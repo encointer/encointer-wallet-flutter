@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
@@ -15,7 +16,7 @@ class SendToTrelloListTile extends StatelessWidget {
         style: context.titleLarge.copyWith(color: AppColors.encointerGrey, fontSize: 19),
       ),
       onTap: () async => AppLaunch.sendEmail(
-        'bugreports@mail.encointer.org',
+        bugReportMail,
         snackBarText: context.l10n.checkEmailApp,
         context: context,
       ),

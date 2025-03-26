@@ -28,6 +28,7 @@ const localePlaceHolder = 'LOCALE_PLACEHOLDER';
 const ceremonyInfoLinkBase = 'https://leu.zuerich/$localePlaceHolder/#zeremonien';
 const encointerLink = 'https://wallet.encointer.org/app/';
 const encointerApi = 'https://api.encointer.org/v1/';
+const bugReportMail = 'bugreports@mail.encointer.org';
 
 String toDeepLink([String? linkText]) => '$encointerLink${linkText?.replaceAll('\n', '_')}';
 String getTransactionHistoryUrl(String cid, String address, {DateTime? startTime, DateTime? endTime}) {

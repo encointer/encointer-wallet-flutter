@@ -104,7 +104,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                         txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
                         onError: (dispatchError) {
                           final message = getLocalizedTxErrorMessage(l10n, dispatchError);
-                          showTxErrorDialog(context, message);
+                          showTxErrorDialog(context, message, false);
                         },
                       ),
                     );
