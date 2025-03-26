@@ -77,10 +77,10 @@ RuntimeError decodeWithIndex(int index, _i1.Input input) {
       return Sudo._decode(input);
     case 10:
       return Balances._decode(input);
-  // case 11:
-  //   return TransactionPayment._decode(input);
-  // case 12:
-  //   return AssetTxPayment._decode(input);
+    // case 11:
+    //   return TransactionPayment._decode(input);
+    // case 12:
+    //   return AssetTxPayment._decode(input);
     case 25:
       return Grandpa._decode(input);
     case 40:
@@ -113,7 +113,6 @@ RuntimeError decodeWithIndex(int index, _i1.Input input) {
       throw Exception('RuntimeError: Invalid variant index: "$index"');
   }
 }
-
 
 class $RuntimeError {
   const $RuntimeError();
@@ -206,9 +205,9 @@ class $RuntimeErrorCodec with _i1.Codec<RuntimeError> {
 
   @override
   void encodeTo(
-      RuntimeError value,
-      _i1.Output output,
-      ) {
+    RuntimeError value,
+    _i1.Output output,
+  ) {
     switch (value.runtimeType) {
       case System:
         (value as System).encodeTo(output);
@@ -355,7 +354,7 @@ class System extends RuntimeError {
         this,
         other,
       ) ||
-          other is System && other.value0 == value0;
+      other is System && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
@@ -397,7 +396,7 @@ class Sudo extends RuntimeError {
         this,
         other,
       ) ||
-          other is Sudo && other.value0 == value0;
+      other is Sudo && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
@@ -439,7 +438,7 @@ class Balances extends RuntimeError {
         this,
         other,
       ) ||
-          other is Balances && other.value0 == value0;
+      other is Balances && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
@@ -565,7 +564,7 @@ class Grandpa extends RuntimeError {
         this,
         other,
       ) ||
-          other is Grandpa && other.value0 == value0;
+      other is Grandpa && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
@@ -607,7 +606,7 @@ class Utility extends RuntimeError {
         this,
         other,
       ) ||
-          other is Utility && other.value0 == value0;
+      other is Utility && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
@@ -649,7 +648,7 @@ class Proxy extends RuntimeError {
         this,
         other,
       ) ||
-          other is Proxy && other.value0 == value0;
+      other is Proxy && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
@@ -691,7 +690,7 @@ class Scheduler extends RuntimeError {
         this,
         other,
       ) ||
-          other is Scheduler && other.value0 == value0;
+      other is Scheduler && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
@@ -733,7 +732,7 @@ class Treasury extends RuntimeError {
         this,
         other,
       ) ||
-          other is Treasury && other.value0 == value0;
+      other is Treasury && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
@@ -775,7 +774,7 @@ class EncointerScheduler extends RuntimeError {
         this,
         other,
       ) ||
-          other is EncointerScheduler && other.value0 == value0;
+      other is EncointerScheduler && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
@@ -817,7 +816,7 @@ class EncointerCeremonies extends RuntimeError {
         this,
         other,
       ) ||
-          other is EncointerCeremonies && other.value0 == value0;
+      other is EncointerCeremonies && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
@@ -859,7 +858,7 @@ class EncointerCommunities extends RuntimeError {
         this,
         other,
       ) ||
-          other is EncointerCommunities && other.value0 == value0;
+      other is EncointerCommunities && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
@@ -901,7 +900,7 @@ class EncointerBalances extends RuntimeError {
         this,
         other,
       ) ||
-          other is EncointerBalances && other.value0 == value0;
+      other is EncointerBalances && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
@@ -943,7 +942,7 @@ class EncointerBazaar extends RuntimeError {
         this,
         other,
       ) ||
-          other is EncointerBazaar && other.value0 == value0;
+      other is EncointerBazaar && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
@@ -985,7 +984,7 @@ class EncointerReputationCommitments extends RuntimeError {
         this,
         other,
       ) ||
-          other is EncointerReputationCommitments && other.value0 == value0;
+      other is EncointerReputationCommitments && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
@@ -1027,7 +1026,7 @@ class EncointerFaucet extends RuntimeError {
         this,
         other,
       ) ||
-          other is EncointerFaucet && other.value0 == value0;
+      other is EncointerFaucet && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
@@ -1069,7 +1068,7 @@ class EncointerDemocracy extends RuntimeError {
         this,
         other,
       ) ||
-          other is EncointerDemocracy && other.value0 == value0;
+      other is EncointerDemocracy && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
@@ -1111,7 +1110,7 @@ class EncointerTreasuries extends RuntimeError {
         this,
         other,
       ) ||
-          other is EncointerTreasuries && other.value0 == value0;
+      other is EncointerTreasuries && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
