@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 
 import 'package:ew_polkadart/encointer_types.dart' as et;
 
@@ -44,6 +45,34 @@ ProposalActionIdentifier proposalActionIdentifierFromPolkadartAction(et.Proposal
     et.IssueSwapNativeOption => ProposalActionIdentifier.issueSwapNativeOption,
     _ => throw UnimplementedError('Invalid Proposal Id Type'),
   };
+}
+
+class ProposalActionIdWithScope {
+  ProposalActionIdWithScope(this.actionId, this.cid);
+
+  factory ProposalActionIdWithScope.fromProposalAction(et.ProposalAction action) {
+    return ProposalActionIdWithScope(
+        proposalActionIdentifierFromPolkadartAction(action), getCidFromPolkadartAction(action));
+  }
+
+  final ProposalActionIdentifier actionId;
+  final CommunityIdentifier? cid;
+}
+
+CommunityIdentifier? getCidFromPolkadartAction(et.ProposalAction action) {
+  final maybeCid = switch (action.runtimeType) {
+    et.AddLocation => (action as et.AddLocation).value0,
+    et.RemoveLocation => (action as et.RemoveLocation).value0,
+    et.UpdateDemurrage => (action as et.UpdateDemurrage).value0,
+    et.UpdateNominalIncome => (action as et.UpdateNominalIncome).value0,
+    et.SetInactivityTimeout => null,
+    et.Petition => (action as et.Petition).value0,
+    et.SpendNative => (action as et.SpendNative).value0,
+    et.IssueSwapNativeOption => (action as et.IssueSwapNativeOption).value0,
+    _ => throw UnimplementedError('Invalid Proposal Id Type'),
+  };
+
+  return maybeCid != null ? CommunityIdentifier.fromPolkadart(maybeCid) : null;
 }
 
 /// We still have to implement support for:
@@ -93,6 +122,11 @@ extension PropsalActionExt on ProposalActionIdentifier {
       ProposalActionIdentifier.issueSwapNativeOption => l10n.proposalTypeIssueSwapNativeOption,
     };
   }
+}
+
+bool hasSameProposalForSameScope(
+    List<ProposalActionIdWithScope> actions, ProposalActionIdentifier id, CommunityIdentifier? scope) {
+  return actions.any((action) => action.actionId == id && action.cid == scope);
 }
 
 double monthlyDemurragePercentToDemurrage(double monthly, BigInt blockProductionTime) {

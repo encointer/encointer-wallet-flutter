@@ -78,7 +78,7 @@ class _ProposePageState extends State<ProposePage> {
   // Beneficiary in for the spendNative/issueSwapNativeOption
   AccountData? beneficiary;
 
-  List<ProposalActionIdentifier> enactmentQueue = [];
+  List<ProposalActionIdWithScope> enactmentQueue = [];
   BigInt globalTreasuryBalance = BigInt.zero;
   BigInt localTreasuryBalance = BigInt.zero;
 
@@ -145,7 +145,9 @@ class _ProposePageState extends State<ProposePage> {
     }
 
     setState(() {
-      // enactmentQueue = queue.map(proposalActionIdentifierFromPolkadartAction).toList();
+      enactmentQueue = queuedProposals.values
+          .map<ProposalActionIdWithScope>((a) => ProposalActionIdWithScope.fromProposalAction(a.action))
+          .toList();
       globalTreasuryBalance = globalTreasuryAccountData.free;
       localTreasuryBalance = localTreasuryAccountData.free;
 
@@ -243,7 +245,8 @@ class _ProposePageState extends State<ProposePage> {
 
                             if (!isBootstrapperOrReputable(store, store.account.currentAddress))
                               Text(l10n.proposalOnlyBootstrappersOrReputablesCanSubmit, textAlign: TextAlign.center),
-                            if (enactmentQueue.contains(selectedAction))
+                            if (hasSameProposalForSameScope(enactmentQueue, selectedAction,
+                                selectedScope.isLocal ? store.encointer.chosenCid! : null))
                               Text(l10n.proposalCannotSubmitProposalTypePendingEnactment, textAlign: TextAlign.center),
 
                             // Submit button
