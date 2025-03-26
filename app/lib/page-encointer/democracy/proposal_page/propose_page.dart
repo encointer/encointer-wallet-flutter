@@ -767,17 +767,15 @@ class _ProposePageState extends State<ProposePage> {
     return [
       if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isGlobal)
         Text(
-          l10n.treasuryGlobalBalanceAndPendingSpends(
-            Fmt.token(globalTreasuryBalance, ertDecimals),
-            Fmt.token(pendingGlobalSpends, ertDecimals),
+          l10n.treasuryGlobalBalance(
+            Fmt.token(globalTreasuryBalance - pendingGlobalSpends, ertDecimals)
           ),
         ),
       if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isLocal ||
           selectedAction == ProposalActionIdentifier.issueSwapNativeOption)
         Text(
-          l10n.treasuryLocalBalanceAndPendingSpends(
-            Fmt.token(localTreasuryBalance, ertDecimals),
-            Fmt.token(pendingLocalSpends, ertDecimals),
+          l10n.treasuryLocalBalance(
+            Fmt.token(localTreasuryBalance - pendingLocalSpends, ertDecimals),
           ),
         )
     ];

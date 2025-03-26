@@ -357,26 +357,27 @@
     "transferHistory": "Miamala",
     "transferHistoryEnd": "Kupakia miamala ya zamani haijasapotiwa bado",
     "transferHistoryTop": "Inaweza kuchukua hadi sekunde 30 kwa ajili ya uhamishaji kuonekana hapa",
-    "treasuryGlobalBalanceAndPendingSpends": "Salio la hazina ya kimataifa: {balance} KSM. Matumizi yanayosubiri: {spends} KSM.",
-    "@treasuryGlobalBalanceAndPendingSpends": {
+    "treasuryGlobalBalance": "Salio la hazina ya kimataifa: {balance} KSM.",
+    "@treasuryGlobalBalance": {
         "placeholders": {
             "balance": {
-                "type": "String",
-                "example": "10"
-            },
-            "spends": {
                 "type": "String",
                 "example": "10"
             }
         }
     },
-    "treasuryLocalBalanceAndPendingSpends": "Salio la hazina ya jamii: {balance} KSM. Matumizi yanayosubiri: {spends} KSM.",
-    "@treasuryLocalBalanceAndPendingSpends": {
+    "treasuryLocalBalance": "Salio la hazina ya jamii: {balance} KSM.",
+    "@treasuryLocalBalance": {
         "placeholders": {
             "balance": {
                 "type": "String",
                 "example": "10"
-            },
+            }
+        }
+    },
+    "treasuryPendingSpends": "Matumizi yanayosubiri: {spends} KSM.",
+    "@treasuryPendingSpends": {
+        "placeholders": {
             "spends": {
                 "type": "String",
                 "example": "10"

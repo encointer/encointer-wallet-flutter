@@ -356,26 +356,27 @@
     "transferHistory": "Transfers",
     "transferHistoryEnd": "Das Laden älterer Transaktionen wird noch nicht unterstützt",
     "transferHistoryTop": "Es kann bis zu 30 Sekunden dauern, bis der Transfer hier auftaucht",
-    "treasuryGlobalBalanceAndPendingSpends": "Globales Schatzkammerguthaben: {balance} KSM. Ausstehende Ausgaben: {spends} KSM.",
-    "@treasuryGlobalBalanceAndPendingSpends": {
+    "treasuryGlobalBalance": "Globales Schatzkammerguthaben: {balance} KSM.",
+    "@treasuryGlobalBalance": {
         "placeholders": {
             "balance": {
-                "type": "String",
-                "example": "10"
-            },
-            "spends": {
                 "type": "String",
                 "example": "10"
             }
         }
     },
-    "treasuryLocalBalanceAndPendingSpends": "Gemeinschaftsschatzkammerguthaben: {balance} KSM. Ausstehende Ausgaben: {spends} KSM.",
-    "@treasuryLocalBalanceAndPendingSpends": {
+    "treasuryLocalBalance": "Gemeinschaftsschatzkammerguthaben: {balance} KSM.",
+    "@treasuryLocalBalance": {
         "placeholders": {
             "balance": {
                 "type": "String",
                 "example": "10"
-            },
+            }
+        }
+    },
+    "treasuryPendingSpends": "Ausstehende Ausgaben: {spends} KSM.",
+    "@treasuryPendingSpends": {
+        "placeholders": {
             "spends": {
                 "type": "String",
                 "example": "10"

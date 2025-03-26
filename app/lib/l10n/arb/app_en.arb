@@ -356,26 +356,27 @@
     "transferHistory": "Transfers",
     "transferHistoryEnd": "Loading older transactions is not yet supported",
     "transferHistoryTop": "It may take up to 30 seconds for a transfer to appear here",
-    "treasuryGlobalBalanceAndPendingSpends": "Global treasury balance: {balance} KSM. Pending spends: {spends} KSM.",
-    "@treasuryGlobalBalanceAndPendingSpends": {
+    "treasuryGlobalBalance": "Global treasury balance: {balance} KSM.",
+    "@treasuryGlobalBalance": {
         "placeholders": {
             "balance": {
-                "type": "String",
-                "example": "10"
-            },
-            "spends": {
                 "type": "String",
                 "example": "10"
             }
         }
     },
-    "treasuryLocalBalanceAndPendingSpends": "Community treasury balance: {balance} KSM. Pending spends: {spends} KSM.",
-    "@treasuryLocalBalanceAndPendingSpends": {
+    "treasuryLocalBalance": "Community treasury balance: {balance} KSM.",
+    "@treasuryLocalBalance": {
         "placeholders": {
             "balance": {
                 "type": "String",
                 "example": "10"
-            },
+            }
+        }
+    },
+    "treasuryPendingSpends": "Pending spends: {spends} KSM.",
+    "@treasuryPendingSpends": {
+        "placeholders": {
             "spends": {
                 "type": "String",
                 "example": "10"
