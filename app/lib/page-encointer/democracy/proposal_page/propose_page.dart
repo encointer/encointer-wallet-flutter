@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:convert/convert.dart';
 import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
@@ -11,12 +13,15 @@ import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/theme/custom/typography/typography_theme.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+
+import 'package:ew_polkadart/encointer_types.dart' as et;
 
 import 'package:ew_polkadart/ew_polkadart.dart'
     show
@@ -74,6 +79,11 @@ class _ProposePageState extends State<ProposePage> {
   AccountData? beneficiary;
 
   List<ProposalActionIdentifier> enactmentQueue = [];
+  BigInt globalTreasuryBalance = BigInt.zero;
+  BigInt localTreasuryBalance = BigInt.zero;
+
+  BigInt pendingGlobalSpends = BigInt.zero;
+  BigInt pendingLocalSpends = BigInt.zero;
 
   @override
   void initState() {
@@ -93,9 +103,54 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Future<void> _updateEnactmentQueue() async {
-    final queue = await webApi.encointer.getProposalEnactmentQueue();
+    final store = context.read<AppStore>();
+    final chosenCid = store.encointer.chosenCid!;
+
+    final futures = await Future.wait([
+      webApi.encointer.getProposalEnactmentQueue(),
+      webApi.encointer.getTreasuryAccount(null).then((account) => webApi.assets.getBalanceOf(account)),
+      webApi.encointer.getTreasuryAccount(chosenCid).then((account) => webApi.assets.getBalanceOf(account)),
+      webApi.encointer.getSwapNativeOptions(chosenCid)
+    ]);
+
+    // cast object type from futures to target type.
+    final queuedProposalIds = futures[0] as List<BigInt>;
+    final globalTreasuryAccountData = futures[1] as et.AccountData;
+    final localTreasuryAccountData = futures[2] as et.AccountData;
+    final swapNativeOptions = futures[3] as List<et.SwapNativeOption>;
+
+    // Get all open swaps for this community
+    final openSwapAmount = swapNativeOptions.fold(BigInt.zero, (sum, swap) => sum + swap.nativeAllowance);
+
+    var globalSpends = BigInt.zero;
+    var localSpends = BigInt.zero;
+
+    final queuedProposals = await webApi.encointer.getProposals(queuedProposalIds);
+
+    // Get pending spends from queued SpendNative and IssueSwapNativeOption proposals.
+    for (final proposal in queuedProposals.values) {
+      final action = proposal.action;
+      if (action is SpendNative) {
+        if (action.value0 == null) {
+          globalSpends += action.value2;
+        } else {
+          final cid = CommunityIdentifier.fromPolkadart(action.value0!);
+          if (cid == store.encointer.chosenCid!) {
+            localSpends += action.value2;
+          }
+        }
+      } else if (action is IssueSwapNativeOption) {
+        localSpends += action.value2.nativeAllowance;
+      }
+    }
+
     setState(() {
-      enactmentQueue = queue.map(proposalActionIdentifierFromPolkadartAction).toList();
+      // enactmentQueue = queue.map(proposalActionIdentifierFromPolkadartAction).toList();
+      globalTreasuryBalance = globalTreasuryAccountData.free;
+      localTreasuryBalance = localTreasuryAccountData.free;
+
+      pendingGlobalSpends = globalSpends;
+      pendingLocalSpends = localSpends + openSwapAmount;
     });
   }
 
@@ -122,75 +177,97 @@ class _ProposePageState extends State<ProposePage> {
           padding: const EdgeInsets.all(16),
           child: Form(
             key: _formKey,
-            child: Column(
-              children: [
-                // Proposal Action Selector
-                DropdownButtonFormField<ProposalActionIdentifier>(
-                  value: selectedAction,
-                  onChanged: (ProposalActionIdentifier? newValue) {
-                    setState(() {
-                      selectedAction = newValue!;
-                      _updateAllowedScopes();
-                    });
-                  },
-                  items: supportedProposalIds().map((ProposalActionIdentifier action) {
-                    return DropdownMenuItem<ProposalActionIdentifier>(
-                      value: action,
-                      child: Text(action.localizedStr(l10n)),
-                    );
-                  }).toList(),
-                  decoration: InputDecoration(labelText: l10n.proposalType),
-                ),
-
-                const SizedBox(height: 10),
-
-                // Scope Selector
-                DropdownButtonFormField<ProposalScope>(
-                  value: selectedScope,
-                  onChanged: allowedScopes.length > 1
-                      ? (ProposalScope? newValue) {
-                          if (newValue != null) {
+            child: LayoutBuilder(
+              builder: (context, constraints) => SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Proposal Action Selector
+                        DropdownButtonFormField<ProposalActionIdentifier>(
+                          value: selectedAction,
+                          onChanged: (ProposalActionIdentifier? newValue) {
                             setState(() {
-                              selectedScope = newValue;
+                              selectedAction = newValue!;
+                              _updateAllowedScopes();
                             });
-                          }
-                        }
-                      : null, // Disable dropdown if only one option
-                  items: allowedScopes.map((ProposalScope scope) {
-                    return DropdownMenuItem<ProposalScope>(
-                      value: scope,
-                      child: Text(scope.localizedStr(l10n)),
-                    );
-                  }).toList(),
-                  decoration: InputDecoration(labelText: l10n.proposalScope),
+                          },
+                          items: supportedProposalIds().map((ProposalActionIdentifier action) {
+                            return DropdownMenuItem<ProposalActionIdentifier>(
+                              value: action,
+                              child: Text(action.localizedStr(l10n)),
+                            );
+                          }).toList(),
+                          decoration: InputDecoration(labelText: l10n.proposalType),
+                        ),
+
+                        const SizedBox(height: 10),
+
+                        // Scope Selector
+                        DropdownButtonFormField<ProposalScope>(
+                          value: selectedScope,
+                          onChanged: allowedScopes.length > 1
+                              ? (ProposalScope? newValue) {
+                                  if (newValue != null) {
+                                    setState(() {
+                                      selectedScope = newValue;
+                                    });
+                                  }
+                                }
+                              : null, // Disable dropdown if only one option
+                          items: allowedScopes.map((ProposalScope scope) {
+                            return DropdownMenuItem<ProposalScope>(
+                              value: scope,
+                              child: Text(scope.localizedStr(l10n)),
+                            );
+                          }).toList(),
+                          decoration: InputDecoration(labelText: l10n.proposalScope),
+                        ),
+
+                        const SizedBox(height: 10),
+
+                        // Dynamic Fields Based on Selected Proposal Action
+                        _buildDynamicFields(context),
+                        const SizedBox(height: 10),
+                        _getProposalExplainer(context),
+
+                        const Spacer(),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ...maybeShowTreasuryBalances(context),
+
+                            // Hint text for accounts without reputation
+
+                            if (!isBootstrapperOrReputable(store, store.account.currentAddress))
+                              Text(l10n.proposalOnlyBootstrappersOrReputablesCanSubmit, textAlign: TextAlign.center),
+                            if (enactmentQueue.contains(selectedAction))
+                              Text(l10n.proposalCannotSubmitProposalTypePendingEnactment, textAlign: TextAlign.center),
+
+                            // Submit button
+
+                            const SizedBox(height: 5),
+                            SubmitButton(
+                              onPressed: isBootstrapperOrReputable(store, store.account.currentAddress) &&
+                                      !enactmentQueue.contains(selectedAction)
+                                  ? (context) async {
+                                      _formKey.currentState!.validate();
+                                      await _submitProposal();
+                                      Navigator.of(context).pop();
+                                    }
+                                  : null,
+                              // disable button for non-bootstrappers/reputables
+                              child: Text(l10n.proposalSubmit),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-
-                const SizedBox(height: 10),
-
-                // Dynamic Fields Based on Selected Proposal Action
-                _buildDynamicFields(context),
-                const SizedBox(height: 10),
-                _getProposalExplainer(context),
-
-                // Submit Button
-                const Spacer(),
-                if (!isBootstrapperOrReputable(store, store.account.currentAddress))
-                  Text(l10n.proposalOnlyBootstrappersOrReputablesCanSubmit, textAlign: TextAlign.center),
-                if (enactmentQueue.contains(selectedAction))
-                  Text(l10n.proposalCannotSubmitProposalTypePendingEnactment, textAlign: TextAlign.center),
-                const SizedBox(height: 5),
-                SubmitButton(
-                  onPressed: isBootstrapperOrReputable(store, store.account.currentAddress) &&
-                          !enactmentQueue.contains(selectedAction)
-                      ? (context) async {
-                          _formKey.currentState!.validate();
-                          await _submitProposal();
-                          Navigator.of(context).pop();
-                        }
-                      : null, // disable button for non-bootstrappers/reputables
-                  child: Text(l10n.proposalSubmit),
-                ),
-              ],
+              ),
             ),
           ),
         ),
@@ -683,5 +760,22 @@ class _ProposePageState extends State<ProposePage> {
       case ProposalActionIdentifier.removeLocation:
         throw UnimplementedError('removeLocation is unsupported');
     }
+  }
+
+  List<Widget> maybeShowTreasuryBalances(BuildContext context) {
+    final l10n = context.l10n;
+    return [
+      if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isGlobal)
+        Text(
+          l10n.treasuryGlobalBalance(Fmt.token(globalTreasuryBalance - pendingGlobalSpends, ertDecimals)),
+        ),
+      if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isLocal ||
+          selectedAction == ProposalActionIdentifier.issueSwapNativeOption)
+        Text(
+          l10n.treasuryLocalBalance(
+            Fmt.token(localTreasuryBalance - pendingLocalSpends, ertDecimals),
+          ),
+        )
+    ];
   }
 }

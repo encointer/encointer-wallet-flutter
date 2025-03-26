@@ -214,7 +214,7 @@
     "proposalExplainerSetInactivityTimeout": "Dieser Vorschlag setzt eine neue globale Inaktivitätsfrist fest. Falls eine Gemeinschaft über die vorgeschriebene Anzahl an VersammlungsZyklen keine Treffen abhält, wird sie gelöscht.",
     "proposalExplainerPetition": "Dieser Vorschlag dient als Petition – entweder global oder innerhalb deiner Gemeinschaft. Er hat keine direkte Wirkung auf der Blockchain, signalisiert jedoch ein Anliegen, auf das die Gemeinschaft reagieren kann.",
     "proposalExplainerSpendNative": "Dieser Vorschlag schlägt vor, KSM aus der Gemeinschaftsreserve für einen Begünstigten auszugeben, entweder durch eine globale oder Gemeinschaftsabstimmung. Diese Mittel können zur Belohnung von Beiträgen oder zur Unterstützung von Gemeinschaftsprojekten verwendet werden.",
-    "proposalExplainerIssueSwapNativeOption": "Dieser Vorschlag ermöglicht es dem Begünstigten, Community-Token zu einem festgelegten Kurs mehrfach gegen KSM einzutauschen, bis zu einem bestimmten KSM-Limit. Der Begünstigte könnte ein lokales Unternehmen sein, das Community-Token akzeptiert und möglicherweise einen Überschuss ansammelt.\n\nBeispiel mit Kurs 3 {currency}/KSM und Limit von 2 KSM:\n\nDer Begünstigte kann bis zu 2 KSM zu einem Kurs von 3 {currency}/KSM eintauschen. Das bedeutet, dass maximal 6 {currency} gegen 2 KSM getauscht werden können.",
+    "proposalExplainerIssueSwapNativeOption": "Dieser Vorschlag ermöglicht es dem Begünstigten, Gemeinschaftswährung zu einem festgelegten Kurs mehrfach gegen KSM einzutauschen, bis zu einem bestimmten KSM-Limit. Der Begünstigte könnte ein lokales Unternehmen sein, das Gemeinschaftswährung akzeptiert und möglicherweise einen Überschuss ansammelt.\n\nBeispiel mit Kurs 3 {currency}/KSM und Limit von 2 KSM:\n\nDer Begünstigte kann bis zu 2 KSM zu einem Kurs von 3 {currency}/KSM eintauschen. Das bedeutet, dass maximal 6 {currency} gegen 2 KSM getauscht werden können.",
     "@proposalExplainerIssueSwapNativeOption": {
         "placeholders": {
             "currency": {
@@ -356,6 +356,33 @@
     "transferHistory": "Transfers",
     "transferHistoryEnd": "Das Laden älterer Transaktionen wird noch nicht unterstützt",
     "transferHistoryTop": "Es kann bis zu 30 Sekunden dauern, bis der Transfer hier auftaucht",
+    "treasuryGlobalBalance": "Freies globales Schatzkammerguthaben: {balance} KSM.",
+    "@treasuryGlobalBalance": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
+    "treasuryLocalBalance": "Freies Gemeinschaftsschatzkammerguthaben: {balance} KSM.",
+    "@treasuryLocalBalance": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
+    "treasuryPendingSpends": "Ausstehende Ausgaben: {spends} KSM.",
+    "@treasuryPendingSpends": {
+        "placeholders": {
+            "spends": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
     "txBroadcast": "Transaktion wurde im Netzwerk",
     "txError": "Transaktionsfehler",
     "txInBlock": "Transaction ist in einem Block",

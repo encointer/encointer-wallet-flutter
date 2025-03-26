@@ -31,12 +31,13 @@ import 'package:ew_polkadart/ew_polkadart.dart'
         BlockHash,
         ByteInput,
         EncointerKusama,
-        Tally,
         Proposal,
         RuntimeVersion,
         SequenceCodec,
         StorageChangeSet,
-        Tuple2;
+        Tally,
+        Tuple2,
+        U128Codec;
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
@@ -705,6 +706,29 @@ class EncointerApi {
     return 0;
   }
 
+  Future<String> getTreasuryAccount(CommunityIdentifier? cid, {BlockHash? at}) async {
+    final treasuryAccount = await _dartApi.getTreasuryAccount(cid, at: at ?? store.chain.latestHash);
+    Log.d('api: getTreasuryAccount: $treasuryAccount', 'EncointerApi');
+    return treasuryAccount;
+  }
+
+  Future<List<et.SwapNativeOption>> getSwapNativeOptions(CommunityIdentifier cid, {BlockHash? at}) async {
+    try {
+      final prefix = encointerKusama.query.encointerTreasuries.swapNativeOptionsMapPrefix(cid.toPolkadart());
+      final pairs = await encointerKusama.rpc.state.getPairs(prefix, at: at ?? store.chain.latestHash);
+
+      // Keys including storage prefix.
+      Log.d("[getSwapNativeOptions] storageKeys: ${pairs.map((pair) => '0x${hex.encode(pair.key)}')}");
+      Log.d("[getSwapNativeOptions] storageValues: ${pairs.map((pair) => '0x${hex.encode(pair.value!)}')}");
+
+      final swapNativeOptions = pairs.map((pair) => et.SwapNativeOption.decode(ByteInput(pair.value!)));
+      return swapNativeOptions.toList();
+    } catch (e, s) {
+      Log.e('[getSwapNativeOptions]', '$e', s);
+      return List.of([]);
+    }
+  }
+
   Future<Map<String, Faucet>> getAllFaucetsWithAccount({BlockHash? at}) async {
     try {
       final prefix = encointerKusama.query.encointerFaucet.faucetsMapPrefix();
@@ -733,7 +757,7 @@ class EncointerApi {
     }
   }
 
-  Future<List<et.ProposalAction>> getProposalEnactmentQueue({BlockHash? at}) async {
+  Future<List<BigInt>> getProposalEnactmentQueue({BlockHash? at}) async {
     try {
       final prefix = encointerKusama.query.encointerDemocracy.enactmentQueueMapPrefix();
       final pairs = await encointerKusama.rpc.state.getPairs(prefix);
@@ -742,9 +766,11 @@ class EncointerApi {
       Log.d("[getProposalEnactmentQueue] storageKeys: ${pairs.map((pair) => '0x${hex.encode(pair.key)}')}");
       Log.d("[getProposalEnactmentQueue] storageValues: ${pairs.map((pair) => '0x${hex.encode(pair.value!)}')}");
 
-      final proposalActions = pairs.map((pair) => et.ProposalAction.decode(ByteInput(pair.value!)));
+      // Todo: this does not work, probably because of the hashed keys.
+      // final proposalActions = pairs.map((pair) => et.ProposalActionIdentifier.decode(ByteInput(pair.key.sublist(32))));
+      final proposalIds = pairs.map((pair) => U128Codec.codec.decode(ByteInput(pair.value!)));
 
-      return proposalActions.toList();
+      return List.from(proposalIds);
     } catch (e, s) {
       Log.e('[getProposalEnactmentQueue]', '$e', s);
       return List.of([]);
