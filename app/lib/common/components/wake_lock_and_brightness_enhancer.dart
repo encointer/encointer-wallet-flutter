@@ -21,7 +21,7 @@ class WakeLockAndBrightnessEnhancer extends StatefulWidget {
 class _WakeLockAndBrightnessEnhancerState extends State<WakeLockAndBrightnessEnhancer> {
   Future<void> setBrightness(double brightness) async {
     try {
-      await ScreenBrightness().setScreenBrightness(brightness);
+      await ScreenBrightness().setApplicationScreenBrightness(brightness);
     } catch (e, s) {
       Log.e('$e', 'WakeLockAndBrightnessEnhancer', s);
       throw Exception('Failed to set brightness');
@@ -30,7 +30,7 @@ class _WakeLockAndBrightnessEnhancerState extends State<WakeLockAndBrightnessEnh
 
   Future<void> resetBrightness() async {
     try {
-      await ScreenBrightness().resetScreenBrightness();
+      await ScreenBrightness().resetApplicationScreenBrightness();
     } catch (e, s) {
       Log.e('$e', 'WakeLockAndBrightnessEnhancer', s);
       throw Exception('Failed to reset brightness');

@@ -8,7 +8,7 @@ part of 'proof_of_attendance.dart';
 
 ProofOfAttendance _$ProofOfAttendanceFromJson(Map<String, dynamic> json) => ProofOfAttendance(
       json['proverPublic'] as String,
-      json['ceremonyIndex'] as int,
+      (json['ceremonyIndex'] as num).toInt(),
       CommunityIdentifier.fromJson(json['communityIdentifier'] as Map<String, dynamic>),
       json['attendeePublic'] as String,
       (json['attendeeSignature'] as Map<String, dynamic>?)?.map(

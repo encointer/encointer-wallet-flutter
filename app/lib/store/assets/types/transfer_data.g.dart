@@ -7,8 +7,8 @@ part of 'transfer_data.dart';
 // **************************************************************************
 
 TransferData _$TransferDataFromJson(Map<String, dynamic> json) => TransferData()
-  ..blockNum = json['block_num'] as int?
-  ..blockTimestamp = json['block_timestamp'] as int?
+  ..blockNum = (json['block_num'] as num?)?.toInt()
+  ..blockTimestamp = (json['block_timestamp'] as num?)?.toInt()
   ..extrinsicIndex = json['extrinsic_index'] as String?
   ..fee = json['fee'] as String?
   ..from = json['from'] as String?

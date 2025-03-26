@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
+import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +53,7 @@ class CeremonyBox extends StatelessWidget {
           Container(
             padding: EdgeInsets.fromLTRB(24, 24, 24, store.encointer.showMeetupInfo ? 12 : 24),
             decoration: BoxDecoration(
-              color: context.colorScheme.background,
+              color: context.colorScheme.surface,
               borderRadius: BorderRadius.vertical(
                 top: const Radius.circular(15),
                 bottom: Radius.circular(store.encointer.showMeetupInfo ? 0 : 15),
@@ -84,6 +86,10 @@ class CeremonyBox extends StatelessWidget {
                             store.account.getKeyringAccount(store.account.currentAccountPubKey!),
                             store.encointer.chosenCid!,
                             txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+                            onError: (dispatchError) {
+                              final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
+                              showTxErrorDialog(context, message, false);
+                            },
                           );
                         }),
                   ),
@@ -131,6 +137,10 @@ class CeremonyBox extends StatelessWidget {
                         store.account.getKeyringAccount(store.account.currentAccountPubKey!),
                         store.encointer.chosenCid!,
                         txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+                        onError: (dispatchError) {
+                          final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
+                          showTxErrorDialog(context, message, false);
+                        },
                       ),
                     ),
                   )

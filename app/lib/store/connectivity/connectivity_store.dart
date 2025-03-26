@@ -13,11 +13,14 @@ abstract class _ConnectivityStoreBase with Store {
   final Connectivity connectivity;
 
   @observable
-  ConnectivityResult connectionState = ConnectivityResult.none;
+  List<ConnectivityResult> connectionState = [ConnectivityResult.none];
 
   @computed
-  bool get isConnectedToNetwork =>
-      connectionState != ConnectivityResult.bluetooth && connectionState != ConnectivityResult.none;
+  bool get isConnectedToNetwork => connectionState.any((cs) =>
+      cs == ConnectivityResult.wifi ||
+      cs == ConnectivityResult.mobile ||
+      cs == ConnectivityResult.ethernet ||
+      cs == ConnectivityResult.vpn);
 
   @action
   void listen() {

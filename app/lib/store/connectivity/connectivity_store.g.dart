@@ -19,13 +19,13 @@ mixin _$ConnectivityStore on _ConnectivityStoreBase, Store {
   late final _$connectionStateAtom = Atom(name: '_ConnectivityStoreBase.connectionState', context: context);
 
   @override
-  ConnectivityResult get connectionState {
+  List<ConnectivityResult> get connectionState {
     _$connectionStateAtom.reportRead();
     return super.connectionState;
   }
 
   @override
-  set connectionState(ConnectivityResult value) {
+  set connectionState(List<ConnectivityResult> value) {
     _$connectionStateAtom.reportWrite(value, super.connectionState, () {
       super.connectionState = value;
     });

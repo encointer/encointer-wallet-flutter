@@ -93,7 +93,7 @@ class PopupBuilder extends StatelessWidget {
       constraints: BoxConstraints.loose(Size(maxWidth, maxHeight)),
       padding: const EdgeInsets.fromLTRB(6, 4, 6, 4),
       decoration: BoxDecoration(
-        color: context.colorScheme.background,
+        color: context.colorScheme.surface,
         borderRadius: BorderRadius.circular(8),
       ),
       child: InkWell(

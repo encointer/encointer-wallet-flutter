@@ -49,7 +49,7 @@
     "canUseFaucetOnlyWithCurrentAccount": "Du kannst das Faucet nur benutzen, wenn das angezeigte Konto das zurzeit gewählte Konto ist.",
     "changeYourPin": "PIN ändern",
     "checkEmailApp": "Keine Email-App installiert",
-    "chosenRightCommunity": "Die Daten sind für eine andere Community. Bitte wechsle die Community um Geld zu senden.",
+    "chosenRightCommunity": "Die Daten sind für eine andere Gemeinschaft. Bitte wechsle die Gemeinschaft um Geld zu senden.",
     "claim": "Einfordern",
     "claimRewardsNotificationBody": "Du hast dein Gemeinschaftseinkommen bereits erhalten.",
     "claimRewardsNotificationTitle": "Gemeinschaftseinkommen angefordert",
@@ -59,9 +59,9 @@
     "claimsSubmit": "Anträge einreichen",
     "closeGathering": "Versammlung schliessen",
     "communities": "Gemeinschaften",
-    "communityChoose": "Wähle eine Community:",
-    "communityDoChoose": "Community auswählen",
-    "communityNotSelected": "Keine Community ausgewählt, klicke auf das Icon",
+    "communityChoose": "Wähle eine Gemeinschaft:",
+    "communityDoChoose": "Gemeinschaft auswählen",
+    "communityNotSelected": "Keine Gemeinschaft ausgewählt, klicke auf das Icon",
     "confirmPin": "Bitte PIN bestätigen",
     "confirmThePayment": "3. Bestätige die Zahlung",
     "contactAddress": "Addresse",
@@ -91,6 +91,10 @@
     "democracyDiscussion": "Diskutiere Vorschläge im Forum!",
     "democracyVotedNotificationBody": "Du hast für diesen Vorschlag abgestimmt.",
     "democracyVotedNotificationTitle": "Abgestimmt",
+    "democracySubmitProposalNotificationBody": "Du hast einen Vorschlag eingereicht, über den nun abgestimmt werden kann.",
+    "democracySubmitProposalNotificationTitle": "Vorschlag eingereicht",
+    "democracyUpdatedProposalStateNotificationBody": "Du hast diesen Vorschlag aktualisiert",
+    "democracyUpdatedProposalStateNotificationTitle": "Vorschlag aktualisiert",
     "detail": "Detail",
     "detailsEnter": "Gib deine Details ein.",
     "developer": "Entwickler-Modus",
@@ -135,6 +139,8 @@
     "insufficientBalance": "Ungenügender Saldo",
     "insufficientFundsErrorBody": "Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite deiner lokalen Gemeinschaft, wie du welches bekommen kannst.",
     "insufficientFundsErrorTitle": "Zu wenig Guthaben",
+    "invalidTransactionFormatErrorBody": "Die Transaktion hatte ein ungültiges Format, was ein Fehler in der Anwendung sein könnte. Wenn du denkst, dass es sich um einen Bug handelt, tippe einfach auf das entsprechende Feld unten.",
+    "invalidTransactionFormatErrorTitle": "Ungültiges Transaktionsformat",
     "invalidCommunity": "Ungültige Gemeinschaft",
     "invalidNetwork": "Ungültiges Netzwerk",
     "invoice": "Rechnungsbetrag",
@@ -195,13 +201,80 @@
     "pinHint": "Du wirst diese PIN benötigen um Transaktionen zu tätigen oder neue Konten hinzufügen.",
     "pinInfo": "PIN muss mindestens 4 Ziffern enthalten. Bei PIN-Verlust ist der Account nicht wiederherstellbar, ausser man hat ein Backup auf der Profilseite gemacht.",
     "pinSecure": "Sichere dein Konto mit einem PIN.",
-    "pleaseCommunityChoose": "Bitte wähle eine Community",
+    "pleaseCommunityChoose": "Bitte wähle eine Gemeinschaft",
     "pleaseConfirmYourNewPin": "Bestätige neue PIN",
     "preview": "Vorschau",
     "print": "Drucken",
     "proposal": "Vorschlag",
     "proposalAye": "Aye",
     "proposalNay": "Nay",
+    "proposalNew": "Neuer Vorschlag",
+    "proposalExplainerAddLocation": "Dieser Vorschlag schlägt einen neuen Treffpunkt für deine Gemeinschaft vor. Achte darauf, dass er mindestens 100 Meter entfernt und nicht weiter als 1 Kilometer von bestehenden Treffpunkten liegt.",
+    "proposalExplainerRemoveLocation": "Dieser Vorschlag schlägt vor, einen bestehenden Treffpunkt deiner Gemeinschaft zu entfernen.",
+    "proposalExplainerUpdateDemurrage": "Dieser Vorschlag legt eine neue monatliche Demurrage für die Lokalwährung fest.",
+    "proposalExplainerUpdateNominalIncome": "Dieser Vorschlag bestimmt ein neues Grundeinkommen pro Versammlungszyklus für deine Gemeinschaft.",
+    "proposalExplainerSetInactivityTimeout": "Dieser Vorschlag setzt eine neue globale Inaktivitätsfrist fest. Falls eine Gemeinschaft über die vorgeschriebene Anzahl an VersammlungsZyklen keine Treffen abhält, wird sie gelöscht.",
+    "proposalExplainerPetition": "Dieser Vorschlag dient als Petition – entweder global oder innerhalb deiner Gemeinschaft. Er hat keine direkte Wirkung auf der Blockchain, signalisiert jedoch ein Anliegen, auf das die Gemeinschaft reagieren kann.",
+    "proposalExplainerSpendNative": "Dieser Vorschlag schlägt vor, KSM aus der Gemeinschaftsreserve für einen Begünstigten auszugeben, entweder durch eine globale oder Gemeinschaftsabstimmung. Diese Mittel können zur Belohnung von Beiträgen oder zur Unterstützung von Gemeinschaftsprojekten verwendet werden.",
+    "proposalExplainerIssueSwapNativeOption": "Dieser Vorschlag ermöglicht es dem Begünstigten, Gemeinschaftswährung zu einem festgelegten Kurs mehrfach gegen KSM einzutauschen, bis zu einem bestimmten KSM-Limit. Der Begünstigte könnte ein lokales Unternehmen sein, das Gemeinschaftswährung akzeptiert und möglicherweise einen Überschuss ansammelt.\n\nBeispiel mit Kurs 3 {currency}/KSM und Limit von 2 KSM:\n\nDer Begünstigte kann bis zu 2 KSM zu einem Kurs von 3 {currency}/KSM eintauschen. Das bedeutet, dass maximal 6 {currency} gegen 2 KSM getauscht werden können.",
+    "@proposalExplainerIssueSwapNativeOption": {
+        "placeholders": {
+            "currency": {
+                "type": "String",
+                "example": "0.5"
+            }
+        }
+    },
+    "proposalType": "Vorschlagstyp",
+    "proposalTypeAddLocation": "Standort hinzufügen",
+    "proposalTypeRemoveLocation": "Standort entfernen",
+    "proposalTypeUpdateDemurrage": "Demurrage aktualisieren",
+    "proposalTypeUpdateNominalIncome": "Grundeinkommen aktualisieren",
+    "proposalTypeSetInactivityTimeout": "Inaktivitätszeitlimit festlegen",
+    "proposalTypePetition": "Petition",
+    "proposalTypeSpendNative": "Native Tokens ausgeben",
+    "proposalTypeIssueSwapNativeOption": "Swap-Option für Native Tokens ausgeben",
+    "proposalScope": "Geltungsbereich",
+    "proposalScopeLocal": "Lokal",
+    "proposalScopeGlobal": "Global",
+    "proposalFieldLatitude": "Breitengrad",
+    "proposalFieldLongitude": "Längengrad",
+    "proposalFieldDemurragePerMonth": "Demurrage (% / Monat)",
+    "proposalFieldNominalIncome": "Grundeinkommen",
+    "proposalFieldInactivityTimeoutCycles": "Inaktivitätszeitlimit (Versammlungszyklen)",
+    "proposalFieldPetitionText": "Petitionstext",
+    "proposalFieldAmount": "Betrag (KSM)",
+    "proposalFieldBeneficiary": "Begünstigter",
+    "proposalFieldAllowance": "Limit (KSM)",
+    "proposalFieldRate": "Kurs ({cc}/KSM)",
+    "@proposalFieldRate": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
+    "proposalFieldBurn": "Verbrennen",
+    "proposalFieldValidity": "Gültigkeit",
+    "proposalFieldErrorEnterPetitionText": "Petitionstext eingeben",
+    "proposalFieldErrorPetitionTextTooLong": "Petitionstext ist zu lang",
+    "proposalFieldErrorEnterLatitude": "Breitengrad eingeben",
+    "proposalFieldErrorLatitudeRange": "Breitengrad muss zwischen -90 und 90 liegen",
+    "proposalFieldErrorEnterLongitude": "Längengrad eingeben",
+    "proposalFieldErrorLongitudeRange": "Längengrad muss zwischen -180 und 180 liegen",
+    "proposalFieldErrorEnterDemurrage": "Demurrage eingeben",
+    "proposalFieldErrorDemurrageRange": "Demurrage muss zwischen 0 und 100 liegen",
+    "proposalFieldErrorEnterPositiveNumber": "Geben Sie eine positive Zahl ein",
+    "proposalFieldErrorPositiveNumberRange": "Muss eine positive Zahl sein",
+    "proposalFieldErrorEnterInactivityTimeout": "Inaktivitätszeitlimit eingeben",
+    "proposalFieldErrorPositiveIntegerRange": "Muss eine positive ganze Zahl sein",
+    "proposalClose": "Schliessen",
+    "proposalUpdateState": "Aktualisieren",
+    "proposalUpdateExplanation": "Dies wird den Status des Vorschlags aktualisieren. Wenn er zu alt ist und nicht genügend Aye-Stimmen hat, wird er abgelehnt. Wenn er lange genug bestätigt wurde, wird er angenommen.",
+    "proposalOnlyBootstrappersOrReputablesCanSubmit": "Nur Bootstrappers oder Reputables können einen Vorschlag einreichen.",
+    "proposalCannotSubmitProposalTypePendingEnactment": "Ein Vorschlag dieses Typs kann nicht eingereicht werden, da bereits einer auf die Umsetzung wartet.",
+    "proposalSubmit": "Vorschlag einreichen",
     "proposalSuperseded": "Verdrängt",
     "proposalRejected": "Abgelehnt",
     "proposalEnacted": "Ausgeführt",
@@ -216,6 +289,8 @@
     "proposalOngoingUntil": "Laufend bis",
     "proposalConfirmingUntil": "In Bestätigung bis",
     "proposalPendingEnactmentAt": "Wird ausgeführt am",
+    "proposalFailedAndNeedsBump": "Der Vorschlag ist gescheitert und kann geschlossen werden.",
+    "proposalPassedAndNeedsBump": "Der Vorschlag wurde angenommen und kann geschlossen werden.",
     "qrScan": "QR-Code scannen",
     "qrScanHintAccount": "Bitte den Empfänger den QR-Code in der Encointer App zu scannen.",
     "rawSeed": "Raw Seed",
@@ -283,6 +358,33 @@
     "transferHistory": "Transfers",
     "transferHistoryEnd": "Das Laden älterer Transaktionen wird noch nicht unterstützt",
     "transferHistoryTop": "Es kann bis zu 30 Sekunden dauern, bis der Transfer hier auftaucht",
+    "treasuryGlobalBalance": "Freies globales Schatzkammerguthaben: {balance} KSM.",
+    "@treasuryGlobalBalance": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
+    "treasuryLocalBalance": "Freies Gemeinschaftsschatzkammerguthaben: {balance} KSM.",
+    "@treasuryLocalBalance": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
+    "treasuryPendingSpends": "Ausstehende Ausgaben: {spends} KSM.",
+    "@treasuryPendingSpends": {
+        "placeholders": {
+            "spends": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
     "txBroadcast": "Transaktion wurde im Netzwerk",
     "txError": "Transaktionsfehler",
     "txInBlock": "Transaction ist in einem Block",
@@ -315,7 +417,7 @@
     "yourBalanceFor": "Dein Kontostand, {accountName}",
     "incomingConfirmed": "Empfang von {amount} {cidSymbol} für {accountName} bestätigt",
     "voucherDifferentNetworkAndCommunity": "Der Gutschein ist für ein anderes Netzwerk. Willst du zu {network} und {community} wechseln? Du kannst das Netzwerk zurückändern under Profil > Developer mode.",
-    "voucherDifferentCommunity": "Der Gutschein ist für eine andere Community. Willst du zu {community} wechseln?",
+    "voucherDifferentCommunity": "Der Gutschein ist für eine andere Gemeinschaft. Willst du zu {community} wechseln?",
     "doYouWantToRedeemThisVoucher": "Willst du diesen Gutschein für {accountName} einlösen?",
     "claimsSubmitN": "{count} Anträge einreichen",
     "claimsScanned": "Du hast {amount} Anträge gescannt",
@@ -381,6 +483,33 @@
             }
         }
     },
+    "proposalSetInactivityTimeoutTo": "Global: Setze das neue Inaktivitätszeitlimit auf {value}",
+    "@proposalSetInactivityTimeoutTo": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalAddLocation": "{cid}: Füge einen neuen Standort hinzu",
+    "@proposalAddLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
+    "proposalRemoveLocation": "{cid}: Entferne einen Standort",
+    "@proposalRemoveLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
     "proposalUpdateNominalIncome": "Gemeinschaftseinkommen anpassen auf {value} {currency}",
     "@proposalUpdateNominalIncome": {
         "placeholders": {
@@ -416,7 +545,7 @@
             }
         }
     },
-    "proposalSpendNative": "{cid} Kasse soll {amount} KSM an {beneficiary} senden",
+    "proposalSpendNative": "{cid} Die Gemeinschaftsreserve soll {amount} KSM an {beneficiary} senden",
     "@proposalSpendNative": {
         "placeholders": {
             "cid": {
@@ -430,6 +559,27 @@
             "beneficiary": {
                 "type": "String",
                 "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
+            }
+        }
+    },
+    "proposalIssueSwapNativeOption": "{cid}: Ermögliche {beneficiary}, bis zu {allowance} KSM zu einem Kurs von {rate} {cid}/KSM einzutauschen.",
+    "@proposalIssueSwapNativeOption": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "beneficiary": {
+                "type": "String",
+                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
+            },
+            "allowance": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "rate": {
+                "type": "String",
+                "example": "1.2"
             }
         }
     },

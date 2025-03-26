@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
+import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -106,13 +108,19 @@ class _AssetsViewState extends State<AssetsView> {
   UpgradeAlert _upgradeAlert(
     AppBar appBar,
   ) {
+    final url = RepositoryProvider.of<AppConfig>(context).appCastUrl;
+    final controller = url != null
+        ? UpgraderStoreController(
+            onAndroid: () => UpgraderAppcastStore(appcastURL: RepositoryProvider.of<AppConfig>(context).appCastUrl!))
+        : null;
+
     return UpgradeAlert(
       upgrader: Upgrader(
-        appcastConfig: RepositoryProvider.of<AppConfig>(context).appCast,
+        storeController: controller,
         debugLogging: RepositoryProvider.of<AppConfig>(context).isIntegrationTest,
-        shouldPopScope: () => true,
-        canDismissDialog: true,
       ),
+      shouldPopScope: () => true,
+      barrierDismissible: true,
       child: _slidingUpPanel(appBar),
     );
   }
@@ -261,6 +269,10 @@ class _AssetsViewState extends State<AssetsView> {
                                   store.account.getKeyringAccount(store.account.currentAccountPubKey!),
                                   widget.store.encointer.chosenCid!,
                                   txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+                                  onError: (dispatchError) {
+                                    final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
+                                    showTxErrorDialog(context, message, false);
+                                  },
                                 ),
                               );
                             } else {
@@ -355,7 +367,7 @@ class _AssetsViewState extends State<AssetsView> {
               height: avatarSize,
               width: avatarSize,
               decoration: BoxDecoration(
-                color: context.colorScheme.background,
+                color: context.colorScheme.surface,
                 shape: BoxShape.circle,
               ),
               child: e.communityIcon != null

@@ -91,6 +91,10 @@
     "democracyDiscussion": "Jadili mapendekezo kwenye foramu yetu!",
     "democracyVotedNotificationBody": "Umepigia kura pendekezo hili.",
     "democracyVotedNotificationTitle": "Umepiga kura",
+    "democracySubmitProposalNotificationBody": "Ulitoa pendekezo, ambalo watu wanaweza kulipigia kura sasa.",
+    "democracySubmitProposalNotificationTitle": "Pendekezo limewasilishwa",
+    "democracyUpdatedProposalStateNotificationBody": "Umesasisha pendekezo hili",
+    "democracyUpdatedProposalStateNotificationTitle": "Pendekezo limesasishwa",
     "detail": "Taarifa",
     "detailsEnter": "ingiza taarifa zako.",
     "developer": "Developer mode",
@@ -135,6 +139,8 @@
     "insufficientBalance": "Kiasi hakitoshi",
     "insufficientFundsErrorBody": "Hauna mali za kutosha kwenye akaunti hii. Angalia kwenye tovuti ya jamii yako kuweza kupata kadhaa.",
     "insufficientFundsErrorTitle": "Mali hazitoshi",
+    "invalidTransactionFormatErrorBody": "Transaction ilikuwa na muundo usio sahihi, ambayo inaweza kuwa hitilafu katika programu. Ikiwa unadhani hii ni hitilafu, tafadhali bonyeza uwanja unaofaa chini.",
+    "invalidTransactionFormatErrorTitle": "Muundo wa Transaction Usio Sahihi",
     "invalidCommunity": "sio jamii sahihi",
     "invalidNetwork": "Mtandao sio sahihi",
     "invoice": "Ankara",
@@ -202,6 +208,73 @@
     "proposal": "Pendekezo",
     "proposalAye": "Aye",
     "proposalNay": "Nay",
+    "proposalNew": "Mapendekezo mapya",
+    "proposalExplainerAddLocation": "Pendekezo hili linapendekeza eneo jipya la mkutano kwa jamii yako. Hakikisha kuwa liko angalau mita 100 kutoka kwa maeneo ya mikutano yaliyopo, na si zaidi ya kilomita 1.",
+    "proposalExplainerRemoveLocation": "Pendekezo hili linapendekeza kuondoa eneo la mikutano lililopo kwa jamii yako.",
+    "proposalExplainerUpdateDemurrage": "Pendekezo hili linapendekeza kiwango kipya cha demuraji ya kila mwezi kwa tokeni ya jamii yako.",
+    "proposalExplainerUpdateNominalIncome": "Pendekezo hili linapendekeza mapato mapya ya kawaida katika mizunguko ya mikutano kwa jamii yako.",
+    "proposalExplainerSetInactivityTimeout": "Pendekezo hili linapendekeza muda mpya wa kimataifa wa kutokufanya kazi. Ikiwa jamii haitafanya mikutano kwa idadi iliyopendekezwa ya mizunguko, itafutwa.",
+    "proposalExplainerPetition": "Pendekezo hili linatumika kama ombi, iwe kimataifa au ndani ya jamii yako. Ingawa halina athari ya moja kwa moja kwenye mnyororo wa vizuizi, linaonyesha nia, kuruhusu jamii kuitambua na kuchukua hatua.",
+    "proposalExplainerSpendNative": "Pendekezo hili linapendekeza kutumia KSM kwa faida ya mfaidi kutoka hazina ya jamii, ama kupitia kura za kimataifa au za jamii. Fedha hizi zinaweza kutumika kureward michango ya jamii au kusaidia mipango ya jamii.",
+    "proposalExplainerIssueSwapNativeOption": "Pendekezo hili linamruhusu mnufaika kubadilisha tokeni za jamii kuwa KSM kwa kiwango kilichowekwa mara nyingi hadi kikomo cha KSM kilichopangwa. Mnufaika anaweza kuwa biashara ya ndani inayokubali tokeni za jamii na inaweza kukusanya ziada.\n\nMfano kwa kiwango cha 3 {currency}/KSM na kikomo cha 2 KSM:\n\nMnufaika anaweza kubadilisha hadi 2 KSM kwa kiwango cha 3 {currency}/KSM. Hivyo basi, kiwango cha juu ni 6 {currency} => 2 KSM.",
+    "@proposalExplainerIssueSwapNativeOption": {
+        "placeholders": {
+            "currency": {
+                "type": "String",
+                "example": "0.5"
+            }
+        }
+    },
+    "proposalType": "Aina ya pendekezo",
+    "proposalTypeAddLocation": "Ongeza eneo",
+    "proposalTypeRemoveLocation": "Ondoa eneo",
+    "proposalTypeUpdateDemurrage": "Sasisha ada ya kuchelewesha",
+    "proposalTypeUpdateNominalIncome": "Sasisha mapato ya kawaida",
+    "proposalTypeSetInactivityTimeout": "Weka muda wa kutokufanya kazi",
+    "proposalTypePetition": "Ombi rasmi",
+    "proposalTypeSpendNative": "Tumia tokeni asili",
+    "proposalTypeIssueSwapNativeOption": "Toa chaguo la kubadilisha tokeni asili",
+    "proposalScope": "Wigo",
+    "proposalScopeLocal": "Kitaifa",
+    "proposalScopeGlobal": "Kimataifa",
+    "proposalFieldLatitude": "Latitudo",
+    "proposalFieldLongitude": "Longitudo",
+    "proposalFieldDemurragePerMonth": "Ada ya kuchelewesha (% / mwezi)",
+    "proposalFieldNominalIncome": "Mapato ya kawaida",
+    "proposalFieldInactivityTimeoutCycles": "Muda wa kutokufanya kazi (mizunguko ya mikutano)",
+    "proposalFieldPetitionText": "Maandishi ya ombi rasmi",
+    "proposalFieldAmount": "Kiasi (KSM)",
+    "proposalFieldBeneficiary": "Mnufaika",
+    "proposalFieldAllowance": "Kikomo (KSM)",
+    "proposalFieldRate": "Kiwango ({cc}/KSM)",
+    "@proposalFieldRate": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
+    "proposalFieldBurn": "Teketeza",
+    "proposalFieldValidity": "Uhalali",
+    "proposalFieldErrorEnterPetitionText": "Weka maandishi ya ombi rasmi",
+    "proposalFieldErrorPetitionTextTooLong": "Maandishi ya ombi rasmi ni marefu sana",
+    "proposalFieldErrorEnterLatitude": "Weka latitudo",
+    "proposalFieldErrorLatitudeRange": "Latitudo lazima iwe kati ya -90 na 90",
+    "proposalFieldErrorEnterLongitude": "Weka longitudo",
+    "proposalFieldErrorLongitudeRange": "Longitudo lazima iwe kati ya -180 na 180",
+    "proposalFieldErrorEnterDemurrage": "Weka ada ya kuchelewesha",
+    "proposalFieldErrorDemurrageRange": "Ada ya kuchelewesha lazima iwe kati ya 0 na 100",
+    "proposalFieldErrorEnterPositiveNumber": "Weka namba chanya",
+    "proposalFieldErrorPositiveNumberRange": "Lazima iwe namba chanya",
+    "proposalFieldErrorEnterInactivityTimeout": "Weka muda wa kutokufanya kazi",
+    "proposalFieldErrorPositiveIntegerRange": "Lazima iwe namba kamili chanya",
+    "proposalOnlyBootstrappersOrReputablesCanSubmit": "Ni bootstrappers au waheshimika pekee wanaoweza kuwasilisha pendekezo.",
+    "proposalCannotSubmitProposalTypePendingEnactment": "Haiwezi kuwasilisha pendekezo la aina hii kwa sababu tayari kuna moja linalosubiri kutekelezwa.",
+    "proposalClose": "Funga",
+    "proposalUpdateState": "Sasisha",
+    "proposalUpdateExplanation": "Hii itasasisha hali ya pendekezo. Ikiwa ni la zamani sana na halina kura za kutosha za 'Ndio', litakataliwa. Ikiwa limekuwa likithibitishwa kwa muda wa kutosha, litakubaliwa.",
+    "proposalSubmit": "Wasilisha Pendekezo",
     "proposalSuperseded": "Iliyopita",
     "proposalRejected": "Imekaataliwa",
     "proposalCancelled": "Imwesitishwa",
@@ -217,6 +290,8 @@
     "proposalOngoingUntil": "Inaendelea hadi",
     "proposalConfirmingUntil": "Inadhibitisha hadi",
     "proposalPendingEnactmentAt": "Inasubiri utekeleazaji kwenye",
+    "proposalFailedAndNeedsBump": "Pendekezo limekataliwa na linaweza kufungwa.",
+    "proposalPassedAndNeedsBump": "Pendekezo limepitishwa na linaweza kufungwa.",
     "qrScan": "Skani QR",
     "qrScanHintAccount": "Muombe mpokeaji askani QR kwenye app ya Encointer.",
     "rawSeed": "Mbegu za kriptografia",
@@ -284,6 +359,33 @@
     "transferHistory": "Miamala",
     "transferHistoryEnd": "Kupakia miamala ya zamani haijasapotiwa bado",
     "transferHistoryTop": "Inaweza kuchukua hadi sekunde 30 kwa ajili ya uhamishaji kuonekana hapa",
+    "treasuryGlobalBalance": "Salio huru la hazina ya kimataifa: {balance} KSM.",
+    "@treasuryGlobalBalance": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
+    "treasuryLocalBalance": "Salio huru la hazina ya jamii: {balance} KSM.",
+    "@treasuryLocalBalance": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
+    "treasuryPendingSpends": "Matumizi yanayosubiri: {spends} KSM.",
+    "@treasuryPendingSpends": {
+        "placeholders": {
+            "spends": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
     "txBroadcast": "Muamala umetumwa.",
     "txError": "Kuna hitilafu kwenye muamala",
     "txInBlock": "Muamala uko kwenye block.",
@@ -547,6 +649,33 @@
             }
         }
     },
+    "proposalSetInactivityTimeoutTo": "Kimataifa: Weka muda mpya wa kutokufanya kazi kuwa {value}",
+    "@proposalSetInactivityTimeoutTo": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalAddLocation": "{cid}: Ongeza eneo jipya",
+    "@proposalAddLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
+    "proposalRemoveLocation": "{cid}: Ondoa eneo",
+    "@proposalRemoveLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
     "proposalUpdateDemurrage": "Sasisha demurrage kuwa {value}%/mwezi",
     "@proposalUpdateDemurrage": {
         "placeholders": {
@@ -583,6 +712,27 @@
             "beneficiary": {
                 "type": "String",
                 "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
+            }
+        }
+    },
+    "proposalIssueSwapNativeOption": "{cid}: Mruhusu {beneficiary} kubadilisha hadi {allowance} KSM kwa kiwango cha {rate} {cid}/KSM.",
+    "@proposalIssueSwapNativeOption": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "beneficiary": {
+                "type": "String",
+                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
+            },
+            "allowance": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "rate": {
+                "type": "String",
+                "example": "1.2"
             }
         }
     },

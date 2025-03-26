@@ -10,11 +10,11 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) => EncointerS
       json['network'] as String,
     )
       ..currentPhase = $enumDecode(_$CeremonyPhaseEnumMap, json['currentPhase'])
-      ..nextPhaseTimestamp = json['nextPhaseTimestamp'] as int?
+      ..nextPhaseTimestamp = (json['nextPhaseTimestamp'] as num?)?.toInt()
       ..phaseDurations = (json['phaseDurations'] as Map<String, dynamic>).map(
-        (k, e) => MapEntry($enumDecode(_$CeremonyPhaseEnumMap, k), e as int),
+        (k, e) => MapEntry($enumDecode(_$CeremonyPhaseEnumMap, k), (e as num).toInt()),
       )
-      ..currentCeremonyIndex = json['currentCeremonyIndex'] as int?
+      ..currentCeremonyIndex = (json['currentCeremonyIndex'] as num?)?.toInt()
       ..communityIdentifiers = (json['communityIdentifiers'] as List<dynamic>)
           .map((e) => CommunityIdentifier.fromJson(e as Map<String, dynamic>))
           .toList()
@@ -124,6 +124,12 @@ mixin _$EncointerStore on _EncointerStore, Store {
   @override
   SvgPicture get communityIconOrDefault => (_$communityIconOrDefaultComputed ??=
           Computed<SvgPicture>(() => super.communityIconOrDefault, name: '_EncointerStore.communityIconOrDefault'))
+      .value;
+  Computed<int?>? _$proposalEnactmentDateComputed;
+
+  @override
+  int? get proposalEnactmentDate => (_$proposalEnactmentDateComputed ??=
+          Computed<int?>(() => super.proposalEnactmentDate, name: '_EncointerStore.proposalEnactmentDate'))
       .value;
   Computed<int?>? _$assigningPhaseStartComputed;
 
@@ -455,6 +461,7 @@ account: ${account},
 communityBalanceEntry: ${communityBalanceEntry},
 communityBalance: ${communityBalance},
 communityIconOrDefault: ${communityIconOrDefault},
+proposalEnactmentDate: ${proposalEnactmentDate},
 assigningPhaseStart: ${assigningPhaseStart},
 attestingPhaseStart: ${attestingPhaseStart},
 nextRegisteringPhaseStart: ${nextRegisteringPhaseStart},

@@ -1,0 +1,56 @@
+name: IOS build and commit files
+
+on:
+  push:
+    branches:
+      - ios-update-files
+
+jobs:
+  flutter-build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set xcode version via env file
+        run: cat .github/env >> $GITHUB_ENV
+
+      - name: prepare xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: ${{ env.XCODE_VERSION }}
+
+      - name: Install flutter wrapper
+        run: ./scripts/install_flutter_wrapper.sh
+
+      - name: Get dependencies (i.e., melos)
+        run: .flutter/bin/dart pub get
+
+      - name: Melos Bootstrap
+        run: .flutter/bin/dart run melos bootstrap
+
+      - name: Update pod repo
+        # sometimes we need to do a clean up for it to work
+        run: |
+          .flutter/bin/dart run melos flutter-clean
+          rm app/ios/podfile.lock
+          .flutter/bin/dart run melos pub-get
+          .flutter/bin/dart run melos precache-ios
+          cd app/ios
+          pod install
+
+      # Build the Flutter app
+      - name: Build Flutter app
+        run: .flutter/bin/dart run melos build-ipa-debug
+
+      # Check for changes and commit
+      - name: Commit changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add app/ios
+          git commit -m "Update ios project files [skip ci]" || echo "No changes to commit."
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

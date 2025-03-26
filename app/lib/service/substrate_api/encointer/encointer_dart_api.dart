@@ -78,6 +78,15 @@ class EncointerDartApi {
     return _dartApi.rpc<List<dynamic>>('author_pendingExtrinsics', <dynamic>[]).then(List.from);
   }
 
+  Future<String> getTreasuryAccount(CommunityIdentifier? cid, {BlockHash? at}) async {
+    final params = <Object?>[cid?.toJson()];
+
+    if (at != null) params.add('0x${hex.encode(at)}');
+
+    final account = await _dartApi.rpc<String>('encointer_getCommunityTreasuryAccountUnchecked', params);
+    return account;
+  }
+
   Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid, {BlockHash? at}) async {
     final params = <Object>[cid.toJson()];
 

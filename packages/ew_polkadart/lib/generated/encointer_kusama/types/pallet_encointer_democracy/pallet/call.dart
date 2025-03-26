@@ -118,7 +118,7 @@ class SubmitProposal extends Call {
     return SubmitProposal(proposalAction: _i3.ProposalAction.codec.decode(input));
   }
 
-  /// ProposalAction<T::AccountId, BalanceOf<T>>
+  /// ProposalAction<T::AccountId, BalanceOf<T>, T::Moment>
   final _i3.ProposalAction proposalAction;
 
   @override

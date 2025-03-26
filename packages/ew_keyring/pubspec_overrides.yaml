@@ -1,7 +1,0 @@
-# melos_managed_dependency_overrides: polkadart_scale_codec
-dependency_overrides:
-  polkadart_scale_codec:
-    git:
-      url: https://github.com/encointer/polkadart
-      ref: cl/add-checkmetadata-extension-rebased
-      path: packages/polkadart_scale_codec

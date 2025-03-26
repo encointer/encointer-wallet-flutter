@@ -12,7 +12,7 @@ import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.d
 import 'package:encointer_wallet/service/substrate_api/core/reconnecting_ws_provider.dart';
 import 'package:ew_endpoint_manager/endpoint_manager.dart';
 import 'package:ew_http/ew_http.dart';
-import 'package:ew_polkadart/ew_polkadart.dart';
+import 'package:ew_polkadart/ew_polkadart.dart' show EncointerKusama, WsProvider;
 import 'package:encointer_wallet/service/log/log_service.dart';
 
 /// Global api instance

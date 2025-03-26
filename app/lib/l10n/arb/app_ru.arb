@@ -91,6 +91,10 @@
     "democracyDiscussion": "Обсудите предложения на форуме!",
     "democracyVotedNotificationBody": "Вы проголосовали за это предложение.",
     "democracyVotedNotificationTitle": "проголосовали",
+    "democracySubmitProposalNotificationBody": "Вы внесли предложение, за которое люди могут проголосовать прямо сейчас.",
+    "democracySubmitProposalNotificationTitle": "Предложение отправлено",
+    "democracyUpdatedProposalStateNotificationBody": "Вы обновили это предложение",
+    "democracyUpdatedProposalStateNotificationTitle": "Предложение обновлено",
     "detail": "Детали",
     "detailsEnter": "Введите свои данные",
     "developer": "Режим разработчика",
@@ -135,6 +139,8 @@
     "insufficientBalance": "Недостаточный баланс",
     "insufficientFundsErrorBody": "У вас недостаточно средств на этом аккаунте. Посмотрите на веб-сайте вашего местного сообщества, как их получить.",
     "insufficientFundsErrorTitle": "Недостаточно средств",
+    "invalidTransactionFormatErrorBody": "У транзакции был неверный формат, возможно, это ошибка в приложении. Если ты считаешь, что это баг, просто нажми на соответствующее поле ниже.",
+    "invalidTransactionFormatErrorTitle": "Неверный формат транзакции",
     "invalidCommunity": "Несоотвествующая община",
     "invalidNetwork": "Неправильная сеть",
     "invoice": "Инвойс",
@@ -199,9 +205,75 @@
     "pleaseConfirmYourNewPin": "Подтвердите PIN-код",
     "preview": "Предпросмотр",
     "print": "Распечатать",
-    "proposal": "предложений",
+    "proposal": "Предложение",
     "proposalAye": "Aye",
     "proposalNay": "Nay",
+    "proposalNew": "новое предложение",
+    "proposalExplainerAddLocation": "Это предложение предлагает новое место встречи для вашего сообщества. Убедитесь, что оно находится не менее чем в 100 метрах и не более чем в 1 километре от существующих мест встреч.",
+    "proposalExplainerRemoveLocation": "Это предложение предлагает удалить существующее место встречи для вашего сообщества.",
+    "proposalExplainerUpdateDemurrage": "Это предложение предлагает новый ежемесячный демерредж для токена сообщества.",
+    "proposalExplainerUpdateNominalIncome": "Это предложение предлагает новый номинальный доход в циклах встреч для вашего сообщества.",
+    "proposalExplainerSetInactivityTimeout": "Это предложение предлагает новый глобальный тайм-аут неактивности. Если сообщество не проводит встречи в течение предложенного количества циклов, оно будет удалено.",
+    "proposalExplainerPetition": "Это предложение служит петицией, либо на глобальном уровне, либо в вашем сообществе. Хотя оно не имеет прямого влияния на блокчейн, оно выражает намерение, позволяя сообществу его распознать и отреагировать.",
+    "proposalExplainerSpendNative": "Это предложение предлагает потратить KSM для получателя из казны сообщества, либо через глобальное, либо через голосование внутри сообщества. Эти средства могут быть использованы для вознаграждения вкладов в сообщество или поддержки инициатив сообщества.",
+    "proposalExplainerIssueSwapNativeOption": "Это предложение позволяет получателю многократно обменивать токены сообщества на KSM по установленному курсу, но не превышая заданного лимита KSM. Получателем может быть местный бизнес, который принимает токены сообщества и может накапливать их избыток.\n\nПример с курсом 3 {currency}/KSM и лимитом 2 KSM:\n\nПолучатель может обменять до 2 KSM по курсу 3 {currency}/KSM. Таким образом, максимум составит 6 {currency} => 2 KSM.",    "proposalType": "Тип предложения",
+    "@proposalExplainerIssueSwapNativeOption": {
+        "placeholders": {
+            "currency": {
+                "type": "String",
+                "example": "0.5"
+            }
+        }
+    },
+    "proposalTypeAddLocation": "Добавить местоположение",
+    "proposalTypeRemoveLocation": "Удалить местоположение",
+    "proposalTypeUpdateDemurrage": "Обновить демерредж",
+    "proposalTypeUpdateNominalIncome": "Обновить номинальный доход",
+    "proposalTypeSetInactivityTimeout": "Установить тайм-аут неактивности",
+    "proposalTypePetition": "Петиция",
+    "proposalTypeSpendNative": "Потратить нативные токены",
+    "proposalTypeIssueSwapNativeOption": "Выпустить опцион на обмен нативных токенов",
+    "proposalScope": "Область действия",
+    "proposalScopeLocal": "Локальный",
+    "proposalScopeGlobal": "Глобальный",
+    "proposalFieldLatitude": "Широта",
+    "proposalFieldLongitude": "Долгота",
+    "proposalFieldDemurragePerMonth": "Демерредж (% / месяц)",
+    "proposalFieldNominalIncome": "Номинальный доход",
+    "proposalFieldInactivityTimeoutCycles": "Тайм-аут неактивности (циклы встреч)",
+    "proposalFieldPetitionText": "Текст петиции",
+    "proposalFieldAmount": "Сумма (KSM)",
+    "proposalFieldBeneficiary": "Получатель",
+    "proposalFieldAllowance": "Лимит (KSM)",
+    "proposalFieldRate": "Ставка ({cc}/KSM)",
+    "@proposalFieldRate": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
+    "proposalFieldBurn": "Сжигание",
+    "proposalFieldValidity": "Срок действия",
+    "proposalFieldErrorEnterPetitionText": "Введите текст петиции",
+    "proposalFieldErrorPetitionTextTooLong": "Текст петиции слишком длинный",
+    "proposalFieldErrorEnterLatitude": "Введите широту",
+    "proposalFieldErrorLatitudeRange": "Широта должна быть от -90 до 90",
+    "proposalFieldErrorEnterLongitude": "Введите долготу",
+    "proposalFieldErrorLongitudeRange": "Долгота должна быть от -180 до 180",
+    "proposalFieldErrorEnterDemurrage": "Введите демерредж",
+    "proposalFieldErrorDemurrageRange": "Демерредж должен быть от 0 до 100",
+    "proposalFieldErrorEnterPositiveNumber": "Введите положительное число",
+    "proposalFieldErrorPositiveNumberRange": "Должно быть положительное число",
+    "proposalFieldErrorEnterInactivityTimeout": "Введите тайм-аут неактивности",
+    "proposalFieldErrorPositiveIntegerRange": "Должно быть положительное целое число",
+    "proposalOnlyBootstrappersOrReputablesCanSubmit": "Только бутстраперы или уважаемые участники могут подать предложение.",
+    "proposalCannotSubmitProposalTypePendingEnactment": "Невозможно подать предложение этого типа, так как уже есть одно ожидающее принятия.",
+    "proposalClose": "Закрыть",
+    "proposalUpdateState": "Обновить",
+    "proposalUpdateExplanation": "Это обновит статус предложения. Если оно слишком старое и не имеет достаточного количества голосов 'За', оно будет отклонено. Если оно подтверждается достаточно долго, оно будет принято.",
+    "proposalSubmit": "Подать предложение",
     "proposalRejected": "Отменено",
     "proposalSuperseded": "заменен",
     "proposalEnacted": "выполнено",
@@ -216,6 +288,8 @@
     "proposalOngoingUntil": "Продолжается до",
     "proposalConfirmingUntil": "В подтверждение до",
     "proposalPendingEnactmentAt": "Выполнено на",
+    "proposalFailedAndNeedsBump": "Предложение не прошло и может быть закрыто.",
+    "proposalPassedAndNeedsBump": "Предложение принято и может быть закрыто.",
     "qrScan": "Сканируйте QR-код",
     "qrScanHintAccount": "Попросите получателя отсканировать QR-код в приложении Еncointer",
     "rawSeed": "Raw Seed",
@@ -283,6 +357,33 @@
     "transferHistoryEnd": "Загрузка более старых транзакций пока не поддерживается",
     "transferHistoryTop": "Появление перевода может занять до 30 секунд",
     "transferHistory": "Транзакции",
+    "treasuryGlobalBalance": "Свободный баланс глобального казначейства: {balance} KSM.",
+    "@treasuryGlobalBalance": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
+    "treasuryLocalBalance": "Свободный баланс казначейства сообщества: {balance} KSM.",
+    "@treasuryLocalBalance": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
+    "treasuryPendingSpends": "Ожидающие расходы: {spends} KSM.",
+    "@treasuryPendingSpends": {
+        "placeholders": {
+            "spends": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
     "txBroadcast": "Транзакция передана в эфир",
     "txError": "Ошибка транзакции",
     "txInBlock": "Транзакция заблокирована",
@@ -394,6 +495,33 @@
             }
         }
     },
+    "proposalSetInactivityTimeoutTo": "Глобально: Установить новый тайм-аут неактивности на {value}",
+    "@proposalSetInactivityTimeoutTo": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalAddLocation": "{cid}: Добавить новое местоположение",
+    "@proposalAddLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
+    "proposalRemoveLocation": "{cid}: Удалить местоположение",
+    "@proposalRemoveLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
     "proposalUpdateDemurrage": "Обновить Demurrage до {value}%/месяц",
     "@proposalUpdateDemurrage": {
         "placeholders": {
@@ -430,6 +558,26 @@
             "beneficiary": {
                 "type": "String",
                 "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
+            }
+        }
+    },
+    "proposalIssueSwapNativeOption": "{cid}: Разрешить {beneficiary} обменять до {allowance} KSM по курсу {rate} {cid}/KSM.",    "@proposalIssueSwapNativeOption": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "beneficiary": {
+                "type": "String",
+                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
+            },
+            "allowance": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "rate": {
+                "type": "String",
+                "example": "1.2"
             }
         }
     },

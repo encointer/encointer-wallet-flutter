@@ -74,7 +74,7 @@ class _SubmitButtonStateSmall extends State<SubmitButtonSmall> {
     return ElevatedButton(
       onPressed: (!_submitting && widget.onPressed != null) ? _onPressed : null,
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 14),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
         backgroundColor: context.colorScheme.primary,
         foregroundColor: Colors.white,
         textStyle: context.titleSmall,

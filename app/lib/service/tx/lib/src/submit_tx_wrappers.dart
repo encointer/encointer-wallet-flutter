@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:convert/convert.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -25,8 +28,8 @@ import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/substrate_fixed/fixed_u128.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
 
-import 'package:ew_polkadart/ew_polkadart.dart' show Vote;
-import 'package:ew_polkadart/ew_polkadart.dart' as pd;
+import 'package:ew_polkadart/ew_polkadart.dart' show ProposalAction, Vote;
+import 'package:ew_polkadart/encointer_types.dart' as pd;
 
 /// Helpers to submit transactions.
 
@@ -67,6 +70,9 @@ Future<void> submitClaimRewards(
   KeyringAccount signer,
   CommunityIdentifier chosenCid, {
   required CommunityIdentifier? txPaymentAsset,
+  // todo: #1763
+  // dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   // meetupIndex = null; the chain will figure out the meetup index.
   final call = api.encointer.encointerKusama.tx.encointerCeremonies.claimRewards(cid: chosenCid.toPolkadart());
@@ -82,6 +88,7 @@ Future<void> submitClaimRewards(
     api,
     OpaqueExtrinsic(xt),
     TxNotification.claimRewards(context.l10n),
+    onError: onError,
     onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
       // Claiming the rewards creates a new reputation if successful.
       // Hence, we should update the state afterwards.
@@ -99,6 +106,8 @@ Future<void> submitRemark(
   KeyringAccount signer,
   String remark, {
   required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   final remarkList = remark.codeUnits;
   final call = api.encointer.encointerKusama.tx.system.remarkWithEvent(remark: remarkList);
@@ -114,6 +123,8 @@ Future<void> submitRemark(
     api,
     OpaqueExtrinsic(xt),
     TxNotification.remark(context.l10n),
+    onFinish: onFinish,
+    onError: onError,
   );
 }
 
@@ -125,6 +136,9 @@ Future<void> submitEndorseNewcomer(
   CommunityIdentifier chosenCid,
   Address newbie, {
   required CommunityIdentifier? txPaymentAsset,
+  // todo: #1763
+  // dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   final call = api.encointer.encointerKusama.tx.encointerCeremonies.endorseNewcomer(
     cid: chosenCid.toPolkadart(),
@@ -142,6 +156,7 @@ Future<void> submitEndorseNewcomer(
     api,
     OpaqueExtrinsic(xt),
     TxNotification.endorseNewcomer(context.l10n),
+    onError: onError,
     onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
       store.encointer.account!.getNumberOfNewbieTicketsForReputable(at: report.blockHashBytes);
       store.encointer.communityAccount!.getNumberOfNewbieTicketsForBootstrapper(at: report.blockHashBytes);
@@ -157,6 +172,9 @@ Future<void> submitUnRegisterParticipant(
   CommunityIdentifier chosenCid, {
   required ProofOfAttendance? lastProofOfAttendance,
   required CommunityIdentifier? txPaymentAsset,
+  // todo: #1763
+  // dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   final maybeReputationCommunityCeremony = (lastProofOfAttendance != null)
       ? Tuple2(
@@ -182,6 +200,7 @@ Future<void> submitUnRegisterParticipant(
     webApi,
     OpaqueExtrinsic(xt),
     TxNotification.unregisterParticipant(context.l10n),
+    onError: onError,
     onFinish: (BuildContext txPageContext, ExtrinsicReport report) async {
       await Future.wait([
         webApi.encointer.getReputations(),
@@ -205,6 +224,9 @@ Future<void> submitRegisterParticipant(
   KeyringAccount signer,
   CommunityIdentifier chosenCid, {
   required CommunityIdentifier? txPaymentAsset,
+  // todo: #1763
+  // dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   final proof = api.encointer.getProofOfAttendance();
 
@@ -225,6 +247,7 @@ Future<void> submitRegisterParticipant(
     api,
     OpaqueExtrinsic(xt),
     TxNotification.registerParticipant(context.l10n),
+    onError: onError,
     onFinish: (BuildContext txPageContext, ExtrinsicReport report) async {
       store.encointer.account!.lastProofOfAttendance = (proof != null) ? ProofOfAttendance.fromPolkadart(proof) : null;
       final data = await webApi.encointer
@@ -260,6 +283,9 @@ Future<void> submitAttestAttendees(
   KeyringAccount signer,
   CommunityIdentifier chosenCid, {
   required CommunityIdentifier? txPaymentAsset,
+  // todo: #1763
+  // dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   final attestations =
       store.encointer.communityAccount!.attendees!.map((address) => Address.decode(address).pubkey).toList();
@@ -286,6 +312,7 @@ Future<void> submitAttestAttendees(
       store.encointer.communityAccount!.setMeetupCompleted();
       Navigator.popUntil(txPageContext, (route) => route.isFirst);
     },
+    onError: onError,
   );
 }
 
@@ -298,6 +325,8 @@ Future<void> submitFaucetDrip(
   CommunityIdentifier cid,
   int cIndex, {
   required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   final call = api.encointer.encointerKusama.tx.encointerFaucet.drip(
     faucetAccount: AddressUtils.pubKeyHexToPubKey(faucetPubKey).toList(),
@@ -317,6 +346,8 @@ Future<void> submitFaucetDrip(
     api,
     OpaqueExtrinsic(xt),
     TxNotification.faucetDrip(context.l10n),
+    onFinish: onFinish,
+    onError: onError,
   );
 }
 
@@ -335,7 +366,7 @@ Future<void> submitEncointerTransfer(
   final call = api.encointer.encointerKusama.tx.encointerBalances.transfer(
     dest: recipientAddress.pubkey,
     communityId: cid.toPolkadart(),
-    amount: FixedU128(bits: u64F64Util.toFixed(amount)),
+    amount: FixedU128(bits: i64F64Util.toFixed(amount)),
   );
   final xt = await TxBuilder(api.provider).createSignedExtrinsic(
     signer.pair,
@@ -365,12 +396,12 @@ Future<dynamic> submitNextPhaseWithAlice(BuildContext context, AppStore store, A
   // This is valid for the encointer-node dev chain config.
   // We currently don't have access to the dev nodes metadata
   // so we hardcode the call.
-  const sudoNextPhaseCall = '0x05003c00';
+  const sudoNextPhaseCall = '05003c00';
   final alice = await KeyringAccount.fromUri('Alice', '//Alice');
 
   final xt = await TxBuilder(api.provider).createSignedExtrinsicWithEncodedCall(
     alice.pair,
-    sudoNextPhaseCall,
+    Uint8List.fromList(hex.decode(sudoNextPhaseCall)),
   );
 
   try {
@@ -431,6 +462,8 @@ Future<void> submitDemocracyVote(
   Vote vote,
   Reputations reputations, {
   required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   final call = api.encointer.encointerKusama.tx.encointerDemocracy.vote(
     proposalId: proposalId,
@@ -450,6 +483,68 @@ Future<void> submitDemocracyVote(
     api,
     OpaqueExtrinsic(xt),
     TxNotification.democracyVote(context.l10n),
+    onFinish: onFinish,
+    onError: onError,
+  );
+}
+
+Future<void> submitDemocracyUpdateProposalState(
+  BuildContext context,
+  AppStore store,
+  Api api,
+  KeyringAccount signer,
+  BigInt proposalId, {
+  required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
+}) async {
+  final call = api.encointer.encointerKusama.tx.encointerDemocracy.updateProposalState(
+    proposalId: proposalId,
+  );
+
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
+  );
+
+  return submitTx(
+    context,
+    store,
+    api,
+    OpaqueExtrinsic(xt),
+    TxNotification.democracyUpdateProposalState(context.l10n),
+    onFinish: onFinish,
+    onError: onError,
+  );
+}
+
+Future<void> submitDemocracyProposal(
+  BuildContext context,
+  AppStore store,
+  Api api,
+  KeyringAccount signer,
+  ProposalAction proposalAction, {
+  required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
+}) async {
+  final call = api.encointer.encointerKusama.tx.encointerDemocracy.submitProposal(proposalAction: proposalAction);
+
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
+  );
+
+  return submitTx(
+    context,
+    store,
+    api,
+    OpaqueExtrinsic(xt),
+    TxNotification.democracySubmitProposal(context.l10n),
+    onFinish: onFinish,
+    onError: onError,
   );
 }
 

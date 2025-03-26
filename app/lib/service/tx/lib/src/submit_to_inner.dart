@@ -19,6 +19,10 @@ import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatc
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
+/// Invalid transaction can be many things, but the most common are:
+/// * Wrong Signed Extension
+/// * BoundedVec out of bounds
+const invalidTransactionFormat = '1002';
 const insufficientFundsError = '1010';
 const lowPriorityTx = '1014';
 
@@ -48,10 +52,9 @@ Future<void> submitTxInner(
       );
 
       if (report.isExtrinsicFailed) {
+        Log.e('[TX] Extrinsic Failed: ${report.dispatchError!.toJson()}');
         _onTxError(store);
         onError?.call(report.dispatchError!);
-        final message = getLocalizedTxErrorMessage(l10n, report.dispatchError!);
-        _showErrorDialog(context, message);
       } else {
         _onTxFinish(context, store, report, onTxFinishFn);
       }
@@ -61,10 +64,17 @@ Future<void> submitTxInner(
       var msg = ErrorNotificationMsg(title: l10n.transactionError, body: e.toString());
       if (e.toString().contains(lowPriorityTx)) {
         msg = ErrorNotificationMsg(title: l10n.txTooLowPriorityErrorTitle, body: l10n.txTooLowPriorityErrorBody);
+        showTxErrorDialog(context, msg, false);
       } else if (e.toString().contains(insufficientFundsError)) {
         msg = ErrorNotificationMsg(title: l10n.insufficientFundsErrorTitle, body: l10n.insufficientFundsErrorBody);
+        showTxErrorDialog(context, msg, false);
+      } else if (e.toString().contains(invalidTransactionFormat)) {
+        msg = ErrorNotificationMsg(
+            title: l10n.invalidTransactionFormatErrorTitle, body: l10n.invalidTransactionFormatErrorBody);
+        showTxErrorDialog(context, msg, true);
+      } else {
+        showTxErrorDialog(context, msg, false);
       }
-      _showErrorDialog(context, msg);
     }
   } else {
     _showTxStatusSnackBar(l10n.txQueuedOffline, null);
@@ -82,7 +92,7 @@ void _onTxError(AppStore store) {
   store.assets.setSubmitting(false);
 }
 
-void _showErrorDialog(BuildContext context, ErrorNotificationMsg message) {
+void showTxErrorDialog(BuildContext context, ErrorNotificationMsg message, bool showBugReportButton) {
   final l10n = context.l10n;
   final languageCode = Localizations.localeOf(context).languageCode;
 
@@ -99,6 +109,15 @@ void _showErrorDialog(BuildContext context, ErrorNotificationMsg message) {
           AppLaunch.launchURL(ceremonyInfoLink(languageCode, cid));
         },
       ),
+      if (showBugReportButton)
+        CupertinoButton(
+          child: const Text('Bug Report'),
+          onPressed: () => AppLaunch.sendEmail(
+            bugReportMail,
+            snackBarText: context.l10n.checkEmailApp,
+            context: context,
+          ),
+        ),
       CupertinoButton(
         child: Text(l10n.ok),
         onPressed: () => Navigator.of(context).pop(),

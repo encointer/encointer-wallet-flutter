@@ -789,7 +789,7 @@ class Constants {
     specName: 'encointer-node-notee',
     implName: 'encointer-node-notee',
     authoringVersion: 0,
-    specVersion: 361,
+    specVersion: 370,
     implVersion: 0,
     apis: [
       _i9.Tuple2<List<int>, int>(

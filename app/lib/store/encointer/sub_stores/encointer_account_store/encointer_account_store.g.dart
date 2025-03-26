@@ -15,7 +15,7 @@ EncointerAccountStore _$EncointerAccountStoreFromJson(Map<String, dynamic> json)
       ))
       ..txsTransfer = ObservableList<TransferData>.of(
           (json['txsTransfer'] as List).map((e) => TransferData.fromJson(e as Map<String, dynamic>)))
-      ..numberOfNewbieTicketsForReputable = json['numberOfNewbieTicketsForReputable'] as int
+      ..numberOfNewbieTicketsForReputable = (json['numberOfNewbieTicketsForReputable'] as num).toInt()
       ..lastProofOfAttendance = json['lastProofOfAttendance'] == null
           ? null
           : ProofOfAttendance.fromJson(json['lastProofOfAttendance'] as Map<String, dynamic>);

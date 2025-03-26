@@ -13,7 +13,7 @@ class BalanceEntry {
   BalanceEntry(this.principal, this.lastUpdate);
 
   factory BalanceEntry.fromPolkadart(et.BalanceEntry entry) {
-    return BalanceEntry(u64F64Util.toDouble(entry.principal.bits), entry.lastUpdate);
+    return BalanceEntry(i64F64Util.toDouble(entry.principal.bits), entry.lastUpdate);
   }
 
   factory BalanceEntry.fromJson(Map<String, dynamic> json) => _$BalanceEntryFromJson(json);

@@ -527,7 +527,21 @@ abstract class _EncointerStore with Store {
     }
   }
 
-  // ----- Computed values for ceremony box
+  // ----- Computed values for the ceremony cycle
+
+  /// The proposal enactment date is the next assigning phase.
+  ///
+  /// But the `assigningPhaseStart` returns the start of the current's cycle
+  /// assigning phase, which is in the past if we aren't in the registering phase.
+  @computed
+  int? get proposalEnactmentDate {
+    if (nextPhaseTimestamp == null || phaseDurations.isEmpty) return null;
+
+    return switch (currentPhase) {
+      CeremonyPhase.Registering => assigningPhaseStart,
+      CeremonyPhase.Assigning || CeremonyPhase.Attesting => assigningPhaseStart! + ceremonyCycleDuration!,
+    };
+  }
 
   @computed
   int? get assigningPhaseStart {
@@ -560,7 +574,9 @@ abstract class _EncointerStore with Store {
   int? get ceremonyCycleDuration {
     if (phaseDurations[CeremonyPhase.Registering] == null ||
         phaseDurations[CeremonyPhase.Assigning] == null ||
-        phaseDurations[CeremonyPhase.Attesting] == null) return null;
+        phaseDurations[CeremonyPhase.Attesting] == null) {
+      return null;
+    }
 
     return phaseDurations[CeremonyPhase.Registering]! +
         phaseDurations[CeremonyPhase.Assigning]! +

@@ -2,6 +2,8 @@ import 'package:encointer_wallet/common/components/submit_button_cupertino.dart'
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
+import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
+import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -106,14 +108,12 @@ class _VoteButtonState extends State<VoteButton> {
                 SubmitButtonCupertino(
                   onPressed: (BuildContext context) async {
                     await _submitDemocracyVote(store, Vote.aye, reputations);
-                    Navigator.of(context).pop();
                   },
                   child: Text(l10n.proposalAye, style: const TextStyle(color: Colors.green)),
                 ),
                 SubmitButtonCupertino(
                   onPressed: (BuildContext context) async {
                     await _submitDemocracyVote(store, Vote.nay, reputations);
-                    Navigator.of(context).pop();
                   },
                   child: Text(l10n.proposalNay, style: const TextStyle(color: Colors.red)),
                 ),
@@ -139,6 +139,11 @@ class _VoteButtonState extends State<VoteButton> {
       vote,
       reputations,
       txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+      onFinish: (_, __) => Navigator.of(context).pop(),
+      onError: (dispatchError) {
+        final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
+        showTxErrorDialog(context, message, false);
+      },
     );
 
     future = _getUncommittedReputationIds(context);

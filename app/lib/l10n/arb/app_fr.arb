@@ -91,6 +91,10 @@
     "democracyDiscussion": "Discute de suggestions dans le forum!",
     "democracyVotedNotificationBody": "Tu as voté pour cette proposition.",
     "democracyVotedNotificationTitle": "Voté",
+    "democracyUpdatedProposalStateNotificationBody": "Vous avez mis à jour cette proposition",
+    "democracyUpdatedProposalStateNotificationTitle": "Proposition mise à jour",
+    "democracySubmitProposalNotificationBody": "Vous avez fait une proposition, sur laquelle les gens peuvent voter maintenant.",
+    "democracySubmitProposalNotificationTitle": "Proposition soumise",
     "detail": "Détail",
     "detailsEnter": "Entre tes détails.",
     "developer": "Mode développeur",
@@ -135,6 +139,8 @@
     "insufficientBalance": "Solde insuffisant",
     "insufficientFundsErrorBody": "Tu n'as pas assez d'argent sur ce compte. Regarde sur le site web de ta communauté locale pour savoir comment en obtenir.",
     "insufficientFundsErrorTitle": "Trop peu de crédit",
+    "invalidTransactionFormatErrorBody": "La transaction avait un format invalide, ce qui pourrait être un bug dans l'application. Si tu penses que c'est un bug, clique sur le champ correspondant ci-dessous.",
+    "invalidTransactionFormatErrorTitle": "Format de transaction invalide",
     "invalidCommunity": "Communauté non valide.",
     "invalidNetwork": "Réseau non valide",
     "invoice": "Montant de la facture",
@@ -202,6 +208,73 @@
     "proposal": "Proposition",
     "proposalAye": "Aye",
     "proposalNay": "Nay",
+    "proposalNew": "Nouvelle Proposition",
+    "proposalExplainerAddLocation": "Cette proposition suggère un nouveau lieu de rencontre pour votre communauté. Assurez-vous qu'il soit situé à au moins 100 mètres et à pas plus de 1 kilomètre des lieux de rencontre existants.",
+    "proposalExplainerRemoveLocation": "Cette proposition suggère de supprimer un lieu de rencontre existant pour votre communauté.",
+    "proposalExplainerUpdateDemurrage": "Cette proposition suggère un nouveau taux de démurrage mensuel pour le jeton de votre communauté.",
+    "proposalExplainerUpdateNominalIncome": "Cette proposition suggère un nouveau revenu nominal dans les cycles de rencontre pour votre communauté.",
+    "proposalExplainerSetInactivityTimeout": "Cette proposition suggère un nouveau délai global d'inactivité. Si une communauté n'organise pas de rencontres pendant le nombre de cycles suggéré, elle sera supprimée.",
+    "proposalExplainerPetition": "Cette proposition sert de pétition, soit au niveau global, soit au sein de votre communauté. Bien qu'elle n'ait pas d'effet direct sur la blockchain, elle signale une intention permettant à la communauté de la reconnaître et d'y répondre.",
+    "proposalExplainerSpendNative": "Cette proposition suggère de dépenser des KSM pour un bénéficiaire provenant du trésor de la communauté, soit par un vote global, soit par un vote de la communauté. Ces fonds peuvent récompenser les contributions à la communauté ou soutenir des initiatives communautaires.",
+    "proposalExplainerIssueSwapNativeOption": "Cette proposition permet au bénéficiaire d'échanger plusieurs fois des tokens communautaires contre des KSM à un taux défini, jusqu'à une limite de KSM fixée. Le bénéficiaire peut être une entreprise locale qui accepte les tokens communautaires et peut accumuler un surplus.\n\nExemple avec un taux de 3 {currency}/KSM et une limite de 2 KSM :\n\nLe bénéficiaire peut échanger jusqu'à 2 KSM à un taux de 3 {currency}/KSM. Ainsi, le maximum est de 6 {currency} => 2 KSM.",
+    "@proposalExplainerIssueSwapNativeOption": {
+        "placeholders": {
+            "currency": {
+                "type": "String",
+                "example": "0.5"
+            }
+        }
+    },
+    "proposalType": "Type de proposition",
+    "proposalTypeAddLocation": "Ajouter un lieu",
+    "proposalTypeRemoveLocation": "Retrancher un lieu",
+    "proposalTypeUpdateDemurrage": "Mettre à jour la démurrage",
+    "proposalTypeUpdateNominalIncome": "Mettre à jour le revenu nominal",
+    "proposalTypeSetInactivityTimeout": "Définir le délai d'inactivité",
+    "proposalTypePetition": "Pétition",
+    "proposalTypeSpendNative": "Dépenser des tokens natifs",
+    "proposalTypeIssueSwapNativeOption": "Émettre une option d'échange de tokens natifs",
+    "proposalScope": "Portée",
+    "proposalScopeLocal": "Local",
+    "proposalScopeGlobal": "Global",
+    "proposalFieldLatitude": "Latitude",
+    "proposalFieldLongitude": "Longitude",
+    "proposalFieldDemurragePerMonth": "Démurrage (% / mois)",
+    "proposalFieldNominalIncome": "Revenu nominal",
+    "proposalFieldInactivityTimeoutCycles": "Délai d'inactivité (cycles de rencontre)",
+    "proposalFieldPetitionText": "Texte de la pétition",
+    "proposalFieldAmount": "Montant (KSM)",
+    "proposalFieldBeneficiary": "Bénéficiaire",
+    "proposalFieldAllowance": "Limite (KSM)",
+    "proposalFieldRate": "Taux ({cc}/KSM)",
+    "@proposalFieldRate": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
+    "proposalFieldBurn": "Brûler",
+    "proposalFieldValidity": "Validité",
+    "proposalFieldErrorEnterPetitionText": "Entrez le texte de la pétition",
+    "proposalFieldErrorPetitionTextTooLong": "Le texte de la pétition est trop long",
+    "proposalFieldErrorEnterLatitude": "Entrez la latitude",
+    "proposalFieldErrorLatitudeRange": "La latitude doit être comprise entre -90 et 90",
+    "proposalFieldErrorEnterLongitude": "Entrez la longitude",
+    "proposalFieldErrorLongitudeRange": "La longitude doit être comprise entre -180 et 180",
+    "proposalFieldErrorEnterDemurrage": "Entrez la démurrage",
+    "proposalFieldErrorDemurrageRange": "La démurrage doit être comprise entre 0 et 100",
+    "proposalFieldErrorEnterPositiveNumber": "Entrez un nombre positif",
+    "proposalFieldErrorPositiveNumberRange": "Doit être un nombre positif",
+    "proposalFieldErrorEnterInactivityTimeout": "Entrez le délai d'inactivité",
+    "proposalFieldErrorPositiveIntegerRange": "Doit être un entier positif",
+    "proposalOnlyBootstrappersOrReputablesCanSubmit": "Seuls les bootstrappers ou les Reputables peuvent soumettre une proposition.",
+    "proposalCannotSubmitProposalTypePendingEnactment": "Impossible de soumettre une proposition de ce type, car une autre est déjà en attente d'adoption.",
+    "proposalClose": "Fermer",
+    "proposalUpdateState": "Mettre à jour",
+    "proposalUpdateExplanation": "Cela mettra à jour l'état de la proposition. Si elle est trop ancienne et n'a pas suffisamment de votes Aye, elle sera rejetée. Si elle a été confirmée assez longtemps, elle sera acceptée.",
+    "proposalSubmit": "Soumettre une proposition",
     "proposalSuperseded": "Epargné",
     "proposalRejected": "Refusé",
     "proposalEnacted": "Exécuté",
@@ -216,6 +289,8 @@
     "proposalOngoingUntil": "En cours jusqu'à",
     "proposalConfirmingUntil": "En confirmation jusqu'à",
     "proposalPendingEnactmentAt": "Sera exécutée le",
+    "proposalFailedAndNeedsBump": "La proposition a échoué et peut être fermée.",
+    "proposalPassedAndNeedsBump": "La proposition a été adoptée et peut être fermée.",
     "qrScan": "Scannez le code QR",
     "qrScanHintAccount": "Demande au destinataire de scanner le code QR dans l'application Encointer.",
     "rawSeed": "Raw Seed",
@@ -283,6 +358,33 @@
     "transferHistory": "Transferts",
     "transferHistoryEnd": "Le chargement des transactions plus anciennes n'est pas encore pris en charge",
     "transferHistoryTop": "Le transfert peut prendre jusqu'à 30 secondes avant d'apparaître ici",
+    "treasuryGlobalBalance": "Solde libre du trésor global : {balance} KSM.",
+    "@treasuryGlobalBalance": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
+    "treasuryLocalBalance": "Solde libre du trésor communautaire : {balance} KSM.",
+    "@treasuryLocalBalance": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
+    "treasuryPendingSpends": "Dépenses en attente : {spends} KSM.",
+    "@treasuryPendingSpends": {
+        "placeholders": {
+            "spends": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
     "txBroadcast": "La transaction a été envoyée sur le réseau",
     "txError": "Erreur de transaction",
     "txInBlock": "Transaction est dans un bloc",
@@ -394,6 +496,33 @@
             }
         }
     },
+    "proposalSetInactivityTimeoutTo": "Global : Définir le nouveau délai d'inactivité sur {value}",
+    "@proposalSetInactivityTimeoutTo": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalAddLocation": "{cid} : Ajouter un nouvel emplacement",
+    "@proposalAddLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
+    "proposalRemoveLocation": "{cid} : Supprimer un emplacement",
+    "@proposalRemoveLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
     "proposalUpdateDemurrage": "Ajuster demurrage à {value}%/mois",
     "@proposalUpdateDemurrage": {
         "placeholders": {
@@ -430,6 +559,27 @@
             "beneficiary": {
                 "type": "String",
                 "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
+            }
+        }
+    },
+    "proposalIssueSwapNativeOption": "{cid} : Permet à {beneficiary} d'échanger jusqu'à {allowance} KSM à un taux de {rate} {cid}/KSM.",
+    "@proposalIssueSwapNativeOption": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "beneficiary": {
+                "type": "String",
+                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
+            },
+            "allowance": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "rate": {
+                "type": "String",
+                "example": "1.2"
             }
         }
     },
