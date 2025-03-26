@@ -6,6 +6,7 @@ import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
+import 'package:encointer_wallet/page-encointer/democracy/proposal_page/utf8_limited_byte_field.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
@@ -410,12 +411,10 @@ class _ProposePageState extends State<ProposePage> {
   Widget petitionInput(BuildContext context) {
     final l10n = context.l10n;
 
-    return TextFormField(
+    return Utf8LimitedTextField(
       controller: petitionTextController,
-      decoration: InputDecoration(
-        labelText: l10n.proposalFieldPetitionText,
-        errorText: petitionError,
-      ),
+      labelText: l10n.proposalFieldPetitionText,
+      errorText: petitionError,
       validator: validatePetitionText,
       onChanged: (value) {
         setState(() {
@@ -425,6 +424,7 @@ class _ProposePageState extends State<ProposePage> {
       keyboardType: TextInputType.multiline,
       minLines: 5,
       maxLines: 10,
+      maxBytes: 256,
     );
   }
 
