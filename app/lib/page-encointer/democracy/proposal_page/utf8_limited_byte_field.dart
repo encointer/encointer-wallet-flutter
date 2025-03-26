@@ -56,8 +56,8 @@ class Utf8LimitedTextFieldState extends State<Utf8LimitedTextField> {
       validator: widget.validator,
       inputFormatters: [Utf8ByteLimitFormatter(widget.maxBytes)],
       onChanged: (value) {
-        widget.onChanged?.call(value);
         _updateByteCount();
+        widget.onChanged?.call(value);
       },
       keyboardType: TextInputType.multiline,
       minLines: widget.minLines,
