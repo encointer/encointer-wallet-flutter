@@ -259,7 +259,6 @@ class _ProposePageState extends State<ProposePage> {
                                   ? (context) async {
                                       _formKey.currentState!.validate();
                                       await _submitProposal();
-                                      Navigator.of(context).pop();
                                     }
                                   : null,
                               // disable button for non-bootstrappers/reputables
@@ -700,8 +699,9 @@ class _ProposePageState extends State<ProposePage> {
         txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
         onError: (dispatchError) {
           final message = getLocalizedTxErrorMessage(l10n, dispatchError);
-          showTxErrorDialog(context, message);
-        },
+          showTxErrorDialog(context, message, false);
+      },
+        onFinish: (_, __) => Navigator.of(context).pop()
       );
     }
   }

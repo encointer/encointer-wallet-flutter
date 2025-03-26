@@ -139,6 +139,8 @@
     "insufficientBalance": "Insufficient balance",
     "insufficientFundsErrorBody": "You do not have sufficient funds on this account. See on the website of your local community how to get some.",
     "insufficientFundsErrorTitle": "Insufficient Funds",
+    "invalidTransactionFormatErrorBody": "The transaction had an invalid format, which might be a bug. If you think this is a bug, please tap the corresponding field below.",
+    "invalidTransactionFormatErrorTitle": "Invalid Transaction Format",
     "invalidCommunity": "Invalid Community",
     "invalidNetwork": "Invalid Network",
     "invoice": "Invoice",

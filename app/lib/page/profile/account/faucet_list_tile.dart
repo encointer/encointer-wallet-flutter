@@ -148,7 +148,7 @@ class _FaucetListTileState extends State<FaucetListTile> {
       txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
       onError: (dispatchError) {
         final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
-        showTxErrorDialog(context, message);
+        showTxErrorDialog(context, message, false);
       },
     );
   }

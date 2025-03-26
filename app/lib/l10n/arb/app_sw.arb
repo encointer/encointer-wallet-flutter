@@ -139,6 +139,8 @@
     "insufficientBalance": "Kiasi hakitoshi",
     "insufficientFundsErrorBody": "Hauna mali za kutosha kwenye akaunti hii. Angalia kwenye tovuti ya jamii yako kuweza kupata kadhaa.",
     "insufficientFundsErrorTitle": "Mali hazitoshi",
+    "invalidTransactionFormatErrorBody": "Transaction ilikuwa na muundo usio sahihi, ambayo inaweza kuwa hitilafu katika programu. Ikiwa unadhani hii ni hitilafu, tafadhali bonyeza uwanja unaofaa chini.",
+    "invalidTransactionFormatErrorTitle": "Muundo wa Transaction Usio Sahihi",
     "invalidCommunity": "sio jamii sahihi",
     "invalidNetwork": "Mtandao sio sahihi",
     "invoice": "Ankara",

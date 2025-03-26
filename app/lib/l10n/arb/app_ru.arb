@@ -139,6 +139,8 @@
     "insufficientBalance": "Недостаточный баланс",
     "insufficientFundsErrorBody": "У вас недостаточно средств на этом аккаунте. Посмотрите на веб-сайте вашего местного сообщества, как их получить.",
     "insufficientFundsErrorTitle": "Недостаточно средств",
+    "invalidTransactionFormatErrorBody": "У транзакции был неверный формат, возможно, это ошибка в приложении. Если ты считаешь, что это баг, просто нажми на соответствующее поле ниже.",
+    "invalidTransactionFormatErrorTitle": "Неверный формат транзакции",
     "invalidCommunity": "Несоотвествующая община",
     "invalidNetwork": "Неправильная сеть",
     "invoice": "Инвойс",

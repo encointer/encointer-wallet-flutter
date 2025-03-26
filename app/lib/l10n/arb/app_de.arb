@@ -139,6 +139,8 @@
     "insufficientBalance": "Ungenügender Saldo",
     "insufficientFundsErrorBody": "Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite deiner lokalen Gemeinschaft, wie du welches bekommen kannst.",
     "insufficientFundsErrorTitle": "Zu wenig Guthaben",
+    "invalidTransactionFormatErrorBody": "Die Transaktion hatte ein ungültiges Format, was ein Fehler in der Anwendung sein könnte. Wenn du denkst, dass es sich um einen Bug handelt, tippe einfach auf das entsprechende Feld unten.",
+    "invalidTransactionFormatErrorTitle": "Ungültiges Transaktionsformat",
     "invalidCommunity": "Ungültige Gemeinschaft",
     "invalidNetwork": "Ungültiges Netzwerk",
     "invoice": "Rechnungsbetrag",

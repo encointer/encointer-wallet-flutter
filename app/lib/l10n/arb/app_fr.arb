@@ -139,6 +139,8 @@
     "insufficientBalance": "Solde insuffisant",
     "insufficientFundsErrorBody": "Tu n'as pas assez d'argent sur ce compte. Regarde sur le site web de ta communauté locale pour savoir comment en obtenir.",
     "insufficientFundsErrorTitle": "Trop peu de crédit",
+    "invalidTransactionFormatErrorBody": "La transaction avait un format invalide, ce qui pourrait être un bug dans l'application. Si tu penses que c'est un bug, clique sur le champ correspondant ci-dessous.",
+    "invalidTransactionFormatErrorTitle": "Format de transaction invalide",
     "invalidCommunity": "Communauté non valide.",
     "invalidNetwork": "Réseau non valide",
     "invoice": "Montant de la facture",
