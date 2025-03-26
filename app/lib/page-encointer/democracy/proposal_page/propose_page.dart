@@ -767,9 +767,7 @@ class _ProposePageState extends State<ProposePage> {
     return [
       if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isGlobal)
         Text(
-          l10n.treasuryGlobalBalance(
-            Fmt.token(globalTreasuryBalance - pendingGlobalSpends, ertDecimals)
-          ),
+          l10n.treasuryGlobalBalance(Fmt.token(globalTreasuryBalance - pendingGlobalSpends, ertDecimals)),
         ),
       if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isLocal ||
           selectedAction == ProposalActionIdentifier.issueSwapNativeOption)
