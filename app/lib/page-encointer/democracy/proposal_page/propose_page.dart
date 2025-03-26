@@ -700,8 +700,8 @@ class _ProposePageState extends State<ProposePage> {
         onError: (dispatchError) {
           final message = getLocalizedTxErrorMessage(l10n, dispatchError);
           showTxErrorDialog(context, message, false);
-      },
-        onFinish: (_, __) => Navigator.of(context).pop()
+        },
+        onFinish: (_, __) => Navigator.of(context).pop(),
       );
     }
   }

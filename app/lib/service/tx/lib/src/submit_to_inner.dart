@@ -69,7 +69,8 @@ Future<void> submitTxInner(
         msg = ErrorNotificationMsg(title: l10n.insufficientFundsErrorTitle, body: l10n.insufficientFundsErrorBody);
         showTxErrorDialog(context, msg, false);
       } else if (e.toString().contains(invalidTransactionFormat)) {
-        msg = ErrorNotificationMsg(title: l10n.invalidTransactionFormatErrorTitle, body: l10n.invalidTransactionFormatErrorBody);
+        msg = ErrorNotificationMsg(
+            title: l10n.invalidTransactionFormatErrorTitle, body: l10n.invalidTransactionFormatErrorBody);
         showTxErrorDialog(context, msg, true);
       }
     }
