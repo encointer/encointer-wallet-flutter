@@ -72,6 +72,8 @@ Future<void> submitTxInner(
         msg = ErrorNotificationMsg(
             title: l10n.invalidTransactionFormatErrorTitle, body: l10n.invalidTransactionFormatErrorBody);
         showTxErrorDialog(context, msg, true);
+      } else {
+        showTxErrorDialog(context, msg, false);
       }
     }
   } else {

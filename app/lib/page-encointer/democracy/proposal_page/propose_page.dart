@@ -255,7 +255,8 @@ class _ProposePageState extends State<ProposePage> {
                             const SizedBox(height: 5),
                             SubmitButton(
                               onPressed: isBootstrapperOrReputable(store, store.account.currentAddress) &&
-                                      !enactmentQueue.contains(selectedAction)
+                                      !hasSameProposalForSameScope(enactmentQueue, selectedAction,
+                                          selectedScope.isLocal ? store.encointer.chosenCid! : null)
                                   ? (context) async {
                                       _formKey.currentState!.validate();
                                       await _submitProposal();

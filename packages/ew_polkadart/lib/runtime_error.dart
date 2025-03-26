@@ -15,25 +15,25 @@ import 'dart:typed_data' as _i2;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
 
-// import 'generated/encointer_kusama/types/cumulus_pallet_dmp_queue/pallet/error.dart' as _i11;
-// import 'generated/encointer_kusama/types/cumulus_pallet_parachain_system/pallet/error.dart' as _i4;
-// import 'generated/encointer_kusama/types/cumulus_pallet_xcmp_queue/pallet/error.dart' as _i8;
 import 'generated/encointer_kusama/types/frame_system/pallet/error.dart' as _i3;
+// import 'generated/encointer_kusama/types/pallet_asset_tx_payment/pallet/error.dart' as _i7;
 import 'generated/encointer_kusama/types/pallet_balances/pallet/error.dart' as _i5;
-// import 'generated/encointer_kusama/types/pallet_collective/pallet/error.dart' as _i16;
-import 'generated/encointer_kusama/types/pallet_encointer_balances/pallet/error.dart' as _i21;
-import 'generated/encointer_kusama/types/pallet_encointer_bazaar/pallet/error.dart' as _i22;
-import 'generated/encointer_kusama/types/pallet_encointer_ceremonies/pallet/error.dart' as _i19;
-import 'generated/encointer_kusama/types/pallet_encointer_communities/pallet/error.dart' as _i20;
-import 'generated/encointer_kusama/types/pallet_encointer_faucet/pallet/error.dart' as _i24;
-import 'generated/encointer_kusama/types/pallet_encointer_reputation_commitments/pallet/error.dart' as _i23;
-import 'generated/encointer_kusama/types/pallet_encointer_scheduler/pallet/error.dart' as _i18;
-// import 'generated/encointer_kusama/types/pallet_membership/pallet/error.dart' as _i17;
-import 'generated/encointer_kusama/types/pallet_proxy/pallet/error.dart' as _i14;
-import 'generated/encointer_kusama/types/pallet_scheduler/pallet/error.dart' as _i15;
-import 'generated/encointer_kusama/types/pallet_treasury/pallet/error.dart' as _i13;
-import 'generated/encointer_kusama/types/pallet_utility/pallet/error.dart' as _i12;
-// import 'generated/encointer_kusama/types/pallet_xcm/pallet/error.dart' as _i9;
+import 'generated/encointer_kusama/types/pallet_encointer_balances/pallet/error.dart' as _i16;
+import 'generated/encointer_kusama/types/pallet_encointer_bazaar/pallet/error.dart' as _i17;
+import 'generated/encointer_kusama/types/pallet_encointer_ceremonies/pallet/error.dart' as _i14;
+import 'generated/encointer_kusama/types/pallet_encointer_communities/pallet/error.dart' as _i15;
+import 'generated/encointer_kusama/types/pallet_encointer_democracy/pallet/error.dart' as _i20;
+import 'generated/encointer_kusama/types/pallet_encointer_faucet/pallet/error.dart' as _i19;
+import 'generated/encointer_kusama/types/pallet_encointer_reputation_commitments/pallet/error.dart' as _i18;
+import 'generated/encointer_kusama/types/pallet_encointer_scheduler/pallet/error.dart' as _i13;
+import 'generated/encointer_kusama/types/pallet_encointer_treasuries/pallet/error.dart' as _i21;
+import 'generated/encointer_kusama/types/pallet_grandpa/pallet/error.dart' as _i8;
+import 'generated/encointer_kusama/types/pallet_proxy/pallet/error.dart' as _i10;
+import 'generated/encointer_kusama/types/pallet_scheduler/pallet/error.dart' as _i11;
+import 'generated/encointer_kusama/types/pallet_sudo/pallet/error.dart' as _i4;
+// import 'generated/encointer_kusama/types/pallet_transaction_payment/pallet/error.dart' as _i6;
+import 'generated/encointer_kusama/types/pallet_treasury/pallet/error.dart' as _i12;
+import 'generated/encointer_kusama/types/pallet_utility/pallet/error.dart' as _i9;
 
 abstract class RuntimeError {
   const RuntimeError();
@@ -66,7 +66,52 @@ abstract class RuntimeError {
     return codec.sizeHint(this);
   }
 
-  Map<String, dynamic> toJson();
+  Map<String, String> toJson();
+}
+
+RuntimeError decodeWithIndex(int index, _i1.Input input) {
+  switch (index) {
+    case 0:
+      return System._decode(input);
+    case 5:
+      return Sudo._decode(input);
+    case 10:
+      return Balances._decode(input);
+    // case 11:
+    //   return TransactionPayment._decode(input);
+    // case 12:
+    //   return AssetTxPayment._decode(input);
+    case 25:
+      return Grandpa._decode(input);
+    case 40:
+      return Utility._decode(input);
+    case 44:
+      return Proxy._decode(input);
+    case 48:
+      return Scheduler._decode(input);
+    case 49:
+      return Treasury._decode(input);
+    case 60:
+      return EncointerScheduler._decode(input);
+    case 61:
+      return EncointerCeremonies._decode(input);
+    case 62:
+      return EncointerCommunities._decode(input);
+    case 63:
+      return EncointerBalances._decode(input);
+    case 64:
+      return EncointerBazaar._decode(input);
+    case 65:
+      return EncointerReputationCommitments._decode(input);
+    case 66:
+      return EncointerFaucet._decode(input);
+    case 67:
+      return EncointerDemocracy._decode(input);
+    case 68:
+      return EncointerTreasuries._decode(input);
+    default:
+      throw Exception('RuntimeError: Invalid variant index: "$index"');
+  }
 }
 
 class $RuntimeError {
@@ -76,76 +121,76 @@ class $RuntimeError {
     return System(value0);
   }
 
-  // ParachainSystem parachainSystem(_i4.Error value0) {
-  //   return ParachainSystem(value0);
-  // }
+  Sudo sudo(_i4.Error value0) {
+    return Sudo(value0);
+  }
 
   Balances balances(_i5.Error value0) {
     return Balances(value0);
   }
 
-  // XcmpQueue xcmpQueue(_i8.Error value0) {
-  //   return XcmpQueue(value0);
+  // TransactionPayment transactionPayment(_i6.Error value0) {
+  //   return TransactionPayment(value0);
   // }
   //
-  // PolkadotXcm polkadotXcm(_i9.Error value0) {
-  //   return PolkadotXcm(value0);
-  // }
-  //
-  // DmpQueue dmpQueue(_i11.Error value0) {
-  //   return DmpQueue(value0);
+  // AssetTxPayment assetTxPayment(_i7.Error value0) {
+  //   return AssetTxPayment(value0);
   // }
 
-  Utility utility(_i12.Error value0) {
+  Grandpa grandpa(_i8.Error value0) {
+    return Grandpa(value0);
+  }
+
+  Utility utility(_i9.Error value0) {
     return Utility(value0);
   }
 
-  Treasury treasury(_i13.Error value0) {
-    return Treasury(value0);
-  }
-
-  Proxy proxy(_i14.Error value0) {
+  Proxy proxy(_i10.Error value0) {
     return Proxy(value0);
   }
 
-  Scheduler scheduler(_i15.Error value0) {
+  Scheduler scheduler(_i11.Error value0) {
     return Scheduler(value0);
   }
 
-  // Collective collective(_i16.Error value0) {
-  //   return Collective(value0);
-  // }
-  //
-  // Membership membership(_i17.Error value0) {
-  //   return Membership(value0);
-  // }
+  Treasury treasury(_i12.Error value0) {
+    return Treasury(value0);
+  }
 
-  EncointerScheduler encointerScheduler(_i18.Error value0) {
+  EncointerScheduler encointerScheduler(_i13.Error value0) {
     return EncointerScheduler(value0);
   }
 
-  EncointerCeremonies encointerCeremonies(_i19.Error value0) {
+  EncointerCeremonies encointerCeremonies(_i14.Error value0) {
     return EncointerCeremonies(value0);
   }
 
-  EncointerCommunities encointerCommunities(_i20.Error value0) {
+  EncointerCommunities encointerCommunities(_i15.Error value0) {
     return EncointerCommunities(value0);
   }
 
-  EncointerBalances encointerBalances(_i21.Error value0) {
+  EncointerBalances encointerBalances(_i16.Error value0) {
     return EncointerBalances(value0);
   }
 
-  EncointerBazaar encointerBazaar(_i22.Error value0) {
+  EncointerBazaar encointerBazaar(_i17.Error value0) {
     return EncointerBazaar(value0);
   }
 
-  EncointerReputationCommitments encointerReputationCommitments(_i23.Error value0) {
+  EncointerReputationCommitments encointerReputationCommitments(_i18.Error value0) {
     return EncointerReputationCommitments(value0);
   }
 
-  EncointerFaucet encointerFaucet(_i24.Error value0) {
+  EncointerFaucet encointerFaucet(_i19.Error value0) {
     return EncointerFaucet(value0);
+  }
+
+  EncointerDemocracy encointerDemocracy(_i20.Error value0) {
+    return EncointerDemocracy(value0);
+  }
+
+  EncointerTreasuries encointerTreasuries(_i21.Error value0) {
+    return EncointerTreasuries(value0);
   }
 }
 
@@ -167,26 +212,23 @@ class $RuntimeErrorCodec with _i1.Codec<RuntimeError> {
       case System:
         (value as System).encodeTo(output);
         break;
-      // case ParachainSystem:
-      //   (value as ParachainSystem).encodeTo(output);
-      //   break;
+      case Sudo:
+        (value as Sudo).encodeTo(output);
+        break;
       case Balances:
         (value as Balances).encodeTo(output);
         break;
-      // case XcmpQueue:
-      //   (value as XcmpQueue).encodeTo(output);
+      // case TransactionPayment:
+      //   (value as TransactionPayment).encodeTo(output);
       //   break;
-      // case PolkadotXcm:
-      //   (value as PolkadotXcm).encodeTo(output);
+      // case AssetTxPayment:
+      //   (value as AssetTxPayment).encodeTo(output);
       //   break;
-      // case DmpQueue:
-      //   (value as DmpQueue).encodeTo(output);
-      //   break;
+      case Grandpa:
+        (value as Grandpa).encodeTo(output);
+        break;
       case Utility:
         (value as Utility).encodeTo(output);
-        break;
-      case Treasury:
-        (value as Treasury).encodeTo(output);
         break;
       case Proxy:
         (value as Proxy).encodeTo(output);
@@ -194,12 +236,9 @@ class $RuntimeErrorCodec with _i1.Codec<RuntimeError> {
       case Scheduler:
         (value as Scheduler).encodeTo(output);
         break;
-      // case Collective:
-      //   (value as Collective).encodeTo(output);
-      //   break;
-      // case Membership:
-      //   (value as Membership).encodeTo(output);
-      //   break;
+      case Treasury:
+        (value as Treasury).encodeTo(output);
+        break;
       case EncointerScheduler:
         (value as EncointerScheduler).encodeTo(output);
         break;
@@ -221,8 +260,14 @@ class $RuntimeErrorCodec with _i1.Codec<RuntimeError> {
       case EncointerFaucet:
         (value as EncointerFaucet).encodeTo(output);
         break;
+      case EncointerDemocracy:
+        (value as EncointerDemocracy).encodeTo(output);
+        break;
+      case EncointerTreasuries:
+        (value as EncointerTreasuries).encodeTo(output);
+        break;
       default:
-        throw Exception('RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('RuntimeError: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -231,28 +276,24 @@ class $RuntimeErrorCodec with _i1.Codec<RuntimeError> {
     switch (value.runtimeType) {
       case System:
         return (value as System)._sizeHint();
-      // case ParachainSystem:
-      //   return (value as ParachainSystem)._sizeHint();
+      case Sudo:
+        return (value as Sudo)._sizeHint();
       case Balances:
         return (value as Balances)._sizeHint();
-      // case XcmpQueue:
-      //   return (value as XcmpQueue)._sizeHint();
-      // case PolkadotXcm:
-      //   return (value as PolkadotXcm)._sizeHint();
-      // case DmpQueue:
-      //   return (value as DmpQueue)._sizeHint();
+      // case TransactionPayment:
+      //   return (value as TransactionPayment)._sizeHint();
+      // case AssetTxPayment:
+      //   return (value as AssetTxPayment)._sizeHint();
+      case Grandpa:
+        return (value as Grandpa)._sizeHint();
       case Utility:
         return (value as Utility)._sizeHint();
-      case Treasury:
-        return (value as Treasury)._sizeHint();
       case Proxy:
         return (value as Proxy)._sizeHint();
       case Scheduler:
         return (value as Scheduler)._sizeHint();
-      // case Collective:
-      //   return (value as Collective)._sizeHint();
-      // case Membership:
-      //   return (value as Membership)._sizeHint();
+      case Treasury:
+        return (value as Treasury)._sizeHint();
       case EncointerScheduler:
         return (value as EncointerScheduler)._sizeHint();
       case EncointerCeremonies:
@@ -267,54 +308,13 @@ class $RuntimeErrorCodec with _i1.Codec<RuntimeError> {
         return (value as EncointerReputationCommitments)._sizeHint();
       case EncointerFaucet:
         return (value as EncointerFaucet)._sizeHint();
+      case EncointerDemocracy:
+        return (value as EncointerDemocracy)._sizeHint();
+      case EncointerTreasuries:
+        return (value as EncointerTreasuries)._sizeHint();
       default:
-        throw Exception('RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('RuntimeError: Unsupported "$value" of type "${value.runtimeType}"');
     }
-  }
-}
-
-RuntimeError decodeWithIndex(int index, _i1.Input input) {
-  switch (index) {
-    case 0:
-      return System._decode(input);
-    // case 1:
-    //   return ParachainSystem._decode(input);
-    case 10:
-      return Balances._decode(input);
-    // case 30:
-    //   return XcmpQueue._decode(input);
-    // case 31:
-    //   return PolkadotXcm._decode(input);
-    // case 33:
-    //   return DmpQueue._decode(input);
-    case 40:
-      return Utility._decode(input);
-    case 43:
-      return Treasury._decode(input);
-    case 44:
-      return Proxy._decode(input);
-    case 48:
-      return Scheduler._decode(input);
-    // case 50:
-    //   return Collective._decode(input);
-    // case 51:
-    //   return Membership._decode(input);
-    case 60:
-      return EncointerScheduler._decode(input);
-    case 61:
-      return EncointerCeremonies._decode(input);
-    case 62:
-      return EncointerCommunities._decode(input);
-    case 63:
-      return EncointerBalances._decode(input);
-    case 64:
-      return EncointerBazaar._decode(input);
-    case 65:
-      return EncointerReputationCommitments._decode(input);
-    case 66:
-      return EncointerFaucet._decode(input);
-    default:
-      throw Exception('RuntimeEvent: Invalid variant index: "$index"');
   }
 }
 
@@ -360,47 +360,47 @@ class System extends RuntimeError {
   int get hashCode => value0.hashCode;
 }
 
-// class ParachainSystem extends RuntimeError {
-//   const ParachainSystem(this.value0);
-//
-//   factory ParachainSystem._decode(_i1.Input input) {
-//     return ParachainSystem(_i4.Error.codec.decode(input));
-//   }
-//
-//   /// cumulus_pallet_parachain_system::Event<Runtime>
-//   final _i4.Error value0;
-//
-//   @override
-//   Map<String, String> toJson() => {'ParachainSystem': value0.toJson()};
-//
-//   int _sizeHint() {
-//     int size = 1;
-//     size = size + _i4.Error.codec.sizeHint(value0);
-//     return size;
-//   }
-//
-//   void encodeTo(_i1.Output output) {
-//     _i1.U8Codec.codec.encodeTo(
-//       1,
-//       output,
-//     );
-//     _i4.Error.codec.encodeTo(
-//       value0,
-//       output,
-//     );
-//   }
-//
-//   @override
-//   bool operator ==(Object other) =>
-//       identical(
-//         this,
-//         other,
-//       ) ||
-//       other is ParachainSystem && other.value0 == value0;
-//
-//   @override
-//   int get hashCode => value0.hashCode;
-// }
+class Sudo extends RuntimeError {
+  const Sudo(this.value0);
+
+  factory Sudo._decode(_i1.Input input) {
+    return Sudo(_i4.Error.codec.decode(input));
+  }
+
+  /// pallet_sudo::Event<Runtime>
+  final _i4.Error value0;
+
+  @override
+  Map<String, String> toJson() => {'Sudo': value0.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i4.Error.codec.sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      5,
+      output,
+    );
+    _i4.Error.codec.encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Sudo && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
+}
 
 class Balances extends RuntimeError {
   const Balances(this.value0);
@@ -444,31 +444,31 @@ class Balances extends RuntimeError {
   int get hashCode => value0.hashCode;
 }
 
-// class XcmpQueue extends RuntimeError {
-//   const XcmpQueue(this.value0);
+// class TransactionPayment extends RuntimeError {
+//   const TransactionPayment(this.value0);
 //
-//   factory XcmpQueue._decode(_i1.Input input) {
-//     return XcmpQueue(_i8.Error.codec.decode(input));
+//   factory TransactionPayment._decode(_i1.Input input) {
+//     return TransactionPayment(_i6.Error.codec.decode(input));
 //   }
 //
-//   /// cumulus_pallet_xcmp_queue::Event<Runtime>
-//   final _i8.Error value0;
+//   /// pallet_transaction_payment::Event<Runtime>
+//   final _i6.Error value0;
 //
 //   @override
-//   Map<String, String> toJson() => {'XcmpQueue': value0.toJson()};
+//   Map<String, String> toJson() => {'TransactionPayment': value0.toJson()};
 //
 //   int _sizeHint() {
 //     int size = 1;
-//     size = size + _i8.Error.codec.sizeHint(value0);
+//     size = size + _i6.Error.codec.sizeHint(value0);
 //     return size;
 //   }
 //
 //   void encodeTo(_i1.Output output) {
 //     _i1.U8Codec.codec.encodeTo(
-//       30,
+//       11,
 //       output,
 //     );
-//     _i8.Error.codec.encodeTo(
+//     _i6.Error.codec.encodeTo(
 //       value0,
 //       output,
 //     );
@@ -480,37 +480,37 @@ class Balances extends RuntimeError {
 //         this,
 //         other,
 //       ) ||
-//       other is XcmpQueue && other.value0 == value0;
+//           other is TransactionPayment && other.value0 == value0;
 //
 //   @override
 //   int get hashCode => value0.hashCode;
 // }
+
+// class AssetTxPayment extends RuntimeError {
+//   const AssetTxPayment(this.value0);
 //
-// class PolkadotXcm extends RuntimeError {
-//   const PolkadotXcm(this.value0);
-//
-//   factory PolkadotXcm._decode(_i1.Input input) {
-//     return PolkadotXcm(_i9.Error.codec.decode(input));
+//   factory AssetTxPayment._decode(_i1.Input input) {
+//     return AssetTxPayment(_i7.Error.codec.decode(input));
 //   }
 //
-//   /// pallet_xcm::Event<Runtime>
-//   final _i9.Error value0;
+//   /// pallet_asset_tx_payment::Event<Runtime>
+//   final _i7.Error value0;
 //
 //   @override
-//   Map<String, String> toJson() => {'PolkadotXcm': value0.toJson()};
+//   Map<String, String> toJson() => {'AssetTxPayment': value0.toJson()};
 //
 //   int _sizeHint() {
 //     int size = 1;
-//     size = size + _i9.Error.codec.sizeHint(value0);
+//     size = size + _i7.Error.codec.sizeHint(value0);
 //     return size;
 //   }
 //
 //   void encodeTo(_i1.Output output) {
 //     _i1.U8Codec.codec.encodeTo(
-//       31,
+//       12,
 //       output,
 //     );
-//     _i9.Error.codec.encodeTo(
+//     _i7.Error.codec.encodeTo(
 //       value0,
 //       output,
 //     );
@@ -522,70 +522,70 @@ class Balances extends RuntimeError {
 //         this,
 //         other,
 //       ) ||
-//       other is PolkadotXcm && other.value0 == value0;
+//           other is AssetTxPayment && other.value0 == value0;
 //
 //   @override
 //   int get hashCode => value0.hashCode;
 // }
-//
-// class DmpQueue extends RuntimeError {
-//   const DmpQueue(this.value0);
-//
-//   factory DmpQueue._decode(_i1.Input input) {
-//     return DmpQueue(_i11.Error.codec.decode(input));
-//   }
-//
-//   /// cumulus_pallet_dmp_queue::Event<Runtime>
-//   final _i11.Error value0;
-//
-//   @override
-//   Map<String, String> toJson() => {'DmpQueue': value0.toJson()};
-//
-//   int _sizeHint() {
-//     int size = 1;
-//     size = size + _i11.Error.codec.sizeHint(value0);
-//     return size;
-//   }
-//
-//   void encodeTo(_i1.Output output) {
-//     _i1.U8Codec.codec.encodeTo(
-//       33,
-//       output,
-//     );
-//     _i11.Error.codec.encodeTo(
-//       value0,
-//       output,
-//     );
-//   }
-//
-//   @override
-//   bool operator ==(Object other) =>
-//       identical(
-//         this,
-//         other,
-//       ) ||
-//       other is DmpQueue && other.value0 == value0;
-//
-//   @override
-//   int get hashCode => value0.hashCode;
-// }
+
+class Grandpa extends RuntimeError {
+  const Grandpa(this.value0);
+
+  factory Grandpa._decode(_i1.Input input) {
+    return Grandpa(_i8.Error.codec.decode(input));
+  }
+
+  /// pallet_grandpa::Event
+  final _i8.Error value0;
+
+  @override
+  Map<String, String> toJson() => {'Grandpa': value0.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i8.Error.codec.sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      25,
+      output,
+    );
+    _i8.Error.codec.encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Grandpa && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
+}
 
 class Utility extends RuntimeError {
   const Utility(this.value0);
 
   factory Utility._decode(_i1.Input input) {
-    return Utility(_i12.Error.codec.decode(input));
+    return Utility(_i9.Error.codec.decode(input));
   }
 
   /// pallet_utility::Event
-  final _i12.Error value0;
+  final _i9.Error value0;
 
   @override
   Map<String, String> toJson() => {'Utility': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i12.Error.codec.sizeHint(value0);
+    size = size + _i9.Error.codec.sizeHint(value0);
     return size;
   }
 
@@ -594,7 +594,7 @@ class Utility extends RuntimeError {
       40,
       output,
     );
-    _i12.Error.codec.encodeTo(
+    _i9.Error.codec.encodeTo(
       value0,
       output,
     );
@@ -612,64 +612,22 @@ class Utility extends RuntimeError {
   int get hashCode => value0.hashCode;
 }
 
-class Treasury extends RuntimeError {
-  const Treasury(this.value0);
-
-  factory Treasury._decode(_i1.Input input) {
-    return Treasury(_i13.Error.codec.decode(input));
-  }
-
-  /// pallet_treasury::Event<Runtime>
-  final _i13.Error value0;
-
-  @override
-  Map<String, String> toJson() => {'Treasury': value0.toJson()};
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i13.Error.codec.sizeHint(value0);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      43,
-      output,
-    );
-    _i13.Error.codec.encodeTo(
-      value0,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is Treasury && other.value0 == value0;
-
-  @override
-  int get hashCode => value0.hashCode;
-}
-
 class Proxy extends RuntimeError {
   const Proxy(this.value0);
 
   factory Proxy._decode(_i1.Input input) {
-    return Proxy(_i14.Error.codec.decode(input));
+    return Proxy(_i10.Error.codec.decode(input));
   }
 
   /// pallet_proxy::Event<Runtime>
-  final _i14.Error value0;
+  final _i10.Error value0;
 
   @override
   Map<String, String> toJson() => {'Proxy': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i14.Error.codec.sizeHint(value0);
+    size = size + _i10.Error.codec.sizeHint(value0);
     return size;
   }
 
@@ -678,7 +636,7 @@ class Proxy extends RuntimeError {
       44,
       output,
     );
-    _i14.Error.codec.encodeTo(
+    _i10.Error.codec.encodeTo(
       value0,
       output,
     );
@@ -700,18 +658,18 @@ class Scheduler extends RuntimeError {
   const Scheduler(this.value0);
 
   factory Scheduler._decode(_i1.Input input) {
-    return Scheduler(_i15.Error.codec.decode(input));
+    return Scheduler(_i11.Error.codec.decode(input));
   }
 
   /// pallet_scheduler::Event<Runtime>
-  final _i15.Error value0;
+  final _i11.Error value0;
 
   @override
   Map<String, String> toJson() => {'Scheduler': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i15.Error.codec.sizeHint(value0);
+    size = size + _i11.Error.codec.sizeHint(value0);
     return size;
   }
 
@@ -720,7 +678,7 @@ class Scheduler extends RuntimeError {
       48,
       output,
     );
-    _i15.Error.codec.encodeTo(
+    _i11.Error.codec.encodeTo(
       value0,
       output,
     );
@@ -738,106 +696,64 @@ class Scheduler extends RuntimeError {
   int get hashCode => value0.hashCode;
 }
 
-// class Collective extends RuntimeError {
-//   const Collective(this.value0);
-//
-//   factory Collective._decode(_i1.Input input) {
-//     return Collective(_i16.Error.codec.decode(input));
-//   }
-//
-//   /// pallet_collective::Event<Runtime, pallet_collective::Instance1>
-//   final _i16.Error value0;
-//
-//   @override
-//   Map<String, String> toJson() => {'Collective': value0.toJson()};
-//
-//   int _sizeHint() {
-//     int size = 1;
-//     size = size + _i16.Error.codec.sizeHint(value0);
-//     return size;
-//   }
-//
-//   void encodeTo(_i1.Output output) {
-//     _i1.U8Codec.codec.encodeTo(
-//       50,
-//       output,
-//     );
-//     _i16.Error.codec.encodeTo(
-//       value0,
-//       output,
-//     );
-//   }
-//
-//   @override
-//   bool operator ==(Object other) =>
-//       identical(
-//         this,
-//         other,
-//       ) ||
-//       other is Collective && other.value0 == value0;
-//
-//   @override
-//   int get hashCode => value0.hashCode;
-// }
-//
-// class Membership extends RuntimeError {
-//   const Membership(this.value0);
-//
-//   factory Membership._decode(_i1.Input input) {
-//     return Membership(_i17.Error.codec.decode(input));
-//   }
-//
-//   /// pallet_membership::Event<Runtime, pallet_membership::Instance1>
-//   final _i17.Error value0;
-//
-//   @override
-//   Map<String, String> toJson() => {'Membership': value0.toJson()};
-//
-//   int _sizeHint() {
-//     int size = 1;
-//     size = size + _i17.Error.codec.sizeHint(value0);
-//     return size;
-//   }
-//
-//   void encodeTo(_i1.Output output) {
-//     _i1.U8Codec.codec.encodeTo(
-//       51,
-//       output,
-//     );
-//     _i17.Error.codec.encodeTo(
-//       value0,
-//       output,
-//     );
-//   }
-//
-//   @override
-//   bool operator ==(Object other) =>
-//       identical(
-//         this,
-//         other,
-//       ) ||
-//       other is Membership && other.value0 == value0;
-//
-//   @override
-//   int get hashCode => value0.hashCode;
-// }
+class Treasury extends RuntimeError {
+  const Treasury(this.value0);
+
+  factory Treasury._decode(_i1.Input input) {
+    return Treasury(_i12.Error.codec.decode(input));
+  }
+
+  /// pallet_treasury::Event<Runtime>
+  final _i12.Error value0;
+
+  @override
+  Map<String, String> toJson() => {'Treasury': value0.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i12.Error.codec.sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      49,
+      output,
+    );
+    _i12.Error.codec.encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Treasury && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
+}
 
 class EncointerScheduler extends RuntimeError {
   const EncointerScheduler(this.value0);
 
   factory EncointerScheduler._decode(_i1.Input input) {
-    return EncointerScheduler(_i18.Error.codec.decode(input));
+    return EncointerScheduler(_i13.Error.codec.decode(input));
   }
 
   /// pallet_encointer_scheduler::Event
-  final _i18.Error value0;
+  final _i13.Error value0;
 
   @override
   Map<String, String> toJson() => {'EncointerScheduler': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i18.Error.codec.sizeHint(value0);
+    size = size + _i13.Error.codec.sizeHint(value0);
     return size;
   }
 
@@ -846,7 +762,7 @@ class EncointerScheduler extends RuntimeError {
       60,
       output,
     );
-    _i18.Error.codec.encodeTo(
+    _i13.Error.codec.encodeTo(
       value0,
       output,
     );
@@ -868,18 +784,18 @@ class EncointerCeremonies extends RuntimeError {
   const EncointerCeremonies(this.value0);
 
   factory EncointerCeremonies._decode(_i1.Input input) {
-    return EncointerCeremonies(_i19.Error.codec.decode(input));
+    return EncointerCeremonies(_i14.Error.codec.decode(input));
   }
 
   /// pallet_encointer_ceremonies::Event<Runtime>
-  final _i19.Error value0;
+  final _i14.Error value0;
 
   @override
   Map<String, String> toJson() => {'EncointerCeremonies': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i19.Error.codec.sizeHint(value0);
+    size = size + _i14.Error.codec.sizeHint(value0);
     return size;
   }
 
@@ -888,7 +804,7 @@ class EncointerCeremonies extends RuntimeError {
       61,
       output,
     );
-    _i19.Error.codec.encodeTo(
+    _i14.Error.codec.encodeTo(
       value0,
       output,
     );
@@ -910,18 +826,18 @@ class EncointerCommunities extends RuntimeError {
   const EncointerCommunities(this.value0);
 
   factory EncointerCommunities._decode(_i1.Input input) {
-    return EncointerCommunities(_i20.Error.codec.decode(input));
+    return EncointerCommunities(_i15.Error.codec.decode(input));
   }
 
   /// pallet_encointer_communities::Event<Runtime>
-  final _i20.Error value0;
+  final _i15.Error value0;
 
   @override
   Map<String, String> toJson() => {'EncointerCommunities': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i20.Error.codec.sizeHint(value0);
+    size = size + _i15.Error.codec.sizeHint(value0);
     return size;
   }
 
@@ -930,7 +846,7 @@ class EncointerCommunities extends RuntimeError {
       62,
       output,
     );
-    _i20.Error.codec.encodeTo(
+    _i15.Error.codec.encodeTo(
       value0,
       output,
     );
@@ -952,18 +868,18 @@ class EncointerBalances extends RuntimeError {
   const EncointerBalances(this.value0);
 
   factory EncointerBalances._decode(_i1.Input input) {
-    return EncointerBalances(_i21.Error.codec.decode(input));
+    return EncointerBalances(_i16.Error.codec.decode(input));
   }
 
   /// pallet_encointer_balances::Event<Runtime>
-  final _i21.Error value0;
+  final _i16.Error value0;
 
   @override
   Map<String, String> toJson() => {'EncointerBalances': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i21.Error.codec.sizeHint(value0);
+    size = size + _i16.Error.codec.sizeHint(value0);
     return size;
   }
 
@@ -972,7 +888,7 @@ class EncointerBalances extends RuntimeError {
       63,
       output,
     );
-    _i21.Error.codec.encodeTo(
+    _i16.Error.codec.encodeTo(
       value0,
       output,
     );
@@ -994,18 +910,18 @@ class EncointerBazaar extends RuntimeError {
   const EncointerBazaar(this.value0);
 
   factory EncointerBazaar._decode(_i1.Input input) {
-    return EncointerBazaar(_i22.Error.codec.decode(input));
+    return EncointerBazaar(_i17.Error.codec.decode(input));
   }
 
   /// pallet_encointer_bazaar::Event<Runtime>
-  final _i22.Error value0;
+  final _i17.Error value0;
 
   @override
   Map<String, String> toJson() => {'EncointerBazaar': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i22.Error.codec.sizeHint(value0);
+    size = size + _i17.Error.codec.sizeHint(value0);
     return size;
   }
 
@@ -1014,7 +930,7 @@ class EncointerBazaar extends RuntimeError {
       64,
       output,
     );
-    _i22.Error.codec.encodeTo(
+    _i17.Error.codec.encodeTo(
       value0,
       output,
     );
@@ -1036,18 +952,18 @@ class EncointerReputationCommitments extends RuntimeError {
   const EncointerReputationCommitments(this.value0);
 
   factory EncointerReputationCommitments._decode(_i1.Input input) {
-    return EncointerReputationCommitments(_i23.Error.codec.decode(input));
+    return EncointerReputationCommitments(_i18.Error.codec.decode(input));
   }
 
   /// pallet_encointer_reputation_commitments::Event<Runtime>
-  final _i23.Error value0;
+  final _i18.Error value0;
 
   @override
   Map<String, String> toJson() => {'EncointerReputationCommitments': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i23.Error.codec.sizeHint(value0);
+    size = size + _i18.Error.codec.sizeHint(value0);
     return size;
   }
 
@@ -1056,7 +972,7 @@ class EncointerReputationCommitments extends RuntimeError {
       65,
       output,
     );
-    _i23.Error.codec.encodeTo(
+    _i18.Error.codec.encodeTo(
       value0,
       output,
     );
@@ -1078,18 +994,18 @@ class EncointerFaucet extends RuntimeError {
   const EncointerFaucet(this.value0);
 
   factory EncointerFaucet._decode(_i1.Input input) {
-    return EncointerFaucet(_i24.Error.codec.decode(input));
+    return EncointerFaucet(_i19.Error.codec.decode(input));
   }
 
   /// pallet_encointer_faucet::Event<Runtime>
-  final _i24.Error value0;
+  final _i19.Error value0;
 
   @override
   Map<String, String> toJson() => {'EncointerFaucet': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i24.Error.codec.sizeHint(value0);
+    size = size + _i19.Error.codec.sizeHint(value0);
     return size;
   }
 
@@ -1098,7 +1014,7 @@ class EncointerFaucet extends RuntimeError {
       66,
       output,
     );
-    _i24.Error.codec.encodeTo(
+    _i19.Error.codec.encodeTo(
       value0,
       output,
     );
@@ -1111,6 +1027,90 @@ class EncointerFaucet extends RuntimeError {
         other,
       ) ||
       other is EncointerFaucet && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
+}
+
+class EncointerDemocracy extends RuntimeError {
+  const EncointerDemocracy(this.value0);
+
+  factory EncointerDemocracy._decode(_i1.Input input) {
+    return EncointerDemocracy(_i20.Error.codec.decode(input));
+  }
+
+  /// pallet_encointer_democracy::Event<Runtime>
+  final _i20.Error value0;
+
+  @override
+  Map<String, String> toJson() => {'EncointerDemocracy': value0.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i20.Error.codec.sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      67,
+      output,
+    );
+    _i20.Error.codec.encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EncointerDemocracy && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
+}
+
+class EncointerTreasuries extends RuntimeError {
+  const EncointerTreasuries(this.value0);
+
+  factory EncointerTreasuries._decode(_i1.Input input) {
+    return EncointerTreasuries(_i21.Error.codec.decode(input));
+  }
+
+  /// pallet_encointer_treasuries::Event<Runtime>
+  final _i21.Error value0;
+
+  @override
+  Map<String, String> toJson() => {'EncointerTreasuries': value0.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i21.Error.codec.sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      68,
+      output,
+    );
+    _i21.Error.codec.encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EncointerTreasuries && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;

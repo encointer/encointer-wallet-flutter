@@ -1,5 +1,7 @@
 import 'package:encointer_wallet/common/components/submit_button_cupertino.dart';
 import 'package:encointer_wallet/service/service.dart';
+import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
+import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +65,6 @@ class _UpdateProposalButtonState extends State<UpdateProposalButton> {
                 SubmitButtonCupertino(
                   onPressed: (BuildContext context) async {
                     await _submitUpdateProposalState(store);
-                    Navigator.of(context).pop();
                   },
                   child: Text(l10n.proposalUpdateState, style: const TextStyle(color: Colors.green)),
                 ),
@@ -87,9 +88,14 @@ class _UpdateProposalButtonState extends State<UpdateProposalButton> {
       store.account.getKeyringAccount(store.account.currentAccountPubKey!),
       widget.proposalId,
       txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
-      onError: (error) => Log.p('[updateProposal] error updating the proposal: $error'),
+      onFinish: (_, __) {
+        Navigator.of(context).pop();
+        setState(() {});
+      },
+      onError: (dispatchError) {
+        final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
+        showTxErrorDialog(context, message, false);
+      },
     );
-
-    setState(() {});
   }
 }
