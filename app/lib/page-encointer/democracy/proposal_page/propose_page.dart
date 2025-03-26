@@ -233,27 +233,21 @@ class _ProposePageState extends State<ProposePage> {
                         const SizedBox(height: 10),
                         _getProposalExplainer(context),
 
-                        // Submit Button
                         const Spacer(),
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                              l10n.treasuryGlobalBalanceAndPendingSpends(
-                                Fmt.token(globalTreasuryBalance, ertDecimals),
-                                Fmt.token(pendingGlobalSpends, ertDecimals),
-                              ),
-                            ),
-                            Text(
-                              l10n.treasuryLocalBalanceAndPendingSpends(
-                                Fmt.token(localTreasuryBalance, ertDecimals),
-                                Fmt.token(pendingLocalSpends, ertDecimals),
-                              ),
-                            ),
+                            ...maybeShowTreasuryBalances(context),
+
+                            // Hint text for accounts without reputation
+
                             if (!isBootstrapperOrReputable(store, store.account.currentAddress))
                               Text(l10n.proposalOnlyBootstrappersOrReputablesCanSubmit, textAlign: TextAlign.center),
                             if (enactmentQueue.contains(selectedAction))
                               Text(l10n.proposalCannotSubmitProposalTypePendingEnactment, textAlign: TextAlign.center),
+
+                            // Submit button
+
                             const SizedBox(height: 5),
                             SubmitButton(
                               onPressed: isBootstrapperOrReputable(store, store.account.currentAddress) &&
@@ -263,7 +257,8 @@ class _ProposePageState extends State<ProposePage> {
                                       await _submitProposal();
                                       Navigator.of(context).pop();
                                     }
-                                  : null, // disable button for non-bootstrappers/reputables
+                                  : null,
+                              // disable button for non-bootstrappers/reputables
                               child: Text(l10n.proposalSubmit),
                             ),
                           ],
@@ -765,5 +760,26 @@ class _ProposePageState extends State<ProposePage> {
       case ProposalActionIdentifier.removeLocation:
         throw UnimplementedError('removeLocation is unsupported');
     }
+  }
+
+  List<Widget> maybeShowTreasuryBalances(BuildContext context) {
+    final l10n = context.l10n;
+    return [
+      if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isGlobal)
+        Text(
+          l10n.treasuryGlobalBalanceAndPendingSpends(
+            Fmt.token(globalTreasuryBalance, ertDecimals),
+            Fmt.token(pendingGlobalSpends, ertDecimals),
+          ),
+        ),
+      if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isLocal ||
+          selectedAction == ProposalActionIdentifier.issueSwapNativeOption)
+        Text(
+          l10n.treasuryLocalBalanceAndPendingSpends(
+            Fmt.token(localTreasuryBalance, ertDecimals),
+            Fmt.token(pendingLocalSpends, ertDecimals),
+          ),
+        )
+    ];
   }
 }
