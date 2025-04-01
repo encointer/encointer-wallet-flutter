@@ -27,16 +27,7 @@ import 'package:ew_http/ew_http.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/encointer_types.dart' show ProofOfAttendance;
 import 'package:ew_polkadart/ew_polkadart.dart'
-    show
-        BlockHash,
-        ByteInput,
-        EncointerKusama,
-        Proposal,
-        SequenceCodec,
-        StorageChangeSet,
-        Tally,
-        Tuple2,
-        U128Codec;
+    show BlockHash, ByteInput, EncointerKusama, Proposal, SequenceCodec, StorageChangeSet, Tally, Tuple2, U128Codec;
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
