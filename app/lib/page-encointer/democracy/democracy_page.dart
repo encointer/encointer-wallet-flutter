@@ -95,6 +95,10 @@ class _DemocracyPageState extends State<DemocracyPage> {
 
     final widgets = listViewWidgets();
 
+    final verifiedReputations = store.encointer.account!.verifiedReputations;
+    final votingReputations =
+        verifiedReputations.entries.where((e) => e.key <= store.encointer.currentCeremonyIndex! - 2).toSet();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.democracy),
@@ -106,6 +110,8 @@ class _DemocracyPageState extends State<DemocracyPage> {
       body: SafeArea(
         child: Column(
           children: [
+            if (store.encointer.chosenCid != null && verifiedReputations.isNotEmpty && votingReputations.isEmpty)
+              _getVotingReputationExplainer(context),
             if (store.encointer.chosenCid == null)
               const Text('Need to choose a community for democracy')
             else
@@ -139,6 +145,28 @@ class _DemocracyPageState extends State<DemocracyPage> {
               ),
             ),
             const SizedBox(height: 10),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _getVotingReputationExplainer(BuildContext context) {
+    final theme = context.bodyMedium;
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(4),
+              child: Icon(Iconsax.info_circle),
+            ),
+            Text(
+              context.l10n.proposalExplainerCannotVoteYet,
+              style: theme,
+              textAlign: TextAlign.left,
+            ),
           ],
         ),
       ),

@@ -225,6 +225,7 @@
             }
         }
     },
+    "proposalExplainerCannotVoteYet": "Tu pourras commencer à voter avec ta réputation à partir du prochain cycle !",
     "proposalType": "Type de proposition",
     "proposalTypeAddLocation": "Ajouter un lieu",
     "proposalTypeRemoveLocation": "Retrancher un lieu",
