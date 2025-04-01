@@ -22,7 +22,7 @@ jobs:
       - name: prepare xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: ${{ env.XCODE_VERSION }}
+          xcode-version: ${{ env.XCODE_BUILD_VERSION }}
 
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh

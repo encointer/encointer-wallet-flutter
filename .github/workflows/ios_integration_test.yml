@@ -51,7 +51,7 @@ jobs:
       - name: prepare xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: ${{ env.XCODE_VERSION }}
+          xcode-version: ${{ env.XCODE_TEST_VERSION }}
 
       - name: "Prepare environment for ios"
         working-directory: ./scripts
