@@ -93,7 +93,7 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
 
       final allowance = Fmt.bigIntToDouble(swapNativeOption.nativeAllowance, ertDecimals);
       final rate = swapNativeOption.rate != null
-          ? i64F64Parser.toDouble(swapNativeOption.rate!.bits) / pow(10, ertDecimals)
+          ? i64F64Parser.toDouble(swapNativeOption.rate!.bits) * pow(10, ertDecimals)
           : null;
 
       // This won't be null until we introduce oracle based rates.
