@@ -756,7 +756,7 @@ class _ProposePageState extends State<ProposePage> {
         final issueOption = SwapNativeOption(
           cid: cid,
           nativeAllowance: BigInt.from(amount * pow(10, 12)),
-          rate: fixedU128FromDouble(rate * pow(10, 12)),
+          rate: fixedU128FromDouble(rate * pow(10, -12)),
           doBurn: true,
         );
 
