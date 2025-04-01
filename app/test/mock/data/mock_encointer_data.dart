@@ -24,10 +24,6 @@ List<CidName> testCommunities = [
   CidName(cid3, buendnerBock),
 ];
 
-Map<int, CommunityReputationV1> testReputations = {
-  1: CommunityReputationV1(cid, ReputationV1.VerifiedUnlinked),
-};
-
 const Map<String, dynamic> communityMetadata = {
   'name': 'Züri Loi',
   'symbol': 'ZUL',

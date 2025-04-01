@@ -225,6 +225,7 @@
             }
         }
     },
+    "proposalExplainerCannotVoteYet": "Du kannst ab dem nächsten Zyklus mit deiner Reputation abstimmen!",
     "proposalType": "Vorschlagstyp",
     "proposalTypeAddLocation": "Standort hinzufügen",
     "proposalTypeRemoveLocation": "Standort entfernen",

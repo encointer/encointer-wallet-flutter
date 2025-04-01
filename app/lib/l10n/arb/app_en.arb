@@ -225,6 +225,7 @@
             }
         }
     },
+    "proposalExplainerCannotVoteYet": "You can start voting with your reputation as of the next cycle!",
     "proposalType": "Proposal Type",
     "proposalTypeAddLocation": "Add location",
     "proposalTypeRemoveLocation": "Remove location",
