@@ -110,7 +110,8 @@ class _DemocracyPageState extends State<DemocracyPage> {
       body: SafeArea(
         child: Column(
           children: [
-            if (store.encointer.chosenCid != null && verifiedReputations.isNotEmpty && votingReputations.isEmpty) _getVotingReputationExplainer(context),
+            if (store.encointer.chosenCid != null && verifiedReputations.isNotEmpty && votingReputations.isEmpty)
+              _getVotingReputationExplainer(context),
             if (store.encointer.chosenCid == null)
               const Text('Need to choose a community for democracy')
             else
@@ -163,7 +164,9 @@ class _DemocracyPageState extends State<DemocracyPage> {
             ),
             Text(
               context.l10n.proposalExplainerCannotVoteYet,
-                style: theme, textAlign: TextAlign.left,),
+              style: theme,
+              textAlign: TextAlign.left,
+            ),
           ],
         ),
       ),
