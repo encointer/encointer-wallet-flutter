@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/gen/assets.gen.dart';
+import 'package:encointer_wallet/gen/assets.g.dart';
 import 'package:flutter/material.dart';
 
 class EncointerLogo extends StatelessWidget {
