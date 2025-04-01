@@ -225,6 +225,7 @@
             }
         }
     },
+    "proposalExplainerCannotVoteYet": "Ты сможешь начать голосовать с репутацией со следующего цикла!",
     "proposalTypeAddLocation": "Добавить местоположение",
     "proposalTypeRemoveLocation": "Удалить местоположение",
     "proposalTypeUpdateDemurrage": "Обновить демерредж",
