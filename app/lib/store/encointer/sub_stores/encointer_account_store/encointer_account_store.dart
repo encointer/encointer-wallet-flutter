@@ -59,7 +59,9 @@ abstract class _EncointerAccountStore with Store {
   ///
   /// Note: must be nullable for json-deserialization of old stores.
   @observable
-  Map<int, CommunityReputation> reputations = ObservableMap();
+  Map<int, CommunityReputation>? _reputationsV2;
+
+  Map<int, CommunityReputation> get reputations => _reputationsV2 ?? {};
 
   /// Returns all reputations associated with a meetup.
   @computed
@@ -141,7 +143,7 @@ abstract class _EncointerAccountStore with Store {
 
   @action
   Future<void> setReputations(Map<int, CommunityReputation> reps) async {
-    reputations = reps;
+    _reputationsV2 = reps;
     unawaited(writeToCache());
     await getNumberOfNewbieTicketsForReputable();
   }
