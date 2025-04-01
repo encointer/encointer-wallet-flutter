@@ -13,6 +13,9 @@ EncointerAccountStore _$EncointerAccountStoreFromJson(Map<String, dynamic> json)
       ..balanceEntries = ObservableMap<String, BalanceEntry>.of((json['balanceEntries'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(k, BalanceEntry.fromJson(e as Map<String, dynamic>)),
       ))
+      ..reputations = (json['reputations'] as Map<String, dynamic>).map(
+        (k, e) => MapEntry(int.parse(k), CommunityReputation.fromJson(e as Map<String, dynamic>)),
+      )
       ..txsTransfer = ObservableList<TransferData>.of(
           (json['txsTransfer'] as List).map((e) => TransferData.fromJson(e as Map<String, dynamic>)))
       ..numberOfNewbieTicketsForReputable = (json['numberOfNewbieTicketsForReputable'] as num).toInt()
@@ -24,6 +27,7 @@ Map<String, dynamic> _$EncointerAccountStoreToJson(EncointerAccountStore instanc
       'network': instance.network,
       'address': instance.address,
       'balanceEntries': instance.balanceEntries.map((k, e) => MapEntry(k, e.toJson())),
+      'reputations': instance.reputations.map((k, e) => MapEntry(k.toString(), e.toJson())),
       'txsTransfer': instance.txsTransfer.map((e) => e.toJson()).toList(),
       'numberOfNewbieTicketsForReputable': instance.numberOfNewbieTicketsForReputable,
       'lastProofOfAttendance': instance.lastProofOfAttendance?.toJson(),
@@ -65,18 +69,18 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
     });
   }
 
-  late final _$_reputationsV2Atom = Atom(name: '_EncointerAccountStore._reputationsV2', context: context);
+  late final _$reputationsAtom = Atom(name: '_EncointerAccountStore.reputations', context: context);
 
   @override
-  Map<int, CommunityReputation>? get _reputationsV2 {
-    _$_reputationsV2Atom.reportRead();
-    return super._reputationsV2;
+  Map<int, CommunityReputation> get reputations {
+    _$reputationsAtom.reportRead();
+    return super.reputations;
   }
 
   @override
-  set _reputationsV2(Map<int, CommunityReputation>? value) {
-    _$_reputationsV2Atom.reportWrite(value, super._reputationsV2, () {
-      super._reputationsV2 = value;
+  set reputations(Map<int, CommunityReputation> value) {
+    _$reputationsAtom.reportWrite(value, super.reputations, () {
+      super.reputations = value;
     });
   }
 
@@ -202,6 +206,7 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   String toString() {
     return '''
 balanceEntries: ${balanceEntries},
+reputations: ${reputations},
 txsTransfer: ${txsTransfer},
 numberOfNewbieTicketsForReputable: ${numberOfNewbieTicketsForReputable},
 lastProofOfAttendance: ${lastProofOfAttendance},
