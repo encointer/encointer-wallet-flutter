@@ -44,6 +44,17 @@ class SubstrateDartApi {
     }
   }
 
+  Future<bool> newTreasuryRpcSupported() async {
+    try {
+      // Check treasury account. This will return an exception if the rpc is not supported.
+      await rpc<String>('encointer_getCommunityTreasuryAccountUnchecked', []);
+
+      return Future.value(true);
+    } catch (e) {
+      return Future.value(false);
+    }
+  }
+
   /// Queries the rpc of the node.
   ///
   /// Hints:
