@@ -44,7 +44,6 @@ class SubstrateDartApi {
     }
   }
 
-
   Future<bool> newTreasuryRpcSupported() async {
     try {
       // Check treasury account. This will return an exception if the rpc is not supported.
