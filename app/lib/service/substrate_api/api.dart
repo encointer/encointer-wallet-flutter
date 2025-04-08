@@ -36,12 +36,16 @@ class NetworkEndpointChecker with EndpointChecker<NetworkEndpoint> {
       return false;
     }
 
-    final offchainIndexing = await SubstrateDartApi(provider).offchainIndexingEnabled();
-    Log.d('[NetworkEndpointChecker] Endpoint ${endpoint.address()} offchainIndexingEnabled: $offchainIndexing', 'Api');
+    final health = await Future.wait([
+      SubstrateDartApi(provider).offchainIndexingEnabled(),
+      SubstrateDartApi(provider).newTreasuryRpcSupported(),
+    ]);
+    Log.d('[NetworkEndpointChecker] Endpoint ${endpoint.address()} offchainIndexingEnabled: ${health[0]}', 'Api');
+    Log.d('[NetworkEndpointChecker] Endpoint ${endpoint.address()} newTreasuryRpcSuppored: ${health[1]}', 'Api');
 
     await provider.disconnect();
-    // only allow nodes that have offchain indexing enabled
-    return offchainIndexing;
+    // only allow nodes that have offchain indexing enabled and support the new treasury rpc
+    return health[0] && health[1];
   }
 }
 
@@ -113,7 +117,6 @@ class Api {
     final manager =
         EndpointManager.withEndpoints(NetworkEndpointChecker(), store.settings.currentNetwork.networkEndpoints());
     final endpoint = await manager.pollHealthyEndpoint(randomize: true);
-
     Log.p('[webApi] Connecting to healthy endpoint: ${endpoint.address()}', 'Api');
 
     store.settings.setNetworkLoading(true);

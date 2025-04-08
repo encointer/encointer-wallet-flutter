@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euxo pipefail
 
-DOCKER_TAG=${1:-1.13.0}
+DOCKER_TAG=${1:-1.16.2}
 
 echo "Encointer client docker tag: ${DOCKER_TAG}"
 
