@@ -174,8 +174,8 @@ bool isInVotingCindexes(
 }
 
 bool isPassing(Tally tally, BigInt electorateSize, BigInt minTurnout) {
-  // minTurnout is in perThousands
-  if ((tally.turnout == BigInt.from(0)) | ((tally.turnout * BigInt.from(1000) / electorateSize) < minTurnout.toInt())) {
+
+  if (!minTurnoutReached(tally, electorateSize, minTurnout)) {
     return false;
   }
 
@@ -184,6 +184,11 @@ bool isPassing(Tally tally, BigInt electorateSize, BigInt minTurnout) {
     tally.turnout.toInt(),
     tally.ayes.toInt(),
   );
+}
+
+bool minTurnoutReached(Tally tally, BigInt electorateSize, BigInt minTurnout) {
+  // minTurnout is in perThousands
+  return (tally.turnout > BigInt.from(0)) && ((tally.turnout * BigInt.from(1000) / electorateSize) >= minTurnout.toInt());
 }
 
 bool positiveTurnoutBias(int electorate, int turnout, int ayes) {
