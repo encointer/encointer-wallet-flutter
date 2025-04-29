@@ -236,7 +236,15 @@
     "proposalTypeSpendNative": "Tumia tokeni asili",
     "proposalTypeIssueSwapNativeOption": "Toa chaguo la kubadilisha tokeni asili",
     "proposalScope": "Wigo",
-    "proposalScopeLocal": "Kitaifa",
+    "proposalScopeLocal": "Kitaifa ({community})",
+    "@proposalScopeLocal": {
+        "placeholders": {
+            "community": {
+                "type": "String",
+                "example": "Mediterranea"
+            }
+        }
+    },
     "proposalScopeGlobal": "Kimataifa",
     "proposalFieldLatitude": "Latitudo",
     "proposalFieldLongitude": "Longitudo",

@@ -223,7 +223,7 @@ class _ProposePageState extends State<ProposePage> {
                           items: allowedScopes.map((ProposalScope scope) {
                             return DropdownMenuItem<ProposalScope>(
                               value: scope,
-                              child: Text(scope.localizedStr(l10n)),
+                              child: Text(scope.localizedStr(l10n, store.encointer.community!.name!)),
                             );
                           }).toList(),
                           decoration: InputDecoration(labelText: l10n.proposalScope),
