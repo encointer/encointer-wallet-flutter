@@ -236,7 +236,15 @@
     "proposalTypeSpendNative": "Native Tokens ausgeben",
     "proposalTypeIssueSwapNativeOption": "Swap-Option für Native Tokens ausgeben",
     "proposalScope": "Geltungsbereich",
-    "proposalScopeLocal": "Lokal",
+    "proposalScopeLocal": "Lokal ({community})",
+    "@proposalScopeLocal": {
+        "placeholders": {
+            "community": {
+                "type": "String",
+                "example": "Mediterranea"
+            }
+        }
+    },
     "proposalScopeGlobal": "Global",
     "proposalFieldLatitude": "Breitengrad",
     "proposalFieldLongitude": "Längengrad",

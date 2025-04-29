@@ -235,7 +235,15 @@
     "proposalTypeSpendNative": "Потратить нативные токены",
     "proposalTypeIssueSwapNativeOption": "Выпустить опцион на обмен нативных токенов",
     "proposalScope": "Область действия",
-    "proposalScopeLocal": "Локальный",
+    "proposalScopeLocal": "Локальный ({community})",
+    "@proposalScopeLocal": {
+        "placeholders": {
+            "community": {
+                "type": "String",
+                "example": "Mediterranea"
+            }
+        }
+    },
     "proposalScopeGlobal": "Глобальный",
     "proposalFieldLatitude": "Широта",
     "proposalFieldLongitude": "Долгота",
