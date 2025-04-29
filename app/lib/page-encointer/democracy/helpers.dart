@@ -173,9 +173,9 @@ bool isInVotingCindexes(
   return cIndex >= votingCindexLowerBound && cIndex <= votingCindexUpperBound;
 }
 
-bool isPassing(Tally tally, BigInt electorateSize, DemocracyParams params) {
+bool isPassing(Tally tally, BigInt electorateSize, BigInt minTurnout) {
   // minTurnout is in perThousands
-  if ((tally.turnout < BigInt.from(1)) | (tally.turnout < params.minTurnout * electorateSize ~/ BigInt.from(1000))) {
+  if ((tally.turnout == BigInt.from(0)) | ((tally.turnout * BigInt.from(1000) / electorateSize) < minTurnout.toInt())) {
     return false;
   }
 

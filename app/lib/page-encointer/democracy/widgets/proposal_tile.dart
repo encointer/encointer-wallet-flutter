@@ -167,7 +167,7 @@ class _ProposalTileState extends State<ProposalTile> {
     }
 
     // This is for current proposals
-    if (isPassing(tally, proposal.electorateSize, params)) {
+    if (isPassing(tally, proposal.electorateSize, params.minTurnout)) {
       return Text(l10n.proposalIsPassing(percentage), style: const TextStyle(color: Colors.green));
     } else {
       return Text(l10n.proposalIsFailing(percentage), style: const TextStyle(color: Colors.red));
