@@ -1,5 +1,7 @@
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/page-encointer/democracy/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
+import 'package:ew_polkadart/encointer_types.dart' as et;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -59,6 +61,60 @@ void main() {
       final queue = <ProposalActionIdWithScope>[ProposalActionIdWithScope(actionId, null)];
 
       expect(hasSameProposalForSameScope(queue, actionId, cid), false);
+    });
+  });
+
+  group('isPassingWorks', () {
+    test('returns false if minTurnout is not reached', () {
+      // Taken from bug report: https://github.com/encointer/encointer-wallet-flutter/issues/1797
+
+      final tally = et.Tally(turnout: BigInt.from(6), ayes: BigInt.from(6));
+      final electorateSize = BigInt.from(129);
+      final minTurnout = BigInt.from(50);
+
+      expect(isPassing(tally, electorateSize, minTurnout), false);
+    });
+
+    test('returns true if turnout threshold is exactly reached', () {
+      final tally = et.Tally(turnout: BigInt.from(1), ayes: BigInt.from(1));
+      final electorateSize = BigInt.from(2);
+      final minTurnout = BigInt.from(50);
+
+      expect(isPassing(tally, electorateSize, minTurnout), true);
+    });
+
+    test('returns false for 100% nays', () {
+      final tally = et.Tally(turnout: BigInt.from(1), ayes: BigInt.from(0));
+      final electorateSize = BigInt.from(2);
+      final minTurnout = BigInt.from(50);
+
+      expect(isPassing(tally, electorateSize, minTurnout), false);
+    });
+  });
+
+  group('minTurnoutReachedWorks', () {
+    test('returns false if minTurnout is not reached', () {
+      final tally = et.Tally(turnout: BigInt.from(6), ayes: BigInt.from(6));
+      final electorateSize = BigInt.from(129);
+      final minTurnout = BigInt.from(50);
+
+      expect(minTurnoutReached(tally, electorateSize, minTurnout), false);
+    });
+
+    test('returns true if turnout threshold is exactly reached', () {
+      final tally = et.Tally(turnout: BigInt.from(1), ayes: BigInt.from(1));
+      final electorateSize = BigInt.from(2);
+      final minTurnout = BigInt.from(50);
+
+      expect(minTurnoutReached(tally, electorateSize, minTurnout), true);
+    });
+
+    test('returns true for max turnout', () {
+      final tally = et.Tally(turnout: BigInt.from(2), ayes: BigInt.from(2));
+      final electorateSize = BigInt.from(2);
+      final minTurnout = BigInt.from(50);
+
+      expect(minTurnoutReached(tally, electorateSize, minTurnout), true);
     });
   });
 }
