@@ -84,6 +84,16 @@ void main() {
 
       expect(isPassing(tally, electorateSize, minTurnout), true);
     });
+
+    test('returns false for 100% nays', () {
+      // Taken from bug report: https://github.com/encointer/encointer-wallet-flutter/issues/1797
+
+      final tally = et.Tally(turnout: BigInt.from(1), ayes: BigInt.from(0));
+      final electorateSize = BigInt.from(2);
+      final minTurnout = BigInt.from(50);
+
+      expect(isPassing(tally, electorateSize, minTurnout), false);
+    });
   });
 
   group('minTurnoutReachedWorks', () {
@@ -101,6 +111,16 @@ void main() {
       // Taken from bug report: https://github.com/encointer/encointer-wallet-flutter/issues/1797
 
       final tally = et.Tally(turnout: BigInt.from(1), ayes: BigInt.from(1));
+      final electorateSize = BigInt.from(2);
+      final minTurnout = BigInt.from(50);
+
+      expect(minTurnoutReached(tally, electorateSize, minTurnout), true);
+    });
+
+    test('returns true for max turnout', () {
+      // Taken from bug report: https://github.com/encointer/encointer-wallet-flutter/issues/1797
+
+      final tally = et.Tally(turnout: BigInt.from(2), ayes: BigInt.from(2));
       final electorateSize = BigInt.from(2);
       final minTurnout = BigInt.from(50);
 
