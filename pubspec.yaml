@@ -68,9 +68,7 @@ melos:
       description: "Get pub dependencies"
 
     pub-get:
-      run: >-
-        dart run melos exec -- \
-        flutter pub get
+      run: dart pub get
       description: "Get pub dependencies"
 
     unit-test:
