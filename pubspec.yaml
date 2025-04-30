@@ -62,9 +62,7 @@ melos:
       description: "Analyze all Dart code and exit if there are any fatal warnings"
 
     flutter-clean:
-      run: >-
-        dart run melos exec -- \
-        flutter clean
+      run: flutter clean
       description: "Get pub dependencies"
 
     pub-get:
