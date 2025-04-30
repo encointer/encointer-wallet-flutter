@@ -135,8 +135,10 @@ flutter_icons:
 
 flutter_gen:
   output: lib/gen/ # Optional (default: lib/gen/)
+  line_length: 120 # Optional (default: 80)
 
   integrations:
+    image: true
     flutter_svg: true
 
 # The following section is specific to Flutter.

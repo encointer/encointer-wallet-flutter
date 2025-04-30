@@ -83,6 +83,10 @@ melos:
         flutter pub run build_runner build --delete-conflicting-outputs
       description: "Generate code with build_runner"
 
+    generate-translations:
+      run: cd app && flutter gen-l10n
+      description: "Generate translationsr"
+
     # Note: This produces bad filepaths on windows. Need to run this script afterwards:
     # `./scripts/replace_backslash_in_dart_files.sh packages/ew_polkadart`.
     run-polkadart-generate:

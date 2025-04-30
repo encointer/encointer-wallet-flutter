@@ -84,8 +84,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get appSettings => 'App-Einstellungen';
 
   @override
-  String get attestNotificationBody =>
-      'Wenn alle Teilnehmer die Attestierungen geschickt haben, kannst du versuchen das Einkommen zu erhalten.';
+  String get attestNotificationBody => 'Wenn alle Teilnehmer die Attestierungen geschickt haben, kannst du versuchen das Einkommen zu erhalten.';
 
   @override
   String get attestNotificationTitle => 'Teilnehmer attestiert';
@@ -97,8 +96,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get balance => 'Kontostand';
 
   @override
-  String get balanceTooLowBody =>
-      'Du hast nicht genug Geld auf dem Konto. Du kannst nicht dein ganzes Geld schicken, weil du noch ein wenig für die Gebühren brauchst.';
+  String get balanceTooLowBody => 'Du hast nicht genug Geld auf dem Konto. Du kannst nicht dein ganzes Geld schicken, weil du noch ein wenig für die Gebühren brauchst.';
 
   @override
   String get balanceTooLowTitle => 'Kontostand zu tief';
@@ -116,19 +114,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biometricAuth => 'Biometrische Authentifizierung';
 
   @override
-  String get biometricAuthDescription =>
-      'Die biometrische Authentifizierung verwendet die auf deinem Telefon gespeicherten biometrischen Informationen, um dich zu authentifizieren, anstatt deinen PIN zu verwenden. Du kannst die biometrische Authentifizierung jederzeit in den Einstellungen aktivieren und deaktivieren.';
+  String get biometricAuthDescription => 'Die biometrische Authentifizierung verwendet die auf deinem Telefon gespeicherten biometrischen Informationen, um dich zu authentifizieren, anstatt deinen PIN zu verwenden. Du kannst die biometrische Authentifizierung jederzeit in den Einstellungen aktivieren und deaktivieren.';
 
   @override
-  String get biometricAuthEnableDisableDescription =>
-      'Gib deinen PIN ein, um die biometrische Authentifizierung zu aktivieren oder zu deaktivieren.';
+  String get biometricAuthEnableDisableDescription => 'Gib deinen PIN ein, um die biometrische Authentifizierung zu aktivieren oder zu deaktivieren.';
 
   @override
   String get block => 'Block';
 
   @override
-  String get bootstrapperContent =>
-      'Wenn Du noch Endorsement-Tickets übrig hast, vergiss nicht Newbies zu als vertrauenswürdig zu bestätigen.';
+  String get bootstrapperContent => 'Wenn Du noch Endorsement-Tickets übrig hast, vergiss nicht Newbies zu als vertrauenswürdig zu bestätigen.';
 
   @override
   String get bootstrapperTitle => 'Als Bootstrapper registriert - Dein Platz ist garantiert.';
@@ -137,15 +132,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get calendarEntryDescription => 'Nimm an der Versammlung teil um dein Einkommen zu erhalten';
 
   @override
-  String get cameraPermissionError =>
-      'Es gab einen Fehler beim Überprüfen der Kameraerlaubnis. Du kannst die Erlaubnis für die Kamera auch über die App-Einstellungen erteilen.';
+  String get cameraPermissionError => 'Es gab einen Fehler beim Überprüfen der Kameraerlaubnis. Du kannst die Erlaubnis für die Kamera auch über die App-Einstellungen erteilen.';
 
   @override
   String get cancel => 'Abbruch';
 
   @override
-  String get canEndorseInRegisteringPhaseOnly =>
-      'Du kannst nur in der Registrierungsphase jemanden als zuverlässig markieren';
+  String get canEndorseInRegisteringPhaseOnly => 'Du kannst nur in der Registrierungsphase jemanden als zuverlässig markieren';
 
   @override
   String get cantEndorseBootstrapper => 'Bootstrapper sind bereits als zuverlässig markiert';
@@ -154,8 +147,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get categories => 'Kategorien';
 
   @override
-  String get canUseFaucetOnlyWithCurrentAccount =>
-      'Du kannst das Faucet nur benutzen, wenn das angezeigte Konto das zurzeit gewählte Konto ist.';
+  String get canUseFaucetOnlyWithCurrentAccount => 'Du kannst das Faucet nur benutzen, wenn das angezeigte Konto das zurzeit gewählte Konto ist.';
 
   @override
   String get changeYourPin => 'PIN ändern';
@@ -164,8 +156,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get checkEmailApp => 'Keine Email-App installiert';
 
   @override
-  String get chosenRightCommunity =>
-      'Die Daten sind für eine andere Gemeinschaft. Bitte wechsle die Gemeinschaft um Geld zu senden.';
+  String get chosenRightCommunity => 'Die Daten sind für eine andere Gemeinschaft. Bitte wechsle die Gemeinschaft um Geld zu senden.';
 
   @override
   String get claim => 'Einfordern';
@@ -180,8 +171,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get claimsScannedAlready => 'bereits gescannter Antrag wurde aktualisiert';
 
   @override
-  String get claimsScannedDecodeFailed =>
-      'Gescannter Antrag konnte nicht dekodiert werden. Dein Gegenüber muss die App updaten.';
+  String get claimsScannedDecodeFailed => 'Gescannter Antrag konnte nicht dekodiert werden. Dein Gegenüber muss die App updaten.';
 
   @override
   String get claimsScannedNew => 'Neuer Antrag gescannt';
@@ -271,8 +261,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get createPassword2Error => 'Die PINs stimmen nicht überein';
 
   @override
-  String get createPasswordError =>
-      'Der PIN muss aus mindestens 4 Ziffern bestehen und darf keine anderen Zeichen enthalten';
+  String get createPasswordError => 'Der PIN muss aus mindestens 4 Ziffern bestehen und darf keine anderen Zeichen enthalten';
 
   @override
   String get deleteAccount => 'löschen';
@@ -299,8 +288,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get democracyUpdatedProposalStateNotificationTitle => 'Vorschlag aktualisiert';
 
   @override
-  String get democracySubmitProposalNotificationBody =>
-      'Du hast einen Vorschlag eingereicht, über den nun abgestimmt werden kann.';
+  String get democracySubmitProposalNotificationBody => 'Du hast einen Vorschlag eingereicht, über den nun abgestimmt werden kann.';
 
   @override
   String get democracySubmitProposalNotificationTitle => 'Vorschlag eingereicht';
@@ -327,8 +315,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get enableBazaar => 'Bazaar aktivieren';
 
   @override
-  String get endorseeContent =>
-      'Du wurdest von einem Bootstrapper als vertrauenswürdiges Mitglied bestätigt. Deswegen ist dein Sitz garantiert.';
+  String get endorseeContent => 'Du wurdest von einem Bootstrapper als vertrauenswürdiges Mitglied bestätigt. Deswegen ist dein Sitz garantiert.';
 
   @override
   String get endorseeTitle => 'Als Endorsee registriert - Dein Platz is garantiert.';
@@ -367,8 +354,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get exportMnemonicOk => 'Mnemonik wurde in die Zwischenablage kopiert.';
 
   @override
-  String get exportWarn =>
-      'Schreibe diese Wörter auf ein Papier. Behalte das Papier an einem sicheren Ort. Diese Wörter geben jedem Zugriff auf das Konto und das Vermögen';
+  String get exportWarn => 'Schreibe diese Wörter auf ein Papier. Behalte das Papier an einem sicheren Ort. Diese Wörter geben jedem Zugriff auf das Konto und das Vermögen';
 
   @override
   String get fail => 'Fehlgeschlagen';
@@ -413,8 +399,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get importDuplicate => 'Dieses Konto existiert bereits, möchtest du es überschreiben?';
 
   @override
-  String get importedWithRawSeedHenceNoMnemonic =>
-      'Konto wurde mit einem Raw Seed importiert und hat deshalb keine Mnemonik';
+  String get importedWithRawSeedHenceNoMnemonic => 'Konto wurde mit einem Raw Seed importiert und hat deshalb keine Mnemonik';
 
   @override
   String get importInvalidMnemonic => 'Ungültige Mnemonik eingegeben';
@@ -435,15 +420,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get insufficientBalance => 'Ungenügender Saldo';
 
   @override
-  String get insufficientFundsErrorBody =>
-      'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite deiner lokalen Gemeinschaft, wie du welches bekommen kannst.';
+  String get insufficientFundsErrorBody => 'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite deiner lokalen Gemeinschaft, wie du welches bekommen kannst.';
 
   @override
   String get insufficientFundsErrorTitle => 'Zu wenig Guthaben';
 
   @override
-  String get invalidTransactionFormatErrorBody =>
-      'Die Transaktion hatte ein ungültiges Format, was ein Fehler in der Anwendung sein könnte. Wenn du denkst, dass es sich um einen Bug handelt, tippe einfach auf das entsprechende Feld unten.';
+  String get invalidTransactionFormatErrorBody => 'Die Transaktion hatte ein ungültiges Format, was ein Fehler in der Anwendung sein könnte. Wenn du denkst, dass es sich um einen Bug handelt, tippe einfach auf das entsprechende Feld unten.';
 
   @override
   String get invalidTransactionFormatErrorTitle => 'Ungültiges Transaktionsformat';
@@ -491,8 +474,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meetupClaimantEqualToSelf => 'Fehler, Adresse ist aktueller account. Antrag wurde nicht gespeichert.';
 
   @override
-  String get meetupClaimantInvalid =>
-      'Diese* Antragssteller*in gehört nicht zu deiner Versammlung. Antrag wurde nicht gespeichert.';
+  String get meetupClaimantInvalid => 'Diese* Antragssteller*in gehört nicht zu deiner Versammlung. Antrag wurde nicht gespeichert.';
 
   @override
   String get meetupLocation => 'Treffpunkt';
@@ -503,8 +485,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get meetupIndexPopupExplanation =>
-      'Verwende die Versammlungsnummer, um deinen tatsächlichen Versammlungsort zu finden. Der Community-Leader ist in deiner Gemeinschaft für die Festlegung der Versammlungsorte verantwortlich. Der tatsächliche Ort kann sich leicht von dem hier angezeigten unterscheiden.';
+  String get meetupIndexPopupExplanation => 'Verwende die Versammlungsnummer, um deinen tatsächlichen Versammlungsort zu finden. Der Community-Leader ist in deiner Gemeinschaft für die Festlegung der Versammlungsorte verantwortlich. Der tatsächliche Ort kann sich leicht von dem hier angezeigten unterscheiden.';
 
   @override
   String get meetupNotificationOneDayBeforeContent => 'Treffen beginnt in 24 Stunden';
@@ -522,8 +503,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mnemonic => 'Mnemonik';
 
   @override
-  String get newbieContent =>
-      'Bei deinem derzeitigen Status ist die Teilnahme am kommenden Cycle nicht garantiert. Bitte Frag in deinem Umfeld nach einem Vertrauensvorschuss.';
+  String get newbieContent => 'Bei deinem derzeitigen Status ist die Teilnahme am kommenden Cycle nicht garantiert. Bitte Frag in deinem Umfeld nach einem Vertrauensvorschuss.';
 
   @override
   String get newbieTitle => 'Teilnahme Nicht Garantiert';
@@ -538,8 +518,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get nextCycleTimeLeft => 'Nächster Cycle ist in';
 
   @override
-  String get noCommunitiesAreYouOffline =>
-      'Keine Gemeinschaften gefunden. Du kannst später eine auswählen. Bist du offline?';
+  String get noCommunitiesAreYouOffline => 'Keine Gemeinschaften gefunden. Du kannst später eine auswählen. Bist du offline?';
 
   @override
   String get noInvoice => 'Ohne Rechnung';
@@ -560,8 +539,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get noTransactions => 'Keine Transaktionen';
 
   @override
-  String get noValidClaimsErrorBody =>
-      'Keine gültigen Bestätigungen wurden eingereicht. Hast du andere Teilnehmer gescannt?';
+  String get noValidClaimsErrorBody => 'Keine gültigen Bestätigungen wurden eingereicht. Hast du andere Teilnehmer gescannt?';
 
   @override
   String get noValidClaimsErrorTitle => 'Keine gültigen Bestätigungen';
@@ -573,12 +551,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get observe => 'Überwachen';
 
   @override
-  String get observeBrief =>
-      'Markiere diese Adresse als zu überwachen, dann kann diese Adresse in der Kontoauswahlseite ausgewählt werden, um deren Vermögen und Aktionen zu überwachen';
+  String get observeBrief => 'Markiere diese Adresse als zu überwachen, dann kann diese Adresse in der Kontoauswahlseite ausgewählt werden, um deren Vermögen und Aktionen zu überwachen';
 
   @override
-  String get observedPendingExtrinsic =>
-      'Es wurde eine unbestätigte Transaktion beobachtet. Bitte warte auf Bestätigung!';
+  String get observedPendingExtrinsic => 'Es wurde eine unbestätigte Transaktion beobachtet. Bitte warte auf Bestätigung!';
 
   @override
   String get offlineMessage => 'Du bist offline. Du kannst deine Ansprüche später auf dem Startbildschirm einreichen.';
@@ -587,8 +563,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get ok => 'OK';
 
   @override
-  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne =>
-      'Nur Reputables können endorsen. Nimm an einem Treffen teil, um Reputation zu erhalten!';
+  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne => 'Nur Reputables können endorsen. Nimm an einem Treffen teil, um Reputation zu erhalten!';
 
   @override
   String get openMapApplication => 'In Karte öffnen';
@@ -633,8 +608,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get pinHint => 'Du wirst diese PIN benötigen um Transaktionen zu tätigen oder neue Konten hinzufügen.';
 
   @override
-  String get pinInfo =>
-      'PIN muss mindestens 4 Ziffern enthalten. Bei PIN-Verlust ist der Account nicht wiederherstellbar, ausser man hat ein Backup auf der Profilseite gemacht.';
+  String get pinInfo => 'PIN muss mindestens 4 Ziffern enthalten. Bei PIN-Verlust ist der Account nicht wiederherstellbar, ausser man hat ein Backup auf der Profilseite gemacht.';
 
   @override
   String get pinSecure => 'Sichere dein Konto mit einem PIN.';
@@ -664,32 +638,25 @@ class AppLocalizationsDe extends AppLocalizations {
   String get proposalNew => 'Neuer Vorschlag';
 
   @override
-  String get proposalExplainerAddLocation =>
-      'Dieser Vorschlag schlägt einen neuen Treffpunkt für deine Gemeinschaft vor. Achte darauf, dass er mindestens 100 Meter entfernt und nicht weiter als 1 Kilometer von bestehenden Treffpunkten liegt.';
+  String get proposalExplainerAddLocation => 'Dieser Vorschlag schlägt einen neuen Treffpunkt für deine Gemeinschaft vor. Achte darauf, dass er mindestens 100 Meter entfernt und nicht weiter als 1 Kilometer von bestehenden Treffpunkten liegt.';
 
   @override
-  String get proposalExplainerRemoveLocation =>
-      'Dieser Vorschlag schlägt vor, einen bestehenden Treffpunkt deiner Gemeinschaft zu entfernen.';
+  String get proposalExplainerRemoveLocation => 'Dieser Vorschlag schlägt vor, einen bestehenden Treffpunkt deiner Gemeinschaft zu entfernen.';
 
   @override
-  String get proposalExplainerUpdateDemurrage =>
-      'Dieser Vorschlag legt eine neue monatliche Demurrage für die Lokalwährung fest.';
+  String get proposalExplainerUpdateDemurrage => 'Dieser Vorschlag legt eine neue monatliche Demurrage für die Lokalwährung fest.';
 
   @override
-  String get proposalExplainerUpdateNominalIncome =>
-      'Dieser Vorschlag bestimmt ein neues Grundeinkommen pro Versammlungszyklus für deine Gemeinschaft.';
+  String get proposalExplainerUpdateNominalIncome => 'Dieser Vorschlag bestimmt ein neues Grundeinkommen pro Versammlungszyklus für deine Gemeinschaft.';
 
   @override
-  String get proposalExplainerSetInactivityTimeout =>
-      'Dieser Vorschlag setzt eine neue globale Inaktivitätsfrist fest. Falls eine Gemeinschaft über die vorgeschriebene Anzahl an VersammlungsZyklen keine Treffen abhält, wird sie gelöscht.';
+  String get proposalExplainerSetInactivityTimeout => 'Dieser Vorschlag setzt eine neue globale Inaktivitätsfrist fest. Falls eine Gemeinschaft über die vorgeschriebene Anzahl an VersammlungsZyklen keine Treffen abhält, wird sie gelöscht.';
 
   @override
-  String get proposalExplainerPetition =>
-      'Dieser Vorschlag dient als Petition – entweder global oder innerhalb deiner Gemeinschaft. Er hat keine direkte Wirkung auf der Blockchain, signalisiert jedoch ein Anliegen, auf das die Gemeinschaft reagieren kann.';
+  String get proposalExplainerPetition => 'Dieser Vorschlag dient als Petition – entweder global oder innerhalb deiner Gemeinschaft. Er hat keine direkte Wirkung auf der Blockchain, signalisiert jedoch ein Anliegen, auf das die Gemeinschaft reagieren kann.';
 
   @override
-  String get proposalExplainerSpendNative =>
-      'Dieser Vorschlag schlägt vor, KSM aus der Gemeinschaftsreserve für einen Begünstigten auszugeben, entweder durch eine globale oder Gemeinschaftsabstimmung. Diese Mittel können zur Belohnung von Beiträgen oder zur Unterstützung von Gemeinschaftsprojekten verwendet werden.';
+  String get proposalExplainerSpendNative => 'Dieser Vorschlag schlägt vor, KSM aus der Gemeinschaftsreserve für einen Begünstigten auszugeben, entweder durch eine globale oder Gemeinschaftsabstimmung. Diese Mittel können zur Belohnung von Beiträgen oder zur Unterstützung von Gemeinschaftsprojekten verwendet werden.';
 
   @override
   String proposalExplainerIssueSwapNativeOption(String currency) {
@@ -812,12 +779,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get proposalFieldErrorPositiveIntegerRange => 'Muss eine positive ganze Zahl sein';
 
   @override
-  String get proposalOnlyBootstrappersOrReputablesCanSubmit =>
-      'Nur Bootstrappers oder Reputables können einen Vorschlag einreichen.';
+  String get proposalOnlyBootstrappersOrReputablesCanSubmit => 'Nur Bootstrappers oder Reputables können einen Vorschlag einreichen.';
 
   @override
-  String get proposalCannotSubmitProposalTypePendingEnactment =>
-      'Ein Vorschlag dieses Typs kann nicht eingereicht werden, da bereits einer auf die Umsetzung wartet.';
+  String get proposalCannotSubmitProposalTypePendingEnactment => 'Ein Vorschlag dieses Typs kann nicht eingereicht werden, da bereits einer auf die Umsetzung wartet.';
 
   @override
   String get proposalClose => 'Schliessen';
@@ -826,8 +791,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get proposalUpdateState => 'Aktualisieren';
 
   @override
-  String get proposalUpdateExplanation =>
-      'Dies wird den Status des Vorschlags aktualisieren. Wenn er zu alt ist und nicht genügend Aye-Stimmen hat, wird er abgelehnt. Wenn er lange genug bestätigt wurde, wird er angenommen.';
+  String get proposalUpdateExplanation => 'Dies wird den Status des Vorschlags aktualisieren. Wenn er zu alt ist und nicht genügend Aye-Stimmen hat, wird er abgelehnt. Wenn er lange genug bestätigt wurde, wird er angenommen.';
 
   @override
   String get proposalSubmit => 'Vorschlag einreichen';
@@ -941,8 +905,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get remarksButton => 'Öffentliche Notiz einreichen';
 
   @override
-  String get remarksExplain =>
-      'Du kannst eine Notiz an das Netzwerk senden. Diese Notiz wird öffentlich und unveränderlich sein. Sie kann von jemensch gelesen und authentifiziert werden, da sie digital von Dir signiert wird.';
+  String get remarksExplain => 'Du kannst eine Notiz an das Netzwerk senden. Diese Notiz wird öffentlich und unveränderlich sein. Sie kann von jemensch gelesen und authentifiziert werden, da sie digital von Dir signiert wird.';
 
   @override
   String get remarksNote => 'Notiz';
@@ -951,8 +914,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get remarksSubmit => 'Notiz einreichen';
 
   @override
-  String get reputableContent =>
-      'Du hast deine Reputation genutzt um einen garantierten Platz zu erhalten. Achtung: Solltest Du dich anmelden, aber nicht zur Versammlung erscheinen, wirst du wieder ein Newbie.';
+  String get reputableContent => 'Du hast deine Reputation genutzt um einen garantierten Platz zu erhalten. Achtung: Solltest Du dich anmelden, aber nicht zur Versammlung erscheinen, wirst du wieder ein Newbie.';
 
   @override
   String get reputableTitle => 'Als Reputable registriert. Dein Platz ist garantiert';
@@ -973,8 +935,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get retry => 'Wiederholen';
 
   @override
-  String get rewardsAlreadyIssuedErrorBody =>
-      'Ein anderer Teilnehmer hat die Auszahlung für dieses Treffen ausgelöst. Du solltest dein Einkommen bereits erhalten haben.';
+  String get rewardsAlreadyIssuedErrorBody => 'Ein anderer Teilnehmer hat die Auszahlung für dieses Treffen ausgelöst. Du solltest dein Einkommen bereits erhalten haben.';
 
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Einkommen bereits ausgezahlt';
@@ -1070,8 +1031,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get transactionError => 'Transaktionsfehler';
 
   @override
-  String get transactionQueuedOffline =>
-      'Die App ist nicht mit der Blockchain verbunden. Die Transaktionen in der Warteschlange werden automatisch bei erfolgreicher Verbindung versendet.';
+  String get transactionQueuedOffline => 'Die App ist nicht mit der Blockchain verbunden. Die Transaktionen in der Warteschlange werden automatisch bei erfolgreicher Verbindung versendet.';
 
   @override
   String get transfer => 'Senden';
@@ -1119,8 +1079,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get txReady => 'Transaktion bereit.';
 
   @override
-  String get txTooLowPriorityErrorBody =>
-      'Technischer Transaktionsfehler. Das kann passieren, wenn du zweimal innerhalb sehr kurzer Zeit eine Transaktion abschickst. Bitte warte einige Sekunden.';
+  String get txTooLowPriorityErrorBody => 'Technischer Transaktionsfehler. Das kann passieren, wenn du zweimal innerhalb sehr kurzer Zeit eine Transaktion abschickst. Bitte warte einige Sekunden.';
 
   @override
   String get txTooLowPriorityErrorTitle => 'Transaktions Prioritätsfehler';
@@ -1132,8 +1091,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get unknownAccount => 'Unbekanntes Konto';
 
   @override
-  String get unknownError =>
-      'Es ist ein Fehler aufgetreten. Bitte überprüfe deine Internetverbindung und versuche es erneut.';
+  String get unknownError => 'Es ist ein Fehler aufgetreten. Bitte überprüfe deine Internetverbindung und versuche es erneut.';
 
   @override
   String get unregister => 'Abmelden';
@@ -1142,8 +1100,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get unregisterDialogTitle => 'Vom nächsten Key-Signing Cycle abmelden?';
 
   @override
-  String get unregisterParticipantNotificationBody =>
-      'Du hast dich abgemeldet vom nächsten Cycle. Du kannst dich wieder anmelden, wenn du es dir anders überlegst.';
+  String get unregisterParticipantNotificationBody => 'Du hast dich abgemeldet vom nächsten Cycle. Du kannst dich wieder anmelden, wenn du es dir anders überlegst.';
 
   @override
   String get unregisterParticipantNotificationTitle => 'Registrierung storniert';
@@ -1155,8 +1112,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get value => 'Wert';
 
   @override
-  String get votesNotDependableErrorBody =>
-      'Es wurde nur die Hälfte oder weniger der zugewiesenen Teilnehmer bestätigt, oder einige Teilnehmer haben ihre Bestätigungen noch nicht eingereicht. Das verhindert das sofortige Auszahlen des Einkommens und du musst 48 Stunden warten.';
+  String get votesNotDependableErrorBody => 'Es wurde nur die Hälfte oder weniger der zugewiesenen Teilnehmer bestätigt, oder einige Teilnehmer haben ihre Bestätigungen noch nicht eingereicht. Das verhindert das sofortige Auszahlen des Einkommens und du musst 48 Stunden warten.';
 
   @override
   String get votesNotDependableErrorTitle => 'Unzureichende Bestätigungen';
@@ -1180,8 +1136,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get wrongPinHint => 'Konto konnte nicht entsperrt werden. Bitte überprüfe die eingegebene PIN.';
 
   @override
-  String get youAreNotRegisteredPleaseRegisterNextTime =>
-      'Du wurdest nicht für diesen Key-Signing Cycle zugewiesen. Bitte registriere dich für den nächsten Cycle um dein Gemeinschaftseinkommen zu erhalten.';
+  String get youAreNotRegisteredPleaseRegisterNextTime => 'Du wurdest nicht für diesen Key-Signing Cycle zugewiesen. Bitte registriere dich für den nächsten Cycle um dein Gemeinschaftseinkommen zu erhalten.';
 
   @override
   String get yourNewPin => 'Neue PIN';

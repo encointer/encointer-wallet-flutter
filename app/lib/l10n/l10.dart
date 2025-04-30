@@ -1,7 +1,7 @@
-import 'package:encointer_wallet/l10n/arb/app_localizations.dart';
+import 'package:encointer_wallet/l10n/gen/app_localizations.dart';
 import 'package:flutter/widgets.dart';
 
-export 'package:encointer_wallet/l10n/arb/app_localizations.dart';
+export 'package:encointer_wallet/l10n/gen/app_localizations.dart';
 
 extension AppLocalizationsX on BuildContext {
   AppLocalizations get l10n => AppLocalizations.of(this);

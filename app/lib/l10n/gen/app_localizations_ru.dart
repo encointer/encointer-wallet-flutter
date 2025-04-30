@@ -84,8 +84,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get appSettings => 'Настройки приложения';
 
   @override
-  String get attestNotificationBody =>
-      'Если все участники отправили свои подтверждения, можно попробовать получить доход.';
+  String get attestNotificationBody => 'Если все участники отправили свои подтверждения, можно попробовать получить доход.';
 
   @override
   String get attestNotificationTitle => 'Фаза Аттестации успешно завершена';
@@ -97,8 +96,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get balance => 'Баланс';
 
   @override
-  String get balanceTooLowBody =>
-      'У вас недостаточно средств на счету. Вы не можете отправить все свои деньги, так как часть нужна для оплаты комиссии.';
+  String get balanceTooLowBody => 'У вас недостаточно средств на счету. Вы не можете отправить все свои деньги, так как часть нужна для оплаты комиссии.';
 
   @override
   String get balanceTooLowTitle => 'Недостаточно средств на счете';
@@ -116,19 +114,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get biometricAuth => 'Биометрическая аутентификация';
 
   @override
-  String get biometricAuthDescription =>
-      'Биометрическая аутентификация использует биометрическую информацию, хранящуюся на вашем телефоне, для аутентификации вас, вместо использования пин-кода. Вы можете включать и отключать биометрическую аутентификацию в любое время в настройках.';
+  String get biometricAuthDescription => 'Биометрическая аутентификация использует биометрическую информацию, хранящуюся на вашем телефоне, для аутентификации вас, вместо использования пин-кода. Вы можете включать и отключать биометрическую аутентификацию в любое время в настройках.';
 
   @override
-  String get biometricAuthEnableDisableDescription =>
-      'Введите свой PIN-код, чтобы включить или отключить биометрическую аутентификацию.';
+  String get biometricAuthEnableDisableDescription => 'Введите свой PIN-код, чтобы включить или отключить биометрическую аутентификацию.';
 
   @override
   String get block => 'Блокировать';
 
   @override
-  String get bootstrapperContent =>
-      'Рассмотрите возможность одобрения новичков, если у вас есть билеты на одобрение,это поможет сообществу расти.';
+  String get bootstrapperContent => 'Рассмотрите возможность одобрения новичков, если у вас есть билеты на одобрение,это поможет сообществу расти.';
 
   @override
   String get bootstrapperTitle => 'Зарегистрирован в качестве Бутсреппера - место гарантировано.';
@@ -137,8 +132,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get calendarEntryDescription => 'Принять участие в собрании для получения дохода общины';
 
   @override
-  String get cameraPermissionError =>
-      'Произошла ошибка при получении разрешения камеры. Вы можете предоставить разрешение в настройках приложения.';
+  String get cameraPermissionError => 'Произошла ошибка при получении разрешения камеры. Вы можете предоставить разрешение в настройках приложения.';
 
   @override
   String get cancel => 'Отмена';
@@ -153,8 +147,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get categories => 'Категории';
 
   @override
-  String get canUseFaucetOnlyWithCurrentAccount =>
-      'Кран можно использовать только в том случае, если отображаемый счет является текущим выбранным счетом.';
+  String get canUseFaucetOnlyWithCurrentAccount => 'Кран можно использовать только в том случае, если отображаемый счет является текущим выбранным счетом.';
 
   @override
   String get changeYourPin => 'Изменить PIN-код';
@@ -163,15 +156,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get checkEmailApp => 'Убедитесь, что вы загрузили приложение электронной почты';
 
   @override
-  String get chosenRightCommunity =>
-      'Данные относятся к другому сообществу. Пожалуйста, измените сообщество, чтобы отправить средства.';
+  String get chosenRightCommunity => 'Данные относятся к другому сообществу. Пожалуйста, измените сообщество, чтобы отправить средства.';
 
   @override
   String get claim => 'Заявление';
 
   @override
-  String get claimRewardsNotificationBody =>
-      'Ваш запрос на вознаграждение получен и будет обработан в кратчайшие сроки. Вы получили свой доход сообщества!';
+  String get claimRewardsNotificationBody => 'Ваш запрос на вознаграждение получен и будет обработан в кратчайшие сроки. Вы получили свой доход сообщества!';
 
   @override
   String get claimRewardsNotificationTitle => 'Доход сообщества запрошен';
@@ -297,8 +288,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get democracyUpdatedProposalStateNotificationTitle => 'Предложение обновлено';
 
   @override
-  String get democracySubmitProposalNotificationBody =>
-      'Вы внесли предложение, за которое люди могут проголосовать прямо сейчас.';
+  String get democracySubmitProposalNotificationBody => 'Вы внесли предложение, за которое люди могут проголосовать прямо сейчас.';
 
   @override
   String get democracySubmitProposalNotificationTitle => 'Предложение отправлено';
@@ -325,8 +315,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get enableBazaar => 'Включить Базар';
 
   @override
-  String get endorseeContent =>
-      'Вы былы одобрены, как заслуживающий доверия член общины. Следовательно, Вы гарантированно будете назначены на этот цикл.';
+  String get endorseeContent => 'Вы былы одобрены, как заслуживающий доверия член общины. Следовательно, Вы гарантированно будете назначены на этот цикл.';
 
   @override
   String get endorseeTitle => 'Зарегистрирован в качестве Индоссанта - ваше место гарантировано';
@@ -365,8 +354,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get exportMnemonicOk => 'Мнемоника скопирована в буфер обмена';
 
   @override
-  String get exportWarn =>
-      'Запишите эти слова на бумаге. Храните бумагу в безопасном месте. Эти слова позволят восстановить этот аккаунт и получить доступ к его средствам';
+  String get exportWarn => 'Запишите эти слова на бумаге. Храните бумагу в безопасном месте. Эти слова позволят восстановить этот аккаунт и получить доступ к его средствам';
 
   @override
   String get fail => 'Не удалось';
@@ -411,8 +399,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get importDuplicate => 'Учетная запись существует, вы хотите аннулировать существующий аккаунт?';
 
   @override
-  String get importedWithRawSeedHenceNoMnemonic =>
-      'Аккаунт был импортирован с необработанным исходным кодом и поэтому не имеет мнемоники';
+  String get importedWithRawSeedHenceNoMnemonic => 'Аккаунт был импортирован с необработанным исходным кодом и поэтому не имеет мнемоники';
 
   @override
   String get importInvalidMnemonic => 'Предоставлена недопустимая мнемоника';
@@ -433,15 +420,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get insufficientBalance => 'Недостаточный баланс';
 
   @override
-  String get insufficientFundsErrorBody =>
-      'У вас недостаточно средств на этом аккаунте. Посмотрите на веб-сайте вашего местного сообщества, как их получить.';
+  String get insufficientFundsErrorBody => 'У вас недостаточно средств на этом аккаунте. Посмотрите на веб-сайте вашего местного сообщества, как их получить.';
 
   @override
   String get insufficientFundsErrorTitle => 'Недостаточно средств';
 
   @override
-  String get invalidTransactionFormatErrorBody =>
-      'У транзакции был неверный формат, возможно, это ошибка в приложении. Если ты считаешь, что это баг, просто нажми на соответствующее поле ниже.';
+  String get invalidTransactionFormatErrorBody => 'У транзакции был неверный формат, возможно, это ошибка в приложении. Если ты считаешь, что это баг, просто нажми на соответствующее поле ниже.';
 
   @override
   String get invalidTransactionFormatErrorTitle => 'Неверный формат транзакции';
@@ -500,8 +485,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get meetupIndexPopupExplanation =>
-      'Используйте номер собрания, чтобы найти реальное место сбора. Ответственность за определение места сбора в вашей общине несет руководитель общины. Реальное место встречи может несколько отличаться от представленного здесь.';
+  String get meetupIndexPopupExplanation => 'Используйте номер собрания, чтобы найти реальное место сбора. Ответственность за определение места сбора в вашей общине несет руководитель общины. Реальное место встречи может несколько отличаться от представленного здесь.';
 
   @override
   String get meetupNotificationOneDayBeforeContent => 'Встреча начнется через 24 часа';
@@ -519,8 +503,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get mnemonic => 'Мнемоническая фраза';
 
   @override
-  String get newbieContent =>
-      'При Вашем текущем статусе участие в предстоящем цикле не гарантировано. Пожалуйста, обратитесь к своим знакомым с просьбой об одобрении.';
+  String get newbieContent => 'При Вашем текущем статусе участие в предстоящем цикле не гарантировано. Пожалуйста, обратитесь к своим знакомым с просьбой об одобрении.';
 
   @override
   String get newbieTitle => 'Предварительное участие';
@@ -535,8 +518,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get nextCycleTimeLeft => 'Следующий цикл через ';
 
   @override
-  String get noCommunitiesAreYouOffline =>
-      'Сообщества не обнаружены. Позже вы можете выбрать одну из них. Вы в оффлайн режиме?';
+  String get noCommunitiesAreYouOffline => 'Сообщества не обнаружены. Позже вы можете выбрать одну из них. Вы в оффлайн режиме?';
 
   @override
   String get noInvoice => 'Без счета-фактуры';
@@ -557,8 +539,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get noTransactions => 'Нет транзакций';
 
   @override
-  String get noValidClaimsErrorBody =>
-      'Вы не отправили никаких действительных требований. Вы проверили наличие других участников?';
+  String get noValidClaimsErrorBody => 'Вы не отправили никаких действительных требований. Вы проверили наличие других участников?';
 
   @override
   String get noValidClaimsErrorTitle => 'Нет действительных требований';
@@ -570,22 +551,19 @@ class AppLocalizationsRu extends AppLocalizations {
   String get observe => 'Мониторинг';
 
   @override
-  String get observeBrief =>
-      'Отметьте это адрес как подлежащий мониторингу, позже вы сможете выбрать этот адрес на странице выбора аккаунта, для просмотра его активов и действий';
+  String get observeBrief => 'Отметьте это адрес как подлежащий мониторингу, позже вы сможете выбрать этот адрес на странице выбора аккаунта, для просмотра его активов и действий';
 
   @override
   String get observedPendingExtrinsic => 'Наблюдается незавершенная транзакция. Пожалуйста, дождитесь подтверждения!';
 
   @override
-  String get offlineMessage =>
-      'В настоящее время вы находитесь в оффлайн режиме. Ваши заявки можно будет отправить позже на главном экране.';
+  String get offlineMessage => 'В настоящее время вы находитесь в оффлайн режиме. Ваши заявки можно будет отправить позже на главном экране.';
 
   @override
   String get ok => 'OK';
 
   @override
-  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne =>
-      'Одобрять могут только люди со статусом Уважаемого. Для получения репутации, посетите собрание!';
+  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne => 'Одобрять могут только люди со статусом Уважаемого. Для получения репутации, посетите собрание!';
 
   @override
   String get openMapApplication => 'Открыть приложение Карты';
@@ -630,8 +608,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get pinHint => 'Этот PIN-код понадобится вам для транзакций и добавления новой учетной записи';
 
   @override
-  String get pinInfo =>
-      'PIN-код должен состоять как минимум из 4 цифр. При утере PIN-кода, восстановить аккаунт невозможно, если только вы не сделали резервную копию в профиле';
+  String get pinInfo => 'PIN-код должен состоять как минимум из 4 цифр. При утере PIN-кода, восстановить аккаунт невозможно, если только вы не сделали резервную копию в профиле';
 
   @override
   String get pinSecure => 'Защитите свой аккаунт с помощью PIN-кода';
@@ -661,32 +638,25 @@ class AppLocalizationsRu extends AppLocalizations {
   String get proposalNew => 'новое предложение';
 
   @override
-  String get proposalExplainerAddLocation =>
-      'Это предложение предлагает новое место встречи для вашего сообщества. Убедитесь, что оно находится не менее чем в 100 метрах и не более чем в 1 километре от существующих мест встреч.';
+  String get proposalExplainerAddLocation => 'Это предложение предлагает новое место встречи для вашего сообщества. Убедитесь, что оно находится не менее чем в 100 метрах и не более чем в 1 километре от существующих мест встреч.';
 
   @override
-  String get proposalExplainerRemoveLocation =>
-      'Это предложение предлагает удалить существующее место встречи для вашего сообщества.';
+  String get proposalExplainerRemoveLocation => 'Это предложение предлагает удалить существующее место встречи для вашего сообщества.';
 
   @override
-  String get proposalExplainerUpdateDemurrage =>
-      'Это предложение предлагает новый ежемесячный демерредж для токена сообщества.';
+  String get proposalExplainerUpdateDemurrage => 'Это предложение предлагает новый ежемесячный демерредж для токена сообщества.';
 
   @override
-  String get proposalExplainerUpdateNominalIncome =>
-      'Это предложение предлагает новый номинальный доход в циклах встреч для вашего сообщества.';
+  String get proposalExplainerUpdateNominalIncome => 'Это предложение предлагает новый номинальный доход в циклах встреч для вашего сообщества.';
 
   @override
-  String get proposalExplainerSetInactivityTimeout =>
-      'Это предложение предлагает новый глобальный тайм-аут неактивности. Если сообщество не проводит встречи в течение предложенного количества циклов, оно будет удалено.';
+  String get proposalExplainerSetInactivityTimeout => 'Это предложение предлагает новый глобальный тайм-аут неактивности. Если сообщество не проводит встречи в течение предложенного количества циклов, оно будет удалено.';
 
   @override
-  String get proposalExplainerPetition =>
-      'Это предложение служит петицией, либо на глобальном уровне, либо в вашем сообществе. Хотя оно не имеет прямого влияния на блокчейн, оно выражает намерение, позволяя сообществу его распознать и отреагировать.';
+  String get proposalExplainerPetition => 'Это предложение служит петицией, либо на глобальном уровне, либо в вашем сообществе. Хотя оно не имеет прямого влияния на блокчейн, оно выражает намерение, позволяя сообществу его распознать и отреагировать.';
 
   @override
-  String get proposalExplainerSpendNative =>
-      'Это предложение предлагает потратить KSM для получателя из казны сообщества, либо через глобальное, либо через голосование внутри сообщества. Эти средства могут быть использованы для вознаграждения вкладов в сообщество или поддержки инициатив сообщества.';
+  String get proposalExplainerSpendNative => 'Это предложение предлагает потратить KSM для получателя из казны сообщества, либо через глобальное, либо через голосование внутри сообщества. Эти средства могут быть использованы для вознаграждения вкладов в сообщество или поддержки инициатив сообщества.';
 
   @override
   String proposalExplainerIssueSwapNativeOption(String currency) {
@@ -809,12 +779,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get proposalFieldErrorPositiveIntegerRange => 'Должно быть положительное целое число';
 
   @override
-  String get proposalOnlyBootstrappersOrReputablesCanSubmit =>
-      'Только бутстраперы или уважаемые участники могут подать предложение.';
+  String get proposalOnlyBootstrappersOrReputablesCanSubmit => 'Только бутстраперы или уважаемые участники могут подать предложение.';
 
   @override
-  String get proposalCannotSubmitProposalTypePendingEnactment =>
-      'Невозможно подать предложение этого типа, так как уже есть одно ожидающее принятия.';
+  String get proposalCannotSubmitProposalTypePendingEnactment => 'Невозможно подать предложение этого типа, так как уже есть одно ожидающее принятия.';
 
   @override
   String get proposalClose => 'Закрыть';
@@ -823,8 +791,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get proposalUpdateState => 'Обновить';
 
   @override
-  String get proposalUpdateExplanation =>
-      'Это обновит статус предложения. Если оно слишком старое и не имеет достаточного количества голосов \'За\', оно будет отклонено. Если оно подтверждается достаточно долго, оно будет принято.';
+  String get proposalUpdateExplanation => 'Это обновит статус предложения. Если оно слишком старое и не имеет достаточного количества голосов \'За\', оно будет отклонено. Если оно подтверждается достаточно долго, оно будет принято.';
 
   @override
   String get proposalSubmit => 'Подать предложение';
@@ -911,8 +878,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get registeringPhaseReminderTitle => 'Зарегистрируйтесь сейчас, не упустите шанс!';
 
   @override
-  String get registerParticipantNotificationBody =>
-      'Спасибо за регистрацию. Вам будет отправлено напоминание за день до встречи.';
+  String get registerParticipantNotificationBody => 'Спасибо за регистрацию. Вам будет отправлено напоминание за день до встречи.';
 
   @override
   String get registerParticipantNotificationTitle => 'Вы успешно зарегистрировались на следующую встречу!';
@@ -939,8 +905,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get remarksButton => 'отправить публичную заметку';
 
   @override
-  String get remarksExplain =>
-      'Вы можете отправить заметку в сеть. Эта заметка будет публичной и неизменяемой. Её могут прочитать и аутентифицировать все, так как она будет цифрово подписана вами.';
+  String get remarksExplain => 'Вы можете отправить заметку в сеть. Эта заметка будет публичной и неизменяемой. Её могут прочитать и аутентифицировать все, так как она будет цифрово подписана вами.';
 
   @override
   String get remarksNote => 'Заметка';
@@ -949,8 +914,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get remarksSubmit => 'Отправить заметку';
 
   @override
-  String get reputableContent =>
-      'Вы воспользовались своей репутаций для получения гарантированного места. Внимание: Если вы зарегистрируетесь, но не явитесь на цикл, вы снова станете новичком.';
+  String get reputableContent => 'Вы воспользовались своей репутаций для получения гарантированного места. Внимание: Если вы зарегистрируетесь, но не явитесь на цикл, вы снова станете новичком.';
 
   @override
   String get reputableTitle => 'Зарегистрирован в качестве Уважаемого - ваше место гарантировано.';
@@ -971,8 +935,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get retry => 'Повторить';
 
   @override
-  String get rewardsAlreadyIssuedErrorBody =>
-      'Другой участник инициировал выплату за это собрание. Вы уже должны были получить свой доход.';
+  String get rewardsAlreadyIssuedErrorBody => 'Другой участник инициировал выплату за это собрание. Вы уже должны были получить свой доход.';
 
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Вознаграждения уже выданы';
@@ -1068,8 +1031,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get transactionError => 'Ошибка транзакции';
 
   @override
-  String get transactionQueuedOffline =>
-      'Приложение не подключено к блокчейну. Транзакция, которая в очереди (будет отправлена автоматически при подключении).';
+  String get transactionQueuedOffline => 'Приложение не подключено к блокчейну. Транзакция, которая в очереди (будет отправлена автоматически при подключении).';
 
   @override
   String get transfer => 'Отправить';
@@ -1111,15 +1073,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get txQueued => 'Транзакция поставлена в очередь';
 
   @override
-  String get txQueuedOffline =>
-      'Вы находитесь в оффлайн режиме. Транзакция будет отправлена, когда вы снова подключитесь к сети.';
+  String get txQueuedOffline => 'Вы находитесь в оффлайн режиме. Транзакция будет отправлена, когда вы снова подключитесь к сети.';
 
   @override
   String get txReady => 'Транзакция готова.';
 
   @override
-  String get txTooLowPriorityErrorBody =>
-      'Техническая ошибка приоритета транзакции. Это может произойти, если вы быстро дважды нажмете на кнопку отправки. Пожалуйста, подождите несколько секунд.';
+  String get txTooLowPriorityErrorBody => 'Техническая ошибка приоритета транзакции. Это может произойти, если вы быстро дважды нажмете на кнопку отправки. Пожалуйста, подождите несколько секунд.';
 
   @override
   String get txTooLowPriorityErrorTitle => 'Техническая ошибка приоритета транзакции';
@@ -1131,8 +1091,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get unknownAccount => 'Неизвестный аккаунт';
 
   @override
-  String get unknownError =>
-      'Извините, произошла ошибка. Пожалуйста, проверьте свое интернет-соединение и попробуйте еще раз.';
+  String get unknownError => 'Извините, произошла ошибка. Пожалуйста, проверьте свое интернет-соединение и попробуйте еще раз.';
 
   @override
   String get unregister => 'Отменить регистрацию';
@@ -1141,8 +1100,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get unregisterDialogTitle => 'Отказаться от участия в следующем цикле?';
 
   @override
-  String get unregisterParticipantNotificationBody =>
-      'Ваша регистрация на следующий цикл была отменена. Если вы передумаете, вы можете зарегистрироваться снова.';
+  String get unregisterParticipantNotificationBody => 'Ваша регистрация на следующий цикл была отменена. Если вы передумаете, вы можете зарегистрироваться снова.';
 
   @override
   String get unregisterParticipantNotificationTitle => 'Регистрация отменена';
@@ -1154,8 +1112,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get value => 'Значимость';
 
   @override
-  String get votesNotDependableErrorBody =>
-      'Назначенных участников собрания подтвердили только половину или менее. Также возможно, что некоторые участники еще не представили свое подтверждение. Это мешает достижению ранней выплаты, и вам нужно подождать 48 часов.';
+  String get votesNotDependableErrorBody => 'Назначенных участников собрания подтвердили только половину или менее. Также возможно, что некоторые участники еще не представили свое подтверждение. Это мешает достижению ранней выплаты, и вам нужно подождать 48 часов.';
 
   @override
   String get votesNotDependableErrorTitle => 'Голоса недостоверны';
@@ -1179,8 +1136,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get wrongPinHint => 'Не удалось разблокировать аккаунт, пожалуйста, проверьте PIN-код';
 
   @override
-  String get youAreNotRegisteredPleaseRegisterNextTime =>
-      'Вы не были записаны на этот цикл подписания ключей. Пожалуйста, присоединяйтесь к следующему циклу, для того, чтобы получить доход сообщества.';
+  String get youAreNotRegisteredPleaseRegisterNextTime => 'Вы не были записаны на этот цикл подписания ключей. Пожалуйста, присоединяйтесь к следующему циклу, для того, чтобы получить доход сообщества.';
 
   @override
   String get yourNewPin => 'Новый PIN-код';
