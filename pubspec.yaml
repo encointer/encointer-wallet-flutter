@@ -1,9 +1,23 @@
 name: encointer_workspace
 description: EncointerWallet made with Flutter.
 
+workspace:
+  - app
+  - packages/endpoint_manager
+  - packages/ew_encointer_utils
+  - packages/ew_format
+  - packages/ew_http
+  - packages/ew_keyring
+  - packages/ew_polkadart
+  - packages/ew_primitives
+  - packages/ew_storage
+  - packages/ew_substrate_fixed
+  - packages/ew_test_keys
+
 environment:
   sdk: ">=3.6.0 <4.0.0"
   flutter: "3.27.1"
 
 dev_dependencies:
-  melos: 3.4.0
+  build_runner: ^2.4.7
+  melos: 6.1.0

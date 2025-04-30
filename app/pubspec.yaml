@@ -18,6 +18,8 @@ version: 1.16.4+900
 
 publish_to: none
 
+resolution: workspace
+
 environment:
   sdk: ">=3.6.0 <4.0.0"
   flutter: "3.27.1"
@@ -77,24 +79,15 @@ dependencies:
   pointycastle: ^3.9.1
   connectivity_plus: ^6.1.1
   timezone: ^0.10.0
-  ew_endpoint_manager:
-    path: ../packages/endpoint_manager
-  ew_encointer_utils:
-    path: ../packages/ew_encointer_utils/
-  ew_storage:
-    path: ../packages/ew_storage/
-  ew_http:
-    path: ../packages/ew_http/
-  ew_keyring:
-    path: ../packages/ew_keyring/
-  ew_polkadart:
-    path: ../packages/ew_polkadart/
-  ew_primitives:
-    path: ../packages/ew_primitives/
-  ew_substrate_fixed:
-    path: ../packages/ew_substrate_fixed/
-  ew_test_keys:
-    path: ../packages/ew_test_keys/
+  ew_endpoint_manager: 0.1.0
+  ew_encointer_utils: 0.1.0
+  ew_storage: 0.1.0
+  ew_http: 0.1.0
+  ew_keyring: 0.1.0
+  ew_polkadart: 0.1.0
+  ew_primitives: 0.1.0
+  ew_substrate_fixed: 0.1.0
+  ew_test_keys: 0.1.0
   decimal: ^2.3.3
 
 dev_dependencies:
