@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/l10n/arb/app_localizations.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:flutter/cupertino.dart';
 

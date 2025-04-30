@@ -1,8 +1,8 @@
 import 'dart:core';
+import 'package:encointer_wallet/l10n/arb/app_localizations.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
 import 'package:ew_polkadart/runtime_error.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
 
 // named imports to disambiguate error types
 import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_ceremonies/pallet/error.dart'
