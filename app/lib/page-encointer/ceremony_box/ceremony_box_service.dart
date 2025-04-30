@@ -1,5 +1,4 @@
 import 'package:add_2_calendar/add_2_calendar.dart';
-import 'package:encointer_wallet/l10n/arb/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 import 'package:encointer_wallet/models/index.dart';
