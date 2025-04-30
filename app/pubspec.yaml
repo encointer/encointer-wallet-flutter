@@ -127,14 +127,9 @@ flutter_gen:
   integrations:
     flutter_svg: true
 
-  assets:
-    exclude:
-      - js_service_encointer/dist/*.jpg
-
 # The following section is specific to Flutter.
 flutter:
   uses-material-design: true
-  generate: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
