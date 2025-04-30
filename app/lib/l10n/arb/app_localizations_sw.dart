@@ -96,8 +96,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get balance => 'Kiasi';
 
   @override
-  String get balanceTooLowBody =>
-      'Hauna kiasi cha kutosha kwenye akaunti yako. Huwezi kutuma hela yote kwa sababu unahitaji kiasi cha kulipa makato ya ada.';
+  String get balanceTooLowBody => 'Hauna kiasi cha kutosha kwenye akaunti yako. Huwezi kutuma hela yote kwa sababu unahitaji kiasi cha kulipa makato ya ada.';
 
   @override
   String get balanceTooLowTitle => 'Kiasi kipo chini sana';
@@ -115,19 +114,16 @@ class AppLocalizationsSw extends AppLocalizations {
   String get biometricAuth => 'Uhakiki wa kibayometriki';
 
   @override
-  String get biometricAuthDescription =>
-      'Uthibitishaji wa kibiometri unatumia taarifa za kibiometri zilizohifadhiwa kwenye simu yako kuthibitisha utambulisho wako, badala ya kutumia PIN yako. Unaweza kuwezesha au kuzima uthibitishaji wa kibiometri wakati wowote kwenye mipangilio.';
+  String get biometricAuthDescription => 'Uthibitishaji wa kibiometri unatumia taarifa za kibiometri zilizohifadhiwa kwenye simu yako kuthibitisha utambulisho wako, badala ya kutumia PIN yako. Unaweza kuwezesha au kuzima uthibitishaji wa kibiometri wakati wowote kwenye mipangilio.';
 
   @override
-  String get biometricAuthEnableDisableDescription =>
-      'Ingiza PIN yako ili kuwezesha au kuzima uthibitishaji wa kibiometri.';
+  String get biometricAuthEnableDisableDescription => 'Ingiza PIN yako ili kuwezesha au kuzima uthibitishaji wa kibiometri.';
 
   @override
   String get block => 'Zuia';
 
   @override
-  String get bootstrapperContent =>
-      'Kama una tiketi za kuidhinisha, itapendeza sana ukiwaidhinisha wanachama wapya kwenye jamii.';
+  String get bootstrapperContent => 'Kama una tiketi za kuidhinisha, itapendeza sana ukiwaidhinisha wanachama wapya kwenye jamii.';
 
   @override
   String get bootstrapperTitle => 'Umesajiliwa kama kamati anzilishi - nafasi yako ya ushiriki ni ya uhakika.';
@@ -136,8 +132,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get calendarEntryDescription => 'Kusanyika kupata pato lako la jamii.';
 
   @override
-  String get cameraPermissionError =>
-      'Kulikuwa na hitilafu katika kupata ruhusa ya kamera. Kwa namna nyingine unaweza kutoa ruhusa kwenye mipangilio ya programu(app settings).';
+  String get cameraPermissionError => 'Kulikuwa na hitilafu katika kupata ruhusa ya kamera. Kwa namna nyingine unaweza kutoa ruhusa kwenye mipangilio ya programu(app settings).';
 
   @override
   String get cancel => 'Sitisha';
@@ -152,8 +147,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get categories => 'Kategoria';
 
   @override
-  String get canUseFaucetOnlyWithCurrentAccount =>
-      'Unaweza kutumia vipengele vya kisima tu ikiwa ukurasa huu wa akaunti unaonyesha akaunti hai kwa sasa.';
+  String get canUseFaucetOnlyWithCurrentAccount => 'Unaweza kutumia vipengele vya kisima tu ikiwa ukurasa huu wa akaunti unaonyesha akaunti hai kwa sasa.';
 
   @override
   String get changeYourPin => 'Badilisha PIN';
@@ -177,8 +171,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get claimsScannedAlready => 'Dai lililoskaniwa hapo awali limeboreshwa';
 
   @override
-  String get claimsScannedDecodeFailed =>
-      'Haikuweza kutafsiri dai lililoskaniwa. Wanachama wengine wanahitaji kuupdate app..';
+  String get claimsScannedDecodeFailed => 'Haikuweza kutafsiri dai lililoskaniwa. Wanachama wengine wanahitaji kuupdate app..';
 
   @override
   String get claimsScannedNew => 'Skani madai mapya';
@@ -322,8 +315,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get enableBazaar => 'Wezesha Bazaar';
 
   @override
-  String get endorseeContent =>
-      'Umeidhinishwa kama mwanachama mwaminifu wa jamii ya Nyota. Hivyo, kuna uhakika wa wewe kuteuliwa kuhudhuria kikao cha mzunguko huu.';
+  String get endorseeContent => 'Umeidhinishwa kama mwanachama mwaminifu wa jamii ya Nyota. Hivyo, kuna uhakika wa wewe kuteuliwa kuhudhuria kikao cha mzunguko huu.';
 
   @override
   String get endorseeTitle => 'Umesajiliwa kama muidhinishwa - nafasi yako imehakikishwa';
@@ -362,8 +354,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get exportMnemonicOk => 'Maneno ya siri yamenakiliwa.';
 
   @override
-  String get exportWarn =>
-      'Andika haya maneno kwenye karatasi. Karatasi hio itunze. Maneno hayo yanamruhusu mtu yeyote kuingia kwenye akaunti na kuweza kutumia mapato yaliyomo.';
+  String get exportWarn => 'Andika haya maneno kwenye karatasi. Karatasi hio itunze. Maneno hayo yanamruhusu mtu yeyote kuingia kwenye akaunti na kuweza kutumia mapato yaliyomo.';
 
   @override
   String get fail => 'Imefeli';
@@ -408,8 +399,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get importDuplicate => 'Akaunti ipo, Je unataka kubadili akaunti iliyopo?';
 
   @override
-  String get importedWithRawSeedHenceNoMnemonic =>
-      'Akaunti imeingizwa kwa mbegu za kriptografia hivyo haina maneno ya siri.';
+  String get importedWithRawSeedHenceNoMnemonic => 'Akaunti imeingizwa kwa mbegu za kriptografia hivyo haina maneno ya siri.';
 
   @override
   String get importInvalidMnemonic => 'Maneno ya siri yaliyoingizwa sio sahihi';
@@ -430,15 +420,13 @@ class AppLocalizationsSw extends AppLocalizations {
   String get insufficientBalance => 'Kiasi hakitoshi';
 
   @override
-  String get insufficientFundsErrorBody =>
-      'Hauna mali za kutosha kwenye akaunti hii. Angalia kwenye tovuti ya jamii yako kuweza kupata kadhaa.';
+  String get insufficientFundsErrorBody => 'Hauna mali za kutosha kwenye akaunti hii. Angalia kwenye tovuti ya jamii yako kuweza kupata kadhaa.';
 
   @override
   String get insufficientFundsErrorTitle => 'Mali hazitoshi';
 
   @override
-  String get invalidTransactionFormatErrorBody =>
-      'Transaction ilikuwa na muundo usio sahihi, ambayo inaweza kuwa hitilafu katika programu. Ikiwa unadhani hii ni hitilafu, tafadhali bonyeza uwanja unaofaa chini.';
+  String get invalidTransactionFormatErrorBody => 'Transaction ilikuwa na muundo usio sahihi, ambayo inaweza kuwa hitilafu katika programu. Ikiwa unadhani hii ni hitilafu, tafadhali bonyeza uwanja unaofaa chini.';
 
   @override
   String get invalidTransactionFormatErrorTitle => 'Muundo wa Transaction Usio Sahihi';
@@ -497,8 +485,7 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get meetupIndexPopupExplanation =>
-      'Tumia Nambari ya Mkusanyiko kupata eneo lako halisi la mkusanyiko. Kiongozi wa jamii ndiye anayehusika kubainisha maeneo ya mkusanyiko katika jamii yako. Eneo halisi linaweza kuwa tofauti kidogo na lile lililoonyeshwa hapa..';
+  String get meetupIndexPopupExplanation => 'Tumia Nambari ya Mkusanyiko kupata eneo lako halisi la mkusanyiko. Kiongozi wa jamii ndiye anayehusika kubainisha maeneo ya mkusanyiko katika jamii yako. Eneo halisi linaweza kuwa tofauti kidogo na lile lililoonyeshwa hapa..';
 
   @override
   String get meetupNotificationOneDayBeforeContent => 'Mkutano unaanza ndani ya masaa 24';
@@ -516,8 +503,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get mnemonic => 'Maneno ya siri';
 
   @override
-  String get newbieContent =>
-      'Kwa hali yako ya sasa, ushiriki wako katika mzunguko ujao hauhakikishiwi. Tafadhali waombe waachama wa jamii yako wakuidhinishe.';
+  String get newbieContent => 'Kwa hali yako ya sasa, ushiriki wako katika mzunguko ujao hauhakikishiwi. Tafadhali waombe waachama wa jamii yako wakuidhinishe.';
 
   @override
   String get newbieTitle => 'Ushiriki wa awali';
@@ -532,8 +518,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get nextCycleTimeLeft => 'Mzunguko ujao unaisha';
 
   @override
-  String get noCommunitiesAreYouOffline =>
-      'Hakuna jamii zilizopatikana. Unaweza kuchagua moja baadaye. Je, uko mtandaoni?';
+  String get noCommunitiesAreYouOffline => 'Hakuna jamii zilizopatikana. Unaweza kuchagua moja baadaye. Je, uko mtandaoni?';
 
   @override
   String get noInvoice => 'Hakuna ankara';
@@ -566,22 +551,19 @@ class AppLocalizationsSw extends AppLocalizations {
   String get observe => 'Uchunguzi';
 
   @override
-  String get observeBrief =>
-      'Weka anwani hii kwenye uchunguzi, kisha unaweza kuchagua anwani hii katika ukurasa wa kuchagua akaunti, ili kutazama mali na vitendo vyake.';
+  String get observeBrief => 'Weka anwani hii kwenye uchunguzi, kisha unaweza kuchagua anwani hii katika ukurasa wa kuchagua akaunti, ili kutazama mali na vitendo vyake.';
 
   @override
   String get observedPendingExtrinsic => 'Muamala unaosubiri umeonekana. Tafadhali subiri uthibitisho.!';
 
   @override
-  String get offlineMessage =>
-      'Kwa sasa hauko mtandaoni(offline). Madai yako yanaweza kutumwa baadaye kwenye Home screen yako.';
+  String get offlineMessage => 'Kwa sasa hauko mtandaoni(offline). Madai yako yanaweza kutumwa baadaye kwenye Home screen yako.';
 
   @override
   String get ok => 'OK';
 
   @override
-  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne =>
-      'Ni wanachama hai wenye sifa pekee ndio wanaoweza kuidhinisha. Hudhuria mkusanyiko/vikao ili kupata sifa!';
+  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne => 'Ni wanachama hai wenye sifa pekee ndio wanaoweza kuidhinisha. Hudhuria mkusanyiko/vikao ili kupata sifa!';
 
   @override
   String get openMapApplication => 'Programu ya Open Map';
@@ -626,8 +608,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get pinHint => 'Utahitaji PIN hii kwa ajili ya miamala na kuongeza akaunti mpya.';
 
   @override
-  String get pinInfo =>
-      'PIN inapaswa kuwa na angalau tarakimu 4. Ikiwa PIN imepotea, hakuna chaguo la kurejesha akaunti isipokuwa ikiwa ulifanya backup kupitia ukurasa wa wasifu..';
+  String get pinInfo => 'PIN inapaswa kuwa na angalau tarakimu 4. Ikiwa PIN imepotea, hakuna chaguo la kurejesha akaunti isipokuwa ikiwa ulifanya backup kupitia ukurasa wa wasifu..';
 
   @override
   String get pinSecure => 'Linda akaunti yako kwa kutumia PIN.';
@@ -657,32 +638,25 @@ class AppLocalizationsSw extends AppLocalizations {
   String get proposalNew => 'Mapendekezo mapya';
 
   @override
-  String get proposalExplainerAddLocation =>
-      'Pendekezo hili linapendekeza eneo jipya la mkutano kwa jamii yako. Hakikisha kuwa liko angalau mita 100 kutoka kwa maeneo ya mikutano yaliyopo, na si zaidi ya kilomita 1.';
+  String get proposalExplainerAddLocation => 'Pendekezo hili linapendekeza eneo jipya la mkutano kwa jamii yako. Hakikisha kuwa liko angalau mita 100 kutoka kwa maeneo ya mikutano yaliyopo, na si zaidi ya kilomita 1.';
 
   @override
-  String get proposalExplainerRemoveLocation =>
-      'Pendekezo hili linapendekeza kuondoa eneo la mikutano lililopo kwa jamii yako.';
+  String get proposalExplainerRemoveLocation => 'Pendekezo hili linapendekeza kuondoa eneo la mikutano lililopo kwa jamii yako.';
 
   @override
-  String get proposalExplainerUpdateDemurrage =>
-      'Pendekezo hili linapendekeza kiwango kipya cha demuraji ya kila mwezi kwa tokeni ya jamii yako.';
+  String get proposalExplainerUpdateDemurrage => 'Pendekezo hili linapendekeza kiwango kipya cha demuraji ya kila mwezi kwa tokeni ya jamii yako.';
 
   @override
-  String get proposalExplainerUpdateNominalIncome =>
-      'Pendekezo hili linapendekeza mapato mapya ya kawaida katika mizunguko ya mikutano kwa jamii yako.';
+  String get proposalExplainerUpdateNominalIncome => 'Pendekezo hili linapendekeza mapato mapya ya kawaida katika mizunguko ya mikutano kwa jamii yako.';
 
   @override
-  String get proposalExplainerSetInactivityTimeout =>
-      'Pendekezo hili linapendekeza muda mpya wa kimataifa wa kutokufanya kazi. Ikiwa jamii haitafanya mikutano kwa idadi iliyopendekezwa ya mizunguko, itafutwa.';
+  String get proposalExplainerSetInactivityTimeout => 'Pendekezo hili linapendekeza muda mpya wa kimataifa wa kutokufanya kazi. Ikiwa jamii haitafanya mikutano kwa idadi iliyopendekezwa ya mizunguko, itafutwa.';
 
   @override
-  String get proposalExplainerPetition =>
-      'Pendekezo hili linatumika kama ombi, iwe kimataifa au ndani ya jamii yako. Ingawa halina athari ya moja kwa moja kwenye mnyororo wa vizuizi, linaonyesha nia, kuruhusu jamii kuitambua na kuchukua hatua.';
+  String get proposalExplainerPetition => 'Pendekezo hili linatumika kama ombi, iwe kimataifa au ndani ya jamii yako. Ingawa halina athari ya moja kwa moja kwenye mnyororo wa vizuizi, linaonyesha nia, kuruhusu jamii kuitambua na kuchukua hatua.';
 
   @override
-  String get proposalExplainerSpendNative =>
-      'Pendekezo hili linapendekeza kutumia KSM kwa faida ya mfaidi kutoka hazina ya jamii, ama kupitia kura za kimataifa au za jamii. Fedha hizi zinaweza kutumika kureward michango ya jamii au kusaidia mipango ya jamii.';
+  String get proposalExplainerSpendNative => 'Pendekezo hili linapendekeza kutumia KSM kwa faida ya mfaidi kutoka hazina ya jamii, ama kupitia kura za kimataifa au za jamii. Fedha hizi zinaweza kutumika kureward michango ya jamii au kusaidia mipango ya jamii.';
 
   @override
   String proposalExplainerIssueSwapNativeOption(String currency) {
@@ -690,8 +664,7 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get proposalExplainerCannotVoteYet =>
-      'Utaweza kuanza kupiga kura kwa kutumia sifa yako kuanzia mzunguko ujao!';
+  String get proposalExplainerCannotVoteYet => 'Utaweza kuanza kupiga kura kwa kutumia sifa yako kuanzia mzunguko ujao!';
 
   @override
   String get proposalType => 'Aina ya pendekezo';
@@ -806,12 +779,10 @@ class AppLocalizationsSw extends AppLocalizations {
   String get proposalFieldErrorPositiveIntegerRange => 'Lazima iwe namba kamili chanya';
 
   @override
-  String get proposalOnlyBootstrappersOrReputablesCanSubmit =>
-      'Ni bootstrappers au waheshimika pekee wanaoweza kuwasilisha pendekezo.';
+  String get proposalOnlyBootstrappersOrReputablesCanSubmit => 'Ni bootstrappers au waheshimika pekee wanaoweza kuwasilisha pendekezo.';
 
   @override
-  String get proposalCannotSubmitProposalTypePendingEnactment =>
-      'Haiwezi kuwasilisha pendekezo la aina hii kwa sababu tayari kuna moja linalosubiri kutekelezwa.';
+  String get proposalCannotSubmitProposalTypePendingEnactment => 'Haiwezi kuwasilisha pendekezo la aina hii kwa sababu tayari kuna moja linalosubiri kutekelezwa.';
 
   @override
   String get proposalClose => 'Funga';
@@ -820,8 +791,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get proposalUpdateState => 'Sasisha';
 
   @override
-  String get proposalUpdateExplanation =>
-      'Hii itasasisha hali ya pendekezo. Ikiwa ni la zamani sana na halina kura za kutosha za \'Ndio\', litakataliwa. Ikiwa limekuwa likithibitishwa kwa muda wa kutosha, litakubaliwa.';
+  String get proposalUpdateExplanation => 'Hii itasasisha hali ya pendekezo. Ikiwa ni la zamani sana na halina kura za kutosha za \'Ndio\', litakataliwa. Ikiwa limekuwa likithibitishwa kwa muda wa kutosha, litakubaliwa.';
 
   @override
   String get proposalSubmit => 'Wasilisha Pendekezo';
@@ -917,8 +887,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get registerUntil => 'Jisajili kabla';
 
   @override
-  String get remainingNewbieTicketsAsBootStrapper =>
-      'Tiketi za wanachama wapya/wageni zilizobaki kama mwanachama anzilishi:';
+  String get remainingNewbieTicketsAsBootStrapper => 'Tiketi za wanachama wapya/wageni zilizobaki kama mwanachama anzilishi:';
 
   @override
   String get remainingNewbieTicketsAsReputable => 'Tiketi za wanachama wageni zilizobaki kama mwanachama hai:';
@@ -936,8 +905,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get remarksButton => 'tuma kumbuka ya umma';
 
   @override
-  String get remarksExplain =>
-      'Unaweza kutuma kumbuka kwenye mtandao. Kumbuka hii itakuwa ya umma na isiyobadilika. Inaweza kusomwa na kuthibitishwa na kila mtu kwani itasainiwa kidijitali na wewe.';
+  String get remarksExplain => 'Unaweza kutuma kumbuka kwenye mtandao. Kumbuka hii itakuwa ya umma na isiyobadilika. Inaweza kusomwa na kuthibitishwa na kila mtu kwani itasainiwa kidijitali na wewe.';
 
   @override
   String get remarksNote => 'Kumbuka';
@@ -946,8 +914,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get remarksSubmit => 'Tuma kumbuka';
 
   @override
-  String get reputableContent =>
-      'Umetumia sifa yako kupata kiti kilicho hakikishiwa. Tahadhari: Ikiwa utajiandikisha lakini usijitokeze katika mzunguko, utarudi kuwa mwanachama mpya/mgeni tena..';
+  String get reputableContent => 'Umetumia sifa yako kupata kiti kilicho hakikishiwa. Tahadhari: Ikiwa utajiandikisha lakini usijitokeze katika mzunguko, utarudi kuwa mwanachama mpya/mgeni tena..';
 
   @override
   String get reputableTitle => 'Umejisajili kama mwenye mwanachama hai - kiti chako kimehakikishiwa';
@@ -968,8 +935,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get retry => 'Jaribu tena';
 
   @override
-  String get rewardsAlreadyIssuedErrorBody =>
-      'Mhudhuriaji mwingine ameanzisha malipo kwa ajili ya mkusanyiko huu. Unapaswa kuwa umepokea mapato yako tayari..';
+  String get rewardsAlreadyIssuedErrorBody => 'Mhudhuriaji mwingine ameanzisha malipo kwa ajili ya mkusanyiko huu. Unapaswa kuwa umepokea mapato yako tayari..';
 
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Zawadi tayari zimetolewa';
@@ -1065,8 +1031,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get transactionError => 'Hitilafu kwenye muamala';
 
   @override
-  String get transactionQueuedOffline =>
-      'Programu haijaunganishwa na blockchain. Muamala uliowekwa foleni (itatumwa kiotomatiki wakati itakapounganishwa tena).';
+  String get transactionQueuedOffline => 'Programu haijaunganishwa na blockchain. Muamala uliowekwa foleni (itatumwa kiotomatiki wakati itakapounganishwa tena).';
 
   @override
   String get transfer => 'Tuma';
@@ -1114,8 +1079,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get txReady => 'Muamala upo tayari.';
 
   @override
-  String get txTooLowPriorityErrorBody =>
-      'Hitilafu ya kipaumbele ya kiufundi ya muamala. Hii inaweza kutokea ikiwa utagusa mara mbili kwa haraka kwenye kitufe cha kutuma. Tafadhali subiri kwa sekunde chache.';
+  String get txTooLowPriorityErrorBody => 'Hitilafu ya kipaumbele ya kiufundi ya muamala. Hii inaweza kutokea ikiwa utagusa mara mbili kwa haraka kwenye kitufe cha kutuma. Tafadhali subiri kwa sekunde chache.';
 
   @override
   String get txTooLowPriorityErrorTitle => 'Hitilafu ya kipaumbele ya muamala';
@@ -1127,8 +1091,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get unknownAccount => 'Akaunti haijulikani';
 
   @override
-  String get unknownError =>
-      'Kuna hitilafu imetokea. Tafadhali kagua muunganisho wako wa intaneti halafu ujaribu tena.';
+  String get unknownError => 'Kuna hitilafu imetokea. Tafadhali kagua muunganisho wako wa intaneti halafu ujaribu tena.';
 
   @override
   String get unregister => 'Jiondoe';
@@ -1137,8 +1100,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get unregisterDialogTitle => 'Unataka kufuta usajili wako wa kikao kijacho?';
 
   @override
-  String get unregisterParticipantNotificationBody =>
-      'Usajili wako kwa mzunguko ujao umefutwa. Ikiwa utabadilisha maoni yako, unaweza kujisajili tena.';
+  String get unregisterParticipantNotificationBody => 'Usajili wako kwa mzunguko ujao umefutwa. Ikiwa utabadilisha maoni yako, unaweza kujisajili tena.';
 
   @override
   String get unregisterParticipantNotificationTitle => 'Usajili umefutwa';
@@ -1150,8 +1112,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get value => 'Thamani';
 
   @override
-  String get votesNotDependableErrorBody =>
-      'Nusu au chini ya washiriki walioteuliwa ndio walithibitishwa kwa mkusanyiko huu. Inaweza pia kuwa baadhi ya wahudhuriaji hawajaweka uthibitisho wao bado. Hii inazuia malipo ya mapema, na unahitaji kusubiri kwa masaa 48.';
+  String get votesNotDependableErrorBody => 'Nusu au chini ya washiriki walioteuliwa ndio walithibitishwa kwa mkusanyiko huu. Inaweza pia kuwa baadhi ya wahudhuriaji hawajaweka uthibitisho wao bado. Hii inazuia malipo ya mapema, na unahitaji kusubiri kwa masaa 48.';
 
   @override
   String get votesNotDependableErrorTitle => 'Kura hazitegemeani';
@@ -1175,8 +1136,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get wrongPinHint => 'Imeshindwa kuifungua akaunti, tafadhali cheki PIN.';
 
   @override
-  String get youAreNotRegisteredPleaseRegisterNextTime =>
-      'Hujawekwa kwenye mzunguko huu. Tafadhali jiunge na mzunguko ujao ili upokee mapato yako ya jamii.';
+  String get youAreNotRegisteredPleaseRegisterNextTime => 'Hujawekwa kwenye mzunguko huu. Tafadhali jiunge na mzunguko ujao ili upokee mapato yako ya jamii.';
 
   @override
   String get yourNewPin => 'PIN mpya.';

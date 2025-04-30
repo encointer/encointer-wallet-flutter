@@ -45,7 +45,7 @@ melos:
   # https://github.com/invertase/melos/issues/122
 
   scripts:
-    format:
+    format-120:
       run: dart format . --line-length 120
       description: "Format all Dart code"
 
