@@ -94,6 +94,8 @@ dev_dependencies:
   build_runner: ^2.4.8
   flutter_gen_runner: ^5.4.0
   json_serializable: ^6.8.0
+  # This library is not well maintained, and had it's dependency in an unusable state.
+  # See: https://github.com/jperezr21/json_serializable_immutable_collections/issues/31
   json_serializable_mobx:
     git:
       url: https://github.com/encointer/json_serializable_immutable_collections
