@@ -49,7 +49,7 @@ jobs:
       - name: "Run the build_runner and return an error if files are changed"
         run: |
           .flutter/bin/dart run melos run-build-runner
-          .flutter/bin/dart run melos format
+          .flutter/bin/dart run melos format-120
           git diff --exit-code
 
     #  test-js:
