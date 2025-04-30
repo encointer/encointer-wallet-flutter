@@ -35,7 +35,8 @@ dependencies:
   # state management with mobx
   mobx: ^2.5.0
   flutter_mobx: ^2.3.0
-  shared_preferences: ^2.3.5
+  shared_preferences: 2.3.5
+  shared_preferences_android: 2.4.0
   flutter_local_notifications: ^18.0.1
   flutter:
     sdk: flutter
