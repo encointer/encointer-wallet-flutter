@@ -84,7 +84,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appSettings => 'App settings';
 
   @override
-  String get attestNotificationBody => 'If all participants have sent the attestations, you can try to claim the income.';
+  String get attestNotificationBody =>
+      'If all participants have sent the attestations, you can try to claim the income.';
 
   @override
   String get attestNotificationTitle => 'Attested attendees';
@@ -96,7 +97,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get balance => 'Balance';
 
   @override
-  String get balanceTooLowBody => 'You don\'t have sufficient funds in your account. You can\'t send all your money because you need some for the fees.';
+  String get balanceTooLowBody =>
+      'You don\'t have sufficient funds in your account. You can\'t send all your money because you need some for the fees.';
 
   @override
   String get balanceTooLowTitle => 'Balance too low';
@@ -114,7 +116,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biometricAuth => 'Biometric authentication';
 
   @override
-  String get biometricAuthDescription => 'Biometric authentication uses the biometric information stored on your phone to authenticate you, instead of using your pin. You can enable and disable biometric authentication anytime in the settings.';
+  String get biometricAuthDescription =>
+      'Biometric authentication uses the biometric information stored on your phone to authenticate you, instead of using your pin. You can enable and disable biometric authentication anytime in the settings.';
 
   @override
   String get biometricAuthEnableDisableDescription => 'Enter your PIN to enable or disable biometric authentication.';
@@ -123,7 +126,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get block => 'Block';
 
   @override
-  String get bootstrapperContent => 'If you have endorsement tickets left, please consider endorsing newbies to help the community grow.';
+  String get bootstrapperContent =>
+      'If you have endorsement tickets left, please consider endorsing newbies to help the community grow.';
 
   @override
   String get bootstrapperTitle => 'Registered as bootstrapper - your seat is guaranteed.';
@@ -132,7 +136,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calendarEntryDescription => 'Gathering to get your community income';
 
   @override
-  String get cameraPermissionError => 'There was an error String getting the camera permission. Alternatively, you can grant permission in the app settings.';
+  String get cameraPermissionError =>
+      'There was an error String getting the camera permission. Alternatively, you can grant permission in the app settings.';
 
   @override
   String get cancel => 'Cancel';
@@ -147,7 +152,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categories => 'Categories';
 
   @override
-  String get canUseFaucetOnlyWithCurrentAccount => 'You can only use the faucet features if this account page shows the currently active account.';
+  String get canUseFaucetOnlyWithCurrentAccount =>
+      'You can only use the faucet features if this account page shows the currently active account.';
 
   @override
   String get changeYourPin => 'Change PIN';
@@ -156,7 +162,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get checkEmailApp => 'Check that you have downloaded the Email app';
 
   @override
-  String get chosenRightCommunity => 'The data is for a different community. Please change the community to send funds.';
+  String get chosenRightCommunity =>
+      'The data is for a different community. Please change the community to send funds.';
 
   @override
   String get claim => 'Claim';
@@ -315,7 +322,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enableBazaar => 'Enable Bazaar';
 
   @override
-  String get endorseeContent => 'You have been endorsed as a trustworthy community member. Hence, you are guaranteed to be assigned to a gathering this cycle.';
+  String get endorseeContent =>
+      'You have been endorsed as a trustworthy community member. Hence, you are guaranteed to be assigned to a gathering this cycle.';
 
   @override
   String get endorseeTitle => 'Registered as endorsee - your seat is guaranteed';
@@ -354,7 +362,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exportMnemonicOk => 'Mnemonic was copied to clipboard.';
 
   @override
-  String get exportWarn => 'Write these words down on paper. Keep the backup paper safe. These words allows anyone to recover this account and access its funds.';
+  String get exportWarn =>
+      'Write these words down on paper. Keep the backup paper safe. These words allows anyone to recover this account and access its funds.';
 
   @override
   String get fail => 'Failed';
@@ -399,7 +408,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get importDuplicate => 'Account exists, do you want to override the existing account?';
 
   @override
-  String get importedWithRawSeedHenceNoMnemonic => 'Account was imported with a raw seed and therefore does not have a mnemonic';
+  String get importedWithRawSeedHenceNoMnemonic =>
+      'Account was imported with a raw seed and therefore does not have a mnemonic';
 
   @override
   String get importInvalidMnemonic => 'Invalid mnemonic supplied';
@@ -420,13 +430,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get insufficientBalance => 'Insufficient balance';
 
   @override
-  String get insufficientFundsErrorBody => 'You do not have sufficient funds on this account. See on the website of your local community how to get some.';
+  String get insufficientFundsErrorBody =>
+      'You do not have sufficient funds on this account. See on the website of your local community how to get some.';
 
   @override
   String get insufficientFundsErrorTitle => 'Insufficient Funds';
 
   @override
-  String get invalidTransactionFormatErrorBody => 'The transaction had an invalid format, which might be a bug. If you think this is a bug, please tap the corresponding field below.';
+  String get invalidTransactionFormatErrorBody =>
+      'The transaction had an invalid format, which might be a bug. If you think this is a bug, please tap the corresponding field below.';
 
   @override
   String get invalidTransactionFormatErrorTitle => 'Invalid Transaction Format';
@@ -485,7 +497,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get meetupIndexPopupExplanation => 'Use the gathering number to find your real gathering location. The community leader is responsible in your community for specifying the gathering locations. The real location could be slightly different from the one displayed here.';
+  String get meetupIndexPopupExplanation =>
+      'Use the gathering number to find your real gathering location. The community leader is responsible in your community for specifying the gathering locations. The real location could be slightly different from the one displayed here.';
 
   @override
   String get meetupNotificationOneDayBeforeContent => 'Gathering starts in 24 hours';
@@ -503,7 +516,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mnemonic => 'Mnemonic';
 
   @override
-  String get newbieContent => 'With your current status the participation for the upcoming cycle is not guaranteed. Please ask your contacts for an Endorsement.';
+  String get newbieContent =>
+      'With your current status the participation for the upcoming cycle is not guaranteed. Please ask your contacts for an Endorsement.';
 
   @override
   String get newbieTitle => 'Tentative Participation';
@@ -551,7 +565,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get observe => 'Observation';
 
   @override
-  String get observeBrief => 'Mark this address as observation, then you can select this address in account select page, to watch its assets and actions';
+  String get observeBrief =>
+      'Mark this address as observation, then you can select this address in account select page, to watch its assets and actions';
 
   @override
   String get observedPendingExtrinsic => 'Pending transaction observed. Please wait for confirmation!';
@@ -563,7 +578,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ok => 'OK';
 
   @override
-  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne => 'Only reputables can endorse. Attend a gathering to get reputation!';
+  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne =>
+      'Only reputables can endorse. Attend a gathering to get reputation!';
 
   @override
   String get openMapApplication => 'Open Map Application';
@@ -608,7 +624,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pinHint => 'You will need this PIN for transactions and adding a new account.';
 
   @override
-  String get pinInfo => 'PIN should consist of at least 4 digits. If the PIN is lost, there is no option to restore the account unless you made a backup via the profile page.';
+  String get pinInfo =>
+      'PIN should consist of at least 4 digits. If the PIN is lost, there is no option to restore the account unless you made a backup via the profile page.';
 
   @override
   String get pinSecure => 'Secure your account with a PIN.';
@@ -638,25 +655,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get proposalNew => 'New Proposal';
 
   @override
-  String get proposalExplainerAddLocation => 'This proposal suggests a new gathering location for your community. Make sure it’s at least 100m away and no more than 1km from existing locations.';
+  String get proposalExplainerAddLocation =>
+      'This proposal suggests a new gathering location for your community. Make sure it’s at least 100m away and no more than 1km from existing locations.';
 
   @override
-  String get proposalExplainerRemoveLocation => 'This proposal suggests to remove an existing gathering location for your community.';
+  String get proposalExplainerRemoveLocation =>
+      'This proposal suggests to remove an existing gathering location for your community.';
 
   @override
-  String get proposalExplainerUpdateDemurrage => 'This proposal suggest a new monthly demurrage for your community token.';
+  String get proposalExplainerUpdateDemurrage =>
+      'This proposal suggest a new monthly demurrage for your community token.';
 
   @override
-  String get proposalExplainerUpdateNominalIncome => 'This proposal suggests a new nominal income in the gathering cycles for your community.';
+  String get proposalExplainerUpdateNominalIncome =>
+      'This proposal suggests a new nominal income in the gathering cycles for your community.';
 
   @override
-  String get proposalExplainerSetInactivityTimeout => 'This proposal suggests a new global inactivity timeout. If a community has not been performing gatherings for the suggested number of gathering cycles, the community will be deleted.';
+  String get proposalExplainerSetInactivityTimeout =>
+      'This proposal suggests a new global inactivity timeout. If a community has not been performing gatherings for the suggested number of gathering cycles, the community will be deleted.';
 
   @override
-  String get proposalExplainerPetition => 'This proposal serves as a petition, either globally or within your community. While it has no direct on-chain effect, it signals intent, allowing the community to recognize and act upon it.';
+  String get proposalExplainerPetition =>
+      'This proposal serves as a petition, either globally or within your community. While it has no direct on-chain effect, it signals intent, allowing the community to recognize and act upon it.';
 
   @override
-  String get proposalExplainerSpendNative => 'This proposal suggests spending KSM for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.';
+  String get proposalExplainerSpendNative =>
+      'This proposal suggests spending KSM for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.';
 
   @override
   String proposalExplainerIssueSwapNativeOption(String currency) {
@@ -779,10 +803,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get proposalFieldErrorPositiveIntegerRange => 'Must be a positive integer';
 
   @override
-  String get proposalOnlyBootstrappersOrReputablesCanSubmit => 'Only bootstrappers or reputables can submit a proposal.';
+  String get proposalOnlyBootstrappersOrReputablesCanSubmit =>
+      'Only bootstrappers or reputables can submit a proposal.';
 
   @override
-  String get proposalCannotSubmitProposalTypePendingEnactment => 'Cannot submit a proposal of this type, as there is already one pending enactment.';
+  String get proposalCannotSubmitProposalTypePendingEnactment =>
+      'Cannot submit a proposal of this type, as there is already one pending enactment.';
 
   @override
   String get proposalClose => 'Close';
@@ -791,7 +817,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get proposalUpdateState => 'Update';
 
   @override
-  String get proposalUpdateExplanation => 'This will update the proposal state. If it is too old and does not have enough Aye votes, it will be rejected. If it has been confirming long enough, it will pass.';
+  String get proposalUpdateExplanation =>
+      'This will update the proposal state. If it is too old and does not have enough Aye votes, it will be rejected. If it has been confirming long enough, it will pass.';
 
   @override
   String get proposalSubmit => 'Submit Proposal';
@@ -905,7 +932,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get remarksButton => 'submit public note';
 
   @override
-  String get remarksExplain => 'You can submit a note to the network. This note will be public and immutable. It can be read and authenticated by everyone as it will be digitally signed by you.';
+  String get remarksExplain =>
+      'You can submit a note to the network. This note will be public and immutable. It can be read and authenticated by everyone as it will be digitally signed by you.';
 
   @override
   String get remarksNote => 'Note';
@@ -914,7 +942,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get remarksSubmit => 'Submit note';
 
   @override
-  String get reputableContent => 'You used your reputation to get a guaranteed seat. Caution: Should you register, but not show up at the cycle, you become a newbie again.';
+  String get reputableContent =>
+      'You used your reputation to get a guaranteed seat. Caution: Should you register, but not show up at the cycle, you become a newbie again.';
 
   @override
   String get reputableTitle => 'Registered as reputable - your seat is guaranteed';
@@ -935,7 +964,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get retry => 'Retry';
 
   @override
-  String get rewardsAlreadyIssuedErrorBody => 'Another attendee has triggered the payout for this gathering. You should have received your income already.';
+  String get rewardsAlreadyIssuedErrorBody =>
+      'Another attendee has triggered the payout for this gathering. You should have received your income already.';
 
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Rewards already issued';
@@ -1031,7 +1061,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get transactionError => 'Transaction error';
 
   @override
-  String get transactionQueuedOffline => 'App is not connected to the blockchain. Queued transaction (will be sent automatically upon reconnection).';
+  String get transactionQueuedOffline =>
+      'App is not connected to the blockchain. Queued transaction (will be sent automatically upon reconnection).';
 
   @override
   String get transfer => 'Send';
@@ -1079,7 +1110,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get txReady => 'Transaction is ready.';
 
   @override
-  String get txTooLowPriorityErrorBody => 'Technical transaction priority error. This can happen if you tap twice on a submit button very quickly. Please wait for a few seconds.';
+  String get txTooLowPriorityErrorBody =>
+      'Technical transaction priority error. This can happen if you tap twice on a submit button very quickly. Please wait for a few seconds.';
 
   @override
   String get txTooLowPriorityErrorTitle => 'Transaction priority error';
@@ -1100,7 +1132,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unregisterDialogTitle => 'Unregister from the next cycle?';
 
   @override
-  String get unregisterParticipantNotificationBody => 'Your registration for the next cycle has been cancelled. If you change your mind, you can register again.';
+  String get unregisterParticipantNotificationBody =>
+      'Your registration for the next cycle has been cancelled. If you change your mind, you can register again.';
 
   @override
   String get unregisterParticipantNotificationTitle => 'Registration cancelled';
@@ -1112,7 +1145,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get value => 'Value';
 
   @override
-  String get votesNotDependableErrorBody => 'Only half or less of the assigned participants were attested for this gathering. It could also be that some attendees haven\'t submitted their attestation yet. This prevents the early payout, and you need to wait for 48 hours.';
+  String get votesNotDependableErrorBody =>
+      'Only half or less of the assigned participants were attested for this gathering. It could also be that some attendees haven\'t submitted their attestation yet. This prevents the early payout, and you need to wait for 48 hours.';
 
   @override
   String get votesNotDependableErrorTitle => 'Votes not dependable';
@@ -1136,7 +1170,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wrongPinHint => 'Failed to unlock account, please check PIN.';
 
   @override
-  String get youAreNotRegisteredPleaseRegisterNextTime => 'You haven\'t been assigned for this key-signing cycle. Please join the next cycle to receive your community income.';
+  String get youAreNotRegisteredPleaseRegisterNextTime =>
+      'You haven\'t been assigned for this key-signing cycle. Please join the next cycle to receive your community income.';
 
   @override
   String get yourNewPin => 'New PIN';
