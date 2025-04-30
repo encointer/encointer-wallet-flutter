@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/logic/single_business_store.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/widgets/business_detail_text_widget.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/widgets/business_detail_address_widget.dart';

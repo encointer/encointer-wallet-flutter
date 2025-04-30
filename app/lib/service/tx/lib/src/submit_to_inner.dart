@@ -10,7 +10,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
 import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';

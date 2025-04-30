@@ -15,7 +15,7 @@ import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.
 import 'package:encointer_wallet/presentation/home/views/home_page.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 
 class CreatePinView extends StatelessWidget {
   const CreatePinView({super.key, this.fromImportPage = false});

@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 
 class Fmt {
   static String? address(String? addr, {int pad = 6}) {

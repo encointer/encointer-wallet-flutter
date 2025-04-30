@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 
 mixin HandleNewAccountResultMixin on Widget {
   Future<void> navigate({

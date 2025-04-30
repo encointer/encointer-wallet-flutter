@@ -13,7 +13,7 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart' show Proposal, Tally;
 

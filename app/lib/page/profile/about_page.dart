@@ -6,7 +6,7 @@ import 'package:encointer_wallet/common/components/jump_to_browser_link.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 
 class CeremonyStartButton extends StatelessWidget {
   const CeremonyStartButton({super.key, this.onPressed});

@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/config/biometric_auth_state.dart';
 import 'package:encointer_wallet/service/service.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';

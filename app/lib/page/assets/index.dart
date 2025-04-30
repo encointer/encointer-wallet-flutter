@@ -14,7 +14,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:upgrader/upgrader.dart';
 import 'package:collection/collection.dart';
 
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';

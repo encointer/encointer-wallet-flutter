@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 
 import 'package:encointer_wallet/common/reg_input_formatter.dart';
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 
 class UI {
   static void copyAndNotify(BuildContext context, String? text) {

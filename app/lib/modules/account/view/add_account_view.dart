@@ -14,7 +14,7 @@ import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 
 class AddAccountView extends StatelessWidget {
   const AddAccountView({super.key});

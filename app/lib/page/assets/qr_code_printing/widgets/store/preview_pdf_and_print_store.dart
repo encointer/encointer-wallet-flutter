@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';

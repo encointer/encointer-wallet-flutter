@@ -1,6 +1,6 @@
 import 'dart:core';
 
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
 import 'package:ew_polkadart/runtime_error.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';

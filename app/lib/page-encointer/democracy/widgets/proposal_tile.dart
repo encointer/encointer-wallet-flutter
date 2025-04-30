@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/democracy/widgets/update_proposal_button.dart';
 import 'package:encointer_wallet/service/service.dart';

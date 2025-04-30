@@ -8,7 +8,7 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/faucet/faucet.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_tx_wrappers.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';

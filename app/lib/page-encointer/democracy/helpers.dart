@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/service.dart';

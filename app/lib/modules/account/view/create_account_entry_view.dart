@@ -8,7 +8,7 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
 import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 
 class CreateAccountEntryView extends StatelessWidget {
   const CreateAccountEntryView({super.key});

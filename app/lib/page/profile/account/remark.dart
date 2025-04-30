@@ -3,7 +3,7 @@ import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 

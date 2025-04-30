@@ -14,7 +14,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/tx_notification.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/l10.dart';
 import 'package:encointer_wallet/config/networks/networks.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/modules/login/logic/login_store.dart';
