@@ -13,10 +13,10 @@ extension ProposalScopeExt on ProposalScope {
 
   bool get isLocal => this == ProposalScope.local;
 
-  String localizedStr(AppLocalizations l10n) {
+  String localizedStr(AppLocalizations l10n, String community) {
     return switch (this) {
       ProposalScope.global => l10n.proposalScopeGlobal,
-      ProposalScope.local => l10n.proposalScopeLocal,
+      ProposalScope.local => l10n.proposalScopeLocal(community),
     };
   }
 }
