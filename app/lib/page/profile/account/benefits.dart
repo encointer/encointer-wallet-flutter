@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:encointer_wallet/models/faucet/faucet.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/l10.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/page/profile/account/faucet_list_tile.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/utils/format.dart';

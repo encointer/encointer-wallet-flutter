@@ -15,7 +15,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
-import 'package:encointer_wallet/l10.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:ew_keyring/ew_keyring.dart' show KeyringAccount, ValidateKeys;
 
 class ImportAccountView extends StatelessWidget {

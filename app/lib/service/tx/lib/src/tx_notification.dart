@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/l10.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:flutter/cupertino.dart';
 
 /// Notification messages for used extrinsics

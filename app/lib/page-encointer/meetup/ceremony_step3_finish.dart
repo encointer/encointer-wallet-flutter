@@ -14,7 +14,7 @@ import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dar
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/l10.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:provider/provider.dart';
 
 class CeremonyStep3Finish extends StatelessWidget {

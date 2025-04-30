@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:encointer_wallet/l10.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
 import 'package:flutter/material.dart';

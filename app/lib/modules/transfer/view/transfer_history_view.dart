@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
-import 'package:encointer_wallet/l10.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/common/components/error/error_view.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 

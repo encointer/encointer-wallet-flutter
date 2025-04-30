@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/l10.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class ExportResultPage extends StatelessWidget {
   const ExportResultPage({super.key});

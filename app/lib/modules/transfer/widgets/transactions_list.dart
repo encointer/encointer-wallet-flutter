@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/l10.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class TransactionsList extends StatelessWidget {

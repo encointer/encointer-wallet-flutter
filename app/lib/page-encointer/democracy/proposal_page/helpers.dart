@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:encointer_wallet/l10.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 
 import 'package:ew_polkadart/encointer_types.dart' as et;

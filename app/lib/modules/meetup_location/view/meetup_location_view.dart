@@ -6,7 +6,7 @@ import 'package:encointer_wallet/common/components/map/encointer_map.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
-import 'package:encointer_wallet/l10.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class MeetupLocationArgs {
   MeetupLocationArgs(
