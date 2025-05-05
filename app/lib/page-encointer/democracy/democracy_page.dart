@@ -35,7 +35,7 @@ class _DemocracyPageState extends State<DemocracyPage> {
   DemocracyParams? democracyParams;
 
   static const pruneApprovedProposalsDays = 150;
-  static const pruneRejectedProposalsDays = 10;
+  static const pruneRejectedProposalsDays = 30;
 
   @override
   void initState() {
