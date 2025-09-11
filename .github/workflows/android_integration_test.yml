@@ -23,7 +23,7 @@ jobs:
     strategy:
       matrix:
         # lower api-levels would be supported but the webView that is pre-installed on these images does not.
-        api-level: [33]
+        api-level: [33, 35]
         include:
           - os: ubuntu-latest
             # needs to be the `id` from the devices given by `avdmanager list device`
