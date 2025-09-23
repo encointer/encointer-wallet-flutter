@@ -120,7 +120,7 @@ List<NetworkEndpoint> kusamaEndpoints() {
     NetworkEndpoint(name: 'Encointer Association', address: 'wss://kusama.api.encointer.org'),
     NetworkEndpoint(name: 'Dwellir', address: 'wss://encointer-kusama-rpc.dwellir.com'),
     NetworkEndpoint(name: 'IBP1', address: 'wss://sys.ibp.network/encointer-kusama'),
-    NetworkEndpoint(name: 'IBP2', address: 'wss://sys.dotters.network/encointer-kusama'),
+    // NetworkEndpoint(name: 'IBP2', address: 'wss://sys.dotters.network/encointer-kusama'),
     NetworkEndpoint(name: 'Lucky Friday', address: 'wss://rpc-encointer-kusama.luckyfriday.io'),
   ];
 }
