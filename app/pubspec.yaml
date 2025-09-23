@@ -78,7 +78,7 @@ dependencies:
   printing: ^5.13.4
   pdf: ^3.11.1
   pointycastle: ^3.9.1
-  connectivity_plus: ^6.1.1
+  connectivity_plus: ^7.0.0
   timezone: ^0.10.0
   ew_endpoint_manager: 0.1.0
   ew_encointer_utils: 0.1.0
