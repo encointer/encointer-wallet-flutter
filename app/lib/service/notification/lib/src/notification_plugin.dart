@@ -134,5 +134,5 @@ class NotificationPlugin {
 Future<void> _configureLocalTimeZone() async {
   tz.initializeTimeZones();
   final timeZoneName = await FlutterTimezone.getLocalTimezone();
-  tz.setLocalLocation(tz.getLocation(timeZoneName.toString()));
+  tz.setLocalLocation(tz.getLocation(timeZoneName.identifier));
 }
