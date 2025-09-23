@@ -52,7 +52,8 @@ class AnnouncementCard extends StatelessWidget {
               title: Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  DateFormat.MMMd(local.languageCode).format(announcement.publishDate),
+                  DateFormat.MMMd(local.languageCode)
+                      .format(announcement.publishDate),
                   style: context.bodySmall,
                 ),
               ),
@@ -72,19 +73,28 @@ class AnnouncementCard extends StatelessWidget {
                 IconButton(
                   icon: Observer(builder: (_) {
                     return Icon(
-                      cardStore.isFavorite ? Icons.favorite : Icons.favorite_border_outlined,
+                      cardStore.isFavorite
+                          ? Icons.favorite
+                          : Icons.favorite_border_outlined,
                       size: 20,
                       color: AppColors.encointerGrey,
                     );
                   }),
-                  onPressed: context.read<AnnouncementCardStore>().toggleFavorite,
+                  onPressed:
+                      context.read<AnnouncementCardStore>().toggleFavorite,
                 ),
                 Observer(builder: (_) {
                   return Text('${cardStore.countFavorite}');
                 }),
                 IconButton(
-                  icon: const Icon(Icons.share, size: 20, color: AppColors.encointerGrey),
-                  onPressed: () => Share.share('${announcement.title}\n${announcement.content}\n${encointerLink}home'),
+                  icon: const Icon(Icons.share,
+                      size: 20, color: AppColors.encointerGrey),
+                  onPressed: () => SharePlus.instance.share(
+                    ShareParams(
+                      title: announcement.title,
+                      text: '${announcement.content}\n${encointerLink}home',
+                    ),
+                  ),
                 )
               ],
             )

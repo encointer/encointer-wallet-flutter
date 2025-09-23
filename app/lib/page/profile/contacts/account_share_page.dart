@@ -27,10 +27,13 @@ class _AccountSharePageState extends State<AccountSharePage> {
     final l10n = context.l10n;
     final store = context.watch<AppStore>();
 
-    final accountToBeSharedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
-    final accountToBeShared = store.account.getAccountData(accountToBeSharedPubKey);
-    final addressSS58 =
-        AddressUtils.pubKeyHexToAddress(accountToBeSharedPubKey!, prefix: store.settings.currentNetwork.ss58());
+    final accountToBeSharedPubKey =
+        ModalRoute.of(context)!.settings.arguments as String?;
+    final accountToBeShared =
+        store.account.getAccountData(accountToBeSharedPubKey);
+    final addressSS58 = AddressUtils.pubKeyHexToAddress(
+        accountToBeSharedPubKey!,
+        prefix: store.settings.currentNetwork.ss58());
 
     final contactQrCode = ContactQrCode(
       account: addressSS58,
@@ -57,7 +60,8 @@ class _AccountSharePageState extends State<AccountSharePage> {
             children: [
               Text(
                 l10n.qrScanHintAccount,
-                style: context.titleLarge.copyWith(color: AppColors.encointerBlack),
+                style: context.titleLarge
+                    .copyWith(color: AppColors.encointerBlack),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
@@ -70,27 +74,34 @@ class _AccountSharePageState extends State<AccountSharePage> {
               const SizedBox(height: 16),
               Text(
                 accountToBeShared.name,
-                style: context.bodyLarge.copyWith(color: AppColors.encointerGrey),
+                style:
+                    context.bodyLarge.copyWith(color: AppColors.encointerGrey),
                 textAlign: TextAlign.center,
               ),
               const Spacer(),
               Text(
                 l10n.shareLinkHint,
                 textAlign: TextAlign.center,
-                style: context.bodyMedium.copyWith(color: AppColors.encointerGrey),
+                style:
+                    context.bodyMedium.copyWith(color: AppColors.encointerGrey),
               ),
               const SizedBox(height: 8),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16)),
+                style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(Icons.share),
                     const SizedBox(width: 12),
-                    Text(l10n.sendLink, style: context.titleLarge.copyWith(color: context.colorScheme.primary)),
+                    Text(l10n.sendLink,
+                        style: context.titleLarge
+                            .copyWith(color: context.colorScheme.primary)),
                   ],
                 ),
-                onPressed: () => Share.share(toDeepLink(contactQrCode.toQrPayload())),
+                onPressed: () => SharePlus.instance.share(
+                  ShareParams(text: toDeepLink(contactQrCode.toQrPayload())),
+                ),
               ),
             ],
           ),

@@ -126,7 +126,6 @@ class NotificationPlugin {
       body,
       tz.TZDateTime.from(scheduledDate, tz.local),
       _platformChannelSpecifics(body, cid: cid),
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       androidScheduleMode: AndroidScheduleMode.inexact,
     );
   }

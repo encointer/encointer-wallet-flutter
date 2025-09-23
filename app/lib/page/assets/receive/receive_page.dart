@@ -44,7 +44,8 @@ class _ReceivePageState extends State<ReceivePage> {
   void initState() {
     super.initState();
     _appStore = context.read<AppStore>();
-    final address = AddressUtils.pubKeyHexToAddress(_appStore.account.currentAccountPubKey!,
+    final address = AddressUtils.pubKeyHexToAddress(
+        _appStore.account.currentAccountPubKey!,
         prefix: _appStore.settings.currentNetwork.ss58());
     invoice = InvoiceQrCode(
       account: address,
@@ -71,7 +72,8 @@ class _ReceivePageState extends State<ReceivePage> {
       const Duration(seconds: 1),
       () async {
         if (!observedPendingExtrinsic) {
-          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(_appStore, webApi, l10n);
+          observedPendingExtrinsic =
+              await showSnackBarUponPendingExtrinsics(_appStore, webApi, l10n);
 
           resetObservedPendingExtrinsicCounter = 0;
         } else {
@@ -82,7 +84,9 @@ class _ReceivePageState extends State<ReceivePage> {
           }
         }
 
-        await webApi.encointer.getAllBalances(store.account.currentAddress).then((balances) {
+        await webApi.encointer
+            .getAllBalances(store.account.currentAddress)
+            .then((balances) {
           final cid = store.encointer.chosenCid;
 
           if (cid == null) {
@@ -91,11 +95,14 @@ class _ReceivePageState extends State<ReceivePage> {
 
           final demurrageRate = store.encointer.community!.demurrage;
           final newBalance = store.encointer.applyDemurrage(balances[cid]);
-          final oldBalance = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry) ?? 0;
+          final oldBalance = store.encointer
+                  .applyDemurrage(store.encointer.communityBalanceEntry) ??
+              0;
 
           if (newBalance != null) {
             final delta = newBalance - oldBalance;
-            Log.d('[receivePage] balance was $oldBalance, changed by $delta', 'ReceivePage');
+            Log.d('[receivePage] balance was $oldBalance, changed by $delta',
+                'ReceivePage');
             if (delta > demurrageRate!) {
               final msg = l10n.incomingConfirmed(
                 delta,
@@ -105,7 +112,8 @@ class _ReceivePageState extends State<ReceivePage> {
               Log.d('[receivePage] $msg', 'ReceivePage');
               store.encointer.account?.addBalanceEntry(cid, balances[cid]!);
 
-              NotificationPlugin.showNotification(44, l10n.fundsReceived, msg, cid: cid.toFmtString());
+              NotificationPlugin.showNotification(44, l10n.fundsReceived, msg,
+                  cid: cid.toFmtString());
             }
           }
         });
@@ -143,15 +151,18 @@ class _ReceivePageState extends State<ReceivePage> {
           ),
           body: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: horizontalPadding),
+              padding: const EdgeInsets.symmetric(
+                  vertical: 12, horizontal: horizontalPadding),
               child: ListView(
                 children: <Widget>[
                   EncointerTextFormField(
                     labelText: l10n.enterAmount,
-                    textStyle: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
+                    textStyle: context.headlineSmall
+                        .copyWith(color: AppColors.encointerBlack),
                     inputFormatters: [UI.decimalInputFormatter()],
                     controller: _amountController,
-                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
                     textFormFieldKey: const Key(EWTestKeys.invoiceAmountInput),
                     onChanged: (value) {
                       setState(() {
@@ -163,12 +174,14 @@ class _ReceivePageState extends State<ReceivePage> {
                     },
                     suffixIcon: const Text(
                       'ⵐ',
-                      style: TextStyle(color: AppColors.encointerGrey, fontSize: 26),
+                      style: TextStyle(
+                          color: AppColors.encointerGrey, fontSize: 26),
                     ),
                   ),
                   Text(
                     '${l10n.receiverAccount} ${store.account.currentAccount.name}',
-                    style: context.titleMedium.copyWith(color: AppColors.encointerGrey),
+                    style: context.titleMedium
+                        .copyWith(color: AppColors.encointerGrey),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
@@ -182,7 +195,11 @@ class _ReceivePageState extends State<ReceivePage> {
                     onTap: () => {
                       if (_formKey.currentState!.validate())
                         {
-                          Share.share(toDeepLink(invoice.toQrPayload())),
+                          SharePlus.instance.share(
+                            ShareParams(
+                              text: toDeepLink(invoice.toQrPayload()),
+                            ),
+                          )
                         }
                     },
                   )
@@ -199,7 +216,8 @@ class _ReceivePageState extends State<ReceivePage> {
 /// Shows a [SnackBar] if we found an extrinsic in a transaction pool addressed to the current account.
 ///
 /// Returns a true if such an extrinsic was found.
-Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, AppLocalizations l10n) async {
+Future<bool> showSnackBarUponPendingExtrinsics(
+    AppStore store, Api api, AppLocalizations l10n) async {
   var observedExtrinsics = false;
 
   try {
