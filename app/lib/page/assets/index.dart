@@ -117,8 +117,7 @@ class _AssetsViewState extends State<AssetsView> {
     return UpgradeAlert(
       upgrader: Upgrader(
         storeController: controller,
-        debugLogging:
-            RepositoryProvider.of<AppConfig>(context).isIntegrationTest,
+        debugLogging: RepositoryProvider.of<AppConfig>(context).isIntegrationTest,
       ),
       shouldPopScope: () => true,
       barrierDismissible: true,
@@ -141,10 +140,7 @@ class _AssetsViewState extends State<AssetsView> {
         padding:
             // Fixme: 60 is hardcoded because we don't know the tabBar size here.
             // Should be tackled in #607
-            EdgeInsets.only(
-                bottom: 60 +
-                    appBar.preferredSize.height +
-                    MediaQuery.of(context).viewPadding.top),
+            EdgeInsets.only(bottom: 60 + appBar.preferredSize.height + MediaQuery.of(context).viewPadding.top),
         child: RefreshIndicator(
           onRefresh: _refreshEncointerState,
           child: ListView(
@@ -165,33 +161,27 @@ class _AssetsViewState extends State<AssetsView> {
                     ),
                     Observer(
                       builder: (_) {
-                        return (widget.store.encointer.community?.name !=
-                                    null) &
+                        return (widget.store.encointer.community?.name != null) &
                                 (widget.store.encointer.chosenCid != null)
                             ? Column(
                                 children: [
                                   TextGradient(
-                                    text:
-                                        '${Fmt.doubleFormat(widget.store.encointer.communityBalance)} ⵐ',
+                                    text: '${Fmt.doubleFormat(widget.store.encointer.communityBalance)} ⵐ',
                                     style: const TextStyle(fontSize: 50),
                                   ),
                                   Text(
                                     '${l10n.balance}, ${widget.store.encointer.community?.symbol}',
-                                    style: context.bodyLarge.copyWith(
-                                        color: AppColors.encointerGrey),
+                                    style: context.bodyLarge.copyWith(color: AppColors.encointerGrey),
                                   ),
                                 ],
                               )
                             : Container(
                                 margin: const EdgeInsets.only(top: 16),
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8),
-                                child: (widget.store.encointer.chosenCid ==
-                                        null)
+                                padding: const EdgeInsets.symmetric(vertical: 8),
+                                child: (widget.store.encointer.chosenCid == null)
                                     ? SizedBox(
                                         width: double.infinity,
-                                        child: Text(l10n.communityNotSelected,
-                                            textAlign: TextAlign.center))
+                                        child: Text(l10n.communityNotSelected, textAlign: TextAlign.center))
                                     : const SizedBox(
                                         width: double.infinity,
                                         child: CupertinoActivityIndicator(),
@@ -202,8 +192,7 @@ class _AssetsViewState extends State<AssetsView> {
                     if (_appSettingsStore.developerMode)
                       ElevatedButton(
                         onPressed: widget.store.dataUpdate.setInvalidated,
-                        child: const Text(
-                            'Invalidate data to trigger state update'),
+                        child: const Text('Invalidate data to trigger state update'),
                       ),
                     const SizedBox(height: 42),
                     Row(
@@ -212,54 +201,41 @@ class _AssetsViewState extends State<AssetsView> {
                           key: const Key(EWTestKeys.qrReceive),
                           icon: const Icon(Iconsax.receive_square_2),
                           label: l10n.receive,
-                          onPressed: () =>
-                              Navigator.pushNamed(context, ReceivePage.route),
+                          onPressed: () => Navigator.pushNamed(context, ReceivePage.route),
                         ),
                         const SizedBox(width: 3),
                         Observer(
-                            builder: (_) => widget
-                                        .store.encointer.communityBalance !=
-                                    null
+                            builder: (_) => widget.store.encointer.communityBalance != null
                                 ? ActionButton(
-                                    key:
-                                        const Key(EWTestKeys.goTransferHistory),
-                                    icon:
-                                        Assets.images.assets.receiveSquare2.svg(
-                                      colorFilter: ColorFilter.mode(
-                                          context.colorScheme.primary,
-                                          BlendMode.srcIn),
+                                    key: const Key(EWTestKeys.goTransferHistory),
+                                    icon: Assets.images.assets.receiveSquare2.svg(
+                                      colorFilter: ColorFilter.mode(context.colorScheme.primary, BlendMode.srcIn),
                                     ),
                                     label: l10n.transferHistory,
-                                    onPressed: () => Navigator.pushNamed(
-                                        context, TransferHistoryView.route))
+                                    onPressed: () => Navigator.pushNamed(context, TransferHistoryView.route))
                                 : ActionButton(
                                     // ActionButton without key. The integration tests break if the key is tapped
                                     // before the button is enabled.
-                                    icon:
-                                        Assets.images.assets.receiveSquare2.svg(
-                                      colorFilter: ColorFilter.mode(
-                                          context.colorScheme.primary,
-                                          BlendMode.srcIn),
+                                    icon: Assets.images.assets.receiveSquare2.svg(
+                                      colorFilter: ColorFilter.mode(context.colorScheme.primary, BlendMode.srcIn),
                                     ),
                                     label: l10n.transferHistory,
                                   )),
                         const SizedBox(width: 3),
                         Observer(
-                          builder: (_) =>
-                              widget.store.encointer.communityBalance != null
-                                  ? ActionButton(
-                                      key: const Key(EWTestKeys.transfer),
-                                      icon: const Icon(Iconsax.send_sqaure_2),
-                                      label: l10n.transfer,
-                                      onPressed: () => Navigator.pushNamed(
-                                          context, TransferPage.route),
-                                    )
-                                  : ActionButton(
-                                      // ActionButton without key. The integration tests break if the key is tapped
-                                      // before the button is enabled.
-                                      icon: const Icon(Iconsax.send_sqaure_2),
-                                      label: l10n.transfer,
-                                    ),
+                          builder: (_) => widget.store.encointer.communityBalance != null
+                              ? ActionButton(
+                                  key: const Key(EWTestKeys.transfer),
+                                  icon: const Icon(Iconsax.send_sqaure_2),
+                                  label: l10n.transfer,
+                                  onPressed: () => Navigator.pushNamed(context, TransferPage.route),
+                                )
+                              : ActionButton(
+                                  // ActionButton without key. The integration tests break if the key is tapped
+                                  // before the button is enabled.
+                                  icon: const Icon(Iconsax.send_sqaure_2),
+                                  label: l10n.transfer,
+                                ),
                         ),
                       ],
                     ),
@@ -270,10 +246,8 @@ class _AssetsViewState extends State<AssetsView> {
                 padding: EdgeInsets.symmetric(vertical: 6),
               ),
               Observer(builder: (_) {
-                final shouldFetch = widget.store.encointer.currentPhase ==
-                        CeremonyPhase.Registering ||
-                    (widget.store.encointer.communityAccount?.meetupCompleted ??
-                        false);
+                final shouldFetch = widget.store.encointer.currentPhase == CeremonyPhase.Registering ||
+                    (widget.store.encointer.communityAccount?.meetupCompleted ?? false);
 
                 return widget.store.settings.isConnected && shouldFetch
                     ? FutureBuilder<bool?>(
@@ -287,21 +261,16 @@ class _AssetsViewState extends State<AssetsView> {
                             if (hasPendingIssuance) {
                               return SubmitButton(
                                 key: const Key(EWTestKeys.claimPendingDev),
-                                child: Text(l10n.issuancePending,
-                                    textAlign: TextAlign.center),
+                                child: Text(l10n.issuancePending, textAlign: TextAlign.center),
                                 onPressed: (context) => submitClaimRewards(
                                   context,
                                   store,
                                   webApi,
-                                  store.account.getKeyringAccount(
-                                      store.account.currentAccountPubKey!),
+                                  store.account.getKeyringAccount(store.account.currentAccountPubKey!),
                                   widget.store.encointer.chosenCid!,
-                                  txPaymentAsset: store.encointer
-                                      .getTxPaymentAsset(
-                                          store.encointer.chosenCid),
+                                  txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
                                   onError: (dispatchError) {
-                                    final message = getLocalizedTxErrorMessage(
-                                        context.l10n, dispatchError);
+                                    final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
                                     showTxErrorDialog(context, message, false);
                                   },
                                 ),
@@ -322,8 +291,7 @@ class _AssetsViewState extends State<AssetsView> {
                     : Container();
               }),
               const SizedBox(height: 24),
-              CeremonyBox(widget.store, webApi,
-                  key: const Key(EWTestKeys.ceremonyBoxWallet)),
+              CeremonyBox(widget.store, webApi, key: const Key(EWTestKeys.ceremonyBoxWallet)),
               const SizedBox(height: 24),
               if (widget.store.encointer.community != null)
                 Observer(
@@ -353,17 +321,13 @@ class _AssetsViewState extends State<AssetsView> {
                   accountOrCommunityData: _allCommunities(),
                   onTap: (int index) async {
                     final store = context.read<AppStore>();
-                    final communityStores =
-                        store.encointer.communityStores?.values.toList() ?? [];
-                    await store.encointer
-                        .setChosenCid(communityStores[index].cid);
+                    final communityStores = store.encointer.communityStores?.values.toList() ?? [];
+                    await store.encointer.setChosenCid(communityStores[index].cid);
 
-                    context.read<AppSettings>().changeTheme(
-                        store.encointer.community?.cid.toFmtString());
+                    context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
                   },
                   onAddIconPressed: () {
-                    Navigator.pushNamed(context, CommunityChooserOnMap.route)
-                        .then((_) {
+                    Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
                       _refreshEncointerState();
                     });
                   },
@@ -375,8 +339,7 @@ class _AssetsViewState extends State<AssetsView> {
                   rowTitle: l10n.switchAccount,
                   accountOrCommunityData: initAllAccounts(),
                   onTap: (int index) async {
-                    await switchAccount(
-                        widget.store.account.accountListAll[index]);
+                    await switchAccount(widget.store.account.accountListAll[index]);
                     unawaited(_refreshEncointerState());
                   },
                   onAddIconPressed: () {
@@ -389,14 +352,12 @@ class _AssetsViewState extends State<AssetsView> {
           ],
         ),
       ),
-      borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(40), topRight: Radius.circular(40)),
+      borderRadius: const BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40)),
     );
   }
 
   List<AccountOrCommunityData> _allCommunities() {
-    final communityStores =
-        context.read<AppStore>().encointer.communityStores?.values.toList();
+    final communityStores = context.read<AppStore>().encointer.communityStores?.values.toList();
 
     if (communityStores == null) return [];
     return communityStores
@@ -432,8 +393,7 @@ class _AssetsViewState extends State<AssetsView> {
             tapToCopy: false,
           ),
           name: account.name,
-          isSelected:
-              account.pubKey == widget.store.account.currentAccountPubKey,
+          isSelected: account.pubKey == widget.store.account.currentAccountPubKey,
         ),
       ),
     ];
