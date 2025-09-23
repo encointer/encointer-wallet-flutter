@@ -40,9 +40,6 @@ jobs:
           cd app && ./../flutterw gen-l10n && cd ..
           ./scripts/check_translations.sh ./app/.untranslated-messages.txt
 
-      - name: "Run unit tests Encointer"
-        run: .flutter/bin/dart run melos unit-test-app-exclude-encointer-node-e2e
-
       - name: "Run unit tests Packages"
         run: .flutter/bin/dart run melos unit-test-packages
 
@@ -52,5 +49,5 @@ jobs:
           .flutter/bin/dart run melos format-120
           git diff --exit-code
 
-    #  test-js:
-    # Todo: Currently e2e tests are mixed with unit tests (although the amount of unit tests is really small)
+      - name: "Run unit tests Encointer"
+        run: .flutter/bin/dart run melos unit-test-app-exclude-encointer-node-e2e
