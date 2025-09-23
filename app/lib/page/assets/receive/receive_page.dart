@@ -182,7 +182,11 @@ class _ReceivePageState extends State<ReceivePage> {
                     onTap: () => {
                       if (_formKey.currentState!.validate())
                         {
-                          Share.share(toDeepLink(invoice.toQrPayload())),
+                          SharePlus.instance.share(
+                            ShareParams(
+                              text: toDeepLink(invoice.toQrPayload()),
+                            ),
+                          )
                         }
                     },
                   )

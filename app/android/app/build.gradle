@@ -31,9 +31,7 @@ if (flutterVersionName == null) {
 android {
     namespace "org.encointer.wallet"
     compileSdk flutter.compileSdkVersion
-    // flutter ndk version is too low for some reason.
-    // This will probably be fixed by an flutter update.
-    ndkVersion "25.1.8937393"
+    ndkVersion flutter.ndkVersion
 
     compileOptions {
         // Flag to enable support for the new language API, see #1165.
@@ -114,5 +112,5 @@ dependencies {
     // Bug: Failed to transform window-java-1.0.0-beta04.jar (androidx.window:window-java:1.0.0-beta04)
     implementation 'androidx.window:window:1.0.0'
     implementation 'androidx.window:window-java:1.0.0'
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
 }

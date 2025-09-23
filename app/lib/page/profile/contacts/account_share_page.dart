@@ -90,7 +90,9 @@ class _AccountSharePageState extends State<AccountSharePage> {
                     Text(l10n.sendLink, style: context.titleLarge.copyWith(color: context.colorScheme.primary)),
                   ],
                 ),
-                onPressed: () => Share.share(toDeepLink(contactQrCode.toQrPayload())),
+                onPressed: () => SharePlus.instance.share(
+                  ShareParams(text: toDeepLink(contactQrCode.toQrPayload())),
+                ),
               ),
             ],
           ),
