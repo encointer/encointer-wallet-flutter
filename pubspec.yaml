@@ -70,7 +70,7 @@ melos:
       description: "Get pub workspace deps"
 
     pub-get:
-      run: cd app && dart pub get
+      run: cd app && flutter pub get
       description: "Get pub dependencies"
 
     unit-test:
