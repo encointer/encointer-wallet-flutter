@@ -27,20 +27,26 @@ void main() {
   });
 
   group('endpointChecker', () {
-    test('kusama endpoints are healthy', () async {
-      final endpoints = Network.encointerKusama.networkEndpoints();
+    for (final e in Network.encointerKusama.networkEndpoints()) {
+      test(
+        'kusama endpoint ${e.address()} is healthy',
+            () async {
+          final result = await NetworkEndpointChecker().checkHealth(e);
+          expect(result, isTrue, reason: 'Endpoint ${e.address()} is not healthy');
+        },
+        tags: productionE2E,
+      );
+    }
 
-      for (final e in endpoints) {
-        expect(await NetworkEndpointChecker().checkHealth(e), true);
-      }
-    }, tags: productionE2E);
-
-    test('gesell endpoints are healthy', () async {
-      final endpoints = Network.gesell.networkEndpoints();
-
-      for (final e in endpoints) {
-        expect(await NetworkEndpointChecker().checkHealth(e), true);
-      }
-    }, tags: productionE2E);
+    for (final e in Network.gesell.networkEndpoints()) {
+      test(
+        'gesell endpoint ${e.address()} is healthy',
+            () async {
+          final result = await NetworkEndpointChecker().checkHealth(e);
+          expect(result, isTrue, reason: 'Endpoint ${e.address()} is not healthy');
+        },
+        tags: productionE2E,
+      );
+    }
   });
 }

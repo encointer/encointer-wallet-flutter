@@ -37,7 +37,7 @@ class SubstrateDartApi {
     try {
       // Check reputation of Alice. This will return an exception if offchain
       // indexing is disabled.
-      await rpc<List<dynamic>>('encointer_getReputations', ['5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY']);
+      await rpc<List<dynamic>>('encointer_getAllCommunities', []);
       return Future.value(true);
     } catch (e) {
       return Future.value(false);

@@ -57,6 +57,9 @@ class EncointerApi {
 
   final AppStore store;
 
+  // Initialized with a completed future to avoid null checks.
+  Future<void> initialCommunityFetch = Future.value();
+
   StreamSubscription<StorageChangeSet>? _currentPhaseSubscription;
   StreamSubscription<StorageChangeSet>? _cidSubscription;
 
@@ -513,7 +516,7 @@ class EncointerApi {
   Future<void> subscribeCommunityIdentifiers() async {
     // contrary to the JS subscriptions, we don't get the current
     // value upon subscribing, only when it changes.
-    unawaited(getCommunityIdentifiers().then(store.encointer.setCommunityIdentifiers).then((_) => communitiesGetAll()));
+    initialCommunityFetch = getCommunityIdentifiers().then(store.encointer.setCommunityIdentifiers).then((_) => communitiesGetAll());
 
     await _cidSubscription?.cancel();
     final cidsPhaseKey = encointerKusama.query.encointerCommunities.communityIdentifiersKey();
