@@ -30,14 +30,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
-  aes_ecb_pkcs5_flutter:
-    dependency: transitive
-    description:
-      name: aes_ecb_pkcs5_flutter
-      sha256: "9deb5ff0c3b679bb95d99963f5f51276f714a05bf5011d8859c478478ee310c3"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.2"
   analyzer:
     dependency: transitive
     description:
