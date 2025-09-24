@@ -184,7 +184,12 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     if (_voucherBalance! < 0.04) return showRedeemFailedDialog(context, context.l10n.voucherBalanceTooLow);
 
     await submitEncointerTransferAll(
-      context, context.read<AppStore>(), widget.api, voucherKeyringAccount, recipientAddress, cid,
+      context,
+      context.read<AppStore>(),
+      widget.api,
+      voucherKeyringAccount,
+      recipientAddress,
+      cid,
       // the voucher obviously has tokens in cid.
       txPaymentAsset: cid,
       onError: (report) async {
