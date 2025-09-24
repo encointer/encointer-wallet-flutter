@@ -26,11 +26,11 @@ jobs:
       - name: Get dependencies (i.e., melos)
         run: .flutter/bin/dart pub get
 
-      - name: Melos Bootstrap
-        run: .flutter/bin/dart run melos bootstrap
-
       - name: "Check fmt"
         run: .flutter/bin/dart run melos format-check
+
+      - name: "Melos Bootstrap"
+        run: .flutter/bin/dart run melos bootstrap
 
       - name: "Analyze Code"
         run: .flutter/bin/dart run melos analyze-check
