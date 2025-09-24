@@ -40,6 +40,7 @@ class SubstrateDartApi {
       await rpc<List<dynamic>>('encointer_getAllCommunities', []);
       return Future.value(true);
     } catch (e) {
+      Log.d('[offchainIndexingEnabled] rpc not supported: $e', 'SubstrateDartApi');
       return Future.value(false);
     }
   }
@@ -51,6 +52,7 @@ class SubstrateDartApi {
 
       return Future.value(true);
     } catch (e) {
+      Log.d('[newTreasuryRpcSupported] rpc not supported: $e', 'SubstrateDartApi');
       return Future.value(false);
     }
   }
@@ -60,7 +62,11 @@ class SubstrateDartApi {
   /// Hints:
   /// * account ids must be passed as SS58.
   Future<T> rpc<T>(String method, List<dynamic> params) async {
+    Log.d('[DartApi] $method: $params');
+
     final response = await _provider.send(method, params);
+    Log.d('[DartApi] Response Error: ${response.error}');
+    Log.d('[DartApi] Response: ${response.result}');
 
     if (response.error != null) throw Exception(response.error);
 
