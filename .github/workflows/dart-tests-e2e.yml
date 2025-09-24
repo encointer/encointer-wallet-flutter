@@ -29,5 +29,5 @@ jobs:
       - name: Melos Bootstrap
         run: .flutter/bin/dart run melos bootstrap
 
-      - name: "Run unit tests Encointer"
+      - name: "Run Dart E2E Tests"
         run: .flutter/bin/dart run melos unit-test-app-with-production-e2e
