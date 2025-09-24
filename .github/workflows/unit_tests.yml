@@ -24,7 +24,17 @@ jobs:
         run: ./scripts/install_flutter_wrapper.sh
 
       - name: "Check fmt"
-        run: .flutter/bin/dart run melos format-check
+        run: .flutter/bin/dart run melos format-120
+
+      - name: Commit fmt changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add app/lib/l10n
+          git commit -m "fmt [skip ci]" || echo "No changes to commit."
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get dependencies (i.e., melos)
         run: .flutter/bin/dart pub get
