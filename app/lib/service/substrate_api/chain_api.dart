@@ -43,12 +43,9 @@ class ChainApi {
 
   /// Subscribes to the latest headers
   Future<void> subscribeNewHeads() async {
-    await _latestHeaderSubscription?.cancel();
+    unawaited(getLatestHeader());
 
-    // The subscription doesn't return the current value, we have to wait
-    // until the next header is produced, hence we fetch the current one apriori.
-    final header = await getLatestHeader();
-    store.chain.setLatestHeader(header);
+    await _latestHeaderSubscription?.cancel();
 
     final subscription = await provider.subscribe(
       'chain_subscribeNewHeads',
@@ -70,8 +67,10 @@ class ChainApi {
     });
   }
 
-  Future<Header> getLatestHeader() {
-    return getHeader();
+  Future<Header> getLatestHeader() async {
+    final header = await getHeader();
+    store.chain.setLatestHeader(header);
+    return header;
   }
 
   Future<Header> getHeader({BlockHash? at}) async {

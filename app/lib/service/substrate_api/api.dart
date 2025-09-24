@@ -41,7 +41,7 @@ class NetworkEndpointChecker with EndpointChecker<NetworkEndpoint> {
       SubstrateDartApi(provider).newTreasuryRpcSupported(),
     ]);
     Log.d('[NetworkEndpointChecker] Endpoint ${endpoint.address()} offchainIndexingEnabled: ${health[0]}', 'Api');
-    Log.d('[NetworkEndpointChecker] Endpoint ${endpoint.address()} newTreasuryRpcSuppored: ${health[1]}', 'Api');
+    Log.d('[NetworkEndpointChecker] Endpoint ${endpoint.address()} newTreasuryRpcSupported: ${health[1]}', 'Api');
 
     await provider.disconnect();
     // only allow nodes that have offchain indexing enabled and support the new treasury rpc
@@ -141,9 +141,9 @@ class Api {
       await store.encointer.initializeUninitializedStores(store.account.currentAddress);
     }
 
-    // await subscriptions here because we want
-    // to fetch the bestHead before making
-    // other requests.
+    // We fetch the latest header before making any other calls.
+    await webApi.chain.getLatestHeader();
+
     await startSubscriptions();
 
     await Future.wait([

@@ -44,7 +44,7 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
 
   Future<(List<LatLng>, Map<LatLng, CidName>)> _loadCommunityData(AppStore store) async {
     // Make sure that we have finished fetching communities
-    await webApi.encointer.initialCommunityFetch;
+    await webApi.encointer.initCommunities();
     final locations = getLocations(store);
     final communityDataAt = getCommunityDataAt(store);
     return (locations, communityDataAt);
