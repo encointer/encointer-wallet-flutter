@@ -75,6 +75,8 @@ class ChainApi {
   Future<Header> getLatestHeader() async {
     final header = await getHeader();
     store.chain.setLatestHeader(header);
+    final hash = await getBlockHash(header.number.toInt());
+    store.chain.setLatestHeaderHash(hash);
     return header;
   }
 
