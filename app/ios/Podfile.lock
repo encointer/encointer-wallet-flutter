@@ -107,11 +107,11 @@ SPEC CHECKSUMS:
   app_links: 585674be3c6661708e6cd794ab4f39fb9d8356f9
   connectivity_plus: 2a701ffec2c0ae28a48cf7540e279787e77c447d
   device_info_plus: bf2e3232933866d73fe290f2942f2156cdd10342
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   flutter_local_notifications: ff50f8405aaa0ccdc7dcfb9022ca192e8ad9688f
   flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
   flutter_timezone: ac3da59ac941ff1c98a2e1f0293420e020120282
-  local_auth_darwin: fa4b06454df7df8e97c18d7ee55151c57e7af0de
+  local_auth_darwin: 63c73d6d28cc3e239be2b6aa460ea6e317cd5100
   mobile_scanner: 77265f3dc8d580810e91849d4a0811a90467ed5e
   package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
