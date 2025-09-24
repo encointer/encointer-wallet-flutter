@@ -99,32 +99,32 @@ dev_dependencies:
   json_serializable_mobx:
     git:
       url: https://github.com/encointer/json_serializable_immutable_collections
-      ref: e32b4164a4673d98bffcb0c4c42b47c8843f1446
+      ref: b247e5a33515f5bcc3ed9ab26793bf03d26b1e4e
       path: builders/json_serializable_mobx
   mobx_codegen: ^2.7.0
   # Check unused dependencies. Note: Some packages are not imported by any dart files but are used
   # for their executables. If that is the case, they can be white-listed by using the --ignore option.
   # mobx_codegen, json_serializable belong to these.
-  dependency_validator: ^4.1.2
+  dependency_validator: ^5.0.2
   flutter_test:
     sdk: flutter
   flutter_driver:
     sdk: flutter
   test: ^1.24.9
   mocktail: ^1.0.1
-  very_good_analysis: ^9.0.0
+  very_good_analysis: ^10.0.0
   rxdart: ^0.28.0
 
 dependency_overrides:
   json_serializable_mobx_typehelpers:
     git:
       url: https://github.com/encointer/json_serializable_immutable_collections
-      ref: e32b4164a4673d98bffcb0c4c42b47c8843f1446
+      ref: b247e5a33515f5bcc3ed9ab26793bf03d26b1e4e
       path: typehelpers/json_serializable_mobx_typehelpers
   json_serializable_type_helper_utils:
     git:
       url: https://github.com/encointer/json_serializable_immutable_collections
-      ref: e32b4164a4673d98bffcb0c4c42b47c8843f1446
+      ref: b247e5a33515f5bcc3ed9ab26793bf03d26b1e4e
       path: typehelpers/json_serializable_type_helper_utils
 
 flutter_icons:

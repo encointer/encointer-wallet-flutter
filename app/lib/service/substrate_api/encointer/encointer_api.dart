@@ -516,6 +516,9 @@ class EncointerApi {
   Future<void> initCommunities() async {
     initialCommunityFetch =
         getCommunityIdentifiers().then(store.encointer.setCommunityIdentifiers).then((_) => communitiesGetAll());
+
+    Log.d('api: initCommunities called');
+
     return initialCommunityFetch;
   }
 
