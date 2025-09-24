@@ -27,14 +27,9 @@ class NetworkEndpointChecker with EndpointChecker<NetworkEndpoint> {
     Log.d('[NetworkEndpointChecker] Checking health of: ${endpoint.address()}', 'Api');
 
     final provider = WsProvider(Uri.parse(endpoint.address()));
-    final ready = await provider.ready();
+    await provider.isReady();
 
-    Log.d('[NetworkEndpointChecker] Endpoint ${endpoint.address()} ready: $ready', 'Api');
-
-    if (!ready) {
-      await provider.disconnect();
-      return false;
-    }
+    Log.d('[NetworkEndpointChecker] Endpoint ${endpoint.address()} is ready', 'Api');
 
     final health = await Future.wait([
       SubstrateDartApi(provider).offchainIndexingEnabled(),
