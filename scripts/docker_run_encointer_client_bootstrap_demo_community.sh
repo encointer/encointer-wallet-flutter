@@ -6,4 +6,8 @@ DOCKER_TAG=${1:-1.16.2}
 echo "Encointer client docker tag: ${DOCKER_TAG}"
 
 # `--add-host host.docker.internal:host-gateway` is only needed for linux
-docker run --add-host host.docker.internal:host-gateway encointer/encointer-client-notee:${DOCKER_TAG} bootstrap_demo_community.py -u ws://host.docker.internal -p 9944 --signer //Bob
+docker run \
+  -e PYTHONUNBUFFERED=1 \
+  --add-host host.docker.internal:host-gateway \
+  encointer/encointer-client-notee:${DOCKER_TAG} \
+  bootstrap_demo_community.py -u ws://host.docker.internal -p 9944 --signer //Bob
