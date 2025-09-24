@@ -514,7 +514,7 @@ class EncointerApi {
   // Make sure that we initially load the communities once before we
   // show the map of all communities during onboarding.
   Future<void> initCommunities() async {
-    initialCommunityFetch ??=
+    initialCommunityFetch =
         getCommunityIdentifiers().then(store.encointer.setCommunityIdentifiers).then((_) => communitiesGetAll());
     return initialCommunityFetch;
   }

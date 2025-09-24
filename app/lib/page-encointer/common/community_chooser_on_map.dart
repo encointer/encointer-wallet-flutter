@@ -130,6 +130,8 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
 }
 
 List<LatLng> getLocations(AppStore store) {
+  Log.p('getLocations: ${store.encointer.communities?.length ?? 0} communities found');
+
   return store.encointer.communities?.map(coordinatesOf).toList() ?? [];
 }
 
