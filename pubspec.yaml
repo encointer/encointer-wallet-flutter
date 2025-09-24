@@ -99,16 +99,22 @@ melos:
       description: "Generate encointer typdedefs with polkadart"
 
     # Unit test Encointer Wallet with tag
-    unit-test-app-exclude-encointer-node-e2e:
+    unit-test-app-exclude-e2e:
       run: >-
         dart run melos exec --scope="encointer_wallet" -- \
-        flutter test --exclude-tags encointer-node-e2e
+        flutter test --exclude-tags encointer-node-e2e,production-e2e
       description: "Run unit tests excluding the `encointer-node-e2e` tag"
 
     unit-test-app-with-encointer-node-e2e:
       run: >-
         dart run melos exec --scope="encointer_wallet" -- \
         flutter test --tags encointer-node-e2e
+      description: "Run unit tests with the `encointer-node-e2e` tag"
+
+    unit-test-app-with-production-e2e:
+      run: >-
+        dart run melos exec --scope="encointer_wallet" -- \
+        flutter test --tags production-e2e
       description: "Run unit tests with the `encointer-node-e2e` tag"
 
     unit-test-packages:
