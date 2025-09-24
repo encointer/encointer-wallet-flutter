@@ -2,9 +2,9 @@ name: Unit Tests & Code Quality
 
 on:
   push:
-    branches: [master, f-droid]
+    branches: [ master, f-droid ]
   pull_request:
-    branches: [master, f-droid]
+    branches: [ master, f-droid ]
 
 # Cancel a currently running workflow from the same PR, branch or tag when a new workflow is
 # triggered (ref https://stackoverflow.com/a/72408109)
@@ -16,6 +16,13 @@ jobs:
   flutter:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      matrix:
+        test: [ analyze-check,
+                format-check,
+                unit-test-packages,
+                unit-test-app-exclude-e2e
+        ]
     steps:
       # Setup Environment
       - uses: actions/checkout@v4
@@ -23,8 +30,24 @@ jobs:
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
 
-      - name: "Check fmt"
-        run: .flutter/bin/dart run melos format-check
+      - name: Get dependencies (i.e., melos)
+        run: .flutter/bin/dart pub get
+
+      - name: "Melos Bootstrap"
+        run: .flutter/bin/dart run melos bootstrap
+
+      - name: ${{ matrix.test }}
+        run: .flutter/bin/dart run melos ${{ matrix.test }}
+
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      # Setup Environment
+      - uses: actions/checkout@v4
+
+      - name: Install flutter wrapper
+        run: ./scripts/install_flutter_wrapper.sh
 
       - name: Get dependencies (i.e., melos)
         run: .flutter/bin/dart pub get
@@ -32,22 +55,13 @@ jobs:
       - name: "Melos Bootstrap"
         run: .flutter/bin/dart run melos bootstrap
 
-      - name: "Analyze Code"
-        run: .flutter/bin/dart run melos analyze-check
-
       - name: "Check translations"
         run: |
           cd app && ./../flutterw gen-l10n && cd ..
           ./scripts/check_translations.sh ./app/.untranslated-messages.txt
-
-      - name: "Run unit tests Packages"
-        run: .flutter/bin/dart run melos unit-test-packages
 
       - name: "Run the build_runner and return an error if files are changed"
         run: |
           .flutter/bin/dart run melos run-build-runner
           .flutter/bin/dart run melos format-120
           git diff --exit-code
-
-      - name: "Run unit tests Encointer"
-        run: .flutter/bin/dart run melos unit-test-app-exclude-e2e
