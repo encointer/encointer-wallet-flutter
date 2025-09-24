@@ -190,7 +190,7 @@ class _ProposePageState extends State<ProposePage> {
                       children: [
                         // Proposal Action Selector
                         DropdownButtonFormField<ProposalActionIdentifier>(
-                          value: selectedAction,
+                          initialValue: selectedAction,
                           onChanged: (ProposalActionIdentifier? newValue) {
                             setState(() {
                               selectedAction = newValue!;
@@ -210,7 +210,7 @@ class _ProposePageState extends State<ProposePage> {
 
                         // Scope Selector
                         DropdownButtonFormField<ProposalScope>(
-                          value: selectedScope,
+                          initialValue: selectedScope,
                           onChanged: allowedScopes.length > 1
                               ? (ProposalScope? newValue) {
                                   if (newValue != null) {
