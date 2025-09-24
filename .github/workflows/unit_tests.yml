@@ -23,6 +23,7 @@ jobs:
                 unit-test-packages,
                 unit-test-app-exclude-e2e
         ]
+      fail-fast: false
     steps:
       # Setup Environment
       - uses: actions/checkout@v4
