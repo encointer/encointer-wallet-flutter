@@ -66,7 +66,7 @@ class SubstrateDartApi {
 
     final response = await _provider.send(method, params);
     Log.d('[DartApi] Response Error: ${response.error}');
-    Log.d('[DartApi] Response: ${response.result}');
+    Log.d('[DartApi] Response Result: ${response.result}');
 
     if (response.error != null) throw Exception(response.error);
 
