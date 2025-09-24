@@ -2,7 +2,7 @@ name: Unit Tests & Code Quality
 
 on:
   push:
-    branches: [ master, f-droid ]
+    branches: [ master, f-droid, cl/test-fmt ]
   pull_request:
     branches: [ master, f-droid ]
 
@@ -19,7 +19,7 @@ jobs:
     strategy:
       matrix:
         test: [ analyze-check,
-                format-check,
+                format-120,
                 unit-test-packages,
                 unit-test-app-exclude-e2e
         ]
@@ -39,6 +39,9 @@ jobs:
 
       - name: ${{ matrix.test }}
         run: .flutter/bin/dart run melos ${{ matrix.test }}
+
+      - name: git diff
+        run: git diff
 
   generate:
     runs-on: ubuntu-latest
