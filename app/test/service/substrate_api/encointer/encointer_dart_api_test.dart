@@ -30,7 +30,7 @@ void main() {
     for (final e in Network.encointerKusama.networkEndpoints()) {
       test(
         'kusama endpoint ${e.address()} is healthy',
-            () async {
+        () async {
           final result = await NetworkEndpointChecker().checkHealth(e);
           expect(result, isTrue, reason: 'Endpoint ${e.address()} is not healthy');
         },
@@ -41,7 +41,7 @@ void main() {
     for (final e in Network.gesell.networkEndpoints()) {
       test(
         'gesell endpoint ${e.address()} is healthy',
-            () async {
+        () async {
           final result = await NetworkEndpointChecker().checkHealth(e);
           expect(result, isTrue, reason: 'Endpoint ${e.address()} is not healthy');
         },
