@@ -35,9 +35,17 @@ class SubstrateDartApi {
 
   Future<bool> offchainIndexingEnabled() async {
     try {
-      // Check reputation of Alice. This will return an exception if offchain
-      // indexing is disabled.
-      await rpc<List<dynamic>>('encointer_getAllCommunities', []);
+      final communities = await rpc<List<dynamic>>('encointer_getAllCommunities', []);
+      if (communities.isEmpty) {
+        // Unfortunately, we cannot test the same way for reputations, as empty
+        // results are valid.
+        Log.e(
+          '[offchainIndexingEnabled] Enabled, but no communities found. We have a caching issue!',
+          'SubstrateDartApi',
+        );
+        return Future.value(false);
+      }
+
       return Future.value(true);
     } catch (e) {
       Log.d('[offchainIndexingEnabled] rpc not supported: $e', 'SubstrateDartApi');
