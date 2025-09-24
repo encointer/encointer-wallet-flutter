@@ -29,3 +29,16 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+
+// --- FIX for Flutter 3.35 task ordering issue ---
+// Ensure that variant-specific Flutter compile tasks do not conflict
+gradle.projectsEvaluated {
+    def flutterTasks = tasks.matching { it.name.startsWith("compileFlutterBuild") }
+    flutterTasks.configureEach { t1 ->
+        flutterTasks.configureEach { t2 ->
+            if (t1 != t2) {
+                t1.mustRunAfter(t2)
+            }
+        }
+    }
+}
