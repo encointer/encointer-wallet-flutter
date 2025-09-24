@@ -57,7 +57,6 @@ class EncointerApi {
 
   final AppStore store;
 
-  // Initialized with a completed future to avoid null checks.
   Future<void>? initialCommunityFetch;
 
   StreamSubscription<StorageChangeSet>? _currentPhaseSubscription;
