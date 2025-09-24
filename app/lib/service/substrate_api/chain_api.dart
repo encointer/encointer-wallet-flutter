@@ -62,6 +62,11 @@ class ChainApi {
       Log.p('[subscribeNewHeads] Got header: ${header.toJson()}');
       store.chain.setLatestHeader(header);
 
+      if (header.number.toInt() == 0) {
+        Log.p('Header number is 0, will not fetch block hash.', 'ChainApi');
+        return;
+      }
+
       final hash = await getBlockHash(header.number.toInt());
       store.chain.setLatestHeaderHash(hash);
     });
