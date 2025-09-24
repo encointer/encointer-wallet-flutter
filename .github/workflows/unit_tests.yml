@@ -50,4 +50,4 @@ jobs:
           git diff --exit-code
 
       - name: "Run unit tests Encointer"
-        run: .flutter/bin/dart run melos unit-test-app-exclude-encointer-node-e2e
+        run: .flutter/bin/dart run melos unit-test-app-exclude-e2e

@@ -1,3 +1,5 @@
+import 'package:encointer_wallet/config/networks/networks.dart' show Network;
+import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/reconnecting_ws_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -22,5 +24,29 @@ void main() {
 
       await provider.disconnect();
     }, tags: encointerNodeE2E);
+  });
+
+  group('endpointChecker', () {
+    for (final e in Network.encointerKusama.networkEndpoints()) {
+      test(
+        'kusama endpoint ${e.address()} is healthy',
+        () async {
+          final result = await NetworkEndpointChecker().checkHealth(e);
+          expect(result, isTrue, reason: 'Endpoint ${e.address()} is not healthy');
+        },
+        tags: productionE2E,
+      );
+    }
+
+    for (final e in Network.gesell.networkEndpoints()) {
+      test(
+        'gesell endpoint ${e.address()} is healthy',
+        () async {
+          final result = await NetworkEndpointChecker().checkHealth(e);
+          expect(result, isTrue, reason: 'Endpoint ${e.address()} is not healthy');
+        },
+        tags: productionE2E,
+      );
+    }
   });
 }

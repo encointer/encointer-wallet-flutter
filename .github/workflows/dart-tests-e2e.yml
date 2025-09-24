@@ -1,0 +1,33 @@
+name: Dart E2E Tests
+
+on:
+  push:
+    branches: [master, f-droid]
+  pull_request:
+    branches: [master, f-droid]
+
+# Cancel a currently running workflow from the same PR, branch or tag when a new workflow is
+# triggered (ref https://stackoverflow.com/a/72408109)
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  dart-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      # Setup Environment
+      - uses: actions/checkout@v4
+
+      - name: Install flutter wrapper
+        run: ./scripts/install_flutter_wrapper.sh
+
+      - name: Get dependencies (i.e., melos)
+        run: .flutter/bin/dart pub get
+
+      - name: Melos Bootstrap
+        run: .flutter/bin/dart run melos bootstrap
+
+      - name: "Run Dart E2E Tests"
+        run: .flutter/bin/dart run melos unit-test-app-with-production-e2e
