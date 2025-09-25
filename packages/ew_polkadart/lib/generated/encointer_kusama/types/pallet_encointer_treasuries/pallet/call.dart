@@ -42,6 +42,16 @@ class $Call {
       desiredNativeAmount: desiredNativeAmount,
     );
   }
+
+  SwapAsset swapAsset({
+    required _i3.CommunityIdentifier cid,
+    required BigInt desiredAssetAmount,
+  }) {
+    return SwapAsset(
+      cid: cid,
+      desiredAssetAmount: desiredAssetAmount,
+    );
+  }
 }
 
 class $CallCodec with _i1.Codec<Call> {
@@ -53,6 +63,8 @@ class $CallCodec with _i1.Codec<Call> {
     switch (index) {
       case 0:
         return SwapNative._decode(input);
+      case 1:
+        return SwapAsset._decode(input);
       default:
         throw Exception('Call: Invalid variant index: "$index"');
     }
@@ -67,6 +79,9 @@ class $CallCodec with _i1.Codec<Call> {
       case SwapNative:
         (value as SwapNative).encodeTo(output);
         break;
+      case SwapAsset:
+        (value as SwapAsset).encodeTo(output);
+        break;
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -77,6 +92,8 @@ class $CallCodec with _i1.Codec<Call> {
     switch (value.runtimeType) {
       case SwapNative:
         return (value as SwapNative)._sizeHint();
+      case SwapAsset:
+        return (value as SwapAsset)._sizeHint();
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -146,5 +163,71 @@ class SwapNative extends Call {
   int get hashCode => Object.hash(
         cid,
         desiredNativeAmount,
+      );
+}
+
+/// swap native tokens for community currency subject to an existing swap option for the
+/// sender account.
+class SwapAsset extends Call {
+  const SwapAsset({
+    required this.cid,
+    required this.desiredAssetAmount,
+  });
+
+  factory SwapAsset._decode(_i1.Input input) {
+    return SwapAsset(
+      cid: _i3.CommunityIdentifier.codec.decode(input),
+      desiredAssetAmount: _i1.U128Codec.codec.decode(input),
+    );
+  }
+
+  /// CommunityIdentifier
+  final _i3.CommunityIdentifier cid;
+
+  /// BalanceOf<T>
+  final BigInt desiredAssetAmount;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'swap_asset': {
+          'cid': cid.toJson(),
+          'desiredAssetAmount': desiredAssetAmount,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i3.CommunityIdentifier.codec.sizeHint(cid);
+    size = size + _i1.U128Codec.codec.sizeHint(desiredAssetAmount);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      1,
+      output,
+    );
+    _i3.CommunityIdentifier.codec.encodeTo(
+      cid,
+      output,
+    );
+    _i1.U128Codec.codec.encodeTo(
+      desiredAssetAmount,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SwapAsset && other.cid == cid && other.desiredAssetAmount == desiredAssetAmount;
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        desiredAssetAmount,
       );
 }
