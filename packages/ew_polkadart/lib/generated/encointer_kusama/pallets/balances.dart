@@ -250,7 +250,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _account.decodeValue(v.key)).toList();
     }
-    return (keys
+    return keys
         .map((key) => _i4.AccountData(
               free: BigInt.zero,
               reserved: BigInt.zero,
@@ -260,7 +260,7 @@ class Queries {
                 radix: 10,
               ),
             ))
-        .toList() as List<_i4.AccountData>); /* Default */
+        .toList(); /* Default */
   }
 
   /// Any liquidity locks on some account balances.

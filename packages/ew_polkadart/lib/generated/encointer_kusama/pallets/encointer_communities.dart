@@ -317,7 +317,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _communityMetadata.decodeValue(v.key)).toList();
     }
-    return (keys
+    return keys
         .map((key) => _i7.CommunityMetadata(
               name: <int>[
                 68,
@@ -397,7 +397,7 @@ class Queries {
               announcementSigner: null,
               rules: _i10.CommunityRules.loCo,
             ))
-        .toList() as List<_i7.CommunityMetadata>); /* Default */
+        .toList(); /* Default */
   }
 
   /// Amount of UBI to be paid for every attended ceremony.
@@ -413,7 +413,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _nominalIncome.decodeValue(v.key)).toList();
     }
-    return (keys.map((key) => _i8.FixedU128(bits: BigInt.zero)).toList() as List<_i8.FixedU128>); /* Default */
+    return keys.map((key) => _i8.FixedU128(bits: BigInt.zero)).toList(); /* Default */
   }
 
   /// Returns the storage key for `communityIdentifiersByGeohash`.

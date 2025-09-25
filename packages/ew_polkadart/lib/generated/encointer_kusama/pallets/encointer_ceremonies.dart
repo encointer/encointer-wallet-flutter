@@ -1016,7 +1016,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _bootstrapperCount.decodeValue(v.key)).toList();
     }
-    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+    return keys.map((key) => BigInt.zero).toList(); /* Default */
   }
 
   _i11.Future<List<BigInt>> multiReputableCount(
@@ -1031,7 +1031,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _reputableCount.decodeValue(v.key)).toList();
     }
-    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+    return keys.map((key) => BigInt.zero).toList(); /* Default */
   }
 
   _i11.Future<List<BigInt>> multiEndorseeCount(
@@ -1046,7 +1046,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _endorseeCount.decodeValue(v.key)).toList();
     }
-    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+    return keys.map((key) => BigInt.zero).toList(); /* Default */
   }
 
   _i11.Future<List<BigInt>> multiNewbieCount(
@@ -1061,7 +1061,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _newbieCount.decodeValue(v.key)).toList();
     }
-    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+    return keys.map((key) => BigInt.zero).toList(); /* Default */
   }
 
   _i11.Future<List<_i6.AssignmentCount>> multiAssignmentCounts(
@@ -1076,14 +1076,14 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _assignmentCounts.decodeValue(v.key)).toList();
     }
-    return (keys
+    return keys
         .map((key) => _i6.AssignmentCount(
               bootstrappers: BigInt.zero,
               reputables: BigInt.zero,
               endorsees: BigInt.zero,
               newbies: BigInt.zero,
             ))
-        .toList() as List<_i6.AssignmentCount>); /* Default */
+        .toList(); /* Default */
   }
 
   _i11.Future<List<_i7.Assignment>> multiAssignments(
@@ -1098,7 +1098,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _assignments.decodeValue(v.key)).toList();
     }
-    return (keys
+    return keys
         .map((key) => _i7.Assignment(
               bootstrappersReputables: _i12.AssignmentParams(
                 m: BigInt.zero,
@@ -1121,7 +1121,7 @@ class Queries {
                 s2: BigInt.zero,
               ),
             ))
-        .toList() as List<_i7.Assignment>); /* Default */
+        .toList(); /* Default */
   }
 
   _i11.Future<List<BigInt>> multiReputationCount(
@@ -1136,7 +1136,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _reputationCount.decodeValue(v.key)).toList();
     }
-    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+    return keys.map((key) => BigInt.zero).toList(); /* Default */
   }
 
   _i11.Future<List<BigInt>> multiGlobalReputationCount(
@@ -1151,7 +1151,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _globalReputationCount.decodeValue(v.key)).toList();
     }
-    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+    return keys.map((key) => BigInt.zero).toList(); /* Default */
   }
 
   _i11.Future<List<BigInt>> multiEndorseesCount(
@@ -1166,7 +1166,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _endorseesCount.decodeValue(v.key)).toList();
     }
-    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+    return keys.map((key) => BigInt.zero).toList(); /* Default */
   }
 
   _i11.Future<List<BigInt>> multiMeetupCount(
@@ -1181,7 +1181,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _meetupCount.decodeValue(v.key)).toList();
     }
-    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+    return keys.map((key) => BigInt.zero).toList(); /* Default */
   }
 
   _i11.Future<List<BigInt>> multiAttestationCount(
@@ -1196,7 +1196,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _attestationCount.decodeValue(v.key)).toList();
     }
-    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+    return keys.map((key) => BigInt.zero).toList(); /* Default */
   }
 
   _i11.Future<List<int?>> multiInactivityCounters(

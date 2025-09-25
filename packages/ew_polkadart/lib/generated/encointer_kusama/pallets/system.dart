@@ -465,7 +465,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _account.decodeValue(v.key)).toList();
     }
-    return (keys
+    return keys
         .map((key) => _i3.AccountInfo(
               nonce: 0,
               consumers: 0,
@@ -481,7 +481,7 @@ class Queries {
                 ),
               ),
             ))
-        .toList() as List<_i3.AccountInfo>); /* Default */
+        .toList(); /* Default */
   }
 
   /// Map of block numbers to block hashes.
@@ -497,13 +497,13 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _blockHash.decodeValue(v.key)).toList();
     }
-    return (keys
+    return keys
         .map((key) => List<int>.filled(
               32,
               0,
               growable: false,
             ))
-        .toList() as List<_i6.H256>); /* Default */
+        .toList(); /* Default */
   }
 
   /// Extrinsics data for the current block (maps an extrinsic's index to its data).
@@ -519,13 +519,13 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _extrinsicData.decodeValue(v.key)).toList();
     }
-    return (keys
+    return keys
         .map((key) => List<int>.filled(
               0,
               0,
               growable: true,
             ))
-        .toList() as List<List<int>>); /* Default */
+        .toList(); /* Default */
   }
 
   /// Mapping between a topic (represented by T::Hash) and a vector of indexes

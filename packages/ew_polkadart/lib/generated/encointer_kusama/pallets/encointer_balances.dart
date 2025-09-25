@@ -128,12 +128,12 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _totalIssuance.decodeValue(v.key)).toList();
     }
-    return (keys
+    return keys
         .map((key) => _i3.BalanceEntry(
               principal: _i8.FixedU128(bits: BigInt.zero),
               lastUpdate: 0,
             ))
-        .toList() as List<_i3.BalanceEntry>); /* Default */
+        .toList(); /* Default */
   }
 
   _i7.Future<List<_i5.FixedI128>> multiDemurragePerBlock(
@@ -148,7 +148,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _demurragePerBlock.decodeValue(v.key)).toList();
     }
-    return (keys.map((key) => _i5.FixedI128(bits: BigInt.zero)).toList() as List<_i5.FixedI128>); /* Default */
+    return keys.map((key) => _i5.FixedI128(bits: BigInt.zero)).toList(); /* Default */
   }
 
   /// Returns the storage key for `totalIssuance`.

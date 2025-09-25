@@ -108,13 +108,13 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _purposes.decodeValue(v.key)).toList();
     }
-    return (keys
+    return keys
         .map((key) => List<int>.filled(
               0,
               0,
               growable: true,
             ))
-        .toList() as List<List<int>>); /* Default */
+        .toList(); /* Default */
   }
 
   /// Returns the storage key for `currentPurposeId`.

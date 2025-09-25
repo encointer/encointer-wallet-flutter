@@ -121,7 +121,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _phaseDurations.decodeValue(v.key)).toList();
     }
-    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+    return keys.map((key) => BigInt.zero).toList(); /* Default */
   }
 
   /// Returns the storage key for `currentCeremonyIndex`.

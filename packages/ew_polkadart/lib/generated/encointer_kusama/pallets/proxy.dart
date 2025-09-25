@@ -95,12 +95,12 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _proxies.decodeValue(v.key)).toList();
     }
-    return (keys
+    return keys
         .map((key) => _i3.Tuple2<List<_i4.ProxyDefinition>, BigInt>(
               [],
               BigInt.zero,
             ))
-        .toList() as List<_i3.Tuple2<List<_i4.ProxyDefinition>, BigInt>>); /* Default */
+        .toList(); /* Default */
   }
 
   /// The announcements made by the proxy (key).
@@ -116,12 +116,12 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _announcements.decodeValue(v.key)).toList();
     }
-    return (keys
+    return keys
         .map((key) => _i3.Tuple2<List<_i6.Announcement>, BigInt>(
               [],
               BigInt.zero,
             ))
-        .toList() as List<_i3.Tuple2<List<_i6.Announcement>, BigInt>>); /* Default */
+        .toList(); /* Default */
   }
 
   /// Returns the storage key for `proxies`.
