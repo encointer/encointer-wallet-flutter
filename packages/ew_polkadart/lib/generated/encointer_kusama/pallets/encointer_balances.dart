@@ -116,6 +116,41 @@ class Queries {
     return BigInt.zero; /* Default */
   }
 
+  _i7.Future<List<_i3.BalanceEntry>> multiTotalIssuance(
+    List<_i2.CommunityIdentifier> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _totalIssuance.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _totalIssuance.decodeValue(v.key)).toList();
+    }
+    return (keys
+        .map((key) => _i3.BalanceEntry(
+              principal: _i8.FixedU128(bits: BigInt.zero),
+              lastUpdate: 0,
+            ))
+        .toList() as List<_i3.BalanceEntry>); /* Default */
+  }
+
+  _i7.Future<List<_i5.FixedI128>> multiDemurragePerBlock(
+    List<_i2.CommunityIdentifier> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _demurragePerBlock.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _demurragePerBlock.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => _i5.FixedI128(bits: BigInt.zero)).toList() as List<_i5.FixedI128>); /* Default */
+  }
+
   /// Returns the storage key for `totalIssuance`.
   _i9.Uint8List totalIssuanceKey(_i2.CommunityIdentifier key1) {
     final hashedKey = _totalIssuance.hashedKeyFor(key1);
@@ -169,33 +204,30 @@ class Txs {
   const Txs();
 
   /// Transfer some balance to another account.
-  _i10.RuntimeCall transfer({
+  _i10.EncointerBalances transfer({
     required _i4.AccountId32 dest,
     required _i2.CommunityIdentifier communityId,
     required _i8.FixedU128 amount,
   }) {
-    final _call = _i11.Call.values.transfer(
+    return _i10.EncointerBalances(_i11.Transfer(
       dest: dest,
       communityId: communityId,
       amount: amount,
-    );
-    return _i10.RuntimeCall.values.encointerBalances(_call);
+    ));
   }
 
-  _i10.RuntimeCall setFeeConversionFactor({required BigInt feeConversionFactor}) {
-    final _call = _i11.Call.values.setFeeConversionFactor(feeConversionFactor: feeConversionFactor);
-    return _i10.RuntimeCall.values.encointerBalances(_call);
+  _i10.EncointerBalances setFeeConversionFactor({required BigInt feeConversionFactor}) {
+    return _i10.EncointerBalances(_i11.SetFeeConversionFactor(feeConversionFactor: feeConversionFactor));
   }
 
-  _i10.RuntimeCall transferAll({
+  _i10.EncointerBalances transferAll({
     required _i4.AccountId32 dest,
     required _i2.CommunityIdentifier cid,
   }) {
-    final _call = _i11.Call.values.transferAll(
+    return _i10.EncointerBalances(_i11.TransferAll(
       dest: dest,
       cid: cid,
-    );
-    return _i10.RuntimeCall.values.encointerBalances(_call);
+    ));
   }
 }
 

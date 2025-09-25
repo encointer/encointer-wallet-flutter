@@ -96,6 +96,27 @@ class Queries {
     return null; /* Default */
   }
 
+  _i7.Future<List<List<int>>> multiPurposes(
+    List<BigInt> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _purposes.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _purposes.decodeValue(v.key)).toList();
+    }
+    return (keys
+        .map((key) => List<int>.filled(
+              0,
+              0,
+              growable: true,
+            ))
+        .toList() as List<List<int>>); /* Default */
+  }
+
   /// Returns the storage key for `currentPurposeId`.
   _i8.Uint8List currentPurposeIdKey() {
     final hashedKey = _currentPurposeId.hashedKey();
@@ -136,23 +157,21 @@ class Queries {
 class Txs {
   const Txs();
 
-  _i9.RuntimeCall registerPurpose({required List<int> descriptor}) {
-    final _call = _i10.Call.values.registerPurpose(descriptor: descriptor);
-    return _i9.RuntimeCall.values.encointerReputationCommitments(_call);
+  _i9.EncointerReputationCommitments registerPurpose({required List<int> descriptor}) {
+    return _i9.EncointerReputationCommitments(_i10.RegisterPurpose(descriptor: descriptor));
   }
 
-  _i9.RuntimeCall commitReputation({
+  _i9.EncointerReputationCommitments commitReputation({
     required _i4.CommunityIdentifier cid,
     required int cindex,
     required BigInt purpose,
     _i6.H256? commitmentHash,
   }) {
-    final _call = _i10.Call.values.commitReputation(
+    return _i9.EncointerReputationCommitments(_i10.CommitReputation(
       cid: cid,
       cindex: cindex,
       purpose: purpose,
       commitmentHash: commitmentHash,
-    );
-    return _i9.RuntimeCall.values.encointerReputationCommitments(_call);
+    ));
   }
 }

@@ -275,6 +275,147 @@ class Queries {
     return 0; /* Default */
   }
 
+  _i9.Future<List<List<_i3.CommunityIdentifier>>> multiCommunityIdentifiersByGeohash(
+    List<_i2.GeoHash> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _communityIdentifiersByGeohash.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _communityIdentifiersByGeohash.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => []).toList() as List<List<_i3.CommunityIdentifier>>); /* Default */
+  }
+
+  _i9.Future<List<List<_i6.AccountId32>>> multiBootstrappers(
+    List<_i3.CommunityIdentifier> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _bootstrappers.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _bootstrappers.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => []).toList() as List<List<_i6.AccountId32>>); /* Default */
+  }
+
+  _i9.Future<List<_i7.CommunityMetadata>> multiCommunityMetadata(
+    List<_i3.CommunityIdentifier> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _communityMetadata.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _communityMetadata.decodeValue(v.key)).toList();
+    }
+    return (keys
+        .map((key) => _i7.CommunityMetadata(
+              name: <int>[
+                68,
+                101,
+                102,
+                97,
+                117,
+                108,
+                116,
+              ],
+              symbol: <int>[
+                68,
+                69,
+                70,
+              ],
+              assets: <int>[
+                68,
+                101,
+                102,
+                97,
+                117,
+                49,
+                116,
+                67,
+                105,
+                100,
+                84,
+                104,
+                97,
+                116,
+                49,
+                115,
+                52,
+                54,
+                67,
+                104,
+                97,
+                114,
+                97,
+                99,
+                116,
+                101,
+                114,
+                115,
+                49,
+                110,
+                76,
+                101,
+                110,
+                103,
+                116,
+                104,
+                49,
+                49,
+                49,
+                49,
+                49,
+                49,
+                49,
+                49,
+                49,
+                49,
+              ],
+              theme: null,
+              url: <int>[
+                68,
+                101,
+                102,
+                97,
+                117,
+                108,
+                116,
+                85,
+                114,
+                108,
+              ],
+              announcementSigner: null,
+              rules: _i10.CommunityRules.loCo,
+            ))
+        .toList() as List<_i7.CommunityMetadata>); /* Default */
+  }
+
+  /// Amount of UBI to be paid for every attended ceremony.
+  _i9.Future<List<_i8.FixedU128>> multiNominalIncome(
+    List<_i3.CommunityIdentifier> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _nominalIncome.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _nominalIncome.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => _i8.FixedU128(bits: BigInt.zero)).toList() as List<_i8.FixedU128>); /* Default */
+  }
+
   /// Returns the storage key for `communityIdentifiersByGeohash`.
   _i11.Uint8List communityIdentifiersByGeohashKey(_i2.GeoHash key1) {
     final hashedKey = _communityIdentifiersByGeohash.hashedKeyFor(key1);
@@ -366,21 +507,20 @@ class Txs {
   /// Add a new community.
   ///
   /// May only be called from `T::TrustableForNonDestructiveAction`.
-  _i12.RuntimeCall newCommunity({
+  _i12.EncointerCommunities newCommunity({
     required _i5.Location location,
     required List<_i6.AccountId32> bootstrappers,
     required _i7.CommunityMetadata communityMetadata,
     _i13.FixedI128? demurrage,
     _i8.FixedU128? nominalIncome,
   }) {
-    final _call = _i14.Call.values.newCommunity(
+    return _i12.EncointerCommunities(_i14.NewCommunity(
       location: location,
       bootstrappers: bootstrappers,
       communityMetadata: communityMetadata,
       demurrage: demurrage,
       nominalIncome: nominalIncome,
-    );
-    return _i12.RuntimeCall.values.encointerCommunities(_call);
+    ));
   }
 
   /// Add a new meetup `location` to the community with `cid`.
@@ -388,15 +528,14 @@ class Txs {
   /// May only be called from `T::TrustableForNonDestructiveAction`.
   ///
   /// Todo: Replace `T::CommunityMaster` with community governance: #137.
-  _i12.RuntimeCall addLocation({
+  _i12.EncointerCommunities addLocation({
     required _i3.CommunityIdentifier cid,
     required _i5.Location location,
   }) {
-    final _call = _i14.Call.values.addLocation(
+    return _i12.EncointerCommunities(_i14.AddLocation(
       cid: cid,
       location: location,
-    );
-    return _i12.RuntimeCall.values.encointerCommunities(_call);
+    ));
   }
 
   /// Remove an existing meetup `location` from the community with `cid`.
@@ -404,66 +543,59 @@ class Txs {
   /// May only be called from `T::CommunityMaster`.
   ///
   /// Todo: Replace `T::CommunityMaster` with community governance: #137.
-  _i12.RuntimeCall removeLocation({
+  _i12.EncointerCommunities removeLocation({
     required _i3.CommunityIdentifier cid,
     required _i5.Location location,
   }) {
-    final _call = _i14.Call.values.removeLocation(
+    return _i12.EncointerCommunities(_i14.RemoveLocation(
       cid: cid,
       location: location,
-    );
-    return _i12.RuntimeCall.values.encointerCommunities(_call);
+    ));
   }
 
   /// Update the metadata of the community with `cid`.
   ///
   /// May only be called from `T::CommunityMaster`.
-  _i12.RuntimeCall updateCommunityMetadata({
+  _i12.EncointerCommunities updateCommunityMetadata({
     required _i3.CommunityIdentifier cid,
     required _i7.CommunityMetadata communityMetadata,
   }) {
-    final _call = _i14.Call.values.updateCommunityMetadata(
+    return _i12.EncointerCommunities(_i14.UpdateCommunityMetadata(
       cid: cid,
       communityMetadata: communityMetadata,
-    );
-    return _i12.RuntimeCall.values.encointerCommunities(_call);
+    ));
   }
 
-  _i12.RuntimeCall updateDemurrage({
+  _i12.EncointerCommunities updateDemurrage({
     required _i3.CommunityIdentifier cid,
     required _i13.FixedI128 demurrage,
   }) {
-    final _call = _i14.Call.values.updateDemurrage(
+    return _i12.EncointerCommunities(_i14.UpdateDemurrage(
       cid: cid,
       demurrage: demurrage,
-    );
-    return _i12.RuntimeCall.values.encointerCommunities(_call);
+    ));
   }
 
-  _i12.RuntimeCall updateNominalIncome({
+  _i12.EncointerCommunities updateNominalIncome({
     required _i3.CommunityIdentifier cid,
     required _i8.FixedU128 nominalIncome,
   }) {
-    final _call = _i14.Call.values.updateNominalIncome(
+    return _i12.EncointerCommunities(_i14.UpdateNominalIncome(
       cid: cid,
       nominalIncome: nominalIncome,
-    );
-    return _i12.RuntimeCall.values.encointerCommunities(_call);
+    ));
   }
 
-  _i12.RuntimeCall setMinSolarTripTimeS({required int minSolarTripTimeS}) {
-    final _call = _i14.Call.values.setMinSolarTripTimeS(minSolarTripTimeS: minSolarTripTimeS);
-    return _i12.RuntimeCall.values.encointerCommunities(_call);
+  _i12.EncointerCommunities setMinSolarTripTimeS({required int minSolarTripTimeS}) {
+    return _i12.EncointerCommunities(_i14.SetMinSolarTripTimeS(minSolarTripTimeS: minSolarTripTimeS));
   }
 
-  _i12.RuntimeCall setMaxSpeedMps({required int maxSpeedMps}) {
-    final _call = _i14.Call.values.setMaxSpeedMps(maxSpeedMps: maxSpeedMps);
-    return _i12.RuntimeCall.values.encointerCommunities(_call);
+  _i12.EncointerCommunities setMaxSpeedMps({required int maxSpeedMps}) {
+    return _i12.EncointerCommunities(_i14.SetMaxSpeedMps(maxSpeedMps: maxSpeedMps));
   }
 
-  _i12.RuntimeCall purgeCommunity({required _i3.CommunityIdentifier cid}) {
-    final _call = _i14.Call.values.purgeCommunity(cid: cid);
-    return _i12.RuntimeCall.values.encointerCommunities(_call);
+  _i12.EncointerCommunities purgeCommunity({required _i3.CommunityIdentifier cid}) {
+    return _i12.EncointerCommunities(_i14.PurgeCommunity(cid: cid));
   }
 }
 

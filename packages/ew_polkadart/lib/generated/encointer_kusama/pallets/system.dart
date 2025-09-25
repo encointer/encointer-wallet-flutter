@@ -452,6 +452,107 @@ class Queries {
     return null; /* Nullable */
   }
 
+  /// The full account information for a particular account ID.
+  _i13.Future<List<_i3.AccountInfo>> multiAccount(
+    List<_i2.AccountId32> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _account.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _account.decodeValue(v.key)).toList();
+    }
+    return (keys
+        .map((key) => _i3.AccountInfo(
+              nonce: 0,
+              consumers: 0,
+              providers: 0,
+              sufficients: 0,
+              data: _i14.AccountData(
+                free: BigInt.zero,
+                reserved: BigInt.zero,
+                frozen: BigInt.zero,
+                flags: BigInt.parse(
+                  '170141183460469231731687303715884105728',
+                  radix: 10,
+                ),
+              ),
+            ))
+        .toList() as List<_i3.AccountInfo>); /* Default */
+  }
+
+  /// Map of block numbers to block hashes.
+  _i13.Future<List<_i6.H256>> multiBlockHash(
+    List<int> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _blockHash.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _blockHash.decodeValue(v.key)).toList();
+    }
+    return (keys
+        .map((key) => List<int>.filled(
+              32,
+              0,
+              growable: false,
+            ))
+        .toList() as List<_i6.H256>); /* Default */
+  }
+
+  /// Extrinsics data for the current block (maps an extrinsic's index to its data).
+  _i13.Future<List<List<int>>> multiExtrinsicData(
+    List<int> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _extrinsicData.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _extrinsicData.decodeValue(v.key)).toList();
+    }
+    return (keys
+        .map((key) => List<int>.filled(
+              0,
+              0,
+              growable: true,
+            ))
+        .toList() as List<List<int>>); /* Default */
+  }
+
+  /// Mapping between a topic (represented by T::Hash) and a vector of indexes
+  /// of events in the `<Events<T>>` list.
+  ///
+  /// All topic vectors have deterministic storage locations depending on the topic. This
+  /// allows light-clients to leverage the changes trie storage tracking mechanism and
+  /// in case of changes fetch the list of events of interest.
+  ///
+  /// The value has the type `(BlockNumberFor<T>, EventIndex)` because if we used only just
+  /// the `EventIndex` then in case if the topic has the same contents on the next block
+  /// no notification will be triggered thus the event might be lost.
+  _i13.Future<List<List<_i9.Tuple2<int, int>>>> multiEventTopics(
+    List<_i6.H256> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _eventTopics.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _eventTopics.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => []).toList() as List<List<_i9.Tuple2<int, int>>>); /* Default */
+  }
+
   /// Returns the storage key for `account`.
   _i16.Uint8List accountKey(_i2.AccountId32 key1) {
     final hashedKey = _account.hashedKeyFor(key1);
@@ -591,72 +692,63 @@ class Txs {
   /// Make some on-chain remark.
   ///
   /// Can be executed by every `origin`.
-  _i17.RuntimeCall remark({required List<int> remark}) {
-    final _call = _i18.Call.values.remark(remark: remark);
-    return _i17.RuntimeCall.values.system(_call);
+  _i17.System remark({required List<int> remark}) {
+    return _i17.System(_i18.Remark(remark: remark));
   }
 
   /// Set the number of pages in the WebAssembly environment's heap.
-  _i17.RuntimeCall setHeapPages({required BigInt pages}) {
-    final _call = _i18.Call.values.setHeapPages(pages: pages);
-    return _i17.RuntimeCall.values.system(_call);
+  _i17.System setHeapPages({required BigInt pages}) {
+    return _i17.System(_i18.SetHeapPages(pages: pages));
   }
 
   /// Set the new runtime code.
-  _i17.RuntimeCall setCode({required List<int> code}) {
-    final _call = _i18.Call.values.setCode(code: code);
-    return _i17.RuntimeCall.values.system(_call);
+  _i17.System setCode({required List<int> code}) {
+    return _i17.System(_i18.SetCode(code: code));
   }
 
   /// Set the new runtime code without doing any checks of the given `code`.
   ///
   /// Note that runtime upgrades will not run if this is called with a not-increasing spec
   /// version!
-  _i17.RuntimeCall setCodeWithoutChecks({required List<int> code}) {
-    final _call = _i18.Call.values.setCodeWithoutChecks(code: code);
-    return _i17.RuntimeCall.values.system(_call);
+  _i17.System setCodeWithoutChecks({required List<int> code}) {
+    return _i17.System(_i18.SetCodeWithoutChecks(code: code));
   }
 
   /// Set some items of storage.
-  _i17.RuntimeCall setStorage({required List<_i9.Tuple2<List<int>, List<int>>> items}) {
-    final _call = _i18.Call.values.setStorage(items: items);
-    return _i17.RuntimeCall.values.system(_call);
+  _i17.System setStorage({required List<_i9.Tuple2<List<int>, List<int>>> items}) {
+    return _i17.System(_i18.SetStorage(items: items));
   }
 
   /// Kill some items from storage.
-  _i17.RuntimeCall killStorage({required List<List<int>> keys}) {
-    final _call = _i18.Call.values.killStorage(keys: keys);
-    return _i17.RuntimeCall.values.system(_call);
+  _i17.System killStorage({required List<List<int>> keys}) {
+    return _i17.System(_i18.KillStorage(keys: keys));
   }
 
   /// Kill all storage items with a key that starts with the given prefix.
   ///
   /// **NOTE:** We rely on the Root origin to provide us the number of subkeys under
   /// the prefix we are removing to accurately calculate the weight of this function.
-  _i17.RuntimeCall killPrefix({
+  _i17.System killPrefix({
     required List<int> prefix,
     required int subkeys,
   }) {
-    final _call = _i18.Call.values.killPrefix(
+    return _i17.System(_i18.KillPrefix(
       prefix: prefix,
       subkeys: subkeys,
-    );
-    return _i17.RuntimeCall.values.system(_call);
+    ));
   }
 
   /// Make some on-chain remark and emit event.
-  _i17.RuntimeCall remarkWithEvent({required List<int> remark}) {
-    final _call = _i18.Call.values.remarkWithEvent(remark: remark);
-    return _i17.RuntimeCall.values.system(_call);
+  _i17.System remarkWithEvent({required List<int> remark}) {
+    return _i17.System(_i18.RemarkWithEvent(remark: remark));
   }
 
   /// Authorize an upgrade to a given `code_hash` for the runtime. The runtime can be supplied
   /// later.
   ///
   /// This call requires Root origin.
-  _i17.RuntimeCall authorizeUpgrade({required _i6.H256 codeHash}) {
-    final _call = _i18.Call.values.authorizeUpgrade(codeHash: codeHash);
-    return _i17.RuntimeCall.values.system(_call);
+  _i17.System authorizeUpgrade({required _i6.H256 codeHash}) {
+    return _i17.System(_i18.AuthorizeUpgrade(codeHash: codeHash));
   }
 
   /// Authorize an upgrade to a given `code_hash` for the runtime. The runtime can be supplied
@@ -667,9 +759,8 @@ class Txs {
   /// recommended for normal use. Use `authorize_upgrade` instead.
   ///
   /// This call requires Root origin.
-  _i17.RuntimeCall authorizeUpgradeWithoutChecks({required _i6.H256 codeHash}) {
-    final _call = _i18.Call.values.authorizeUpgradeWithoutChecks(codeHash: codeHash);
-    return _i17.RuntimeCall.values.system(_call);
+  _i17.System authorizeUpgradeWithoutChecks({required _i6.H256 codeHash}) {
+    return _i17.System(_i18.AuthorizeUpgradeWithoutChecks(codeHash: codeHash));
   }
 
   /// Provide the preimage (runtime binary) `code` for an upgrade that has been authorized.
@@ -681,9 +772,8 @@ class Txs {
   /// the new `code` in the same block or attempt to schedule the upgrade.
   ///
   /// All origins are allowed.
-  _i17.RuntimeCall applyAuthorizedUpgrade({required List<int> code}) {
-    final _call = _i18.Call.values.applyAuthorizedUpgrade(code: code);
-    return _i17.RuntimeCall.values.system(_call);
+  _i17.System applyAuthorizedUpgrade({required List<int> code}) {
+    return _i17.System(_i18.ApplyAuthorizedUpgrade(code: code));
   }
 }
 

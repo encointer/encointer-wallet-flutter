@@ -174,6 +174,31 @@ class Queries {
     return []; /* Default */
   }
 
+  /// A mapping from grandpa set ID to the index of the *most recent* session for which its
+  /// members were responsible.
+  ///
+  /// This is only used for validating equivocation proofs. An equivocation proof must
+  /// contains a key-ownership proof for a given session, therefore we need a way to tie
+  /// together sessions and GRANDPA set ids, i.e. we need to validate that a validator
+  /// was the owner of a given key on a given session, and what the active set ID was
+  /// during that session.
+  ///
+  /// TWOX-NOTE: `SetId` is not under user control.
+  _i8.Future<List<int?>> multiSetIdSession(
+    List<BigInt> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _setIdSession.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _setIdSession.decodeValue(v.key)).toList();
+    }
+    return []; /* Nullable */
+  }
+
   /// Returns the storage key for `state`.
   _i9.Uint8List stateKey() {
     final hashedKey = _state.hashedKey();
@@ -230,15 +255,14 @@ class Txs {
   /// equivocation proof and validate the given key ownership proof
   /// against the extracted offender. If both are valid, the offence
   /// will be reported.
-  _i10.RuntimeCall reportEquivocation({
+  _i10.Grandpa reportEquivocation({
     required _i11.EquivocationProof equivocationProof,
     required _i12.Void keyOwnerProof,
   }) {
-    final _call = _i13.Call.values.reportEquivocation(
+    return _i10.Grandpa(_i13.ReportEquivocation(
       equivocationProof: equivocationProof,
       keyOwnerProof: keyOwnerProof,
-    );
-    return _i10.RuntimeCall.values.grandpa(_call);
+    ));
   }
 
   /// Report voter equivocation/misbehavior. This method will verify the
@@ -250,15 +274,14 @@ class Txs {
   /// block authors will call it (validated in `ValidateUnsigned`), as such
   /// if the block author is defined it will be defined as the equivocation
   /// reporter.
-  _i10.RuntimeCall reportEquivocationUnsigned({
+  _i10.Grandpa reportEquivocationUnsigned({
     required _i11.EquivocationProof equivocationProof,
     required _i12.Void keyOwnerProof,
   }) {
-    final _call = _i13.Call.values.reportEquivocationUnsigned(
+    return _i10.Grandpa(_i13.ReportEquivocationUnsigned(
       equivocationProof: equivocationProof,
       keyOwnerProof: keyOwnerProof,
-    );
-    return _i10.RuntimeCall.values.grandpa(_call);
+    ));
   }
 
   /// Note that the current authority set of the GRANDPA finality gadget has stalled.
@@ -273,15 +296,14 @@ class Txs {
   /// block of all validators of the new authority set.
   ///
   /// Only callable by root.
-  _i10.RuntimeCall noteStalled({
+  _i10.Grandpa noteStalled({
     required int delay,
     required int bestFinalizedBlockNumber,
   }) {
-    final _call = _i13.Call.values.noteStalled(
+    return _i10.Grandpa(_i13.NoteStalled(
       delay: delay,
       bestFinalizedBlockNumber: bestFinalizedBlockNumber,
-    );
-    return _i10.RuntimeCall.values.grandpa(_call);
+    ));
   }
 }
 

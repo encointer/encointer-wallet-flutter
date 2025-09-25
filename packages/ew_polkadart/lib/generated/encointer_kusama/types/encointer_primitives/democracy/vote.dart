@@ -23,6 +23,7 @@ enum Vote {
   static const $VoteCodec codec = $VoteCodec();
 
   String toJson() => variantName;
+
   _i2.Uint8List encode() {
     return codec.encode(this);
   }

@@ -23,6 +23,7 @@ enum Pays {
   static const $PaysCodec codec = $PaysCodec();
 
   String toJson() => variantName;
+
   _i2.Uint8List encode() {
     return codec.encode(this);
   }

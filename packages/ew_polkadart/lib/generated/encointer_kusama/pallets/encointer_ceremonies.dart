@@ -1004,6 +1004,216 @@ class Queries {
     return 0; /* Default */
   }
 
+  _i11.Future<List<BigInt>> multiBootstrapperCount(
+    List<_i5.Tuple2<_i2.CommunityIdentifier, int>> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _bootstrapperCount.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _bootstrapperCount.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+  }
+
+  _i11.Future<List<BigInt>> multiReputableCount(
+    List<_i5.Tuple2<_i2.CommunityIdentifier, int>> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _reputableCount.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _reputableCount.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+  }
+
+  _i11.Future<List<BigInt>> multiEndorseeCount(
+    List<_i5.Tuple2<_i2.CommunityIdentifier, int>> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _endorseeCount.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _endorseeCount.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+  }
+
+  _i11.Future<List<BigInt>> multiNewbieCount(
+    List<_i5.Tuple2<_i2.CommunityIdentifier, int>> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _newbieCount.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _newbieCount.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+  }
+
+  _i11.Future<List<_i6.AssignmentCount>> multiAssignmentCounts(
+    List<_i5.Tuple2<_i2.CommunityIdentifier, int>> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _assignmentCounts.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _assignmentCounts.decodeValue(v.key)).toList();
+    }
+    return (keys
+        .map((key) => _i6.AssignmentCount(
+              bootstrappers: BigInt.zero,
+              reputables: BigInt.zero,
+              endorsees: BigInt.zero,
+              newbies: BigInt.zero,
+            ))
+        .toList() as List<_i6.AssignmentCount>); /* Default */
+  }
+
+  _i11.Future<List<_i7.Assignment>> multiAssignments(
+    List<_i5.Tuple2<_i2.CommunityIdentifier, int>> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _assignments.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _assignments.decodeValue(v.key)).toList();
+    }
+    return (keys
+        .map((key) => _i7.Assignment(
+              bootstrappersReputables: _i12.AssignmentParams(
+                m: BigInt.zero,
+                s1: BigInt.zero,
+                s2: BigInt.zero,
+              ),
+              endorsees: _i12.AssignmentParams(
+                m: BigInt.zero,
+                s1: BigInt.zero,
+                s2: BigInt.zero,
+              ),
+              newbies: _i12.AssignmentParams(
+                m: BigInt.zero,
+                s1: BigInt.zero,
+                s2: BigInt.zero,
+              ),
+              locations: _i12.AssignmentParams(
+                m: BigInt.zero,
+                s1: BigInt.zero,
+                s2: BigInt.zero,
+              ),
+            ))
+        .toList() as List<_i7.Assignment>); /* Default */
+  }
+
+  _i11.Future<List<BigInt>> multiReputationCount(
+    List<_i5.Tuple2<_i2.CommunityIdentifier, int>> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _reputationCount.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _reputationCount.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+  }
+
+  _i11.Future<List<BigInt>> multiGlobalReputationCount(
+    List<int> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _globalReputationCount.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _globalReputationCount.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+  }
+
+  _i11.Future<List<BigInt>> multiEndorseesCount(
+    List<_i5.Tuple2<_i2.CommunityIdentifier, int>> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _endorseesCount.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _endorseesCount.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+  }
+
+  _i11.Future<List<BigInt>> multiMeetupCount(
+    List<_i5.Tuple2<_i2.CommunityIdentifier, int>> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _meetupCount.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _meetupCount.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+  }
+
+  _i11.Future<List<BigInt>> multiAttestationCount(
+    List<_i5.Tuple2<_i2.CommunityIdentifier, int>> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _attestationCount.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _attestationCount.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => BigInt.zero).toList() as List<BigInt>); /* Default */
+  }
+
+  _i11.Future<List<int?>> multiInactivityCounters(
+    List<_i2.CommunityIdentifier> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _inactivityCounters.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _inactivityCounters.decodeValue(v.key)).toList();
+    }
+    return []; /* Nullable */
+  }
+
   /// Returns the storage key for `burnedBootstrapperNewbieTickets`.
   _i13.Uint8List burnedBootstrapperNewbieTicketsKey(
     _i2.CommunityIdentifier key1,
@@ -1488,114 +1698,101 @@ class Queries {
 class Txs {
   const Txs();
 
-  _i14.RuntimeCall registerParticipant({
+  _i14.EncointerCeremonies registerParticipant({
     required _i2.CommunityIdentifier cid,
     _i15.ProofOfAttendance? proof,
   }) {
-    final _call = _i16.Call.values.registerParticipant(
+    return _i14.EncointerCeremonies(_i16.RegisterParticipant(
       cid: cid,
       proof: proof,
-    );
-    return _i14.RuntimeCall.values.encointerCeremonies(_call);
+    ));
   }
 
-  _i14.RuntimeCall upgradeRegistration({
+  _i14.EncointerCeremonies upgradeRegistration({
     required _i2.CommunityIdentifier cid,
     required _i15.ProofOfAttendance proof,
   }) {
-    final _call = _i16.Call.values.upgradeRegistration(
+    return _i14.EncointerCeremonies(_i16.UpgradeRegistration(
       cid: cid,
       proof: proof,
-    );
-    return _i14.RuntimeCall.values.encointerCeremonies(_call);
+    ));
   }
 
-  _i14.RuntimeCall unregisterParticipant({
+  _i14.EncointerCeremonies unregisterParticipant({
     required _i2.CommunityIdentifier cid,
     _i5.Tuple2<_i2.CommunityIdentifier, int>? maybeReputationCommunityCeremony,
   }) {
-    final _call = _i16.Call.values.unregisterParticipant(
+    return _i14.EncointerCeremonies(_i16.UnregisterParticipant(
       cid: cid,
       maybeReputationCommunityCeremony: maybeReputationCommunityCeremony,
-    );
-    return _i14.RuntimeCall.values.encointerCeremonies(_call);
+    ));
   }
 
-  _i14.RuntimeCall attestAttendees({
+  _i14.EncointerCeremonies attestAttendees({
     required _i2.CommunityIdentifier cid,
     required int numberOfParticipantsVote,
     required List<_i3.AccountId32> attestations,
   }) {
-    final _call = _i16.Call.values.attestAttendees(
+    return _i14.EncointerCeremonies(_i16.AttestAttendees(
       cid: cid,
       numberOfParticipantsVote: numberOfParticipantsVote,
       attestations: attestations,
-    );
-    return _i14.RuntimeCall.values.encointerCeremonies(_call);
+    ));
   }
 
-  _i14.RuntimeCall endorseNewcomer({
+  _i14.EncointerCeremonies endorseNewcomer({
     required _i2.CommunityIdentifier cid,
     required _i3.AccountId32 newbie,
   }) {
-    final _call = _i16.Call.values.endorseNewcomer(
+    return _i14.EncointerCeremonies(_i16.EndorseNewcomer(
       cid: cid,
       newbie: newbie,
-    );
-    return _i14.RuntimeCall.values.encointerCeremonies(_call);
+    ));
   }
 
-  _i14.RuntimeCall claimRewards({
+  _i14.EncointerCeremonies claimRewards({
     required _i2.CommunityIdentifier cid,
     BigInt? maybeMeetupIndex,
   }) {
-    final _call = _i16.Call.values.claimRewards(
+    return _i14.EncointerCeremonies(_i16.ClaimRewards(
       cid: cid,
       maybeMeetupIndex: maybeMeetupIndex,
-    );
-    return _i14.RuntimeCall.values.encointerCeremonies(_call);
+    ));
   }
 
-  _i14.RuntimeCall setInactivityTimeout({required int inactivityTimeout}) {
-    final _call = _i16.Call.values.setInactivityTimeout(inactivityTimeout: inactivityTimeout);
-    return _i14.RuntimeCall.values.encointerCeremonies(_call);
+  _i14.EncointerCeremonies setInactivityTimeout({required int inactivityTimeout}) {
+    return _i14.EncointerCeremonies(_i16.SetInactivityTimeout(inactivityTimeout: inactivityTimeout));
   }
 
-  _i14.RuntimeCall setEndorsementTicketsPerBootstrapper({required int endorsementTicketsPerBootstrapper}) {
-    final _call = _i16.Call.values
-        .setEndorsementTicketsPerBootstrapper(endorsementTicketsPerBootstrapper: endorsementTicketsPerBootstrapper);
-    return _i14.RuntimeCall.values.encointerCeremonies(_call);
+  _i14.EncointerCeremonies setEndorsementTicketsPerBootstrapper({required int endorsementTicketsPerBootstrapper}) {
+    return _i14.EncointerCeremonies(_i16.SetEndorsementTicketsPerBootstrapper(
+        endorsementTicketsPerBootstrapper: endorsementTicketsPerBootstrapper));
   }
 
-  _i14.RuntimeCall setEndorsementTicketsPerReputable({required int endorsementTicketsPerReputable}) {
-    final _call = _i16.Call.values
-        .setEndorsementTicketsPerReputable(endorsementTicketsPerReputable: endorsementTicketsPerReputable);
-    return _i14.RuntimeCall.values.encointerCeremonies(_call);
+  _i14.EncointerCeremonies setEndorsementTicketsPerReputable({required int endorsementTicketsPerReputable}) {
+    return _i14.EncointerCeremonies(
+        _i16.SetEndorsementTicketsPerReputable(endorsementTicketsPerReputable: endorsementTicketsPerReputable));
   }
 
-  _i14.RuntimeCall setReputationLifetime({required int reputationLifetime}) {
-    final _call = _i16.Call.values.setReputationLifetime(reputationLifetime: reputationLifetime);
-    return _i14.RuntimeCall.values.encointerCeremonies(_call);
+  _i14.EncointerCeremonies setReputationLifetime({required int reputationLifetime}) {
+    return _i14.EncointerCeremonies(_i16.SetReputationLifetime(reputationLifetime: reputationLifetime));
   }
 
-  _i14.RuntimeCall setMeetupTimeOffset({required int meetupTimeOffset}) {
-    final _call = _i16.Call.values.setMeetupTimeOffset(meetupTimeOffset: meetupTimeOffset);
-    return _i14.RuntimeCall.values.encointerCeremonies(_call);
+  _i14.EncointerCeremonies setMeetupTimeOffset({required int meetupTimeOffset}) {
+    return _i14.EncointerCeremonies(_i16.SetMeetupTimeOffset(meetupTimeOffset: meetupTimeOffset));
   }
 
-  _i14.RuntimeCall setTimeTolerance({required BigInt timeTolerance}) {
-    final _call = _i16.Call.values.setTimeTolerance(timeTolerance: timeTolerance);
-    return _i14.RuntimeCall.values.encointerCeremonies(_call);
+  _i14.EncointerCeremonies setTimeTolerance({required BigInt timeTolerance}) {
+    return _i14.EncointerCeremonies(_i16.SetTimeTolerance(timeTolerance: timeTolerance));
   }
 
-  _i14.RuntimeCall setLocationTolerance({required int locationTolerance}) {
-    final _call = _i16.Call.values.setLocationTolerance(locationTolerance: locationTolerance);
-    return _i14.RuntimeCall.values.encointerCeremonies(_call);
+  _i14.EncointerCeremonies setLocationTolerance({required int locationTolerance}) {
+    return _i14.EncointerCeremonies(_i16.SetLocationTolerance(locationTolerance: locationTolerance));
   }
 
-  _i14.RuntimeCall purgeCommunityCeremony({required _i5.Tuple2<_i2.CommunityIdentifier, int> communityCeremony}) {
-    final _call = _i16.Call.values.purgeCommunityCeremony(communityCeremony: communityCeremony);
-    return _i14.RuntimeCall.values.encointerCeremonies(_call);
+  _i14.EncointerCeremonies purgeCommunityCeremony(
+      {required _i5.Tuple2<_i2.CommunityIdentifier, int> communityCeremony}) {
+    return _i14.EncointerCeremonies(_i16.PurgeCommunityCeremony(communityCeremony: communityCeremony));
   }
 }
 
