@@ -23,6 +23,7 @@ enum TransactionalError {
   static const $TransactionalErrorCodec codec = $TransactionalErrorCodec();
 
   String toJson() => variantName;
+
   _i2.Uint8List encode() {
     return codec.encode(this);
   }

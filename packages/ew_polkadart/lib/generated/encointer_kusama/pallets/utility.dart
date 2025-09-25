@@ -25,9 +25,8 @@ class Txs {
   /// `BatchInterrupted` event is deposited, along with the number of successful calls made
   /// and the error of the failed call. If all were successful, then the `BatchCompleted`
   /// event is deposited.
-  _i1.RuntimeCall batch({required List<_i1.RuntimeCall> calls}) {
-    final _call = _i2.Call.values.batch(calls: calls);
-    return _i1.RuntimeCall.values.utility(_call);
+  _i1.Utility batch({required List<_i1.RuntimeCall> calls}) {
+    return _i1.Utility(_i2.Batch(calls: calls));
   }
 
   /// Send a call through an indexed pseudonym of the sender.
@@ -43,15 +42,14 @@ class Txs {
   /// NOTE: Prior to version *12, this was called `as_limited_sub`.
   ///
   /// The dispatch origin for this call must be _Signed_.
-  _i1.RuntimeCall asDerivative({
+  _i1.Utility asDerivative({
     required int index,
     required _i1.RuntimeCall call,
   }) {
-    final _call = _i2.Call.values.asDerivative(
+    return _i1.Utility(_i2.AsDerivative(
       index: index,
       call: call,
-    );
-    return _i1.RuntimeCall.values.utility(_call);
+    ));
   }
 
   /// Send a batch of dispatch calls and atomically execute them.
@@ -67,9 +65,8 @@ class Txs {
   ///
   /// ## Complexity
   /// - O(C) where C is the number of calls to be batched.
-  _i1.RuntimeCall batchAll({required List<_i1.RuntimeCall> calls}) {
-    final _call = _i2.Call.values.batchAll(calls: calls);
-    return _i1.RuntimeCall.values.utility(_call);
+  _i1.Utility batchAll({required List<_i1.RuntimeCall> calls}) {
+    return _i1.Utility(_i2.BatchAll(calls: calls));
   }
 
   /// Dispatches a function call with a provided origin.
@@ -78,15 +75,14 @@ class Txs {
   ///
   /// ## Complexity
   /// - O(1).
-  _i1.RuntimeCall dispatchAs({
+  _i1.Utility dispatchAs({
     required _i3.OriginCaller asOrigin,
     required _i1.RuntimeCall call,
   }) {
-    final _call = _i2.Call.values.dispatchAs(
+    return _i1.Utility(_i2.DispatchAs(
       asOrigin: asOrigin,
       call: call,
-    );
-    return _i1.RuntimeCall.values.utility(_call);
+    ));
   }
 
   /// Send a batch of dispatch calls.
@@ -102,9 +98,8 @@ class Txs {
   ///
   /// ## Complexity
   /// - O(C) where C is the number of calls to be batched.
-  _i1.RuntimeCall forceBatch({required List<_i1.RuntimeCall> calls}) {
-    final _call = _i2.Call.values.forceBatch(calls: calls);
-    return _i1.RuntimeCall.values.utility(_call);
+  _i1.Utility forceBatch({required List<_i1.RuntimeCall> calls}) {
+    return _i1.Utility(_i2.ForceBatch(calls: calls));
   }
 
   /// Dispatch a function call with a specified weight.
@@ -113,15 +108,14 @@ class Txs {
   /// Root origin to specify the weight of the call.
   ///
   /// The dispatch origin for this call must be _Root_.
-  _i1.RuntimeCall withWeight({
+  _i1.Utility withWeight({
     required _i1.RuntimeCall call,
     required _i4.Weight weight,
   }) {
-    final _call = _i2.Call.values.withWeight(
+    return _i1.Utility(_i2.WithWeight(
       call: call,
       weight: weight,
-    );
-    return _i1.RuntimeCall.values.utility(_call);
+    ));
   }
 }
 

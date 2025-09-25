@@ -68,15 +68,14 @@ class Txs {
 
   /// swap native tokens for community currency subject to an existing swap option for the
   /// sender account.
-  _i7.RuntimeCall swapNative({
+  _i7.EncointerTreasuries swapNative({
     required _i2.CommunityIdentifier cid,
     required BigInt desiredNativeAmount,
   }) {
-    final _call = _i8.Call.values.swapNative(
+    return _i7.EncointerTreasuries(_i8.SwapNative(
       cid: cid,
       desiredNativeAmount: desiredNativeAmount,
-    );
-    return _i7.RuntimeCall.values.encointerTreasuries(_call);
+    ));
   }
 }
 

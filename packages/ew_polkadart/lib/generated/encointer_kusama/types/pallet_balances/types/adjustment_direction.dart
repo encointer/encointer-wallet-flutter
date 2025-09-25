@@ -23,6 +23,7 @@ enum AdjustmentDirection {
   static const $AdjustmentDirectionCodec codec = $AdjustmentDirectionCodec();
 
   String toJson() => variantName;
+
   _i2.Uint8List encode() {
     return codec.encode(this);
   }

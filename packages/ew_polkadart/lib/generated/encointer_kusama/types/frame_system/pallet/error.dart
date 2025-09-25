@@ -52,6 +52,7 @@ enum Error {
   static const $ErrorCodec codec = $ErrorCodec();
 
   String toJson() => variantName;
+
   _i2.Uint8List encode() {
     return codec.encode(this);
   }
