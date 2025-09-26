@@ -264,12 +264,32 @@
     "proposalFieldNominalIncome": "Nominal Income",
     "proposalFieldInactivityTimeoutCycles": "Inactivity Timeout (gathering cycles)",
     "proposalFieldPetitionText": "Petition Text",
-    "proposalFieldAmount": "Amount (KSM)",
+    "proposalFieldAmount": "Amount ({asset})",
+    "@proposalFieldAmount": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
     "proposalFieldBeneficiary": "Beneficiary",
-    "proposalFieldAllowance": "Limit (KSM)",
-    "proposalFieldRate": "Rate ({cc}/KSM)",
+    "proposalFieldAllowance": "Limit ({asset})",
+    "@proposalFieldAllowance": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
+    "proposalFieldRate": "Rate ({cc}/{asset})",
     "@proposalFieldRate": {
         "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            },
             "cc": {
                 "type": "String",
                 "example": "6"

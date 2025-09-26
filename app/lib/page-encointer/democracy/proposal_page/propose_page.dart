@@ -369,7 +369,7 @@ class _ProposePageState extends State<ProposePage> {
       TextFormField(
         controller: allowanceController,
         decoration: InputDecoration(
-          labelText: l10n.proposalFieldAllowance,
+          labelText: l10n.proposalFieldAllowance('KSM'),
           errorText: allowanceError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -387,7 +387,7 @@ class _ProposePageState extends State<ProposePage> {
       TextFormField(
         controller: rateController,
         decoration: InputDecoration(
-          labelText: l10n.proposalFieldRate(store.encointer.community!.symbol!),
+          labelText: l10n.proposalFieldRate(store.encointer.community!.symbol!, 'KSM'),
           errorText: rateError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -446,7 +446,7 @@ class _ProposePageState extends State<ProposePage> {
       TextFormField(
         controller: amountController,
         decoration: InputDecoration(
-          labelText: l10n.proposalFieldAmount,
+          labelText: l10n.proposalFieldAmount('KSM'),
           errorText: amountError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),

@@ -35,6 +35,11 @@ enum ProposalActionIdentifier {
   issueSwapAssetOption,
 }
 
+/// Asset to be spent on asset hub.
+enum AssetToSpend {
+  usdc,
+}
+
 ProposalActionIdentifier proposalActionIdentifierFromPolkadartAction(et.ProposalAction action) {
   return switch (action.runtimeType) {
     et.AddLocation => ProposalActionIdentifier.addLocation,

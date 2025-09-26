@@ -253,12 +253,32 @@
     "proposalFieldNominalIncome": "Номинальный доход",
     "proposalFieldInactivityTimeoutCycles": "Тайм-аут неактивности (циклы встреч)",
     "proposalFieldPetitionText": "Текст петиции",
-    "proposalFieldAmount": "Сумма (KSM)",
+    "proposalFieldAmount": "Сумма ({asset})",
+    "@proposalFieldAmount": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
     "proposalFieldBeneficiary": "Получатель",
-    "proposalFieldAllowance": "Лимит (KSM)",
-    "proposalFieldRate": "Ставка ({cc}/KSM)",
+    "proposalFieldAllowance": "Лимит ({asset})",
+    "@proposalFieldAllowance": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
+    "proposalFieldRate": "Ставка ({cc}/{asset})",
     "@proposalFieldRate": {
         "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            },
             "cc": {
                 "type": "String",
                 "example": "6"

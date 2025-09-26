@@ -254,12 +254,32 @@
     "proposalFieldNominalIncome": "Mapato ya kawaida",
     "proposalFieldInactivityTimeoutCycles": "Muda wa kutokufanya kazi (mizunguko ya mikutano)",
     "proposalFieldPetitionText": "Maandishi ya ombi rasmi",
-    "proposalFieldAmount": "Kiasi (KSM)",
+    "proposalFieldAmount": "Kiasi ({asset})",
+    "@proposalFieldAmount": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
     "proposalFieldBeneficiary": "Mnufaika",
-    "proposalFieldAllowance": "Kikomo (KSM)",
-    "proposalFieldRate": "Kiwango ({cc}/KSM)",
+    "proposalFieldAllowance": "Kikomo ({asset})",
+    "@proposalFieldAllowance": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
+    "proposalFieldRate": "Kiwango ({cc}/{asset})",
     "@proposalFieldRate": {
         "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            },
             "cc": {
                 "type": "String",
                 "example": "6"

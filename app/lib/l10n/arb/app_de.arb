@@ -254,12 +254,32 @@
     "proposalFieldNominalIncome": "Grundeinkommen",
     "proposalFieldInactivityTimeoutCycles": "Inaktivitätszeitlimit (Versammlungszyklen)",
     "proposalFieldPetitionText": "Petitionstext",
-    "proposalFieldAmount": "Betrag (KSM)",
+    "proposalFieldAmount": "Betrag ({asset})",
+    "@proposalFieldAmount": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
     "proposalFieldBeneficiary": "Begünstigter",
-    "proposalFieldAllowance": "Limit (KSM)",
-    "proposalFieldRate": "Kurs ({cc}/KSM)",
+    "proposalFieldAllowance": "Limit ({asset})",
+    "@proposalFieldAllowance": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
+    "proposalFieldRate": "Kurs ({cc}/{asset})",
     "@proposalFieldRate": {
         "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            },
             "cc": {
                 "type": "String",
                 "example": "6"

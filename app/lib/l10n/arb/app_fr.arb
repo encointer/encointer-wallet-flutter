@@ -254,12 +254,32 @@
     "proposalFieldNominalIncome": "Revenu nominal",
     "proposalFieldInactivityTimeoutCycles": "Délai d'inactivité (cycles de rencontre)",
     "proposalFieldPetitionText": "Texte de la pétition",
-    "proposalFieldAmount": "Montant (KSM)",
+    "proposalFieldAmount": "Montant ({asset})",
+    "@proposalFieldAmount": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
     "proposalFieldBeneficiary": "Bénéficiaire",
-    "proposalFieldAllowance": "Limite (KSM)",
-    "proposalFieldRate": "Taux ({cc}/KSM)",
+    "proposalFieldAllowance": "Limite ({asset})",
+    "@proposalFieldAllowance": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
+    "proposalFieldRate": "Taux ({cc}/{asset})",
     "@proposalFieldRate": {
         "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            },
             "cc": {
                 "type": "String",
                 "example": "6"
