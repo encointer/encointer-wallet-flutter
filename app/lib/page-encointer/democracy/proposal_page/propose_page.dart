@@ -363,14 +363,18 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget issueSwapNativeOptionInput() {
-    final store = context.read<AppStore>();
-    final l10n = context.l10n;
+        return Column(children: issueSwapOptionInput('KSM'));
+  }
 
-    return Column(children: [
+  List<Widget> issueSwapOptionInput(String currency) {
+    final l10n = context.l10n;
+    final store = context.read<AppStore>();
+
+    return [
       TextFormField(
         controller: allowanceController,
         decoration: InputDecoration(
-          labelText: l10n.proposalFieldAllowance('KSM'),
+          labelText: l10n.proposalFieldAllowance(currency),
           errorText: allowanceError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -388,7 +392,7 @@ class _ProposePageState extends State<ProposePage> {
       TextFormField(
         controller: rateController,
         decoration: InputDecoration(
-          labelText: l10n.proposalFieldRate(store.encointer.community!.symbol!, 'KSM'),
+          labelText: l10n.proposalFieldRate(store.encointer.community!.symbol!, currency),
           errorText: rateError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -417,7 +421,7 @@ class _ProposePageState extends State<ProposePage> {
       ),
       // Text(l10n.proposalFieldBurn, style: const TextStyle(fontWeight: FontWeight.bold)),
       // Text(l10n.proposalFieldValidity, style: const TextStyle(fontWeight: FontWeight.bold)),
-    ]);
+    ];
   }
 
   Widget petitionInput(BuildContext context) {
