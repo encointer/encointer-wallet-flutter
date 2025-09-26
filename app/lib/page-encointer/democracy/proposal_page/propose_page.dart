@@ -355,7 +355,7 @@ class _ProposePageState extends State<ProposePage> {
         return spendAssetInput(context);
 
       case ProposalActionIdentifier.issueSwapAssetOption:
-        throw UnimplementedError('remove location is unsupported');
+        return issueSwapAssetOptionInput();
 
       case ProposalActionIdentifier.removeLocation:
         throw UnimplementedError('remove location is unsupported');
@@ -363,7 +363,11 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget issueSwapNativeOptionInput() {
-        return Column(children: issueSwapOptionInput('KSM'));
+    return Column(children: issueSwapOptionInput('KSM'));
+  }
+
+  Widget issueSwapAssetOptionInput() {
+    return Column(children: [selectAssetDropDown(), ...issueSwapOptionInput(selectedAsset.name.toUpperCase())]);
   }
 
   List<Widget> issueSwapOptionInput(String currency) {
@@ -449,31 +453,34 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget spendAssetInput(BuildContext context) {
-    final l10n = context.l10n;
-
     return Column(children: [
-      DropdownButtonFormField<AssetToSpend>(
-          initialValue: selectedAsset,
-          decoration: InputDecoration(
-            labelText: l10n.proposalFieldAssetToSpend,
-          ),
-          items: AssetToSpend.values.map((asset) {
-            return DropdownMenuItem(
-              value: asset,
-              child: Text(asset.name.toUpperCase()),
-            );
-          }).toList(),
-          onChanged: AssetToSpend.values.length > 1
-              ? (AssetToSpend? newValue) {
-                  if (newValue != null) {
-                    setState(() {
-                      selectedAsset = newValue;
-                    });
-                  }
-                }
-              : null),
+      selectAssetDropDown(),
       ...spendInputWidgets(selectedAsset.name.toUpperCase()),
     ]);
+  }
+
+  Widget selectAssetDropDown() {
+    final l10n = context.l10n;
+    return DropdownButtonFormField<AssetToSpend>(
+        initialValue: selectedAsset,
+        decoration: InputDecoration(
+          labelText: l10n.proposalFieldAssetToSpend,
+        ),
+        items: AssetToSpend.values.map((asset) {
+          return DropdownMenuItem(
+            value: asset,
+            child: Text(asset.name.toUpperCase()),
+          );
+        }).toList(),
+        onChanged: AssetToSpend.values.length > 1
+            ? (AssetToSpend? newValue) {
+                if (newValue != null) {
+                  setState(() {
+                    selectedAsset = newValue;
+                  });
+                }
+              }
+            : null);
   }
 
   List<Widget> spendInputWidgets(String currency) {
