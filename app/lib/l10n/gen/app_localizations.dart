@@ -65,7 +65,8 @@ import 'app_localizations_sw.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale)
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -73,7 +74,8 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -85,7 +87,8 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -1403,6 +1406,18 @@ abstract class AppLocalizations {
   /// **'This proposal allows the beneficiary to exchange community tokens for KSM at a defined rate multiple times up to a set KSM limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 {currency}/KSM and limit 2 KSM:\n\nThe beneficiary can exchange up to 2 KSM at a rate of 3 {currency}/KSM. Hence, the maximum is 6 {currency} => 2 KSM.'**
   String proposalExplainerIssueSwapNativeOption(String currency);
 
+  /// No description provided for @proposalExplainerSpendAsset.
+  ///
+  /// In en, this message translates to:
+  /// **'This proposal suggests spending a specified Asset for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.'**
+  String get proposalExplainerSpendAsset;
+
+  /// No description provided for @proposalExplainerIssueSwapAssetOption.
+  ///
+  /// In en, this message translates to:
+  /// **'This proposal allows the beneficiary to exchange community tokens for a specified Asset at a defined rate multiple times up to a set Asset limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 {currency}/Asset and limit 2 Asset:\n\nThe beneficiary can exchange up to 2 Assets at a rate of 3 {currency}/Asset. Hence, the maximum is 6 {currency} => 2 Asset.'**
+  String proposalExplainerIssueSwapAssetOption(String currency);
+
   /// No description provided for @proposalExplainerCannotVoteYet.
   ///
   /// In en, this message translates to:
@@ -1462,6 +1477,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Issue Swap Native Option'**
   String get proposalTypeIssueSwapNativeOption;
+
+  /// No description provided for @proposalTypeSpendAsset.
+  ///
+  /// In en, this message translates to:
+  /// **'Spend Asset'**
+  String get proposalTypeSpendAsset;
+
+  /// No description provided for @proposalTypeIssueSwapAssetOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue Swap Asset Option'**
+  String get proposalTypeIssueSwapAssetOption;
 
   /// No description provided for @proposalScope.
   ///
@@ -2523,7 +2550,8 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{cid}: Let {beneficiary} exchange up to {allowance} KSM at a rate of {rate} {cid}/KSM'**
-  String proposalIssueSwapNativeOption(String cid, String beneficiary, String allowance, String rate);
+  String proposalIssueSwapNativeOption(
+      String cid, String beneficiary, String allowance, String rate);
 
   /// No description provided for @proposalSupersededBy.
   ///
@@ -2532,7 +2560,8 @@ abstract class AppLocalizations {
   String proposalSupersededBy(String id);
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -2541,7 +2570,8 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['de', 'en', 'fr', 'ru', 'sw'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      <String>['de', 'en', 'fr', 'ru', 'sw'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -2562,7 +2592,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsSw();
   }
 
-  throw FlutterError('AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+  throw FlutterError(
+      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
       'an issue with the localizations generation tool. Please file an issue '
       'on GitHub with a reproducible sample app and the gen-l10n configuration '
       'that was used.');

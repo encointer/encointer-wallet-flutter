@@ -235,6 +235,8 @@
     "proposalTypePetition": "Petition",
     "proposalTypeSpendNative": "Native Tokens ausgeben",
     "proposalTypeIssueSwapNativeOption": "Swap-Option für Native Tokens ausgeben",
+    "proposalTypeSpendAsset": "Token ausgeben",
+    "proposalTypeIssueSwapAssetOption": "Swap-Token-Option emittieren",
     "proposalScope": "Geltungsbereich",
     "proposalScopeLocal": "Lokal ({community})",
     "@proposalScopeLocal": {

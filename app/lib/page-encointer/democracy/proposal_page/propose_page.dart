@@ -319,6 +319,10 @@ class _ProposePageState extends State<ProposePage> {
         return l10n.proposalExplainerSpendNative;
       case ProposalActionIdentifier.issueSwapNativeOption:
         return l10n.proposalExplainerIssueSwapNativeOption(store.encointer.community!.symbol!);
+      case ProposalActionIdentifier.spendAsset:
+        return l10n.proposalExplainerSpendAsset;
+      case ProposalActionIdentifier.issueSwapAssetOption:
+        return l10n.proposalExplainerIssueSwapAssetOption(store.encointer.community!.symbol!);
     }
   }
 
@@ -345,6 +349,13 @@ class _ProposePageState extends State<ProposePage> {
 
       case ProposalActionIdentifier.issueSwapNativeOption:
         return issueSwapNativeOptionInput();
+
+      case ProposalActionIdentifier.spendAsset:
+        throw UnimplementedError('remove location is unsupported');
+
+      case ProposalActionIdentifier.issueSwapAssetOption:
+        throw UnimplementedError('remove location is unsupported');
+
       case ProposalActionIdentifier.removeLocation:
         throw UnimplementedError('remove location is unsupported');
     }
@@ -761,6 +772,12 @@ class _ProposePageState extends State<ProposePage> {
         );
 
         return IssueSwapNativeOption(maybeCid!, hex.decode(ben.replaceFirst('0x', '')), issueOption);
+
+      case ProposalActionIdentifier.spendAsset:
+        throw UnimplementedError('spendAsset is unsupported');
+      case ProposalActionIdentifier.issueSwapAssetOption:
+        throw UnimplementedError('issueSwapAssetOption is unsupported');
+
       case ProposalActionIdentifier.removeLocation:
         throw UnimplementedError('removeLocation is unsupported');
     }

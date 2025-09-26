@@ -235,6 +235,8 @@
     "proposalTypePetition": "Pétition",
     "proposalTypeSpendNative": "Dépenser des tokens natifs",
     "proposalTypeIssueSwapNativeOption": "Émettre une option d'échange de tokens natifs",
+    "proposalTypeSpendAsset": "Dépenser un jeton",
+    "proposalTypeIssueSwapAssetOption": "Émettre une option de swap de jeton",
     "proposalScope": "Portée",
     "proposalScopeLocal": "Local ({community})",
     "@proposalScopeLocal": {

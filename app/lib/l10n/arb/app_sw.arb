@@ -235,6 +235,8 @@
     "proposalTypePetition": "Ombi rasmi",
     "proposalTypeSpendNative": "Tumia tokeni asili",
     "proposalTypeIssueSwapNativeOption": "Toa chaguo la kubadilisha tokeni asili",
+    "proposalTypeSpendAsset": "Tumia tokeni",
+    "proposalTypeIssueSwapAssetOption": "Toa chaguo la kubadilisha tokeni",
     "proposalScope": "Wigo",
     "proposalScopeLocal": "Kitaifa ({community})",
     "@proposalScopeLocal": {

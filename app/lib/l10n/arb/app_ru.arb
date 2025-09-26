@@ -234,6 +234,8 @@
     "proposalTypePetition": "Петиция",
     "proposalTypeSpendNative": "Потратить нативные токены",
     "proposalTypeIssueSwapNativeOption": "Выпустить опцион на обмен нативных токенов",
+    "proposalTypeSpendAsset": "Потратить токен",
+    "proposalTypeIssueSwapAssetOption": "Выпустить опцион на своп токена",
     "proposalScope": "Область действия",
     "proposalScopeLocal": "Локальный ({community})",
     "@proposalScopeLocal": {
