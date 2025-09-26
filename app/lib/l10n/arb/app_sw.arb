@@ -254,6 +254,7 @@
     "proposalFieldNominalIncome": "Mapato ya kawaida",
     "proposalFieldInactivityTimeoutCycles": "Muda wa kutokufanya kazi (mizunguko ya mikutano)",
     "proposalFieldPetitionText": "Maandishi ya ombi rasmi",
+    "proposalFieldAssetToSpend": "Tokeni ya kutumia",
     "proposalFieldAmount": "Kiasi ({asset})",
     "@proposalFieldAmount": {
         "placeholders": {

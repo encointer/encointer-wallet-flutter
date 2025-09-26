@@ -762,6 +762,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get proposalFieldPetitionText => 'Petition Text';
 
   @override
+  String get proposalFieldAssetToSpend => 'Asset to spend';
+
+  @override
   String proposalFieldAmount(String asset) {
     return 'Amount ($asset)';
   }

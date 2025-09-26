@@ -52,6 +52,7 @@ class _ProposePageState extends State<ProposePage> {
   ProposalActionIdentifier selectedAction = ProposalActionIdentifier.petition;
   late ProposalScope selectedScope;
   List<ProposalScope> allowedScopes = [];
+  AssetToSpend selectedAsset = AssetToSpend.usdc;
 
   // Controllers for text fields
   final TextEditingController latController = TextEditingController();
@@ -351,7 +352,7 @@ class _ProposePageState extends State<ProposePage> {
         return issueSwapNativeOptionInput();
 
       case ProposalActionIdentifier.spendAsset:
-        throw UnimplementedError('remove location is unsupported');
+        return spendAssetInput(context);
 
       case ProposalActionIdentifier.issueSwapAssetOption:
         throw UnimplementedError('remove location is unsupported');
@@ -440,13 +441,44 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget spendNativeInput(BuildContext context) {
-    final store = context.read<AppStore>();
+    return Column(children: spendInputWidgets('KSM'));
+  }
+
+  Widget spendAssetInput(BuildContext context) {
     final l10n = context.l10n;
+
     return Column(children: [
+      DropdownButtonFormField<AssetToSpend>(
+          initialValue: selectedAsset,
+          decoration: InputDecoration(
+            labelText: l10n.proposalFieldAssetToSpend,
+          ),
+          items: AssetToSpend.values.map((asset) {
+            return DropdownMenuItem(
+              value: asset,
+              child: Text(asset.name.toUpperCase()),
+            );
+          }).toList(),
+          onChanged: AssetToSpend.values.length > 1
+              ? (AssetToSpend? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      selectedAsset = newValue;
+                    });
+                  }
+                }
+              : null),
+      ...spendInputWidgets(selectedAsset.name.toUpperCase()),
+    ]);
+  }
+
+  List<Widget> spendInputWidgets(String currency) {
+    final l10n = context.l10n;
+    return [
       TextFormField(
         controller: amountController,
         decoration: InputDecoration(
-          labelText: l10n.proposalFieldAmount('KSM'),
+          labelText: l10n.proposalFieldAmount(currency),
           errorText: amountError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -463,7 +495,7 @@ class _ProposePageState extends State<ProposePage> {
       ),
       const SizedBox(height: 10),
       EncointerAddressInputField(
-        store,
+        context.read<AppStore>(),
         label: l10n.proposalFieldBeneficiary,
         initialValue: beneficiary,
         onChanged: (AccountData acc) {
@@ -473,7 +505,7 @@ class _ProposePageState extends State<ProposePage> {
         },
         hideIdenticon: true,
       ),
-    ]);
+    ];
   }
 
   /// Inactivity timeout text form allowing positive integers.

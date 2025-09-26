@@ -254,6 +254,7 @@
     "proposalFieldNominalIncome": "Grundeinkommen",
     "proposalFieldInactivityTimeoutCycles": "Inaktivitätszeitlimit (Versammlungszyklen)",
     "proposalFieldPetitionText": "Petitionstext",
+    "proposalFieldAssetToSpend": "Zu vergebender Token",
     "proposalFieldAmount": "Betrag ({asset})",
     "@proposalFieldAmount": {
         "placeholders": {

@@ -765,6 +765,9 @@ class AppLocalizationsSw extends AppLocalizations {
   String get proposalFieldPetitionText => 'Maandishi ya ombi rasmi';
 
   @override
+  String get proposalFieldAssetToSpend => 'Tokeni ya kutumia';
+
+  @override
   String proposalFieldAmount(String asset) {
     return 'Kiasi ($asset)';
   }

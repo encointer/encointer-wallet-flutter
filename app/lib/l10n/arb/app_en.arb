@@ -264,6 +264,7 @@
     "proposalFieldNominalIncome": "Nominal Income",
     "proposalFieldInactivityTimeoutCycles": "Inactivity Timeout (gathering cycles)",
     "proposalFieldPetitionText": "Petition Text",
+    "proposalFieldAssetToSpend": "Asset to spend",
     "proposalFieldAmount": "Amount ({asset})",
     "@proposalFieldAmount": {
         "placeholders": {

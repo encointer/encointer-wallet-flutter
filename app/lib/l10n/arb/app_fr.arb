@@ -254,6 +254,7 @@
     "proposalFieldNominalIncome": "Revenu nominal",
     "proposalFieldInactivityTimeoutCycles": "Délai d'inactivité (cycles de rencontre)",
     "proposalFieldPetitionText": "Texte de la pétition",
+    "proposalFieldAssetToSpend": "Jeton à dépenser",
     "proposalFieldAmount": "Montant ({asset})",
     "@proposalFieldAmount": {
         "placeholders": {

@@ -253,6 +253,7 @@
     "proposalFieldNominalIncome": "Номинальный доход",
     "proposalFieldInactivityTimeoutCycles": "Тайм-аут неактивности (циклы встреч)",
     "proposalFieldPetitionText": "Текст петиции",
+    "proposalFieldAssetToSpend": "Токен для траты",
     "proposalFieldAmount": "Сумма ({asset})",
     "@proposalFieldAmount": {
         "placeholders": {

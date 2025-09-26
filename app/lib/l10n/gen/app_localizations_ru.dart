@@ -768,6 +768,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get proposalFieldPetitionText => 'Текст петиции';
 
   @override
+  String get proposalFieldAssetToSpend => 'Токен для траты';
+
+  @override
   String proposalFieldAmount(String asset) {
     return 'Сумма ($asset)';
   }

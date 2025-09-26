@@ -1541,6 +1541,12 @@ abstract class AppLocalizations {
   /// **'Petition Text'**
   String get proposalFieldPetitionText;
 
+  /// No description provided for @proposalFieldAssetToSpend.
+  ///
+  /// In en, this message translates to:
+  /// **'Asset to spend'**
+  String get proposalFieldAssetToSpend;
+
   /// No description provided for @proposalFieldAmount.
   ///
   /// In en, this message translates to:
