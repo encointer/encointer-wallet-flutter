@@ -400,7 +400,7 @@ class _ProposePageState extends State<ProposePage> {
       TextFormField(
         controller: rateController,
         decoration: InputDecoration(
-          labelText: l10n.proposalFieldRate(store.encointer.community!.symbol!, currency),
+          labelText: l10n.proposalFieldRate(currency, store.encointer.community!.symbol!),
           errorText: rateError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -825,12 +825,8 @@ class _ProposePageState extends State<ProposePage> {
         final ben = beneficiary!.pubKey;
 
         final amount = double.tryParse(amountController.text)!;
-        return SpendAsset(
-          maybeCid,
-          hex.decode(ben.replaceFirst('0x', '')),
-          BigInt.from(amount * pow(10, selectedAsset.decimals)),
-          selectedAsset.assetId
-        );
+        return SpendAsset(maybeCid, hex.decode(ben.replaceFirst('0x', '')),
+            BigInt.from(amount * pow(10, selectedAsset.decimals)), selectedAsset.assetId);
 
       case ProposalActionIdentifier.issueSwapAssetOption:
         final maybeCid = selectedScope.isLocal ? cid : null;
