@@ -1367,8 +1367,18 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String proposalSpendAsset(String asset, String cid, String amount, String beneficiary) {
+    return '$cid Die Gemeinschaftsreserve soll $amount $asset an $beneficiary senden';
+  }
+
+  @override
   String proposalIssueSwapNativeOption(String cid, String beneficiary, String allowance, String rate) {
     return '$cid: Ermögliche $beneficiary, bis zu $allowance KSM zu einem Kurs von $rate $cid/KSM einzutauschen.';
+  }
+
+  @override
+  String proposalIssueSwapAssetOption(String asset, String cid, String beneficiary, String allowance, String rate) {
+    return '$cid: Ermögliche $beneficiary, bis zu $allowance $asset zu einem Kurs von $rate $cid/$asset einzutauschen.';
   }
 
   @override

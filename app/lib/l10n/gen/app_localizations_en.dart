@@ -1357,8 +1357,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String proposalSpendAsset(String asset, String cid, String amount, String beneficiary) {
+    return '$cid treasury shall spend $amount $asset to $beneficiary';
+  }
+
+  @override
   String proposalIssueSwapNativeOption(String cid, String beneficiary, String allowance, String rate) {
     return '$cid: Let $beneficiary exchange up to $allowance KSM at a rate of $rate $cid/KSM';
+  }
+
+  @override
+  String proposalIssueSwapAssetOption(String asset, String cid, String beneficiary, String allowance, String rate) {
+    return '$cid: Let $beneficiary exchange up to $allowance $asset at a rate of $rate $cid/$asset';
   }
 
   @override

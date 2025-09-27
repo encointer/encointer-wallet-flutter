@@ -1366,8 +1366,18 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String proposalSpendAsset(String asset, String cid, String amount, String beneficiary) {
+    return '$cid Казначейство отправит $amount $asset $beneficiary';
+  }
+
+  @override
   String proposalIssueSwapNativeOption(String cid, String beneficiary, String allowance, String rate) {
     return '$cid: Разрешить $beneficiary обменять до $allowance KSM по курсу $rate $cid/KSM.';
+  }
+
+  @override
+  String proposalIssueSwapAssetOption(String asset, String cid, String beneficiary, String allowance, String rate) {
+    return '$cid: Разрешить $beneficiary обменять до $allowance $asset по курсу $rate $cid/$asset.';
   }
 
   @override

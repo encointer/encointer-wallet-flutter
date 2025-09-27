@@ -25,6 +25,13 @@ extension AssetToSpendExt on AssetToSpend {
   }
 }
 
+AssetToSpend fromVersionedLocatableAsset(VersionedLocatableAsset asset) {
+  if (asset == usdcForeignAsset) {
+    return AssetToSpend.usdc;
+  }
+  throw ArgumentError('Unknown asset: $asset');
+}
+
 /// USDC Foreign Asset on Kusama Asset Hub
 /// From runtime integration tests:
 //  https://github.com/encointer/runtimes/blob/fe847b9b4c9ec2411ac4db5b876937b0581ead3c/integration-tests/emulated/tests/encointer/encointer-kusama/src/tests/remote_treasury_payout.rs#L142C1-L145C4
@@ -37,7 +44,6 @@ VersionedLocatableAsset usdcForeignAsset = V5(
   location: XcmLocation(parents: 1, interior: X1([Parachain(assetHubParaId)])),
   assetId: XcmLocation(parents: 0, interior: polkadotForeignAsset(foreignAssetPalletInstance, usdcAssetId)),
 );
-
 
 BigInt assetHubParaId = BigInt.from(1000);
 

@@ -2549,11 +2549,23 @@ abstract class AppLocalizations {
   /// **'{cid} treasury shall spend {amount} KSM to {beneficiary}'**
   String proposalSpendNative(String cid, String amount, String beneficiary);
 
+  /// No description provided for @proposalSpendAsset.
+  ///
+  /// In en, this message translates to:
+  /// **'{cid} treasury shall spend {amount} {asset} to {beneficiary}'**
+  String proposalSpendAsset(String asset, String cid, String amount, String beneficiary);
+
   /// No description provided for @proposalIssueSwapNativeOption.
   ///
   /// In en, this message translates to:
   /// **'{cid}: Let {beneficiary} exchange up to {allowance} KSM at a rate of {rate} {cid}/KSM'**
   String proposalIssueSwapNativeOption(String cid, String beneficiary, String allowance, String rate);
+
+  /// No description provided for @proposalIssueSwapAssetOption.
+  ///
+  /// In en, this message translates to:
+  /// **'{cid}: Let {beneficiary} exchange up to {allowance} {asset} at a rate of {rate} {cid}/{asset}'**
+  String proposalIssueSwapAssetOption(String asset, String cid, String beneficiary, String allowance, String rate);
 
   /// No description provided for @proposalSupersededBy.
   ///
