@@ -33,6 +33,7 @@ import 'package:ew_polkadart/ew_polkadart.dart'
         ProposalAction,
         SetInactivityTimeout,
         SpendNative,
+        SpendAsset,
         UpdateDemurrage,
         UpdateNominalIncome,
         SwapNativeOption,
@@ -820,7 +821,16 @@ class _ProposePageState extends State<ProposePage> {
         return IssueSwapNativeOption(maybeCid!, hex.decode(ben.replaceFirst('0x', '')), issueOption);
 
       case ProposalActionIdentifier.spendAsset:
-        throw UnimplementedError('spendAsset is unsupported');
+        final maybeCid = selectedScope.isLocal ? cid : null;
+        final ben = beneficiary!.pubKey;
+
+        final amount = double.tryParse(amountController.text)!;
+        return SpendAsset(
+          maybeCid,
+          hex.decode(ben.replaceFirst('0x', '')),
+          BigInt.from(amount * pow(10, selectedAsset.decimals)),
+          selectedAsset.assetId
+        );
 
       case ProposalActionIdentifier.issueSwapAssetOption:
         final maybeCid = selectedScope.isLocal ? cid : null;

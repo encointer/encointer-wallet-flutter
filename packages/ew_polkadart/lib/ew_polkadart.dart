@@ -18,6 +18,7 @@ export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal
         Petition,
         SpendNative,
         IssueSwapNativeOption,
+        SpendAsset,
         IssueSwapAssetOption;
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal_action_identifier.dart'
     show ProposalActionIdentifier;
