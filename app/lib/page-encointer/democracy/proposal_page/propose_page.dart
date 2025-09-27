@@ -5,6 +5,7 @@ import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/page-encointer/democracy/proposal_page/asset_id.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/utf8_limited_byte_field.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -34,7 +35,9 @@ import 'package:ew_polkadart/ew_polkadart.dart'
         SpendNative,
         UpdateDemurrage,
         UpdateNominalIncome,
-        SwapNativeOption;
+        SwapNativeOption,
+        SwapAssetOption,
+        IssueSwapAssetOption;
 
 class ProposePage extends StatefulWidget {
   const ProposePage({super.key});
@@ -818,8 +821,22 @@ class _ProposePageState extends State<ProposePage> {
 
       case ProposalActionIdentifier.spendAsset:
         throw UnimplementedError('spendAsset is unsupported');
+
       case ProposalActionIdentifier.issueSwapAssetOption:
-        throw UnimplementedError('issueSwapAssetOption is unsupported');
+        final maybeCid = selectedScope.isLocal ? cid : null;
+        final ben = beneficiary!.pubKey;
+
+        final amount = double.tryParse(allowanceController.text)!;
+        final rate = double.tryParse(rateController.text)!;
+        final issueOption = SwapAssetOption(
+          cid: cid,
+          assetId: selectedAsset.assetId,
+          assetAllowance: BigInt.from(amount * pow(10, selectedAsset.decimals)),
+          rate: fixedU128FromDouble(rate * pow(10, -12)),
+          doBurn: true,
+        );
+
+        return IssueSwapAssetOption(maybeCid!, hex.decode(ben.replaceFirst('0x', '')), issueOption);
 
       case ProposalActionIdentifier.removeLocation:
         throw UnimplementedError('removeLocation is unsupported');
