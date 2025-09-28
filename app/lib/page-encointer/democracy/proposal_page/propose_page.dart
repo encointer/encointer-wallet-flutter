@@ -459,7 +459,7 @@ class _ProposePageState extends State<ProposePage> {
   Widget spendAssetInput(BuildContext context) {
     return Column(children: [
       selectAssetDropDown(),
-      ...spendInputWidgets(selectedAsset.name.toUpperCase()),
+      ...spendInputWidgets(selectedAsset.symbol),
     ]);
   }
 
@@ -473,7 +473,7 @@ class _ProposePageState extends State<ProposePage> {
         items: AssetToSpend.values.map((asset) {
           return DropdownMenuItem(
             value: asset,
-            child: Text(asset.name.toUpperCase()),
+            child: Text(asset.symbol),
           );
         }).toList(),
         onChanged: AssetToSpend.values.length > 1

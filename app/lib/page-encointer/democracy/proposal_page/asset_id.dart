@@ -50,7 +50,7 @@ BigInt assetHubParaId = BigInt.from(1000);
 /// Asset Pallet Instance on Asset Hub Polkadot
 const PalletInstance foreignAssetPalletInstance = PalletInstance(50);
 
-/// USD Coin on Polkadot Asset Hub Polkadot
+/// USD Coin on Asset Hub Polkadot
 GeneralIndex usdcAssetId = GeneralIndex(BigInt.from(1337));
 
 X4 polkadotForeignAsset(PalletInstance palletInstance, GeneralIndex assetId) {
