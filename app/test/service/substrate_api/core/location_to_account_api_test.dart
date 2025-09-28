@@ -45,7 +45,7 @@ void main() {
       test(
         '${testCase['name']} converts correctly',
             () async {
-          final locationOnAHK = encointerAccountOnAHK(testCase['encointer']!);
+          final locationOnAHK = encointerAddressOnAHK(testCase['encointer']!);
           final accountId = await api.locationToAccountId(locationOnAHK);
 
           expect(accountId, AddressUtils.addressToPubKey(testCase['expected']!));

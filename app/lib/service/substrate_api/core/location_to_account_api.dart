@@ -3,8 +3,12 @@ import 'package:ew_polkadart/ew_polkadart.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
 
 
-XcmLocation encointerAccountOnAHK(String ss58Address) {
+XcmLocation encointerAddressOnAHK(String ss58Address) {
   final accountId = AddressUtils.addressToPubKey(ss58Address);
+  return encointerAccountOnAHK(accountId);
+}
+
+XcmLocation encointerAccountOnAHK(AccountId32 accountId) {
   return XcmLocation(parents: 1, interior: X2([Parachain(BigInt.from(1001)), XcmAccountId32(id: accountId)]));
 }
 
