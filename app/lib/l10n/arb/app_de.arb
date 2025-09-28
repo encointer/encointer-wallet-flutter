@@ -225,6 +225,16 @@
             }
         }
     },
+    "proposalExplainerSpendAsset": "Dieser Vorschlag schlägt vor, einen bestimmten Token für dich aus der Community-Treasury auszugeben, entweder durch eine globale oder Community-Abstimmung. Diese Mittel können für Community-Beiträge belohnen oder Community-Initiativen unterstützen.\n\nHinweis: Du erhältst diesen Token direkt auf Asset Hub Kusama.",
+    "proposalExplainerIssueSwapAssetOption": "Dieser Vorschlag erlaubt dir, Community-Token gegen einen festgelegten Token zu einem definierten Kurs mehrfach bis zu einem festgelegten Token-Limit zu tauschen. Du könntest ein lokales Unternehmen sein, das Community-Token annimmt und einen Überschuss ansammeln kann.\n\nBeispiel mit Kurs 3 {currency}/Token und Limit 2 Token:\n\nDu kannst bis zu 2 Token zu einem Kurs von 3 {currency}/Token tauschen. Somit beträgt das Maximum 6 {currency} => 2 Token.\n\nHinweis: Du erhältst diesen Token direkt auf Asset Hub Kusama.",
+    "@proposalExplainerIssueSwapAssetOption": {
+        "placeholders": {
+            "currency": {
+                "type": "String",
+                "example": "0.5"
+            }
+        }
+    },
     "proposalExplainerCannotVoteYet": "Du kannst ab dem nächsten Zyklus mit deiner Reputation abstimmen!",
     "proposalType": "Vorschlagstyp",
     "proposalTypeAddLocation": "Standort hinzufügen",

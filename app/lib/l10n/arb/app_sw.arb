@@ -225,6 +225,16 @@
             }
         }
     },
+    "proposalExplainerSpendAsset": "Pendekezo hili linapendekeza kutumia tokeni maalum kwa mnufaika kutoka hazina ya jamii, ama kupitia kura ya jumla au ya jamii. Fedha hizi zinaweza kutumika kuponyesha michango ya jamii au kusaidia miradi ya jamii.\n\nKumbuka: Utapokea tokeni hii moja kwa moja kwenye Asset Hub Kusama.",
+    "proposalExplainerIssueSwapAssetOption": "Pendekezo hili linakuruhusu kubadilisha tokeni za jamii kwa tokeni maalum kwa kiwango kilichowekwa mara nyingi hadi kikomo kilichowekwa cha tokeni.\n\nMfano kwa kiwango cha 3 {currency}/Token na kikomo cha 2 Token:\n\nUnaweza kubadilisha hadi 2 Token kwa kiwango cha 3 {currency}/Token. Hivyo, kiwango cha juu ni 6 {currency} => 2 Token.\n\nKumbuka: Utapokea tokeni hii moja kwa moja kwenye Asset Hub Kusama.",
+    "@proposalExplainerIssueSwapAssetOption": {
+        "placeholders": {
+            "currency": {
+                "type": "String",
+                "example": "0.5"
+            }
+        }
+    },
     "proposalExplainerCannotVoteYet": "Utaweza kuanza kupiga kura kwa kutumia sifa yako kuanzia mzunguko ujao!",
     "proposalType": "Aina ya pendekezo",
     "proposalTypeAddLocation": "Ongeza eneo",

@@ -701,11 +701,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get proposalExplainerSpendAsset =>
-      'This proposal suggests spending a specified Asset for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.';
+      'Cette proposition suggère de dépenser un jeton spécifié pour toi depuis la trésorerie communautaire, soit par un vote global, soit par un vote communautaire. Ces fonds peuvent récompenser les contributions à la communauté ou soutenir des initiatives communautaires.\n\nRemarque : Tu recevras ce jeton directement sur Asset Hub Kusama.';
 
   @override
   String proposalExplainerIssueSwapAssetOption(String currency) {
-    return 'This proposal allows the beneficiary to exchange community tokens for a specified Asset at a defined rate multiple times up to a set Asset limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 $currency/Asset and limit 2 Asset:\n\nThe beneficiary can exchange up to 2 Assets at a rate of 3 $currency/Asset. Hence, the maximum is 6 $currency => 2 Asset.';
+    return 'Cette proposition te permet d’échanger des jetons communautaires contre un jeton spécifié à un taux défini plusieurs fois jusqu’à une limite fixée.\n\nExemple avec un taux de 3 $currency/Jeton et une limite de 2 Jetons :\n\nTu peux échanger jusqu’à 2 Jetons à un taux de 3 $currency/Jeton. Ainsi, le maximum est de 6 $currency => 2 Jetons.\n\nRemarque : Tu recevras ce jeton directement sur Asset Hub Kusama.';
   }
 
   @override

@@ -691,11 +691,11 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get proposalExplainerSpendAsset =>
-      'This proposal suggests spending a specified Asset for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.';
+      'Pendekezo hili linapendekeza kutumia tokeni maalum kwa mnufaika kutoka hazina ya jamii, ama kupitia kura ya jumla au ya jamii. Fedha hizi zinaweza kutumika kuponyesha michango ya jamii au kusaidia miradi ya jamii.\n\nKumbuka: Utapokea tokeni hii moja kwa moja kwenye Asset Hub Kusama.';
 
   @override
   String proposalExplainerIssueSwapAssetOption(String currency) {
-    return 'This proposal allows the beneficiary to exchange community tokens for a specified Asset at a defined rate multiple times up to a set Asset limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 $currency/Asset and limit 2 Asset:\n\nThe beneficiary can exchange up to 2 Assets at a rate of 3 $currency/Asset. Hence, the maximum is 6 $currency => 2 Asset.';
+    return 'Pendekezo hili linakuruhusu kubadilisha tokeni za jamii kwa tokeni maalum kwa kiwango kilichowekwa mara nyingi hadi kikomo kilichowekwa cha tokeni.\n\nMfano kwa kiwango cha 3 $currency/Token na kikomo cha 2 Token:\n\nUnaweza kubadilisha hadi 2 Token kwa kiwango cha 3 $currency/Token. Hivyo, kiwango cha juu ni 6 $currency => 2 Token.\n\nKumbuka: Utapokea tokeni hii moja kwa moja kwenye Asset Hub Kusama.';
   }
 
   @override

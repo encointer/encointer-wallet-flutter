@@ -225,6 +225,16 @@
             }
         }
     },
+    "proposalExplainerSpendAsset": "Cette proposition suggère de dépenser un jeton spécifié pour toi depuis la trésorerie communautaire, soit par un vote global, soit par un vote communautaire. Ces fonds peuvent récompenser les contributions à la communauté ou soutenir des initiatives communautaires.\n\nRemarque : Tu recevras ce jeton directement sur Asset Hub Kusama.",
+    "proposalExplainerIssueSwapAssetOption": "Cette proposition te permet d’échanger des jetons communautaires contre un jeton spécifié à un taux défini plusieurs fois jusqu’à une limite fixée.\n\nExemple avec un taux de 3 {currency}/Jeton et une limite de 2 Jetons :\n\nTu peux échanger jusqu’à 2 Jetons à un taux de 3 {currency}/Jeton. Ainsi, le maximum est de 6 {currency} => 2 Jetons.\n\nRemarque : Tu recevras ce jeton directement sur Asset Hub Kusama.",
+    "@proposalExplainerIssueSwapAssetOption": {
+        "placeholders": {
+            "currency": {
+                "type": "String",
+                "example": "0.5"
+            }
+        }
+    },
     "proposalExplainerCannotVoteYet": "Tu pourras commencer à voter avec ta réputation à partir du prochain cycle !",
     "proposalType": "Type de proposition",
     "proposalTypeAddLocation": "Ajouter un lieu",
