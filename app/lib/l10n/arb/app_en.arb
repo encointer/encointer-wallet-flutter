@@ -243,10 +243,38 @@
     "proposalTypeUpdateNominalIncome": "Update Nominal Income",
     "proposalTypeSetInactivityTimeout": "Set Inactivity Timeout",
     "proposalTypePetition": "Petition",
-    "proposalTypeSpendNative": "Spend Native Tokens",
-    "proposalTypeIssueSwapNativeOption": "Issue Swap Native Option",
-    "proposalTypeSpendAsset": "Spend Asset",
-    "proposalTypeIssueSwapAssetOption": "Issue Swap Asset Option",
+    "proposalTypeSpendNative": "Spend KSM",
+    "proposalTypeIssueSwapNativeOption": "Swap {cc} for KSM",
+    "@proposalTypeIssueSwapNativeOption": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "MTA"
+            }
+        }
+    },
+    "proposalTypeSpendAsset": "Spend {asset}",
+    "@proposalTypeSpendAsset": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "proposalTypeIssueSwapAssetOption": "Swap {cc} for {asset}",
+    "@proposalTypeIssueSwapAssetOption": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "MTA"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
     "proposalScope": "Scope",
     "proposalScopeLocal": "Local ({community})",
     "@proposalScopeLocal": {

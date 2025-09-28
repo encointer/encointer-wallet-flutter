@@ -1466,26 +1466,26 @@ abstract class AppLocalizations {
   /// No description provided for @proposalTypeSpendNative.
   ///
   /// In en, this message translates to:
-  /// **'Spend Native Tokens'**
+  /// **'Spend KSM'**
   String get proposalTypeSpendNative;
 
   /// No description provided for @proposalTypeIssueSwapNativeOption.
   ///
   /// In en, this message translates to:
-  /// **'Issue Swap Native Option'**
-  String get proposalTypeIssueSwapNativeOption;
+  /// **'Swap {cc} for KSM'**
+  String proposalTypeIssueSwapNativeOption(String cc);
 
   /// No description provided for @proposalTypeSpendAsset.
   ///
   /// In en, this message translates to:
-  /// **'Spend Asset'**
-  String get proposalTypeSpendAsset;
+  /// **'Spend {asset}'**
+  String proposalTypeSpendAsset(String asset);
 
   /// No description provided for @proposalTypeIssueSwapAssetOption.
   ///
   /// In en, this message translates to:
-  /// **'Issue Swap Asset Option'**
-  String get proposalTypeIssueSwapAssetOption;
+  /// **'Swap {cc} for {asset}'**
+  String proposalTypeIssueSwapAssetOption(String cc, String asset);
 
   /// No description provided for @proposalScope.
   ///

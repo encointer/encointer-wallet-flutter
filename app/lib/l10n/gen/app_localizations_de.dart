@@ -730,16 +730,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get proposalTypePetition => 'Petition';
 
   @override
-  String get proposalTypeSpendNative => 'Native Tokens ausgeben';
+  String get proposalTypeSpendNative => 'KSM ausgeben';
 
   @override
-  String get proposalTypeIssueSwapNativeOption => 'Swap-Option für Native Tokens ausgeben';
+  String proposalTypeIssueSwapNativeOption(String cc) {
+    return '$cc für KSM tauschen';
+  }
 
   @override
-  String get proposalTypeSpendAsset => 'Token ausgeben';
+  String proposalTypeSpendAsset(String asset) {
+    return '$asset ausgeben';
+  }
 
   @override
-  String get proposalTypeIssueSwapAssetOption => 'Swap-Token-Option emittieren';
+  String proposalTypeIssueSwapAssetOption(String cc, String asset) {
+    return '$cc für $asset tauschen';
+  }
 
   @override
   String get proposalScope => 'Geltungsbereich';

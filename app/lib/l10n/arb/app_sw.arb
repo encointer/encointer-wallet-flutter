@@ -233,10 +233,38 @@
     "proposalTypeUpdateNominalIncome": "Sasisha mapato ya kawaida",
     "proposalTypeSetInactivityTimeout": "Weka muda wa kutokufanya kazi",
     "proposalTypePetition": "Ombi rasmi",
-    "proposalTypeSpendNative": "Tumia tokeni asili",
-    "proposalTypeIssueSwapNativeOption": "Toa chaguo la kubadilisha tokeni asili",
-    "proposalTypeSpendAsset": "Tumia tokeni",
-    "proposalTypeIssueSwapAssetOption": "Toa chaguo la kubadilisha tokeni",
+    "proposalTypeSpendNative": "KSM asili",
+    "proposalTypeIssueSwapNativeOption": "Badilisha {cc} kwa KSM",
+    "@proposalTypeIssueSwapNativeOption": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "MTA"
+            }
+        }
+    },
+    "proposalTypeSpendAsset": "Tumia {asset}",
+    "@proposalTypeSpendAsset": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "proposalTypeIssueSwapAssetOption": "Badilisha {cc} kwa {asset}",
+    "@proposalTypeIssueSwapAssetOption": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "MTA"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
     "proposalScope": "Wigo",
     "proposalScopeLocal": "Kitaifa ({community})",
     "@proposalScopeLocal": {

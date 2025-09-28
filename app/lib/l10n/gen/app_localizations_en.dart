@@ -721,16 +721,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get proposalTypePetition => 'Petition';
 
   @override
-  String get proposalTypeSpendNative => 'Spend Native Tokens';
+  String get proposalTypeSpendNative => 'Spend KSM';
 
   @override
-  String get proposalTypeIssueSwapNativeOption => 'Issue Swap Native Option';
+  String proposalTypeIssueSwapNativeOption(String cc) {
+    return 'Swap $cc for KSM';
+  }
 
   @override
-  String get proposalTypeSpendAsset => 'Spend Asset';
+  String proposalTypeSpendAsset(String asset) {
+    return 'Spend $asset';
+  }
 
   @override
-  String get proposalTypeIssueSwapAssetOption => 'Issue Swap Asset Option';
+  String proposalTypeIssueSwapAssetOption(String cc, String asset) {
+    return 'Swap $cc for $asset';
+  }
 
   @override
   String get proposalScope => 'Scope';

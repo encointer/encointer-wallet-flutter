@@ -205,7 +205,7 @@ class _ProposePageState extends State<ProposePage> {
                           items: supportedProposalIds().map((ProposalActionIdentifier action) {
                             return DropdownMenuItem<ProposalActionIdentifier>(
                               value: action,
-                              child: Text(action.localizedStr(l10n)),
+                              child: Text(action.localizedStr(l10n, store.encointer.community!.symbol!, selectedAsset)),
                             );
                           }).toList(),
                           decoration: InputDecoration(labelText: l10n.proposalType),

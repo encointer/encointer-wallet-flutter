@@ -727,16 +727,22 @@ class AppLocalizationsRu extends AppLocalizations {
   String get proposalTypePetition => 'Петиция';
 
   @override
-  String get proposalTypeSpendNative => 'Потратить нативные токены';
+  String get proposalTypeSpendNative => 'Потратить KSM';
 
   @override
-  String get proposalTypeIssueSwapNativeOption => 'Выпустить опцион на обмен нативных токенов';
+  String proposalTypeIssueSwapNativeOption(String cc) {
+    return 'Обменять $cc на KSM';
+  }
 
   @override
-  String get proposalTypeSpendAsset => 'Потратить токен';
+  String proposalTypeSpendAsset(String asset) {
+    return 'Потратить $asset';
+  }
 
   @override
-  String get proposalTypeIssueSwapAssetOption => 'Выпустить опцион на своп токена';
+  String proposalTypeIssueSwapAssetOption(String cc, String asset) {
+    return 'Обменять $cc на $asset';
+  }
 
   @override
   String get proposalScope => 'Область действия';

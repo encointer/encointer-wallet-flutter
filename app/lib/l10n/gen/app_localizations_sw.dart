@@ -724,16 +724,22 @@ class AppLocalizationsSw extends AppLocalizations {
   String get proposalTypePetition => 'Ombi rasmi';
 
   @override
-  String get proposalTypeSpendNative => 'Tumia tokeni asili';
+  String get proposalTypeSpendNative => 'KSM asili';
 
   @override
-  String get proposalTypeIssueSwapNativeOption => 'Toa chaguo la kubadilisha tokeni asili';
+  String proposalTypeIssueSwapNativeOption(String cc) {
+    return 'Badilisha $cc kwa KSM';
+  }
 
   @override
-  String get proposalTypeSpendAsset => 'Tumia tokeni';
+  String proposalTypeSpendAsset(String asset) {
+    return 'Tumia $asset';
+  }
 
   @override
-  String get proposalTypeIssueSwapAssetOption => 'Toa chaguo la kubadilisha tokeni';
+  String proposalTypeIssueSwapAssetOption(String cc, String asset) {
+    return 'Badilisha $cc kwa $asset';
+  }
 
   @override
   String get proposalScope => 'Wigo';

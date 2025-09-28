@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/page-encointer/democracy/proposal_page/asset_id.dart';
 
 import 'package:ew_polkadart/encointer_types.dart' as et;
 
@@ -120,7 +121,7 @@ extension PropsalActionExt on ProposalActionIdentifier {
     };
   }
 
-  String localizedStr(AppLocalizations l10n) {
+  String localizedStr(AppLocalizations l10n, String cidSymbol, AssetToSpend asset) {
     return switch (this) {
       ProposalActionIdentifier.addLocation => l10n.proposalTypeAddLocation,
       ProposalActionIdentifier.removeLocation => l10n.proposalTypeRemoveLocation,
@@ -129,9 +130,9 @@ extension PropsalActionExt on ProposalActionIdentifier {
       ProposalActionIdentifier.setInactivityTimeout => l10n.proposalTypeSetInactivityTimeout,
       ProposalActionIdentifier.petition => l10n.proposalTypePetition,
       ProposalActionIdentifier.spendNative => l10n.proposalTypeSpendNative,
-      ProposalActionIdentifier.issueSwapNativeOption => l10n.proposalTypeIssueSwapNativeOption,
-      ProposalActionIdentifier.spendAsset => l10n.proposalTypeSpendAsset,
-      ProposalActionIdentifier.issueSwapAssetOption => l10n.proposalTypeIssueSwapAssetOption
+      ProposalActionIdentifier.issueSwapNativeOption => l10n.proposalTypeIssueSwapNativeOption(cidSymbol),
+      ProposalActionIdentifier.spendAsset => l10n.proposalTypeSpendAsset(asset.symbol),
+      ProposalActionIdentifier.issueSwapAssetOption => l10n.proposalTypeIssueSwapAssetOption(cidSymbol, asset.symbol)
     };
   }
 }

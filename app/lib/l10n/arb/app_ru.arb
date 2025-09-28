@@ -232,10 +232,38 @@
     "proposalTypeUpdateNominalIncome": "Обновить номинальный доход",
     "proposalTypeSetInactivityTimeout": "Установить тайм-аут неактивности",
     "proposalTypePetition": "Петиция",
-    "proposalTypeSpendNative": "Потратить нативные токены",
-    "proposalTypeIssueSwapNativeOption": "Выпустить опцион на обмен нативных токенов",
-    "proposalTypeSpendAsset": "Потратить токен",
-    "proposalTypeIssueSwapAssetOption": "Выпустить опцион на своп токена",
+    "proposalTypeSpendNative": "Потратить KSM",
+    "proposalTypeIssueSwapNativeOption": "Обменять {cc} на KSM",
+    "@proposalTypeIssueSwapNativeOption": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "MTA"
+            }
+        }
+    },
+    "proposalTypeSpendAsset": "Потратить {asset}",
+    "@proposalTypeSpendAsset": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "proposalTypeIssueSwapAssetOption": "Обменять {cc} на {asset}",
+    "@proposalTypeIssueSwapAssetOption": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "MTA"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
     "proposalScope": "Область действия",
     "proposalScopeLocal": "Локальный ({community})",
     "@proposalScopeLocal": {

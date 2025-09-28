@@ -233,10 +233,38 @@
     "proposalTypeUpdateNominalIncome": "Mettre à jour le revenu nominal",
     "proposalTypeSetInactivityTimeout": "Définir le délai d'inactivité",
     "proposalTypePetition": "Pétition",
-    "proposalTypeSpendNative": "Dépenser des tokens natifs",
-    "proposalTypeIssueSwapNativeOption": "Émettre une option d'échange de tokens natifs",
-    "proposalTypeSpendAsset": "Dépenser un jeton",
-    "proposalTypeIssueSwapAssetOption": "Émettre une option de swap de jeton",
+    "proposalTypeSpendNative": "Dépenser des KSM",
+    "proposalTypeIssueSwapNativeOption": "Échanger {cc} contre KSM",
+    "@proposalTypeIssueSwapNativeOption": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "MTA"
+            }
+        }
+    },
+    "proposalTypeSpendAsset": "Dépenser {asset}",
+    "@proposalTypeSpendAsset": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "proposalTypeIssueSwapAssetOption": "Échanger {cc} contre {asset}",
+    "@proposalTypeIssueSwapAssetOption": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "MTA"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
     "proposalScope": "Portée",
     "proposalScopeLocal": "Local ({community})",
     "@proposalScopeLocal": {
