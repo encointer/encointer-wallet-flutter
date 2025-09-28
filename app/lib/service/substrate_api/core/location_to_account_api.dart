@@ -2,7 +2,6 @@ import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
 
-
 XcmLocation encointerAddressOnAHK(String ss58Address) {
   final accountId = AddressUtils.addressToPubKey(ss58Address);
   return encointerAccountOnAHK(accountId);
