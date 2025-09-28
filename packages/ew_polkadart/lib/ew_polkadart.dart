@@ -59,9 +59,12 @@ export 'package:polkadart_scale_codec/polkadart_scale_codec.dart'
 
 import 'generated/encointer_kusama/types/staging_xcm/v5/location/location.dart' show Location;
 import 'generated/encointer_kusama/types/staging_xcm/v5/junction/junction.dart' show AccountId32;
+import 'generated/encointer_kusama/types/xcm/versioned_location.dart' show VersionedLocation, V5;
 
 /// Re-export Location as XcmLocation to avoid conflict with Encointer Location
 typedef XcmLocation = Location;
+typedef XcmVersionedLocation = VersionedLocation;
+typedef LocationV5 = V5;
 
 /// Re-export Location as XcmLocation to avoid conflict with Encointer Location
 typedef XcmAccountId32 = AccountId32;
