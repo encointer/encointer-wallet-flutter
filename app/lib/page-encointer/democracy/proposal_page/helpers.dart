@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/page-encointer/democracy/proposal_page/asset_id.dart';
 
 import 'package:ew_polkadart/encointer_types.dart' as et;
 
@@ -30,7 +31,9 @@ enum ProposalActionIdentifier {
   setInactivityTimeout,
   petition,
   spendNative,
-  issueSwapNativeOption
+  issueSwapNativeOption,
+  spendAsset,
+  issueSwapAssetOption,
 }
 
 ProposalActionIdentifier proposalActionIdentifierFromPolkadartAction(et.ProposalAction action) {
@@ -43,6 +46,8 @@ ProposalActionIdentifier proposalActionIdentifierFromPolkadartAction(et.Proposal
     et.Petition => ProposalActionIdentifier.petition,
     et.SpendNative => ProposalActionIdentifier.spendNative,
     et.IssueSwapNativeOption => ProposalActionIdentifier.issueSwapNativeOption,
+    et.SpendAsset => ProposalActionIdentifier.spendAsset,
+    et.IssueSwapAssetOption => ProposalActionIdentifier.issueSwapAssetOption,
     _ => throw UnimplementedError('Invalid Proposal Id Type'),
   };
 }
@@ -69,6 +74,8 @@ CommunityIdentifier? getCidFromPolkadartAction(et.ProposalAction action) {
     et.Petition => (action as et.Petition).value0,
     et.SpendNative => (action as et.SpendNative).value0,
     et.IssueSwapNativeOption => (action as et.IssueSwapNativeOption).value0,
+    et.SpendAsset => (action as et.SpendAsset).value0,
+    et.IssueSwapAssetOption => (action as et.IssueSwapAssetOption).value0,
     _ => throw UnimplementedError('Invalid Proposal Id Type'),
   };
 
@@ -86,6 +93,8 @@ List<ProposalActionIdentifier> supportedProposalIds() {
     ProposalActionIdentifier.petition,
     ProposalActionIdentifier.spendNative,
     ProposalActionIdentifier.issueSwapNativeOption,
+    ProposalActionIdentifier.spendAsset,
+    ProposalActionIdentifier.issueSwapAssetOption,
   ];
 }
 
@@ -107,10 +116,12 @@ extension PropsalActionExt on ProposalActionIdentifier {
       // Global or Local allowed (first value is the default)
       ProposalActionIdentifier.petition => [ProposalScope.local, ProposalScope.global],
       ProposalActionIdentifier.spendNative => [ProposalScope.local, ProposalScope.global],
+      ProposalActionIdentifier.spendAsset => [ProposalScope.local, ProposalScope.global],
+      ProposalActionIdentifier.issueSwapAssetOption => [ProposalScope.local, ProposalScope.global],
     };
   }
 
-  String localizedStr(AppLocalizations l10n) {
+  String localizedStr(AppLocalizations l10n, String cidSymbol, AssetToSpend asset) {
     return switch (this) {
       ProposalActionIdentifier.addLocation => l10n.proposalTypeAddLocation,
       ProposalActionIdentifier.removeLocation => l10n.proposalTypeRemoveLocation,
@@ -119,7 +130,9 @@ extension PropsalActionExt on ProposalActionIdentifier {
       ProposalActionIdentifier.setInactivityTimeout => l10n.proposalTypeSetInactivityTimeout,
       ProposalActionIdentifier.petition => l10n.proposalTypePetition,
       ProposalActionIdentifier.spendNative => l10n.proposalTypeSpendNative,
-      ProposalActionIdentifier.issueSwapNativeOption => l10n.proposalTypeIssueSwapNativeOption,
+      ProposalActionIdentifier.issueSwapNativeOption => l10n.proposalTypeIssueSwapNativeOption(cidSymbol),
+      ProposalActionIdentifier.spendAsset => l10n.proposalTypeSpendAsset(asset.symbol),
+      ProposalActionIdentifier.issueSwapAssetOption => l10n.proposalTypeIssueSwapAssetOption(cidSymbol, asset.symbol)
     };
   }
 }

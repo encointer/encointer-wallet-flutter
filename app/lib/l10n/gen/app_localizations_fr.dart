@@ -700,6 +700,15 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get proposalExplainerSpendAsset =>
+      'Cette proposition suggère de dépenser un jeton spécifié pour toi depuis la trésorerie communautaire, soit par un vote global, soit par un vote communautaire. Ces fonds peuvent récompenser les contributions à la communauté ou soutenir des initiatives communautaires.\n\nRemarque : Tu recevras ce jeton directement sur Asset Hub Kusama.';
+
+  @override
+  String proposalExplainerIssueSwapAssetOption(String currency) {
+    return 'Cette proposition te permet d’échanger des jetons communautaires contre un jeton spécifié à un taux défini plusieurs fois jusqu’à une limite fixée.\n\nExemple avec un taux de 3 $currency/Jeton et une limite de 2 Jetons :\n\nTu peux échanger jusqu’à 2 Jetons à un taux de 3 $currency/Jeton. Ainsi, le maximum est de 6 $currency => 2 Jetons.\n\nRemarque : Tu recevras ce jeton directement sur Asset Hub Kusama.';
+  }
+
+  @override
   String get proposalExplainerCannotVoteYet =>
       'Tu pourras commencer à voter avec ta réputation à partir du prochain cycle !';
 
@@ -725,10 +734,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get proposalTypePetition => 'Pétition';
 
   @override
-  String get proposalTypeSpendNative => 'Dépenser des tokens natifs';
+  String get proposalTypeSpendNative => 'Dépenser des KSM';
 
   @override
-  String get proposalTypeIssueSwapNativeOption => 'Émettre une option d\'échange de tokens natifs';
+  String proposalTypeIssueSwapNativeOption(String cc) {
+    return 'Échanger $cc contre KSM';
+  }
+
+  @override
+  String proposalTypeSpendAsset(String asset) {
+    return 'Dépenser $asset';
+  }
+
+  @override
+  String proposalTypeIssueSwapAssetOption(String cc, String asset) {
+    return 'Échanger $cc contre $asset';
+  }
 
   @override
   String get proposalScope => 'Portée';
@@ -760,17 +781,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get proposalFieldPetitionText => 'Texte de la pétition';
 
   @override
-  String get proposalFieldAmount => 'Montant (KSM)';
+  String get proposalFieldAssetToSpend => 'Jeton à dépenser';
+
+  @override
+  String proposalFieldAmount(String asset) {
+    return 'Montant ($asset)';
+  }
 
   @override
   String get proposalFieldBeneficiary => 'Bénéficiaire';
 
   @override
-  String get proposalFieldAllowance => 'Limite (KSM)';
+  String proposalFieldAllowance(String asset) {
+    return 'Limite ($asset)';
+  }
 
   @override
-  String proposalFieldRate(String cc) {
-    return 'Taux ($cc/KSM)';
+  String proposalFieldRate(String asset, String cc) {
+    return 'Taux ($cc/$asset)';
   }
 
   @override
@@ -1350,8 +1378,18 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String proposalSpendAsset(String asset, String cid, String amount, String beneficiary) {
+    return '$cid trèsor enverra $amount $asset à $beneficiary';
+  }
+
+  @override
   String proposalIssueSwapNativeOption(String cid, String beneficiary, String allowance, String rate) {
     return '$cid : Permet à $beneficiary d\'échanger jusqu\'à $allowance KSM à un taux de $rate $cid/KSM.';
+  }
+
+  @override
+  String proposalIssueSwapAssetOption(String asset, String cid, String beneficiary, String allowance, String rate) {
+    return '$cid : Permet à $beneficiary d\'échanger jusqu\'à $allowance $asset à un taux de $rate $cid/$asset.';
   }
 
   @override

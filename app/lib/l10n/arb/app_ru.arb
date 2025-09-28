@@ -225,6 +225,16 @@
             }
         }
     },
+    "proposalExplainerSpendAsset": "Это предложение предлагает потратить указанный токен для тебя из казны сообщества, либо через глобальное голосование, либо через голосование сообщества. Эти средства могут вознаградить вклад в сообщество или поддержать инициативы сообщества.\n\nПримечание: Ты получишь этот токен напрямую на Asset Hub Kusama.",
+    "proposalExplainerIssueSwapAssetOption": "Это предложение позволяет тебе обменивать токены сообщества на указанный токен по заданной ставке несколько раз до установленного лимита токенов.\n\nПример с курсом 3 {currency}/Токен и лимитом 2 Токена:\n\nТы можешь обменять до 2 Токенов по курсу 3 {currency}/Токен. Таким образом, максимум составляет 6 {currency} => 2 Токена.\n\nПримечание: Ты получишь этот токен напрямую на Asset Hub Kusama.",
+    "@proposalExplainerIssueSwapAssetOption": {
+        "placeholders": {
+            "currency": {
+                "type": "String",
+                "example": "0.5"
+            }
+        }
+    },
     "proposalExplainerCannotVoteYet": "Ты сможешь начать голосовать с репутацией со следующего цикла!",
     "proposalTypeAddLocation": "Добавить местоположение",
     "proposalTypeRemoveLocation": "Удалить местоположение",
@@ -232,8 +242,38 @@
     "proposalTypeUpdateNominalIncome": "Обновить номинальный доход",
     "proposalTypeSetInactivityTimeout": "Установить тайм-аут неактивности",
     "proposalTypePetition": "Петиция",
-    "proposalTypeSpendNative": "Потратить нативные токены",
-    "proposalTypeIssueSwapNativeOption": "Выпустить опцион на обмен нативных токенов",
+    "proposalTypeSpendNative": "Потратить KSM",
+    "proposalTypeIssueSwapNativeOption": "Обменять {cc} на KSM",
+    "@proposalTypeIssueSwapNativeOption": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "MTA"
+            }
+        }
+    },
+    "proposalTypeSpendAsset": "Потратить {asset}",
+    "@proposalTypeSpendAsset": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "proposalTypeIssueSwapAssetOption": "Обменять {cc} на {asset}",
+    "@proposalTypeIssueSwapAssetOption": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "MTA"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
     "proposalScope": "Область действия",
     "proposalScopeLocal": "Локальный ({community})",
     "@proposalScopeLocal": {
@@ -251,12 +291,33 @@
     "proposalFieldNominalIncome": "Номинальный доход",
     "proposalFieldInactivityTimeoutCycles": "Тайм-аут неактивности (циклы встреч)",
     "proposalFieldPetitionText": "Текст петиции",
-    "proposalFieldAmount": "Сумма (KSM)",
+    "proposalFieldAssetToSpend": "Токен для траты",
+    "proposalFieldAmount": "Сумма ({asset})",
+    "@proposalFieldAmount": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
     "proposalFieldBeneficiary": "Получатель",
-    "proposalFieldAllowance": "Лимит (KSM)",
-    "proposalFieldRate": "Ставка ({cc}/KSM)",
+    "proposalFieldAllowance": "Лимит ({asset})",
+    "@proposalFieldAllowance": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
+    "proposalFieldRate": "Ставка ({cc}/{asset})",
     "@proposalFieldRate": {
         "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            },
             "cc": {
                 "type": "String",
                 "example": "6"
@@ -570,8 +631,55 @@
             }
         }
     },
-    "proposalIssueSwapNativeOption": "{cid}: Разрешить {beneficiary} обменять до {allowance} KSM по курсу {rate} {cid}/KSM.",    "@proposalIssueSwapNativeOption": {
+    "proposalSpendAsset": "{cid} Казначейство отправит {amount} {asset} {beneficiary}",
+    "@proposalSpendAsset": {
         "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "global"
+            },
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "amount": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "beneficiary": {
+                "type": "String",
+                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
+            }
+        }
+    },
+    "proposalIssueSwapNativeOption": "{cid}: Разрешить {beneficiary} обменять до {allowance} KSM по курсу {rate} {cid}/KSM.",
+    "@proposalIssueSwapNativeOption": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "beneficiary": {
+                "type": "String",
+                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
+            },
+            "allowance": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "rate": {
+                "type": "String",
+                "example": "1.2"
+            }
+        }
+    },
+    "proposalIssueSwapAssetOption": "{cid}: Разрешить {beneficiary} обменять до {allowance} {asset} по курсу {rate} {cid}/{asset}.",
+    "@proposalIssueSwapAssetOption": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "global"
+            },
             "cid": {
                 "type": "String",
                 "example": "global"

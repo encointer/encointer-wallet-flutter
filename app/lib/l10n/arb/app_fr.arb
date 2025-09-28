@@ -225,6 +225,16 @@
             }
         }
     },
+    "proposalExplainerSpendAsset": "Cette proposition suggère de dépenser un jeton spécifié pour toi depuis la trésorerie communautaire, soit par un vote global, soit par un vote communautaire. Ces fonds peuvent récompenser les contributions à la communauté ou soutenir des initiatives communautaires.\n\nRemarque : Tu recevras ce jeton directement sur Asset Hub Kusama.",
+    "proposalExplainerIssueSwapAssetOption": "Cette proposition te permet d’échanger des jetons communautaires contre un jeton spécifié à un taux défini plusieurs fois jusqu’à une limite fixée.\n\nExemple avec un taux de 3 {currency}/Jeton et une limite de 2 Jetons :\n\nTu peux échanger jusqu’à 2 Jetons à un taux de 3 {currency}/Jeton. Ainsi, le maximum est de 6 {currency} => 2 Jetons.\n\nRemarque : Tu recevras ce jeton directement sur Asset Hub Kusama.",
+    "@proposalExplainerIssueSwapAssetOption": {
+        "placeholders": {
+            "currency": {
+                "type": "String",
+                "example": "0.5"
+            }
+        }
+    },
     "proposalExplainerCannotVoteYet": "Tu pourras commencer à voter avec ta réputation à partir du prochain cycle !",
     "proposalType": "Type de proposition",
     "proposalTypeAddLocation": "Ajouter un lieu",
@@ -233,8 +243,38 @@
     "proposalTypeUpdateNominalIncome": "Mettre à jour le revenu nominal",
     "proposalTypeSetInactivityTimeout": "Définir le délai d'inactivité",
     "proposalTypePetition": "Pétition",
-    "proposalTypeSpendNative": "Dépenser des tokens natifs",
-    "proposalTypeIssueSwapNativeOption": "Émettre une option d'échange de tokens natifs",
+    "proposalTypeSpendNative": "Dépenser des KSM",
+    "proposalTypeIssueSwapNativeOption": "Échanger {cc} contre KSM",
+    "@proposalTypeIssueSwapNativeOption": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "MTA"
+            }
+        }
+    },
+    "proposalTypeSpendAsset": "Dépenser {asset}",
+    "@proposalTypeSpendAsset": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "proposalTypeIssueSwapAssetOption": "Échanger {cc} contre {asset}",
+    "@proposalTypeIssueSwapAssetOption": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "MTA"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
     "proposalScope": "Portée",
     "proposalScopeLocal": "Local ({community})",
     "@proposalScopeLocal": {
@@ -252,12 +292,33 @@
     "proposalFieldNominalIncome": "Revenu nominal",
     "proposalFieldInactivityTimeoutCycles": "Délai d'inactivité (cycles de rencontre)",
     "proposalFieldPetitionText": "Texte de la pétition",
-    "proposalFieldAmount": "Montant (KSM)",
+    "proposalFieldAssetToSpend": "Jeton à dépenser",
+    "proposalFieldAmount": "Montant ({asset})",
+    "@proposalFieldAmount": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
     "proposalFieldBeneficiary": "Bénéficiaire",
-    "proposalFieldAllowance": "Limite (KSM)",
-    "proposalFieldRate": "Taux ({cc}/KSM)",
+    "proposalFieldAllowance": "Limite ({asset})",
+    "@proposalFieldAllowance": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
+    "proposalFieldRate": "Taux ({cc}/{asset})",
     "@proposalFieldRate": {
         "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "6"
+            },
             "cc": {
                 "type": "String",
                 "example": "6"
@@ -571,9 +632,55 @@
             }
         }
     },
+    "proposalSpendAsset": "{cid} trèsor enverra {amount} {asset} à {beneficiary}",
+    "@proposalSpendAsset": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "global"
+            },
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "amount": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "beneficiary": {
+                "type": "String",
+                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
+            }
+        }
+    },
     "proposalIssueSwapNativeOption": "{cid} : Permet à {beneficiary} d'échanger jusqu'à {allowance} KSM à un taux de {rate} {cid}/KSM.",
     "@proposalIssueSwapNativeOption": {
         "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "beneficiary": {
+                "type": "String",
+                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
+            },
+            "allowance": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "rate": {
+                "type": "String",
+                "example": "1.2"
+            }
+        }
+    },
+    "proposalIssueSwapAssetOption": "{cid} : Permet à {beneficiary} d'échanger jusqu'à {allowance} {asset} à un taux de {rate} {cid}/{asset}.",
+    "@proposalIssueSwapAssetOption": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "global"
+            },
             "cid": {
                 "type": "String",
                 "example": "global"

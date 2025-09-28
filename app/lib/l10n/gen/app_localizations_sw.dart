@@ -690,6 +690,15 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
+  String get proposalExplainerSpendAsset =>
+      'Pendekezo hili linapendekeza kutumia tokeni maalum kwa mnufaika kutoka hazina ya jamii, ama kupitia kura ya jumla au ya jamii. Fedha hizi zinaweza kutumika kuponyesha michango ya jamii au kusaidia miradi ya jamii.\n\nKumbuka: Utapokea tokeni hii moja kwa moja kwenye Asset Hub Kusama.';
+
+  @override
+  String proposalExplainerIssueSwapAssetOption(String currency) {
+    return 'Pendekezo hili linakuruhusu kubadilisha tokeni za jamii kwa tokeni maalum kwa kiwango kilichowekwa mara nyingi hadi kikomo kilichowekwa cha tokeni.\n\nMfano kwa kiwango cha 3 $currency/Token na kikomo cha 2 Token:\n\nUnaweza kubadilisha hadi 2 Token kwa kiwango cha 3 $currency/Token. Hivyo, kiwango cha juu ni 6 $currency => 2 Token.\n\nKumbuka: Utapokea tokeni hii moja kwa moja kwenye Asset Hub Kusama.';
+  }
+
+  @override
   String get proposalExplainerCannotVoteYet =>
       'Utaweza kuanza kupiga kura kwa kutumia sifa yako kuanzia mzunguko ujao!';
 
@@ -715,10 +724,22 @@ class AppLocalizationsSw extends AppLocalizations {
   String get proposalTypePetition => 'Ombi rasmi';
 
   @override
-  String get proposalTypeSpendNative => 'Tumia tokeni asili';
+  String get proposalTypeSpendNative => 'KSM asili';
 
   @override
-  String get proposalTypeIssueSwapNativeOption => 'Toa chaguo la kubadilisha tokeni asili';
+  String proposalTypeIssueSwapNativeOption(String cc) {
+    return 'Badilisha $cc kwa KSM';
+  }
+
+  @override
+  String proposalTypeSpendAsset(String asset) {
+    return 'Tumia $asset';
+  }
+
+  @override
+  String proposalTypeIssueSwapAssetOption(String cc, String asset) {
+    return 'Badilisha $cc kwa $asset';
+  }
 
   @override
   String get proposalScope => 'Wigo';
@@ -750,17 +771,24 @@ class AppLocalizationsSw extends AppLocalizations {
   String get proposalFieldPetitionText => 'Maandishi ya ombi rasmi';
 
   @override
-  String get proposalFieldAmount => 'Kiasi (KSM)';
+  String get proposalFieldAssetToSpend => 'Tokeni ya kutumia';
+
+  @override
+  String proposalFieldAmount(String asset) {
+    return 'Kiasi ($asset)';
+  }
 
   @override
   String get proposalFieldBeneficiary => 'Mnufaika';
 
   @override
-  String get proposalFieldAllowance => 'Kikomo (KSM)';
+  String proposalFieldAllowance(String asset) {
+    return 'Kikomo ($asset)';
+  }
 
   @override
-  String proposalFieldRate(String cc) {
-    return 'Kiwango ($cc/KSM)';
+  String proposalFieldRate(String asset, String cc) {
+    return 'Kiwango ($cc/$asset)';
   }
 
   @override
@@ -1340,8 +1368,18 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
+  String proposalSpendAsset(String asset, String cid, String amount, String beneficiary) {
+    return '$cid hazina itatuma $amount $asset kwa $beneficiary';
+  }
+
+  @override
   String proposalIssueSwapNativeOption(String cid, String beneficiary, String allowance, String rate) {
     return '$cid: Mruhusu $beneficiary kubadilisha hadi $allowance KSM kwa kiwango cha $rate $cid/KSM.';
+  }
+
+  @override
+  String proposalIssueSwapAssetOption(String asset, String cid, String beneficiary, String allowance, String rate) {
+    return '$cid: Mruhusu $beneficiary kubadilisha hadi $allowance $asset kwa kiwango cha $rate $cid/$asset.';
   }
 
   @override

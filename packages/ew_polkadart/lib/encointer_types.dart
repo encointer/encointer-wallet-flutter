@@ -47,7 +47,9 @@ export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal
         SetInactivityTimeout,
         Petition,
         SpendNative,
-        IssueSwapNativeOption;
+        IssueSwapNativeOption,
+        SpendAsset,
+        IssueSwapAssetOption;
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal_action_identifier.dart'
     show ProposalActionIdentifier;
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal_state.dart'

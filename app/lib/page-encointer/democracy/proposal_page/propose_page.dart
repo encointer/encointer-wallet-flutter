@@ -5,6 +5,7 @@ import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/page-encointer/democracy/proposal_page/asset_id.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/utf8_limited_byte_field.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -32,9 +33,12 @@ import 'package:ew_polkadart/ew_polkadart.dart'
         ProposalAction,
         SetInactivityTimeout,
         SpendNative,
+        SpendAsset,
         UpdateDemurrage,
         UpdateNominalIncome,
-        SwapNativeOption;
+        SwapNativeOption,
+        SwapAssetOption,
+        IssueSwapAssetOption;
 
 class ProposePage extends StatefulWidget {
   const ProposePage({super.key});
@@ -52,6 +56,7 @@ class _ProposePageState extends State<ProposePage> {
   ProposalActionIdentifier selectedAction = ProposalActionIdentifier.petition;
   late ProposalScope selectedScope;
   List<ProposalScope> allowedScopes = [];
+  AssetToSpend selectedAsset = AssetToSpend.usdc;
 
   // Controllers for text fields
   final TextEditingController latController = TextEditingController();
@@ -200,7 +205,7 @@ class _ProposePageState extends State<ProposePage> {
                           items: supportedProposalIds().map((ProposalActionIdentifier action) {
                             return DropdownMenuItem<ProposalActionIdentifier>(
                               value: action,
-                              child: Text(action.localizedStr(l10n)),
+                              child: Text(action.localizedStr(l10n, store.encointer.community!.symbol!, selectedAsset)),
                             );
                           }).toList(),
                           decoration: InputDecoration(labelText: l10n.proposalType),
@@ -319,6 +324,10 @@ class _ProposePageState extends State<ProposePage> {
         return l10n.proposalExplainerSpendNative;
       case ProposalActionIdentifier.issueSwapNativeOption:
         return l10n.proposalExplainerIssueSwapNativeOption(store.encointer.community!.symbol!);
+      case ProposalActionIdentifier.spendAsset:
+        return l10n.proposalExplainerSpendAsset;
+      case ProposalActionIdentifier.issueSwapAssetOption:
+        return l10n.proposalExplainerIssueSwapAssetOption(store.encointer.community!.symbol!);
     }
   }
 
@@ -345,20 +354,35 @@ class _ProposePageState extends State<ProposePage> {
 
       case ProposalActionIdentifier.issueSwapNativeOption:
         return issueSwapNativeOptionInput();
+
+      case ProposalActionIdentifier.spendAsset:
+        return spendAssetInput(context);
+
+      case ProposalActionIdentifier.issueSwapAssetOption:
+        return issueSwapAssetOptionInput();
+
       case ProposalActionIdentifier.removeLocation:
         throw UnimplementedError('remove location is unsupported');
     }
   }
 
   Widget issueSwapNativeOptionInput() {
-    final store = context.read<AppStore>();
-    final l10n = context.l10n;
+    return Column(children: issueSwapOptionInput('KSM'));
+  }
 
-    return Column(children: [
+  Widget issueSwapAssetOptionInput() {
+    return Column(children: [selectAssetDropDown(), ...issueSwapOptionInput(selectedAsset.name.toUpperCase())]);
+  }
+
+  List<Widget> issueSwapOptionInput(String currency) {
+    final l10n = context.l10n;
+    final store = context.read<AppStore>();
+
+    return [
       TextFormField(
         controller: allowanceController,
         decoration: InputDecoration(
-          labelText: l10n.proposalFieldAllowance,
+          labelText: l10n.proposalFieldAllowance(currency),
           errorText: allowanceError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -376,7 +400,7 @@ class _ProposePageState extends State<ProposePage> {
       TextFormField(
         controller: rateController,
         decoration: InputDecoration(
-          labelText: l10n.proposalFieldRate(store.encointer.community!.symbol!),
+          labelText: l10n.proposalFieldRate(currency, store.encointer.community!.symbol!),
           errorText: rateError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -405,7 +429,7 @@ class _ProposePageState extends State<ProposePage> {
       ),
       // Text(l10n.proposalFieldBurn, style: const TextStyle(fontWeight: FontWeight.bold)),
       // Text(l10n.proposalFieldValidity, style: const TextStyle(fontWeight: FontWeight.bold)),
-    ]);
+    ];
   }
 
   Widget petitionInput(BuildContext context) {
@@ -429,13 +453,47 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget spendNativeInput(BuildContext context) {
-    final store = context.read<AppStore>();
-    final l10n = context.l10n;
+    return Column(children: spendInputWidgets('KSM'));
+  }
+
+  Widget spendAssetInput(BuildContext context) {
     return Column(children: [
+      selectAssetDropDown(),
+      ...spendInputWidgets(selectedAsset.symbol),
+    ]);
+  }
+
+  Widget selectAssetDropDown() {
+    final l10n = context.l10n;
+    return DropdownButtonFormField<AssetToSpend>(
+        initialValue: selectedAsset,
+        decoration: InputDecoration(
+          labelText: l10n.proposalFieldAssetToSpend,
+        ),
+        items: AssetToSpend.values.map((asset) {
+          return DropdownMenuItem(
+            value: asset,
+            child: Text(asset.symbol),
+          );
+        }).toList(),
+        onChanged: AssetToSpend.values.length > 1
+            ? (AssetToSpend? newValue) {
+                if (newValue != null) {
+                  setState(() {
+                    selectedAsset = newValue;
+                  });
+                }
+              }
+            : null);
+  }
+
+  List<Widget> spendInputWidgets(String currency) {
+    final l10n = context.l10n;
+    return [
       TextFormField(
         controller: amountController,
         decoration: InputDecoration(
-          labelText: l10n.proposalFieldAmount,
+          labelText: l10n.proposalFieldAmount(currency),
           errorText: amountError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -452,7 +510,7 @@ class _ProposePageState extends State<ProposePage> {
       ),
       const SizedBox(height: 10),
       EncointerAddressInputField(
-        store,
+        context.read<AppStore>(),
         label: l10n.proposalFieldBeneficiary,
         initialValue: beneficiary,
         onChanged: (AccountData acc) {
@@ -462,7 +520,7 @@ class _ProposePageState extends State<ProposePage> {
         },
         hideIdenticon: true,
       ),
-    ]);
+    ];
   }
 
   /// Inactivity timeout text form allowing positive integers.
@@ -744,7 +802,7 @@ class _ProposePageState extends State<ProposePage> {
         return SpendNative(
           maybeCid,
           hex.decode(ben.replaceFirst('0x', '')),
-          BigInt.from(amount * pow(10, 12)),
+          BigInt.from(amount * pow(10, ertDecimals)),
         );
 
       case ProposalActionIdentifier.issueSwapNativeOption:
@@ -755,12 +813,37 @@ class _ProposePageState extends State<ProposePage> {
         final rate = double.tryParse(rateController.text)!;
         final issueOption = SwapNativeOption(
           cid: cid,
-          nativeAllowance: BigInt.from(amount * pow(10, 12)),
-          rate: fixedU128FromDouble(rate * pow(10, -12)),
+          nativeAllowance: BigInt.from(amount * pow(10, ertDecimals)),
+          rate: fixedU128FromDouble(rate * pow(10, -ertDecimals)),
           doBurn: true,
         );
 
         return IssueSwapNativeOption(maybeCid!, hex.decode(ben.replaceFirst('0x', '')), issueOption);
+
+      case ProposalActionIdentifier.spendAsset:
+        final maybeCid = selectedScope.isLocal ? cid : null;
+        final ben = beneficiary!.pubKey;
+
+        final amount = double.tryParse(amountController.text)!;
+        return SpendAsset(maybeCid, hex.decode(ben.replaceFirst('0x', '')),
+            BigInt.from(amount * pow(10, selectedAsset.decimals)), selectedAsset.assetId);
+
+      case ProposalActionIdentifier.issueSwapAssetOption:
+        final maybeCid = selectedScope.isLocal ? cid : null;
+        final ben = beneficiary!.pubKey;
+
+        final amount = double.tryParse(allowanceController.text)!;
+        final rate = double.tryParse(rateController.text)!;
+        final issueOption = SwapAssetOption(
+          cid: cid,
+          assetId: selectedAsset.assetId,
+          assetAllowance: BigInt.from(amount * pow(10, selectedAsset.decimals)),
+          rate: fixedU128FromDouble(rate * pow(10, -selectedAsset.decimals)),
+          doBurn: true,
+        );
+
+        return IssueSwapAssetOption(maybeCid!, hex.decode(ben.replaceFirst('0x', '')), issueOption);
+
       case ProposalActionIdentifier.removeLocation:
         throw UnimplementedError('removeLocation is unsupported');
     }

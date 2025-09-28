@@ -1403,6 +1403,18 @@ abstract class AppLocalizations {
   /// **'This proposal allows the beneficiary to exchange community tokens for KSM at a defined rate multiple times up to a set KSM limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 {currency}/KSM and limit 2 KSM:\n\nThe beneficiary can exchange up to 2 KSM at a rate of 3 {currency}/KSM. Hence, the maximum is 6 {currency} => 2 KSM.'**
   String proposalExplainerIssueSwapNativeOption(String currency);
 
+  /// No description provided for @proposalExplainerSpendAsset.
+  ///
+  /// In en, this message translates to:
+  /// **'This proposal suggests spending a specified Asset for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.\n\nNote: You will receive this asset on Asset Hub Kusama directly.'**
+  String get proposalExplainerSpendAsset;
+
+  /// No description provided for @proposalExplainerIssueSwapAssetOption.
+  ///
+  /// In en, this message translates to:
+  /// **'This proposal allows the beneficiary to exchange community tokens for a specified Asset at a defined rate multiple times up to a set Asset limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 {currency}/Asset and limit 2 Asset:\n\nThe beneficiary can exchange up to 2 Assets at a rate of 3 {currency}/Asset. Hence, the maximum is 6 {currency} => 2 Asset.\n\nNote: You will receive this asset on Asset Hub Kusama directly.'**
+  String proposalExplainerIssueSwapAssetOption(String currency);
+
   /// No description provided for @proposalExplainerCannotVoteYet.
   ///
   /// In en, this message translates to:
@@ -1454,14 +1466,26 @@ abstract class AppLocalizations {
   /// No description provided for @proposalTypeSpendNative.
   ///
   /// In en, this message translates to:
-  /// **'Spend Native Tokens'**
+  /// **'Spend KSM'**
   String get proposalTypeSpendNative;
 
   /// No description provided for @proposalTypeIssueSwapNativeOption.
   ///
   /// In en, this message translates to:
-  /// **'Issue Swap Native Option'**
-  String get proposalTypeIssueSwapNativeOption;
+  /// **'Swap {cc} for KSM'**
+  String proposalTypeIssueSwapNativeOption(String cc);
+
+  /// No description provided for @proposalTypeSpendAsset.
+  ///
+  /// In en, this message translates to:
+  /// **'Spend {asset}'**
+  String proposalTypeSpendAsset(String asset);
+
+  /// No description provided for @proposalTypeIssueSwapAssetOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Swap {cc} for {asset}'**
+  String proposalTypeIssueSwapAssetOption(String cc, String asset);
 
   /// No description provided for @proposalScope.
   ///
@@ -1517,11 +1541,17 @@ abstract class AppLocalizations {
   /// **'Petition Text'**
   String get proposalFieldPetitionText;
 
+  /// No description provided for @proposalFieldAssetToSpend.
+  ///
+  /// In en, this message translates to:
+  /// **'Asset to spend'**
+  String get proposalFieldAssetToSpend;
+
   /// No description provided for @proposalFieldAmount.
   ///
   /// In en, this message translates to:
-  /// **'Amount (KSM)'**
-  String get proposalFieldAmount;
+  /// **'Amount ({asset})'**
+  String proposalFieldAmount(String asset);
 
   /// No description provided for @proposalFieldBeneficiary.
   ///
@@ -1532,14 +1562,14 @@ abstract class AppLocalizations {
   /// No description provided for @proposalFieldAllowance.
   ///
   /// In en, this message translates to:
-  /// **'Limit (KSM)'**
-  String get proposalFieldAllowance;
+  /// **'Limit ({asset})'**
+  String proposalFieldAllowance(String asset);
 
   /// No description provided for @proposalFieldRate.
   ///
   /// In en, this message translates to:
-  /// **'Rate ({cc}/KSM)'**
-  String proposalFieldRate(String cc);
+  /// **'Rate ({cc}/{asset})'**
+  String proposalFieldRate(String asset, String cc);
 
   /// No description provided for @proposalFieldBurn.
   ///
@@ -2519,11 +2549,23 @@ abstract class AppLocalizations {
   /// **'{cid} treasury shall spend {amount} KSM to {beneficiary}'**
   String proposalSpendNative(String cid, String amount, String beneficiary);
 
+  /// No description provided for @proposalSpendAsset.
+  ///
+  /// In en, this message translates to:
+  /// **'{cid} treasury shall spend {amount} {asset} to {beneficiary}'**
+  String proposalSpendAsset(String asset, String cid, String amount, String beneficiary);
+
   /// No description provided for @proposalIssueSwapNativeOption.
   ///
   /// In en, this message translates to:
   /// **'{cid}: Let {beneficiary} exchange up to {allowance} KSM at a rate of {rate} {cid}/KSM'**
   String proposalIssueSwapNativeOption(String cid, String beneficiary, String allowance, String rate);
+
+  /// No description provided for @proposalIssueSwapAssetOption.
+  ///
+  /// In en, this message translates to:
+  /// **'{cid}: Let {beneficiary} exchange up to {allowance} {asset} at a rate of {rate} {cid}/{asset}'**
+  String proposalIssueSwapAssetOption(String asset, String cid, String beneficiary, String allowance, String rate);
 
   /// No description provided for @proposalSupersededBy.
   ///
