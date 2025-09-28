@@ -187,6 +187,12 @@ et.CommunityIdentifier? getCommunityIdentifierFromProposal(ProposalAction action
     case IssueSwapNativeOption:
       // can be global or local
       return (action as IssueSwapNativeOption).value0;
+    case SpendAsset:
+      // can be global or local
+      return (action as SpendAsset).value0;
+    case IssueSwapAssetOption:
+      // can be global or local
+      return (action as IssueSwapAssetOption).value0;
     default:
       throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
   }

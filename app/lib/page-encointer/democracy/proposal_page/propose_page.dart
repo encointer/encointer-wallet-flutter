@@ -802,7 +802,7 @@ class _ProposePageState extends State<ProposePage> {
         return SpendNative(
           maybeCid,
           hex.decode(ben.replaceFirst('0x', '')),
-          BigInt.from(amount * pow(10, 12)),
+          BigInt.from(amount * pow(10, ertDecimals)),
         );
 
       case ProposalActionIdentifier.issueSwapNativeOption:
@@ -813,8 +813,8 @@ class _ProposePageState extends State<ProposePage> {
         final rate = double.tryParse(rateController.text)!;
         final issueOption = SwapNativeOption(
           cid: cid,
-          nativeAllowance: BigInt.from(amount * pow(10, 12)),
-          rate: fixedU128FromDouble(rate * pow(10, -12)),
+          nativeAllowance: BigInt.from(amount * pow(10, ertDecimals)),
+          rate: fixedU128FromDouble(rate * pow(10, -ertDecimals)),
           doBurn: true,
         );
 
@@ -838,7 +838,7 @@ class _ProposePageState extends State<ProposePage> {
           cid: cid,
           assetId: selectedAsset.assetId,
           assetAllowance: BigInt.from(amount * pow(10, selectedAsset.decimals)),
-          rate: fixedU128FromDouble(rate * pow(10, -12)),
+          rate: fixedU128FromDouble(rate * pow(10, -selectedAsset.decimals)),
           doBurn: true,
         );
 
