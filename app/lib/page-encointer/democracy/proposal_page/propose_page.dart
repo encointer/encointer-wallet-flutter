@@ -100,15 +100,15 @@ class _ProposePageState extends State<ProposePage> {
   @override
   void initState() {
     super.initState();
-    _updateAllowedScopes();
-    _updateEnactmentQueue();
-
     // We initialize AssetHubApi here already so that we can be sure that
     // it is prepared in the propose page.
     assetHubApi = AssetHubWebApi.endpoints(
       context.read<AppStore>().settings.currentNetwork.assetHubEndpoints(),
     );
     unawaited(assetHubApi.init());
+
+    _updateAllowedScopes();
+    _updateEnactmentQueue();
 
     beneficiary = context.read<AppStore>().account.currentAccount;
   }
@@ -125,13 +125,15 @@ class _ProposePageState extends State<ProposePage> {
     final store = context.read<AppStore>();
     final chosenCid = store.encointer.chosenCid!;
 
+    await assetHubApi.isConnected();
+
     final futures = await Future.wait([
       webApi.encointer.getProposalEnactmentQueue(),
       webApi.encointer.getTreasuryAccount(null).then((account) => webApi.assets.getBalanceOf(account)),
       webApi.encointer.getTreasuryAccount(chosenCid).then((account) => webApi.assets.getBalanceOf(account)),
       webApi.encointer
           .getTreasuryAccount(chosenCid)
-          .then((account) => assetHubApi.api.getForeignAssetBalanceOf(account, selectedAsset.assetId)),
+          .then((account) => assetHubApi.api.getForeignAssetBalanceOfEncointerAccount(account, selectedAsset.assetId)),
       webApi.encointer.getSwapNativeOptions(chosenCid)
     ]);
 

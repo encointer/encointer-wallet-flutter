@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/location_to_account_api.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/asset_hub_types.dart' show XcmAssetHubLocation;
@@ -6,6 +7,8 @@ import 'package:ew_polkadart/ew_polkadart.dart' show BlockHash, Provider, XcmLoc
 import 'package:ew_polkadart/generated/asset_hub_kusama/asset_hub_kusama.dart';
 import 'package:ew_polkadart/generated/asset_hub_kusama/types/pallet_balances/types/account_data.dart' show AccountData;
 import 'package:ew_polkadart/generated/asset_hub_kusama/types/sp_core/crypto/account_id32.dart';
+
+const logTarget = 'AssetHubApi';
 
 class AssetHubApi {
   AssetHubApi(this.provider) : assetHubKusama = AssetHubKusama(provider);
@@ -38,9 +41,18 @@ class AssetHubApi {
   }
 
   /// Get the balance of an address on Asset Hub Kusama.
+  Future<BigInt> getForeignAssetBalanceOfEncointerAccount(String address, XcmLocation assetId, {BlockHash? at}) async {
+    final accountId = await encointerAccountOnAHK(address);
+    return getForeignAssetBalanceOf(AddressUtils.pubKeyToAddress(accountId, prefix: 2), assetId);
+  }
+
+  /// Get the balance of an address on Asset Hub Kusama.
   Future<BigInt> getForeignAssetBalanceOf(String address, XcmLocation assetId, {BlockHash? at}) async {
     final encoded = assetId.encode();
     final assetHubId = XcmAssetHubLocation.decode(Input.fromBytes(encoded));
+
+    Log.d('Getting foreign asset balance for: $address and assetId: ${assetHubId.toJson()}', logTarget);
+
     return assetHubKusama.query.foreignAssets
         .account(assetHubId, AddressUtils.addressToPubKey(address), at: at)
         .then((info) => info?.balance ?? BigInt.zero);

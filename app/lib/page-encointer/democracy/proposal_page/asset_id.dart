@@ -61,11 +61,12 @@ GeneralIndex usdcAssetId = GeneralIndex(BigInt.from(1337));
 
 XcmLocation polkadotForeignAsset(GeneralIndex assetId) {
   return XcmLocation(
-      parents: 0,
+      parents: 2,
       interior: X4([
         const GlobalConsensus(Polkadot()),
         Parachain(assetHubParaId),
         foreignAssetPalletInstance,
         assetId,
-      ]));
+      ]),
+  );
 }
