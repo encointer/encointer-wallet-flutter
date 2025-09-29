@@ -835,6 +835,7 @@ class EncointerApi {
       Network.encointerRococo => encointerKusamaParams(),
       Network.gesell => encointerSoloParams(),
       Network.gesellDev => encointerSoloParams(),
+      Network.zombienetLocal => encointerKusamaParams()
     };
   }
 

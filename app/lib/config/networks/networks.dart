@@ -14,20 +14,20 @@ class NetworkEndpoint with Endpoint {
 }
 
 const String gesellId = 'nctr-gsl';
-const String gesellDevId = 'nctr-gsl-dev';
 const String rococoId = 'nctr-r';
 const String kusamaId = 'nctr-k';
 
+// Dev networks
+const String gesellDevId = 'nctr-gsl-dev';
+const String zombienetId = 'nctr-zombienet';
+
 /// Enum representing the different networks.
-///
-/// NOTE: We shouldn't do `_` wildcard matching in the switch statement so that
-///       we get guaranteed type safety when we extend the enum variant due to the
-///       compiler check for exhaustive matching.
 enum Network {
   encointerKusama,
   encointerRococo,
   gesell,
-  gesellDev;
+  gesellDev,
+  zombienetLocal;
 
   factory Network.fromInfoOrDefault(String info) {
     return switch (info) {
@@ -35,6 +35,7 @@ enum Network {
       rococoId => Network.encointerRococo,
       gesellId => Network.gesell,
       gesellDevId => Network.gesellDev,
+      zombienetId => Network.zombienetLocal,
       _ => Network.encointerKusama,
     };
   }
@@ -45,6 +46,7 @@ enum Network {
       rococoId => Network.encointerRococo,
       gesellId => Network.gesell,
       gesellDevId => Network.gesellDev,
+      zombienetId => Network.zombienetLocal,
       _ => throw Exception(['Invalid network $info']),
     };
   }
@@ -55,6 +57,7 @@ enum Network {
       encointerRococo => rococoId,
       gesell => gesellId,
       gesellDev => gesellDevId,
+      zombienetLocal => zombienetId,
     };
   }
 
@@ -64,6 +67,7 @@ enum Network {
       encointerRococo => 42,
       gesell => 42,
       gesellDev => 42,
+      zombienetLocal => 2,
     };
   }
 
@@ -76,6 +80,7 @@ enum Network {
       gesell => ipfsGatewayEncointer,
       // only dev network refers to the local one
       gesellDev => ipfsGatewayLocal,
+      zombienetLocal => ipfsGatewayLocal,
     };
   }
 
@@ -86,6 +91,7 @@ enum Network {
       gesell => networkEndpoints().first.address(),
       // only dev network refers to the local one
       gesellDev => networkEndpoints().first.address(),
+      zombienetLocal => networkEndpoints().first.address(),
     };
   }
 
@@ -95,18 +101,17 @@ enum Network {
       encointerRococo => rococoEndpoints(),
       gesell => gesellEndpoints(),
       gesellDev => gesellDevEndpoints(),
+      zombienetLocal => zombienetLocalEndpoints(),
     };
+  }
+
+  List<NetworkEndpoint> assetHubKusamaEndpoints() {
+    return assetHubKusamaEndpoints();
   }
 }
 
 List<NetworkEndpoint> gesellEndpoints() {
   return [NetworkEndpoint(name: 'Encointer Association', address: 'wss://gesell.encointer.org')];
-}
-
-List<NetworkEndpoint> gesellDevEndpoints() {
-  return [
-    NetworkEndpoint(name: 'Local DevNet', address: 'ws://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:9944')
-  ];
 }
 
 List<NetworkEndpoint> rococoEndpoints() {
@@ -122,5 +127,31 @@ List<NetworkEndpoint> kusamaEndpoints() {
     NetworkEndpoint(name: 'IBP1', address: 'wss://sys.ibp.network/encointer-kusama'),
     // NetworkEndpoint(name: 'IBP2', address: 'wss://sys.dotters.network/encointer-kusama'),
     NetworkEndpoint(name: 'Lucky Friday', address: 'wss://rpc-encointer-kusama.luckyfriday.io'),
+  ];
+}
+
+List<NetworkEndpoint> assetHubKusamaEndpoints() {
+  return [
+    NetworkEndpoint(name: 'Dwellir', address: 'wss://asset-hub-kusama-rpc.n.dwellir.com'),
+    NetworkEndpoint(name: 'Dwellir Tunisia', address: 'wss://statemine-rpc-tn.dwellir.com'),
+    NetworkEndpoint(name: 'IBP1', address: 'wss://sys.ibp.network/asset-hub-kusama'),
+    NetworkEndpoint(name: 'IBP2', address: 'wss://asset-hub-kusama.dotters.network'),
+    NetworkEndpoint(name: 'Lucky Friday', address: 'wss://rpc-asset-hub-kusama.luckyfriday.io'),
+    NetworkEndpoint(name: 'OnFinality', address: 'wss://assethub-kusama.api.onfinality.io/public-ws'),
+    NetworkEndpoint(name: 'RadiumBlock', address: ' wss://statemine.public.curie.radiumblock.co/ws'),
+  ];
+}
+
+// Dev Endpoints
+
+List<NetworkEndpoint> zombienetLocalEndpoints() {
+  return [
+    NetworkEndpoint(name: 'Local DevNet', address: 'ws://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:9944')
+  ];
+}
+
+List<NetworkEndpoint> gesellDevEndpoints() {
+  return [
+    NetworkEndpoint(name: 'Local DevNet', address: 'ws://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:9944')
   ];
 }
