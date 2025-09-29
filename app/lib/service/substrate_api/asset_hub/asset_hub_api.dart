@@ -29,7 +29,7 @@ class AssetHubApi {
     return api.locationToAccountId(location);
   }
 
-  /// Get the balance of an address on Asset Hub Kusama.
+  /// Get the balance of the Asset Hub's representation of an Encointer account on Asset Hub Kusama.
   Future<AccountData> getBalanceOfEncointerAccountOnKusama(String address, {BlockHash? at}) async {
     final accountId = await encointerAccountOnAHK(address);
     return assetHubKusama.query.system.account(accountId, at: at).then((info) => info.data);
@@ -40,7 +40,7 @@ class AssetHubApi {
     return assetHubKusama.query.system.account(AddressUtils.addressToPubKey(address), at: at).then((info) => info.data);
   }
 
-  /// Get the balance of an address on Asset Hub Kusama.
+  /// Get balance of a foreign asset of the Asset Hub's representation of an Encointer account on Asset Hub Kusama.
   Future<BigInt> getForeignAssetBalanceOfEncointerAccount(String address, XcmLocation assetId, {BlockHash? at}) async {
     final accountId = await encointerAccountOnAHK(address);
     final addressOnAssetHub = AddressUtils.pubKeyToAddress(accountId, prefix: 2);
@@ -48,7 +48,7 @@ class AssetHubApi {
     return getForeignAssetBalanceOf(addressOnAssetHub, assetId);
   }
 
-  /// Get the balance of an address on Asset Hub Kusama.
+  /// Get the foreign asset balance of an address on Asset Hub Kusama.
   Future<BigInt> getForeignAssetBalanceOf(String address, XcmLocation assetId, {BlockHash? at}) async {
     final encoded = assetId.encode();
     final assetHubId = XcmAssetHubLocation.decode(Input.fromBytes(encoded));

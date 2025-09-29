@@ -114,8 +114,7 @@ class _ProposePageState extends State<ProposePage> {
   @override
   void initState() {
     super.initState();
-    // We initialize AssetHubApi here already so that we can be sure that
-    // it is prepared in the propose page.
+
     assetHubApi = AssetHubWebApi.endpoints(
       context.read<AppStore>().settings.currentNetwork.assetHubEndpoints(),
     );
@@ -146,10 +145,9 @@ class _ProposePageState extends State<ProposePage> {
 
     final globalTreasuryAccount = treasuryAccounts[0];
     final localTreasuryAccount = treasuryAccounts[1];
+    Log.d('[updateEnactmentQueue] got encointer treasury accounts: $treasuryAccounts', logTarget);
 
     await assetHubApi.ensureReady();
-
-    Log.d('[updateEnactmentQueue] got encointer treasury accounts: $treasuryAccounts', logTarget);
 
     final futures = await Future.wait([
       webApi.encointer.getProposalEnactmentQueue(),
