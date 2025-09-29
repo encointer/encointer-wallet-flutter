@@ -62,7 +62,7 @@ void main() {
         for (final testCase in testCases) {
           test(
             '${testCase['name']} has correct treasury accounts on encointer',
-                () async {
+            () async {
               final cid = CommunityIdentifier.fromFmtString(testCase['cid']!);
               final encointerAddress = await encointerApi.getTreasuryAccount(cid);
               expect(AddressUtils.transformPrefix(encointerAddress, 2), testCase['encointer']);
@@ -74,7 +74,7 @@ void main() {
         for (final testCase in testCases) {
           test(
             '${testCase['name']} has correct treasury accounts on asset hub kusama',
-                () async {
+            () async {
               final accountId = await assetHubApi.encointerAccountOnAHK(testCase['encointer']!);
 
               expect(AddressUtils.pubKeyToAddress(accountId, prefix: 2), testCase['asset_hub']);
