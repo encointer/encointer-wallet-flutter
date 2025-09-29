@@ -117,7 +117,9 @@ extension PropsalActionExt on ProposalActionIdentifier {
       ProposalActionIdentifier.petition => [ProposalScope.local, ProposalScope.global],
       ProposalActionIdentifier.spendNative => [ProposalScope.local, ProposalScope.global],
       ProposalActionIdentifier.spendAsset => [ProposalScope.local, ProposalScope.global],
-      ProposalActionIdentifier.issueSwapAssetOption => [ProposalScope.local, ProposalScope.global],
+
+      // Only local for now, but later global might be possible
+      ProposalActionIdentifier.issueSwapAssetOption => [ProposalScope.local],
     };
   }
 
