@@ -28,6 +28,7 @@ class AssetHubApi {
     return api.locationToAccountId(location);
   }
 
+  /// Get the balance of an address on Asset Hub Kusama.
   Future<AccountData> getBalanceOf(String address, {BlockHash? at}) async {
     return assetHubKusama.query.system
         .account(AddressUtils.addressToPubKey(address), at: at ?? store.chain.latestHash)
