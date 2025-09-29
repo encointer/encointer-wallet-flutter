@@ -18,8 +18,8 @@ jobs:
     timeout-minutes: 30
     strategy:
       matrix:
-        api-level: [ unit-test-app-with-production-e2e,
-                     unit-test-app-with-endpoint-health-e2e ]
+        test: [ unit-test-app-with-production-e2e,
+                unit-test-app-with-endpoint-health-e2e ]
       fail-fast: false
     steps:
       # Setup Environment
@@ -35,4 +35,4 @@ jobs:
         run: .flutter/bin/dart run melos bootstrap
 
       - name: "Run Dart E2E Tests"
-        run: .flutter/bin/dart run melos unit-test-app-with-production-e2e
+        run: .flutter/bin/dart run melos ${{ matrix.test }}
