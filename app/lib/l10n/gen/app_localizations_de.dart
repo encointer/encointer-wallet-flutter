@@ -834,6 +834,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get proposalFieldErrorPositiveNumberRange => 'Muss eine positive Zahl sein';
 
   @override
+  String get proposalFieldErrorPositiveNumberTooBig => 'Die Zahl ist zu gross';
+
+  @override
   String get proposalFieldErrorEnterInactivityTimeout => 'Inaktivitätszeitlimit eingeben';
 
   @override

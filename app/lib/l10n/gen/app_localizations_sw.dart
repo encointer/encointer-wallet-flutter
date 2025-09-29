@@ -828,6 +828,9 @@ class AppLocalizationsSw extends AppLocalizations {
   String get proposalFieldErrorPositiveNumberRange => 'Lazima iwe namba chanya';
 
   @override
+  String get proposalFieldErrorPositiveNumberTooBig => 'Nambari ni kubwa sana';
+
+  @override
   String get proposalFieldErrorEnterInactivityTimeout => 'Weka muda wa kutokufanya kazi';
 
   @override

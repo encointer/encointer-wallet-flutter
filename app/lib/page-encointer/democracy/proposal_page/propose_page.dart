@@ -57,6 +57,8 @@ class ProposePage extends StatefulWidget {
 class _ProposePageState extends State<ProposePage> {
   final _formKey = GlobalKey<FormState>();
 
+  static const maxTreasuryPayoutFraction = 0.1;
+
   late AssetHubWebApi assetHubApi;
 
   // Default selected values
@@ -162,11 +164,9 @@ class _ProposePageState extends State<ProposePage> {
     final queuedProposalIds = futures[0] as List<BigInt>;
     final globalTreasuryAccountDataOnEncointer = futures[1] as et.AccountData;
     final localTreasuryAccountDataOnEncointer = futures[2] as et.AccountData;
-    final localTreasuryAccountDataOnAHK = futures[3] as BigInt;
+    final localTreasuryAssetBalanceOnAHK = futures[3] as BigInt;
     final swapNativeOptions = futures[4] as List<et.SwapNativeOption>;
     final swapAssetOptions = futures[5] as List<et.SwapAssetOption>;
-
-    Log.d('[updateEnactmentQueue] localTreasuryAccountOnAHK $localTreasuryAccountDataOnAHK', logTarget);
 
     // Get all open swaps for this community
     final openSwapNativeAmount = swapNativeOptions.fold(BigInt.zero, (sum, swap) => sum + swap.nativeAllowance);
@@ -224,7 +224,7 @@ class _ProposePageState extends State<ProposePage> {
           .toList();
       globalTreasuryBalance = globalTreasuryAccountDataOnEncointer.free;
       localTreasuryBalance = localTreasuryAccountDataOnEncointer.free;
-      localTreasuryBalanceOnAHK = localTreasuryAccountDataOnAHK;
+      localTreasuryBalanceOnAHK = localTreasuryAssetBalanceOnAHK;
 
       pendingGlobalSpends = globalSpends;
       pendingLocalSpends = localSpends + openSwapNativeAmount;
@@ -437,14 +437,20 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget issueSwapNativeOptionInput() {
-    return Column(children: issueSwapOptionInput('KSM'));
+    final maxSwapValue = selectedScope.isLocal
+        ? maxTreasuryPayoutFraction * Fmt.bigIntToDouble(localTreasuryBalance - pendingLocalSpends, ertDecimals)
+        : maxTreasuryPayoutFraction * Fmt.bigIntToDouble(globalTreasuryBalance - pendingGlobalSpends, ertDecimals);
+    return Column(children: issueSwapOptionInput('KSM', maxSwapValue));
   }
 
   Widget issueSwapAssetOptionInput() {
-    return Column(children: [selectAssetDropDown(), ...issueSwapOptionInput(selectedAsset.name.toUpperCase())]);
+    final maxSwapValue =
+        maxTreasuryPayoutFraction * Fmt.bigIntToDouble(assetTreasuryLiquidity(selectedAsset), selectedAsset.decimals);
+    return Column(
+        children: [selectAssetDropDown(), ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), maxSwapValue)]);
   }
 
-  List<Widget> issueSwapOptionInput(String currency) {
+  List<Widget> issueSwapOptionInput(String currency, double? maxValue) {
     final l10n = context.l10n;
     final store = context.read<AppStore>();
 
@@ -460,10 +466,10 @@ class _ProposePageState extends State<ProposePage> {
           FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
           // Only numbers & decimal
         ],
-        validator: validatePositiveNumber,
+        validator: (v) => validatePositiveNumberWithMax(v, maxValue),
         onChanged: (value) {
           setState(() {
-            allowanceError = validatePositiveNumber(value);
+            allowanceError = validatePositiveNumberWithMax(value, maxValue);
           });
         },
       ),
@@ -770,6 +776,11 @@ class _ProposePageState extends State<ProposePage> {
 
   /// Ensures that the number is positive (doubles)
   String? validatePositiveNumber(String? value) {
+    return validatePositiveNumberWithMax(value, null);
+  }
+
+  /// Ensures that the number is positive (doubles)
+  String? validatePositiveNumberWithMax(String? value, double? max) {
     final l10n = context.l10n;
     if (value == null || value.isEmpty) {
       return l10n.proposalFieldErrorEnterPositiveNumber;
@@ -777,6 +788,8 @@ class _ProposePageState extends State<ProposePage> {
       final number = double.tryParse(value);
       if (number == null || number <= 0) {
         return l10n.proposalFieldErrorPositiveNumberRange;
+      } else if (max != null && number > max) {
+        return l10n.proposalFieldErrorPositiveNumberTooBig;
       } else {
         return null;
       }
@@ -938,14 +951,19 @@ class _ProposePageState extends State<ProposePage> {
         Text(
           l10n.treasuryLocalBalanceOnAHK(
             Fmt.token(
-                localTreasuryBalanceOnAHK -
-                    swapAssetOptions[selectedAsset]! -
-                    pendingSwapAssetOptions[selectedAsset]! -
-                    pendingAssetSpends[selectedAsset]!,
-                selectedAsset.decimals),
+              assetTreasuryLiquidity(selectedAsset),
+              selectedAsset.decimals,
+            ),
             selectedAsset.symbol,
           ),
         )
     ];
+  }
+
+  BigInt assetTreasuryLiquidity(AssetToSpend asset) {
+    return localTreasuryBalanceOnAHK -
+        swapAssetOptions[selectedAsset]! -
+        pendingSwapAssetOptions[selectedAsset]! -
+        pendingAssetSpends[selectedAsset]!;
   }
 }

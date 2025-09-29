@@ -337,6 +337,7 @@
     "proposalFieldErrorDemurrageRange": "Demurrage muss zwischen 0 und 100 liegen",
     "proposalFieldErrorEnterPositiveNumber": "Geben Sie eine positive Zahl ein",
     "proposalFieldErrorPositiveNumberRange": "Muss eine positive Zahl sein",
+    "proposalFieldErrorPositiveNumberTooBig": "Die Zahl ist zu gross",
     "proposalFieldErrorEnterInactivityTimeout": "Inaktivitätszeitlimit eingeben",
     "proposalFieldErrorPositiveIntegerRange": "Muss eine positive ganze Zahl sein",
     "proposalClose": "Schliessen",

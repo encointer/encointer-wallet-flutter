@@ -336,6 +336,7 @@
     "proposalFieldErrorDemurrageRange": "Демерредж должен быть от 0 до 100",
     "proposalFieldErrorEnterPositiveNumber": "Введите положительное число",
     "proposalFieldErrorPositiveNumberRange": "Должно быть положительное число",
+    "proposalFieldErrorPositiveNumberTooBig": "Число слишком большое",
     "proposalFieldErrorEnterInactivityTimeout": "Введите тайм-аут неактивности",
     "proposalFieldErrorPositiveIntegerRange": "Должно быть положительное целое число",
     "proposalOnlyBootstrappersOrReputablesCanSubmit": "Только бутстраперы или уважаемые участники могут подать предложение.",

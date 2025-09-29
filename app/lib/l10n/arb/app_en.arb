@@ -337,6 +337,7 @@
     "proposalFieldErrorDemurrageRange": "Demurrage must be between 0 and 100",
     "proposalFieldErrorEnterPositiveNumber": "Enter positive number",
     "proposalFieldErrorPositiveNumberRange": "Must be a positive number",
+    "proposalFieldErrorPositiveNumberTooBig": "Number is too big",
     "proposalFieldErrorEnterInactivityTimeout": "Enter inactivity timeout",
     "proposalFieldErrorPositiveIntegerRange": "Must be a positive integer",
     "proposalOnlyBootstrappersOrReputablesCanSubmit": "Only bootstrappers or reputables can submit a proposal.",
