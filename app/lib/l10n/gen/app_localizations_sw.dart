@@ -828,6 +828,9 @@ class AppLocalizationsSw extends AppLocalizations {
   String get proposalFieldErrorPositiveNumberRange => 'Lazima iwe namba chanya';
 
   @override
+  String get proposalFieldErrorPositiveNumberTooBig => 'Nambari ni kubwa sana';
+
+  @override
   String get proposalFieldErrorEnterInactivityTimeout => 'Weka muda wa kutokufanya kazi';
 
   @override
@@ -1116,6 +1119,11 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String treasuryLocalBalance(String balance) {
     return 'Salio huru la hazina ya jamii: $balance KSM.';
+  }
+
+  @override
+  String treasuryLocalBalanceOnAHK(String balance, String asset) {
+    return 'Salio huru la hazina ya jamii kwenye AHK: $balance KSM.';
   }
 
   @override

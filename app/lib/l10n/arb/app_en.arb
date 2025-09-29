@@ -337,6 +337,7 @@
     "proposalFieldErrorDemurrageRange": "Demurrage must be between 0 and 100",
     "proposalFieldErrorEnterPositiveNumber": "Enter positive number",
     "proposalFieldErrorPositiveNumberRange": "Must be a positive number",
+    "proposalFieldErrorPositiveNumberTooBig": "Number is too big",
     "proposalFieldErrorEnterInactivityTimeout": "Enter inactivity timeout",
     "proposalFieldErrorPositiveIntegerRange": "Must be a positive integer",
     "proposalOnlyBootstrappersOrReputablesCanSubmit": "Only bootstrappers or reputables can submit a proposal.",
@@ -443,6 +444,19 @@
             "balance": {
                 "type": "String",
                 "example": "10"
+            }
+        }
+    },
+    "treasuryLocalBalanceOnAHK": "Free community treasury balance on Asset Hub: {balance} {asset}.",
+    "@treasuryLocalBalanceOnAHK": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            },
+            "asset": {
+                "type": "String",
+                "example": "{Leu}"
             }
         }
     },

@@ -1643,6 +1643,12 @@ abstract class AppLocalizations {
   /// **'Must be a positive number'**
   String get proposalFieldErrorPositiveNumberRange;
 
+  /// No description provided for @proposalFieldErrorPositiveNumberTooBig.
+  ///
+  /// In en, this message translates to:
+  /// **'Number is too big'**
+  String get proposalFieldErrorPositiveNumberTooBig;
+
   /// No description provided for @proposalFieldErrorEnterInactivityTimeout.
   ///
   /// In en, this message translates to:
@@ -2200,6 +2206,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Free community treasury balance: {balance} KSM.'**
   String treasuryLocalBalance(String balance);
+
+  /// No description provided for @treasuryLocalBalanceOnAHK.
+  ///
+  /// In en, this message translates to:
+  /// **'Free community treasury balance on Asset Hub: {balance} {asset}.'**
+  String treasuryLocalBalanceOnAHK(String balance, String asset);
 
   /// No description provided for @treasuryPendingSpends.
   ///

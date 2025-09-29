@@ -26,7 +26,7 @@ void main() {
     }, tags: encointerNodeE2E);
   });
 
-  group('endpointChecker', () {
+  group('endpoint health check', () {
     for (final e in Network.encointerKusama.networkEndpoints()) {
       test(
         'kusama endpoint ${e.address()} is healthy',
@@ -34,7 +34,7 @@ void main() {
           final result = await NetworkEndpointChecker().checkHealth(e);
           expect(result, isTrue, reason: 'Endpoint ${e.address()} is not healthy');
         },
-        tags: productionE2E,
+        tags: endpointHealthE2E,
       );
     }
 
@@ -45,7 +45,7 @@ void main() {
           final result = await NetworkEndpointChecker().checkHealth(e);
           expect(result, isTrue, reason: 'Endpoint ${e.address()} is not healthy');
         },
-        tags: productionE2E,
+        tags: endpointHealthE2E,
       );
     }
   });

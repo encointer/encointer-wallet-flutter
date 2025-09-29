@@ -57,6 +57,7 @@ export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/tally.dart' show Tally;
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/vote.dart' show Vote;
 export 'generated/encointer_kusama/types/encointer_primitives/treasuries/swap_native_option.dart' show SwapNativeOption;
+export 'generated/encointer_kusama/types/encointer_primitives/treasuries/swap_asset_option.dart' show SwapAssetOption;
 
 // export types from faucet
 export 'generated/encointer_kusama/types/encointer_primitives/faucet/faucet.dart' show Faucet;

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:convert/convert.dart';
@@ -8,7 +9,9 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/asset_id.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/utf8_limited_byte_field.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/substrate_api/asset_hub/asset_hub_web_api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
@@ -40,6 +43,8 @@ import 'package:ew_polkadart/ew_polkadart.dart'
         SwapAssetOption,
         IssueSwapAssetOption;
 
+const logTarget = 'ProposePage';
+
 class ProposePage extends StatefulWidget {
   const ProposePage({super.key});
 
@@ -51,6 +56,10 @@ class ProposePage extends StatefulWidget {
 
 class _ProposePageState extends State<ProposePage> {
   final _formKey = GlobalKey<FormState>();
+
+  static const maxTreasuryPayoutFraction = 0.1;
+
+  late AssetHubWebApi assetHubApi;
 
   // Default selected values
   ProposalActionIdentifier selectedAction = ProposalActionIdentifier.petition;
@@ -87,13 +96,30 @@ class _ProposePageState extends State<ProposePage> {
   List<ProposalActionIdWithScope> enactmentQueue = [];
   BigInt globalTreasuryBalance = BigInt.zero;
   BigInt localTreasuryBalance = BigInt.zero;
+  BigInt localTreasuryBalanceOnAHK = BigInt.zero;
 
   BigInt pendingGlobalSpends = BigInt.zero;
   BigInt pendingLocalSpends = BigInt.zero;
 
+  Map<AssetToSpend, BigInt> swapAssetOptions = {
+    AssetToSpend.usdc: BigInt.zero,
+  };
+  Map<AssetToSpend, BigInt> pendingSwapAssetOptions = {
+    AssetToSpend.usdc: BigInt.zero,
+  };
+  Map<AssetToSpend, BigInt> pendingAssetSpends = {
+    AssetToSpend.usdc: BigInt.zero,
+  };
+
   @override
   void initState() {
     super.initState();
+
+    assetHubApi = AssetHubWebApi.endpoints(
+      context.read<AppStore>().settings.currentNetwork.assetHubEndpoints(),
+    );
+    unawaited(assetHubApi.init());
+
     _updateAllowedScopes();
     _updateEnactmentQueue();
 
@@ -112,21 +138,42 @@ class _ProposePageState extends State<ProposePage> {
     final store = context.read<AppStore>();
     final chosenCid = store.encointer.chosenCid!;
 
+    Log.d('[updateEnactmentQueue] querying data', logTarget);
+
+    final treasuryAccounts =
+        await Future.wait([webApi.encointer.getTreasuryAccount(null), webApi.encointer.getTreasuryAccount(chosenCid)]);
+
+    final globalTreasuryAccount = treasuryAccounts[0];
+    final localTreasuryAccount = treasuryAccounts[1];
+    Log.d('[updateEnactmentQueue] got encointer treasury accounts: $treasuryAccounts', logTarget);
+
+    await assetHubApi.ensureReady();
+
     final futures = await Future.wait([
       webApi.encointer.getProposalEnactmentQueue(),
-      webApi.encointer.getTreasuryAccount(null).then((account) => webApi.assets.getBalanceOf(account)),
-      webApi.encointer.getTreasuryAccount(chosenCid).then((account) => webApi.assets.getBalanceOf(account)),
-      webApi.encointer.getSwapNativeOptions(chosenCid)
+      webApi.assets.getBalanceOf(globalTreasuryAccount),
+      webApi.assets.getBalanceOf(localTreasuryAccount),
+      assetHubApi.api.getForeignAssetBalanceOfEncointerAccount(localTreasuryAccount, selectedAsset.assetId),
+      webApi.encointer.getSwapNativeOptions(chosenCid),
+      webApi.encointer.getSwapAssetOptions(chosenCid)
     ]);
 
     // cast object type from futures to target type.
     final queuedProposalIds = futures[0] as List<BigInt>;
-    final globalTreasuryAccountData = futures[1] as et.AccountData;
-    final localTreasuryAccountData = futures[2] as et.AccountData;
-    final swapNativeOptions = futures[3] as List<et.SwapNativeOption>;
+    final globalTreasuryAccountDataOnEncointer = futures[1] as et.AccountData;
+    final localTreasuryAccountDataOnEncointer = futures[2] as et.AccountData;
+    final localTreasuryAssetBalanceOnAHK = futures[3] as BigInt;
+    final swapNativeOptions = futures[4] as List<et.SwapNativeOption>;
+    final swapAssetOptions = futures[5] as List<et.SwapAssetOption>;
 
     // Get all open swaps for this community
-    final openSwapAmount = swapNativeOptions.fold(BigInt.zero, (sum, swap) => sum + swap.nativeAllowance);
+    final openSwapNativeAmount = swapNativeOptions.fold(BigInt.zero, (sum, swap) => sum + swap.nativeAllowance);
+
+    for (final assetOption in swapAssetOptions) {
+      final asset = fromVersionedLocatableAsset(assetOption.assetId);
+      Log.d('[updateEnactmentQueue] found swap asset option: ${assetOption.toJson()}', logTarget);
+      this.swapAssetOptions[asset] = (this.swapAssetOptions[asset] ?? BigInt.zero) + assetOption.assetAllowance;
+    }
 
     var globalSpends = BigInt.zero;
     var localSpends = BigInt.zero;
@@ -147,6 +194,25 @@ class _ProposePageState extends State<ProposePage> {
         }
       } else if (action is IssueSwapNativeOption) {
         localSpends += action.value2.nativeAllowance;
+      } else if (action is SpendAsset) {
+        final asset = fromVersionedLocatableAsset(action.value3);
+        if (action.value0 == null) {
+          // Currently we do not have a global asset spend proposal.
+        } else {
+          final cid = CommunityIdentifier.fromPolkadart(action.value0!);
+          if (cid == store.encointer.chosenCid!) {
+            Log.d('[updateEnactmentQueue] pending SpendAsset: ${action.toJson()}', logTarget);
+            pendingAssetSpends[asset] = (pendingAssetSpends[asset] ?? BigInt.zero) + action.value2;
+          }
+        }
+      } else if (action is IssueSwapAssetOption) {
+        final asset = fromVersionedLocatableAsset(action.value2.assetId);
+        final cid = CommunityIdentifier.fromPolkadart(action.value0);
+        if (cid == store.encointer.chosenCid!) {
+          Log.d('[updateEnactmentQueue] pending spend SwapAssetOption: ${action.toJson()}', logTarget);
+          pendingSwapAssetOptions[asset] =
+              (pendingSwapAssetOptions[asset] ?? BigInt.zero) + action.value2.assetAllowance;
+        }
       }
     }
 
@@ -154,16 +220,18 @@ class _ProposePageState extends State<ProposePage> {
       enactmentQueue = queuedProposals.values
           .map<ProposalActionIdWithScope>((a) => ProposalActionIdWithScope.fromProposalAction(a.action))
           .toList();
-      globalTreasuryBalance = globalTreasuryAccountData.free;
-      localTreasuryBalance = localTreasuryAccountData.free;
+      globalTreasuryBalance = globalTreasuryAccountDataOnEncointer.free;
+      localTreasuryBalance = localTreasuryAccountDataOnEncointer.free;
+      localTreasuryBalanceOnAHK = localTreasuryAssetBalanceOnAHK;
 
       pendingGlobalSpends = globalSpends;
-      pendingLocalSpends = localSpends + openSwapAmount;
+      pendingLocalSpends = localSpends + openSwapNativeAmount;
     });
   }
 
   @override
   void dispose() {
+    assetHubApi.close();
     super.dispose();
   }
 
@@ -367,14 +435,20 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget issueSwapNativeOptionInput() {
-    return Column(children: issueSwapOptionInput('KSM'));
+    final maxSwapValue = selectedScope.isLocal
+        ? maxTreasuryPayoutFraction * Fmt.bigIntToDouble(localTreasuryBalance - pendingLocalSpends, ertDecimals)
+        : maxTreasuryPayoutFraction * Fmt.bigIntToDouble(globalTreasuryBalance - pendingGlobalSpends, ertDecimals);
+    return Column(children: issueSwapOptionInput('KSM', maxSwapValue));
   }
 
   Widget issueSwapAssetOptionInput() {
-    return Column(children: [selectAssetDropDown(), ...issueSwapOptionInput(selectedAsset.name.toUpperCase())]);
+    final maxSwapValue =
+        maxTreasuryPayoutFraction * Fmt.bigIntToDouble(assetTreasuryLiquidity(selectedAsset), selectedAsset.decimals);
+    return Column(
+        children: [selectAssetDropDown(), ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), maxSwapValue)]);
   }
 
-  List<Widget> issueSwapOptionInput(String currency) {
+  List<Widget> issueSwapOptionInput(String currency, double? maxValue) {
     final l10n = context.l10n;
     final store = context.read<AppStore>();
 
@@ -390,10 +464,10 @@ class _ProposePageState extends State<ProposePage> {
           FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
           // Only numbers & decimal
         ],
-        validator: validatePositiveNumber,
+        validator: (v) => validatePositiveNumberWithMax(v, maxValue),
         onChanged: (value) {
           setState(() {
-            allowanceError = validatePositiveNumber(value);
+            allowanceError = validatePositiveNumberWithMax(value, maxValue);
           });
         },
       ),
@@ -700,6 +774,11 @@ class _ProposePageState extends State<ProposePage> {
 
   /// Ensures that the number is positive (doubles)
   String? validatePositiveNumber(String? value) {
+    return validatePositiveNumberWithMax(value, null);
+  }
+
+  /// Ensures that the number is positive (doubles)
+  String? validatePositiveNumberWithMax(String? value, double? max) {
     final l10n = context.l10n;
     if (value == null || value.isEmpty) {
       return l10n.proposalFieldErrorEnterPositiveNumber;
@@ -707,6 +786,8 @@ class _ProposePageState extends State<ProposePage> {
       final number = double.tryParse(value);
       if (number == null || number <= 0) {
         return l10n.proposalFieldErrorPositiveNumberRange;
+      } else if (max != null && number > max) {
+        return l10n.proposalFieldErrorPositiveNumberTooBig;
       } else {
         return null;
       }
@@ -826,7 +907,7 @@ class _ProposePageState extends State<ProposePage> {
 
         final amount = double.tryParse(amountController.text)!;
         return SpendAsset(maybeCid, hex.decode(ben.replaceFirst('0x', '')),
-            BigInt.from(amount * pow(10, selectedAsset.decimals)), selectedAsset.assetId);
+            BigInt.from(amount * pow(10, selectedAsset.decimals)), selectedAsset.versionedLocatableAsset);
 
       case ProposalActionIdentifier.issueSwapAssetOption:
         final maybeCid = selectedScope.isLocal ? cid : null;
@@ -836,7 +917,7 @@ class _ProposePageState extends State<ProposePage> {
         final rate = double.tryParse(rateController.text)!;
         final issueOption = SwapAssetOption(
           cid: cid,
-          assetId: selectedAsset.assetId,
+          assetId: selectedAsset.versionedLocatableAsset,
           assetAllowance: BigInt.from(amount * pow(10, selectedAsset.decimals)),
           rate: fixedU128FromDouble(rate * pow(10, -selectedAsset.decimals)),
           doBurn: true,
@@ -862,7 +943,25 @@ class _ProposePageState extends State<ProposePage> {
           l10n.treasuryLocalBalance(
             Fmt.token(localTreasuryBalance - pendingLocalSpends, ertDecimals),
           ),
+        ),
+      if (selectedAction == ProposalActionIdentifier.spendAsset && selectedScope.isLocal ||
+          selectedAction == ProposalActionIdentifier.issueSwapAssetOption)
+        Text(
+          l10n.treasuryLocalBalanceOnAHK(
+            Fmt.token(
+              assetTreasuryLiquidity(selectedAsset),
+              selectedAsset.decimals,
+            ),
+            selectedAsset.symbol,
+          ),
         )
     ];
+  }
+
+  BigInt assetTreasuryLiquidity(AssetToSpend asset) {
+    return localTreasuryBalanceOnAHK -
+        swapAssetOptions[selectedAsset]! -
+        pendingSwapAssetOptions[selectedAsset]! -
+        pendingAssetSpends[selectedAsset]!;
   }
 }

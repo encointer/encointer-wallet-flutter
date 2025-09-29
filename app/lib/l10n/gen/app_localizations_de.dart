@@ -834,6 +834,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get proposalFieldErrorPositiveNumberRange => 'Muss eine positive Zahl sein';
 
   @override
+  String get proposalFieldErrorPositiveNumberTooBig => 'Die Zahl ist zu gross';
+
+  @override
   String get proposalFieldErrorEnterInactivityTimeout => 'Inaktivitätszeitlimit eingeben';
 
   @override
@@ -1121,6 +1124,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String treasuryLocalBalance(String balance) {
     return 'Freies Gemeinschaftsschatzkammerguthaben: $balance KSM.';
+  }
+
+  @override
+  String treasuryLocalBalanceOnAHK(String balance, String asset) {
+    return 'Freies Gemeinschaftsschatzkammerguthaben auf Asset Hub: $balance $asset.';
   }
 
   @override

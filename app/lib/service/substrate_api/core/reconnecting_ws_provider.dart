@@ -53,6 +53,10 @@ class ReconnectingWsProvider extends Provider {
     }
   }
 
+  Future<void> isReady() {
+    return provider.isReady();
+  }
+
   @override
   bool isConnected() {
     // the `provider.isConnected()` check is wrong upstream.

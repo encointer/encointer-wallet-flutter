@@ -2,7 +2,7 @@
 library;
 
 export 'generated/encointer_kusama/encointer_kusama.dart' show EncointerKusama, Constants, Queries, Rpc;
-export 'generated/encointer_kusama/types/tuples.dart' show Tuple2;
+export 'generated/encointer_kusama/types/tuples.dart' show Tuple2, Tuple2Codec;
 export 'package:polkadart/polkadart.dart';
 
 // encointer democracy exports
@@ -38,6 +38,8 @@ export 'generated/encointer_kusama/types/staging_xcm/v5/junction/network_id.dart
 export 'generated/encointer_kusama/types/polkadot_runtime_common/impls/versioned_locatable_asset.dart'
     show VersionedLocatableAsset, V5;
 
+export 'asset_hub_types.dart' show XcmAssetHubLocation;
+
 export 'package:polkadart_scale_codec/polkadart_scale_codec.dart'
     show
         ByteInput,
@@ -59,9 +61,12 @@ export 'package:polkadart_scale_codec/polkadart_scale_codec.dart'
 
 import 'generated/encointer_kusama/types/staging_xcm/v5/location/location.dart' show Location;
 import 'generated/encointer_kusama/types/staging_xcm/v5/junction/junction.dart' show AccountId32;
+import 'generated/encointer_kusama/types/xcm/versioned_location.dart' show VersionedLocation, V5;
 
 /// Re-export Location as XcmLocation to avoid conflict with Encointer Location
 typedef XcmLocation = Location;
+typedef XcmVersionedLocation = VersionedLocation;
+typedef LocationV5 = V5;
 
 /// Re-export Location as XcmLocation to avoid conflict with Encointer Location
 typedef XcmAccountId32 = AccountId32;
