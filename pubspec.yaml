@@ -117,6 +117,12 @@ melos:
         flutter test --tags production-e2e
       description: "Run unit tests with the `encointer-node-e2e` tag"
 
+    unit-test-app-with-endpoint-health-e2e:
+      run: >-
+        dart run melos exec --scope="encointer_wallet" -- \
+        flutter test --tags endpoint-health-e2e
+      description: "Run unit tests with the `endpoint-health-e2e` tag"
+
     unit-test-packages:
       run: >-
         dart run melos exec --ignore="encointer_wallet" -- \

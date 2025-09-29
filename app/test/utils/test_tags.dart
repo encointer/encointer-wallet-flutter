@@ -3,3 +3,6 @@ const encointerNodeE2E = 'encointer-node-e2e';
 
 /// Test tag for running against a production network
 const productionE2E = 'production-e2e';
+
+/// Test tag for running against a production network
+const endpointHealthE2E = 'endpoint-health-e2e';
