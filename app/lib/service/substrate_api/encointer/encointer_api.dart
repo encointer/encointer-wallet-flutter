@@ -708,6 +708,23 @@ class EncointerApi {
     }
   }
 
+  Future<List<et.SwapAssetOption>> getSwapAssetOptions(CommunityIdentifier cid, {BlockHash? at}) async {
+    try {
+      final prefix = encointerKusama.query.encointerTreasuries.swapAssetOptionsMapPrefix(cid.toPolkadart());
+      final pairs = await encointerKusama.rpc.state.getPairs(prefix, at: at ?? store.chain.latestHash);
+
+      // Keys including storage prefix.
+      Log.d("[getSwapAssetOptions] storageKeys: ${pairs.map((pair) => '0x${hex.encode(pair.key)}')}");
+      Log.d("[getSwapAssetOptions] storageValues: ${pairs.map((pair) => '0x${hex.encode(pair.value!)}')}");
+
+      final swapAssetOptions = pairs.map((pair) => et.SwapAssetOption.decode(ByteInput(pair.value!)));
+      return swapAssetOptions.toList();
+    } catch (e, s) {
+      Log.e('[getSwapAssetOptions]', '$e', s);
+      return List.of([]);
+    }
+  }
+
   Future<Map<String, Faucet>> getAllFaucetsWithAccount({BlockHash? at}) async {
     try {
       final prefix = encointerKusama.query.encointerFaucet.faucetsMapPrefix();

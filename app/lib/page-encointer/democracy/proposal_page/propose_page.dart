@@ -43,6 +43,8 @@ import 'package:ew_polkadart/ew_polkadart.dart'
         SwapAssetOption,
         IssueSwapAssetOption;
 
+const logTarget = 'ProposePage';
+
 class ProposePage extends StatefulWidget {
   const ProposePage({super.key});
 
@@ -97,6 +99,16 @@ class _ProposePageState extends State<ProposePage> {
   BigInt pendingGlobalSpends = BigInt.zero;
   BigInt pendingLocalSpends = BigInt.zero;
 
+  Map<AssetToSpend, BigInt> swapAssetOptions = {
+    AssetToSpend.usdc: BigInt.zero,
+  };
+  Map<AssetToSpend, BigInt> pendingSwapAssetOptions = {
+    AssetToSpend.usdc: BigInt.zero,
+  };
+  Map<AssetToSpend, BigInt> pendingAssetSpends = {
+    AssetToSpend.usdc: BigInt.zero,
+  };
+
   @override
   void initState() {
     super.initState();
@@ -134,7 +146,8 @@ class _ProposePageState extends State<ProposePage> {
       webApi.encointer
           .getTreasuryAccount(chosenCid)
           .then((account) => assetHubApi.api.getForeignAssetBalanceOfEncointerAccount(account, selectedAsset.assetId)),
-      webApi.encointer.getSwapNativeOptions(chosenCid)
+      webApi.encointer.getSwapNativeOptions(chosenCid),
+      webApi.encointer.getSwapAssetOptions(chosenCid)
     ]);
 
     // cast object type from futures to target type.
@@ -143,11 +156,16 @@ class _ProposePageState extends State<ProposePage> {
     final localTreasuryAccountDataOnEncointer = futures[2] as et.AccountData;
     final localTreasuryAccountDataOnAHK = futures[3] as BigInt;
     final swapNativeOptions = futures[4] as List<et.SwapNativeOption>;
-
-    Log.p('localTreasuryAccountDataOnAHK: $localTreasuryAccountDataOnAHK', 'ProposePage');
+    final swapAssetOptions = futures[5] as List<et.SwapAssetOption>;
 
     // Get all open swaps for this community
-    final openSwapAmount = swapNativeOptions.fold(BigInt.zero, (sum, swap) => sum + swap.nativeAllowance);
+    final openSwapNativeAmount = swapNativeOptions.fold(BigInt.zero, (sum, swap) => sum + swap.nativeAllowance);
+
+    for (final assetOption in swapAssetOptions) {
+      final asset = fromVersionedLocatableAsset(assetOption.assetId);
+      Log.d('[updateEnactmentQueue] found swap asset option: ${assetOption.toJson()}', logTarget);
+      this.swapAssetOptions[asset] = (this.swapAssetOptions[asset] ?? BigInt.zero) + assetOption.assetAllowance;
+    }
 
     var globalSpends = BigInt.zero;
     var localSpends = BigInt.zero;
@@ -168,6 +186,25 @@ class _ProposePageState extends State<ProposePage> {
         }
       } else if (action is IssueSwapNativeOption) {
         localSpends += action.value2.nativeAllowance;
+      } else if (action is SpendAsset) {
+        final asset = fromVersionedLocatableAsset(action.value3);
+        if (action.value0 == null) {
+          // Currently we do not have a global asset spend proposal.
+        } else {
+          final cid = CommunityIdentifier.fromPolkadart(action.value0!);
+          if (cid == store.encointer.chosenCid!) {
+            Log.d('[updateEnactmentQueue] pending SpendAsset: ${action.toJson()}', logTarget);
+            pendingAssetSpends[asset] = (pendingAssetSpends[asset] ?? BigInt.zero) + action.value2;
+          }
+        }
+      } else if (action is IssueSwapAssetOption) {
+        final asset = fromVersionedLocatableAsset(action.value2.assetId);
+        final cid = CommunityIdentifier.fromPolkadart(action.value0);
+        if (cid == store.encointer.chosenCid!) {
+          Log.d('[updateEnactmentQueue] pending spend SwapAssetOption: ${action.toJson()}', logTarget);
+          pendingSwapAssetOptions[asset] =
+              (pendingSwapAssetOptions[asset] ?? BigInt.zero) + action.value2.assetAllowance;
+        }
       }
     }
 
@@ -180,7 +217,7 @@ class _ProposePageState extends State<ProposePage> {
       localTreasuryBalanceOnAHK = localTreasuryAccountDataOnAHK;
 
       pendingGlobalSpends = globalSpends;
-      pendingLocalSpends = localSpends + openSwapAmount;
+      pendingLocalSpends = localSpends + openSwapNativeAmount;
     });
   }
 
@@ -890,7 +927,14 @@ class _ProposePageState extends State<ProposePage> {
           selectedAction == ProposalActionIdentifier.issueSwapAssetOption)
         Text(
           l10n.treasuryLocalBalanceOnAHK(
-              Fmt.token(localTreasuryBalanceOnAHK - pendingLocalSpends, selectedAsset.decimals), selectedAsset.symbol),
+            Fmt.token(
+                localTreasuryBalanceOnAHK -
+                    swapAssetOptions[selectedAsset]! -
+                    pendingSwapAssetOptions[selectedAsset]! -
+                    pendingAssetSpends[selectedAsset]!,
+                selectedAsset.decimals),
+            selectedAsset.symbol,
+          ),
         )
     ];
   }
