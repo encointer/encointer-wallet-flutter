@@ -18,7 +18,6 @@ jobs:
     timeout-minutes: 30
     strategy:
       matrix:
-        # lower api-levels would be supported but the webView that is pre-installed on these images does not.
         api-level: [ unit-test-app-with-production-e2e,
                      unit-test-app-with-endpoint-health-e2e ]
       fail-fast: false
