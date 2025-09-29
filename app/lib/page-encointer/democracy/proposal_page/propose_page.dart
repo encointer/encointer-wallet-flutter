@@ -889,9 +889,8 @@ class _ProposePageState extends State<ProposePage> {
       if (selectedAction == ProposalActionIdentifier.spendAsset && selectedScope.isLocal ||
           selectedAction == ProposalActionIdentifier.issueSwapAssetOption)
         Text(
-          l10n.treasuryLocalBalance(
-            Fmt.token(localTreasuryBalanceOnAHK - pendingLocalSpends, selectedAsset.decimals),
-          ),
+          l10n.treasuryLocalBalanceOnAHK(
+              Fmt.token(localTreasuryBalanceOnAHK - pendingLocalSpends, selectedAsset.decimals), selectedAsset.symbol),
         )
     ];
   }
