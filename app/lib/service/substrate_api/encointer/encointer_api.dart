@@ -36,7 +36,6 @@ import 'package:ew_polkadart/ew_polkadart.dart'
         StorageChangeSet,
         Tally,
         Tuple2,
-        Tuple2Codec,
         Input,
         U128Codec;
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
@@ -716,16 +715,22 @@ class EncointerApi {
       // Keys including storage prefix.
       Log.d("[getSwapNativeOptions] storageKeys: ${keys.map((key) => '0x${hex.encode(key)}')}");
 
-      final cidAccount = keys
-          .map((key) =>
-              const Tuple2Codec(et.CommunityIdentifier.codec, AccountId32Codec()).decode(ByteInput(key.sublist(32))))
-          .toList();
+      // final cidAccount = keys
+      //     .map((key) =>
+      //         const Tuple2Codec(et.CommunityIdentifier.codec, AccountId32Codec()).decode(ByteInput(key.sublist(32))))
+      //     .toList();
+      //
+      // final swapNativeOptions = await Future.wait(
+      //   cidAccount.map((ca) => encointerKusama.query.encointerTreasuries
+      //       .swapNativeOptions(ca.value0, ca.value1, at: at ?? store.chain.latestHash)
+      //       .then((option) => option!)),
+      // );
 
-      final swapNativeOptions = await Future.wait(
-        cidAccount.map((ca) => encointerKusama.query.encointerTreasuries
-            .swapNativeOptions(ca.value0, ca.value1, at: at ?? store.chain.latestHash)
-            .then((option) => option!)),
-      );
+      final swapNativeOptions = await Future.wait(keys.map((key) => encointerKusama.rpc.state
+          .getStorage(key)
+          .then((value) => et.SwapNativeOption.codec.decode(Input.fromBytes(value!)))));
+
+      Log.d('[getSwapNativeOptions] SwapNativeOptions: ${swapNativeOptions.map((option) => option.toJson())}');
 
       return swapNativeOptions;
     } catch (e, s) {
@@ -748,16 +753,22 @@ class EncointerApi {
       // Keys including storage prefix.
       Log.d("[getSwapAssetOptions] storageKeys: ${keys.map((key) => '0x${hex.encode(key)}')}");
 
-      final cidAccount = keys
-          .map((key) =>
-              const Tuple2Codec(et.CommunityIdentifier.codec, AccountId32Codec()).decode(ByteInput(key.sublist(32))))
-          .toList();
+      // final cidAccount = keys
+      //     .map((key) =>
+      //         const Tuple2Codec(et.CommunityIdentifier.codec, AccountId32Codec()).decode(ByteInput(key.sublist(32))))
+      //     .toList();
+      //
+      // final swapAssetsOptions = await Future.wait(
+      //   cidAccount.map((ca) => encointerKusama.query.encointerTreasuries
+      //       .swapAssetOptions(ca.value0, ca.value1, at: at ?? store.chain.latestHash)
+      //       .then((option) => option!)),
+      // );
 
-      final swapAssetsOptions = await Future.wait(
-        cidAccount.map((ca) => encointerKusama.query.encointerTreasuries
-            .swapAssetOptions(ca.value0, ca.value1, at: at ?? store.chain.latestHash)
-            .then((option) => option!)),
-      );
+      final swapAssetsOptions = await Future.wait(keys.map((key) => encointerKusama.rpc.state
+          .getStorage(key)
+          .then((value) => et.SwapAssetOption.codec.decode(Input.fromBytes(value!)))));
+
+      Log.d('[getSwapNativeOptions] SwapNativeOptions: ${swapAssetsOptions.map((option) => option.toJson())}');
 
       return swapAssetsOptions;
     } catch (e, s) {
