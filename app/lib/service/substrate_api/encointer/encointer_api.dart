@@ -27,7 +27,18 @@ import 'package:ew_http/ew_http.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/encointer_types.dart' show ProofOfAttendance;
 import 'package:ew_polkadart/ew_polkadart.dart'
-    show BlockHash, ByteInput, EncointerKusama, Proposal, SequenceCodec, StorageChangeSet, Tally, Tuple2, Tuple2Codec;
+    show
+        BlockHash,
+        ByteInput,
+        EncointerKusama,
+        Proposal,
+        SequenceCodec,
+        StorageChangeSet,
+        Tally,
+        Tuple2,
+        Tuple2Codec,
+        Input,
+        U128Codec;
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
@@ -797,12 +808,16 @@ class EncointerApi {
       // Keys including storage prefix.
       Log.d("[getProposalEnactmentQueue] storageKeys: ${keys.map((key) => '0x${hex.encode(key)}')}");
 
-      final proposalActions =
-          keys.map((key) => et.ProposalActionIdentifier.decode(ByteInput(key.sublist(32)))).toList();
-      final proposalIds = await encointerKusama.query.encointerDemocracy
-          .multiEnactmentQueue(proposalActions, at: at ?? store.chain.latestHash)
-          .then((ids) => ids.map((id) => id!).toList());
+      // Fixme: We get some decoding errors here with polkadart. I do not understand why.
+      // https://github.com/encointer/encointer-wallet-flutter/issues/1833
+      // final action0 = et.ProposalActionIdentifier.decode(Input.fromBytes(keys[0].sublist(32)));
+      // // If it is a spendNative the codec fails to decode.
+      // final action1 = et.ProposalActionIdentifier.decode(Input.fromBytes(keys[1].sublist(32)));
+      // Log.d("[getProposalEnactmentQueue] proposalAction: ${action0.toJson()}')}");
+      // Log.d("[getProposalEnactmentQueue] proposalAction: ${action1.toJson()}')}");
 
+      final proposalIds = await Future.wait(keys.map((key) =>
+          encointerKusama.rpc.state.getStorage(key).then((value) => U128Codec.codec.decode(Input.fromBytes(value!)))));
       Log.d('[getProposalEnactmentQueue] proposalIds: $proposalIds', 'EncointerApi');
 
       return proposalIds;
