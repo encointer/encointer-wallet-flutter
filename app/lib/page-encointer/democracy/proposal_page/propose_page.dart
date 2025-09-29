@@ -105,8 +105,8 @@ class _ProposePageState extends State<ProposePage> {
 
     // We initialize AssetHubApi here already so that we can be sure that
     // it is prepared in the propose page.
-    assetHubApi = AssetHubWebApi.create(
-      context.read<AppStore>(),
+    assetHubApi = AssetHubWebApi.endpoints(
+      context.read<AppStore>().settings.currentNetwork.assetHubEndpoints(),
     );
     unawaited(assetHubApi.init());
 

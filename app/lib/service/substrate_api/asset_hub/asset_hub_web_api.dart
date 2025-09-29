@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:encointer_wallet/config/networks/networks.dart';
 import 'package:encointer_wallet/service/substrate_api/asset_hub/asset_hub_api.dart';
-import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/service/substrate_api/core/reconnecting_ws_provider.dart';
 import 'package:ew_endpoint_manager/endpoint_manager.dart';
 import 'package:ew_polkadart/ew_polkadart.dart' show WsProvider;
@@ -28,23 +27,18 @@ class AssetHubNetworkEndpointChecker with EndpointChecker<NetworkEndpoint> {
 
 class AssetHubWebApi {
   AssetHubWebApi(
-    this.store,
     this.provider,
     this.api,
+    this.endpoints,
   );
 
-  factory AssetHubWebApi.create(AppStore store) {
+  factory AssetHubWebApi.endpoints(List<Endpoint> endpoints) {
     // Initialize with default endpoint, will check for healthiness later.
-    final provider =
-        ReconnectingWsProvider(Uri.parse(store.settings.currentNetwork.defaultAssetHubEndpoint()), autoConnect: false);
-    return AssetHubWebApi(
-      store,
-      provider,
-      AssetHubApi(store, provider),
-    );
+    final provider = ReconnectingWsProvider(Uri.parse(endpoints.first.address()), autoConnect: false);
+    return AssetHubWebApi(provider, AssetHubApi(provider), endpoints);
   }
 
-  final AppStore store;
+  final List<Endpoint> endpoints;
 
   final ReconnectingWsProvider provider;
   final AssetHubApi api;
@@ -75,8 +69,7 @@ class AssetHubWebApi {
 
   Future<void> _connect() async {
     Log.p('Looking for a healthy endpoint...', logTarget);
-    final manager = EndpointManager.withEndpoints(
-        AssetHubNetworkEndpointChecker(), store.settings.currentNetwork.assetHubEndpoints());
+    final manager = EndpointManager.withEndpoints(AssetHubNetworkEndpointChecker(), endpoints);
     final endpoint = await manager.pollHealthyEndpoint(randomize: true);
     Log.p('Connecting to healthy endpoint: ${endpoint.address()}', logTarget);
 
