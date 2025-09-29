@@ -447,6 +447,15 @@
             }
         }
     },
+    "treasuryLocalBalanceOnAHK": "Salio huru la hazina ya jamii kwenye AHK: {balance} KSM.",
+    "@treasuryLocalBalanceOnAHK": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
     "treasuryPendingSpends": "Matumizi yanayosubiri: {spends} KSM.",
     "@treasuryPendingSpends": {
         "placeholders": {

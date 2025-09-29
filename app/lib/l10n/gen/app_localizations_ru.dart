@@ -1122,6 +1122,11 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String treasuryLocalBalanceOnAHK(String balance, String asset) {
+    return 'Свободный баланс казначейства сообщества на Asset Hub: $balance KSM.';
+  }
+
+  @override
   String treasuryPendingSpends(String spends) {
     return 'Ожидающие расходы: $spends KSM.';
   }

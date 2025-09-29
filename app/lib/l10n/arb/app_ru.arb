@@ -445,6 +445,15 @@
             }
         }
     },
+    "treasuryLocalBalanceOnAHK": "Свободный баланс казначейства сообщества на Asset Hub: {balance} KSM.",
+    "@treasuryLocalBalanceOnAHK": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
     "treasuryPendingSpends": "Ожидающие расходы: {spends} KSM.",
     "@treasuryPendingSpends": {
         "placeholders": {

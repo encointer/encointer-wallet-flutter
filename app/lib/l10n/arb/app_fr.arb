@@ -446,6 +446,19 @@
             }
         }
     },
+    "treasuryLocalBalanceOnAHK": "Solde libre du trésor communautaire sur Asset Hub: {balance} {asset}.",
+    "@treasuryLocalBalanceOnAHK": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            },
+            "asset": {
+                "type": "String",
+                "example": "{Leu}"
+            }
+        }
+    },
     "treasuryPendingSpends": "Dépenses en attente : {spends} KSM.",
     "@treasuryPendingSpends": {
         "placeholders": {
