@@ -62,11 +62,7 @@ void main() {
         () async {
           final cid = CommunityIdentifier.fromFmtString(testCase['cid']!);
           final encointerAddress = await encointerApi.getTreasuryAccount(cid);
-
-          // Need to convert the default prefix 42 address to prefix 2
-          final pubkey = AddressUtils.addressToPubKey(encointerAddress);
-
-          expect(AddressUtils.pubKeyToAddress(pubkey, prefix: 2), testCase['encointer']);
+          expect(AddressUtils.transformPrefix(encointerAddress, 2), testCase['encointer']);
         },
         tags: productionE2E,
       );
