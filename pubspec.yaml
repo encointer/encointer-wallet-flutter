@@ -102,7 +102,7 @@ melos:
     unit-test-app-exclude-e2e:
       run: >-
         dart run melos exec --scope="encointer_wallet" -- \
-        flutter test --exclude-tags encointer-node-e2e,production-e2e
+        flutter test --exclude-tags encointer-node-e2e,production-e2e,endpoint-health-e2e
       description: "Run unit tests excluding the `encointer-node-e2e` tag"
 
     unit-test-app-with-encointer-node-e2e:
