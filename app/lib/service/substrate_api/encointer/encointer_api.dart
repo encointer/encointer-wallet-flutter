@@ -686,8 +686,9 @@ class EncointerApi {
 
   Future<String> getTreasuryAccount(CommunityIdentifier? cid, {BlockHash? at}) async {
     final treasuryAccount = await _dartApi.getTreasuryAccount(cid, at: at ?? store.chain.latestHash);
-    Log.d('api: getTreasuryAccount: $treasuryAccount', 'EncointerApi');
-    return treasuryAccount;
+    final address = AddressUtils.transformPrefix(treasuryAccount, store.settings.currentNetwork.ss58());
+    Log.d('api: getTreasuryAccount: $address', 'EncointerApi');
+    return address;
   }
 
   Future<List<et.SwapNativeOption>> getSwapNativeOptions(CommunityIdentifier cid, {BlockHash? at}) async {
