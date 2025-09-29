@@ -2,7 +2,7 @@
 library;
 
 export 'generated/encointer_kusama/encointer_kusama.dart' show EncointerKusama, Constants, Queries, Rpc;
-export 'generated/encointer_kusama/types/tuples.dart' show Tuple2;
+export 'generated/encointer_kusama/types/tuples.dart' show Tuple2, Tuple2Codec;
 export 'package:polkadart/polkadart.dart';
 
 // encointer democracy exports

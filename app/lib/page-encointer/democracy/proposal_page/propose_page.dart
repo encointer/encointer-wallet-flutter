@@ -158,6 +158,8 @@ class _ProposePageState extends State<ProposePage> {
     final swapNativeOptions = futures[4] as List<et.SwapNativeOption>;
     final swapAssetOptions = futures[5] as List<et.SwapAssetOption>;
 
+    Log.d('[updateEnactmentQueue] localTreasuryAccountOnAHK $localTreasuryAccountDataOnAHK', logTarget);
+
     // Get all open swaps for this community
     final openSwapNativeAmount = swapNativeOptions.fold(BigInt.zero, (sum, swap) => sum + swap.nativeAllowance);
 
