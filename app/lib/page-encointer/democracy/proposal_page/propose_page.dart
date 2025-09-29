@@ -137,15 +137,23 @@ class _ProposePageState extends State<ProposePage> {
     final store = context.read<AppStore>();
     final chosenCid = store.encointer.chosenCid!;
 
-    await assetHubApi.isConnected();
+    Log.d('[updateEnactmentQueue] querying data', logTarget);
+
+    final treasuryAccounts =
+        await Future.wait([webApi.encointer.getTreasuryAccount(null), webApi.encointer.getTreasuryAccount(chosenCid)]);
+
+    final globalTreasuryAccount = treasuryAccounts[0];
+    final localTreasuryAccount = treasuryAccounts[1];
+
+    await assetHubApi.ensureReady();
+
+    Log.d('[updateEnactmentQueue] got encointer treasury accounts: $treasuryAccounts', logTarget);
 
     final futures = await Future.wait([
       webApi.encointer.getProposalEnactmentQueue(),
-      webApi.encointer.getTreasuryAccount(null).then((account) => webApi.assets.getBalanceOf(account)),
-      webApi.encointer.getTreasuryAccount(chosenCid).then((account) => webApi.assets.getBalanceOf(account)),
-      webApi.encointer
-          .getTreasuryAccount(chosenCid)
-          .then((account) => assetHubApi.api.getForeignAssetBalanceOfEncointerAccount(account, selectedAsset.assetId)),
+      webApi.assets.getBalanceOf(globalTreasuryAccount),
+      webApi.assets.getBalanceOf(localTreasuryAccount),
+      assetHubApi.api.getForeignAssetBalanceOfEncointerAccount(localTreasuryAccount, selectedAsset.assetId),
       webApi.encointer.getSwapNativeOptions(chosenCid),
       webApi.encointer.getSwapAssetOptions(chosenCid)
     ]);
