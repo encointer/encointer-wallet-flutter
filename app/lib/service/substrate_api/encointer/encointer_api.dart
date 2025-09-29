@@ -697,6 +697,11 @@ class EncointerApi {
       final keys =
           await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 50, at: at ?? store.chain.latestHash);
 
+      if (keys.isEmpty) {
+        Log.d('[getSwapNativeOptions] No swap native options found', 'EncointerApi');
+        return List.of([]);
+      }
+
       // Keys including storage prefix.
       Log.d("[getSwapNativeOptions] storageKeys: ${keys.map((key) => '0x${hex.encode(key)}')}");
 
@@ -713,7 +718,7 @@ class EncointerApi {
 
       return swapNativeOptions;
     } catch (e, s) {
-      Log.e('[getSwapNativeOptions]', '$e', s);
+      Log.e('[getSwapNativeOptions] Error: $e', 'EncointerApi', s);
       return List.of([]);
     }
   }
@@ -724,8 +729,13 @@ class EncointerApi {
       final keys =
           await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 50, at: at ?? store.chain.latestHash);
 
+      if (keys.isEmpty) {
+        Log.d('[getSwapAssetOptions] No swap asset options found', 'EncointerApi');
+        return List.of([]);
+      }
+
       // Keys including storage prefix.
-      Log.d("[getSwapNativeOptions] storageKeys: ${keys.map((key) => '0x${hex.encode(key)}')}");
+      Log.d("[getSwapAssetOptions] storageKeys: ${keys.map((key) => '0x${hex.encode(key)}')}");
 
       final cidAccount = keys
           .map((key) =>
@@ -740,7 +750,7 @@ class EncointerApi {
 
       return swapAssetsOptions;
     } catch (e, s) {
-      Log.e('[getSwapAssetOptions]', '$e', s);
+      Log.e('[getSwapAssetOptions] Error: $e', 'EncointerApi', s);
       return List.of([]);
     }
   }
@@ -779,6 +789,11 @@ class EncointerApi {
       final keys =
           await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 50, at: at ?? store.chain.latestHash);
 
+      if (keys.isEmpty) {
+        Log.d('[getProposalEnactmentQueue] No proposals in enactment queue', 'EncointerApi');
+        return List.of([]);
+      }
+
       // Keys including storage prefix.
       Log.d("[getProposalEnactmentQueue] storageKeys: ${keys.map((key) => '0x${hex.encode(key)}')}");
 
@@ -788,11 +803,11 @@ class EncointerApi {
           .multiEnactmentQueue(proposalActions, at: at ?? store.chain.latestHash)
           .then((ids) => ids.map((id) => id!).toList());
 
-      Log.d("[getProposalEnactmentQueue] proposalIds: $proposalIds')}");
+      Log.d('[getProposalEnactmentQueue] proposalIds: $proposalIds', 'EncointerApi');
 
       return proposalIds;
     } catch (e, s) {
-      Log.e('[getProposalEnactmentQueue]', '$e', s);
+      Log.e('[getProposalEnactmentQueue] Error: $e', 'EncointerApi', s);
       return List.of([]);
     }
   }
