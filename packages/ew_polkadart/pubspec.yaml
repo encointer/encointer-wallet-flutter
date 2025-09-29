@@ -31,5 +31,5 @@ dev_dependencies:
 polkadart:
   output_dir: lib/generated
   chains:
-    encointer_kusama: wss://gesell.encointer.org
+    encointer_kusama: wss://kusama.api.encointer.org
 #    asset_hub_kusama:  wss://sys.ibp.network/asset-hub-kusama
