@@ -38,6 +38,8 @@ export 'generated/encointer_kusama/types/staging_xcm/v5/junction/network_id.dart
 export 'generated/encointer_kusama/types/polkadot_runtime_common/impls/versioned_locatable_asset.dart'
     show VersionedLocatableAsset, V5;
 
+export 'asset_hub_types.dart' show XcmAssetHubLocation;
+
 export 'package:polkadart_scale_codec/polkadart_scale_codec.dart'
     show
         ByteInput,

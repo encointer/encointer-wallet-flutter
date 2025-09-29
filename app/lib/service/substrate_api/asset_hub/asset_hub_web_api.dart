@@ -35,8 +35,8 @@ class AssetHubWebApi {
 
   factory AssetHubWebApi.create(AppStore store) {
     // Initialize with default endpoint, will check for healthiness later.
-    final provider = ReconnectingWsProvider(Uri.parse(store.settings.currentNetwork.defaultAssetHubKusamaEndpoint()),
-        autoConnect: false);
+    final provider =
+        ReconnectingWsProvider(Uri.parse(store.settings.currentNetwork.defaultAssetHubEndpoint()), autoConnect: false);
     return AssetHubWebApi(
       store,
       provider,
@@ -76,7 +76,7 @@ class AssetHubWebApi {
   Future<void> _connect() async {
     Log.p('Looking for a healthy endpoint...', logTarget);
     final manager = EndpointManager.withEndpoints(
-        AssetHubNetworkEndpointChecker(), store.settings.currentNetwork.assetHubKusamaEndpoints());
+        AssetHubNetworkEndpointChecker(), store.settings.currentNetwork.assetHubEndpoints());
     final endpoint = await manager.pollHealthyEndpoint(randomize: true);
     Log.p('Connecting to healthy endpoint: ${endpoint.address()}', logTarget);
 

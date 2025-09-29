@@ -18,9 +18,15 @@ extension AssetToSpendExt on AssetToSpend {
     };
   }
 
-  VersionedLocatableAsset get assetId {
+  VersionedLocatableAsset get versionedLocatableAsset {
     return switch (this) {
       AssetToSpend.usdc => usdcForeignAsset,
+    };
+  }
+
+  XcmLocation get assetId {
+    return switch (this) {
+      AssetToSpend.usdc => polkadotForeignAsset(usdcAssetId),
     };
   }
 }
@@ -42,7 +48,7 @@ AssetToSpend fromVersionedLocatableAsset(VersionedLocatableAsset asset) {
 // 	};
 VersionedLocatableAsset usdcForeignAsset = V5(
   location: XcmLocation(parents: 1, interior: X1([Parachain(assetHubParaId)])),
-  assetId: XcmLocation(parents: 0, interior: polkadotForeignAsset(foreignAssetPalletInstance, usdcAssetId)),
+  assetId: polkadotForeignAsset(usdcAssetId),
 );
 
 BigInt assetHubParaId = BigInt.from(1000);
@@ -53,11 +59,13 @@ const PalletInstance foreignAssetPalletInstance = PalletInstance(50);
 /// USD Coin on Asset Hub Polkadot
 GeneralIndex usdcAssetId = GeneralIndex(BigInt.from(1337));
 
-X4 polkadotForeignAsset(PalletInstance palletInstance, GeneralIndex assetId) {
-  return X4([
-    const GlobalConsensus(Polkadot()),
-    Parachain(assetHubParaId),
-    palletInstance,
-    assetId,
-  ]);
+XcmLocation polkadotForeignAsset(GeneralIndex assetId) {
+  return XcmLocation(
+      parents: 0,
+      interior: X4([
+        const GlobalConsensus(Polkadot()),
+        Parachain(assetHubParaId),
+        foreignAssetPalletInstance,
+        assetId,
+      ]));
 }

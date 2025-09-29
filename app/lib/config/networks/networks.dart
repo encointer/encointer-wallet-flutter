@@ -105,11 +105,11 @@ enum Network {
     };
   }
 
-  List<NetworkEndpoint> assetHubKusamaEndpoints() {
+  List<NetworkEndpoint> assetHubEndpoints() {
     return assetHubKusamaEndpoints();
   }
 
-  String defaultAssetHubKusamaEndpoint() {
+  String defaultAssetHubEndpoint() {
     return assetHubKusamaEndpoints().first.address();
   }
 }
@@ -142,7 +142,7 @@ List<NetworkEndpoint> assetHubKusamaEndpoints() {
     NetworkEndpoint(name: 'IBP2', address: 'wss://asset-hub-kusama.dotters.network'),
     NetworkEndpoint(name: 'Lucky Friday', address: 'wss://rpc-asset-hub-kusama.luckyfriday.io'),
     NetworkEndpoint(name: 'OnFinality', address: 'wss://assethub-kusama.api.onfinality.io/public-ws'),
-    NetworkEndpoint(name: 'RadiumBlock', address: ' wss://statemine.public.curie.radiumblock.co/ws'),
+    NetworkEndpoint(name: 'RadiumBlock', address: 'wss://statemine.public.curie.radiumblock.co/ws'),
   ];
 }
 

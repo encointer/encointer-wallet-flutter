@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:convert/convert.dart';
@@ -8,7 +9,9 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/asset_id.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/utf8_limited_byte_field.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/substrate_api/asset_hub/asset_hub_web_api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
@@ -52,6 +55,8 @@ class ProposePage extends StatefulWidget {
 class _ProposePageState extends State<ProposePage> {
   final _formKey = GlobalKey<FormState>();
 
+  late AssetHubWebApi assetHubApi;
+
   // Default selected values
   ProposalActionIdentifier selectedAction = ProposalActionIdentifier.petition;
   late ProposalScope selectedScope;
@@ -87,6 +92,7 @@ class _ProposePageState extends State<ProposePage> {
   List<ProposalActionIdWithScope> enactmentQueue = [];
   BigInt globalTreasuryBalance = BigInt.zero;
   BigInt localTreasuryBalance = BigInt.zero;
+  BigInt localTreasuryBalanceOnAHK = BigInt.zero;
 
   BigInt pendingGlobalSpends = BigInt.zero;
   BigInt pendingLocalSpends = BigInt.zero;
@@ -96,6 +102,13 @@ class _ProposePageState extends State<ProposePage> {
     super.initState();
     _updateAllowedScopes();
     _updateEnactmentQueue();
+
+    // We initialize AssetHubApi here already so that we can be sure that
+    // it is prepared in the propose page.
+    assetHubApi = AssetHubWebApi.create(
+      context.read<AppStore>(),
+    );
+    unawaited(assetHubApi.init());
 
     beneficiary = context.read<AppStore>().account.currentAccount;
   }
@@ -116,14 +129,20 @@ class _ProposePageState extends State<ProposePage> {
       webApi.encointer.getProposalEnactmentQueue(),
       webApi.encointer.getTreasuryAccount(null).then((account) => webApi.assets.getBalanceOf(account)),
       webApi.encointer.getTreasuryAccount(chosenCid).then((account) => webApi.assets.getBalanceOf(account)),
+      webApi.encointer
+          .getTreasuryAccount(chosenCid)
+          .then((account) => assetHubApi.api.getForeignAssetBalanceOf(account, selectedAsset.assetId)),
       webApi.encointer.getSwapNativeOptions(chosenCid)
     ]);
 
     // cast object type from futures to target type.
     final queuedProposalIds = futures[0] as List<BigInt>;
-    final globalTreasuryAccountData = futures[1] as et.AccountData;
-    final localTreasuryAccountData = futures[2] as et.AccountData;
-    final swapNativeOptions = futures[3] as List<et.SwapNativeOption>;
+    final globalTreasuryAccountDataOnEncointer = futures[1] as et.AccountData;
+    final localTreasuryAccountDataOnEncointer = futures[2] as et.AccountData;
+    final localTreasuryAccountDataOnAHK = futures[3] as BigInt;
+    final swapNativeOptions = futures[4] as List<et.SwapNativeOption>;
+
+    Log.p('localTreasuryAccountDataOnAHK: $localTreasuryAccountDataOnAHK', 'ProposePage');
 
     // Get all open swaps for this community
     final openSwapAmount = swapNativeOptions.fold(BigInt.zero, (sum, swap) => sum + swap.nativeAllowance);
@@ -154,8 +173,9 @@ class _ProposePageState extends State<ProposePage> {
       enactmentQueue = queuedProposals.values
           .map<ProposalActionIdWithScope>((a) => ProposalActionIdWithScope.fromProposalAction(a.action))
           .toList();
-      globalTreasuryBalance = globalTreasuryAccountData.free;
-      localTreasuryBalance = localTreasuryAccountData.free;
+      globalTreasuryBalance = globalTreasuryAccountDataOnEncointer.free;
+      localTreasuryBalance = localTreasuryAccountDataOnEncointer.free;
+      localTreasuryBalanceOnAHK = localTreasuryAccountDataOnAHK;
 
       pendingGlobalSpends = globalSpends;
       pendingLocalSpends = localSpends + openSwapAmount;
@@ -164,6 +184,7 @@ class _ProposePageState extends State<ProposePage> {
 
   @override
   void dispose() {
+    assetHubApi.close();
     super.dispose();
   }
 
@@ -826,7 +847,7 @@ class _ProposePageState extends State<ProposePage> {
 
         final amount = double.tryParse(amountController.text)!;
         return SpendAsset(maybeCid, hex.decode(ben.replaceFirst('0x', '')),
-            BigInt.from(amount * pow(10, selectedAsset.decimals)), selectedAsset.assetId);
+            BigInt.from(amount * pow(10, selectedAsset.decimals)), selectedAsset.versionedLocatableAsset);
 
       case ProposalActionIdentifier.issueSwapAssetOption:
         final maybeCid = selectedScope.isLocal ? cid : null;
@@ -836,7 +857,7 @@ class _ProposePageState extends State<ProposePage> {
         final rate = double.tryParse(rateController.text)!;
         final issueOption = SwapAssetOption(
           cid: cid,
-          assetId: selectedAsset.assetId,
+          assetId: selectedAsset.versionedLocatableAsset,
           assetAllowance: BigInt.from(amount * pow(10, selectedAsset.decimals)),
           rate: fixedU128FromDouble(rate * pow(10, -selectedAsset.decimals)),
           doBurn: true,
@@ -861,6 +882,13 @@ class _ProposePageState extends State<ProposePage> {
         Text(
           l10n.treasuryLocalBalance(
             Fmt.token(localTreasuryBalance - pendingLocalSpends, ertDecimals),
+          ),
+        ),
+      if (selectedAction == ProposalActionIdentifier.spendAsset && selectedScope.isLocal ||
+          selectedAction == ProposalActionIdentifier.issueSwapAssetOption)
+        Text(
+          l10n.treasuryLocalBalance(
+            Fmt.token(localTreasuryBalanceOnAHK - pendingLocalSpends, selectedAsset.decimals),
           ),
         )
     ];
