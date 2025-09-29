@@ -108,6 +108,10 @@ enum Network {
   List<NetworkEndpoint> assetHubKusamaEndpoints() {
     return assetHubKusamaEndpoints();
   }
+
+  String defaultAssetHubKusamaEndpoint() {
+    return assetHubKusamaEndpoints().first.address();
+  }
 }
 
 List<NetworkEndpoint> gesellEndpoints() {
