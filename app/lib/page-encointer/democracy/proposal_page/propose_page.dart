@@ -7,8 +7,10 @@ import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/asset_id.dart';
+import 'package:encointer_wallet/page-encointer/democracy/proposal_page/exchange_rate.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/utf8_limited_byte_field.dart';
+import 'package:encointer_wallet/service/forex/forex_service.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/asset_hub/asset_hub_web_api.dart';
@@ -66,6 +68,10 @@ class _ProposePageState extends State<ProposePage> {
   late ProposalScope selectedScope;
   List<ProposalScope> allowedScopes = [];
   AssetToSpend selectedAsset = AssetToSpend.usdc;
+  ForexRate? rate;
+
+  // Forex service to get exchange rate of a community's local fiat to usd.
+  final forexService = ForexService();
 
   // Controllers for text fields
   final TextEditingController latController = TextEditingController();
@@ -122,6 +128,7 @@ class _ProposePageState extends State<ProposePage> {
 
     _updateAllowedScopes();
     _updateEnactmentQueue();
+    _updateExchangeRate();
 
     beneficiary = context.read<AppStore>().account.currentAccount;
   }
@@ -132,6 +139,23 @@ class _ProposePageState extends State<ProposePage> {
       allowedScopes = selectedAction.allowedPolicies();
       selectedScope = allowedScopes.first; // Default to the first allowed scope
     });
+  }
+
+  Future<void> _updateExchangeRate() async {
+    final store = context.read<AppStore>();
+    final symbol = store.encointer.community!.symbol!;
+
+    if (isKnownCommunity(symbol)) {
+      final knowCommunity = knownCommunityFromMetadata(symbol);
+      final fiat = knowCommunity.localFiatCurrency.symbol;
+      final forexRate = await forexService.getUsdRate(fiat);
+      Log.d('[updateExchangeRate] got forex exchange rate usd->$fiat: ${forexRate?.value}');
+      setState(() {
+        rate = forexRate;
+      });
+    } else {
+      Log.d('[updateExchangeRate] Will not fetch exchange rate for not well-known community $symbol');
+    }
   }
 
   Future<void> _updateEnactmentQueue() async {
@@ -452,6 +476,8 @@ class _ProposePageState extends State<ProposePage> {
     final l10n = context.l10n;
     final store = context.read<AppStore>();
 
+    final isKnown = isKnownCommunity(store.encointer.community!.symbol!);
+
     return [
       TextFormField(
         controller: allowanceController,
@@ -472,15 +498,19 @@ class _ProposePageState extends State<ProposePage> {
         },
       ),
       TextFormField(
-        controller: rateController,
+        controller: rateController..text = isKnown ? rate?.value.toString() ?? '0' : rateController.text, // set constant value if needed
+        enabled: !isKnown, // disables editing when condition is true
         decoration: InputDecoration(
-          labelText: l10n.proposalFieldRate(currency, store.encointer.community!.symbol!),
+          labelText: l10n.proposalFieldRate(
+            currency,
+            store.encointer.community!.symbol!,
+          ),
           errorText: rateError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
           // Only numbers & decimal
+          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         ],
         validator: validatePositiveNumber,
         onChanged: (value) {

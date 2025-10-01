@@ -3,6 +3,8 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+const String logTarget = 'ForexService';
+
 class ForexService {
   ForexService({
     this.cacheDuration = const Duration(days: 1),
@@ -26,34 +28,34 @@ class ForexService {
 
     final prefs = await SharedPreferences.getInstance();
 
-    // 1. In-memory cache
-    final cached = _cache[cacheKey];
-    if (cached != null) {
-      final fresh = DateTime.now().isBefore(cached.expiry);
-      if (fresh) {
-        return ForexRate(
-          value: cached.value,
-          fetchedAt: cached.fetchedAt,
-          isStale: false,
-        );
-      }
-    }
-
-    // 2. Persistent cache
-    final storedJson = prefs.getString('forex_$cacheKey');
-    _CacheEntry? stored;
-    if (storedJson != null) {
-      stored = _CacheEntry.fromJson(json.decode(storedJson) as Map<String, dynamic>);
-      final fresh = DateTime.now().isBefore(stored.expiry);
-      if (fresh) {
-        _cache[cacheKey] = stored;
-        return ForexRate(
-          value: stored.value,
-          fetchedAt: stored.fetchedAt,
-          isStale: false,
-        );
-      }
-    }
+    // // 1. In-memory cache
+    // final cached = _cache[cacheKey];
+    // if (cached != null) {
+    //   final fresh = DateTime.now().isBefore(cached.expiry);
+    //   if (fresh) {
+    //     return ForexRate(
+    //       value: cached.value,
+    //       fetchedAt: cached.fetchedAt,
+    //       isStale: false,
+    //     );
+    //   }
+    // }
+    //
+    // // 2. Persistent cache
+    // final storedJson = prefs.getString('forex_$cacheKey');
+    // _CacheEntry? stored;
+    // if (storedJson != null) {
+    //   stored = _CacheEntry.fromJson(json.decode(storedJson) as Map<String, dynamic>);
+    //   final fresh = DateTime.now().isBefore(stored.expiry);
+    //   if (fresh) {
+    //     _cache[cacheKey] = stored;
+    //     return ForexRate(
+    //       value: stored.value,
+    //       fetchedAt: stored.fetchedAt,
+    //       isStale: false,
+    //     );
+    //   }
+    // }
 
     // 3. Fetch from API
     final primaryUrl = Uri.parse('$_primaryBaseUrl/$baseNormalized.json');
@@ -75,14 +77,14 @@ class ForexService {
 
     // 4. Stale fallback
     if (preferStale) {
-      final entry = cached ?? stored;
-      if (entry != null) {
-        return ForexRate(
-          value: entry.value,
-          fetchedAt: entry.fetchedAt,
-          isStale: true,
-        );
-      }
+      // final entry = cached ?? stored;
+      // if (entry != null) {
+      //   return ForexRate(
+      //     value: entry.value,
+      //     fetchedAt: entry.fetchedAt,
+      //     isStale: true,
+      //   );
+      // }
     }
 
     return null;
@@ -95,13 +97,15 @@ class ForexService {
     try {
       final resp = await _client.get(url);
       if (resp.statusCode == 200) {
+        Log.d('Response: ${resp.body}', logTarget);
         final data = json.decode(resp.body);
         if (data is Map && data.containsKey(base) && data[base] is Map && data[base][target] is num) {
           return (data[base][target] as num).toDouble();
         }
+        Log.e('Could not find currency in response', logTarget);
       }
     } catch (e) {
-      Log.e('Error fetching rate from $url: $e', 'ForexService');
+      Log.e('Error fetching rate from $url: $e', logTarget);
     }
     return null;
   }
