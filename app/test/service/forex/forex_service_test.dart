@@ -83,7 +83,7 @@ void main() {
     for (final c in ['chf', 'ngn', 'tzs']) {
       test(
         'fetches USD->$c successfully from real API',
-            () async {
+        () async {
           // Use in-memory SharedPreferences so plugin is not needed
           SharedPreferences.setMockInitialValues({});
 

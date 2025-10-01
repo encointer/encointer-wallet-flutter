@@ -498,7 +498,8 @@ class _ProposePageState extends State<ProposePage> {
         },
       ),
       TextFormField(
-        controller: rateController..text = isKnown ? rate?.value.toString() ?? '0' : rateController.text, // set constant value if needed
+        controller: rateController
+          ..text = isKnown ? rate?.value.toString() ?? '0' : rateController.text, // set constant value if needed
         enabled: !isKnown, // disables editing when condition is true
         decoration: InputDecoration(
           labelText: l10n.proposalFieldRate(

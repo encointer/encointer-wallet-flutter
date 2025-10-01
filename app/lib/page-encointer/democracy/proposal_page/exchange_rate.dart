@@ -54,9 +54,7 @@ KnownCommunity knownCommunityFromMetadata(String symbol) {
   };
 }
 
-enum LocalFiatCurrencies {
-  chf, ngn, tzs
-}
+enum LocalFiatCurrencies { chf, ngn, tzs }
 
 extension LocalFiatCurrenciesExt on LocalFiatCurrencies {
   String get symbol {
