@@ -28,34 +28,34 @@ class ForexService {
 
     final prefs = await SharedPreferences.getInstance();
 
-    // // 1. In-memory cache
-    // final cached = _cache[cacheKey];
-    // if (cached != null) {
-    //   final fresh = DateTime.now().isBefore(cached.expiry);
-    //   if (fresh) {
-    //     return ForexRate(
-    //       value: cached.value,
-    //       fetchedAt: cached.fetchedAt,
-    //       isStale: false,
-    //     );
-    //   }
-    // }
-    //
-    // // 2. Persistent cache
-    // final storedJson = prefs.getString('forex_$cacheKey');
-    // _CacheEntry? stored;
-    // if (storedJson != null) {
-    //   stored = _CacheEntry.fromJson(json.decode(storedJson) as Map<String, dynamic>);
-    //   final fresh = DateTime.now().isBefore(stored.expiry);
-    //   if (fresh) {
-    //     _cache[cacheKey] = stored;
-    //     return ForexRate(
-    //       value: stored.value,
-    //       fetchedAt: stored.fetchedAt,
-    //       isStale: false,
-    //     );
-    //   }
-    // }
+    // 1. In-memory cache
+    final cached = _cache[cacheKey];
+    if (cached != null) {
+      final fresh = DateTime.now().isBefore(cached.expiry);
+      if (fresh) {
+        return ForexRate(
+          value: cached.value,
+          fetchedAt: cached.fetchedAt,
+          isStale: false,
+        );
+      }
+    }
+
+    // 2. Persistent cache
+    final storedJson = prefs.getString('forex_$cacheKey');
+    _CacheEntry? stored;
+    if (storedJson != null) {
+      stored = _CacheEntry.fromJson(json.decode(storedJson) as Map<String, dynamic>);
+      final fresh = DateTime.now().isBefore(stored.expiry);
+      if (fresh) {
+        _cache[cacheKey] = stored;
+        return ForexRate(
+          value: stored.value,
+          fetchedAt: stored.fetchedAt,
+          isStale: false,
+        );
+      }
+    }
 
     // 3. Fetch from API
     final primaryUrl = Uri.parse('$_primaryBaseUrl/$baseNormalized.json');
@@ -77,14 +77,14 @@ class ForexService {
 
     // 4. Stale fallback
     if (preferStale) {
-      // final entry = cached ?? stored;
-      // if (entry != null) {
-      //   return ForexRate(
-      //     value: entry.value,
-      //     fetchedAt: entry.fetchedAt,
-      //     isStale: true,
-      //   );
-      // }
+      final entry = cached ?? stored;
+      if (entry != null) {
+        return ForexRate(
+          value: entry.value,
+          fetchedAt: entry.fetchedAt,
+          isStale: true,
+        );
+      }
     }
 
     return null;
