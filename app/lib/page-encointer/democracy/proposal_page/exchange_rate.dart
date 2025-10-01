@@ -1,7 +1,7 @@
 // Hardcoded exchange rates of CC to the local national currency.
-const num leuToChf = 1;
-const num nytToTzs = 1;
-const num pnqToNgn = 1;
+const num leuPerChf = 2;
+const num nytPerTzs = 2;
+const num pnqPerNgn = 2;
 
 const leu = 'leu';
 const pnq = 'pnq';
@@ -29,6 +29,14 @@ extension KnownCommunityExt on KnownCommunity {
       KnownCommunity.leu => leu,
       KnownCommunity.nyt => nyt,
       KnownCommunity.pnq => pnq,
+    };
+  }
+
+  num get ccPerFiatRate {
+    return switch (this) {
+      KnownCommunity.leu => leuPerChf,
+      KnownCommunity.nyt => nytPerTzs,
+      KnownCommunity.pnq => pnqPerNgn,
     };
   }
 }
