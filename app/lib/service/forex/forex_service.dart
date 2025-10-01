@@ -98,11 +98,23 @@ class ForexService {
       final resp = await _client.get(url);
       if (resp.statusCode == 200) {
         Log.d('Response: ${resp.body}', logTarget);
-        final data = json.decode(resp.body);
-        if (data is Map && data.containsKey(base) && data[base] is Map && data[base][target] is num) {
-          return (data[base][target] as num).toDouble();
+        // Cast the decoded JSON to the expected structure
+        final data = json.decode(resp.body) as Map<String, dynamic>?;
+
+        if (data != null && data.containsKey(base)) {
+          // 'baseValue' will be dynamic, needs further checking/casting
+          final baseValue = data[base];
+          if (baseValue is Map<String, dynamic> && baseValue.containsKey(target)) {
+            // 'targetValue' will be dynamic, needs further checking/casting
+            final targetValue = baseValue[target];
+            if (targetValue is num) {
+              return targetValue.toDouble();
+            }
+          }
         }
-        Log.e('Could not find currency in response', logTarget);
+        Log.e('Could not find currency in response. Data structure unexpected.', logTarget);
+      } else {
+        Log.e('Received non-200 status: ${resp.statusCode} from $url', logTarget);
       }
     } catch (e) {
       Log.e('Error fetching rate from $url: $e', logTarget);
