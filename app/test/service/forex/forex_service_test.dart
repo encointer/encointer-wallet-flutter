@@ -91,7 +91,7 @@ void main() {
             client: http.Client(), // real HTTP client
           );
 
-          final rate = await service.getUsdRate('ngn');
+          final rate = await service.getUsdRate(c);
 
           expect(rate, isNotNull);
           expect(rate!.value, greaterThan(0));
