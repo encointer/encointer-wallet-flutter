@@ -59,7 +59,7 @@ jobs:
       - name: "Check translations"
         run: |
           .flutter/bin/dart run melos generate-translations
-          ./scripts/check_translations.sh ./l10n/.untranslated-messages.txt
+          cd l10n && ./scripts/check_translations.sh .untranslated-messages.txt
 
       - name: "Run the build_runner and return an error if files are changed"
         run: |
