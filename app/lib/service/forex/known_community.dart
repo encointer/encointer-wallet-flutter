@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/service/forex/currency.dart';
 
-const num _leuPerChf = 2;
+const num _leuPerChf = 1;
 const num _nytPerTzs = 2;
 const num _pnqPerNgn = 2;
 
