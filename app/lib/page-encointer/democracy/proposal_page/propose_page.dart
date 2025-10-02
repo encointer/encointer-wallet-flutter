@@ -528,7 +528,7 @@ class _ProposePageState extends State<ProposePage> {
       // set constant value if needed
       controller: rateController
         ..text = tryDeriveRate && isKnown ? ccToUsdAfterDiscount.toString() : rateController.text,
-      // disables editing when condition is true
+      // We want to derive a sane value for well-known communities and disable editing.
       enabled: !tryDeriveRate && isKnown,
       decoration: InputDecoration(
         labelText: l10n.proposalFieldRate(
