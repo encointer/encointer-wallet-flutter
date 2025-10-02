@@ -1,3 +1,6 @@
+/// Some well-known communities where we define a fixed rate of CC -> local fiat,
+/// and then USD with an applied discount.
+
 import 'package:encointer_wallet/service/forex/currency.dart';
 
 const num _leuPerChf = 1;

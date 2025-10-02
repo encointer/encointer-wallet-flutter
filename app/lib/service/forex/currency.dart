@@ -1,3 +1,5 @@
+/// Some well-known fiat currencies used as base or lookup.
+
 enum Currency {
   usd('USD', r'$'),
   eur('EUR', '€'),

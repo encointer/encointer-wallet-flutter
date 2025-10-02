@@ -1,3 +1,7 @@
+/// Forex service for fetching the rates for some well-known communities to USD
+///
+/// Other base currencies can also be used.
+
 import 'dart:convert';
 import 'package:encointer_wallet/service/forex/currency.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
