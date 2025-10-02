@@ -145,9 +145,10 @@ class _ProposePageState extends State<ProposePage> {
     final store = context.read<AppStore>();
     final symbol = store.encointer.community!.symbol!;
 
-    if (isKnownCommunity(symbol)) {
-      final knowCommunity = knownCommunityFromMetadata(symbol);
-      final fiat = knowCommunity.localFiatCurrency;
+    final knownCommunity = KnownCommunity.tryFromSymbol(symbol);
+
+    if (knownCommunity != null) {
+      final fiat = knownCommunity.localFiat;
       final forexRate = await forexService.getUsdRate(fiat);
       Log.d('[updateExchangeRate] got forex exchange rate usd->$fiat: ${forexRate?.value}');
       setState(() {
@@ -476,7 +477,7 @@ class _ProposePageState extends State<ProposePage> {
     final l10n = context.l10n;
     final store = context.read<AppStore>();
 
-    final isKnown = isKnownCommunity(store.encointer.community!.symbol!);
+    final isKnown = KnownCommunity.isKnown(store.encointer.community!.symbol!);
 
     return [
       TextFormField(

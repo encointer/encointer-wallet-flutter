@@ -1,57 +1,58 @@
 import 'package:encointer_wallet/service/forex/currency.dart';
 
-// Hardcoded exchange rates of CC to the local national currency.
-const num leuPerChf = 2;
-const num nytPerTzs = 2;
-const num pnqPerNgn = 2;
+/// Hardcoded exchange rates of CC to local fiat
+const num _leuPerChf = 2;
+const num _nytPerTzs = 2;
+const num _pnqPerNgn = 2;
 
-const leu = 'leu';
-const pnq = 'pnq';
-const nyt = 'nyt';
-
-const discount = 0.2;
+/// Discount applied to communities (can be per-community if needed)
+const double _defaultDiscount = 0.2;
 
 enum KnownCommunity {
-  leu,
-  nyt,
-  pnq,
-}
+  leu(
+    symbol: 'leu',
+    localFiat: Currency.chf,
+    ccPerFiatRate: _leuPerChf,
+    discount: _defaultDiscount,
+  ),
+  nyt(
+    symbol: 'nyt',
+    localFiat: Currency.tzs,
+    ccPerFiatRate: _nytPerTzs,
+    discount: _defaultDiscount,
+  ),
+  pnq(
+    symbol: 'pnq',
+    localFiat: Currency.ngn,
+    ccPerFiatRate: _pnqPerNgn,
+    discount: _defaultDiscount,
+  );
 
-extension KnownCommunityExt on KnownCommunity {
-  Currency get localFiatCurrency {
-    return switch (this) {
-      KnownCommunity.leu => Currency.chf,
-      KnownCommunity.nyt => Currency.tzs,
-      KnownCommunity.pnq => Currency.ngn,
-    };
-  }
+  const KnownCommunity({
+    required this.symbol,
+    required this.localFiat,
+    required this.ccPerFiatRate,
+    required this.discount,
+  });
 
-  String get symbol {
-    return switch (this) {
-      KnownCommunity.leu => leu,
-      KnownCommunity.nyt => nyt,
-      KnownCommunity.pnq => pnq,
-    };
-  }
+  /// Community symbol (e.g., 'leu', 'nyt', 'pnq')
+  final String symbol;
 
-  num get ccPerFiatRate {
-    return switch (this) {
-      KnownCommunity.leu => leuPerChf,
-      KnownCommunity.nyt => nytPerTzs,
-      KnownCommunity.pnq => pnqPerNgn,
-    };
-  }
-}
+  /// Local fiat currency
+  final Currency localFiat;
 
-bool isKnownCommunity(String symbol) {
-  return KnownCommunity.values.map((e) => e.symbol).contains(symbol.toLowerCase());
-}
+  /// CC per fiat exchange rate
+  final num ccPerFiatRate;
 
-KnownCommunity knownCommunityFromMetadata(String symbol) {
-  return switch (symbol.toLowerCase()) {
-    leu => KnownCommunity.leu,
-    nyt => KnownCommunity.nyt,
-    pnq => KnownCommunity.pnq,
-    _ => throw Exception('Unknown community symbol: $symbol')
-  };
+  /// Discount for this community
+  final double discount;
+
+  /// Lookup map by symbol (lowercase)
+  static final Map<String, KnownCommunity> _lookup = {for (var c in KnownCommunity.values) c.symbol.toLowerCase(): c};
+
+  /// Safe lookup by symbol (returns null if unknown)
+  static KnownCommunity? tryFromSymbol(String symbol) => _lookup[symbol.toLowerCase()];
+
+  /// Check if a symbol belongs to a known community
+  static bool isKnown(String symbol) => _lookup.containsKey(symbol.toLowerCase());
 }
