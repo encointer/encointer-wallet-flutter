@@ -1,7 +1,7 @@
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 
 class AppAlert {
   static Future<T?> showDialog<T>(

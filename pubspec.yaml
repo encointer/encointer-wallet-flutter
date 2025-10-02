@@ -13,6 +13,7 @@ workspace:
   - packages/ew_storage
   - packages/ew_substrate_fixed
   - packages/ew_test_keys
+  - packages/l10n
 
 environment:
   sdk: ">=3.6.0 <4.0.0"
@@ -88,8 +89,8 @@ melos:
       description: "Generate code with build_runner"
 
     generate-translations:
-      run: cd app && flutter gen-l10n
-      description: "Generate translationsr"
+      run: cd packages/l10n && flutter gen-l10n
+      description: "Generate translations"
 
     # Note: This produces bad filepaths on windows. Need to run this script afterwards:
     # `./scripts/replace_backslash_in_dart_files.sh packages/ew_polkadart`.

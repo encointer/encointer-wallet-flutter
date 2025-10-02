@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppService {

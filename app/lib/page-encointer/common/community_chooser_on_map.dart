@@ -13,7 +13,7 @@ import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 import 'package:provider/provider.dart';
 
 class CommunityChooserOnMap extends StatefulWidget {

@@ -10,7 +10,7 @@ import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_schedule.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 
 class CeremonyInfo extends StatelessWidget {
   const CeremonyInfo({
