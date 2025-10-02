@@ -13,7 +13,7 @@ workspace:
   - packages/ew_storage
   - packages/ew_substrate_fixed
   - packages/ew_test_keys
-  - packages/l10n
+  - l10n
 
 environment:
   sdk: ">=3.6.0 <4.0.0"
@@ -47,11 +47,11 @@ melos:
 
   scripts:
     format-120:
-      run: dart format . --line-length 120
+      run: dart format app --line-length 120 && dart format packages --line-length 120
       description: "Format all Dart code"
 
     format-check:
-      run: dart format . --line-length 120 --set-exit-if-changed
+      run: dart format app --line-length 120 --set-exit-if-changed && dart format packages --line-length 120 --set-exit-if-changed
       description: "Check format all Dart code"
 
     analyze:
@@ -89,7 +89,7 @@ melos:
       description: "Generate code with build_runner"
 
     generate-translations:
-      run: cd packages/l10n && flutter gen-l10n
+      run: cd l10n && flutter gen-l10n
       description: "Generate translations"
 
     # Note: This produces bad filepaths on windows. Need to run this script afterwards:
