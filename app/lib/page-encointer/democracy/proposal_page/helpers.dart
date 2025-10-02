@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/asset_id.dart';
 

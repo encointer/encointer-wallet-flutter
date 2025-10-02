@@ -15,7 +15,7 @@ import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';

@@ -12,7 +12,7 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 import 'package:ew_keyring/ew_keyring.dart' show AddressUtils, Address;
 
 class ScanClaimQrCode extends StatefulWidget {

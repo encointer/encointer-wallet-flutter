@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
 class EmptyBusiness extends StatelessWidget {

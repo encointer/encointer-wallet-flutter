@@ -10,7 +10,7 @@ import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dar
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_step2_scan2.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 
 class CeremonyStep1Count extends StatelessWidget {
   CeremonyStep1Count(this.store, this.api, {super.key});
