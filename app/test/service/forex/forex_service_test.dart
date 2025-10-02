@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:encointer_wallet/service/forex/currency.dart';
 import 'package:encointer_wallet/service/forex/forex_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -20,7 +21,7 @@ void main() {
       SharedPreferences.setMockInitialValues({});
       final service = ForexService(client: mockClient);
 
-      final rate = await service.getRate('usd', 'ngn');
+      final rate = await service.getRate(Currency.usd, Currency.ngn);
 
       expect(rate, isNotNull);
       expect(rate!.value, 1600.5);
@@ -41,7 +42,7 @@ void main() {
       final mockClient = MockClient((_) async => http.Response('fail', 500));
       final service = ForexService(client: mockClient);
 
-      final rate = await service.getRate('usd', 'ngn');
+      final rate = await service.getRate(Currency.usd, Currency.ngn);
 
       expect(rate, isNotNull);
       expect(rate!.value, 1234.5);
@@ -61,7 +62,7 @@ void main() {
       final mockClient = MockClient((_) async => http.Response('fail', 500));
       final service = ForexService(client: mockClient);
 
-      final rate = await service.getRate('usd', 'ngn');
+      final rate = await service.getRate(Currency.usd, Currency.ngn);
 
       expect(rate, isNotNull);
       expect(rate!.isStale, true);
@@ -73,16 +74,16 @@ void main() {
       final mockClient = MockClient((_) async => http.Response('fail', 500));
       final service = ForexService(client: mockClient, preferStale: false);
 
-      final rate = await service.getRate('usd', 'ngn');
+      final rate = await service.getRate(Currency.usd, Currency.ngn);
 
       expect(rate, isNull);
     });
   });
 
   group('ForexService live API (integration)', () {
-    for (final c in ['chf', 'ngn', 'tzs']) {
+    for (final c in Currency.values) {
       test(
-        'fetches USD->$c successfully from real API',
+        'fetches USD->${c.isoCode} successfully from real API',
         () async {
           // Use in-memory SharedPreferences so plugin is not needed
           SharedPreferences.setMockInitialValues({});

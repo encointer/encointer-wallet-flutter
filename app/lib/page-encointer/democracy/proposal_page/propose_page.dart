@@ -147,7 +147,7 @@ class _ProposePageState extends State<ProposePage> {
 
     if (isKnownCommunity(symbol)) {
       final knowCommunity = knownCommunityFromMetadata(symbol);
-      final fiat = knowCommunity.localFiatCurrency.symbol;
+      final fiat = knowCommunity.localFiatCurrency;
       final forexRate = await forexService.getUsdRate(fiat);
       Log.d('[updateExchangeRate] got forex exchange rate usd->$fiat: ${forexRate?.value}');
       setState(() {

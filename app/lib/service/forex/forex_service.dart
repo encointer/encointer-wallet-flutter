@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:encointer_wallet/service/forex/currency.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,10 +22,10 @@ class ForexService {
   final http.Client _client;
 
   /// Generic method: fetch exchange rate from [base] to [target].
-  Future<ForexRate?> getRate(String base, String target) async {
-    final baseNormalized = base.toLowerCase();
-    final targetNormalized = target.toLowerCase();
-    final cacheKey = '$baseNormalized-$targetNormalized';
+  Future<ForexRate?> getRate(Currency base, Currency target) async {
+    final baseIsoCode = base.isoCodeLower;
+    final targetIsoCode = target.isoCodeLower;
+    final cacheKey = '$baseIsoCode-$targetIsoCode';
 
     final prefs = await SharedPreferences.getInstance();
 
@@ -58,11 +59,11 @@ class ForexService {
     }
 
     // 3. Fetch from API
-    final primaryUrl = Uri.parse('$_primaryBaseUrl/$baseNormalized.json');
-    final fallbackUrl = Uri.parse('$_fallbackBaseUrl/$baseNormalized.json');
+    final primaryUrl = Uri.parse('$_primaryBaseUrl/$baseIsoCode.json');
+    final fallbackUrl = Uri.parse('$_fallbackBaseUrl/$baseIsoCode.json');
 
-    var rate = await _fetchRateFromUrl(primaryUrl, baseNormalized, targetNormalized);
-    rate ??= await _fetchRateFromUrl(fallbackUrl, baseNormalized, targetNormalized);
+    var rate = await _fetchRateFromUrl(primaryUrl, base, target);
+    rate ??= await _fetchRateFromUrl(fallbackUrl, base, target);
 
     if (rate != null) {
       final entry = _CacheEntry(
@@ -91,9 +92,12 @@ class ForexService {
   }
 
   /// Convenience wrapper: always use USD as base.
-  Future<ForexRate?> getUsdRate(String target) => getRate('usd', target);
+  Future<ForexRate?> getUsdRate(Currency target) => getRate(Currency.usd, target);
 
-  Future<double?> _fetchRateFromUrl(Uri url, String base, String target) async {
+  Future<double?> _fetchRateFromUrl(Uri url, Currency base, Currency target) async {
+    final baseIsoCode = base.isoCodeLower;
+    final targetIsoCode = target.isoCodeLower;
+
     try {
       final resp = await _client.get(url);
       if (resp.statusCode == 200) {
@@ -101,12 +105,12 @@ class ForexService {
         // Cast the decoded JSON to the expected structure
         final data = json.decode(resp.body) as Map<String, dynamic>?;
 
-        if (data != null && data.containsKey(base)) {
+        if (data != null && data.containsKey(baseIsoCode)) {
           // 'baseValue' will be dynamic, needs further checking/casting
-          final baseValue = data[base];
-          if (baseValue is Map<String, dynamic> && baseValue.containsKey(target)) {
+          final baseValue = data[baseIsoCode];
+          if (baseValue is Map<String, dynamic> && baseValue.containsKey(targetIsoCode)) {
             // 'targetValue' will be dynamic, needs further checking/casting
-            final targetValue = baseValue[target];
+            final targetValue = baseValue[targetIsoCode];
             if (targetValue is num) {
               return targetValue.toDouble();
             }

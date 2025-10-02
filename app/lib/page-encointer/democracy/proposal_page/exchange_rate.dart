@@ -1,3 +1,5 @@
+import 'package:encointer_wallet/service/forex/currency.dart';
+
 // Hardcoded exchange rates of CC to the local national currency.
 const num leuPerChf = 2;
 const num nytPerTzs = 2;
@@ -16,11 +18,11 @@ enum KnownCommunity {
 }
 
 extension KnownCommunityExt on KnownCommunity {
-  LocalFiatCurrencies get localFiatCurrency {
+  Currency get localFiatCurrency {
     return switch (this) {
-      KnownCommunity.leu => LocalFiatCurrencies.chf,
-      KnownCommunity.nyt => LocalFiatCurrencies.tzs,
-      KnownCommunity.pnq => LocalFiatCurrencies.ngn,
+      KnownCommunity.leu => Currency.chf,
+      KnownCommunity.nyt => Currency.tzs,
+      KnownCommunity.pnq => Currency.ngn,
     };
   }
 
@@ -52,16 +54,4 @@ KnownCommunity knownCommunityFromMetadata(String symbol) {
     pnq => KnownCommunity.pnq,
     _ => throw Exception('Unknown community symbol: $symbol')
   };
-}
-
-enum LocalFiatCurrencies { chf, ngn, tzs }
-
-extension LocalFiatCurrenciesExt on LocalFiatCurrencies {
-  String get symbol {
-    return switch (this) {
-      LocalFiatCurrencies.chf => 'chf',
-      LocalFiatCurrencies.ngn => 'ngn',
-      LocalFiatCurrencies.tzs => 'tzs',
-    };
-  }
 }
