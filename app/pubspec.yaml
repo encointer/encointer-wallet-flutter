@@ -40,8 +40,6 @@ dependencies:
   flutter_local_notifications: ^19.4.2
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
   base58check: ^2.0.0
   package_info_plus: ^9.0.0
   quiver: ^3.2.2
@@ -81,6 +79,7 @@ dependencies:
   timezone: ^0.10.0
   ew_endpoint_manager: 0.1.0
   ew_encointer_utils: 0.1.0
+  ew_l10n: 0.1.0
   ew_storage: 0.1.0
   ew_http: 0.1.0
   ew_keyring: 0.1.0
