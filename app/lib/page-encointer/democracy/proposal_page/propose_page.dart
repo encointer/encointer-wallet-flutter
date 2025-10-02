@@ -522,13 +522,12 @@ class _ProposePageState extends State<ProposePage> {
 
     final knownCommunity = KnownCommunity.tryFromSymbol(store.encointer.community!.symbol!);
     final isKnown = knownCommunity != null;
+    final ccToUsdAfterDiscount = knownCommunity!.ccPerUsd(rate?.value ?? 0);
 
     return TextFormField(
       // set constant value if needed
       controller: rateController
-        ..text = tryDeriveRate && isKnown
-            ? knownCommunity.computeCcUsdRateFromLocalFiat(rate?.value ?? 0).toString()
-            : rateController.text,
+        ..text = tryDeriveRate && isKnown ? ccToUsdAfterDiscount.toString() : rateController.text,
       // disables editing when condition is true
       enabled: !tryDeriveRate && isKnown,
       decoration: InputDecoration(

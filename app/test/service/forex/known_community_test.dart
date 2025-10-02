@@ -13,36 +13,68 @@ void main() {
       expect(KnownCommunity.isKnown('xyz'), false);
     });
 
-    // One well-understandable explicit test
-    test('CC → USD computation with mock local fiat rate', () {
-      const leu = KnownCommunity.nyt;
-      const mockLocalFiatToUsd = 1.1; // pretend 1 CHF = 1.1 USD
+    group('computeCcUsdFromApiRate', () {
+      // Unparameterized example for LEU community (for better understanding)
+      test('1 USD -> 0.79 CHF, LEU community', () {
+        const community = KnownCommunity.leu;
 
-      final ccUsdRate = leu.computeCcUsdRateFromLocalFiat(mockLocalFiatToUsd);
+        const usdToChfRate = 0.79; // 1 USD = 0.79 CHF
 
-      // 1 CC = 0.5 CHF * 1.1 USD * (1 - 0.2 discount) = 0.44
-      expect(ccUsdRate, closeTo(0.44, 1e-6));
-    });
+        final ccUsdRate = community.ccPerUsd(usdToChfRate);
 
-    // test the rest parametrized
-    test('CC → USD computation with mock local fiat rate', () {
-      const mockRates = {
-        'leu': 1.1, // 1 CHF = 1.1 USD
-        'nyt': 0.0043, // 1 TZS = 0.0043 USD
-        'pnq': 0.0023, // 1 NGN = 0.0023 USD
+        // Manual calculation:
+        // 1 CC = 1 CHF
+        // 1 USD = 0.79 CHF
+        // Apply discount 0.2 → 1 CHF/CC * 0.79 [USD/CHF] * 0.8 ≈ 0.632 USD
+        expect(ccUsdRate, closeTo(0.6320, 1e-6));
+      });
+
+      test('1 USD -> 0.79 CHF, LEU community', () {
+        const community = KnownCommunity.leu;
+
+        const usdToChfRate = 0.79; // 1 USD = 0.79 CHF
+
+        final ccUsdRate = community.ccPerUsd(usdToChfRate);
+
+        // Manual calculation:
+        // 1 CC = 1 CHF
+        // 1 USD = 0.79 CHF
+        // Apply discount 0.2 → 1 CC/CHF * 0.79 [USD/CHF] * 0.8 ≈ 0.632 USD
+        expect(ccUsdRate, closeTo(0.6320, 1e-6));
+      });
+
+      test('1 USD -> 0.1484.76300699 NGN, PNQ community', () {
+        const community = KnownCommunity.pnq;
+
+        const usdToNgnRate = 2452.61; // 1 USD = 2452.61339866 CHF
+
+        final ccUsdRate = community.ccPerUsd(usdToNgnRate);
+
+        // Manual calculation:
+        // 2 CC = 1 CHF
+        // 1 USD = 2452.61 NGN
+        // Apply discount 0.2 → 1/2 CC/CHF * 2452.61 [USD/CHF] * 0.8 ≈ 981.044 CC/USD
+        expect(ccUsdRate, closeTo(981.044, 1e-6));
+      });
+
+      // Mock API rates: 1 USD = x local fiat
+      const apiRates = {
+        'leu': 0.79, // 1 USD = 0.79 CHF
+        'nyt': 2452.61, // 1 USD = 2452.61339866 TZS
+        'pnq': 1484.76, // 1 USD = 1484.76300699 NGN
       };
 
-      for (final community in KnownCommunity.values) {
-        final mockLocalToUsd = mockRates[community.symbol]!;
-        final ccUsdRate = community.computeCcUsdRateFromLocalFiat(mockLocalToUsd);
+      test('computes CC -> USD for all communities (USD->localFiat)', () {
+        for (final community in KnownCommunity.values) {
+          final usdToLocal = apiRates[community.symbol]!;
 
-        // sanity check: rate > 0
-        expect(ccUsdRate, greaterThan(0));
+          final ccUsdRate = community.ccPerUsd(usdToLocal);
 
-        // optionally, verify manual calculation
-        final expected = (1 / community.ccPerLocalFiat) * mockLocalToUsd * (1 - community.discount);
-        expect(ccUsdRate, closeTo(expected, 1e-6));
-      }
+          final expected = (1 / community.localFiatRate) * usdToLocal * (1 - community.discount);
+
+          expect(ccUsdRate, closeTo(expected, 1e-6), reason: 'CC → USD failed for ${community.symbol}');
+        }
+      });
     });
   });
 }

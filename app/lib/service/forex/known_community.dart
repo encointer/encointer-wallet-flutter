@@ -10,14 +10,14 @@ const num _pnqPerNgn = 2;
 const double _defaultDiscount = 0.2;
 
 enum KnownCommunity {
-  leu(symbol: 'leu', fiatCurrency: Currency.chf, ccPerLocalFiat: _leuPerChf, discount: _defaultDiscount),
-  nyt(symbol: 'nyt', fiatCurrency: Currency.tzs, ccPerLocalFiat: _nytPerTzs, discount: _defaultDiscount),
-  pnq(symbol: 'pnq', fiatCurrency: Currency.ngn, ccPerLocalFiat: _pnqPerNgn, discount: _defaultDiscount);
+  leu(symbol: 'leu', fiatCurrency: Currency.chf, localFiatRate: _leuPerChf, discount: _defaultDiscount),
+  nyt(symbol: 'nyt', fiatCurrency: Currency.tzs, localFiatRate: _nytPerTzs, discount: _defaultDiscount),
+  pnq(symbol: 'pnq', fiatCurrency: Currency.ngn, localFiatRate: _pnqPerNgn, discount: _defaultDiscount);
 
   const KnownCommunity({
     required this.symbol,
     required this.fiatCurrency,
-    required this.ccPerLocalFiat,
+    required this.localFiatRate,
     required this.discount,
   });
 
@@ -25,8 +25,8 @@ enum KnownCommunity {
   final String symbol;
   // Local fiat
   final Currency fiatCurrency;
-  // How many CC per 1 unit local fiat
-  final num ccPerLocalFiat;
+  // How many CC per 1 unit local fiat ([LocalFiat/CC])
+  final num localFiatRate;
   // Discount applied
   final double discount;
 
@@ -38,9 +38,11 @@ enum KnownCommunity {
   static bool isKnown(String symbol) => _lookup.containsKey(symbol.toLowerCase());
 }
 
-extension KnownCommunityRates on KnownCommunity {
-  /// Computes the CC → USD rate using a pre-fetched localFiat → USD rate
-  double computeCcUsdRateFromLocalFiat(double localFiatToUsd) {
-    return (1 / ccPerLocalFiat) * localFiatToUsd * (1 - discount);
+extension UsdRateExtension on KnownCommunity {
+  /// [CC/LocalFiat] * [localFiat/USD] * discount
+  ///
+  /// [usdRate] needs to be in [localFiat/USD]
+  double ccPerUsd(double usdRate) {
+    return (1 / localFiatRate) * usdRate * (1 - discount);
   }
 }
