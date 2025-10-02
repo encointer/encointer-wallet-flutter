@@ -34,3 +34,10 @@ enum KnownCommunity {
 
   static bool isKnown(String symbol) => _lookup.containsKey(symbol.toLowerCase());
 }
+
+extension KnownCommunityRates on KnownCommunity {
+  /// Computes the CC → USD rate using a pre-fetched localFiat → USD rate
+  double computeCcUsdRateFromLocalFiat(double localFiatToUsd) {
+    return (1 / ccPerLocalFiat) * localFiatToUsd * (1 - discount);
+  }
+}

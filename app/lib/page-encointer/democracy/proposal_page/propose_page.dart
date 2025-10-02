@@ -463,21 +463,21 @@ class _ProposePageState extends State<ProposePage> {
     final maxSwapValue = selectedScope.isLocal
         ? maxTreasuryPayoutFraction * Fmt.bigIntToDouble(localTreasuryBalance - pendingLocalSpends, ertDecimals)
         : maxTreasuryPayoutFraction * Fmt.bigIntToDouble(globalTreasuryBalance - pendingGlobalSpends, ertDecimals);
-    return Column(children: issueSwapOptionInput('KSM', maxSwapValue));
+    return Column(children: issueSwapOptionInput('KSM', maxSwapValue, false));
   }
 
   Widget issueSwapAssetOptionInput() {
     final maxSwapValue =
         maxTreasuryPayoutFraction * Fmt.bigIntToDouble(assetTreasuryLiquidity(selectedAsset), selectedAsset.decimals);
-    return Column(
-        children: [selectAssetDropDown(), ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), maxSwapValue)]);
+    return Column(children: [
+      selectAssetDropDown(),
+      ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), maxSwapValue, true)
+    ]);
   }
 
-  List<Widget> issueSwapOptionInput(String currency, double? maxValue) {
+  List<Widget> issueSwapOptionInput(String currency, double? maxValue, bool tryDeriveRate) {
     final l10n = context.l10n;
     final store = context.read<AppStore>();
-
-    final isKnown = KnownCommunity.isKnown(store.encointer.community!.symbol!);
 
     return [
       TextFormField(
@@ -498,29 +498,7 @@ class _ProposePageState extends State<ProposePage> {
           });
         },
       ),
-      TextFormField(
-        controller: rateController
-          ..text = isKnown ? rate?.value.toString() ?? '0' : rateController.text, // set constant value if needed
-        enabled: !isKnown, // disables editing when condition is true
-        decoration: InputDecoration(
-          labelText: l10n.proposalFieldRate(
-            currency,
-            store.encointer.community!.symbol!,
-          ),
-          errorText: rateError,
-        ),
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [
-          // Only numbers & decimal
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-        ],
-        validator: validatePositiveNumber,
-        onChanged: (value) {
-          setState(() {
-            rateError = validatePositiveNumber(value);
-          });
-        },
-      ),
+      rateInput(currency, tryDeriveRate),
       const SizedBox(height: 10),
       EncointerAddressInputField(
         store,
@@ -536,6 +514,42 @@ class _ProposePageState extends State<ProposePage> {
       // Text(l10n.proposalFieldBurn, style: const TextStyle(fontWeight: FontWeight.bold)),
       // Text(l10n.proposalFieldValidity, style: const TextStyle(fontWeight: FontWeight.bold)),
     ];
+  }
+
+  Widget rateInput(String currency, bool tryDeriveRate) {
+    final l10n = context.l10n;
+    final store = context.read<AppStore>();
+
+    final knownCommunity = KnownCommunity.tryFromSymbol(store.encointer.community!.symbol!);
+    final isKnown = knownCommunity != null;
+
+    return TextFormField(
+      // set constant value if needed
+      controller: rateController
+        ..text = tryDeriveRate && isKnown
+            ? knownCommunity.computeCcUsdRateFromLocalFiat(rate?.value ?? 0).toString()
+            : rateController.text,
+      // disables editing when condition is true
+      enabled: !tryDeriveRate && isKnown,
+      decoration: InputDecoration(
+        labelText: l10n.proposalFieldRate(
+          currency,
+          store.encointer.community!.symbol!,
+        ),
+        errorText: rateError,
+      ),
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      inputFormatters: [
+        // Only numbers & decimal
+        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
+      ],
+      validator: validatePositiveNumber,
+      onChanged: (value) {
+        setState(() {
+          rateError = validatePositiveNumber(value);
+        });
+      },
+    );
   }
 
   Widget petitionInput(BuildContext context) {
