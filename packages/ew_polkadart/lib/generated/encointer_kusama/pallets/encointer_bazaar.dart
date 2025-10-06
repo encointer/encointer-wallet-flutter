@@ -126,65 +126,59 @@ class Queries {
 class Txs {
   const Txs();
 
-  _i10.RuntimeCall createBusiness({
+  _i10.EncointerBazaar createBusiness({
     required _i2.CommunityIdentifier cid,
     required List<int> url,
   }) {
-    final _call = _i11.Call.values.createBusiness(
+    return _i10.EncointerBazaar(_i11.CreateBusiness(
       cid: cid,
       url: url,
-    );
-    return _i10.RuntimeCall.values.encointerBazaar(_call);
+    ));
   }
 
-  _i10.RuntimeCall updateBusiness({
+  _i10.EncointerBazaar updateBusiness({
     required _i2.CommunityIdentifier cid,
     required List<int> url,
   }) {
-    final _call = _i11.Call.values.updateBusiness(
+    return _i10.EncointerBazaar(_i11.UpdateBusiness(
       cid: cid,
       url: url,
-    );
-    return _i10.RuntimeCall.values.encointerBazaar(_call);
+    ));
   }
 
-  _i10.RuntimeCall deleteBusiness({required _i2.CommunityIdentifier cid}) {
-    final _call = _i11.Call.values.deleteBusiness(cid: cid);
-    return _i10.RuntimeCall.values.encointerBazaar(_call);
+  _i10.EncointerBazaar deleteBusiness({required _i2.CommunityIdentifier cid}) {
+    return _i10.EncointerBazaar(_i11.DeleteBusiness(cid: cid));
   }
 
-  _i10.RuntimeCall createOffering({
+  _i10.EncointerBazaar createOffering({
     required _i2.CommunityIdentifier cid,
     required List<int> url,
   }) {
-    final _call = _i11.Call.values.createOffering(
+    return _i10.EncointerBazaar(_i11.CreateOffering(
       cid: cid,
       url: url,
-    );
-    return _i10.RuntimeCall.values.encointerBazaar(_call);
+    ));
   }
 
-  _i10.RuntimeCall updateOffering({
+  _i10.EncointerBazaar updateOffering({
     required _i2.CommunityIdentifier cid,
     required int oid,
     required List<int> url,
   }) {
-    final _call = _i11.Call.values.updateOffering(
+    return _i10.EncointerBazaar(_i11.UpdateOffering(
       cid: cid,
       oid: oid,
       url: url,
-    );
-    return _i10.RuntimeCall.values.encointerBazaar(_call);
+    ));
   }
 
-  _i10.RuntimeCall deleteOffering({
+  _i10.EncointerBazaar deleteOffering({
     required _i2.CommunityIdentifier cid,
     required int oid,
   }) {
-    final _call = _i11.Call.values.deleteOffering(
+    return _i10.EncointerBazaar(_i11.DeleteOffering(
       cid: cid,
       oid: oid,
-    );
-    return _i10.RuntimeCall.values.encointerBazaar(_call);
+    ));
   }
 }

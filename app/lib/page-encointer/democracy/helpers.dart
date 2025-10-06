@@ -1,9 +1,10 @@
 import 'dart:math';
 
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/location/location.dart';
+import 'package:encointer_wallet/page-encointer/democracy/proposal_page/asset_id.dart';
 import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -29,11 +30,13 @@ import 'package:ew_polkadart/ew_polkadart.dart'
         RemoveLocation,
         SetInactivityTimeout,
         SpendNative,
+        SpendAsset,
         SupersededBy,
         Tally,
         UpdateDemurrage,
         UpdateNominalIncome,
-        IssueSwapNativeOption;
+        IssueSwapNativeOption,
+        IssueSwapAssetOption;
 
 /// Gets the localized proposal action title.
 ///
@@ -100,6 +103,38 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
       final rateFmt = rate != null ? Fmt.doubleFormat(rate, length: 2) : 'no-rate-found';
 
       return l10n.proposalIssueSwapNativeOption(cidStr, beneficiary, Fmt.doubleFormat(allowance, length: 2), rateFmt);
+    case SpendAsset:
+      final spendAsset = action as SpendAsset;
+      final cidPolkadart = getCommunityIdentifierFromProposal(action);
+      final cidStr = cidOrGlobal(cidPolkadart, store);
+      final beneficiary =
+          Fmt.address(AddressUtils.pubKeyToAddress(spendAsset.value1, prefix: store.settings.currentNetwork.ss58()))!;
+
+      final asset = fromVersionedLocatableAsset(action.value3);
+      final amount = Fmt.token(action.value2, asset.decimals);
+
+      return l10n.proposalSpendAsset(asset.symbol, cidStr, amount, beneficiary);
+    case IssueSwapAssetOption:
+      final issueOption = action as IssueSwapAssetOption;
+      final cidPolkadart = getCommunityIdentifierFromProposal(action);
+      final cidStr = cidOrGlobal(cidPolkadart, store);
+      final beneficiary =
+          Fmt.address(AddressUtils.pubKeyToAddress(issueOption.value1, prefix: store.settings.currentNetwork.ss58()))!;
+      final swapAssetOption = issueOption.value2;
+
+      final asset = fromVersionedLocatableAsset(swapAssetOption.assetId);
+
+      final allowance = Fmt.bigIntToDouble(swapAssetOption.assetAllowance, asset.decimals);
+
+      final rate = swapAssetOption.rate != null
+          ? i64F64Parser.toDouble(swapAssetOption.rate!.bits) * pow(10, asset.decimals)
+          : null;
+
+      // This won't be null until we introduce oracle based rates.
+      final rateFmt = rate != null ? Fmt.doubleFormat(rate, length: 2) : 'no-rate-found';
+
+      return l10n.proposalIssueSwapAssetOption(
+          asset.symbol, cidStr, beneficiary, Fmt.doubleFormat(allowance, length: 2), rateFmt);
     default:
       throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
   }
@@ -152,6 +187,12 @@ et.CommunityIdentifier? getCommunityIdentifierFromProposal(ProposalAction action
     case IssueSwapNativeOption:
       // can be global or local
       return (action as IssueSwapNativeOption).value0;
+    case SpendAsset:
+      // can be global or local
+      return (action as SpendAsset).value0;
+    case IssueSwapAssetOption:
+      // can be global or local
+      return (action as IssueSwapAssetOption).value0;
     default:
       throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
   }

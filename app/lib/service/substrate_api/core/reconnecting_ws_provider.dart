@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
 
+// Todo: Upstream does no also reconnect automatically, so we can simplify.
+// https://github.com/encointer/encointer-wallet-flutter/issues/1819
 class ReconnectingWsProvider extends Provider {
   ReconnectingWsProvider(this.url, {bool autoConnect = true})
       : provider = WsProvider(
@@ -17,7 +19,7 @@ class ReconnectingWsProvider extends Provider {
     await disconnect();
     this.url = url;
     provider = WsProvider(url);
-    await provider.ready();
+    await provider.isReady();
   }
 
   @override
@@ -26,7 +28,7 @@ class ReconnectingWsProvider extends Provider {
       return Future.value();
     } else {
       // We want to use a new channel even if the channel exists but it was closed.
-      provider.channel = null;
+      provider.socket = null;
       provider = WsProvider(url, autoConnect: false);
       return provider.connect();
     }
@@ -37,7 +39,7 @@ class ReconnectingWsProvider extends Provider {
     // We only care if the channel is not equal to null.
     // Because we still want the internal cleanup if
     // the connection was closed from the other end.
-    if (provider.channel == null) {
+    if (provider.socket == null) {
       return Future.value();
     } else {
       try {
@@ -51,12 +53,15 @@ class ReconnectingWsProvider extends Provider {
     }
   }
 
+  Future<void> isReady() {
+    return provider.isReady();
+  }
+
   @override
   bool isConnected() {
     // the `provider.isConnected()` check is wrong upstream.
     // Hence, we implement it ourselves.
-    final channel = provider.channel;
-    return channel != null && channel.closeCode == null;
+    return provider.isOpen;
   }
 
   @override

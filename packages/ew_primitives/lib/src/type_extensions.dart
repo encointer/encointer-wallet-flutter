@@ -5,7 +5,6 @@ import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/acc
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/multi_signature.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/substrate_fixed/fixed_i128.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/substrate_fixed/fixed_u128.dart';
-import 'package:ew_polkadart/generated/encointer_kusama/types/tuples.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
 
 extension KeyringAccountMultiAddressExt on KeyringAccount {

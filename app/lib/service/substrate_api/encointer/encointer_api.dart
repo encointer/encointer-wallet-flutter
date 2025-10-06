@@ -27,7 +27,17 @@ import 'package:ew_http/ew_http.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/encointer_types.dart' show ProofOfAttendance;
 import 'package:ew_polkadart/ew_polkadart.dart'
-    show BlockHash, ByteInput, EncointerKusama, Proposal, SequenceCodec, StorageChangeSet, Tally, Tuple2, U128Codec;
+    show
+        BlockHash,
+        ByteInput,
+        EncointerKusama,
+        Proposal,
+        SequenceCodec,
+        StorageChangeSet,
+        Tally,
+        Tuple2,
+        Input,
+        U128Codec;
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
@@ -56,6 +66,8 @@ class EncointerApi {
   final EncointerKusama encointerKusama;
 
   final AppStore store;
+
+  Future<void>? initialCommunityFetch;
 
   StreamSubscription<StorageChangeSet>? _currentPhaseSubscription;
   StreamSubscription<StorageChangeSet>? _cidSubscription;
@@ -509,11 +521,22 @@ class EncointerApi {
     }
   }
 
+  // Make sure that we initially load the communities once before we
+  // show the map of all communities during onboarding.
+  Future<void> initCommunities() async {
+    initialCommunityFetch =
+        getCommunityIdentifiers().then(store.encointer.setCommunityIdentifiers).then((_) => communitiesGetAll());
+
+    Log.d('api: initCommunities called');
+
+    return initialCommunityFetch;
+  }
+
   /// Subscribes to new community identifies.
   Future<void> subscribeCommunityIdentifiers() async {
     // contrary to the JS subscriptions, we don't get the current
     // value upon subscribing, only when it changes.
-    unawaited(getCommunityIdentifiers().then(store.encointer.setCommunityIdentifiers).then((_) => communitiesGetAll()));
+    unawaited(initCommunities());
 
     await _cidSubscription?.cancel();
     final cidsPhaseKey = encointerKusama.query.encointerCommunities.communityIdentifiersKey();
@@ -673,23 +696,83 @@ class EncointerApi {
 
   Future<String> getTreasuryAccount(CommunityIdentifier? cid, {BlockHash? at}) async {
     final treasuryAccount = await _dartApi.getTreasuryAccount(cid, at: at ?? store.chain.latestHash);
-    Log.d('api: getTreasuryAccount: $treasuryAccount', 'EncointerApi');
-    return treasuryAccount;
+    final address = AddressUtils.transformPrefix(treasuryAccount, store.settings.currentNetwork.ss58());
+    Log.d('api: getTreasuryAccount: $address', 'EncointerApi');
+    return address;
   }
 
   Future<List<et.SwapNativeOption>> getSwapNativeOptions(CommunityIdentifier cid, {BlockHash? at}) async {
     try {
       final prefix = encointerKusama.query.encointerTreasuries.swapNativeOptionsMapPrefix(cid.toPolkadart());
-      final pairs = await encointerKusama.rpc.state.getPairs(prefix, at: at ?? store.chain.latestHash);
+      final keys =
+          await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 50, at: at ?? store.chain.latestHash);
+
+      if (keys.isEmpty) {
+        Log.d('[getSwapNativeOptions] No swap native options found', 'EncointerApi');
+        return List.of([]);
+      }
 
       // Keys including storage prefix.
-      Log.d("[getSwapNativeOptions] storageKeys: ${pairs.map((pair) => '0x${hex.encode(pair.key)}')}");
-      Log.d("[getSwapNativeOptions] storageValues: ${pairs.map((pair) => '0x${hex.encode(pair.value!)}')}");
+      Log.d("[getSwapNativeOptions] storageKeys: ${keys.map((key) => '0x${hex.encode(key)}')}");
 
-      final swapNativeOptions = pairs.map((pair) => et.SwapNativeOption.decode(ByteInput(pair.value!)));
-      return swapNativeOptions.toList();
+      // final cidAccount = keys
+      //     .map((key) =>
+      //         const Tuple2Codec(et.CommunityIdentifier.codec, AccountId32Codec()).decode(ByteInput(key.sublist(32))))
+      //     .toList();
+      //
+      // final swapNativeOptions = await Future.wait(
+      //   cidAccount.map((ca) => encointerKusama.query.encointerTreasuries
+      //       .swapNativeOptions(ca.value0, ca.value1, at: at ?? store.chain.latestHash)
+      //       .then((option) => option!)),
+      // );
+
+      final swapNativeOptions = await Future.wait(keys.map((key) => encointerKusama.rpc.state
+          .getStorage(key)
+          .then((value) => et.SwapNativeOption.codec.decode(Input.fromBytes(value!)))));
+
+      Log.d('[getSwapNativeOptions] SwapNativeOptions: ${swapNativeOptions.map((option) => option.toJson())}');
+
+      return swapNativeOptions;
     } catch (e, s) {
-      Log.e('[getSwapNativeOptions]', '$e', s);
+      Log.e('[getSwapNativeOptions] Error: $e', 'EncointerApi', s);
+      return List.of([]);
+    }
+  }
+
+  Future<List<et.SwapAssetOption>> getSwapAssetOptions(CommunityIdentifier cid, {BlockHash? at}) async {
+    try {
+      final prefix = encointerKusama.query.encointerTreasuries.swapAssetOptionsMapPrefix(cid.toPolkadart());
+      final keys =
+          await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 50, at: at ?? store.chain.latestHash);
+
+      if (keys.isEmpty) {
+        Log.d('[getSwapAssetOptions] No swap asset options found', 'EncointerApi');
+        return List.of([]);
+      }
+
+      // Keys including storage prefix.
+      Log.d("[getSwapAssetOptions] storageKeys: ${keys.map((key) => '0x${hex.encode(key)}')}");
+
+      // final cidAccount = keys
+      //     .map((key) =>
+      //         const Tuple2Codec(et.CommunityIdentifier.codec, AccountId32Codec()).decode(ByteInput(key.sublist(32))))
+      //     .toList();
+      //
+      // final swapAssetsOptions = await Future.wait(
+      //   cidAccount.map((ca) => encointerKusama.query.encointerTreasuries
+      //       .swapAssetOptions(ca.value0, ca.value1, at: at ?? store.chain.latestHash)
+      //       .then((option) => option!)),
+      // );
+
+      final swapAssetsOptions = await Future.wait(keys.map((key) => encointerKusama.rpc.state
+          .getStorage(key)
+          .then((value) => et.SwapAssetOption.codec.decode(Input.fromBytes(value!)))));
+
+      Log.d('[getSwapNativeOptions] SwapNativeOptions: ${swapAssetsOptions.map((option) => option.toJson())}');
+
+      return swapAssetsOptions;
+    } catch (e, s) {
+      Log.e('[getSwapAssetOptions] Error: $e', 'EncointerApi', s);
       return List.of([]);
     }
   }
@@ -725,19 +808,32 @@ class EncointerApi {
   Future<List<BigInt>> getProposalEnactmentQueue({BlockHash? at}) async {
     try {
       final prefix = encointerKusama.query.encointerDemocracy.enactmentQueueMapPrefix();
-      final pairs = await encointerKusama.rpc.state.getPairs(prefix);
+      final keys =
+          await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 50, at: at ?? store.chain.latestHash);
+
+      if (keys.isEmpty) {
+        Log.d('[getProposalEnactmentQueue] No proposals in enactment queue', 'EncointerApi');
+        return List.of([]);
+      }
 
       // Keys including storage prefix.
-      Log.d("[getProposalEnactmentQueue] storageKeys: ${pairs.map((pair) => '0x${hex.encode(pair.key)}')}");
-      Log.d("[getProposalEnactmentQueue] storageValues: ${pairs.map((pair) => '0x${hex.encode(pair.value!)}')}");
+      Log.d("[getProposalEnactmentQueue] storageKeys: ${keys.map((key) => '0x${hex.encode(key)}')}");
 
-      // Todo: this does not work, probably because of the hashed keys.
-      // final proposalActions = pairs.map((pair) => et.ProposalActionIdentifier.decode(ByteInput(pair.key.sublist(32))));
-      final proposalIds = pairs.map((pair) => U128Codec.codec.decode(ByteInput(pair.value!)));
+      // Fixme: We get some decoding errors here with polkadart. I do not understand why.
+      // https://github.com/encointer/encointer-wallet-flutter/issues/1833
+      // final action0 = et.ProposalActionIdentifier.decode(Input.fromBytes(keys[0].sublist(32)));
+      // // If it is a spendNative the codec fails to decode.
+      // final action1 = et.ProposalActionIdentifier.decode(Input.fromBytes(keys[1].sublist(32)));
+      // Log.d("[getProposalEnactmentQueue] proposalAction: ${action0.toJson()}')}");
+      // Log.d("[getProposalEnactmentQueue] proposalAction: ${action1.toJson()}')}");
 
-      return List.from(proposalIds);
+      final proposalIds = await Future.wait(keys.map((key) =>
+          encointerKusama.rpc.state.getStorage(key).then((value) => U128Codec.codec.decode(Input.fromBytes(value!)))));
+      Log.d('[getProposalEnactmentQueue] proposalIds: $proposalIds', 'EncointerApi');
+
+      return proposalIds;
     } catch (e, s) {
-      Log.e('[getProposalEnactmentQueue]', '$e', s);
+      Log.e('[getProposalEnactmentQueue] Error: $e', 'EncointerApi', s);
       return List.of([]);
     }
   }
@@ -822,6 +918,7 @@ class EncointerApi {
       Network.encointerRococo => encointerKusamaParams(),
       Network.gesell => encointerSoloParams(),
       Network.gesellDev => encointerSoloParams(),
+      Network.zombienetLocal => encointerKusamaParams()
     };
   }
 
