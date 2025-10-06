@@ -82,7 +82,8 @@ CommunityIdentifier? getCidFromPolkadartAction(et.ProposalAction action) {
   return maybeCid != null ? CommunityIdentifier.fromPolkadart(maybeCid) : null;
 }
 
-///
+/// Removing locations is not supported, as this needs some more complex logic:
+/// https://github.com/encointer/encointer-wallet-flutter/issues/1757
 List<ProposalActionIdentifier> supportedProposalIds(bool developerMode) {
   return [
     ProposalActionIdentifier.addLocation,
