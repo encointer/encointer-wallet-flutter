@@ -6,6 +6,7 @@ import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/asset_id.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/utf8_limited_byte_field.dart';
@@ -21,6 +22,7 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/theme/custom/typography/typography_theme.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:flutter/material.dart';
 import 'package:ew_l10n/l10n.dart';
@@ -262,6 +264,7 @@ class _ProposePageState extends State<ProposePage> {
 
   @override
   Widget build(BuildContext context) {
+    final devMode = RepositoryProvider.of<AppSettings>(context).developerMode;
     final store = context.read<AppStore>();
     final l10n = context.l10n;
 
@@ -295,7 +298,7 @@ class _ProposePageState extends State<ProposePage> {
                               _updateAllowedScopes();
                             });
                           },
-                          items: supportedProposalIds().map((ProposalActionIdentifier action) {
+                          items: supportedProposalIds(devMode).map((ProposalActionIdentifier action) {
                             return DropdownMenuItem<ProposalActionIdentifier>(
                               value: action,
                               child: Text(action.localizedStr(l10n, store.encointer.community!.symbol!, selectedAsset)),

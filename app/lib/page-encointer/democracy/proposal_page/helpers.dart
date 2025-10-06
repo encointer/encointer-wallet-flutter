@@ -82,9 +82,9 @@ CommunityIdentifier? getCidFromPolkadartAction(et.ProposalAction action) {
   return maybeCid != null ? CommunityIdentifier.fromPolkadart(maybeCid) : null;
 }
 
-/// We still have to implement support for:
-/// * issueSwapOption: It does not exist yet in the generated types
-List<ProposalActionIdentifier> supportedProposalIds() {
+/// Removing locations is not supported, as this needs some more complex logic:
+/// https://github.com/encointer/encointer-wallet-flutter/issues/1757
+List<ProposalActionIdentifier> supportedProposalIds(bool developerMode) {
   return [
     ProposalActionIdentifier.addLocation,
     ProposalActionIdentifier.updateDemurrage,
@@ -93,8 +93,8 @@ List<ProposalActionIdentifier> supportedProposalIds() {
     ProposalActionIdentifier.petition,
     ProposalActionIdentifier.spendNative,
     ProposalActionIdentifier.issueSwapNativeOption,
-    ProposalActionIdentifier.spendAsset,
-    ProposalActionIdentifier.issueSwapAssetOption,
+    if (developerMode) ProposalActionIdentifier.spendAsset,
+    if (developerMode) ProposalActionIdentifier.issueSwapAssetOption,
   ];
 }
 

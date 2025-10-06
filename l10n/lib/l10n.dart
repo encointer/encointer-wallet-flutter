@@ -1,4 +1,4 @@
-import 'l10n.dart';
+import 'package:ew_l10n/l10n.dart';
 import 'package:flutter/widgets.dart';
 
 export 'package:ew_l10n/src/gen/app_localizations.dart';
