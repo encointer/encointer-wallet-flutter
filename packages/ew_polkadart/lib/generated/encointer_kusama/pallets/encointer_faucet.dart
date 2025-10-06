@@ -57,6 +57,21 @@ class Queries {
     return BigInt.zero; /* Default */
   }
 
+  _i5.Future<List<_i3.Faucet?>> multiFaucets(
+    List<_i2.AccountId32> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _faucets.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _faucets.decodeValue(v.key)).toList();
+    }
+    return []; /* Nullable */
+  }
+
   /// Returns the storage key for `faucets`.
   _i6.Uint8List faucetsKey(_i2.AccountId32 key1) {
     final hashedKey = _faucets.hashedKeyFor(key1);
@@ -79,53 +94,48 @@ class Queries {
 class Txs {
   const Txs();
 
-  _i7.RuntimeCall createFaucet({
+  _i7.EncointerFaucet createFaucet({
     required List<int> name,
     required BigInt amount,
     List<_i8.CommunityIdentifier>? whitelist,
     required BigInt dripAmount,
   }) {
-    final _call = _i9.Call.values.createFaucet(
+    return _i7.EncointerFaucet(_i9.CreateFaucet(
       name: name,
       amount: amount,
       whitelist: whitelist,
       dripAmount: dripAmount,
-    );
-    return _i7.RuntimeCall.values.encointerFaucet(_call);
+    ));
   }
 
-  _i7.RuntimeCall drip({
+  _i7.EncointerFaucet drip({
     required _i2.AccountId32 faucetAccount,
     required _i8.CommunityIdentifier cid,
     required int cindex,
   }) {
-    final _call = _i9.Call.values.drip(
+    return _i7.EncointerFaucet(_i9.Drip(
       faucetAccount: faucetAccount,
       cid: cid,
       cindex: cindex,
-    );
-    return _i7.RuntimeCall.values.encointerFaucet(_call);
+    ));
   }
 
-  _i7.RuntimeCall dissolveFaucet({
+  _i7.EncointerFaucet dissolveFaucet({
     required _i2.AccountId32 faucetAccount,
     required _i2.AccountId32 beneficiary,
   }) {
-    final _call = _i9.Call.values.dissolveFaucet(
+    return _i7.EncointerFaucet(_i9.DissolveFaucet(
       faucetAccount: faucetAccount,
       beneficiary: beneficiary,
-    );
-    return _i7.RuntimeCall.values.encointerFaucet(_call);
+    ));
   }
 
-  _i7.RuntimeCall closeFaucet({required _i2.AccountId32 faucetAccount}) {
-    final _call = _i9.Call.values.closeFaucet(faucetAccount: faucetAccount);
-    return _i7.RuntimeCall.values.encointerFaucet(_call);
+  _i7.EncointerFaucet closeFaucet({required _i2.AccountId32 faucetAccount}) {
+    return _i7.EncointerFaucet(_i9.CloseFaucet(faucetAccount: faucetAccount));
   }
 
-  _i7.RuntimeCall setReserveAmount({required BigInt reserveAmount}) {
-    final _call = _i9.Call.values.setReserveAmount(reserveAmount: reserveAmount);
-    return _i7.RuntimeCall.values.encointerFaucet(_call);
+  _i7.EncointerFaucet setReserveAmount({required BigInt reserveAmount}) {
+    return _i7.EncointerFaucet(_i9.SetReserveAmount(reserveAmount: reserveAmount));
   }
 }
 

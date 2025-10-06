@@ -35,11 +35,20 @@ class SubstrateDartApi {
 
   Future<bool> offchainIndexingEnabled() async {
     try {
-      // Check reputation of Alice. This will return an exception if offchain
-      // indexing is disabled.
-      await rpc<List<dynamic>>('encointer_getReputations', ['5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY']);
+      final communities = await rpc<List<dynamic>>('encointer_getAllCommunities', []);
+      if (communities.isEmpty) {
+        // Unfortunately, we cannot test the same way for reputations, as empty
+        // results are valid.
+        Log.e(
+          '[offchainIndexingEnabled] Enabled, but no communities found. We have a caching issue!',
+          'SubstrateDartApi',
+        );
+        return Future.value(false);
+      }
+
       return Future.value(true);
     } catch (e) {
+      Log.d('[offchainIndexingEnabled] rpc not supported: $e', 'SubstrateDartApi');
       return Future.value(false);
     }
   }
@@ -51,6 +60,7 @@ class SubstrateDartApi {
 
       return Future.value(true);
     } catch (e) {
+      Log.d('[newTreasuryRpcSupported] rpc not supported: $e', 'SubstrateDartApi');
       return Future.value(false);
     }
   }
@@ -60,7 +70,11 @@ class SubstrateDartApi {
   /// Hints:
   /// * account ids must be passed as SS58.
   Future<T> rpc<T>(String method, List<dynamic> params) async {
+    Log.d('[DartApi] $method: $params');
+
     final response = await _provider.send(method, params);
+    Log.d('[DartApi] Response Error: ${response.error}');
+    Log.d('[DartApi] Response Result: ${response.result}');
 
     if (response.error != null) throw Exception(response.error);
 

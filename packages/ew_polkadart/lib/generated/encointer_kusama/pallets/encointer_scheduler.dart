@@ -109,6 +109,21 @@ class Queries {
     return BigInt.zero; /* Default */
   }
 
+  _i4.Future<List<BigInt>> multiPhaseDurations(
+    List<_i3.CeremonyPhaseType> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _phaseDurations.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _phaseDurations.decodeValue(v.key)).toList();
+    }
+    return keys.map((key) => BigInt.zero).toList(); /* Default */
+  }
+
   /// Returns the storage key for `currentCeremonyIndex`.
   _i5.Uint8List currentCeremonyIndexKey() {
     final hashedKey = _currentCeremonyIndex.hashedKey();
@@ -152,33 +167,29 @@ class Txs {
   /// Manually transition to next phase without affecting the ceremony rhythm
   ///
   /// May only be called from `T::CeremonyMaster`.
-  _i6.RuntimeCall nextPhase() {
-    final _call = _i7.Call.values.nextPhase();
-    return _i6.RuntimeCall.values.encointerScheduler(_call);
+  _i6.EncointerScheduler nextPhase() {
+    return _i6.EncointerScheduler(_i7.NextPhase());
   }
 
   /// Push next phase change by one entire day
   ///
   /// May only be called from `T::CeremonyMaster`.
-  _i6.RuntimeCall pushByOneDay() {
-    final _call = _i7.Call.values.pushByOneDay();
-    return _i6.RuntimeCall.values.encointerScheduler(_call);
+  _i6.EncointerScheduler pushByOneDay() {
+    return _i6.EncointerScheduler(_i7.PushByOneDay());
   }
 
-  _i6.RuntimeCall setPhaseDuration({
+  _i6.EncointerScheduler setPhaseDuration({
     required _i3.CeremonyPhaseType ceremonyPhase,
     required BigInt duration,
   }) {
-    final _call = _i7.Call.values.setPhaseDuration(
+    return _i6.EncointerScheduler(_i7.SetPhaseDuration(
       ceremonyPhase: ceremonyPhase,
       duration: duration,
-    );
-    return _i6.RuntimeCall.values.encointerScheduler(_call);
+    ));
   }
 
-  _i6.RuntimeCall setNextPhaseTimestamp({required BigInt timestamp}) {
-    final _call = _i7.Call.values.setNextPhaseTimestamp(timestamp: timestamp);
-    return _i6.RuntimeCall.values.encointerScheduler(_call);
+  _i6.EncointerScheduler setNextPhaseTimestamp({required BigInt timestamp}) {
+    return _i6.EncointerScheduler(_i7.SetNextPhaseTimestamp(timestamp: timestamp));
   }
 }
 

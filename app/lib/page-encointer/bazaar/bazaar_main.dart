@@ -7,7 +7,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/businesses/widgets/dropdo
 import 'package:encointer_wallet/theme/custom/typography/typography_theme.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 
 class BazaarPage extends StatefulWidget {
   const BazaarPage({super.key});

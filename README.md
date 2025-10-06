@@ -126,7 +126,7 @@ The following file contains the supported flutter version:
 * run all tests from the command line:`./flutterw test`
 * exclude e2e-tests that need a running encointer node:
 ```shell
-.\.flutter\bin\dart run melos unit-test-app-exclude-encointer-node-e2e
+.\.flutter\bin\dart run melos unit-test-app-exclude-e2e
 ```
 * run e2e-tests that need a running encointer node:
 ```shell

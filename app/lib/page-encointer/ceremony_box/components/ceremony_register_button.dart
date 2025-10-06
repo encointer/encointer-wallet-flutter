@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/maybe_date_time.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 
 class CeremonyRegisterButton extends StatefulWidget {
   const CeremonyRegisterButton({super.key, this.registerUntil, this.onPressed});

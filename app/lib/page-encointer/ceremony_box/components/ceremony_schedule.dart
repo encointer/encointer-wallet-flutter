@@ -6,7 +6,7 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_count_down.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 
 /// Shows primarily the date of the next ceremony.
 ///

@@ -25,6 +25,7 @@ enum ParticipantType {
   static const $ParticipantTypeCodec codec = $ParticipantTypeCodec();
 
   String toJson() => variantName;
+
   _i2.Uint8List encode() {
     return codec.encode(this);
   }

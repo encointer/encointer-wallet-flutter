@@ -24,6 +24,7 @@ enum CommunityRules {
   static const $CommunityRulesCodec codec = $CommunityRulesCodec();
 
   String toJson() => variantName;
+
   _i2.Uint8List encode() {
     return codec.encode(this);
   }

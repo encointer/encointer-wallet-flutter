@@ -214,6 +214,124 @@ class Queries {
     return []; /* Default */
   }
 
+  /// The Balances pallet example of storing the balance of an account.
+  ///
+  /// # Example
+  ///
+  /// ```nocompile
+  ///  impl pallet_balances::Config for Runtime {
+  ///    type AccountStore = StorageMapShim<Self::Account<Runtime>, frame_system::Provider<Runtime>, AccountId, Self::AccountData<Balance>>
+  ///  }
+  /// ```
+  ///
+  /// You can also store the balance of an account in the `System` pallet.
+  ///
+  /// # Example
+  ///
+  /// ```nocompile
+  ///  impl pallet_balances::Config for Runtime {
+  ///   type AccountStore = System
+  ///  }
+  /// ```
+  ///
+  /// But this comes with tradeoffs, storing account balances in the system pallet stores
+  /// `frame_system` data alongside the account data contrary to storing account balances in the
+  /// `Balances` pallet, which uses a `StorageMap` to store balances data only.
+  /// NOTE: This is only used in the case that this pallet is used to store balances.
+  _i8.Future<List<_i4.AccountData>> multiAccount(
+    List<_i3.AccountId32> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _account.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _account.decodeValue(v.key)).toList();
+    }
+    return keys
+        .map((key) => _i4.AccountData(
+              free: BigInt.zero,
+              reserved: BigInt.zero,
+              frozen: BigInt.zero,
+              flags: BigInt.parse(
+                '170141183460469231731687303715884105728',
+                radix: 10,
+              ),
+            ))
+        .toList(); /* Default */
+  }
+
+  /// Any liquidity locks on some account balances.
+  /// NOTE: Should only be accessed when setting, changing and freeing a lock.
+  ///
+  /// Use of locks is deprecated in favour of freezes. See `https://github.com/paritytech/substrate/pull/12951/`
+  _i8.Future<List<List<_i5.BalanceLock>>> multiLocks(
+    List<_i3.AccountId32> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _locks.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _locks.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => []).toList() as List<List<_i5.BalanceLock>>); /* Default */
+  }
+
+  /// Named reserves on some account balances.
+  ///
+  /// Use of reserves is deprecated in favour of holds. See `https://github.com/paritytech/substrate/pull/12951/`
+  _i8.Future<List<List<_i6.ReserveData>>> multiReserves(
+    List<_i3.AccountId32> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _reserves.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _reserves.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => []).toList() as List<List<_i6.ReserveData>>); /* Default */
+  }
+
+  /// Holds on account balances.
+  _i8.Future<List<List<_i7.IdAmount>>> multiHolds(
+    List<_i3.AccountId32> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _holds.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _holds.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => []).toList() as List<List<_i7.IdAmount>>); /* Default */
+  }
+
+  /// Freeze locks on account balances.
+  _i8.Future<List<List<_i7.IdAmount>>> multiFreezes(
+    List<_i3.AccountId32> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _freezes.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _freezes.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => []).toList() as List<List<_i7.IdAmount>>); /* Default */
+  }
+
   /// Returns the storage key for `totalIssuance`.
   _i9.Uint8List totalIssuanceKey() {
     final hashedKey = _totalIssuance.hashedKey();
@@ -297,30 +415,28 @@ class Txs {
   /// of the transfer, the account will be reaped.
   ///
   /// The dispatch origin for this call must be `Signed` by the transactor.
-  _i10.RuntimeCall transferAllowDeath({
+  _i10.Balances transferAllowDeath({
     required _i11.MultiAddress dest,
     required BigInt value,
   }) {
-    final _call = _i12.Call.values.transferAllowDeath(
+    return _i10.Balances(_i12.TransferAllowDeath(
       dest: dest,
       value: value,
-    );
-    return _i10.RuntimeCall.values.balances(_call);
+    ));
   }
 
   /// Exactly as `transfer_allow_death`, except the origin must be root and the source account
   /// may be specified.
-  _i10.RuntimeCall forceTransfer({
+  _i10.Balances forceTransfer({
     required _i11.MultiAddress source,
     required _i11.MultiAddress dest,
     required BigInt value,
   }) {
-    final _call = _i12.Call.values.forceTransfer(
+    return _i10.Balances(_i12.ForceTransfer(
       source: source,
       dest: dest,
       value: value,
-    );
-    return _i10.RuntimeCall.values.balances(_call);
+    ));
   }
 
   /// Same as the [`transfer_allow_death`] call, but with a check that the transfer will not
@@ -329,15 +445,14 @@ class Txs {
   /// 99% of the time you want [`transfer_allow_death`] instead.
   ///
   /// [`transfer_allow_death`]: struct.Pallet.html#method.transfer
-  _i10.RuntimeCall transferKeepAlive({
+  _i10.Balances transferKeepAlive({
     required _i11.MultiAddress dest,
     required BigInt value,
   }) {
-    final _call = _i12.Call.values.transferKeepAlive(
+    return _i10.Balances(_i12.TransferKeepAlive(
       dest: dest,
       value: value,
-    );
-    return _i10.RuntimeCall.values.balances(_call);
+    ));
   }
 
   /// Transfer the entire transferable balance from the caller account.
@@ -355,29 +470,27 @@ class Txs {
   ///  of the funds the account has, causing the sender account to be killed (false), or
   ///  transfer everything except at least the existential deposit, which will guarantee to
   ///  keep the sender account alive (true).
-  _i10.RuntimeCall transferAll({
+  _i10.Balances transferAll({
     required _i11.MultiAddress dest,
     required bool keepAlive,
   }) {
-    final _call = _i12.Call.values.transferAll(
+    return _i10.Balances(_i12.TransferAll(
       dest: dest,
       keepAlive: keepAlive,
-    );
-    return _i10.RuntimeCall.values.balances(_call);
+    ));
   }
 
   /// Unreserve some balance from a user by force.
   ///
   /// Can only be called by ROOT.
-  _i10.RuntimeCall forceUnreserve({
+  _i10.Balances forceUnreserve({
     required _i11.MultiAddress who,
     required BigInt amount,
   }) {
-    final _call = _i12.Call.values.forceUnreserve(
+    return _i10.Balances(_i12.ForceUnreserve(
       who: who,
       amount: amount,
-    );
-    return _i10.RuntimeCall.values.balances(_call);
+    ));
   }
 
   /// Upgrade a specified account.
@@ -388,23 +501,21 @@ class Txs {
   /// This will waive the transaction fee if at least all but 10% of the accounts needed to
   /// be upgraded. (We let some not have to be upgraded just in order to allow for the
   /// possibility of churn).
-  _i10.RuntimeCall upgradeAccounts({required List<_i3.AccountId32> who}) {
-    final _call = _i12.Call.values.upgradeAccounts(who: who);
-    return _i10.RuntimeCall.values.balances(_call);
+  _i10.Balances upgradeAccounts({required List<_i3.AccountId32> who}) {
+    return _i10.Balances(_i12.UpgradeAccounts(who: who));
   }
 
   /// Set the regular balance of a given account.
   ///
   /// The dispatch origin for this call is `root`.
-  _i10.RuntimeCall forceSetBalance({
+  _i10.Balances forceSetBalance({
     required _i11.MultiAddress who,
     required BigInt newFree,
   }) {
-    final _call = _i12.Call.values.forceSetBalance(
+    return _i10.Balances(_i12.ForceSetBalance(
       who: who,
       newFree: newFree,
-    );
-    return _i10.RuntimeCall.values.balances(_call);
+    ));
   }
 
   /// Adjust the total issuance in a saturating way.
@@ -412,15 +523,14 @@ class Txs {
   /// Can only be called by root and always needs a positive `delta`.
   ///
   /// # Example
-  _i10.RuntimeCall forceAdjustTotalIssuance({
+  _i10.Balances forceAdjustTotalIssuance({
     required _i13.AdjustmentDirection direction,
     required BigInt delta,
   }) {
-    final _call = _i12.Call.values.forceAdjustTotalIssuance(
+    return _i10.Balances(_i12.ForceAdjustTotalIssuance(
       direction: direction,
       delta: delta,
-    );
-    return _i10.RuntimeCall.values.balances(_call);
+    ));
   }
 
   /// Burn the specified liquid free balance from the origin account.
@@ -430,15 +540,14 @@ class Txs {
   ///
   /// Unlike sending funds to a _burn_ address, which merely makes the funds inaccessible,
   /// this `burn` operation will reduce total issuance by the amount _burned_.
-  _i10.RuntimeCall burn({
+  _i10.Balances burn({
     required BigInt value,
     required bool keepAlive,
   }) {
-    final _call = _i12.Call.values.burn(
+    return _i10.Balances(_i12.Burn(
       value: value,
       keepAlive: keepAlive,
-    );
-    return _i10.RuntimeCall.values.balances(_call);
+    ));
   }
 }
 

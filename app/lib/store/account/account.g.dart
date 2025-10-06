@@ -172,41 +172,6 @@ mixin _$AccountStore on _AccountStore, Store {
     return _$loadAccountAsyncAction.run(() => super.loadAccount());
   }
 
-  late final _$updateSeedAsyncAction = AsyncAction('_AccountStore.updateSeed', context: context);
-
-  @override
-  Future<void> updateSeed(String? pubKey, String passwordOld, String passwordNew) {
-    return _$updateSeedAsyncAction.run(() => super.updateSeed(pubKey, passwordOld, passwordNew));
-  }
-
-  late final _$encryptSeedAsyncAction = AsyncAction('_AccountStore.encryptSeed', context: context);
-
-  @override
-  Future<void> encryptSeed(String? pubKey, String seed, String seedType, String password) {
-    return _$encryptSeedAsyncAction.run(() => super.encryptSeed(pubKey, seed, seedType, password));
-  }
-
-  late final _$decryptSeedAsyncAction = AsyncAction('_AccountStore.decryptSeed', context: context);
-
-  @override
-  Future<String?> decryptSeed(String pubKey, String seedType, String password) {
-    return _$decryptSeedAsyncAction.run(() => super.decryptSeed(pubKey, seedType, password));
-  }
-
-  late final _$checkSeedExistAsyncAction = AsyncAction('_AccountStore.checkSeedExist', context: context);
-
-  @override
-  Future<bool> checkSeedExist(String seedType, String? pubKey) {
-    return _$checkSeedExistAsyncAction.run(() => super.checkSeedExist(seedType, pubKey));
-  }
-
-  late final _$deleteSeedAsyncAction = AsyncAction('_AccountStore.deleteSeed', context: context);
-
-  @override
-  Future<void> deleteSeed(String seedType, String? pubKey) {
-    return _$deleteSeedAsyncAction.run(() => super.deleteSeed(seedType, pubKey));
-  }
-
   late final _$_AccountStoreActionController = ActionController(name: '_AccountStore', context: context);
 
   @override

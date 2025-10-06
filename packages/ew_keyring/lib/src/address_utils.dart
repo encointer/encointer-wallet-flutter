@@ -35,4 +35,9 @@ abstract class AddressUtils {
   static String addressToPubKeyHex(String address) {
     return Address.decode(address).toPubHex();
   }
+
+  static String transformPrefix(String address, int newPrefix) {
+    final addr = Address.decode(address);
+    return Address(prefix: newPrefix, pubkey: addr.pubkey).encode();
+  }
 }

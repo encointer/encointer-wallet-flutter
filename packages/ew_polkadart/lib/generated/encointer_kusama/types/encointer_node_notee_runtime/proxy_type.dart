@@ -24,6 +24,7 @@ enum ProxyType {
   static const $ProxyTypeCodec codec = $ProxyTypeCodec();
 
   String toJson() => variantName;
+
   _i2.Uint8List encode() {
     return codec.encode(this);
   }

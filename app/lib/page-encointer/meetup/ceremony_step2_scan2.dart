@@ -9,7 +9,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 import 'package:encointer_wallet/common/components/qr_code_view/qr_code_image_view.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';

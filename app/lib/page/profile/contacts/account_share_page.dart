@@ -9,7 +9,7 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 
 class AccountSharePage extends StatefulWidget {
@@ -90,7 +90,9 @@ class _AccountSharePageState extends State<AccountSharePage> {
                     Text(l10n.sendLink, style: context.titleLarge.copyWith(color: context.colorScheme.primary)),
                   ],
                 ),
-                onPressed: () => Share.share(toDeepLink(contactQrCode.toQrPayload())),
+                onPressed: () => SharePlus.instance.share(
+                  ShareParams(text: toDeepLink(contactQrCode.toQrPayload())),
+                ),
               ),
             ],
           ),

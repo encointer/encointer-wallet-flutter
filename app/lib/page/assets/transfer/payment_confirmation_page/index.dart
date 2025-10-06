@@ -23,7 +23,7 @@ import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';

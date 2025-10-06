@@ -25,6 +25,7 @@ enum ExclusionReason {
   static const $ExclusionReasonCodec codec = $ExclusionReasonCodec();
 
   String toJson() => variantName;
+
   _i2.Uint8List encode() {
     return codec.encode(this);
   }

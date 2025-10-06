@@ -97,7 +97,7 @@ jobs:
         run: ./scripts/docker_run_encointer_node_notee.sh ${{ matrix.docker_tag }} &
 
       - name: Bootstrap Demo Community
-        run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh ${{ matrix.docker_tag }}
+        run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh --docker-tag=${{ matrix.docker_tag }}
 
       - name: "Start Simulator"
         working-directory: ./scripts

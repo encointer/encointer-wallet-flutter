@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/store/account/services/account_storage_service.dart';
-import 'package:encointer_wallet/store/account/services/legacy_encryption_service.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +29,6 @@ class SplashView extends StatelessWidget {
 
     await AccountMigrationService(
       await SharedPreferences.getInstance(),
-      LegacyEncryptionService(store.legacyStorage),
       AccountStorageService(store.secureStorage),
       loginStore.loginService,
     ).migrateIfOutdated();

@@ -159,6 +159,86 @@ class Queries {
     return null; /* Nullable */
   }
 
+  /// Unique `PurposeIds` of a `Proposal`.
+  ///
+  /// This is used to prevent reuse of a reputation for the same `PurposeId`.
+  _i7.Future<List<BigInt?>> multiPurposeIds(
+    List<BigInt> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _purposeIds.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _purposeIds.decodeValue(v.key)).toList();
+    }
+    return []; /* Nullable */
+  }
+
+  /// All proposals that have ever been proposed including the past ones.
+  _i7.Future<List<_i3.Proposal?>> multiProposals(
+    List<BigInt> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _proposals.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _proposals.decodeValue(v.key)).toList();
+    }
+    return []; /* Nullable */
+  }
+
+  /// Tallies for the proposal corresponding to `ProposalId`.
+  _i7.Future<List<_i4.Tally?>> multiTallies(
+    List<BigInt> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _tallies.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _tallies.decodeValue(v.key)).toList();
+    }
+    return []; /* Nullable */
+  }
+
+  _i7.Future<List<_i6.Tuple2<BigInt, BigInt>?>> multiLastApprovedProposalForAction(
+    List<_i5.ProposalActionIdentifier> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _lastApprovedProposalForAction.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _lastApprovedProposalForAction.decodeValue(v.key)).toList();
+    }
+    return []; /* Nullable */
+  }
+
+  _i7.Future<List<BigInt?>> multiEnactmentQueue(
+    List<_i5.ProposalActionIdentifier> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _enactmentQueue.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _enactmentQueue.decodeValue(v.key)).toList();
+    }
+    return []; /* Nullable */
+  }
+
   /// Returns the storage key for `purposeIds`.
   _i8.Uint8List purposeIdsKey(BigInt key1) {
     final hashedKey = _purposeIds.hashedKeyFor(key1);
@@ -229,27 +309,24 @@ class Queries {
 class Txs {
   const Txs();
 
-  _i9.RuntimeCall submitProposal({required _i10.ProposalAction proposalAction}) {
-    final _call = _i11.Call.values.submitProposal(proposalAction: proposalAction);
-    return _i9.RuntimeCall.values.encointerDemocracy(_call);
+  _i9.EncointerDemocracy submitProposal({required _i10.ProposalAction proposalAction}) {
+    return _i9.EncointerDemocracy(_i11.SubmitProposal(proposalAction: proposalAction));
   }
 
-  _i9.RuntimeCall vote({
+  _i9.EncointerDemocracy vote({
     required BigInt proposalId,
     required _i12.Vote vote,
     required List<_i6.Tuple2<_i13.CommunityIdentifier, int>> reputations,
   }) {
-    final _call = _i11.Call.values.vote(
+    return _i9.EncointerDemocracy(_i11.Vote(
       proposalId: proposalId,
       vote: vote,
       reputations: reputations,
-    );
-    return _i9.RuntimeCall.values.encointerDemocracy(_call);
+    ));
   }
 
-  _i9.RuntimeCall updateProposalState({required BigInt proposalId}) {
-    final _call = _i11.Call.values.updateProposalState(proposalId: proposalId);
-    return _i9.RuntimeCall.values.encointerDemocracy(_call);
+  _i9.EncointerDemocracy updateProposalState({required BigInt proposalId}) {
+    return _i9.EncointerDemocracy(_i11.UpdateProposalState(proposalId: proposalId));
   }
 }
 
@@ -270,7 +347,7 @@ class Constants {
   /// electorate will be 0.
   final BigInt proposalLifetime = BigInt.from(777600000);
 
-  /// Minimum turnout in permill for a proposal to be considered as passing and entering the
-  /// `Confirming` state.
+  /// Minimum turnout in perthousand for a proposal to be considered as passing and entering
+  /// the `Confirming` state.
   final BigInt minTurnout = BigInt.from(50);
 }

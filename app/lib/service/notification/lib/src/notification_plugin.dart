@@ -126,7 +126,6 @@ class NotificationPlugin {
       body,
       tz.TZDateTime.from(scheduledDate, tz.local),
       _platformChannelSpecifics(body, cid: cid),
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       androidScheduleMode: AndroidScheduleMode.inexact,
     );
   }
@@ -135,5 +134,5 @@ class NotificationPlugin {
 Future<void> _configureLocalTimeZone() async {
   tz.initializeTimeZones();
   final timeZoneName = await FlutterTimezone.getLocalTimezone();
-  tz.setLocalLocation(tz.getLocation(timeZoneName));
+  tz.setLocalLocation(tz.getLocation(timeZoneName.identifier));
 }

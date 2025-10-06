@@ -5,7 +5,6 @@ import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/account/services/account_storage_service.dart';
-import 'package:encointer_wallet/store/account/services/legacy_encryption_service.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -23,20 +22,17 @@ class AccountStore extends _AccountStore with _$AccountStore {
   AccountStore(super.appStore);
 
   // Re-export these here for backwards compatibility.
-  static const String seedTypeMnemonic = LegacyEncryptionService.seedTypeMnemonic;
-  static const String seedTypeRawSeed = LegacyEncryptionService.seedTypeRawSeed;
-  static const String seedTypeKeystore = LegacyEncryptionService.seedTypeKeystore;
+  static const String seedTypeMnemonic = 'mnemonic';
+  static const String seedTypeRawSeed = 'rawSeed';
+  static const String seedTypeKeystore = 'keystore';
 }
 
 abstract class _AccountStore with Store {
   _AccountStore(this.rootStore)
-      : legacyEncryptionService = LegacyEncryptionService(rootStore.legacyStorage),
-        accountStorageService = AccountStorageService(rootStore.secureStorage),
+      : accountStorageService = AccountStorageService(rootStore.secureStorage),
         keyring = EncointerKeyring();
 
   final AppStore rootStore;
-
-  final LegacyEncryptionService legacyEncryptionService;
 
   final AccountStorageService accountStorageService;
 
@@ -239,30 +235,5 @@ abstract class _AccountStore with Store {
 
     currentAccountPubKey = await rootStore.localStorage.getCurrentAccount();
     loading = false;
-  }
-
-  @action
-  Future<void> updateSeed(String? pubKey, String passwordOld, String passwordNew) async {
-    return legacyEncryptionService.updateSeed(pubKey, passwordOld, passwordNew);
-  }
-
-  @action
-  Future<void> encryptSeed(String? pubKey, String seed, String seedType, String password) async {
-    return legacyEncryptionService.encryptSeed(pubKey, seed, seedType, password);
-  }
-
-  @action
-  Future<String?> decryptSeed(String pubKey, String seedType, String password) async {
-    return legacyEncryptionService.decryptSeed(pubKey, seedType, password);
-  }
-
-  @action
-  Future<bool> checkSeedExist(String seedType, String? pubKey) async {
-    return legacyEncryptionService.checkSeedExist(seedType, pubKey);
-  }
-
-  @action
-  Future<void> deleteSeed(String seedType, String? pubKey) async {
-    return legacyEncryptionService.deleteSeed(seedType, pubKey);
   }
 }
