@@ -1,4 +1,7 @@
 import 'package:encointer_wallet/config/networks/networks.dart' show Network;
+import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
+import 'package:encointer_wallet/models/bazaar/business_data.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart' show CommunityIdentifier;
 import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/reconnecting_ws_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -24,6 +27,29 @@ void main() {
 
       await provider.disconnect();
     }, tags: encointerNodeE2E);
+  });
+
+  group('encointerDartApi Businesses', () {
+    test('gets allBusinesses data', () async {
+      final cid = CommunityIdentifier.fromFmtString('u0qj944rhWE');
+
+      final provider = ReconnectingWsProvider(Uri.parse('wss://kusama.api.encointer.org'));
+      final substrateDartApi = SubstrateDartApi(provider);
+      final encointerDartApi = EncointerDartApi(substrateDartApi);
+
+
+      final business = await encointerDartApi.bazaarGetBusinesses(cid);
+
+      final expectedBusiness = AccountBusinessTuple('5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK', BusinessData(
+          'Qmb3mRYRK6nwf3MXULPRHAQHAfkGs38UJ7voXLPN9gngqa',
+            1
+      ));
+
+      await provider.disconnect();
+
+      expect(business, expectedBusiness);
+
+    }, tags: productionE2E);
   });
 
   group('endpoint health check', () {
