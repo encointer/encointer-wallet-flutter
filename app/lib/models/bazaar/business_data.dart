@@ -26,7 +26,7 @@ class BusinessData {
   final int lastOid;
 
   Map<String, dynamic> toJson() => {
-    'url': url,
-    'lastOid': lastOid,
-  };
+        'url': url,
+        'lastOid': lastOid,
+      };
 }

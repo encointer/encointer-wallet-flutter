@@ -99,7 +99,6 @@ class EncointerApi {
   }
 
   void getCommunityData() {
-    getBusinesses();
     getCommunityMetadata();
     getAllMeetupLocations();
     getDemurrage();
