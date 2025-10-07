@@ -986,7 +986,10 @@ class EncointerApi {
   }
 
   Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid, {BlockHash? at}) async {
-    return _dartApi.bazaarGetBusinesses(cid, at: at ?? store.chain.latestHash);
+    final businesses = await _dartApi.bazaarGetBusinesses(cid, at: at ?? store.chain.latestHash);
+
+    Log.d('[bazaarGetBusinesses] got businesses ${businesses.toString()}');
+    return businesses;
   }
 
   Future<Either<Businesses, EwHttpException>> getBusinessesIpfs(String ipfsUrlHash) async {

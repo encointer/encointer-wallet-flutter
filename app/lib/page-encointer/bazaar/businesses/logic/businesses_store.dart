@@ -77,12 +77,12 @@ abstract class _BusinessesStoreBase with Store {
 
     if (accountBusinessTuples.isNotEmpty) {
       await Future.forEach<AccountBusinessTuple>(accountBusinessTuples, (element) async {
-        if (element.businessData != null && element.businessData!.url.isNotNullOrEmpty) {
+        if (element.businessData.url.isNotNullOrEmpty) {
           Log.d(
-            '_getBusinessesLogosAndUpdate: accountBusinessTuple.businessData!.url! = ${element.businessData!.url!}',
+            '_getBusinessesLogosAndUpdate: accountBusinessTuple.businessData!.url! = ${element.businessData.url}',
             _targetLogger,
           );
-          final response = await _getBusinesses(element.businessData!.url!);
+          final response = await _getBusinesses(element.businessData.url);
 
           Log.d('_getBusinesses: response = $response', _targetLogger);
 
