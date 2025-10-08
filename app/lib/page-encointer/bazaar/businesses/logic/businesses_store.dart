@@ -90,7 +90,6 @@ abstract class _BusinessesStoreBase with Store {
             (l) {
               error = l.failureType.name;
               Log.d('[getBusinessesLogosAndUpdate]: error = $l', _targetLogger);
-
             },
             (r) {
               r.controller = element.controller;

@@ -988,7 +988,7 @@ class EncointerApi {
   Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid, {BlockHash? at}) async {
     final businesses = await _dartApi.bazaarGetBusinesses(cid, at: at ?? store.chain.latestHash);
 
-    Log.d('[bazaarGetBusinesses] got businesses ${businesses.toString()}');
+    Log.d('[bazaarGetBusinesses] got businesses $businesses');
     return businesses;
   }
 

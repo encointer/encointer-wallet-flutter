@@ -1,8 +1,7 @@
 import 'package:encointer_wallet/config/networks/networks.dart' show Network;
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/bazaar/business_data.dart';
-import 'package:encointer_wallet/models/communities/community_identifier.dart'
-    show CommunityIdentifier;
+import 'package:encointer_wallet/models/communities/community_identifier.dart' show CommunityIdentifier;
 import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/reconnecting_ws_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,8 +21,7 @@ void main() {
 
       final encointerDartApi = EncointerDartApi(substrateDartApi);
 
-      final data = await encointerDartApi.getAggregatedAccountData(
-          mediterraneanTestCommunity, aliceAddress);
+      final data = await encointerDartApi.getAggregatedAccountData(mediterraneanTestCommunity, aliceAddress);
       // ignore: avoid_print
       print('data: $data');
 
@@ -35,8 +33,7 @@ void main() {
     test('gets allBusinesses data', () async {
       final cid = CommunityIdentifier.fromFmtString('u0qj944rhWE');
 
-      final provider =
-          ReconnectingWsProvider(Uri.parse('wss://kusama.api.encointer.org'));
+      final provider = ReconnectingWsProvider(Uri.parse('wss://kusama.api.encointer.org'));
       final substrateDartApi = SubstrateDartApi(provider);
       final encointerDartApi = EncointerDartApi(substrateDartApi);
 
@@ -60,8 +57,7 @@ void main() {
         'kusama endpoint ${e.address()} is healthy',
         () async {
           final result = await NetworkEndpointChecker().checkHealth(e);
-          expect(result, isTrue,
-              reason: 'Endpoint ${e.address()} is not healthy');
+          expect(result, isTrue, reason: 'Endpoint ${e.address()} is not healthy');
         },
         tags: endpointHealthE2E,
       );
@@ -72,8 +68,7 @@ void main() {
         'gesell endpoint ${e.address()} is healthy',
         () async {
           final result = await NetworkEndpointChecker().checkHealth(e);
-          expect(result, isTrue,
-              reason: 'Endpoint ${e.address()} is not healthy');
+          expect(result, isTrue, reason: 'Endpoint ${e.address()} is not healthy');
         },
         tags: endpointHealthE2E,
       );
