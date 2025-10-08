@@ -60,7 +60,7 @@ class ImageHashToLinkOrNullConverter implements JsonConverter<String?, String?> 
 
   @override
   String? fromJson(String? value) {
-    return '$infuraIpfsUrl/$value';
+    return '$encointerIpfsUrl/$value';
   }
 
   @override

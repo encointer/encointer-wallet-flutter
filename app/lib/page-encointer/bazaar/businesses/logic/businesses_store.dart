@@ -36,7 +36,7 @@ abstract class _BusinessesStoreBase with Store {
   }
 
   Future<Either<Businesses, EwHttpException>> _getBusinesses(String ipfsUrlHash) {
-    Log.d('_getBusinesses: ipfsUrlHash = $ipfsUrlHash', _targetLogger);
+    Log.d('[getBusinesses]: ipfsUrlHash = $ipfsUrlHash', _targetLogger);
     return webApi.encointer.getBusinessesIpfs(ipfsUrlHash);
   }
 
@@ -73,24 +73,28 @@ abstract class _BusinessesStoreBase with Store {
   }
 
   Future<void> _getBusinessesLogosAndUpdate(List<AccountBusinessTuple> accountBusinessTuples) async {
-    Log.d('_getBusinessesLogosAndUpdate: accountBusinessTuples = $accountBusinessTuples', _targetLogger);
+    Log.d('[getBusinessesLogosAndUpdate]: accountBusinessTuples = $accountBusinessTuples', _targetLogger);
 
     if (accountBusinessTuples.isNotEmpty) {
       await Future.forEach<AccountBusinessTuple>(accountBusinessTuples, (element) async {
         if (element.businessData.url.isNotNullOrEmpty) {
           Log.d(
-            '_getBusinessesLogosAndUpdate: accountBusinessTuple.businessData!.url! = ${element.businessData.url}',
+            '[getBusinessesLogosAndUpdate]: accountBusinessTuple.businessData!.url! = ${element.businessData.url}',
             _targetLogger,
           );
           final response = await _getBusinesses(element.businessData.url);
 
-          Log.d('_getBusinesses: response = $response', _targetLogger);
+          Log.d('[getBusinessesLogosAndUpdate]: response = $response', _targetLogger);
 
           response.fold(
-            (l) => error = l.failureType.name,
+            (l) {
+              error = l.failureType.name;
+              Log.d('[getBusinessesLogosAndUpdate]: error = $l', _targetLogger);
+
+            },
             (r) {
               r.controller = element.controller;
-              Log.d('_getBusinesses: right = ${r.toJson()}', _targetLogger);
+              Log.d('getBusinessesLogosAndUpdate: right = ${r.toJson()}', _targetLogger);
               businesses.add(r);
             },
           );

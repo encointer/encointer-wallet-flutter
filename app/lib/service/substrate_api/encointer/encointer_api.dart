@@ -993,13 +993,13 @@ class EncointerApi {
   }
 
   Future<Either<Businesses, EwHttpException>> getBusinessesIpfs(String ipfsUrlHash) async {
-    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    final url = '$encointerIpfsUrl/$ipfsUrlHash';
     return ewHttp.getType(url, fromJson: Businesses.fromJson);
   }
 
   ///TODO(Azamat): method not working, fix it
   Future<Either<Map<String, dynamic>, EwHttpException>> getBusinessesPhotos(String ipfsUrlHash) async {
-    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    final url = '$encointerIpfsUrl/$ipfsUrlHash';
     final response = ewHttp.get<Map<String, dynamic>>(url);
 
     return response;
@@ -1023,12 +1023,12 @@ class EncointerApi {
   }
 
   Future<Either<ItemOffered, EwHttpException>> getItemOffered(String ipfsUrlHash) async {
-    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    final url = '$encointerIpfsUrl/$ipfsUrlHash';
     return ewHttp.getType(url, fromJson: ItemOffered.fromJson);
   }
 
   Future<Either<IpfsProduct, EwHttpException>> getSingleBusinessProduct(String ipfsUrlHash) async {
-    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    final url = '$encointerIpfsUrl/$ipfsUrlHash';
     return ewHttp.getType(url, fromJson: IpfsProduct.fromJson);
   }
 }
