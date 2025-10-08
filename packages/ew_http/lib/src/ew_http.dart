@@ -27,21 +27,48 @@ class EwHttp {
   }
 
   Future<Either<T, EwHttpException>> getType<T>(String url, {required FromJson<T> fromJson}) async {
-    try {
-      final data = await get<Map<String, dynamic>>(url);
-      return data.fold(Left.new, (r) => Right(fromJson(r)));
-    } catch (e, s) {
-      return Left(EwHttpException(FailureType.decode, error: e, stackTrace: s));
-    }
+    final data = await get<Map<String, dynamic>>(url);
+    return data.fold(
+      Left.new,
+      (r) {
+        try {
+          return Right(fromJson(r));
+        } catch (e, s) {
+          return Left(
+            EwHttpException(
+              FailureType.decode,
+              error: e,
+              data: r,
+              stackTrace: s,
+            ),
+          );
+        }
+      },
+    );
   }
 
   Future<Either<List<T>, EwHttpException>> getTypeList<T>(String url, {required FromJson<T> fromJson}) async {
-    try {
-      final data = await get<List<dynamic>>(url);
-      return data.fold(Left.new, (r) => Right(r.map((e) => fromJson(e as Map<String, dynamic>)).toList()));
-    } catch (e, s) {
-      return Left(EwHttpException(FailureType.deserialization, error: e, stackTrace: s));
-    }
+    final data = await get<List<dynamic>>(url);
+
+    return data.fold(
+      // Left case: simply forward the Left value
+      Left.new,
+      (r) {
+        try {
+          final list = r.map((result) => fromJson(result as Map<String, dynamic>)).toList();
+          return Right(list);
+        } catch (e, s) {
+          return Left(
+            EwHttpException(
+              FailureType.decode,
+              error: e,
+              data: r,
+              stackTrace: s,
+            ),
+          );
+        }
+      },
+    );
   }
 
   Future<Map<String, String>> _getRequestHeaders() async {
