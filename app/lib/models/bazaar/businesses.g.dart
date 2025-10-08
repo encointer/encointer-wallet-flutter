@@ -47,6 +47,7 @@ const _$CategoryEnumMap = {
   Category.fashionAndClothing: 'fashion_clothing',
   Category.foodAndBeverageStore: 'food_beverage_store',
   Category.restaurantsAndBars: 'restaurants_bars',
+  Category.iTHardware: 'it_hardware',
   Category.food: 'food',
 };
 

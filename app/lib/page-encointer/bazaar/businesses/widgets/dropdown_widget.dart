@@ -86,6 +86,8 @@ enum Category {
   foodAndBeverageStore('Food & Beverage Store'),
   @JsonValue('restaurants_bars')
   restaurantsAndBars('Restaurants & Bars'),
+  @JsonValue('it_hardware')
+  iTHardware('IT Hardware'),
   @JsonValue('food')
   food('Food');
 
