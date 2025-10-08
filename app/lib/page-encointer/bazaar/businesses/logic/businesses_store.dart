@@ -35,9 +35,9 @@ abstract class _BusinessesStoreBase with Store {
     return webApi.encointer.bazaarGetBusinesses(cid);
   }
 
-  Future<Either<Businesses, EwHttpException>> _getBusinesses(String ipfsUrlHash) {
-    Log.d('[getBusinesses]: ipfsUrlHash = $ipfsUrlHash', _targetLogger);
-    return webApi.encointer.getBusinessesIpfs(ipfsUrlHash);
+  Future<Either<Businesses, EwHttpException>> _getBusinesses(String ipfsCid) {
+    Log.d('[getBusinesses]: ipfsCid = $ipfsCid', _targetLogger);
+    return webApi.encointer.getBusinessesIpfs(ipfsCid);
   }
 
   @action
@@ -47,7 +47,7 @@ abstract class _BusinessesStoreBase with Store {
 
     final accountBusinessTuples = await _bazaarGetBusinesses(cid);
 
-    await _getBusinessesLogosAndUpdate(accountBusinessTuples);
+    await _updateBusinesses(accountBusinessTuples);
 
     Log.d('getBusinesses: after update businesses = $businesses', _targetLogger);
 
@@ -72,28 +72,28 @@ abstract class _BusinessesStoreBase with Store {
     });
   }
 
-  Future<void> _getBusinessesLogosAndUpdate(List<AccountBusinessTuple> accountBusinessTuples) async {
-    Log.d('[getBusinessesLogosAndUpdate]: accountBusinessTuples = $accountBusinessTuples', _targetLogger);
+  Future<void> _updateBusinesses(List<AccountBusinessTuple> accountBusinessTuples) async {
+    Log.d('[updateBusinesses]: accountBusinessTuples = $accountBusinessTuples', _targetLogger);
 
     if (accountBusinessTuples.isNotEmpty) {
       await Future.forEach<AccountBusinessTuple>(accountBusinessTuples, (element) async {
         if (element.businessData.url.isNotNullOrEmpty) {
           Log.d(
-            '[getBusinessesLogosAndUpdate]: accountBusinessTuple.businessData!.url! = ${element.businessData.url}',
+            '[updateBusinesses]: accountBusinessTuple.businessData!.url! = ${element.businessData.url}',
             _targetLogger,
           );
           final response = await _getBusinesses(element.businessData.url);
 
-          Log.d('[getBusinessesLogosAndUpdate]: response = $response', _targetLogger);
+          Log.d('[updateBusinesses]: response = $response', _targetLogger);
 
           response.fold(
             (l) {
               error = l.failureType.name;
-              Log.d('[getBusinessesLogosAndUpdate]: error = $l', _targetLogger);
+              Log.d('[updateBusinesses]: error = $l', _targetLogger);
             },
             (r) {
               r.controller = element.controller;
-              Log.d('getBusinessesLogosAndUpdate: right = ${r.toJson()}', _targetLogger);
+              Log.d('updateBusinesses: right = ${r.toJson()}', _targetLogger);
               businesses.add(r);
             },
           );
@@ -120,8 +120,6 @@ abstract class _BusinessesStoreBase with Store {
     _update();
   }
 
-  ///TOOD(Azamat): Need to fix the method
-  // ignore: unused_element
   Future<void> _getBusinessesPhotos() async {
     await Future.forEach<Businesses>(businesses, (element) async {
       if (element.photos.isNotNullOrEmpty) {
