@@ -1,15 +1,15 @@
 class EwHttpException implements Exception {
-  const EwHttpException(this.failureType, {this.error, this.data, this.stackTrace, this.statusCode});
+  const EwHttpException(this.failureType, {this.error, this.moreErrorData, this.stackTrace, this.statusCode});
 
   final dynamic error;
-  final dynamic data;
+  final dynamic moreErrorData;
   final FailureType failureType;
   final StackTrace? stackTrace;
   final int? statusCode;
 
   @override
   String toString() {
-    return 'EwHttpException: { failureType: $failureType, error: $error, data: $data, stackTrace: ${stackTrace?.toString() ?? 'null'}, statusCode: ${statusCode ?? 'null'} }';
+    return 'EwHttpException: { failureType: $failureType, error: $error, data: $moreErrorData, stackTrace: ${stackTrace?.toString() ?? 'null'}, statusCode: ${statusCode ?? 'null'} }';
   }
 }
 

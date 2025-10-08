@@ -38,7 +38,7 @@ class EwHttp {
             EwHttpException(
               FailureType.decode,
               error: e,
-              data: r,
+              moreErrorData: r,
               stackTrace: s,
             ),
           );
@@ -62,7 +62,7 @@ class EwHttp {
             EwHttpException(
               FailureType.decode,
               error: e,
-              data: r,
+              moreErrorData: r,
               stackTrace: s,
             ),
           );
