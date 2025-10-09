@@ -13,7 +13,7 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/models/bazaar/businesses.dart';
+import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_product.dart';
 import 'package:encointer_wallet/models/bazaar/item_offered.dart';
 import 'package:encointer_wallet/models/faucet/faucet.dart';
@@ -992,12 +992,10 @@ class EncointerApi {
     return businesses;
   }
 
-  Future<Either<Businesses, EwHttpException>> getBusinessesIpfs(String ipfsUrlHash) async {
-    final url = '$encointerIpfsUrl/$ipfsUrlHash';
-    return ewHttp.getType(url, fromJson: Businesses.fromJson);
+  Future<Either<IpfsBusiness, EwHttpException>> getBusinessesIpfs(String ipfsCid) async {
+    return ewHttp.getType(ipfsUrl(ipfsCid), fromJson: IpfsBusiness.fromJson);
   }
 
-  ///TODO(Azamat): method not working, fix it
   Future<Either<Map<String, dynamic>, EwHttpException>> getBusinessesPhotos(String ipfsUrlHash) async {
     final url = '$encointerIpfsUrl/$ipfsUrlHash';
     final response = ewHttp.get<Map<String, dynamic>>(url);
@@ -1051,4 +1049,14 @@ class DemocracyParams {
   final BigInt minTurnout;
   final BigInt confirmationPeriod;
   final BigInt proposalLifetime;
+}
+
+Future<String?> getIpfsPhoto(EwHttp ewHttp, String ipfsCid) async {
+  final url = ipfsUrl(ipfsCid);
+  final response = await ewHttp.get<String>(url);
+
+  return response.fold((l) {
+    Log.e(l.toString());
+    return null;
+  }, (r) => r);
 }

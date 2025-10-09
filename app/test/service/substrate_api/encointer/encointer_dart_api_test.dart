@@ -41,7 +41,7 @@ void main() {
 
       final expectedBusiness = AccountBusinessTuple(
         '5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK',
-        BusinessData('Qmb3mRYRK6nwf3MXULPRHAQHAfkGs38UJ7voXLPN9gngqa', 1),
+        BusinessData('QmTvnruvcgvcW9K5AN4p47mwcDQytaBckNzndvRzNnEHx6', 1),
       );
 
       await provider.disconnect();

@@ -15,7 +15,7 @@ class MockIpfsApi extends IpfsApi {
   const MockIpfsApi(super.httpClient, {super.gateway});
 
   @override
-  Future<String?> getCommunityIcon(String? cid) {
+  Future<String?> getCommunityIcon(String? ipfsCid) {
     return Future.value(mockIcon);
   }
 }

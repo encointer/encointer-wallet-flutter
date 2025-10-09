@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:mobx/mobx.dart';
 import 'package:ew_http/ew_http.dart';
 
@@ -8,7 +9,6 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/widgets/dropdown_widget.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
-import 'package:encointer_wallet/models/bazaar/businesses.dart';
 
 part 'businesses_store.g.dart';
 
@@ -19,10 +19,10 @@ class BusinessesStore = _BusinessesStoreBase with _$BusinessesStore;
 
 abstract class _BusinessesStoreBase with Store {
   @observable
-  List<Businesses> businesses = <Businesses>[];
+  List<IpfsBusiness> businesses = <IpfsBusiness>[];
 
   @observable
-  List<Businesses> sortedBusinesses = <Businesses>[];
+  List<IpfsBusiness> sortedBusinesses = <IpfsBusiness>[];
 
   @observable
   FetchStatus fetchStatus = FetchStatus.loading;
@@ -35,7 +35,7 @@ abstract class _BusinessesStoreBase with Store {
     return webApi.encointer.bazaarGetBusinesses(cid);
   }
 
-  Future<Either<Businesses, EwHttpException>> _getBusinesses(String ipfsCid) {
+  Future<Either<IpfsBusiness, EwHttpException>> _getBusinesses(String ipfsCid) {
     Log.d('[getBusinesses]: ipfsCid = $ipfsCid', _targetLogger);
     return webApi.encointer.getBusinessesIpfs(ipfsCid);
   }
@@ -107,10 +107,10 @@ abstract class _BusinessesStoreBase with Store {
   @action
   void filterBusinessesByCategory({required Category category}) {
     if (category == Category.all) {
-      sortedBusinesses = <Businesses>[];
+      sortedBusinesses = <IpfsBusiness>[];
       sortedBusinesses.addAll(businesses);
     } else {
-      sortedBusinesses = <Businesses>[];
+      sortedBusinesses = <IpfsBusiness>[];
       sortedBusinesses
         ..addAll(businesses)
         ..removeWhere((element) => element.category != category);
@@ -121,7 +121,7 @@ abstract class _BusinessesStoreBase with Store {
   }
 
   Future<void> _getBusinessesPhotos() async {
-    await Future.forEach<Businesses>(businesses, (element) async {
+    await Future.forEach<IpfsBusiness>(businesses, (element) async {
       if (element.photos.isNotNullOrEmpty) {
         Log.d('_getBusinessesPhotos: element.photos = ${element.photos}', _targetLogger);
         final photosReponse = await webApi.encointer.getBusinessesPhotos(element.photos!);

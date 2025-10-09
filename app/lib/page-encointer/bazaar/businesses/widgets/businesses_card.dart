@@ -6,13 +6,13 @@ import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart'
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/logic/single_business_store.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/views/single_business_view.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/models/bazaar/businesses.dart';
+import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
 class BusinessesCard extends StatelessWidget {
   const BusinessesCard({super.key, required this.businesses});
 
-  final Businesses businesses;
+  final IpfsBusiness businesses;
 
   @override
   Widget build(BuildContext context) {
