@@ -7,6 +7,9 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../utils/test_tags.dart';
 
 void main() {
+  // Test that we can access the files added in:
+  //
+  // https://github.com/encointer/encointer-node/pull/404
   group('Ipfs Api', () {
     test('Can well-known-business', () async {
       final ipfsApi = IpfsApi(EwHttp());
@@ -35,6 +38,15 @@ void main() {
       final result = await ipfsApi.getFileFromFolder('QmbAsammnMX41xiJPVVhLTQB6UaMPyYPFgpZVg8qBTGWNE', 'logo.png');
 
       expect(result != null, true);
+    }, tags: productionE2E);
+
+
+    test('Can list asset folder', () async {
+      final ipfsApi = IpfsApi(EwHttp());
+
+      final result = await ipfsApi.listFolderRecursive('QmasSnnY6w6tMYYFzC5xaHa9GrhmeZ99aGx3eXD2rqpz8b');
+      // Yes, the files to have different extensions
+      expect(result, ['image01.png', 'image02.jpg', 'image03.jpg']);
     }, tags: productionE2E);
   });
 }
