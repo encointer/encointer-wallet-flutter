@@ -44,7 +44,7 @@ String ceremonyInfoLink(String locale, String? cid) {
 
 const assignmentFAQLinkEN = 'https://leu.zuerich/en/#why-have-i-not-been-assigned-to-a-cycle';
 const assignmentFAQLinkDE = 'https://leu.zuerich/#warum-wurde-ich-keinem-cycle-zugewiesen';
-const encointerIpfsUrl = 'http://ipfs.encointer.org:8080/ipfs';
+const encointerIpfsUrl = 'http://ipfs.encointer.org:8080';
 
 String ipfsUrl(String ipfsCid) {
   return '$encointerIpfsUrl/$ipfsCid';

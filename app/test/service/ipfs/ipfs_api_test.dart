@@ -32,7 +32,7 @@ void main() {
     test('Can get logo of well-known-business', () async {
       final ipfsApi = IpfsApi(EwHttp());
 
-      final result = await ipfsApi.getFromIpfsFolder('QmbAsammnMX41xiJPVVhLTQB6UaMPyYPFgpZVg8qBTGWNE', 'logo.png');
+      final result = await ipfsApi.getFileFromFolder('QmbAsammnMX41xiJPVVhLTQB6UaMPyYPFgpZVg8qBTGWNE', 'logo.png');
 
       expect(result != null, true);
     }, tags: productionE2E);
