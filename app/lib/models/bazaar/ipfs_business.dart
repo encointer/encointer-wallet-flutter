@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/widgets/dropdown_widget.dart';
 
 part 'ipfs_business.g.dart';

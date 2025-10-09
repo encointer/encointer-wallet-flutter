@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'ipfs_product.g.dart';

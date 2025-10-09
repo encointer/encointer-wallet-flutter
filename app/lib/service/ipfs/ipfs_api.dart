@@ -21,8 +21,13 @@ class IpfsApi {
     return getFromIpfsFolder(ipfsCid, communityIconName);
   }
 
-  Future<Either<IpfsBusiness, EwHttpException>> getBusinessesIpfs(String ipfsCid) async {
-    return ewHttp.getType(ipfsUrl(ipfsCid), fromJson: IpfsBusiness.fromJson);
+  Future<IpfsBusiness> getIpfsBusiness(String businessIpfsCid) async {
+    final response = await ewHttp.getType(ipfsUrl(businessIpfsCid), fromJson: IpfsBusiness.fromJson);
+
+    return response.fold((l) {
+      Log.e('[getIpfsBusiness] error: $l', 'Ipfs');
+      return throw Exception('[getIpfsBusiness] error getting business data: $l');
+    }, (r) => r);
   }
 
   Future<String?> getFromIpfsFolder(String folderCid, String assetName) async {
