@@ -30,7 +30,6 @@ class IpfsProduct {
   final String category;
 
   /// ipfs-cid where the images live
-  @ImageHashToLinkOrNullConverter()
   final String? image;
 
   final String? itemCondition;

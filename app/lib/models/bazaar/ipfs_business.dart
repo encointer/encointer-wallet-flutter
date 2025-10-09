@@ -39,7 +39,6 @@ class IpfsBusiness {
   final String openingHours;
   String? photos;
   String? controller;
-  @ImageHashToLinkOrNullConverter()
   String? logo;
   final Status? status;
   Color get statusColor {
@@ -53,18 +52,6 @@ class IpfsBusiness {
         return const Color(0xFFf4f7f8);
     }
   }
-}
-
-class ImageHashToLinkOrNullConverter implements JsonConverter<String?, String?> {
-  const ImageHashToLinkOrNullConverter();
-
-  @override
-  String? fromJson(String? value) {
-    return '$encointerIpfsUrl/$value';
-  }
-
-  @override
-  String? toJson(String? val) => val;
 }
 
 enum Status {

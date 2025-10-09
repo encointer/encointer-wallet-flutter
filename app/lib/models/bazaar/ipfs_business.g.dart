@@ -14,7 +14,7 @@ IpfsBusiness _$IpfsBusinessFromJson(Map<String, dynamic> json) => IpfsBusiness(
       longitude: json['longitude'] as String,
       latitude: json['latitude'] as String,
       openingHours: json['openingHours'] as String,
-      logo: const ImageHashToLinkOrNullConverter().fromJson(json['logo'] as String?),
+      logo: json['logo'] as String?,
       photos: json['photos'] as String?,
       photo: json['photo'] as String?,
       telephone: json['telephone'] as String?,
@@ -36,7 +36,7 @@ Map<String, dynamic> _$IpfsBusinessToJson(IpfsBusiness instance) => <String, dyn
       'openingHours': instance.openingHours,
       'photos': instance.photos,
       'controller': instance.controller,
-      'logo': const ImageHashToLinkOrNullConverter().toJson(instance.logo),
+      'logo': instance.logo,
       'status': _$StatusEnumMap[instance.status],
     };
 
