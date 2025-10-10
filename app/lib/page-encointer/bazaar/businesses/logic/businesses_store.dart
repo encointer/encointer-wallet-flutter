@@ -82,7 +82,6 @@ abstract class _BusinessesStoreBase with Store {
             _targetLogger,
           );
 
-
           try {
             final business = await _getBusinesses(element.businessData.url);
             Log.d('[updateBusinesses]: response = $business', _targetLogger);

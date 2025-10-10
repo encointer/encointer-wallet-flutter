@@ -32,7 +32,7 @@ void main() {
   //
   // https://github.com/encointer/encointer-node/pull/404
   group('IpfsApi', () {
-   // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // BUSINESS FETCHING
     // -------------------------------------------------------------------------
     test('fetches and decodes a well-known business correctly', () async {
@@ -55,7 +55,7 @@ void main() {
 
     test('throws or returns error if CID is invalid', () async {
       expect(
-            () async => ipfsApi.getIpfsBusiness(invalidCid),
+        () async => ipfsApi.getIpfsBusiness(invalidCid),
         throwsA(isA<Exception>()),
       );
     }, tags: productionE2E);
