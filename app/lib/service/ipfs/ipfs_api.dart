@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
+import 'package:encointer_wallet/service/ipfs/models.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -85,23 +86,22 @@ class IpfsApi {
   /// Tries to list a folder. Uses API if available, otherwise falls back to gateway HTML.
   Future<List<IpfsLink>> listFolderDetailed(String folderCid) async {
     try {
-      // Try API first
       final apiUrl = '$gateway$lsRequest';
       final response = await ewHttp.postForm<Map<String, dynamic>>(
         apiUrl,
         fields: {'arg': folderCid},
-        decodeResponse: (res) => jsonDecode(utf8.decode(res.bodyBytes)) as Map<String, dynamic>,
+        decodeResponse: (res) =>
+        jsonDecode(utf8.decode(res.bodyBytes)) as Map<String, dynamic>,
       );
 
       return response.fold((l) {
-        Log.d('[listFolderDetailed] API not available, fallback to gateway', logTarget);
+        Log.d('[listFolderDetailed] API not available, fallback', logTarget);
         return _listViaGateway(folderCid);
       }, (r) {
-        final objects = (r['Objects'] as List?) ?? [];
-        if (objects.isEmpty) return <IpfsLink>[];
-
-        final links = (objects.first['Links'] as List?) ?? [];
-        return links.map((link) => IpfsLink.fromJson(link as Map<String, dynamic>)).toList();
+        // Convert API response into typed objects
+        final lsResponse = IpfsLsResponse.fromJson(r);
+        if (lsResponse.objects.isEmpty) return <IpfsLink>[];
+        return lsResponse.objects.first.links;
       });
     } catch (e, s) {
       Log.d('[listFolderDetailed] API call failed, fallback: $e', logTarget, s);
@@ -187,28 +187,4 @@ class IpfsApi {
       return '$gateway/ipfs/$cidOrFolder';
     }
   }
-}
-
-/// Model for an IPFS ls result.
-class IpfsLink {
-  IpfsLink({
-    required this.name,
-    required this.hash,
-    required this.size,
-    required this.type,
-  });
-
-  factory IpfsLink.fromJson(Map<String, dynamic> json) {
-    return IpfsLink(
-      name: json['Name'] as String? ?? '',
-      hash: json['Hash'] as String? ?? '',
-      size: json['Size'] is int ? json['Size'] as int : int.tryParse('${json['Size']}') ?? 0,
-      type: (json['Type'] == 1) ? 'Dir' : 'File',
-    );
-  }
-
-  final String name;
-  final String hash;
-  final int size;
-  final String type;
 }
