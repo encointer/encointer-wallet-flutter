@@ -3,9 +3,7 @@ class IpfsLsResponse {
 
   factory IpfsLsResponse.fromJson(Map<String, dynamic> json) {
     final objectsRaw = json['Objects'] as List<dynamic>? ?? [];
-    final objects = objectsRaw
-        .map((e) => IpfsObject.fromJson(e as Map<String, dynamic>))
-        .toList();
+    final objects = objectsRaw.map((e) => IpfsObject.fromJson(e as Map<String, dynamic>)).toList();
     return IpfsLsResponse(objects: objects);
   }
 
@@ -17,9 +15,7 @@ class IpfsObject {
 
   factory IpfsObject.fromJson(Map<String, dynamic> json) {
     final linksRaw = json['Links'] as List<dynamic>? ?? [];
-    final links = linksRaw
-        .map((e) => IpfsLink.fromJson(e as Map<String, dynamic>))
-        .toList();
+    final links = linksRaw.map((e) => IpfsLink.fromJson(e as Map<String, dynamic>)).toList();
     return IpfsObject(links: links);
   }
 

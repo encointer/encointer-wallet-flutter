@@ -115,7 +115,6 @@ class IpfsApi {
     return images;
   }
 
-
   /// Tries to list a folder. Uses API if available, otherwise falls back to gateway HTML.
   Future<List<IpfsLink>> listFolderDetailed(String folderCid) async {
     try {
@@ -123,8 +122,7 @@ class IpfsApi {
       final response = await ewHttp.postForm<Map<String, dynamic>>(
         apiUrl,
         fields: {'arg': folderCid},
-        decodeResponse: (res) =>
-        jsonDecode(utf8.decode(res.bodyBytes)) as Map<String, dynamic>,
+        decodeResponse: (res) => jsonDecode(utf8.decode(res.bodyBytes)) as Map<String, dynamic>,
       );
 
       return response.fold((l) {
@@ -158,11 +156,11 @@ class IpfsApi {
           .map((a) => a.text.trim())
           .where((name) => name.isNotEmpty && name != 'Parent directory')
           .map((name) => IpfsLink(
-        name: name,
-        hash: '', // fallback has no hash
-        size: 0,  // unknown size
-        type: name.contains('.') ? 'File' : 'Dir',
-      ))
+                name: name,
+                hash: '', // fallback has no hash
+                size: 0, // unknown size
+                type: name.contains('.') ? 'File' : 'Dir',
+              ))
           .toList();
 
       return IpfsObject(links: links);

@@ -114,20 +114,4 @@ abstract class _BusinessesStoreBase with Store {
     _sortByStatus();
     _update();
   }
-
-  Future<void> _getBusinessesPhotos() async {
-    await Future.forEach<IpfsBusiness>(businesses, (element) async {
-      if (element.photos.isNotNullOrEmpty) {
-        Log.d('_getBusinessesPhotos: element.photos = ${element.photos}', _targetLogger);
-        final photosReponse = await webApi.encointer.getBusinessesPhotos(element.photos!);
-
-        photosReponse.fold(
-          (l) => error = l.failureType.name,
-          (r) {
-            Log.d('_getBusinessesPhotos: right = $r', _targetLogger);
-          },
-        );
-      }
-    });
-  }
 }

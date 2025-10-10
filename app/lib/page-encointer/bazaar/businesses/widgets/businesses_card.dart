@@ -1,8 +1,8 @@
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
+import 'package:encointer_wallet/service/service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/gen/assets.gen.dart';
-import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/logic/single_business_store.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/views/single_business_view.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -37,34 +37,18 @@ class BusinessesCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (businesses.logo.isNotNullOrEmpty)
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(businesses.logo!),
-                    ),
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      bottomLeft: Radius.circular(20),
-                    ),
-                  ),
-                  child: const SizedBox(height: double.infinity, width: 130),
-                )
-              else
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(Assets.images.assets.mosaicBackground.path),
-                    ),
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      bottomLeft: Radius.circular(20),
-                    ),
-                  ),
-                  child: const SizedBox(height: double.infinity, width: 130),
+              IpfsImage(
+                ipfs: webApi.ipfsApi,
+                cidOrFolder: businesses.logo!,
+                width: 130,
+                height: double.infinity,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
                 ),
+                loadingBuilder: (_) => const Center(child: CircularProgressIndicator()),
+                errorBuilder: (_, error) => const Center(child: Icon(Icons.broken_image, size: 40)),
+              ),
               Expanded(
                 child: ListTile(
                   contentPadding: const EdgeInsets.all(10),
