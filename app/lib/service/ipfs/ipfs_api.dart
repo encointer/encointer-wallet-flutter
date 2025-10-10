@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:path_provider/path_provider.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:encointer_wallet/config/consts.dart';
@@ -12,10 +11,13 @@ import 'package:html/parser.dart' as html;
 const logTarget = 'Ipfs';
 
 class IpfsApi {
-  const IpfsApi(this.ewHttp, {this.gateway = encointerIpfsUrl});
+  const IpfsApi(this.ewHttp,
+      {this.gateway = encointerIpfsUrl, Directory? cacheDir})
+      : _cacheDir = cacheDir;
 
   final EwHttp ewHttp;
   final String gateway;
+  final Directory? _cacheDir;
 
   static const String lsRequest = '/api/v0/ls';
   static const String catRequest = '/api/v0/cat';
@@ -29,7 +31,8 @@ class IpfsApi {
   }
 
   Future<IpfsBusiness> getIpfsBusiness(String businessIpfsCid) async {
-    final response = await ewHttp.getType(_buildIpfsUrl(businessIpfsCid), fromJson: IpfsBusiness.fromJson);
+    final response = await ewHttp.getType(_buildIpfsUrl(businessIpfsCid),
+        fromJson: IpfsBusiness.fromJson);
     return response.fold((l) {
       Log.e('[getIpfsBusiness] error: $l', logTarget);
       throw Exception('[getIpfsBusiness] error getting business data: $l');
@@ -51,7 +54,8 @@ class IpfsApi {
   }
 
   /// 💾 Fetches file bytes from IPFS (no caching).
-  Future<Uint8List?> getFileBytes(String cidOrFolder, [String? filename]) async {
+  Future<Uint8List?> getFileBytes(String cidOrFolder,
+      [String? filename]) async {
     final url = _buildIpfsUrl(cidOrFolder, filename);
     final response = await ewHttp.getBytes(url);
     return response.fold((l) {
@@ -61,7 +65,8 @@ class IpfsApi {
   }
 
   /// 🖼️ Fetches and caches an image, works with folder+file OR direct CID.
-  Future<Uint8List?> getImageBytes(String cidOrFolder, [String? imageName]) async {
+  Future<Uint8List?> getImageBytes(String cidOrFolder,
+      [String? imageName]) async {
     final cacheFile = await _getCachedFile(cidOrFolder, imageName);
 
     if (cacheFile.existsSync()) {
@@ -90,18 +95,22 @@ class IpfsApi {
       final response = await ewHttp.postForm<Map<String, dynamic>>(
         apiUrl,
         fields: {'arg': folderCid},
-        decodeResponse: (res) => jsonDecode(utf8.decode(res.bodyBytes)) as Map<String, dynamic>,
+        decodeResponse: (res) =>
+            jsonDecode(utf8.decode(res.bodyBytes)) as Map<String, dynamic>,
       );
 
       return response.fold((l) {
-        Log.d('[listFolderDetailed] API not available, fallback to gateway', logTarget);
+        Log.d('[listFolderDetailed] API not available, fallback to gateway',
+            logTarget);
         return _listViaGateway(folderCid);
       }, (r) {
         final objects = (r['Objects'] as List?) ?? [];
         if (objects.isEmpty) return <IpfsLink>[];
 
         final links = (objects.first['Links'] as List?) ?? [];
-        return links.map((link) => IpfsLink.fromJson(link as Map<String, dynamic>)).toList();
+        return links
+            .map((link) => IpfsLink.fromJson(link as Map<String, dynamic>))
+            .toList();
       });
     } catch (e, s) {
       Log.d('[listFolderDetailed] API call failed, fallback: $e', logTarget, s);
@@ -124,7 +133,11 @@ class IpfsApi {
       return anchors
           .map((a) => a.text.trim())
           .where((name) => name.isNotEmpty && name != 'Parent directory')
-          .map((name) => IpfsLink(name: name, hash: '', size: 0, type: name.contains('.') ? 'File' : 'Dir'))
+          .map((name) => IpfsLink(
+              name: name,
+              hash: '',
+              size: 0,
+              type: name.contains('.') ? 'File' : 'Dir'))
           .toList();
     });
   }
@@ -136,14 +149,17 @@ class IpfsApi {
   }
 
   /// Recursive listing (API or fallback)
-  Future<List<String>> listFolderRecursive(String rootCid, {String prefix = ''}) async {
+  Future<List<String>> listFolderRecursive(String rootCid,
+      {String prefix = ''}) async {
     final result = <String>[];
 
     final entries = await listFolderDetailed(rootCid);
     for (final entry in entries) {
       final path = prefix.isEmpty ? entry.name : '$prefix/${entry.name}';
       if (entry.type == 'Dir') {
-        final nested = await listFolderRecursive(entry.hash.isEmpty ? rootCid : entry.hash, prefix: path);
+        final nested = await listFolderRecursive(
+            entry.hash.isEmpty ? rootCid : entry.hash,
+            prefix: path);
         result.addAll(nested);
       } else {
         result.add(path);
@@ -153,13 +169,12 @@ class IpfsApi {
     return result;
   }
 
-
   // ---------------------------------------------------------------------------
   // Cache handling
   // ---------------------------------------------------------------------------
 
   Future<File> _getCachedFile(String cidOrFolder, [String? filename]) async {
-    final dir = await getApplicationDocumentsDirectory();
+    final dir = _cacheDir ?? await Directory.systemTemp.createTemp();
     final cacheDir = Directory(p.join(dir.path, 'ipfs_cache'));
     if (!cacheDir.existsSync()) cacheDir.createSync(recursive: true);
 
@@ -168,13 +183,11 @@ class IpfsApi {
     return File(p.join(cacheDir.path, fileName));
   }
 
+  /// Clears the cache folder
   Future<void> clearCache() async {
-    final dir = await getApplicationDocumentsDirectory();
+    final dir = _cacheDir ?? await Directory.systemTemp.createTemp();
     final cacheDir = Directory(p.join(dir.path, 'ipfs_cache'));
-    if (cacheDir.existsSync()) {
-      await cacheDir.delete(recursive: true);
-      Log.d('[IPFS] Cache cleared', 'Ipfs');
-    }
+    if (cacheDir.existsSync()) cacheDir.deleteSync(recursive: true);
   }
 
   // ---------------------------------------------------------------------------
@@ -205,7 +218,9 @@ class IpfsLink {
     return IpfsLink(
       name: json['Name'] as String? ?? '',
       hash: json['Hash'] as String? ?? '',
-      size: json['Size'] is int ? json['Size'] as int : int.tryParse('${json['Size']}') ?? 0,
+      size: json['Size'] is int
+          ? json['Size'] as int
+          : int.tryParse('${json['Size']}') ?? 0,
       type: (json['Type'] == 1) ? 'Dir' : 'File',
     );
   }
