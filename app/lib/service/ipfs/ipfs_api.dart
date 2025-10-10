@@ -83,6 +83,39 @@ class IpfsApi {
     });
   }
 
+  /// Recursively fetches all images under a folder CID (or a direct CID if single file)
+  /// Returns a map: relative path → bytes
+  Future<Map<String, Uint8List>> getImagesFromFolder(String cidOrFolder) async {
+    final images = <String, Uint8List>{};
+
+    // Try to list folder; if fails, assume single file
+    final entries = await listFolderDetailed(cidOrFolder);
+    if (entries.isEmpty) {
+      // Single file, fetch directly
+      final bytes = await getImageBytes(cidOrFolder);
+      if (bytes != null) images[cidOrFolder] = bytes;
+      return images;
+    }
+
+    // Recursive folder fetch
+    for (final entry in entries) {
+      Log.d('Image entry: name ${entry.name}, hash: ${entry.hash}, type: ${entry.type}');
+      final path = entry.name;
+      if (entry.type == 'Dir') {
+        final nested = await getImagesFromFolder(entry.hash);
+        nested.forEach((nestedPath, bytes) {
+          images['$path/$nestedPath'] = bytes;
+        });
+      } else {
+        final bytes = await getImageBytes(cidOrFolder, entry.name);
+        if (bytes != null) images[path] = bytes;
+      }
+    }
+
+    return images;
+  }
+
+
   /// Tries to list a folder. Uses API if available, otherwise falls back to gateway HTML.
   Future<List<IpfsLink>> listFolderDetailed(String folderCid) async {
     try {
@@ -96,7 +129,7 @@ class IpfsApi {
 
       return response.fold((l) {
         Log.d('[listFolderDetailed] API not available, fallback', logTarget);
-        return _listViaGateway(folderCid);
+        return _listViaGateway(folderCid).then((r) => r.links);
       }, (r) {
         // Convert API response into typed objects
         final lsResponse = IpfsLsResponse.fromJson(r);
@@ -105,27 +138,34 @@ class IpfsApi {
       });
     } catch (e, s) {
       Log.d('[listFolderDetailed] API call failed, fallback: $e', logTarget, s);
-      return _listViaGateway(folderCid);
+      return _listViaGateway(folderCid).then((r) => r.links);
     }
   }
 
   /// Fallback: parse HTML from public gateway directory listings
-  Future<List<IpfsLink>> _listViaGateway(String folderCid) async {
+  Future<IpfsObject> _listViaGateway(String folderCid) async {
     final url = Uri.parse('$gateway/ipfs/$folderCid/');
     final response = await ewHttp.get<String>(url.toString());
 
     return response.fold((l) {
       Log.e('[listViaGateway] failed: $l', logTarget);
-      return <IpfsLink>[];
+      return IpfsObject(links: <IpfsLink>[]);
     }, (htmlContent) {
       final document = html.parse(htmlContent);
       final anchors = document.querySelectorAll('a');
 
-      return anchors
+      final links = anchors
           .map((a) => a.text.trim())
           .where((name) => name.isNotEmpty && name != 'Parent directory')
-          .map((name) => IpfsLink(name: name, hash: '', size: 0, type: name.contains('.') ? 'File' : 'Dir'))
+          .map((name) => IpfsLink(
+        name: name,
+        hash: '', // fallback has no hash
+        size: 0,  // unknown size
+        type: name.contains('.') ? 'File' : 'Dir',
+      ))
           .toList();
+
+      return IpfsObject(links: links);
     });
   }
 
@@ -138,12 +178,12 @@ class IpfsApi {
   /// Recursive listing (API or fallback)
   Future<List<String>> listFolderRecursive(String rootCid, {String prefix = ''}) async {
     final result = <String>[];
-
     final entries = await listFolderDetailed(rootCid);
+
     for (final entry in entries) {
       final path = prefix.isEmpty ? entry.name : '$prefix/${entry.name}';
       if (entry.type == 'Dir') {
-        final nested = await listFolderRecursive(entry.hash.isEmpty ? rootCid : entry.hash, prefix: path);
+        final nested = await listFolderRecursive(entry.hash.isNotEmpty ? entry.hash : rootCid, prefix: path);
         result.addAll(nested);
       } else {
         result.add(path);

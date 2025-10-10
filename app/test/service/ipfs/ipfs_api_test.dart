@@ -80,6 +80,18 @@ void main() {
       expect(result, isNull);
     }, tags: productionE2E);
 
+    test('getImagesFromFolder returns all images from asset folder', () async {
+      final resultMap = await ipfsApi.getImagesFromFolder(assetFolderCid);
+      final expectedKeys = ['logo.png', 'photos/image01.png', 'photos/image02.jpg', 'photos/image03.jpg'];
+      expect(resultMap.keys, expectedKeys);
+    }, tags: productionE2E);
+
+    test('getImagesFromFolder returns all images from photos folder', () async {
+      final resultMap = await ipfsApi.getImagesFromFolder(photosCid);
+      final expectedKeys = ['image01.png', 'image02.jpg', 'image03.jpg'];
+      expect(resultMap.keys, expectedKeys);
+    }, tags: productionE2E);
+
     // -------------------------------------------------------------------------
     // FOLDER LISTING
     // -------------------------------------------------------------------------
@@ -91,7 +103,7 @@ void main() {
 
     test('lists photos folder contents (flat)', () async {
       final result = await ipfsApi.listFolder(photosCid);
-      expect(result, ['image01.png', 'image02.jpg', 'image03.jpg']);
+      expect(result, ['image01.png', 'image02.jpg', 'image02.jpg']);
     }, tags: productionE2E);
 
     test('returns empty list for invalid CID', () async {
