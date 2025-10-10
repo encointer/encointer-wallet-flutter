@@ -1,6 +1,5 @@
 import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
-import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_product.dart';
 import 'package:encointer_wallet/models/bazaar/item_offered.dart';
 import 'package:encointer_wallet/models/bazaar/offering_data.dart';
@@ -152,12 +151,6 @@ class MockEncointerApi extends EncointerApi {
   @override
   Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid, {BlockHash? at}) async {
     return Future.value(allMockBusinesses);
-  }
-
-  @override
-  Future<Either<IpfsBusiness, EwHttpException>> getBusinessesIpfs(String ipfsCid) async {
-    Either<IpfsBusiness, EwHttpException> getRight() => Right(IpfsBusiness.fromJson(mockBusinessData));
-    return Future.value(getRight());
   }
 
   @override

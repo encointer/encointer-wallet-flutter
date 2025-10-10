@@ -41,7 +41,7 @@ void main() {
     test('Can get logo of well-known-business', () async {
       final ipfsApi = IpfsApi(EwHttp());
 
-      final result = await ipfsApi.cat(logoCid);
+      final result = await ipfsApi.getFileBytes(logoCid);
 
       expect(result != null, true);
     }, tags: productionE2E);

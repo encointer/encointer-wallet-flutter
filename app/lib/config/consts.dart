@@ -46,10 +46,6 @@ const assignmentFAQLinkEN = 'https://leu.zuerich/en/#why-have-i-not-been-assigne
 const assignmentFAQLinkDE = 'https://leu.zuerich/#warum-wurde-ich-keinem-cycle-zugewiesen';
 const encointerIpfsUrl = 'http://ipfs.encointer.org:8080';
 
-String ipfsUrl(String ipfsCid) {
-  return '$encointerIpfsUrl/$ipfsCid';
-}
-
 String leuZurichCycleAssignmentFAQLink(String locale) {
   return switch (locale) {
     'en' => assignmentFAQLinkEN,

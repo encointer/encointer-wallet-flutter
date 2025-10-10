@@ -25,61 +25,61 @@ class IpfsApi {
       Log.d('[IPFS] return default icon (no CID set)', logTarget);
       return null;
     }
-    return getFileFromFolder(ipfsCid, communityIconName);
+    return getFileText(ipfsCid, communityIconName);
   }
 
   Future<IpfsBusiness> getIpfsBusiness(String businessIpfsCid) async {
-    final response = await ewHttp.getType(ipfsUrl(businessIpfsCid), fromJson: IpfsBusiness.fromJson);
+    final response = await ewHttp.getType(_buildIpfsUrl(businessIpfsCid), fromJson: IpfsBusiness.fromJson);
     return response.fold((l) {
       Log.e('[getIpfsBusiness] error: $l', logTarget);
       throw Exception('[getIpfsBusiness] error getting business data: $l');
     }, (r) => r);
   }
 
-  /// Fetches image bytes from IPFS with local disk caching.
-  Future<Uint8List?> getImageBytes(String folderCid, String imageName) async {
-    final file = await _getCachedFile(folderCid, imageName);
+  // ---------------------------------------------------------------------------
+  // Flexible fetchers
+  // ---------------------------------------------------------------------------
 
-    // Use cache if available
-    if (file.existsSync()) {
-      Log.d('[IPFS] Cache hit for $imageName', 'Ipfs');
-      return file.readAsBytes();
+  /// 🔤 Fetches text (UTF-8) from either a folder+filename or direct CID.
+  Future<String?> getFileText(String cidOrFolder, [String? filename]) async {
+    final url = _buildIpfsUrl(cidOrFolder, filename);
+    final response = await ewHttp.get<String>(url);
+    return response.fold((l) {
+      Log.e('[getFileText] error: $l', 'Ipfs');
+      return null;
+    }, (r) => r);
+  }
+
+  /// 💾 Fetches file bytes from IPFS (no caching).
+  Future<Uint8List?> getFileBytes(String cidOrFolder, [String? filename]) async {
+    final url = _buildIpfsUrl(cidOrFolder, filename);
+    final response = await ewHttp.getBytes(url);
+    return response.fold((l) {
+      Log.e('[getFileBytes] error: $l', 'Ipfs');
+      return null;
+    }, (r) => r);
+  }
+
+  /// 🖼️ Fetches and caches an image, works with folder+file OR direct CID.
+  Future<Uint8List?> getImageBytes(String cidOrFolder, [String? imageName]) async {
+    final cacheFile = await _getCachedFile(cidOrFolder, imageName);
+
+    if (cacheFile.existsSync()) {
+      Log.d('[IPFS] Cache hit for ${imageName ?? cidOrFolder}', 'Ipfs');
+      return cacheFile.readAsBytes();
     }
 
-    // Otherwise fetch from IPFS gateway
-    final url = '$gateway/ipfs/$folderCid/$imageName';
+    final url = _buildIpfsUrl(cidOrFolder, imageName);
     final response = await ewHttp.getBytes(url);
-
     return response.fold((l) {
       Log.e('[getImageBytes] error: $l', 'Ipfs');
       return null;
     }, (r) async {
-      // 🧩 Cache the fetched image
-      await file.create(recursive: true);
-      await file.writeAsBytes(r);
-      Log.d('[IPFS] Cached $imageName locally', 'Ipfs');
+      await cacheFile.create(recursive: true);
+      await cacheFile.writeAsBytes(r);
+      Log.d('[IPFS] Cached ${imageName ?? cidOrFolder}', 'Ipfs');
       return r;
     });
-  }
-
-  /// 🔧 Resolves a local cache file path for a given CID and image name.
-  Future<File> _getCachedFile(String folderCid, String imageName) async {
-    final dir = await getApplicationDocumentsDirectory();
-    final cacheDir = Directory(p.join(dir.path, 'ipfs_cache', folderCid));
-    if (!cacheDir.existsSync()) {
-      await cacheDir.create(recursive: true);
-    }
-    return File(p.join(cacheDir.path, imageName));
-  }
-
-  Future<String?> getFileFromFolder(String folderCid, String assetName) async {
-    final url = '$gateway/ipfs/$folderCid/$assetName';
-    final response = await ewHttp.get<String>(url);
-
-    return response.fold((l) {
-      Log.e('[getFileFromFolder] error: $l', logTarget);
-      return null;
-    }, (r) => r);
   }
 
   /// Tries to list a folder. Uses API if available, otherwise falls back to gateway HTML.
@@ -153,23 +153,43 @@ class IpfsApi {
     return result;
   }
 
-  /// Reads file content
-  Future<String?> cat(String fileCid) async {
-    final apiUrl = '$gateway$catRequest';
-    final response = await ewHttp.postForm<String>(
-      apiUrl,
-      fields: {'arg': fileCid},
-      decodeResponse: (res) => utf8.decode(res.bodyBytes),
-    );
 
-    return response.fold((l) async {
-      // fallback: try reading via gateway
-      final fallback = await ewHttp.get<String>('$gateway/ipfs/$fileCid');
-      return fallback.fold((_) => null, (r) => r);
-    }, (r) => r);
+  // ---------------------------------------------------------------------------
+  // Cache handling
+  // ---------------------------------------------------------------------------
+
+  Future<File> _getCachedFile(String cidOrFolder, [String? filename]) async {
+    final dir = await getApplicationDocumentsDirectory();
+    final cacheDir = Directory(p.join(dir.path, 'ipfs_cache'));
+    if (!cacheDir.existsSync()) cacheDir.createSync(recursive: true);
+
+    final safeName = filename ?? cidOrFolder;
+    final fileName = safeName.replaceAll(RegExp('[^a-zA-Z0-9._-]'), '_');
+    return File(p.join(cacheDir.path, fileName));
   }
 
-  String ipfsUrl(String cid) => '$gateway/ipfs/$cid';
+  Future<void> clearCache() async {
+    final dir = await getApplicationDocumentsDirectory();
+    final cacheDir = Directory(p.join(dir.path, 'ipfs_cache'));
+    if (cacheDir.existsSync()) {
+      await cacheDir.delete(recursive: true);
+      Log.d('[IPFS] Cache cleared', 'Ipfs');
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Helpers
+  // ---------------------------------------------------------------------------
+
+  String _buildIpfsUrl(String cidOrFolder, [String? filename]) {
+    // if filename is provided: assume folder CID
+    // otherwise: assume CID refers directly to a file
+    if (filename != null && filename.isNotEmpty) {
+      return '$gateway/ipfs/$cidOrFolder/$filename';
+    } else {
+      return '$gateway/ipfs/$cidOrFolder';
+    }
+  }
 }
 
 /// Model for an IPFS ls result.

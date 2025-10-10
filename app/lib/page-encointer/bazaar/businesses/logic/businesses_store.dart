@@ -1,6 +1,5 @@
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:mobx/mobx.dart';
-import 'package:ew_http/ew_http.dart';
 
 import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
@@ -35,9 +34,9 @@ abstract class _BusinessesStoreBase with Store {
     return webApi.encointer.bazaarGetBusinesses(cid);
   }
 
-  Future<Either<IpfsBusiness, EwHttpException>> _getBusinesses(String ipfsCid) {
+  Future<IpfsBusiness> _getBusinesses(String ipfsCid) {
     Log.d('[getBusinesses]: ipfsCid = $ipfsCid', _targetLogger);
-    return webApi.encointer.getBusinessesIpfs(ipfsCid);
+    return webApi.ipfsApi.getIpfsBusiness(ipfsCid);
   }
 
   @action
@@ -82,21 +81,18 @@ abstract class _BusinessesStoreBase with Store {
             '[updateBusinesses]: accountBusinessTuple.businessData!.url! = ${element.businessData.url}',
             _targetLogger,
           );
-          final response = await _getBusinesses(element.businessData.url);
 
-          Log.d('[updateBusinesses]: response = $response', _targetLogger);
 
-          response.fold(
-            (l) {
-              error = l.failureType.name;
-              Log.d('[updateBusinesses]: error = $l', _targetLogger);
-            },
-            (r) {
-              r.controller = element.controller;
-              Log.d('updateBusinesses: right = ${r.toJson()}', _targetLogger);
-              businesses.add(r);
-            },
-          );
+          try {
+            final business = await _getBusinesses(element.businessData.url);
+            Log.d('[updateBusinesses]: response = $business', _targetLogger);
+            business.controller = element.controller;
+            Log.d('updateBusinesses: right = ${business.toJson()}', _targetLogger);
+            businesses.add(business);
+          } catch (e) {
+            error = e.toString();
+            Log.d('[updateBusinesses]: error = $e', _targetLogger);
+          }
         }
       });
     }
