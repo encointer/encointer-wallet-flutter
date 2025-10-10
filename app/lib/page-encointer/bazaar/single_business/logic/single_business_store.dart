@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:encointer_wallet/models/bazaar/businesses.dart';
+import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_product.dart';
 import 'package:encointer_wallet/models/bazaar/item_offered.dart';
 import 'package:encointer_wallet/models/bazaar/offering_data.dart';
@@ -32,7 +32,7 @@ abstract class _SingleBusinessStoreBase with Store {
         isLikedPersonally = isLikedPersonally1,
         countLikes = countLikes1;
 
-  late final Businesses _businesses;
+  late final IpfsBusiness _businesses;
 
   late final CommunityIdentifier _cid;
 

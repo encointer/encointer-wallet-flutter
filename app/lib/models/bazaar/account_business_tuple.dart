@@ -19,10 +19,10 @@ class AccountBusinessTuple {
   Map<String, dynamic> toJson() => _$AccountBusinessTupleToJson(this);
 
   /// accountId of the business's controller
-  final String? controller;
+  final String controller;
 
   /// the business data belonging to [controller]
-  final BusinessData? businessData;
+  final BusinessData businessData;
 
   @override
   String toString() {

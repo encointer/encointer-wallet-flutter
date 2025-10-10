@@ -1,5 +1,5 @@
+import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:mobx/mobx.dart';
-import 'package:ew_http/ew_http.dart';
 
 import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
@@ -8,7 +8,6 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/widgets/dropdown_widget.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
-import 'package:encointer_wallet/models/bazaar/businesses.dart';
 
 part 'businesses_store.g.dart';
 
@@ -19,10 +18,10 @@ class BusinessesStore = _BusinessesStoreBase with _$BusinessesStore;
 
 abstract class _BusinessesStoreBase with Store {
   @observable
-  List<Businesses> businesses = <Businesses>[];
+  List<IpfsBusiness> businesses = <IpfsBusiness>[];
 
   @observable
-  List<Businesses> sortedBusinesses = <Businesses>[];
+  List<IpfsBusiness> sortedBusinesses = <IpfsBusiness>[];
 
   @observable
   FetchStatus fetchStatus = FetchStatus.loading;
@@ -35,9 +34,9 @@ abstract class _BusinessesStoreBase with Store {
     return webApi.encointer.bazaarGetBusinesses(cid);
   }
 
-  Future<Either<Businesses, EwHttpException>> _getBusinesses(String ipfsUrlHash) {
-    Log.d('_getBusinesses: ipfsUrlHash = $ipfsUrlHash', _targetLogger);
-    return webApi.encointer.getBusinessesIpfs(ipfsUrlHash);
+  Future<IpfsBusiness> _getBusinesses(String ipfsCid) {
+    Log.d('[getBusinesses]: ipfsCid = $ipfsCid', _targetLogger);
+    return webApi.ipfsApi.getIpfsBusiness(ipfsCid);
   }
 
   @action
@@ -47,7 +46,7 @@ abstract class _BusinessesStoreBase with Store {
 
     final accountBusinessTuples = await _bazaarGetBusinesses(cid);
 
-    await _getBusinessesLogosAndUpdate(accountBusinessTuples);
+    await _updateBusinesses(accountBusinessTuples);
 
     Log.d('getBusinesses: after update businesses = $businesses', _targetLogger);
 
@@ -72,28 +71,27 @@ abstract class _BusinessesStoreBase with Store {
     });
   }
 
-  Future<void> _getBusinessesLogosAndUpdate(List<AccountBusinessTuple> accountBusinessTuples) async {
-    Log.d('_getBusinessesLogosAndUpdate: accountBusinessTuples = $accountBusinessTuples', _targetLogger);
+  Future<void> _updateBusinesses(List<AccountBusinessTuple> accountBusinessTuples) async {
+    Log.d('[updateBusinesses]: accountBusinessTuples = $accountBusinessTuples', _targetLogger);
 
     if (accountBusinessTuples.isNotEmpty) {
       await Future.forEach<AccountBusinessTuple>(accountBusinessTuples, (element) async {
-        if (element.businessData != null && element.businessData!.url.isNotNullOrEmpty) {
+        if (element.businessData.url.isNotNullOrEmpty) {
           Log.d(
-            '_getBusinessesLogosAndUpdate: accountBusinessTuple.businessData!.url! = ${element.businessData!.url!}',
+            '[updateBusinesses]: accountBusinessTuple.businessData!.url! = ${element.businessData.url}',
             _targetLogger,
           );
-          final response = await _getBusinesses(element.businessData!.url!);
 
-          Log.d('_getBusinesses: response = $response', _targetLogger);
-
-          response.fold(
-            (l) => error = l.failureType.name,
-            (r) {
-              r.controller = element.controller;
-              Log.d('_getBusinesses: right = ${r.toJson()}', _targetLogger);
-              businesses.add(r);
-            },
-          );
+          try {
+            final business = await _getBusinesses(element.businessData.url);
+            Log.d('[updateBusinesses]: response = $business', _targetLogger);
+            business.controller = element.controller;
+            Log.d('updateBusinesses: right = ${business.toJson()}', _targetLogger);
+            businesses.add(business);
+          } catch (e) {
+            error = e.toString();
+            Log.d('[updateBusinesses]: error = $e', _targetLogger);
+          }
         }
       });
     }
@@ -104,10 +102,10 @@ abstract class _BusinessesStoreBase with Store {
   @action
   void filterBusinessesByCategory({required Category category}) {
     if (category == Category.all) {
-      sortedBusinesses = <Businesses>[];
+      sortedBusinesses = <IpfsBusiness>[];
       sortedBusinesses.addAll(businesses);
     } else {
-      sortedBusinesses = <Businesses>[];
+      sortedBusinesses = <IpfsBusiness>[];
       sortedBusinesses
         ..addAll(businesses)
         ..removeWhere((element) => element.category != category);
@@ -115,23 +113,5 @@ abstract class _BusinessesStoreBase with Store {
 
     _sortByStatus();
     _update();
-  }
-
-  ///TOOD(Azamat): Need to fix the method
-  // ignore: unused_element
-  Future<void> _getBusinessesPhotos() async {
-    await Future.forEach<Businesses>(businesses, (element) async {
-      if (element.photos.isNotNullOrEmpty) {
-        Log.d('_getBusinessesPhotos: element.photos = ${element.photos}', _targetLogger);
-        final photosReponse = await webApi.encointer.getBusinessesPhotos(element.photos!);
-
-        photosReponse.fold(
-          (l) => error = l.failureType.name,
-          (r) {
-            Log.d('_getBusinessesPhotos: right = $r', _targetLogger);
-          },
-        );
-      }
-    });
   }
 }

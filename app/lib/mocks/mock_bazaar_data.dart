@@ -1,7 +1,6 @@
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/bazaar/business_data.dart';
 import 'package:encointer_wallet/models/bazaar/business_identifier.dart';
-import 'package:encointer_wallet/models/bazaar/businesses.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_offering.dart';
 import 'package:encointer_wallet/models/bazaar/offering_data.dart';
@@ -64,34 +63,6 @@ final List<OfferingData> allMockOfferings = [
   offeringData4,
 ];
 
-final List<IpfsBusiness> allMockIpfsBusinesses = [
-  ipfsBusiness1,
-  ipfsBusiness2,
-  ipfsBusiness3,
-];
-
-final Map<String, IpfsOffering> ipfsOfferings = {
-  offeringIpfsCid1: ipfsOffering1,
-  offeringIpfsCid2: ipfsOffering2,
-  offeringIpfsCid3: ipfsOffering3,
-  offeringIpfsCid4: ipfsOffering4,
-};
-
-final Map<String, IpfsBusiness> ipfsBusinesses = {
-  businessIpfsCid1: ipfsBusiness1,
-  businessIpfsCid2: ipfsBusiness2,
-  businessIpfsCid3: ipfsBusiness3,
-};
-
-// Todo: @armin add some actual images to assets that look nice in the bazaar.
-// Additionally, the bazaar should support more than one image per asset/business.
-final ipfsBusiness1 = IpfsBusiness('Homemade delicacies', 'Everything is yummy', 'Бишкек, Ala Too Square',
-    'assets/images/assets/assets_nav_0.png', 'Mo-Thu, 8am-8pm');
-final ipfsBusiness2 = IpfsBusiness('From Malfoy for Dumbledore', 'You will love it', 'Zürich, Technoparkstrasse 1',
-    'assets/images/assets/assets_nav_0.png', 'Mo-Thu, 8am-8pm');
-final ipfsBusiness3 = IpfsBusiness(
-    'NFT plaza', 'Everything is yummy', 'Miami Beach', 'assets/images/assets/assets_nav_0.png', 'Mo-Thu, 8am-8pm');
-
 final ipfsOffering1 =
     IpfsOffering('Cheesecake', 1, 'I am yummy', 'Бишкек, Ala Too Square', 'assets/images/assets/assets_nav_0.png');
 final ipfsOffering2 =
@@ -118,4 +89,4 @@ final mockBusinessData = {
   'controller': controller1,
 };
 
-final Businesses businessesMockForSingleBusiness = Businesses.fromJson(mockBusinessData);
+final IpfsBusiness businessesMockForSingleBusiness = IpfsBusiness.fromJson(mockBusinessData);
