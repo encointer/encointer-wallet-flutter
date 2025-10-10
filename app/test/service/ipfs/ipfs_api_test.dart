@@ -11,6 +11,12 @@ void main() {
   //
   // https://github.com/encointer/encointer-node/pull/404
   group('Ipfs Api', () {
+
+    // This cid is not onchain, we know it from above docs.
+    const assetFolderCid = 'QmUxPhjtx7NxByaD6UwFzz46oeubShmL9mNMqAuM72mQTq';
+    const logoCid = 'QmbAsammnMX41xiJPVVhLTQB6UaMPyYPFgpZVg8qBTGWNE';
+    const photosCid = 'QmasSnnY6w6tMYYFzC5xaHa9GrhmeZ99aGx3eXD2rqpz8b';
+
     test('Can well-known-business', () async {
       final ipfsApi = IpfsApi(EwHttp());
 
@@ -25,8 +31,8 @@ void main() {
         longitude: '8.5049619',
         latitude: '47.3690377',
         openingHours: 'Mon 9h-12h, Tue-Fri 13h-17h',
-        logo: 'QmbAsammnMX41xiJPVVhLTQB6UaMPyYPFgpZVg8qBTGWNE',
-        photos: 'QmasSnnY6w6tMYYFzC5xaHa9GrhmeZ99aGx3eXD2rqpz8b',
+        logo: logoCid,
+        photos: photosCid,
       );
 
       expect(result.toJson(), expectedBusiness.toJson());
@@ -35,16 +41,23 @@ void main() {
     test('Can get logo of well-known-business', () async {
       final ipfsApi = IpfsApi(EwHttp());
 
-      final result = await ipfsApi.getFileFromFolder('QmbAsammnMX41xiJPVVhLTQB6UaMPyYPFgpZVg8qBTGWNE', 'logo.png');
+      final result = await ipfsApi.cat(logoCid);
 
       expect(result != null, true);
     }, tags: productionE2E);
 
-
-    test('Can list asset folder', () async {
+    test('Can list asset folder recursive', () async {
       final ipfsApi = IpfsApi(EwHttp());
 
-      final result = await ipfsApi.listFolderRecursive('QmasSnnY6w6tMYYFzC5xaHa9GrhmeZ99aGx3eXD2rqpz8b');
+
+      final result = await ipfsApi.listFolderRecursive(assetFolderCid);
+      expect(result, ['logo.png', 'photos/image01.png', 'photos/image02.jpg', 'photos/image03.jpg']);
+    }, tags: productionE2E);
+
+    test('Can list photos folder', () async {
+      final ipfsApi = IpfsApi(EwHttp());
+
+      final result = await ipfsApi.listFolder(photosCid);
       // Yes, the files to have different extensions
       expect(result, ['image01.png', 'image02.jpg', 'image03.jpg']);
     }, tags: productionE2E);

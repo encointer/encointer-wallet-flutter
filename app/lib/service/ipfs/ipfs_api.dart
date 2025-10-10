@@ -1,9 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:path_provider/path_provider.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:path/path.dart' as p;
 import 'package:html/parser.dart' as html;
+
+const logTarget = 'Ipfs';
 
 class IpfsApi {
   const IpfsApi(this.ewHttp, {this.gateway = encointerIpfsUrl});
@@ -16,7 +22,7 @@ class IpfsApi {
 
   Future<String?> getCommunityIcon(String ipfsCid) async {
     if (ipfsCid.isEmpty) {
-      Log.d('[IPFS] return default icon (no CID set)', 'Ipfs');
+      Log.d('[IPFS] return default icon (no CID set)', logTarget);
       return null;
     }
     return getFileFromFolder(ipfsCid, communityIconName);
@@ -25,9 +31,45 @@ class IpfsApi {
   Future<IpfsBusiness> getIpfsBusiness(String businessIpfsCid) async {
     final response = await ewHttp.getType(ipfsUrl(businessIpfsCid), fromJson: IpfsBusiness.fromJson);
     return response.fold((l) {
-      Log.e('[getIpfsBusiness] error: $l', 'Ipfs');
+      Log.e('[getIpfsBusiness] error: $l', logTarget);
       throw Exception('[getIpfsBusiness] error getting business data: $l');
     }, (r) => r);
+  }
+
+  /// Fetches image bytes from IPFS with local disk caching.
+  Future<Uint8List?> getImageBytes(String folderCid, String imageName) async {
+    final file = await _getCachedFile(folderCid, imageName);
+
+    // Use cache if available
+    if (file.existsSync()) {
+      Log.d('[IPFS] Cache hit for $imageName', 'Ipfs');
+      return file.readAsBytes();
+    }
+
+    // Otherwise fetch from IPFS gateway
+    final url = '$gateway/ipfs/$folderCid/$imageName';
+    final response = await ewHttp.getBytes(url);
+
+    return response.fold((l) {
+      Log.e('[getImageBytes] error: $l', 'Ipfs');
+      return null;
+    }, (r) async {
+      // 🧩 Cache the fetched image
+      await file.create(recursive: true);
+      await file.writeAsBytes(r);
+      Log.d('[IPFS] Cached $imageName locally', 'Ipfs');
+      return r;
+    });
+  }
+
+  /// 🔧 Resolves a local cache file path for a given CID and image name.
+  Future<File> _getCachedFile(String folderCid, String imageName) async {
+    final dir = await getApplicationDocumentsDirectory();
+    final cacheDir = Directory(p.join(dir.path, 'ipfs_cache', folderCid));
+    if (!cacheDir.existsSync()) {
+      await cacheDir.create(recursive: true);
+    }
+    return File(p.join(cacheDir.path, imageName));
   }
 
   Future<String?> getFileFromFolder(String folderCid, String assetName) async {
@@ -35,7 +77,7 @@ class IpfsApi {
     final response = await ewHttp.get<String>(url);
 
     return response.fold((l) {
-      Log.e('[getFileFromFolder] error: $l', 'Ipfs');
+      Log.e('[getFileFromFolder] error: $l', logTarget);
       return null;
     }, (r) => r);
   }
@@ -52,7 +94,7 @@ class IpfsApi {
       );
 
       return response.fold((l) {
-        Log.d('[listFolderDetailed] API not available, fallback to gateway', 'Ipfs');
+        Log.d('[listFolderDetailed] API not available, fallback to gateway', logTarget);
         return _listViaGateway(folderCid);
       }, (r) {
         final objects = (r['Objects'] as List?) ?? [];
@@ -62,7 +104,7 @@ class IpfsApi {
         return links.map((link) => IpfsLink.fromJson(link as Map<String, dynamic>)).toList();
       });
     } catch (e, s) {
-      Log.d('[listFolderDetailed] API call failed, fallback: $e', 'Ipfs', s);
+      Log.d('[listFolderDetailed] API call failed, fallback: $e', logTarget, s);
       return _listViaGateway(folderCid);
     }
   }
@@ -73,7 +115,7 @@ class IpfsApi {
     final response = await ewHttp.get<String>(url.toString());
 
     return response.fold((l) {
-      Log.e('[listViaGateway] failed: $l', 'Ipfs');
+      Log.e('[listViaGateway] failed: $l', logTarget);
       return <IpfsLink>[];
     }, (htmlContent) {
       final document = html.parse(htmlContent);
@@ -130,14 +172,14 @@ class IpfsApi {
   String ipfsUrl(String cid) => '$gateway/ipfs/$cid';
 }
 
-/// Internal model for an IPFS ls result.
+/// Model for an IPFS ls result.
 class IpfsLink {
   IpfsLink({
     required this.name,
     required this.hash,
     required this.size,
     required this.type,
-  }); // "File" or "Dir"
+  });
 
   factory IpfsLink.fromJson(Map<String, dynamic> json) {
     return IpfsLink(
