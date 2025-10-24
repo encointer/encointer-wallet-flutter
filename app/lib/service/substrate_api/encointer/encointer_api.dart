@@ -991,10 +991,6 @@ class EncointerApi {
     return businesses;
   }
 
-  // Future<Either<IpfsBusiness, EwHttpException>> getBusinessesIpfs(String ipfsCid) async {
-  // return ewHttp.getType(ipfsUrl(ipfsCid), fromJson: IpfsBusiness.fromJson);
-  // }
-
   Future<Either<Map<String, dynamic>, EwHttpException>> getBusinessesPhotos(String ipfsUrlHash) async {
     final url = '$encointerIpfsUrl/$ipfsUrlHash';
     final response = ewHttp.get<Map<String, dynamic>>(url);

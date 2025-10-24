@@ -47,6 +47,7 @@ void main() {
       await provider.disconnect();
 
       // We do not overwrite the hashes currently to get object equality.
+      // So we need to compare the jsons.
       expect(businesses[0].toJson(), expectedBusiness.toJson());
     }, tags: productionE2E);
   });
