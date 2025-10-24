@@ -22,8 +22,8 @@ class BusinessesCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => Provider(
-              create: (context) => SingleBusinessStore(business, context.read<AppStore>().encointer.community!.cid)
-                ..getSingleBusiness(),
+              create: (context) =>
+                  SingleBusinessStore(business, context.read<AppStore>().encointer.community!.cid)..getSingleBusiness(),
               child: const SingleBusinessView(),
             ),
           ),
