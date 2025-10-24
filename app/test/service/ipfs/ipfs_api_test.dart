@@ -103,7 +103,7 @@ void main() {
 
     test('lists photos folder contents (flat)', () async {
       final result = await ipfsApi.listFolder(photosCid);
-      expect(result, ['image01.png', 'image02.jpg', 'image02.jpg']);
+      expect(result, ['image01.png', 'image02.jpg', 'image03.jpg']);
     }, tags: productionE2E);
 
     test('returns empty list for invalid CID', () async {
