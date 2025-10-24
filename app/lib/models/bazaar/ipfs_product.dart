@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/models/bazaar/businesses.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'ipfs_product.g.dart';
@@ -30,7 +29,6 @@ class IpfsProduct {
   final String category;
 
   /// ipfs-cid where the images live
-  @ImageHashToLinkOrNullConverter()
   final String? image;
 
   final String? itemCondition;

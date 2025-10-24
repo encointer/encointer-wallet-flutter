@@ -13,7 +13,6 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/models/bazaar/businesses.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_product.dart';
 import 'package:encointer_wallet/models/bazaar/item_offered.dart';
 import 'package:encointer_wallet/models/faucet/faucet.dart';
@@ -99,7 +98,6 @@ class EncointerApi {
   }
 
   void getCommunityData() {
-    getBusinesses();
     getCommunityMetadata();
     getAllMeetupLocations();
     getDemurrage();
@@ -987,17 +985,14 @@ class EncointerApi {
   }
 
   Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid, {BlockHash? at}) async {
-    return _dartApi.bazaarGetBusinesses(cid, at: at ?? store.chain.latestHash);
+    final businesses = await _dartApi.bazaarGetBusinesses(cid, at: at ?? store.chain.latestHash);
+
+    Log.d('[bazaarGetBusinesses] got businesses $businesses');
+    return businesses;
   }
 
-  Future<Either<Businesses, EwHttpException>> getBusinessesIpfs(String ipfsUrlHash) async {
-    final url = '$infuraIpfsUrl/$ipfsUrlHash';
-    return ewHttp.getType(url, fromJson: Businesses.fromJson);
-  }
-
-  ///TODO(Azamat): method not working, fix it
   Future<Either<Map<String, dynamic>, EwHttpException>> getBusinessesPhotos(String ipfsUrlHash) async {
-    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    final url = '$encointerIpfsUrl/$ipfsUrlHash';
     final response = ewHttp.get<Map<String, dynamic>>(url);
 
     return response;
@@ -1021,12 +1016,12 @@ class EncointerApi {
   }
 
   Future<Either<ItemOffered, EwHttpException>> getItemOffered(String ipfsUrlHash) async {
-    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    final url = '$encointerIpfsUrl/$ipfsUrlHash';
     return ewHttp.getType(url, fromJson: ItemOffered.fromJson);
   }
 
   Future<Either<IpfsProduct, EwHttpException>> getSingleBusinessProduct(String ipfsUrlHash) async {
-    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    final url = '$encointerIpfsUrl/$ipfsUrlHash';
     return ewHttp.getType(url, fromJson: IpfsProduct.fromJson);
   }
 }

@@ -1,18 +1,18 @@
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
+import 'package:encointer_wallet/service/service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/gen/assets.gen.dart';
-import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/logic/single_business_store.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/views/single_business_view.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/models/bazaar/businesses.dart';
+import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
 class BusinessesCard extends StatelessWidget {
-  const BusinessesCard({super.key, required this.businesses});
+  const BusinessesCard({super.key, required this.business});
 
-  final Businesses businesses;
+  final IpfsBusiness business;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,8 @@ class BusinessesCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => Provider(
-              create: (context) => SingleBusinessStore(businesses, context.read<AppStore>().encointer.community!.cid)
-                ..getSingleBusiness(),
+              create: (context) =>
+                  SingleBusinessStore(business, context.read<AppStore>().encointer.community!.cid)..getSingleBusiness(),
               child: const SingleBusinessView(),
             ),
           ),
@@ -37,44 +37,29 @@ class BusinessesCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (businesses.logo.isNotNullOrEmpty)
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(businesses.logo!),
-                    ),
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      bottomLeft: Radius.circular(20),
-                    ),
-                  ),
-                  child: const SizedBox(height: double.infinity, width: 130),
-                )
-              else
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(Assets.images.assets.mosaicBackground.path),
-                    ),
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      bottomLeft: Radius.circular(20),
-                    ),
-                  ),
-                  child: const SizedBox(height: double.infinity, width: 130),
+              IpfsImage(
+                ipfs: webApi.ipfsApi,
+                cidOrFolder: business.logo!,
+                width: 130,
+                height: double.infinity,
+                fit: BoxFit.contain,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
                 ),
+                loadingBuilder: (_) => const Center(child: CircularProgressIndicator()),
+                errorBuilder: (_, error) => const Center(child: Icon(Icons.broken_image, size: 40)),
+              ),
               Expanded(
                 child: ListTile(
                   contentPadding: const EdgeInsets.all(10),
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(child: Text(businesses.category.name, style: context.bodySmall)),
+                      Expanded(child: Text(business.category.name, style: context.bodySmall)),
                       Text(
-                        businesses.status?.name ?? '',
-                        style: context.bodySmall.copyWith(color: businesses.status?.textColor ?? Colors.black),
+                        business.status?.name ?? '',
+                        style: context.bodySmall.copyWith(color: business.status?.textColor ?? Colors.black),
                       )
                     ],
                   ),
@@ -83,14 +68,14 @@ class BusinessesCard extends StatelessWidget {
                     children: [
                       const SizedBox(height: 28),
                       Text(
-                        businesses.name,
+                        business.name,
                         style: context.labelLarge,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        businesses.description,
+                        business.description,
                         style: context.bodyMedium,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
