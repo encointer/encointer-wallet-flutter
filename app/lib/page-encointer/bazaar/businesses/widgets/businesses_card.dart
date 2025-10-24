@@ -42,6 +42,7 @@ class BusinessesCard extends StatelessWidget {
                 cidOrFolder: business.logo!,
                 width: 130,
                 height: double.infinity,
+                fit: BoxFit.contain,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20),
                   bottomLeft: Radius.circular(20),
