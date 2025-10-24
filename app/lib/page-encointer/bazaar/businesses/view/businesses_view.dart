@@ -41,7 +41,7 @@ class BusinessesList extends StatelessWidget {
       itemCount: businesses.length,
       itemBuilder: (BuildContext context, int index) {
         final business = businesses[index];
-        return BusinessesCard(businesses: business);
+        return BusinessesCard(business: business);
       },
     );
   }

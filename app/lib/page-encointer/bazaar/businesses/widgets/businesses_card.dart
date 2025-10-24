@@ -10,9 +10,9 @@ import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
 class BusinessesCard extends StatelessWidget {
-  const BusinessesCard({super.key, required this.businesses});
+  const BusinessesCard({super.key, required this.business});
 
-  final IpfsBusiness businesses;
+  final IpfsBusiness business;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class BusinessesCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => Provider(
-              create: (context) => SingleBusinessStore(businesses, context.read<AppStore>().encointer.community!.cid)
+              create: (context) => SingleBusinessStore(business, context.read<AppStore>().encointer.community!.cid)
                 ..getSingleBusiness(),
               child: const SingleBusinessView(),
             ),
@@ -39,7 +39,7 @@ class BusinessesCard extends StatelessWidget {
             children: [
               IpfsImage(
                 ipfs: webApi.ipfsApi,
-                cidOrFolder: businesses.logo!,
+                cidOrFolder: business.logo!,
                 width: 130,
                 height: double.infinity,
                 borderRadius: const BorderRadius.only(
@@ -55,10 +55,10 @@ class BusinessesCard extends StatelessWidget {
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(child: Text(businesses.category.name, style: context.bodySmall)),
+                      Expanded(child: Text(business.category.name, style: context.bodySmall)),
                       Text(
-                        businesses.status?.name ?? '',
-                        style: context.bodySmall.copyWith(color: businesses.status?.textColor ?? Colors.black),
+                        business.status?.name ?? '',
+                        style: context.bodySmall.copyWith(color: business.status?.textColor ?? Colors.black),
                       )
                     ],
                   ),
@@ -67,14 +67,14 @@ class BusinessesCard extends StatelessWidget {
                     children: [
                       const SizedBox(height: 28),
                       Text(
-                        businesses.name,
+                        business.name,
                         style: context.labelLarge,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        businesses.description,
+                        business.description,
                         style: context.bodyMedium,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
