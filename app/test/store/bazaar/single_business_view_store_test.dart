@@ -18,7 +18,7 @@ void main() {
     webApi = getMockApi(AppStore(MockLocalStorage(), SecureStorageMock(), LegacyLocalStorageMock()));
     await webApi.init();
 
-    businessesStore = SingleBusinessStore(businessesMockForSingleBusiness, cidEdisonPaula);
+    businessesStore = SingleBusinessStore(businessesMockForSingleBusiness);
   });
 
   group('SingleBusinessStore Test', () {

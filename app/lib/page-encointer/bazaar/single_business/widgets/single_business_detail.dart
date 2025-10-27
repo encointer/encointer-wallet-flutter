@@ -1,3 +1,5 @@
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +31,15 @@ class SingleBusinessDetail extends StatelessWidget {
       child: Card(
         child: Column(
           children: [
-            Image.network(singleBusiness.logo, width: double.infinity, fit: BoxFit.cover),
+            IpfsImage(
+              ipfs: webApi.ipfsApi,
+              cidOrFolder: singleBusiness.logo,
+              width: double.infinity,
+              height: 80,
+              fit: BoxFit.contain,
+              loadingBuilder: (_) => const Center(child: CircularProgressIndicator()),
+              errorBuilder: (_, error) => const Center(child: Icon(Icons.broken_image, size: 40)),
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(30, 20, 30, 60),
               child: Column(

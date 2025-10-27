@@ -13,8 +13,6 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/models/bazaar/ipfs_product.dart';
-import 'package:encointer_wallet/models/bazaar/item_offered.dart';
 import 'package:encointer_wallet/models/faucet/faucet.dart';
 import 'package:encointer_wallet/service/encointer_feed/feed.dart' as feed;
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -1013,16 +1011,6 @@ class EncointerApi {
   Future<List<OfferingData>> bazaarGetOfferingsForBusiness(CommunityIdentifier cid, String? controller,
       {BlockHash? at}) async {
     return _dartApi.bazaarGetOfferingsForBusiness(cid, controller, at: at ?? store.chain.latestHash);
-  }
-
-  Future<Either<ItemOffered, EwHttpException>> getItemOffered(String ipfsUrlHash) async {
-    final url = '$encointerIpfsUrl/$ipfsUrlHash';
-    return ewHttp.getType(url, fromJson: ItemOffered.fromJson);
-  }
-
-  Future<Either<IpfsProduct, EwHttpException>> getSingleBusinessProduct(String ipfsUrlHash) async {
-    final url = '$encointerIpfsUrl/$ipfsUrlHash';
-    return ewHttp.getType(url, fromJson: IpfsProduct.fromJson);
   }
 }
 
