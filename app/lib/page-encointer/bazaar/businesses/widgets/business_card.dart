@@ -8,8 +8,8 @@ import 'package:encointer_wallet/page-encointer/bazaar/single_business/views/sin
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
-class BusinessesCard extends StatelessWidget {
-  const BusinessesCard({super.key, required this.business});
+class BusinessCard extends StatelessWidget {
+  const BusinessCard({super.key, required this.business});
 
   final IpfsBusiness business;
 
