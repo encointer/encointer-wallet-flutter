@@ -55,12 +55,11 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery>
     _tapController =
         AnimationController(vsync: this, duration: const Duration(milliseconds: 150));
 
-    _tapAnimation = Tween<double>(begin: 1.0, end: 1.05).animate(
+    _tapAnimation = Tween<double>(begin: 1, end: 1.05).animate(
       CurvedAnimation(parent: _tapController, curve: Curves.easeOut),
     );
 
-    // Background fade in from 0 to 0.85 opacity during pop
-    _backgroundOpacity = Tween<double>(begin: 0.0, end: 0.85).animate(
+    _backgroundOpacity = Tween<double>(begin: 0, end: 0.85).animate(
       CurvedAnimation(parent: _tapController, curve: Curves.easeOut),
     );
   }
@@ -74,7 +73,6 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery>
 
   Future<void> _onThumbnailTap(int index) async {
     setState(() => _tappedIndex = index);
-    // Animate pop and fade in overlay simultaneously
     await _tapController.forward();
     await _tapController.reverse();
     setState(() => _tappedIndex = null);
@@ -87,7 +85,7 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery>
     if (_images.isEmpty) return;
 
     Navigator.of(context).push(
-      PageRouteBuilder(
+      PageRouteBuilder<void>(
         opaque: false,
         pageBuilder: (_, __, ___) => _FullScreenGallery(
           images: _images,
@@ -159,8 +157,11 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery>
                 return Stack(
                   alignment: Alignment.center,
                   children: [
-                    // Background fade
-                    Container(color: Colors.black.withOpacity(_backgroundOpacity.value)),
+                    // Background fade using .withAlpha
+                    Container(
+                      color: Colors.black
+                          .withAlpha((_backgroundOpacity.value * 255).toInt()),
+                    ),
                     // Scaling thumbnail
                     Transform.scale(scale: _tapAnimation.value, child: child),
                   ],
@@ -216,7 +217,7 @@ class _FullScreenGalleryState extends State<_FullScreenGallery> {
       onTap: () => Navigator.of(context).pop(),
       child: Stack(
         children: [
-          Container(color: Colors.black.withOpacity(0.85)),
+          Container(color: Colors.black.withAlpha((0.85 * 255).toInt())),
           PageView.builder(
             controller: _controller,
             itemCount: widget.images.length,
@@ -245,7 +246,8 @@ class _FullScreenGalleryState extends State<_FullScreenGallery> {
             right: 0,
             child: Center(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                padding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 decoration: BoxDecoration(
                   color: Colors.black45,
                   borderRadius: BorderRadius.circular(20),
