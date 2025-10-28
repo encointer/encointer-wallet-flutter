@@ -15,12 +15,15 @@ class IpfsBusiness {
     required this.longitude,
     required this.latitude,
     required this.openingHours,
+    this.addressDescription,
+    this.zipcode,
     this.logo,
     this.photos,
     this.photo,
     this.telephone,
     this.email,
     this.status,
+    this.moreInfo,
     this.controller,
   });
   factory IpfsBusiness.fromJson(Map<String, dynamic> json) => _$IpfsBusinessFromJson(json);
@@ -31,15 +34,19 @@ class IpfsBusiness {
   final Category category;
   final String? photo;
   final String address;
+  final String? zipcode;
+  final String? addressDescription;
   final String? telephone;
   final String? email;
   final String longitude;
   final String latitude;
   final String openingHours;
-  String? photos;
+  final String? moreInfo;
+  final String? photos;
   String? controller;
-  String? logo;
+  final String? logo;
   final Status? status;
+
   Color get statusColor {
     switch (status) {
       case Status.highlight:

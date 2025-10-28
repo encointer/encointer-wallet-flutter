@@ -5,12 +5,11 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/logic/single_business_store.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/views/single_business_view.dart';
-import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
-class BusinessesCard extends StatelessWidget {
-  const BusinessesCard({super.key, required this.business});
+class BusinessCard extends StatelessWidget {
+  const BusinessCard({super.key, required this.business});
 
   final IpfsBusiness business;
 
@@ -22,8 +21,7 @@ class BusinessesCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => Provider(
-              create: (context) =>
-                  SingleBusinessStore(business, context.read<AppStore>().encointer.community!.cid)..getSingleBusiness(),
+              create: (context) => SingleBusinessStore(business),
               child: const SingleBusinessView(),
             ),
           ),
