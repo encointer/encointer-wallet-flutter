@@ -40,7 +40,7 @@ class _BazaarPageState extends State<BazaarPage> {
   }
 
   Future<void> _onAddBusiness() async {
-    final cid = context.read<AppStore>().encointer.community!.cid.toFmtString();
+    final community = context.read<AppStore>().encointer.community!.name;
     final address = context.read<AppStore>().account.currentAddress;
     final subject = Uri.encodeComponent('Request for registering a new business');
     final body = Uri.encodeComponent('''
@@ -51,7 +51,7 @@ I would like to register a business for my community.
 My relevant onchain data is:
 
 Account: $address
-cid: $cid
+community: $community
 
 I am looking forward to your response.
 ''');
