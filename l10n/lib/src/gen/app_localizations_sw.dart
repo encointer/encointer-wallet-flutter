@@ -52,6 +52,9 @@ class AppLocalizationsSw extends AppLocalizations {
   String get addAccount => 'Ongeza akaunti';
 
   @override
+  String get addBusiness => 'Ongeza biashara';
+
+  @override
   String get addContact => 'Ongeza mawasiliano';
 
   @override
@@ -165,8 +168,8 @@ class AppLocalizationsSw extends AppLocalizations {
   String get changeYourPin => 'Badilisha PIN';
 
   @override
-  String get checkEmailApp =>
-      'Cheki kama umedownload app ya Email, Tafadhali badili jamii kuweza kutuma mali.';
+  String get emailFailedToOpen =>
+      'Imeshindikana kufungua programu ya barua pepe.';
 
   @override
   String get chosenRightCommunity =>

@@ -17,7 +17,7 @@ class SendToTrelloListTile extends StatelessWidget {
       ),
       onTap: () async => AppLaunch.sendEmail(
         bugReportMail,
-        snackBarText: context.l10n.checkEmailApp,
+        snackBarText: context.l10n.emailFailedToOpen,
         context: context,
       ),
     );

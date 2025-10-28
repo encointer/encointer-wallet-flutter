@@ -54,6 +54,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get addAccount => 'Konto hinzufügen';
 
   @override
+  String get addBusiness => 'Geschäft hinzufügen';
+
+  @override
   String get addContact => 'Kontakt hinzufügen';
 
   @override
@@ -169,7 +172,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get changeYourPin => 'PIN ändern';
 
   @override
-  String get checkEmailApp => 'Keine Email-App installiert';
+  String get emailFailedToOpen => 'E-Mail-App konnte nicht geöffnet werden.';
 
   @override
   String get chosenRightCommunity =>

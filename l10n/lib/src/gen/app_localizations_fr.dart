@@ -53,6 +53,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get addAccount => 'Ajouter un compte';
 
   @override
+  String get addBusiness => 'Ajouter une entreprise';
+
+  @override
   String get addContact => 'ajouter un contact';
 
   @override
@@ -169,7 +172,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get changeYourPin => 'Changer le NIP';
 
   @override
-  String get checkEmailApp => 'Aucune application de Email installée';
+  String get emailFailedToOpen => 'Impossible d’ouvrir l’application e-mail.';
 
   @override
   String get chosenRightCommunity =>
