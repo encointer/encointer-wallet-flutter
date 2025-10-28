@@ -1,5 +1,8 @@
+import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:iconsax/iconsax.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/logic/businesses_store.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/businesses_view.dart';
@@ -36,9 +39,37 @@ class _BazaarPageState extends State<BazaarPage> {
     });
   }
 
+  Future<void> _onAddBusiness() async {
+    final cid = context.read<AppStore>().encointer.community?.cid ?? '';
+    final address = context.read<AppStore>().account.currentAddress ?? '';
+    final subject = Uri.encodeComponent('Request for registering a new business');
+    final body = Uri.encodeComponent('''
+Dear Encointer Team,
+
+I would like to register a business for my community.
+
+My relevant onchain data is:
+
+Account: $address
+CID: $cid
+''');
+
+    final mailUri = Uri.parse('mailto:bazaar@encointer.org?subject=$subject&body=$body');
+    if (await canLaunchUrl(mailUri)) {
+      await launchUrl(mailUri);
+    } else {
+      AppAlert.showErrorDialog(
+        context,
+        errorText: 'Could not open email client.',
+        buttontext: context.l10n.ok,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.acceptancePoints, style: context.headlineSmall),
@@ -49,18 +80,26 @@ class _BazaarPageState extends State<BazaarPage> {
           ),
         ],
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(50),
+          preferredSize: const Size.fromHeight(56),
           child: Padding(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   l10n.categories,
                   style: context.bodySmall,
                 ),
                 const SizedBox(width: 10),
-                const DropdownWidget(),
+                const Expanded(
+                  child: DropdownWidget(),
+                ),
+                const SizedBox(width: 8),
+                IconButton(
+                  onPressed: _onAddBusiness,
+                  icon: const Icon(Iconsax.add_square),
+                  color: context.colorScheme.secondary,
+                  tooltip: 'Add Business',
+                ),
               ],
             ),
           ),
