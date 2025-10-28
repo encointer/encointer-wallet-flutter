@@ -136,7 +136,10 @@ class SingleBusinessDetail extends StatelessWidget {
                   if (business.photos != null)
                     IpfsImageGallery(
                     ipfs: webApi.ipfsApi,
-                    cidsOrFolders: [business.photos!]
+                    cidsOrFolders: [business.photos!],
+                      tapScale: 0.99,
+                      tapAnimationDuration: const Duration(milliseconds: 40),
+                      tapDelay: const Duration(milliseconds: 20),
                   )
                 ],
               ),

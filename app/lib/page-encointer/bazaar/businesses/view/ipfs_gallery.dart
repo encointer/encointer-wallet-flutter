@@ -14,6 +14,9 @@ class IpfsImageGallery extends StatefulWidget {
     this.borderRadius = 8,
     this.placeholder = const ColoredBox(color: Colors.grey),
     this.maxConcurrent = 4,
+    this.tapScale = 1.04,
+    this.tapAnimationDuration = const Duration(milliseconds: 80),
+    this.tapDelay = const Duration(milliseconds: 60),
   });
 
   final IpfsApi ipfs;
@@ -25,42 +28,50 @@ class IpfsImageGallery extends StatefulWidget {
   final Widget placeholder;
   final int maxConcurrent;
 
+  /// How much the thumbnail should "pop" when tapped (e.g., 1.0 → 1.04)
+  final double tapScale;
+
+  /// Duration of the tap animation (forward + reverse)
+  final Duration tapAnimationDuration;
+
+  /// Small delay before showing full-screen after tap animation
+  final Duration tapDelay;
+
   @override
   State<IpfsImageGallery> createState() => _IpfsImageGalleryState();
 }
 
-class _IpfsImageGalleryState extends State<IpfsImageGallery>
-    with SingleTickerProviderStateMixin {
+class _IpfsImageGalleryState extends State<IpfsImageGallery> with SingleTickerProviderStateMixin {
   final List<IpfsImageItem> _images = [];
   StreamSubscription<IpfsImageItem>? _subscription;
 
   late AnimationController _tapController;
   late Animation<double> _tapAnimation;
   late Animation<double> _backgroundOpacity;
-  int? _tappedIndex; // Track tapped thumbnail
+  int? _tappedIndex;
 
   @override
   void initState() {
     super.initState();
     _subscription = widget.ipfs
         .streamGalleryImagesQueued(
-      cidsOrFolders: widget.cidsOrFolders,
-      includeFiles: widget.includeFiles,
-      maxConcurrent: widget.maxConcurrent,
-    )
-        .listen((item) {
-      setState(() => _images.add(item));
-    });
+          cidsOrFolders: widget.cidsOrFolders,
+          includeFiles: widget.includeFiles,
+          maxConcurrent: widget.maxConcurrent,
+        )
+        .listen((item) => setState(() => _images.add(item)));
 
-    _tapController =
-        AnimationController(vsync: this, duration: const Duration(milliseconds: 150));
-
-    _tapAnimation = Tween<double>(begin: 1, end: 1.05).animate(
-      CurvedAnimation(parent: _tapController, curve: Curves.easeOut),
+    _tapController = AnimationController(
+      vsync: this,
+      duration: widget.tapAnimationDuration,
     );
 
-    _backgroundOpacity = Tween<double>(begin: 0, end: 0.85).animate(
-      CurvedAnimation(parent: _tapController, curve: Curves.easeOut),
+    _tapAnimation = Tween<double>(begin: 1, end: widget.tapScale).animate(
+      CurvedAnimation(parent: _tapController, curve: Curves.easeOutCubic),
+    );
+
+    _backgroundOpacity = Tween<double>(begin: 0, end: 0.6).animate(
+      CurvedAnimation(parent: _tapController, curve: Curves.easeOutCubic),
     );
   }
 
@@ -76,8 +87,7 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery>
     await _tapController.forward();
     await _tapController.reverse();
 
-    await Future<void>.delayed(const Duration(milliseconds: 120));
-
+    await Future<void>.delayed(widget.tapDelay);
     setState(() => _tappedIndex = null);
 
     if (!mounted) return;
@@ -118,41 +128,40 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery>
             borderRadius: BorderRadius.circular(widget.borderRadius),
             child: img.hasData
                 ? Hero(
-              tag: heroTag,
-              flightShuttleBuilder: (flightContext, animation,
-                  flightDirection, fromHero, toHero) {
-                return AnimatedBuilder(
-                  animation: animation,
-                  builder: (context, child) {
-                    final radius = widget.borderRadius * (1 - animation.value);
-                    return ClipRRect(
-                      borderRadius: BorderRadius.circular(radius),
-                      child: child,
-                    );
-                  },
-                  child: Image.memory(
-                    img.bytes!,
+                    tag: heroTag,
+                    flightShuttleBuilder: (flightContext, animation, flightDirection, fromHero, toHero) {
+                      return AnimatedBuilder(
+                        animation: animation,
+                        builder: (context, child) {
+                          final radius = widget.borderRadius * (1 - animation.value);
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(radius),
+                            child: child,
+                          );
+                        },
+                        child: Image.memory(
+                          img.bytes!,
+                          width: widget.imageWidth,
+                          height: widget.imageHeight,
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    },
+                    child: Image.memory(
+                      img.bytes!,
+                      width: widget.imageWidth,
+                      height: widget.imageHeight,
+                      fit: BoxFit.cover,
+                    ),
+                  )
+                : SizedBox(
                     width: widget.imageWidth,
                     height: widget.imageHeight,
-                    fit: BoxFit.cover,
+                    child: widget.placeholder,
                   ),
-                );
-              },
-              child: Image.memory(
-                img.bytes!,
-                width: widget.imageWidth,
-                height: widget.imageHeight,
-                fit: BoxFit.cover,
-              ),
-            )
-                : SizedBox(
-              width: widget.imageWidth,
-              height: widget.imageHeight,
-              child: widget.placeholder,
-            ),
           );
 
-          // Only wrap the tapped thumbnail
+          // Apply tap feedback only on tapped thumbnail
           if (_tappedIndex == i) {
             thumbnailWidget = AnimatedBuilder(
               animation: _tapController,
@@ -160,12 +169,9 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery>
                 return Stack(
                   alignment: Alignment.center,
                   children: [
-                    // Background fade using .withAlpha
                     Container(
-                      color: Colors.black
-                          .withAlpha((_backgroundOpacity.value * 255).toInt()),
+                      color: Colors.black.withAlpha((_backgroundOpacity.value * 255).toInt()),
                     ),
-                    // Scaling thumbnail
                     Transform.scale(scale: _tapAnimation.value, child: child),
                   ],
                 );
@@ -231,14 +237,11 @@ class _FullScreenGalleryState extends State<_FullScreenGallery> {
               return Center(
                 child: img.hasData
                     ? Hero(
-                  tag: heroTag,
-                  child: InteractiveViewer(
-                    child: Image.memory(
-                      img.bytes!,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                )
+                        tag: heroTag,
+                        child: InteractiveViewer(
+                          child: Image.memory(img.bytes!, fit: BoxFit.contain),
+                        ),
+                      )
                     : const SizedBox.shrink(),
               );
             },
@@ -249,8 +252,7 @@ class _FullScreenGalleryState extends State<_FullScreenGallery> {
             right: 0,
             child: Center(
               child: Container(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 decoration: BoxDecoration(
                   color: Colors.black45,
                   borderRadius: BorderRadius.circular(20),
