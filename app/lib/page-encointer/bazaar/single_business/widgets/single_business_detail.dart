@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_gallery.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:flutter/material.dart';
@@ -132,6 +133,11 @@ class SingleBusinessDetail extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 40),
+                  if (business.photos != null)
+                    IpfsImageGalleryStream(
+                    ipfs: webApi.ipfsApi,
+                    cidsOrFolders: [business.photos!]
+                  )
                 ],
               ),
             ),
