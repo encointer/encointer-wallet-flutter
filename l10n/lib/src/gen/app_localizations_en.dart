@@ -170,7 +170,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get changeYourPin => 'Change PIN';
 
   @override
-  String get checkEmailApp => 'Check that you have downloaded the Email app';
+  String get emailFailedToOpen => 'Could not open email client.';
 
   @override
   String get chosenRightCommunity =>

@@ -169,8 +169,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get changeYourPin => 'Изменить PIN-код';
 
   @override
-  String get checkEmailApp =>
-      'Убедитесь, что вы загрузили приложение электронной почты';
+  String get emailFailedToOpen => 'Не удалось открыть почтовое приложение.';
 
   @override
   String get chosenRightCommunity =>

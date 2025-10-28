@@ -398,11 +398,11 @@ abstract class AppLocalizations {
   /// **'Change PIN'**
   String get changeYourPin;
 
-  /// No description provided for @checkEmailApp.
+  /// No description provided for @emailFailedToOpen.
   ///
   /// In en, this message translates to:
-  /// **'Check that you have downloaded the Email app'**
-  String get checkEmailApp;
+  /// **'Could not open email client.'**
+  String get emailFailedToOpen;
 
   /// No description provided for @chosenRightCommunity.
   ///

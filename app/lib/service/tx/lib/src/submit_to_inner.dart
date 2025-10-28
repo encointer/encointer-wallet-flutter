@@ -114,7 +114,7 @@ void showTxErrorDialog(BuildContext context, ErrorNotificationMsg message, bool 
           child: const Text('Bug Report'),
           onPressed: () => AppLaunch.sendEmail(
             bugReportMail,
-            snackBarText: context.l10n.checkEmailApp,
+            snackBarText: context.l10n.emailFailedToOpen,
             context: context,
           ),
         ),

@@ -172,7 +172,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get changeYourPin => 'Changer le NIP';
 
   @override
-  String get checkEmailApp => 'Aucune application de Email installée';
+  String get emailFailedToOpen => 'Impossible d’ouvrir l’application e-mail.';
 
   @override
   String get chosenRightCommunity =>

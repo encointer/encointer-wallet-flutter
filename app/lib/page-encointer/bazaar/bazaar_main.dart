@@ -71,7 +71,7 @@ I am looking forward to your response.
       if (!launched && context.mounted) {
         AppAlert.showErrorDialog(
           context,
-          errorText: 'Could not open email client.',
+          errorText: context.l10n.emailFailedToOpen,
           buttontext: context.l10n.ok,
         );
       }
@@ -79,7 +79,7 @@ I am looking forward to your response.
       if (context.mounted) {
         AppAlert.showErrorDialog(
           context,
-          errorText: 'Could not open email client.',
+          errorText: context.l10n.emailFailedToOpen,
           buttontext: context.l10n.ok,
         );
       }
@@ -121,7 +121,7 @@ I am looking forward to your response.
                   onPressed: _onAddBusiness,
                   icon: const Icon(Iconsax.add_square),
                   color: context.colorScheme.secondary,
-                  tooltip: 'Add Business',
+                  tooltip: l10n.addBusiness,
                 ),
               ],
             ),
