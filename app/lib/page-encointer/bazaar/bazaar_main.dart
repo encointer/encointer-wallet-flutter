@@ -40,8 +40,8 @@ class _BazaarPageState extends State<BazaarPage> {
   }
 
   Future<void> _onAddBusiness() async {
-    final cid = context.read<AppStore>().encointer.community?.cid ?? '';
-    final address = context.read<AppStore>().account.currentAddress ?? '';
+    final cid = context.read<AppStore>().encointer.community!.cid.toFmtString();
+    final address = context.read<AppStore>().account.currentAddress;
     final subject = Uri.encodeComponent('Request for registering a new business');
     final body = Uri.encodeComponent('''
 Dear Encointer Team,
@@ -51,7 +51,9 @@ I would like to register a business for my community.
 My relevant onchain data is:
 
 Account: $address
-CID: $cid
+cid: $cid
+
+I am looking forward to your response.
 ''');
 
     final mailUri = Uri(
@@ -87,6 +89,8 @@ CID: $cid
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final store = context.read<AppStore>();
+
 
     return Scaffold(
       appBar: AppBar(
@@ -112,6 +116,7 @@ CID: $cid
                   child: DropdownWidget(),
                 ),
                 const SizedBox(width: 8),
+                if (store.encointer.chosenCid != null)
                 IconButton(
                   onPressed: _onAddBusiness,
                   icon: const Icon(Iconsax.add_square),
