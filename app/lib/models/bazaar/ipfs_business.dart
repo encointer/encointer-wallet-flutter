@@ -1,7 +1,6 @@
+import 'package:encointer_wallet/models/bazaar/category.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import 'package:encointer_wallet/page-encointer/bazaar/businesses/widgets/dropdown_widget.dart';
 
 part 'ipfs_business.g.dart';
 
@@ -10,7 +9,7 @@ class IpfsBusiness {
   IpfsBusiness({
     required this.name,
     required this.description,
-    required this.category,
+    required this.categoryRaw,
     required this.address,
     required this.longitude,
     required this.latitude,
@@ -31,7 +30,6 @@ class IpfsBusiness {
 
   final String name;
   final String description;
-  final Category category;
   final String? photo;
   final String address;
   final String? zipcode;
@@ -46,6 +44,31 @@ class IpfsBusiness {
   String? controller;
   final String? logo;
   final Status? status;
+
+  @JsonKey(name: 'category')
+  final String categoryRaw;
+
+  /// Try to map [categoryRaw] to a known [Category] enum.
+  Category get category => Category.fromJsonKey(categoryRaw);
+
+  /// Human-readable name, including unknown backend values.
+  String get categoryDisplayName {
+    final cat = category;
+    if (cat != Category.other) return cat.defaultLabel;
+
+    // Unknown category: prettify backend value
+    return _prettifySlug(categoryRaw);
+  }
+
+  /// Converts something like "local_art__and_crafts" → "Local Art & Crafts"
+  String _prettifySlug(String slug) {
+    final normalized = slug.replaceAll(RegExp('_+'), ' ').trim();
+    if (normalized.isEmpty) return 'Other';
+    return normalized
+        .split(' ')
+        .map((w) => w.isEmpty ? '' : '${w[0].toUpperCase()}${w.substring(1).toLowerCase()}')
+        .join(' ');
+  }
 
   Color get statusColor {
     switch (status) {

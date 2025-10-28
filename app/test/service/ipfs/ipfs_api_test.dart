@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:encointer_wallet/models/bazaar/category.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/businesses/widgets/dropdown_widget.dart';
 import 'package:encointer_wallet/service/ipfs/ipfs_api.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -41,7 +41,7 @@ void main() {
       final expectedBusiness = IpfsBusiness(
         name: 'Revamp-IT',
         description: 'Computersupport und -dienste',
-        category: Category.iTHardware,
+        categoryRaw: Category.iTHardware.jsonKey,
         address: 'Birmensdorferstrasse 379, 8055 Zürich',
         longitude: '8.5049619',
         latitude: '47.3690377',
