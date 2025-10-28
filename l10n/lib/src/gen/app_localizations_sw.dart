@@ -168,6 +168,33 @@ class AppLocalizationsSw extends AppLocalizations {
   String get changeYourPin => 'Badilisha PIN';
 
   @override
+  String get category_all => 'Zote';
+
+  @override
+  String get category_art_music => 'Sanaa & Muziki';
+
+  @override
+  String get category_body_soul => 'Mwili & Nafsi';
+
+  @override
+  String get category_fashion_clothing => 'Mitindo & Mavazi';
+
+  @override
+  String get category_food_beverage_store => 'Duka la Chakula & Vinywaji';
+
+  @override
+  String get category_restaurants_bars => 'Migahawa & Baa';
+
+  @override
+  String get category_it_hardware => 'Vifaa vya IT';
+
+  @override
+  String get category_food => 'Chakula';
+
+  @override
+  String get category_other => 'Nyingine';
+
+  @override
   String get emailFailedToOpen =>
       'Imeshindikana kufungua programu ya barua pepe.';
 

@@ -34,7 +34,7 @@ class _DropdownWidgetState extends State<DropdownWidget> {
           .map(
             (e) => DropdownMenuEntry<Category>(
               value: e,
-              label: e.name,
+              label: e.localized(context),
               style: ButtonStyle(
                 textStyle: WidgetStateProperty.all(context.textTheme.bodySmall),
               ),

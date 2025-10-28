@@ -172,6 +172,33 @@ class AppLocalizationsFr extends AppLocalizations {
   String get changeYourPin => 'Changer le NIP';
 
   @override
+  String get category_all => 'Tout';
+
+  @override
+  String get category_art_music => 'Art & Musique';
+
+  @override
+  String get category_body_soul => 'Corps & Esprit';
+
+  @override
+  String get category_fashion_clothing => 'Mode & Vêtements';
+
+  @override
+  String get category_food_beverage_store => 'Épicerie & Boissons';
+
+  @override
+  String get category_restaurants_bars => 'Restaurants & Bars';
+
+  @override
+  String get category_it_hardware => 'Matériel informatique';
+
+  @override
+  String get category_food => 'Nourriture';
+
+  @override
+  String get category_other => 'Autre';
+
+  @override
   String get emailFailedToOpen => 'Impossible d’ouvrir l’application e-mail.';
 
   @override

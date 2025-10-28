@@ -398,6 +398,60 @@ abstract class AppLocalizations {
   /// **'Change PIN'**
   String get changeYourPin;
 
+  /// No description provided for @category_all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get category_all;
+
+  /// No description provided for @category_art_music.
+  ///
+  /// In en, this message translates to:
+  /// **'Art & Music'**
+  String get category_art_music;
+
+  /// No description provided for @category_body_soul.
+  ///
+  /// In en, this message translates to:
+  /// **'Body & Soul'**
+  String get category_body_soul;
+
+  /// No description provided for @category_fashion_clothing.
+  ///
+  /// In en, this message translates to:
+  /// **'Fashion & Clothing'**
+  String get category_fashion_clothing;
+
+  /// No description provided for @category_food_beverage_store.
+  ///
+  /// In en, this message translates to:
+  /// **'Food & Beverage Store'**
+  String get category_food_beverage_store;
+
+  /// No description provided for @category_restaurants_bars.
+  ///
+  /// In en, this message translates to:
+  /// **'Restaurants & Bars'**
+  String get category_restaurants_bars;
+
+  /// No description provided for @category_it_hardware.
+  ///
+  /// In en, this message translates to:
+  /// **'IT Hardware'**
+  String get category_it_hardware;
+
+  /// No description provided for @category_food.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get category_food;
+
+  /// No description provided for @category_other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get category_other;
+
   /// No description provided for @emailFailedToOpen.
   ///
   /// In en, this message translates to:
