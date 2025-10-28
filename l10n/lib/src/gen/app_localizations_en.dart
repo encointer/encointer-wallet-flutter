@@ -170,6 +170,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get changeYourPin => 'Change PIN';
 
   @override
+  String get category_all => 'All';
+
+  @override
+  String get category_art_music => 'Art & Music';
+
+  @override
+  String get category_body_soul => 'Body & Soul';
+
+  @override
+  String get category_fashion_clothing => 'Fashion & Clothing';
+
+  @override
+  String get category_food_beverage_store => 'Food & Beverage Store';
+
+  @override
+  String get category_restaurants_bars => 'Restaurants & Bars';
+
+  @override
+  String get category_it_hardware => 'IT Hardware';
+
+  @override
+  String get category_food => 'Food';
+
+  @override
+  String get category_other => 'Other';
+
+  @override
   String get emailFailedToOpen => 'Could not open email client.';
 
   @override

@@ -169,6 +169,33 @@ class AppLocalizationsRu extends AppLocalizations {
   String get changeYourPin => 'Изменить PIN-код';
 
   @override
+  String get category_all => 'Все';
+
+  @override
+  String get category_art_music => 'Искусство и музыка';
+
+  @override
+  String get category_body_soul => 'Тело и душа';
+
+  @override
+  String get category_fashion_clothing => 'Мода и одежда';
+
+  @override
+  String get category_food_beverage_store => 'Магазин еды и напитков';
+
+  @override
+  String get category_restaurants_bars => 'Рестораны и бары';
+
+  @override
+  String get category_it_hardware => 'IT-оборудование';
+
+  @override
+  String get category_food => 'Еда';
+
+  @override
+  String get category_other => 'Другое';
+
+  @override
   String get emailFailedToOpen => 'Не удалось открыть почтовое приложение.';
 
   @override
