@@ -75,6 +75,9 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery>
     setState(() => _tappedIndex = index);
     await _tapController.forward();
     await _tapController.reverse();
+
+    await Future<void>.delayed(const Duration(milliseconds: 120));
+
     setState(() => _tappedIndex = null);
 
     if (!mounted) return;
