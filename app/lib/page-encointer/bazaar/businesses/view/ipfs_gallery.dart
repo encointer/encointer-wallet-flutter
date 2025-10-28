@@ -56,11 +56,16 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery> {
   void _showFullScreenGallery(int initialIndex) {
     if (_images.isEmpty) return;
 
-    showDialog<void>(
-      context: context,
-      builder: (_) => _FullScreenGallery(
-        images: _images,
-        initialIndex: initialIndex,
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (_, __, ___) => _FullScreenGallery(
+          images: _images,
+          initialIndex: initialIndex,
+          thumbnailWidth: widget.imageWidth,
+          thumbnailHeight: widget.imageHeight,
+          borderRadius: widget.borderRadius,
+        ),
       ),
     );
   }
@@ -76,16 +81,39 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery> {
         separatorBuilder: (_, __) => const SizedBox(width: 8),
         itemBuilder: (context, i) {
           final img = _images[i];
+          final heroTag = img.cidOrFolder + (img.fileName ?? '');
           return GestureDetector(
             onTap: () => _showFullScreenGallery(i),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(widget.borderRadius),
               child: img.hasData
-                  ? Image.memory(
-                img.bytes!,
-                width: widget.imageWidth,
-                height: widget.imageHeight,
-                fit: BoxFit.cover,
+                  ? Hero(
+                tag: heroTag,
+                flightShuttleBuilder: (flightContext, animation, flightDirection,
+                    fromHero, toHero) {
+                  return AnimatedBuilder(
+                    animation: animation,
+                    builder: (context, child) {
+                      final radius = widget.borderRadius * (1 - animation.value);
+                      return ClipRRect(
+                        borderRadius: BorderRadius.circular(radius),
+                        child: child,
+                      );
+                    },
+                    child: Image.memory(
+                      img.bytes!,
+                      width: widget.imageWidth,
+                      height: widget.imageHeight,
+                      fit: BoxFit.cover,
+                    ),
+                  );
+                },
+                child: Image.memory(
+                  img.bytes!,
+                  width: widget.imageWidth,
+                  height: widget.imageHeight,
+                  fit: BoxFit.cover,
+                ),
               )
                   : SizedBox(
                 width: widget.imageWidth,
@@ -100,15 +128,20 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery> {
   }
 }
 
-/// Full-screen swipeable gallery overlay with page indicator
 class _FullScreenGallery extends StatefulWidget {
-
   const _FullScreenGallery({
     required this.images,
     required this.initialIndex,
+    required this.thumbnailWidth,
+    required this.thumbnailHeight,
+    required this.borderRadius,
   });
+
   final List<IpfsImageItem> images;
   final int initialIndex;
+  final double thumbnailWidth;
+  final double thumbnailHeight;
+  final double borderRadius;
 
   @override
   State<_FullScreenGallery> createState() => _FullScreenGalleryState();
@@ -129,45 +162,54 @@ class _FullScreenGalleryState extends State<_FullScreenGallery> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.of(context).pop(),
-      child: Container(
-        color: Colors.black.withOpacity(0.85),
-        alignment: Alignment.center,
-        child: Stack(
-          children: [
-            PageView.builder(
-              controller: _controller,
-              itemCount: widget.images.length,
-              onPageChanged: (index) => setState(() => _currentIndex = index),
-              itemBuilder: (context, index) {
-                final img = widget.images[index];
-                return InteractiveViewer(
-                  child: img.hasData
-                      ? Image.memory(img.bytes!, fit: BoxFit.contain)
-                      : const SizedBox.shrink(),
-                );
-              },
-            ),
-            // Page indicator at bottom center
-            Positioned(
-              bottom: 24,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.black45,
-                    borderRadius: BorderRadius.circular(20),
+      child: Stack(
+        children: [
+          // Fade-in black background
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            color: Colors.black.withOpacity(0.85),
+          ),
+          PageView.builder(
+            controller: _controller,
+            itemCount: widget.images.length,
+            onPageChanged: (index) => setState(() => _currentIndex = index),
+            itemBuilder: (context, index) {
+              final img = widget.images[index];
+              final heroTag = img.cidOrFolder + (img.fileName ?? '');
+              return Center(
+                child: img.hasData
+                    ? Hero(
+                  tag: heroTag,
+                  child: InteractiveViewer(
+                    child: Image.memory(
+                      img.bytes!,
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                  child: Text(
-                    '${_currentIndex + 1} / ${widget.images.length}',
-                    style: const TextStyle(color: Colors.white, fontSize: 16),
-                  ),
+                )
+                    : const SizedBox.shrink(),
+              );
+            },
+          ),
+          Positioned(
+            bottom: 24,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.black45,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  '${_currentIndex + 1} / ${widget.images.length}',
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
