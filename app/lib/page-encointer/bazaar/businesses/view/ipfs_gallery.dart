@@ -29,9 +29,15 @@ class IpfsImageGallery extends StatefulWidget {
   State<IpfsImageGallery> createState() => _IpfsImageGalleryState();
 }
 
-class _IpfsImageGalleryState extends State<IpfsImageGallery> {
+class _IpfsImageGalleryState extends State<IpfsImageGallery>
+    with SingleTickerProviderStateMixin {
   final List<IpfsImageItem> _images = [];
   StreamSubscription<IpfsImageItem>? _subscription;
+
+  late AnimationController _tapController;
+  late Animation<double> _tapAnimation;
+  late Animation<double> _backgroundOpacity;
+  int? _tappedIndex; // Track tapped thumbnail
 
   @override
   void initState() {
@@ -45,12 +51,36 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery> {
         .listen((item) {
       setState(() => _images.add(item));
     });
+
+    _tapController =
+        AnimationController(vsync: this, duration: const Duration(milliseconds: 150));
+
+    _tapAnimation = Tween<double>(begin: 1.0, end: 1.05).animate(
+      CurvedAnimation(parent: _tapController, curve: Curves.easeOut),
+    );
+
+    // Background fade in from 0 to 0.85 opacity during pop
+    _backgroundOpacity = Tween<double>(begin: 0.0, end: 0.85).animate(
+      CurvedAnimation(parent: _tapController, curve: Curves.easeOut),
+    );
   }
 
   @override
   void dispose() {
     _subscription?.cancel();
+    _tapController.dispose();
     super.dispose();
+  }
+
+  Future<void> _onThumbnailTap(int index) async {
+    setState(() => _tappedIndex = index);
+    // Animate pop and fade in overlay simultaneously
+    await _tapController.forward();
+    await _tapController.reverse();
+    setState(() => _tappedIndex = null);
+
+    if (!mounted) return;
+    _showFullScreenGallery(index);
   }
 
   void _showFullScreenGallery(int initialIndex) {
@@ -82,45 +112,67 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery> {
         itemBuilder: (context, i) {
           final img = _images[i];
           final heroTag = img.cidOrFolder + (img.fileName ?? '');
-          return GestureDetector(
-            onTap: () => _showFullScreenGallery(i),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(widget.borderRadius),
-              child: img.hasData
-                  ? Hero(
-                tag: heroTag,
-                flightShuttleBuilder: (flightContext, animation, flightDirection,
-                    fromHero, toHero) {
-                  return AnimatedBuilder(
-                    animation: animation,
-                    builder: (context, child) {
-                      final radius = widget.borderRadius * (1 - animation.value);
-                      return ClipRRect(
-                        borderRadius: BorderRadius.circular(radius),
-                        child: child,
-                      );
-                    },
-                    child: Image.memory(
-                      img.bytes!,
-                      width: widget.imageWidth,
-                      height: widget.imageHeight,
-                      fit: BoxFit.cover,
-                    ),
-                  );
-                },
-                child: Image.memory(
-                  img.bytes!,
-                  width: widget.imageWidth,
-                  height: widget.imageHeight,
-                  fit: BoxFit.cover,
-                ),
-              )
-                  : SizedBox(
+
+          Widget thumbnailWidget = ClipRRect(
+            borderRadius: BorderRadius.circular(widget.borderRadius),
+            child: img.hasData
+                ? Hero(
+              tag: heroTag,
+              flightShuttleBuilder: (flightContext, animation,
+                  flightDirection, fromHero, toHero) {
+                return AnimatedBuilder(
+                  animation: animation,
+                  builder: (context, child) {
+                    final radius = widget.borderRadius * (1 - animation.value);
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(radius),
+                      child: child,
+                    );
+                  },
+                  child: Image.memory(
+                    img.bytes!,
+                    width: widget.imageWidth,
+                    height: widget.imageHeight,
+                    fit: BoxFit.cover,
+                  ),
+                );
+              },
+              child: Image.memory(
+                img.bytes!,
                 width: widget.imageWidth,
                 height: widget.imageHeight,
-                child: widget.placeholder,
+                fit: BoxFit.cover,
               ),
+            )
+                : SizedBox(
+              width: widget.imageWidth,
+              height: widget.imageHeight,
+              child: widget.placeholder,
             ),
+          );
+
+          // Only wrap the tapped thumbnail
+          if (_tappedIndex == i) {
+            thumbnailWidget = AnimatedBuilder(
+              animation: _tapController,
+              builder: (context, child) {
+                return Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    // Background fade
+                    Container(color: Colors.black.withOpacity(_backgroundOpacity.value)),
+                    // Scaling thumbnail
+                    Transform.scale(scale: _tapAnimation.value, child: child),
+                  ],
+                );
+              },
+              child: thumbnailWidget,
+            );
+          }
+
+          return GestureDetector(
+            onTap: () => _onThumbnailTap(i),
+            child: thumbnailWidget,
           );
         },
       ),
@@ -164,11 +216,7 @@ class _FullScreenGalleryState extends State<_FullScreenGallery> {
       onTap: () => Navigator.of(context).pop(),
       child: Stack(
         children: [
-          // Fade-in black background
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            color: Colors.black.withOpacity(0.85),
-          ),
+          Container(color: Colors.black.withOpacity(0.85)),
           PageView.builder(
             controller: _controller,
             itemCount: widget.images.length,
