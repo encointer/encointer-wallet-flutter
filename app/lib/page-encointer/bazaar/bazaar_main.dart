@@ -54,15 +54,33 @@ Account: $address
 CID: $cid
 ''');
 
-    final mailUri = Uri.parse('mailto:bazaar@encointer.org?subject=$subject&body=$body');
-    if (await canLaunchUrl(mailUri)) {
-      await launchUrl(mailUri);
-    } else {
-      AppAlert.showErrorDialog(
-        context,
-        errorText: 'Could not open email client.',
-        buttontext: context.l10n.ok,
+    final mailUri = Uri(
+      scheme: 'mailto',
+      path: 'bazaar@encointer.org',
+      query: 'subject=$subject&body=$body',
+    );
+
+    try {
+      final launched = await launchUrl(
+        mailUri,
+        mode: LaunchMode.externalApplication, // ensures OS mail app is used
       );
+
+      if (!launched && context.mounted) {
+        AppAlert.showErrorDialog(
+          context,
+          errorText: 'Could not open email client.',
+          buttontext: context.l10n.ok,
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        AppAlert.showErrorDialog(
+          context,
+          errorText: 'Could not open email client.',
+          buttontext: context.l10n.ok,
+        );
+      }
     }
   }
 
