@@ -54,6 +54,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get addAccount => 'Konto hinzufügen';
 
   @override
+  String get addBusiness => 'Geschäft hinzufügen';
+
+  @override
   String get addContact => 'Kontakt hinzufügen';
 
   @override

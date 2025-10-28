@@ -188,6 +188,12 @@ abstract class AppLocalizations {
   /// **'Add account'**
   String get addAccount;
 
+  /// No description provided for @addBusiness.
+  ///
+  /// In en, this message translates to:
+  /// **'Add business'**
+  String get addBusiness;
+
   /// No description provided for @addContact.
   ///
   /// In en, this message translates to:

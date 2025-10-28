@@ -52,6 +52,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addAccount => 'Add account';
 
   @override
+  String get addBusiness => 'Add business';
+
+  @override
   String get addContact => 'Add contact';
 
   @override
