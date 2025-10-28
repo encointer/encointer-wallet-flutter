@@ -56,7 +56,7 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery> {
   void _showFullScreenGallery(int initialIndex) {
     if (_images.isEmpty) return;
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (_) => _FullScreenGallery(
         images: _images,
