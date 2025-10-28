@@ -25,13 +25,13 @@ void main() {
     test('`getSingleBusiness()` should update fetchStatus to success and populate ipfsProducts list and singleBusiness',
         () async {
       expect(businessesStore.fetchStatus, FetchStatus.loading);
-      expect(businessesStore.singleBusiness, isNull);
+      expect(businessesStore.business, isNull);
 
       await businessesStore.getSingleBusiness();
 
       expect(businessesStore.fetchStatus, FetchStatus.success);
-      expect(businessesStore.singleBusiness, isNotNull);
-      expect(businessesStore.singleBusiness!.name, businessesMockForSingleBusiness.name);
+      expect(businessesStore.business, isNotNull);
+      expect(businessesStore.business.name, businessesMockForSingleBusiness.name);
 
       expect(businessesStore.ipfsProducts, isNotNull);
       expect(businessesStore.ipfsProducts.length, greaterThan(0));

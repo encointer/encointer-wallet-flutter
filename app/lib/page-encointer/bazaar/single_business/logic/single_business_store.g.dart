@@ -63,21 +63,6 @@ mixin _$SingleBusinessStore on _SingleBusinessStoreBase, Store {
     });
   }
 
-  late final _$singleBusinessAtom = Atom(name: '_SingleBusinessStoreBase.singleBusiness', context: context);
-
-  @override
-  SingleBusiness? get singleBusiness {
-    _$singleBusinessAtom.reportRead();
-    return super.singleBusiness;
-  }
-
-  @override
-  set singleBusiness(SingleBusiness? value) {
-    _$singleBusinessAtom.reportWrite(value, super.singleBusiness, () {
-      super.singleBusiness = value;
-    });
-  }
-
   late final _$fetchStatusAtom = Atom(name: '_SingleBusinessStoreBase.fetchStatus', context: context);
 
   @override
@@ -162,7 +147,6 @@ mixin _$SingleBusinessStore on _SingleBusinessStoreBase, Store {
 isLiked: ${isLiked},
 isLikedPersonally: ${isLikedPersonally},
 countLikes: ${countLikes},
-singleBusiness: ${singleBusiness},
 fetchStatus: ${fetchStatus},
 ipfsProducts: ${ipfsProducts},
 error: ${error}

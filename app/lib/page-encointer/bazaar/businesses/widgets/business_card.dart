@@ -21,8 +21,7 @@ class BusinessCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => Provider(
-              create: (context) =>
-                  SingleBusinessStore(business)..getSingleBusiness(),
+              create: (context) => SingleBusinessStore(business)..getSingleBusiness(),
               child: const SingleBusinessView(),
             ),
           ),

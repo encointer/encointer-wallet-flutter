@@ -18,7 +18,7 @@ class SingleBusinessView extends StatelessWidget {
       appBar: AppBar(
         title: Observer(builder: (_) {
           return switch (store.fetchStatus) {
-            FetchStatus.success => Text(store.singleBusiness!.name.toUpperCase()),
+            FetchStatus.success => Text(store.business.name.toUpperCase()),
             _ => const SizedBox(),
           };
         }),
@@ -28,7 +28,7 @@ class SingleBusinessView extends StatelessWidget {
           case FetchStatus.loading:
             return const CenteredActivityIndicator();
           case FetchStatus.success:
-            return SingleBusinessDetail(singleBusiness: store.singleBusiness!);
+            return SingleBusinessDetail(business: store.business);
           case FetchStatus.error:
             return const ErrorView();
           case FetchStatus.noData:
