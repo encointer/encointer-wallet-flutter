@@ -91,7 +91,6 @@ I am looking forward to your response.
     final l10n = context.l10n;
     final store = context.read<AppStore>();
 
-
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.acceptancePoints, style: context.headlineSmall),
@@ -117,12 +116,12 @@ I am looking forward to your response.
                 ),
                 const SizedBox(width: 8),
                 if (store.encointer.chosenCid != null)
-                IconButton(
-                  onPressed: _onAddBusiness,
-                  icon: const Icon(Iconsax.add_square),
-                  color: context.colorScheme.secondary,
-                  tooltip: l10n.addBusiness,
-                ),
+                  IconButton(
+                    onPressed: _onAddBusiness,
+                    icon: const Icon(Iconsax.add_square),
+                    color: context.colorScheme.secondary,
+                    tooltip: l10n.addBusiness,
+                  ),
               ],
             ),
           ),
