@@ -2,8 +2,6 @@ import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_product.dart';
 import 'package:mobx/mobx.dart';
 
-import 'package:encointer_wallet/utils/fetch_status.dart';
-
 part 'single_business_store.g.dart';
 
 // const _targetLogger = 'SingleBusinessStore';
@@ -33,22 +31,10 @@ abstract class _SingleBusinessStoreBase with Store {
   late int countLikes;
 
   @observable
-  FetchStatus fetchStatus = FetchStatus.loading;
-
-  @observable
   List<IpfsProduct> ipfsProducts = <IpfsProduct>[];
 
   @observable
   String? error;
-
-  @action
-  Future<void> getSingleBusiness() async {
-    fetchStatus = FetchStatus.loading;
-
-    // todo get photos
-
-    fetchStatus = FetchStatus.success;
-  }
 
   @action
   void toggleLikes() {
