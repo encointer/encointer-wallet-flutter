@@ -134,7 +134,7 @@ class SingleBusinessDetail extends StatelessWidget {
                   ),
                   const SizedBox(height: 40),
                   if (business.photos != null)
-                    IpfsImageGalleryStream(
+                    IpfsImageGallery(
                     ipfs: webApi.ipfsApi,
                     cidsOrFolders: [business.photos!]
                   )

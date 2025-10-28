@@ -1,9 +1,20 @@
+import 'dart:async';
+
 import 'package:encointer_wallet/service/ipfs/ipfs_api.dart';
 import 'package:encointer_wallet/service/ipfs/ipfs_gallery_stream.dart';
 import 'package:flutter/material.dart';
 
-class IpfsImageGalleryStream extends StatefulWidget {
-  const IpfsImageGalleryStream({
+class IpfsImageGallery extends StatefulWidget {
+  final IpfsApi ipfs;
+  final List<String> cidsOrFolders;
+  final Map<String, List<String>>? includeFiles;
+  final double imageWidth;
+  final double imageHeight;
+  final double borderRadius;
+  final Widget placeholder;
+  final int maxConcurrent;
+
+  const IpfsImageGallery({
     super.key,
     required this.ipfs,
     required this.cidsOrFolders,
@@ -12,40 +23,35 @@ class IpfsImageGalleryStream extends StatefulWidget {
     this.imageHeight = 120,
     this.borderRadius = 8,
     this.placeholder = const ColoredBox(color: Colors.grey),
+    this.maxConcurrent = 4,
   });
 
-  final IpfsApi ipfs;
-  final List<String> cidsOrFolders;
-  final Map<String, List<String>>? includeFiles;
-  final double imageWidth;
-  final double imageHeight;
-  final double borderRadius;
-  final Widget placeholder;
-
-
   @override
-  State<IpfsImageGalleryStream> createState() => _IpfsImageGalleryStreamState();
+  State<IpfsImageGallery> createState() => _IpfsImageGalleryState();
 }
 
-class _IpfsImageGalleryStreamState extends State<IpfsImageGalleryStream> {
+class _IpfsImageGalleryState extends State<IpfsImageGallery> {
   final List<IpfsImageItem> _images = [];
+  StreamSubscription<IpfsImageItem>? _subscription;
 
   @override
   void initState() {
     super.initState();
-    _loadImages();
-  }
-
-  void _loadImages() {
-    widget.ipfs
+    _subscription = widget.ipfs
         .streamGalleryImagesQueued(
       cidsOrFolders: widget.cidsOrFolders,
       includeFiles: widget.includeFiles,
-      maxConcurrent: 5
+      maxConcurrent: widget.maxConcurrent,
     )
         .listen((item) {
       setState(() => _images.add(item));
-    }, onError: (e) => debugPrint('Error loading image: $e'));
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 
   @override
