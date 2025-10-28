@@ -82,7 +82,7 @@ class IpfsBusiness {
         return const Color(0xFFE8FBFF);
       case Status.recently:
         return Colors.lightGreen.shade100;
-    // ignore: no_default_cases
+      // ignore: no_default_cases
       default:
         return const Color(0xFFf4f7f8);
     }
