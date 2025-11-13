@@ -753,12 +753,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get proposalExplainerSpendAsset =>
-      'This proposal suggests spending a specified Asset for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.\n\nNote: You will receive this asset on Asset Hub Kusama directly.';
+  String proposalExplainerSpendAsset(String asset) {
+    return 'This proposal suggests spending $asset for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.\n\nNote: You will receive the $asset on Asset Hub Kusama directly.';
+  }
 
   @override
-  String proposalExplainerIssueSwapAssetOption(String currency) {
-    return 'This proposal allows the beneficiary to exchange community tokens for a specified Asset at a defined rate multiple times up to a set Asset limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 $currency/Asset and limit 2 Asset:\n\nThe beneficiary can exchange up to 2 Assets at a rate of 3 $currency/Asset. Hence, the maximum is 6 $currency => 2 Asset.\n\nNote: You will receive this asset on Asset Hub Kusama directly.';
+  String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
+    return 'This proposal allows the beneficiary to exchange community tokens for $asset at a defined rate multiple times up to a set $asset limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 $cc/$asset and limit 2 $asset:\n\nThe beneficiary can exchange up to 2 $asset at a rate of 3 $cc/$asset. Hence, the maximum is 6 $cc => 2 $asset.\n\nNote: You will receive the $asset on Asset Hub Kusama directly.';
   }
 
   @override

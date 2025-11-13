@@ -762,12 +762,13 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get proposalExplainerSpendAsset =>
-      'Dieser Vorschlag schlägt vor, einen bestimmten Token für dich aus der Community-Treasury auszugeben, entweder durch eine globale oder Community-Abstimmung. Diese Mittel können für Community-Beiträge belohnen oder Community-Initiativen unterstützen.\n\nHinweis: Du erhältst diesen Token direkt auf Asset Hub Kusama.';
+  String proposalExplainerSpendAsset(String asset) {
+    return 'Dieser Vorschlag schlägt vor, $asset aus der Community-Treasury für eine begünstigte Person auszugeben – entweder durch eine globale oder lokale Abstimmung. Diese Mittel können Community-Beiträge belohnen oder Initiativen unterstützen.\n\nHinweis: Du erhältst das $asset direkt auf dem Asset Hub Kusama.';
+  }
 
   @override
-  String proposalExplainerIssueSwapAssetOption(String currency) {
-    return 'Dieser Vorschlag erlaubt dir, Community-Token gegen einen festgelegten Token zu einem definierten Kurs mehrfach bis zu einem festgelegten Token-Limit zu tauschen. Du könntest ein lokales Unternehmen sein, das Community-Token annimmt und einen Überschuss ansammeln kann.\n\nBeispiel mit Kurs 3 $currency/Token und Limit 2 Token:\n\nDu kannst bis zu 2 Token zu einem Kurs von 3 $currency/Token tauschen. Somit beträgt das Maximum 6 $currency => 2 Token.\n\nHinweis: Du erhältst diesen Token direkt auf Asset Hub Kusama.';
+  String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
+    return 'Dieser Vorschlag erlaubt es der begünstigten Person, Community-Tokens mehrfach zu einem festgelegten Kurs gegen $asset zu tauschen – bis zu einem definierten $asset-Limit. Die begünstigte Person könnte ein lokales Unternehmen sein, das Community-Tokens akzeptiert und eventuell Überschüsse ansammelt.\n\nBeispiel mit Kurs 3 $cc/$asset und Limit 2 $asset:\n\nDie begünstigte Person kann bis zu 2 $asset zu einem Kurs von 3 $cc/$asset tauschen. Das Maximum beträgt also 6 $cc => 2 $asset.\n\nHinweis: Du erhältst das $asset direkt auf dem Asset Hub Kusama.';
   }
 
   @override
