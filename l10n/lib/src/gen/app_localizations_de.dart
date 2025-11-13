@@ -768,7 +768,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
-    return 'Dieser Vorschlag erlaubt es der begünstigten Person, Community-Tokens mehrfach zu einem festgelegten Kurs gegen $asset zu tauschen – bis zu einem definierten $asset-Limit. Die begünstigte Person könnte ein lokales Unternehmen sein, das Community-Tokens akzeptiert und eventuell Überschüsse ansammelt.\n\nBeispiel mit Kurs 3 $cc/$asset und Limit 2 $asset:\n\nDie begünstigte Person kann bis zu 2 $asset zu einem Kurs von 3 $cc/$asset tauschen. Das Maximum beträgt also 6 $cc => 2 $asset.\n\nHinweis: Du erhältst das $asset direkt auf dem Asset Hub Kusama.';
+    return 'Dieser Vorschlag erlaubt es dem Empfänger, $cc zu einem festgelegten Kurs mehrfach gegen $asset zu tauschen, bis ein festes $asset-Limit erreicht ist. Der Empfänger könnte ein lokales Geschäft sein, das $cc akzeptiert und eventuell einen Überschuss ansammelt.\n\nBeispiel mit Kurs 3 $cc/$asset und Limit 2 $asset:\n\nDer Empfänger kann bis zu 2 $asset zu einem Kurs von 3 $cc/$asset tauschen. Das Maximum ist also 6 $cc => 2 $asset.\n\nHinweis: Du erhältst die $asset direkt auf Asset Hub Kusama.';
   }
 
   @override

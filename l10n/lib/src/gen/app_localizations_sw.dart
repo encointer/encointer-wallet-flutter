@@ -763,7 +763,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
-    return 'Pendekezo hili linamruhusu mnufaika kubadilisha tokeni za jumuiya kwa $asset kwa kiwango kilichowekwa mara kadhaa hadi kufikia kikomo cha $asset. Mnufaika anaweza kuwa biashara ya ndani inayokubali tokeni za jumuiya na inaweza kujikusanyia ziada.\n\nMfano ukiwa na kiwango cha 3 $cc/$asset na kikomo cha 2 $asset:\n\nMnufaika anaweza kubadilisha hadi 2 $asset kwa kiwango cha 3 $cc/$asset. Hivyo, kiwango cha juu ni 6 $cc => 2 $asset.\n\nKumbuka: Utapokea $asset moja kwa moja kwenye Asset Hub Kusama.';
+    return 'Pendekezo hili linamruhusu mpokeaji kubadilisha $cc kwa $asset kwa kiwango kilichowekwa mara kadhaa hadi kufikia kikomo cha $asset. Mpokeaji anaweza kuwa biashara ya eneo inayokubali $cc na inaweza kujikusanyia ziada.\n\nMfano ukiwa na kiwango cha 3 $cc/$asset na kikomo cha 2 $asset:\n\nMpokeaji anaweza kubadilisha hadi $asset 2 kwa kiwango cha 3 $cc/$asset. Kiwango cha juu zaidi ni $cc 6 => $asset 2.\n\nKumbuka: Utapokea $asset moja kwa moja kwenye Asset Hub Kusama.';
   }
 
   @override

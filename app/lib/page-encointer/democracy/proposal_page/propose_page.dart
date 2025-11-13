@@ -421,9 +421,9 @@ class _ProposePageState extends State<ProposePage> {
       case ProposalActionIdentifier.issueSwapNativeOption:
         return l10n.proposalExplainerIssueSwapNativeOption(store.encointer.community!.symbol!);
       case ProposalActionIdentifier.spendAsset:
-        return l10n.proposalExplainerSpendAsset;
+        return l10n.proposalExplainerSpendAsset(selectedAsset.symbol);
       case ProposalActionIdentifier.issueSwapAssetOption:
-        return l10n.proposalExplainerIssueSwapAssetOption(store.encointer.community!.symbol!);
+        return l10n.proposalExplainerIssueSwapAssetOption(store.encointer.community!.symbol!, selectedAsset.symbol);
     }
   }
 

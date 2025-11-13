@@ -1475,7 +1475,7 @@ abstract class AppLocalizations {
   /// No description provided for @proposalExplainerIssueSwapAssetOption.
   ///
   /// In en, this message translates to:
-  /// **'This proposal allows the beneficiary to exchange community tokens for {asset} at a defined rate multiple times up to a set {asset} limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 {cc}/{asset} and limit 2 {asset}:\n\nThe beneficiary can exchange up to 2 {asset} at a rate of 3 {cc}/{asset}. Hence, the maximum is 6 {cc} => 2 {asset}.\n\nNote: You will receive the {asset} on Asset Hub Kusama directly.'**
+  /// **'This proposal allows the beneficiary to exchange {cc} for {asset} at a defined rate multiple times up to a set {asset} limit. The beneficiary might be a local business that accepts {cc} and may accumulate a surplus.\n\nExample with rate 3 {cc}/{asset} and limit 2 {asset}:\n\nThe beneficiary can exchange up to 2 {asset} at a rate of 3 {cc}/{asset}. Hence, the maximum is 6 {cc} => 2 {asset}.\n\nNote: You will receive the {asset} on Asset Hub Kusama directly.'**
   String proposalExplainerIssueSwapAssetOption(String cc, String asset);
 
   /// No description provided for @proposalExplainerCannotVoteYet.

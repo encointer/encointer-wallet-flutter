@@ -765,7 +765,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
-    return 'Cette proposition permet au bénéficiaire d’échanger des jetons communautaires contre des $asset à un taux défini, plusieurs fois, jusqu’à une limite fixée en $asset. Le bénéficiaire pourrait être une entreprise locale acceptant les jetons communautaires et accumulant un surplus.\n\nExemple avec un taux de 3 $cc/$asset et une limite de 2 $asset :\n\nLe bénéficiaire peut échanger jusqu’à 2 $asset à un taux de 3 $cc/$asset. Le maximum est donc de 6 $cc => 2 $asset.\n\nRemarque : Tu recevras les $asset directement sur Asset Hub Kusama.';
+    return 'Cette proposition permet au bénéficiaire d’échanger des $cc contre des $asset à un taux défini, plusieurs fois, jusqu’à une limite de $asset fixée. Le bénéficiaire peut être un commerce local qui accepte les $cc et peut accumuler un surplus.\n\nExemple avec un taux de 3 $cc/$asset et une limite de 2 $asset :\n\nLe bénéficiaire peut échanger jusqu’à 2 $asset à un taux de 3 $cc/$asset. Le maximum est donc 6 $cc => 2 $asset.\n\nRemarque : Tu recevras les $asset directement sur Asset Hub Kusama.';
   }
 
   @override
