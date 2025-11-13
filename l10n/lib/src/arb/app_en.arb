@@ -870,8 +870,8 @@
             }
         }
     },
-    "proposalIssueSwapAssetOptionCCLimit": "You can exchange up to {allowance} {cc} to reach your defined {asset} limit.",
-    "@proposalIssueSwapAssetOptionCCLimit": {
+    "proposalIssueSwapOptionCCLimit": "You can exchange up to {allowance} {cc} to reach your defined {asset} limit.",
+    "@proposalIssueSwapOptionCCLimit": {
         "placeholders": {
             "asset": {
                 "type": "String",

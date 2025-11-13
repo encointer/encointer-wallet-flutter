@@ -474,8 +474,16 @@ class _ProposePageState extends State<ProposePage> {
         maxTreasuryPayoutFraction * Fmt.bigIntToDouble(assetTreasuryLiquidity(selectedAsset), selectedAsset.decimals);
     return Column(children: [
       selectAssetDropDown(),
-      ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), maxSwapValue, true)
+      ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), maxSwapValue, true),
     ]);
+  }
+
+  double ccSwapLimit() {
+    final allowance = allowanceController.text.isNotEmpty ? double.tryParse(allowanceController.text) : null;
+    final rate = rateController.text.isNotEmpty ? double.tryParse(rateController.text) : null;
+    final ccLimit = allowance != null && rate != null ? allowance * rate : 0.0;
+
+    return ccLimit;
   }
 
   List<Widget> issueSwapOptionInput(String currency, double? maxValue, bool tryDeriveRate) {
@@ -502,6 +510,8 @@ class _ProposePageState extends State<ProposePage> {
         },
       ),
       rateInput(currency, tryDeriveRate),
+      Text(l10n.proposalIssueSwapOptionCCLimit(
+          currency, store.encointer.community!.symbol!, ccSwapLimit().toString())),
       const SizedBox(height: 10),
       EncointerAddressInputField(
         store,

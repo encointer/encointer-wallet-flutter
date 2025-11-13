@@ -681,7 +681,7 @@
             }
         }
     },
-    "proposalIssueSwapAssetOptionCCLimit": "Tu peux échanger jusqu’à {allowance} {cc} pour atteindre ta limite de {asset} définie.",
+    "proposalIssueSwapOptionCCLimit": "Tu peux échanger jusqu’à {allowance} {cc} pour atteindre ta limite de {asset} définie.",
     "proposalIssueSwapAssetOption": "{cid} : Permet à {beneficiary} d'échanger jusqu'à {allowance} {asset} à un taux de {rate} {cid}/{asset}.",
     "@proposalIssueSwapAssetOption": {
         "placeholders": {

@@ -2638,11 +2638,11 @@ abstract class AppLocalizations {
   String proposalIssueSwapNativeOption(
       String cid, String beneficiary, String allowance, String rate);
 
-  /// No description provided for @proposalIssueSwapAssetOptionCCLimit.
+  /// No description provided for @proposalIssueSwapOptionCCLimit.
   ///
   /// In en, this message translates to:
   /// **'You can exchange up to {allowance} {cc} to reach your defined {asset} limit.'**
-  String proposalIssueSwapAssetOptionCCLimit(
+  String proposalIssueSwapOptionCCLimit(
       String asset, String cc, String allowance);
 
   /// No description provided for @proposalIssueSwapAssetOption.
