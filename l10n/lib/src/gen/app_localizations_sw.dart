@@ -904,7 +904,9 @@ class AppLocalizationsSw extends AppLocalizations {
   String get proposalFieldErrorPositiveNumberRange => 'Lazima iwe namba chanya';
 
   @override
-  String get proposalFieldErrorPositiveNumberTooBig => 'Nambari ni kubwa sana';
+  String proposalFieldErrorPositiveNumberTooBig(String amount) {
+    return 'Nambari ni kubwa sana (Kikomo: $amount)';
+  }
 
   @override
   String get proposalFieldErrorEnterInactivityTimeout =>
@@ -1481,6 +1483,12 @@ class AppLocalizationsSw extends AppLocalizations {
   String proposalIssueSwapNativeOption(
       String cid, String beneficiary, String allowance, String rate) {
     return '$cid: Mruhusu $beneficiary kubadilisha hadi $allowance KSM kwa kiwango cha $rate $cid/KSM.';
+  }
+
+  @override
+  String proposalIssueSwapOptionCCLimit(
+      String asset, String cc, String allowance) {
+    return 'Unaweza kubadilisha hadi $allowance $cc kufikia kikomo chako cha $asset kilichowekwa.';
   }
 
   @override

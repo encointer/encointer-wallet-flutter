@@ -330,7 +330,7 @@
     "proposalFieldErrorDemurrageRange": "Demurrage muss zwischen 0 und 100 liegen",
     "proposalFieldErrorEnterPositiveNumber": "Geben Sie eine positive Zahl ein",
     "proposalFieldErrorPositiveNumberRange": "Muss eine positive Zahl sein",
-    "proposalFieldErrorPositiveNumberTooBig": "Die Zahl ist zu gross",
+    "proposalFieldErrorPositiveNumberTooBig": "Zahl ist zu groß (Limit: {amount})",
     "proposalFieldErrorEnterInactivityTimeout": "Inaktivitätszeitlimit eingeben",
     "proposalFieldErrorPositiveIntegerRange": "Muss eine positive ganze Zahl sein",
     "proposalClose": "Schliessen",
@@ -681,6 +681,7 @@
             }
         }
     },
+    "proposalIssueSwapOptionCCLimit": "Du kannst bis zu {allowance} {cc} tauschen, um dein festgelegtes {asset}-Limit zu erreichen.",
     "proposalIssueSwapAssetOption": "{cid}: Ermögliche {beneficiary}, bis zu {allowance} {asset} zu einem Kurs von {rate} {cid}/{asset} einzutauschen.",
     "@proposalIssueSwapAssetOption": {
         "placeholders": {

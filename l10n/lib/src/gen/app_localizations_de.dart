@@ -909,7 +909,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Muss eine positive Zahl sein';
 
   @override
-  String get proposalFieldErrorPositiveNumberTooBig => 'Die Zahl ist zu gross';
+  String proposalFieldErrorPositiveNumberTooBig(String amount) {
+    return 'Zahl ist zu groß (Limit: $amount)';
+  }
 
   @override
   String get proposalFieldErrorEnterInactivityTimeout =>
@@ -1489,6 +1491,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String proposalIssueSwapNativeOption(
       String cid, String beneficiary, String allowance, String rate) {
     return '$cid: Ermögliche $beneficiary, bis zu $allowance KSM zu einem Kurs von $rate $cid/KSM einzutauschen.';
+  }
+
+  @override
+  String proposalIssueSwapOptionCCLimit(
+      String asset, String cc, String allowance) {
+    return 'Du kannst bis zu $allowance $cc tauschen, um dein festgelegtes $asset-Limit zu erreichen.';
   }
 
   @override

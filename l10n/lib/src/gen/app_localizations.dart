@@ -1709,8 +1709,8 @@ abstract class AppLocalizations {
   /// No description provided for @proposalFieldErrorPositiveNumberTooBig.
   ///
   /// In en, this message translates to:
-  /// **'Number is too big'**
-  String get proposalFieldErrorPositiveNumberTooBig;
+  /// **'Number is too big (Limit: {amount})'**
+  String proposalFieldErrorPositiveNumberTooBig(String amount);
 
   /// No description provided for @proposalFieldErrorEnterInactivityTimeout.
   ///
@@ -2637,6 +2637,13 @@ abstract class AppLocalizations {
   /// **'{cid}: Let {beneficiary} exchange up to {allowance} KSM at a rate of {rate} {cid}/KSM'**
   String proposalIssueSwapNativeOption(
       String cid, String beneficiary, String allowance, String rate);
+
+  /// No description provided for @proposalIssueSwapOptionCCLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'You can exchange up to {allowance} {cc} to reach your defined {asset} limit.'**
+  String proposalIssueSwapOptionCCLimit(
+      String asset, String cc, String allowance);
 
   /// No description provided for @proposalIssueSwapAssetOption.
   ///

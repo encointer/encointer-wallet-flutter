@@ -463,19 +463,37 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget issueSwapNativeOptionInput() {
-    final maxSwapValue = selectedScope.isLocal
-        ? maxTreasuryPayoutFraction * Fmt.bigIntToDouble(localTreasuryBalance - pendingLocalSpends, ertDecimals)
-        : maxTreasuryPayoutFraction * Fmt.bigIntToDouble(globalTreasuryBalance - pendingGlobalSpends, ertDecimals);
+    final maxSwapValue = nativeTreasuryUnallocatedLiquidity();
     return Column(children: issueSwapOptionInput('KSM', maxSwapValue, false));
   }
 
   Widget issueSwapAssetOptionInput() {
-    final maxSwapValue =
-        maxTreasuryPayoutFraction * Fmt.bigIntToDouble(assetTreasuryLiquidity(selectedAsset), selectedAsset.decimals);
+    final maxSwapValue = assetTreasuryUnallocatedLiquidity();
     return Column(children: [
       selectAssetDropDown(),
-      ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), maxSwapValue, true)
+      ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), maxSwapValue, true),
     ]);
+  }
+
+  double assetTreasuryUnallocatedLiquidity() {
+    final unallocated =
+        maxTreasuryPayoutFraction * Fmt.bigIntToDouble(assetTreasuryLiquidity(selectedAsset), selectedAsset.decimals);
+    return unallocated;
+  }
+
+  double nativeTreasuryUnallocatedLiquidity() {
+    final unallocated = selectedScope.isLocal
+        ? maxTreasuryPayoutFraction * Fmt.bigIntToDouble(localTreasuryBalance - pendingLocalSpends, ertDecimals)
+        : maxTreasuryPayoutFraction * Fmt.bigIntToDouble(globalTreasuryBalance - pendingGlobalSpends, ertDecimals);
+    return unallocated;
+  }
+
+  double ccSwapLimit() {
+    final allowance = allowanceController.text.isNotEmpty ? double.tryParse(allowanceController.text) : null;
+    final rate = rateController.text.isNotEmpty ? double.tryParse(rateController.text) : null;
+    final ccLimit = allowance != null && rate != null ? allowance * rate : 0.0;
+
+    return ccLimit;
   }
 
   List<Widget> issueSwapOptionInput(String currency, double? maxValue, bool tryDeriveRate) {
@@ -502,6 +520,13 @@ class _ProposePageState extends State<ProposePage> {
         },
       ),
       rateInput(currency, tryDeriveRate),
+      Text(
+        l10n.proposalIssueSwapOptionCCLimit(
+          currency,
+          store.encointer.community!.symbol!,
+          Fmt.formatNumber(context, ccSwapLimit(), decimals: 4),
+        ),
+      ),
       const SizedBox(height: 10),
       EncointerAddressInputField(
         store,
@@ -525,12 +550,11 @@ class _ProposePageState extends State<ProposePage> {
 
     final knownCommunity = KnownCommunity.tryFromSymbol(store.encointer.community!.symbol!);
     final isKnown = knownCommunity != null;
-    final ccToUsdAfterDiscount = knownCommunity!.ccPerUsd(rate?.value ?? 0);
+    final ccToUsdAfterMarkup = Fmt.formatNumber(context, knownCommunity!.ccPerUsd(rate?.value ?? 0), decimals: 4);
 
     return TextFormField(
       // set constant value if needed
-      controller: rateController
-        ..text = tryDeriveRate && isKnown ? ccToUsdAfterDiscount.toString() : rateController.text,
+      controller: rateController..text = tryDeriveRate && isKnown ? ccToUsdAfterMarkup : rateController.text,
       // We want to derive a sane value for well-known communities and disable editing.
       enabled: !tryDeriveRate && isKnown,
       decoration: InputDecoration(
@@ -575,13 +599,15 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget spendNativeInput(BuildContext context) {
-    return Column(children: spendInputWidgets('KSM'));
+    final maxSpend = nativeTreasuryUnallocatedLiquidity();
+    return Column(children: spendInputWidgets('KSM', maxSpend));
   }
 
   Widget spendAssetInput(BuildContext context) {
+    final maxSpend = assetTreasuryUnallocatedLiquidity();
     return Column(children: [
       selectAssetDropDown(),
-      ...spendInputWidgets(selectedAsset.symbol),
+      ...spendInputWidgets(selectedAsset.symbol, maxSpend),
     ]);
   }
 
@@ -609,7 +635,7 @@ class _ProposePageState extends State<ProposePage> {
             : null);
   }
 
-  List<Widget> spendInputWidgets(String currency) {
+  List<Widget> spendInputWidgets(String currency, double max) {
     final l10n = context.l10n;
     return [
       TextFormField(
@@ -626,7 +652,7 @@ class _ProposePageState extends State<ProposePage> {
         validator: validatePositiveNumber,
         onChanged: (value) {
           setState(() {
-            amountError = validatePositiveNumber(value);
+            amountError = validatePositiveNumberWithMax(value, max);
           });
         },
       ),
@@ -835,7 +861,8 @@ class _ProposePageState extends State<ProposePage> {
       if (number == null || number <= 0) {
         return l10n.proposalFieldErrorPositiveNumberRange;
       } else if (max != null && number > max) {
-        return l10n.proposalFieldErrorPositiveNumberTooBig;
+        final maxFmt = Fmt.formatNumber(context, max, decimals: 4);
+        return l10n.proposalFieldErrorPositiveNumberTooBig(maxFmt);
       } else {
         return null;
       }
