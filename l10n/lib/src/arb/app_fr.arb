@@ -235,16 +235,8 @@
             }
         }
     },
-    "proposalExplainerSpendAsset": "Cette proposition suggère de dépenser un jeton spécifié pour toi depuis la trésorerie communautaire, soit par un vote global, soit par un vote communautaire. Ces fonds peuvent récompenser les contributions à la communauté ou soutenir des initiatives communautaires.\n\nRemarque : Tu recevras ce jeton directement sur Asset Hub Kusama.",
-    "proposalExplainerIssueSwapAssetOption": "Cette proposition te permet d’échanger des jetons communautaires contre un jeton spécifié à un taux défini plusieurs fois jusqu’à une limite fixée.\n\nExemple avec un taux de 3 {currency}/Jeton et une limite de 2 Jetons :\n\nTu peux échanger jusqu’à 2 Jetons à un taux de 3 {currency}/Jeton. Ainsi, le maximum est de 6 {currency} => 2 Jetons.\n\nRemarque : Tu recevras ce jeton directement sur Asset Hub Kusama.",
-    "@proposalExplainerIssueSwapAssetOption": {
-        "placeholders": {
-            "currency": {
-                "type": "String",
-                "example": "0.5"
-            }
-        }
-    },
+    "proposalExplainerSpendAsset": "Cette proposition suggère de dépenser des {asset} pour un bénéficiaire à partir du trésor de la communauté, soit par un vote global, soit par un vote communautaire. Ces fonds peuvent récompenser les contributions ou soutenir des initiatives communautaires.\n\nRemarque : Tu recevras les {asset} directement sur Asset Hub Kusama.",
+    "proposalExplainerIssueSwapAssetOption": "Cette proposition permet au bénéficiaire d’échanger des jetons communautaires contre des {asset} à un taux défini, plusieurs fois, jusqu’à une limite fixée en {asset}. Le bénéficiaire pourrait être une entreprise locale acceptant les jetons communautaires et accumulant un surplus.\n\nExemple avec un taux de 3 {cc}/{asset} et une limite de 2 {asset} :\n\nLe bénéficiaire peut échanger jusqu’à 2 {asset} à un taux de 3 {cc}/{asset}. Le maximum est donc de 6 {cc} => 2 {asset}.\n\nRemarque : Tu recevras les {asset} directement sur Asset Hub Kusama.",
     "proposalExplainerCannotVoteYet": "Tu pourras commencer à voter avec ta réputation à partir du prochain cycle !",
     "proposalType": "Type de proposition",
     "proposalTypeAddLocation": "Ajouter un lieu",

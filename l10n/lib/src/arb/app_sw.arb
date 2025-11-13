@@ -236,16 +236,8 @@
             }
         }
     },
-    "proposalExplainerSpendAsset": "Pendekezo hili linapendekeza kutumia tokeni maalum kwa mnufaika kutoka hazina ya jamii, ama kupitia kura ya jumla au ya jamii. Fedha hizi zinaweza kutumika kuponyesha michango ya jamii au kusaidia miradi ya jamii.\n\nKumbuka: Utapokea tokeni hii moja kwa moja kwenye Asset Hub Kusama.",
-    "proposalExplainerIssueSwapAssetOption": "Pendekezo hili linakuruhusu kubadilisha tokeni za jamii kwa tokeni maalum kwa kiwango kilichowekwa mara nyingi hadi kikomo kilichowekwa cha tokeni.\n\nMfano kwa kiwango cha 3 {currency}/Token na kikomo cha 2 Token:\n\nUnaweza kubadilisha hadi 2 Token kwa kiwango cha 3 {currency}/Token. Hivyo, kiwango cha juu ni 6 {currency} => 2 Token.\n\nKumbuka: Utapokea tokeni hii moja kwa moja kwenye Asset Hub Kusama.",
-    "@proposalExplainerIssueSwapAssetOption": {
-        "placeholders": {
-            "currency": {
-                "type": "String",
-                "example": "0.5"
-            }
-        }
-    },
+    "proposalExplainerSpendAsset": "Pendekezo hili linapendekeza kutumia {asset} kwa mnufaika kutoka hazina ya jumuiya, ama kupitia kura ya kimataifa au ya kijumuiya. Fedha hizi zinaweza kutumika kupongeza michango ya wanajumuiya au kusaidia miradi ya kijumuiya.\n\nKumbuka: Utapokea {asset} moja kwa moja kwenye Asset Hub Kusama.",
+    "proposalExplainerIssueSwapAssetOption": "Pendekezo hili linamruhusu mnufaika kubadilisha tokeni za jumuiya kwa {asset} kwa kiwango kilichowekwa mara kadhaa hadi kufikia kikomo cha {asset}. Mnufaika anaweza kuwa biashara ya ndani inayokubali tokeni za jumuiya na inaweza kujikusanyia ziada.\n\nMfano ukiwa na kiwango cha 3 {cc}/{asset} na kikomo cha 2 {asset}:\n\nMnufaika anaweza kubadilisha hadi 2 {asset} kwa kiwango cha 3 {cc}/{asset}. Hivyo, kiwango cha juu ni 6 {cc} => 2 {asset}.\n\nKumbuka: Utapokea {asset} moja kwa moja kwenye Asset Hub Kusama.",
     "proposalExplainerCannotVoteYet": "Utaweza kuanza kupiga kura kwa kutumia sifa yako kuanzia mzunguko ujao!",
     "proposalType": "Aina ya pendekezo",
     "proposalTypeAddLocation": "Ongeza eneo",
