@@ -238,46 +238,10 @@
     "proposalTypePetition": "Pétition",
     "proposalTypeSpendNative": "Dépenser des KSM",
     "proposalTypeIssueSwapNativeOption": "Échanger {cc} contre KSM",
-    "@proposalTypeIssueSwapNativeOption": {
-        "placeholders": {
-            "cc": {
-                "type": "String",
-                "example": "MTA"
-            }
-        }
-    },
     "proposalTypeSpendAsset": "Dépenser {asset}",
-    "@proposalTypeSpendAsset": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "USDC"
-            }
-        }
-    },
     "proposalTypeIssueSwapAssetOption": "Échanger {cc} contre {asset}",
-    "@proposalTypeIssueSwapAssetOption": {
-        "placeholders": {
-            "cc": {
-                "type": "String",
-                "example": "MTA"
-            },
-            "asset": {
-                "type": "String",
-                "example": "USDC"
-            }
-        }
-    },
     "proposalScope": "Portée",
     "proposalScopeLocal": "Local ({community})",
-    "@proposalScopeLocal": {
-        "placeholders": {
-            "community": {
-                "type": "String",
-                "example": "Mediterranea"
-            }
-        }
-    },
     "proposalScopeGlobal": "Global",
     "proposalFieldLatitude": "Latitude",
     "proposalFieldLongitude": "Longitude",
@@ -287,37 +251,9 @@
     "proposalFieldPetitionText": "Texte de la pétition",
     "proposalFieldAssetToSpend": "Jeton à dépenser",
     "proposalFieldAmount": "Montant ({asset})",
-    "@proposalFieldAmount": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "6"
-            }
-        }
-    },
     "proposalFieldBeneficiary": "Bénéficiaire",
     "proposalFieldAllowance": "Limite ({asset})",
-    "@proposalFieldAllowance": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "6"
-            }
-        }
-    },
     "proposalFieldRate": "Taux ({cc}/{asset})",
-    "@proposalFieldRate": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "6"
-            },
-            "cc": {
-                "type": "String",
-                "example": "6"
-            }
-        }
-    },
     "proposalFieldBurn": "Brûler",
     "proposalFieldValidity": "Validité",
     "proposalFieldErrorEnterPetitionText": "Entrez le texte de la pétition",
@@ -423,45 +359,9 @@
     "transferHistoryEnd": "Le chargement des transactions plus anciennes n'est pas encore pris en charge",
     "transferHistoryTop": "Le transfert peut prendre jusqu'à 30 secondes avant d'apparaître ici",
     "treasuryGlobalBalance": "Solde libre du trésor global : {balance} KSM.",
-    "@treasuryGlobalBalance": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
     "treasuryLocalBalance": "Solde libre du trésor communautaire : {balance} KSM.",
-    "@treasuryLocalBalance": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
     "treasuryLocalBalanceOnAHK": "Solde libre du trésor communautaire sur Asset Hub: {balance} {asset}.",
-    "@treasuryLocalBalanceOnAHK": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            },
-            "asset": {
-                "type": "String",
-                "example": "{Leu}"
-            }
-        }
-    },
     "treasuryPendingSpends": "Dépenses en attente : {spends} KSM.",
-    "@treasuryPendingSpends": {
-        "placeholders": {
-            "spends": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
     "txBroadcast": "La transaction a été envoyée sur le réseau",
     "txError": "Erreur de transaction",
     "txInBlock": "Transaction est dans un bloc",
@@ -507,213 +407,21 @@
     "communityWithName": "Communauté {name}",
     "verifyAuthTitle": "Vérifie {useBioAuth, select, true{ta identité} false{ton NIP} other{}} s'il te plaît.",
     "offersForCommunity": "Des offres pour un {value}",
-    "@offersForCommunity": {
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "LEU"
-            }
-        }
-    },
     "proposalApprovalThreshold": "Valeur seuil d'acceptation: {percentage}%",
-    "@proposalApprovalThreshold": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalPassed": "Adopté avec {percentage}% Aye",
-    "@proposalPassed": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalFailed": "Rejeté avec {percentage}% Aye",
-    "@proposalFailed": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalIsPassing": "En cours d'adoption avec {percentage}% Aye",
-    "@proposalIsPassing": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalIsFailing": "En cours de rejet avec {percentage}% Aye",
-    "@proposalIsFailing": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalUpdateNominalIncome": "Ajuster le revenu communautaire à {value} {currency}",
-    "@proposalUpdateNominalIncome": {
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "currency": {
-                "type": "String",
-                "example": "LEU"
-            }
-        }
-    },
     "proposalSetInactivityTimeoutTo": "Global : Définir le nouveau délai d'inactivité sur {value}",
-    "@proposalSetInactivityTimeoutTo": {
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalAddLocation": "{cid} : Ajouter un nouvel emplacement",
-    "@proposalAddLocation": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            }
-        }
-    },
     "proposalRemoveLocation": "{cid} : Supprimer un emplacement",
-    "@proposalRemoveLocation": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            }
-        }
-    },
     "proposalUpdateDemurrage": "Ajuster demurrage à {value}%/mois",
-    "@proposalUpdateDemurrage": {
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalPetition": "{cid} petition: {value}",
-    "@proposalPetition": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "value": {
-                "type": "String",
-                "example": "Peace to the World"
-            }
-        }
-    },
     "proposalSpendNative": "{cid} trèsor enverra {amount} KSM à {beneficiary}",
-    "@proposalSpendNative": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "amount": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "beneficiary": {
-                "type": "String",
-                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
-            }
-        }
-    },
     "proposalSpendAsset": "{cid} trèsor enverra {amount} {asset} à {beneficiary}",
-    "@proposalSpendAsset": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "global"
-            },
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "amount": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "beneficiary": {
-                "type": "String",
-                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
-            }
-        }
-    },
     "proposalIssueSwapNativeOption": "{cid} : Permet à {beneficiary} d'échanger jusqu'à {allowance} KSM à un taux de {rate} {cid}/KSM.",
-    "@proposalIssueSwapNativeOption": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "beneficiary": {
-                "type": "String",
-                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
-            },
-            "allowance": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "rate": {
-                "type": "String",
-                "example": "1.2"
-            }
-        }
-    },
     "proposalIssueSwapOptionCCLimit": "Tu peux échanger jusqu’à {allowance} {cc} pour atteindre ta limite de {asset} définie.",
     "proposalIssueSwapAssetOption": "{cid} : Permet à {beneficiary} d'échanger jusqu'à {allowance} {asset} à un taux de {rate} {cid}/{asset}.",
-    "@proposalIssueSwapAssetOption": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "global"
-            },
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "beneficiary": {
-                "type": "String",
-                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
-            },
-            "allowance": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "rate": {
-                "type": "String",
-                "example": "1.2"
-            }
-        }
-    },
-    "proposalSupersededBy": "Epargné par: {id}",
-    "@proposalSupersededBy": {
-        "placeholders": {
-            "id": {
-                "type": "String",
-                "example": "6"
-            }
-        }
-    }
+    "proposalSupersededBy": "Epargné par: {id}"
 }
