@@ -227,14 +227,6 @@
     "proposalExplainerPetition": "Dieser Vorschlag dient als Petition – entweder global oder innerhalb deiner Gemeinschaft. Er hat keine direkte Wirkung auf der Blockchain, signalisiert jedoch ein Anliegen, auf das die Gemeinschaft reagieren kann.",
     "proposalExplainerSpendNative": "Dieser Vorschlag schlägt vor, KSM aus der Gemeinschaftsreserve für einen Begünstigten auszugeben, entweder durch eine globale oder Gemeinschaftsabstimmung. Diese Mittel können zur Belohnung von Beiträgen oder zur Unterstützung von Gemeinschaftsprojekten verwendet werden.",
     "proposalExplainerIssueSwapNativeOption": "Dieser Vorschlag ermöglicht es dem Begünstigten, Gemeinschaftswährung zu einem festgelegten Kurs mehrfach gegen KSM einzutauschen, bis zu einem bestimmten KSM-Limit. Der Begünstigte könnte ein lokales Unternehmen sein, das Gemeinschaftswährung akzeptiert und möglicherweise einen Überschuss ansammelt.\n\nBeispiel mit Kurs 3 {currency}/KSM und Limit von 2 KSM:\n\nDer Begünstigte kann bis zu 2 KSM zu einem Kurs von 3 {currency}/KSM eintauschen. Das bedeutet, dass maximal 6 {currency} gegen 2 KSM getauscht werden können.",
-    "@proposalExplainerIssueSwapNativeOption": {
-        "placeholders": {
-            "currency": {
-                "type": "String",
-                "example": "0.5"
-            }
-        }
-    },
     "proposalExplainerSpendAsset": "Dieser Vorschlag schlägt vor, {asset} aus der Community-Treasury für eine begünstigte Person auszugeben – entweder durch eine globale oder lokale Abstimmung. Diese Mittel können Community-Beiträge belohnen oder Initiativen unterstützen.\n\nHinweis: Du erhältst das {asset} direkt auf dem Asset Hub Kusama.",
     "proposalExplainerIssueSwapAssetOption": "Dieser Vorschlag erlaubt es der begünstigten Person, Community-Tokens mehrfach zu einem festgelegten Kurs gegen {asset} zu tauschen – bis zu einem definierten {asset}-Limit. Die begünstigte Person könnte ein lokales Unternehmen sein, das Community-Tokens akzeptiert und eventuell Überschüsse ansammelt.\n\nBeispiel mit Kurs 3 {cc}/{asset} und Limit 2 {asset}:\n\nDie begünstigte Person kann bis zu 2 {asset} zu einem Kurs von 3 {cc}/{asset} tauschen. Das Maximum beträgt also 6 {cc} => 2 {asset}.\n\nHinweis: Du erhältst das {asset} direkt auf dem Asset Hub Kusama.",
     "proposalExplainerCannotVoteYet": "Du kannst ab dem nächsten Zyklus mit deiner Reputation abstimmen!",

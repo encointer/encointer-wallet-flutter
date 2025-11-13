@@ -231,7 +231,7 @@
         "placeholders": {
             "currency": {
                 "type": "String",
-                "example": "0.5"
+                "example": "LEU"
             }
         }
     },
@@ -249,7 +249,7 @@
         "placeholders": {
             "cc": {
                 "type": "String",
-                "example": "0.5"
+                "example": "LEU"
             },
             "asset": {
                 "type": "String",

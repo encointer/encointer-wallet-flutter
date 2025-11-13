@@ -227,14 +227,6 @@
     "proposalExplainerPetition": "Cette proposition sert de pétition, soit au niveau global, soit au sein de votre communauté. Bien qu'elle n'ait pas d'effet direct sur la blockchain, elle signale une intention permettant à la communauté de la reconnaître et d'y répondre.",
     "proposalExplainerSpendNative": "Cette proposition suggère de dépenser des KSM pour un bénéficiaire provenant du trésor de la communauté, soit par un vote global, soit par un vote de la communauté. Ces fonds peuvent récompenser les contributions à la communauté ou soutenir des initiatives communautaires.",
     "proposalExplainerIssueSwapNativeOption": "Cette proposition permet au bénéficiaire d'échanger plusieurs fois des tokens communautaires contre des KSM à un taux défini, jusqu'à une limite de KSM fixée. Le bénéficiaire peut être une entreprise locale qui accepte les tokens communautaires et peut accumuler un surplus.\n\nExemple avec un taux de 3 {currency}/KSM et une limite de 2 KSM :\n\nLe bénéficiaire peut échanger jusqu'à 2 KSM à un taux de 3 {currency}/KSM. Ainsi, le maximum est de 6 {currency} => 2 KSM.",
-    "@proposalExplainerIssueSwapNativeOption": {
-        "placeholders": {
-            "currency": {
-                "type": "String",
-                "example": "0.5"
-            }
-        }
-    },
     "proposalExplainerSpendAsset": "Cette proposition suggère de dépenser des {asset} pour un bénéficiaire à partir du trésor de la communauté, soit par un vote global, soit par un vote communautaire. Ces fonds peuvent récompenser les contributions ou soutenir des initiatives communautaires.\n\nRemarque : Tu recevras les {asset} directement sur Asset Hub Kusama.",
     "proposalExplainerIssueSwapAssetOption": "Cette proposition permet au bénéficiaire d’échanger des jetons communautaires contre des {asset} à un taux défini, plusieurs fois, jusqu’à une limite fixée en {asset}. Le bénéficiaire pourrait être une entreprise locale acceptant les jetons communautaires et accumulant un surplus.\n\nExemple avec un taux de 3 {cc}/{asset} et une limite de 2 {asset} :\n\nLe bénéficiaire peut échanger jusqu’à 2 {asset} à un taux de 3 {cc}/{asset}. Le maximum est donc de 6 {cc} => 2 {asset}.\n\nRemarque : Tu recevras les {asset} directement sur Asset Hub Kusama.",
     "proposalExplainerCannotVoteYet": "Tu pourras commencer à voter avec ta réputation à partir du prochain cycle !",
