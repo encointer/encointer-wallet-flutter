@@ -1486,6 +1486,12 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
+  String proposalIssueSwapAssetOptionCCLimit(
+      String asset, String cc, String allowance) {
+    return 'Unaweza kubadilisha hadi $allowance $cc kufikia kikomo chako cha $asset kilichowekwa.';
+  }
+
+  @override
   String proposalIssueSwapAssetOption(String asset, String cid,
       String beneficiary, String allowance, String rate) {
     return '$cid: Mruhusu $beneficiary kubadilisha hadi $allowance $asset kwa kiwango cha $rate $cid/$asset.';

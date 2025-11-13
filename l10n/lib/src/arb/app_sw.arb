@@ -831,6 +831,7 @@
             }
         }
     },
+    "proposalIssueSwapAssetOptionCCLimit": "Unaweza kubadilisha hadi {allowance} {cc} kufikia kikomo chako cha {asset} kilichowekwa.",
     "proposalIssueSwapAssetOption": "{cid}: Mruhusu {beneficiary} kubadilisha hadi {allowance} {asset} kwa kiwango cha {rate} {cid}/{asset}.",
     "@proposalIssueSwapAssetOption": {
         "placeholders": {

@@ -870,6 +870,23 @@
             }
         }
     },
+    "proposalIssueSwapAssetOptionCCLimit": "You can exchange up to {allowance} {cc} to reach your defined {asset} limit.",
+    "@proposalIssueSwapAssetOptionCCLimit": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            },
+            "cc": {
+                "type": "String",
+                "example": "LEU"
+            },
+            "allowance": {
+                "type": "String",
+                "example": "1.1"
+            }
+        }
+    },
     "proposalIssueSwapAssetOption": "{cid}: Let {beneficiary} exchange up to {allowance} {asset} at a rate of {rate} {cid}/{asset}",
     "@proposalIssueSwapAssetOption": {
         "placeholders": {

@@ -678,6 +678,7 @@
             }
         }
     },
+    "proposalIssueSwapAssetOptionCCLimit": "Ты можешь обменять до {allowance} {cc}, чтобы достичь установленного лимита {asset}.",
     "proposalIssueSwapAssetOption": "{cid}: Разрешить {beneficiary} обменять до {allowance} {asset} по курсу {rate} {cid}/{asset}.",
     "@proposalIssueSwapAssetOption": {
         "placeholders": {

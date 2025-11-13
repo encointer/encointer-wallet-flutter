@@ -1479,6 +1479,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String proposalIssueSwapAssetOptionCCLimit(
+      String asset, String cc, String allowance) {
+    return 'You can exchange up to $allowance $cc to reach your defined $asset limit.';
+  }
+
+  @override
   String proposalIssueSwapAssetOption(String asset, String cid,
       String beneficiary, String allowance, String rate) {
     return '$cid: Let $beneficiary exchange up to $allowance $asset at a rate of $rate $cid/$asset';
