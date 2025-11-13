@@ -510,8 +510,9 @@ class _ProposePageState extends State<ProposePage> {
         },
       ),
       rateInput(currency, tryDeriveRate),
-      Text(l10n.proposalIssueSwapOptionCCLimit(
-          currency, store.encointer.community!.symbol!, ccSwapLimit().toString())),
+      Text(
+        l10n.proposalIssueSwapOptionCCLimit(currency, store.encointer.community!.symbol!, ccSwapLimit().toString()),
+      ),
       const SizedBox(height: 10),
       EncointerAddressInputField(
         store,
