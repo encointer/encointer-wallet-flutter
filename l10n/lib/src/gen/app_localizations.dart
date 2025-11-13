@@ -1463,20 +1463,20 @@ abstract class AppLocalizations {
   /// No description provided for @proposalExplainerIssueSwapNativeOption.
   ///
   /// In en, this message translates to:
-  /// **'This proposal allows the beneficiary to exchange community tokens for KSM at a defined rate multiple times up to a set KSM limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 {currency}/KSM and limit 2 KSM:\n\nThe beneficiary can exchange up to 2 KSM at a rate of 3 {currency}/KSM. Hence, the maximum is 6 {currency} => 2 KSM.'**
-  String proposalExplainerIssueSwapNativeOption(String currency);
+  /// **'This proposal allows the beneficiary to exchange {cc} for KSM at a defined rate multiple times up to a set KSM limit. The beneficiary might be a local business that accepts {cc} and may accumulate a surplus.\n\nExample with rate 3 {cc}/KSM and limit 2 KSM:\n\nThe beneficiary can exchange up to 2 KSM at a rate of 3 {cc}/KSM. Hence, the maximum is 6 {cc} => 2 KSM.'**
+  String proposalExplainerIssueSwapNativeOption(String cc);
 
   /// No description provided for @proposalExplainerSpendAsset.
   ///
   /// In en, this message translates to:
-  /// **'This proposal suggests spending a specified Asset for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.\n\nNote: You will receive this asset on Asset Hub Kusama directly.'**
-  String get proposalExplainerSpendAsset;
+  /// **'This proposal suggests spending {asset} for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.\n\nNote: You will receive the {asset} on Asset Hub Kusama directly.'**
+  String proposalExplainerSpendAsset(String asset);
 
   /// No description provided for @proposalExplainerIssueSwapAssetOption.
   ///
   /// In en, this message translates to:
-  /// **'This proposal allows the beneficiary to exchange community tokens for a specified Asset at a defined rate multiple times up to a set Asset limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 {currency}/Asset and limit 2 Asset:\n\nThe beneficiary can exchange up to 2 Assets at a rate of 3 {currency}/Asset. Hence, the maximum is 6 {currency} => 2 Asset.\n\nNote: You will receive this asset on Asset Hub Kusama directly.'**
-  String proposalExplainerIssueSwapAssetOption(String currency);
+  /// **'This proposal allows the beneficiary to exchange {cc} for {asset} at a defined rate multiple times up to a set {asset} limit. The beneficiary might be a local business that accepts {cc} and may accumulate a surplus.\n\nExample with rate 3 {cc}/{asset} and limit 2 {asset}:\n\nThe beneficiary can exchange up to 2 {asset} at a rate of 3 {cc}/{asset}. Hence, the maximum is 6 {cc} => 2 {asset}.\n\nNote: You will receive the {asset} on Asset Hub Kusama directly.'**
+  String proposalExplainerIssueSwapAssetOption(String cc, String asset);
 
   /// No description provided for @proposalExplainerCannotVoteYet.
   ///

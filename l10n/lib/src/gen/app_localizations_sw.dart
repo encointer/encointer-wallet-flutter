@@ -752,17 +752,18 @@ class AppLocalizationsSw extends AppLocalizations {
       'Pendekezo hili linapendekeza kutumia KSM kwa faida ya mfaidi kutoka hazina ya jamii, ama kupitia kura za kimataifa au za jamii. Fedha hizi zinaweza kutumika kureward michango ya jamii au kusaidia mipango ya jamii.';
 
   @override
-  String proposalExplainerIssueSwapNativeOption(String currency) {
-    return 'Pendekezo hili linamruhusu mnufaika kubadilisha tokeni za jamii kuwa KSM kwa kiwango kilichowekwa mara nyingi hadi kikomo cha KSM kilichopangwa. Mnufaika anaweza kuwa biashara ya ndani inayokubali tokeni za jamii na inaweza kukusanya ziada.\n\nMfano kwa kiwango cha 3 $currency/KSM na kikomo cha 2 KSM:\n\nMnufaika anaweza kubadilisha hadi 2 KSM kwa kiwango cha 3 $currency/KSM. Hivyo basi, kiwango cha juu ni 6 $currency => 2 KSM.';
+  String proposalExplainerIssueSwapNativeOption(String cc) {
+    return 'Pendekezo hili linamruhusu mpokeaji kubadilisha $cc kwa KSM kwa kiwango kilichowekwa mara kadhaa hadi kufikia kikomo cha KSM. Mpokeaji anaweza kuwa biashara ya eneo inayokubali $cc na inaweza kujikusanyia ziada.\n\nMfano ukiwa na kiwango cha 3 $cc/KSM na kikomo cha 2 KSM:\n\nMpokeaji anaweza kubadilisha hadi KSM 2 kwa kiwango cha 3 $cc/KSM. Kiwango cha juu zaidi ni 6 $cc => 2 KSM.';
   }
 
   @override
-  String get proposalExplainerSpendAsset =>
-      'Pendekezo hili linapendekeza kutumia tokeni maalum kwa mnufaika kutoka hazina ya jamii, ama kupitia kura ya jumla au ya jamii. Fedha hizi zinaweza kutumika kuponyesha michango ya jamii au kusaidia miradi ya jamii.\n\nKumbuka: Utapokea tokeni hii moja kwa moja kwenye Asset Hub Kusama.';
+  String proposalExplainerSpendAsset(String asset) {
+    return 'Pendekezo hili linapendekeza kutumia $asset kwa mnufaika kutoka hazina ya jumuiya, ama kupitia kura ya kimataifa au ya kijumuiya. Fedha hizi zinaweza kutumika kupongeza michango ya wanajumuiya au kusaidia miradi ya kijumuiya.\n\nKumbuka: Utapokea $asset moja kwa moja kwenye Asset Hub Kusama.';
+  }
 
   @override
-  String proposalExplainerIssueSwapAssetOption(String currency) {
-    return 'Pendekezo hili linakuruhusu kubadilisha tokeni za jamii kwa tokeni maalum kwa kiwango kilichowekwa mara nyingi hadi kikomo kilichowekwa cha tokeni.\n\nMfano kwa kiwango cha 3 $currency/Token na kikomo cha 2 Token:\n\nUnaweza kubadilisha hadi 2 Token kwa kiwango cha 3 $currency/Token. Hivyo, kiwango cha juu ni 6 $currency => 2 Token.\n\nKumbuka: Utapokea tokeni hii moja kwa moja kwenye Asset Hub Kusama.';
+  String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
+    return 'Pendekezo hili linamruhusu mpokeaji kubadilisha $cc kwa $asset kwa kiwango kilichowekwa mara kadhaa hadi kufikia kikomo cha $asset. Mpokeaji anaweza kuwa biashara ya eneo inayokubali $cc na inaweza kujikusanyia ziada.\n\nMfano ukiwa na kiwango cha 3 $cc/$asset na kikomo cha 2 $asset:\n\nMpokeaji anaweza kubadilisha hadi $asset 2 kwa kiwango cha 3 $cc/$asset. Kiwango cha juu zaidi ni $cc 6 => $asset 2.\n\nKumbuka: Utapokea $asset moja kwa moja kwenye Asset Hub Kusama.';
   }
 
   @override

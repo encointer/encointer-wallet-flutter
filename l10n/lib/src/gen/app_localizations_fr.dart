@@ -754,17 +754,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette proposition suggère de dépenser des KSM pour un bénéficiaire provenant du trésor de la communauté, soit par un vote global, soit par un vote de la communauté. Ces fonds peuvent récompenser les contributions à la communauté ou soutenir des initiatives communautaires.';
 
   @override
-  String proposalExplainerIssueSwapNativeOption(String currency) {
-    return 'Cette proposition permet au bénéficiaire d\'échanger plusieurs fois des tokens communautaires contre des KSM à un taux défini, jusqu\'à une limite de KSM fixée. Le bénéficiaire peut être une entreprise locale qui accepte les tokens communautaires et peut accumuler un surplus.\n\nExemple avec un taux de 3 $currency/KSM et une limite de 2 KSM :\n\nLe bénéficiaire peut échanger jusqu\'à 2 KSM à un taux de 3 $currency/KSM. Ainsi, le maximum est de 6 $currency => 2 KSM.';
+  String proposalExplainerIssueSwapNativeOption(String cc) {
+    return 'Cette proposition permet au bénéficiaire d’échanger des $cc contre des KSM à un taux défini, plusieurs fois, jusqu’à une limite KSM fixée. Le bénéficiaire peut être un commerce local qui accepte les $cc et peut accumuler un surplus.\n\nExemple avec un taux de 3 $cc/KSM et une limite de 2 KSM :\n\nLe bénéficiaire peut échanger jusqu’à 2 KSM à un taux de 3 $cc/KSM. Le maximum est donc 6 $cc => 2 KSM.';
   }
 
   @override
-  String get proposalExplainerSpendAsset =>
-      'Cette proposition suggère de dépenser un jeton spécifié pour toi depuis la trésorerie communautaire, soit par un vote global, soit par un vote communautaire. Ces fonds peuvent récompenser les contributions à la communauté ou soutenir des initiatives communautaires.\n\nRemarque : Tu recevras ce jeton directement sur Asset Hub Kusama.';
+  String proposalExplainerSpendAsset(String asset) {
+    return 'Cette proposition suggère de dépenser des $asset pour un bénéficiaire à partir du trésor de la communauté, soit par un vote global, soit par un vote communautaire. Ces fonds peuvent récompenser les contributions ou soutenir des initiatives communautaires.\n\nRemarque : Tu recevras les $asset directement sur Asset Hub Kusama.';
+  }
 
   @override
-  String proposalExplainerIssueSwapAssetOption(String currency) {
-    return 'Cette proposition te permet d’échanger des jetons communautaires contre un jeton spécifié à un taux défini plusieurs fois jusqu’à une limite fixée.\n\nExemple avec un taux de 3 $currency/Jeton et une limite de 2 Jetons :\n\nTu peux échanger jusqu’à 2 Jetons à un taux de 3 $currency/Jeton. Ainsi, le maximum est de 6 $currency => 2 Jetons.\n\nRemarque : Tu recevras ce jeton directement sur Asset Hub Kusama.';
+  String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
+    return 'Cette proposition permet au bénéficiaire d’échanger des $cc contre des $asset à un taux défini, plusieurs fois, jusqu’à une limite de $asset fixée. Le bénéficiaire peut être un commerce local qui accepte les $cc et peut accumuler un surplus.\n\nExemple avec un taux de 3 $cc/$asset et une limite de 2 $asset :\n\nLe bénéficiaire peut échanger jusqu’à 2 $asset à un taux de 3 $cc/$asset. Le maximum est donc 6 $cc => 2 $asset.\n\nRemarque : Tu recevras les $asset directement sur Asset Hub Kusama.';
   }
 
   @override
