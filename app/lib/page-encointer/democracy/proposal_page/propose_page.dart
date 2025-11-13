@@ -511,7 +511,11 @@ class _ProposePageState extends State<ProposePage> {
       ),
       rateInput(currency, tryDeriveRate),
       Text(
-        l10n.proposalIssueSwapOptionCCLimit(currency, store.encointer.community!.symbol!, ccSwapLimit().toString()),
+        l10n.proposalIssueSwapOptionCCLimit(
+          currency,
+          store.encointer.community!.symbol!,
+          Fmt.formatNumber(context, ccSwapLimit(), decimals: 4),
+        ),
       ),
       const SizedBox(height: 10),
       EncointerAddressInputField(
