@@ -540,12 +540,12 @@ class _ProposePageState extends State<ProposePage> {
 
     final knownCommunity = KnownCommunity.tryFromSymbol(store.encointer.community!.symbol!);
     final isKnown = knownCommunity != null;
-    final ccToUsdAfterDiscount = knownCommunity!.ccPerUsd(rate?.value ?? 0);
+    final ccToUsdAfterMarkup = Fmt.formatNumber(context, knownCommunity!.ccPerUsd(rate?.value ?? 0), decimals: 4);
 
     return TextFormField(
       // set constant value if needed
       controller: rateController
-        ..text = tryDeriveRate && isKnown ? ccToUsdAfterDiscount.toString() : rateController.text,
+        ..text = tryDeriveRate && isKnown ? ccToUsdAfterMarkup.toString() : rateController.text,
       // We want to derive a sane value for well-known communities and disable editing.
       enabled: !tryDeriveRate && isKnown,
       decoration: InputDecoration(
