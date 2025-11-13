@@ -25,22 +25,8 @@ void main() {
         // Manual calculation:
         // 1 CC = 1 CHF
         // 1 USD = 0.79 CHF
-        // Apply discount 0.2 → 1 CHF/CC * 0.79 [USD/CHF] * 0.8 ≈ 0.632 USD
-        expect(ccUsdRate, closeTo(0.6320, 1e-6));
-      });
-
-      test('1 USD -> 0.79 CHF, LEU community', () {
-        const community = KnownCommunity.leu;
-
-        const usdToChfRate = 0.79; // 1 USD = 0.79 CHF
-
-        final ccUsdRate = community.ccPerUsd(usdToChfRate);
-
-        // Manual calculation:
-        // 1 CC = 1 CHF
-        // 1 USD = 0.79 CHF
-        // Apply discount 0.2 → 1 CC/CHF * 0.79 [USD/CHF] * 0.8 ≈ 0.632 USD
-        expect(ccUsdRate, closeTo(0.6320, 1e-6));
+        // Apply markup 0.2 → 1 CHF/CC * 0.79 [USD/CHF] * 1.2 ≈ 0.948 USD/CC
+        expect(ccUsdRate, closeTo(0.948, 1e-6));
       });
 
       test('1 USD -> 0.1484.76300699 NGN, PNQ community', () {
@@ -53,8 +39,8 @@ void main() {
         // Manual calculation:
         // 2 CC = 1 CHF
         // 1 USD = 2452.61 NGN
-        // Apply discount 0.2 → 1/2 CC/CHF * 2452.61 [USD/CHF] * 0.8 ≈ 981.044 CC/USD
-        expect(ccUsdRate, closeTo(981.044, 1e-6));
+        // Apply markup 0.2 → 1/2 CHF/CC * 2452.61 [USD/CHF] * 1.2 ≈ 1471.566 USD/CC
+        expect(ccUsdRate, closeTo(1471.566, 1e-6));
       });
 
       // Mock API rates: 1 USD = x local fiat
@@ -70,7 +56,7 @@ void main() {
 
           final ccUsdRate = community.ccPerUsd(usdToLocal);
 
-          final expected = (1 / community.localFiatRate) * usdToLocal * (1 - community.discount);
+          final expected = (1 / community.localFiatRate) * usdToLocal * (1 + community.markup);
 
           expect(ccUsdRate, closeTo(expected, 1e-6), reason: 'CC → USD failed for ${community.symbol}');
         }

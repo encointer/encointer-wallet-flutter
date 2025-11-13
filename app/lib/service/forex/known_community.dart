@@ -7,18 +7,18 @@ const num _leuPerChf = 1;
 const num _nytPerTzs = 2;
 const num _pnqPerNgn = 2;
 
-const double _defaultDiscount = 0.2;
+const double _defaultMarkup = 0.2;
 
 enum KnownCommunity {
-  leu(symbol: 'leu', fiatCurrency: Currency.chf, localFiatRate: _leuPerChf, discount: _defaultDiscount),
-  nyt(symbol: 'nyt', fiatCurrency: Currency.tzs, localFiatRate: _nytPerTzs, discount: _defaultDiscount),
-  pnq(symbol: 'pnq', fiatCurrency: Currency.ngn, localFiatRate: _pnqPerNgn, discount: _defaultDiscount);
+  leu(symbol: 'leu', fiatCurrency: Currency.chf, localFiatRate: _leuPerChf, markup: _defaultMarkup),
+  nyt(symbol: 'nyt', fiatCurrency: Currency.tzs, localFiatRate: _nytPerTzs, markup: _defaultMarkup),
+  pnq(symbol: 'pnq', fiatCurrency: Currency.ngn, localFiatRate: _pnqPerNgn, markup: _defaultMarkup);
 
   const KnownCommunity({
     required this.symbol,
     required this.fiatCurrency,
     required this.localFiatRate,
-    required this.discount,
+    required this.markup,
   });
 
   // Community symbol
@@ -27,8 +27,8 @@ enum KnownCommunity {
   final Currency fiatCurrency;
   // How many CC per 1 unit local fiat ([LocalFiat/CC])
   final num localFiatRate;
-  // Discount applied
-  final double discount;
+  // Markup applied
+  final double markup;
 
   // Lookup map
   static final Map<String, KnownCommunity> _lookup = {for (var c in KnownCommunity.values) c.symbol.toLowerCase(): c};
@@ -43,6 +43,6 @@ extension UsdRateExtension on KnownCommunity {
   ///
   /// [usdRate] needs to be in [localFiat/USD]
   double ccPerUsd(double usdRate) {
-    return (1 / localFiatRate) * usdRate * (1 - discount);
+    return (1 / localFiatRate) * usdRate * (1 + markup);
   }
 }
