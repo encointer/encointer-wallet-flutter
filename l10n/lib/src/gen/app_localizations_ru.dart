@@ -900,7 +900,9 @@ class AppLocalizationsRu extends AppLocalizations {
       'Должно быть положительное число';
 
   @override
-  String get proposalFieldErrorPositiveNumberTooBig => 'Число слишком большое';
+  String proposalFieldErrorPositiveNumberTooBig(num amount) {
+    return 'Число слишком большое (предел: $amount)';
+  }
 
   @override
   String get proposalFieldErrorEnterInactivityTimeout =>

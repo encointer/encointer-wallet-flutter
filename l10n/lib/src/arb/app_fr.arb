@@ -330,7 +330,7 @@
     "proposalFieldErrorDemurrageRange": "La démurrage doit être comprise entre 0 et 100",
     "proposalFieldErrorEnterPositiveNumber": "Entrez un nombre positif",
     "proposalFieldErrorPositiveNumberRange": "Doit être un nombre positif",
-    "proposalFieldErrorPositiveNumberTooBig": "Le nombre est trop grand",
+    "proposalFieldErrorPositiveNumberTooBig": "Le nombre est trop grand (limite : {amount})",
     "proposalFieldErrorEnterInactivityTimeout": "Entrez le délai d'inactivité",
     "proposalFieldErrorPositiveIntegerRange": "Doit être un entier positif",
     "proposalOnlyBootstrappersOrReputablesCanSubmit": "Seuls les bootstrappers ou les Reputables peuvent soumettre une proposition.",

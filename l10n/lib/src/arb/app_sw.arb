@@ -331,7 +331,7 @@
     "proposalFieldErrorDemurrageRange": "Ada ya kuchelewesha lazima iwe kati ya 0 na 100",
     "proposalFieldErrorEnterPositiveNumber": "Weka namba chanya",
     "proposalFieldErrorPositiveNumberRange": "Lazima iwe namba chanya",
-    "proposalFieldErrorPositiveNumberTooBig": "Nambari ni kubwa sana",
+    "proposalFieldErrorPositiveNumberTooBig": "Nambari ni kubwa sana (Kikomo: {amount})",
     "proposalFieldErrorEnterInactivityTimeout": "Weka muda wa kutokufanya kazi",
     "proposalFieldErrorPositiveIntegerRange": "Lazima iwe namba kamili chanya",
     "proposalOnlyBootstrappersOrReputablesCanSubmit": "Ni bootstrappers au waheshimika pekee wanaoweza kuwasilisha pendekezo.",

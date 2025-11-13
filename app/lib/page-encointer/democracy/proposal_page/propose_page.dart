@@ -835,7 +835,7 @@ class _ProposePageState extends State<ProposePage> {
       if (number == null || number <= 0) {
         return l10n.proposalFieldErrorPositiveNumberRange;
       } else if (max != null && number > max) {
-        return l10n.proposalFieldErrorPositiveNumberTooBig;
+        return l10n.proposalFieldErrorPositiveNumberTooBig(max);
       } else {
         return null;
       }

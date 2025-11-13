@@ -1709,8 +1709,8 @@ abstract class AppLocalizations {
   /// No description provided for @proposalFieldErrorPositiveNumberTooBig.
   ///
   /// In en, this message translates to:
-  /// **'Number is too big'**
-  String get proposalFieldErrorPositiveNumberTooBig;
+  /// **'Number is too big (Limit: {amount})'**
+  String proposalFieldErrorPositiveNumberTooBig(num amount);
 
   /// No description provided for @proposalFieldErrorEnterInactivityTimeout.
   ///

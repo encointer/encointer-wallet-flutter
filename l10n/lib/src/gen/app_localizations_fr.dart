@@ -908,8 +908,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Doit être un nombre positif';
 
   @override
-  String get proposalFieldErrorPositiveNumberTooBig =>
-      'Le nombre est trop grand';
+  String proposalFieldErrorPositiveNumberTooBig(num amount) {
+    return 'Le nombre est trop grand (limite : $amount)';
+  }
 
   @override
   String get proposalFieldErrorEnterInactivityTimeout =>
