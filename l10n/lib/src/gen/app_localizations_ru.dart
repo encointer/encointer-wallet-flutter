@@ -767,7 +767,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Ты сможешь начать голосовать с репутацией со следующего цикла!';
 
   @override
-  String get proposalType => 'Proposal Type';
+  String get proposalType => 'Тип предложения';
 
   @override
   String get proposalTypeAddLocation => 'Добавить местоположение';
