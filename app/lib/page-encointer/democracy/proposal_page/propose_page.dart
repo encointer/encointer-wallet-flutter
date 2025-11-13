@@ -463,19 +463,29 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget issueSwapNativeOptionInput() {
-    final maxSwapValue = selectedScope.isLocal
-        ? maxTreasuryPayoutFraction * Fmt.bigIntToDouble(localTreasuryBalance - pendingLocalSpends, ertDecimals)
-        : maxTreasuryPayoutFraction * Fmt.bigIntToDouble(globalTreasuryBalance - pendingGlobalSpends, ertDecimals);
+    final maxSwapValue = nativeTreasuryUnallocatedLiquidity();
     return Column(children: issueSwapOptionInput('KSM', maxSwapValue, false));
   }
 
   Widget issueSwapAssetOptionInput() {
-    final maxSwapValue =
-        maxTreasuryPayoutFraction * Fmt.bigIntToDouble(assetTreasuryLiquidity(selectedAsset), selectedAsset.decimals);
+    final maxSwapValue = assetTreasuryUnallocatedLiquidity();
     return Column(children: [
       selectAssetDropDown(),
       ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), maxSwapValue, true),
     ]);
+  }
+
+  double assetTreasuryUnallocatedLiquidity() {
+    final unallocated =
+        maxTreasuryPayoutFraction * Fmt.bigIntToDouble(assetTreasuryLiquidity(selectedAsset), selectedAsset.decimals);
+    return unallocated;
+  }
+
+  double nativeTreasuryUnallocatedLiquidity() {
+    final unallocated = selectedScope.isLocal
+        ? maxTreasuryPayoutFraction * Fmt.bigIntToDouble(localTreasuryBalance - pendingLocalSpends, ertDecimals)
+        : maxTreasuryPayoutFraction * Fmt.bigIntToDouble(globalTreasuryBalance - pendingGlobalSpends, ertDecimals);
+    return unallocated;
   }
 
   double ccSwapLimit() {
@@ -544,8 +554,7 @@ class _ProposePageState extends State<ProposePage> {
 
     return TextFormField(
       // set constant value if needed
-      controller: rateController
-        ..text = tryDeriveRate && isKnown ? ccToUsdAfterMarkup.toString() : rateController.text,
+      controller: rateController..text = tryDeriveRate && isKnown ? ccToUsdAfterMarkup.toString() : rateController.text,
       // We want to derive a sane value for well-known communities and disable editing.
       enabled: !tryDeriveRate && isKnown,
       decoration: InputDecoration(
@@ -590,13 +599,15 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget spendNativeInput(BuildContext context) {
-    return Column(children: spendInputWidgets('KSM'));
+    final maxSpend = nativeTreasuryUnallocatedLiquidity();
+    return Column(children: spendInputWidgets('KSM', maxSpend));
   }
 
   Widget spendAssetInput(BuildContext context) {
+    final maxSpend = assetTreasuryUnallocatedLiquidity();
     return Column(children: [
       selectAssetDropDown(),
-      ...spendInputWidgets(selectedAsset.symbol),
+      ...spendInputWidgets(selectedAsset.symbol, maxSpend),
     ]);
   }
 
@@ -624,7 +635,7 @@ class _ProposePageState extends State<ProposePage> {
             : null);
   }
 
-  List<Widget> spendInputWidgets(String currency) {
+  List<Widget> spendInputWidgets(String currency, double max) {
     final l10n = context.l10n;
     return [
       TextFormField(
@@ -641,7 +652,7 @@ class _ProposePageState extends State<ProposePage> {
         validator: validatePositiveNumber,
         onChanged: (value) {
           setState(() {
-            amountError = validatePositiveNumber(value);
+            amountError = validatePositiveNumberWithMax(value, max);
           });
         },
       ),
