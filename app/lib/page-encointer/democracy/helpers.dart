@@ -39,8 +39,6 @@ import 'package:ew_polkadart/ew_polkadart.dart'
         IssueSwapAssetOption;
 
 /// Gets the localized proposal action title.
-///
-/// Todo: add localization for all variants.
 String getProposalActionTitle(BuildContext context, ProposalAction action) {
   final l10n = context.l10n;
   final store = context.read<AppStore>();
