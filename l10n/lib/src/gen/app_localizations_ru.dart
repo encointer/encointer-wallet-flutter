@@ -748,8 +748,8 @@ class AppLocalizationsRu extends AppLocalizations {
       'Это предложение предлагает потратить KSM для получателя из казны сообщества, либо через глобальное, либо через голосование внутри сообщества. Эти средства могут быть использованы для вознаграждения вкладов в сообщество или поддержки инициатив сообщества.';
 
   @override
-  String proposalExplainerIssueSwapNativeOption(String currency) {
-    return 'Это предложение позволяет получателю многократно обменивать токены сообщества на KSM по установленному курсу, но не превышая заданного лимита KSM. Получателем может быть местный бизнес, который принимает токены сообщества и может накапливать их избыток.\n\nПример с курсом 3 $currency/KSM и лимитом 2 KSM:\n\nПолучатель может обменять до 2 KSM по курсу 3 $currency/KSM. Таким образом, максимум составит 6 $currency => 2 KSM.';
+  String proposalExplainerIssueSwapNativeOption(String cc) {
+    return 'Это предложение позволяет получателю обменивать $cc на KSM по установленному курсу несколько раз, вплоть до определённого лимита KSM. Получателем может быть местный бизнес, который принимает $cc и может накапливать излишки.\n\nПример: курс 3 $cc/KSM, лимит 2 KSM:\n\nПолучатель может обменять до 2 KSM по курсу 3 $cc/KSM. Максимум составляет 6 $cc => 2 KSM.';
   }
 
   @override
@@ -767,7 +767,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Ты сможешь начать голосовать с репутацией со следующего цикла!';
 
   @override
-  String get proposalType => 'Тип предложения';
+  String get proposalType => 'Proposal Type';
 
   @override
   String get proposalTypeAddLocation => 'Добавить местоположение';

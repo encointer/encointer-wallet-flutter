@@ -1463,8 +1463,8 @@ abstract class AppLocalizations {
   /// No description provided for @proposalExplainerIssueSwapNativeOption.
   ///
   /// In en, this message translates to:
-  /// **'This proposal allows the beneficiary to exchange community tokens for KSM at a defined rate multiple times up to a set KSM limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 {currency}/KSM and limit 2 KSM:\n\nThe beneficiary can exchange up to 2 KSM at a rate of 3 {currency}/KSM. Hence, the maximum is 6 {currency} => 2 KSM.'**
-  String proposalExplainerIssueSwapNativeOption(String currency);
+  /// **'This proposal allows the beneficiary to exchange {cc} for KSM at a defined rate multiple times up to a set KSM limit. The beneficiary might be a local business that accepts {cc} and may accumulate a surplus.\n\nExample with rate 3 {cc}/KSM and limit 2 KSM:\n\nThe beneficiary can exchange up to 2 KSM at a rate of 3 {cc}/KSM. Hence, the maximum is 6 {cc} => 2 KSM.'**
+  String proposalExplainerIssueSwapNativeOption(String cc);
 
   /// No description provided for @proposalExplainerSpendAsset.
   ///

@@ -757,8 +757,8 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Vorschlag schlägt vor, KSM aus der Gemeinschaftsreserve für einen Begünstigten auszugeben, entweder durch eine globale oder Gemeinschaftsabstimmung. Diese Mittel können zur Belohnung von Beiträgen oder zur Unterstützung von Gemeinschaftsprojekten verwendet werden.';
 
   @override
-  String proposalExplainerIssueSwapNativeOption(String currency) {
-    return 'Dieser Vorschlag ermöglicht es dem Begünstigten, Gemeinschaftswährung zu einem festgelegten Kurs mehrfach gegen KSM einzutauschen, bis zu einem bestimmten KSM-Limit. Der Begünstigte könnte ein lokales Unternehmen sein, das Gemeinschaftswährung akzeptiert und möglicherweise einen Überschuss ansammelt.\n\nBeispiel mit Kurs 3 $currency/KSM und Limit von 2 KSM:\n\nDer Begünstigte kann bis zu 2 KSM zu einem Kurs von 3 $currency/KSM eintauschen. Das bedeutet, dass maximal 6 $currency gegen 2 KSM getauscht werden können.';
+  String proposalExplainerIssueSwapNativeOption(String cc) {
+    return 'Dieser Vorschlag erlaubt es dem Empfänger, $cc zu einem festgelegten Kurs mehrfach gegen KSM zu tauschen, bis ein festes KSM-Limit erreicht ist. Der Empfänger könnte ein lokales Geschäft sein, das $cc akzeptiert und eventuell einen Überschuss ansammelt.\n\nBeispiel mit Kurs 3 $cc/KSM und Limit 2 KSM:\n\nDer Empfänger kann bis zu 2 KSM zu einem Kurs von 3 $cc/KSM tauschen. Das Maximum ist also 6 $cc => 2 KSM.';
   }
 
   @override

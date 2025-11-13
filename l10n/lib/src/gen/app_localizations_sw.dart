@@ -752,8 +752,8 @@ class AppLocalizationsSw extends AppLocalizations {
       'Pendekezo hili linapendekeza kutumia KSM kwa faida ya mfaidi kutoka hazina ya jamii, ama kupitia kura za kimataifa au za jamii. Fedha hizi zinaweza kutumika kureward michango ya jamii au kusaidia mipango ya jamii.';
 
   @override
-  String proposalExplainerIssueSwapNativeOption(String currency) {
-    return 'Pendekezo hili linamruhusu mnufaika kubadilisha tokeni za jamii kuwa KSM kwa kiwango kilichowekwa mara nyingi hadi kikomo cha KSM kilichopangwa. Mnufaika anaweza kuwa biashara ya ndani inayokubali tokeni za jamii na inaweza kukusanya ziada.\n\nMfano kwa kiwango cha 3 $currency/KSM na kikomo cha 2 KSM:\n\nMnufaika anaweza kubadilisha hadi 2 KSM kwa kiwango cha 3 $currency/KSM. Hivyo basi, kiwango cha juu ni 6 $currency => 2 KSM.';
+  String proposalExplainerIssueSwapNativeOption(String cc) {
+    return 'Pendekezo hili linamruhusu mpokeaji kubadilisha $cc kwa KSM kwa kiwango kilichowekwa mara kadhaa hadi kufikia kikomo cha KSM. Mpokeaji anaweza kuwa biashara ya eneo inayokubali $cc na inaweza kujikusanyia ziada.\n\nMfano ukiwa na kiwango cha 3 $cc/KSM na kikomo cha 2 KSM:\n\nMpokeaji anaweza kubadilisha hadi KSM 2 kwa kiwango cha 3 $cc/KSM. Kiwango cha juu zaidi ni 6 $cc => 2 KSM.';
   }
 
   @override
