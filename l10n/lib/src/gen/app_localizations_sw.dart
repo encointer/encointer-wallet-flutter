@@ -904,7 +904,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get proposalFieldErrorPositiveNumberRange => 'Lazima iwe namba chanya';
 
   @override
-  String proposalFieldErrorPositiveNumberTooBig(num amount) {
+  String proposalFieldErrorPositiveNumberTooBig(String amount) {
     return 'Nambari ni kubwa sana (Kikomo: $amount)';
   }
 

@@ -363,7 +363,7 @@
     "@proposalFieldErrorPositiveNumberTooBig": {
         "placeholders": {
             "amount": {
-                "type": "num",
+                "type": "String",
                 "example": "0.1"
             }
         }

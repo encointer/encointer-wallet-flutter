@@ -1710,7 +1710,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Number is too big (Limit: {amount})'**
-  String proposalFieldErrorPositiveNumberTooBig(num amount);
+  String proposalFieldErrorPositiveNumberTooBig(String amount);
 
   /// No description provided for @proposalFieldErrorEnterInactivityTimeout.
   ///

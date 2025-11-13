@@ -554,7 +554,7 @@ class _ProposePageState extends State<ProposePage> {
 
     return TextFormField(
       // set constant value if needed
-      controller: rateController..text = tryDeriveRate && isKnown ? ccToUsdAfterMarkup.toString() : rateController.text,
+      controller: rateController..text = tryDeriveRate && isKnown ? ccToUsdAfterMarkup : rateController.text,
       // We want to derive a sane value for well-known communities and disable editing.
       enabled: !tryDeriveRate && isKnown,
       decoration: InputDecoration(
@@ -861,7 +861,8 @@ class _ProposePageState extends State<ProposePage> {
       if (number == null || number <= 0) {
         return l10n.proposalFieldErrorPositiveNumberRange;
       } else if (max != null && number > max) {
-        return l10n.proposalFieldErrorPositiveNumberTooBig(max);
+        final maxFmt = Fmt.formatNumber(context, max, decimals: 4);
+        return l10n.proposalFieldErrorPositiveNumberTooBig(maxFmt);
       } else {
         return null;
       }
