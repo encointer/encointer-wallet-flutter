@@ -407,38 +407,39 @@ class AppLocalizationsFr extends AppLocalizations {
   String get event => 'ID d\'événement';
 
   @override
-  String get swapOptionAvailable => 'Swap Option Available';
+  String get swapOptionAvailable => 'Option d’échange disponible';
 
   @override
   String swapOptionRate(String amount, String asset, String cc) {
-    return 'Rate $amount $cc/$asset';
+    return 'Taux $amount $cc/$asset';
   }
 
   @override
   String swapOptionCcLimit(String amount, String cc) {
-    return '$cc Limit: $amount $cc';
+    return 'Limite $cc : $amount $cc';
   }
 
   @override
   String swapOptionCcToBeSwapped(String amount, String cc) {
-    return '$cc to be swapped: $amount $cc';
+    return '$cc à échanger : $amount $cc';
   }
 
   @override
   String swapOptionLimit(String amount, String asset) {
-    return 'Limit: $amount $asset';
+    return 'Limite : $amount $asset';
   }
 
   @override
   String exerciseSwapAssetOptionAvailable(String asset) {
-    return '$asset Swap Option Available';
+    return 'Option d’échange $asset disponible';
   }
 
   @override
-  String get exerciseSwapNativeOptionAvailable => 'KSM Swap Option Available';
+  String get exerciseSwapNativeOptionAvailable =>
+      'Option d’échange KSM disponible';
 
   @override
-  String get exerciseSwapOption => 'Exercise Swap Option';
+  String get exerciseSwapOption => 'Exercer l’option d’échange';
 
   @override
   String get export => 'Activer le Bazaar';
@@ -1244,7 +1245,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le transfert peut prendre jusqu\'à 30 secondes avant d\'apparaître ici';
 
   @override
-  String get treasuryBalanceTooLow => 'Treasury Balance too low';
+  String get treasuryBalanceTooLow => 'Solde du trésor trop bas';
 
   @override
   String treasuryGlobalBalance(String balance) {

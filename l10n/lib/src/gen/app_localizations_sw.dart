@@ -404,38 +404,39 @@ class AppLocalizationsSw extends AppLocalizations {
   String get event => 'ID ya tukio';
 
   @override
-  String get swapOptionAvailable => 'Swap Option Available';
+  String get swapOptionAvailable => 'Chaguo la kubadilisha linapatikana';
 
   @override
   String swapOptionRate(String amount, String asset, String cc) {
-    return 'Rate $amount $cc/$asset';
+    return 'Kiwango $amount $cc/$asset';
   }
 
   @override
   String swapOptionCcLimit(String amount, String cc) {
-    return '$cc Limit: $amount $cc';
+    return 'Kikomo cha $cc: $amount $cc';
   }
 
   @override
   String swapOptionCcToBeSwapped(String amount, String cc) {
-    return '$cc to be swapped: $amount $cc';
+    return '$cc ya kubadilishwa: $amount $cc';
   }
 
   @override
   String swapOptionLimit(String amount, String asset) {
-    return 'Limit: $amount $asset';
+    return 'Kikomo: $amount $asset';
   }
 
   @override
   String exerciseSwapAssetOptionAvailable(String asset) {
-    return '$asset Swap Option Available';
+    return 'Chaguo la kubadilisha $asset linapatikana';
   }
 
   @override
-  String get exerciseSwapNativeOptionAvailable => 'KSM Swap Option Available';
+  String get exerciseSwapNativeOptionAvailable =>
+      'Chaguo la kubadilisha KSM linapatikana';
 
   @override
-  String get exerciseSwapOption => 'Exercise Swap Option';
+  String get exerciseSwapOption => 'Tumia chaguo la kubadilisha';
 
   @override
   String get export =>
@@ -1240,7 +1241,7 @@ class AppLocalizationsSw extends AppLocalizations {
       'Inaweza kuchukua hadi sekunde 30 kwa ajili ya uhamishaji kuonekana hapa';
 
   @override
-  String get treasuryBalanceTooLow => 'Treasury Balance too low';
+  String get treasuryBalanceTooLow => 'Salio la hazina ni dogo sana';
 
   @override
   String treasuryGlobalBalance(String balance) {

@@ -402,38 +402,38 @@ class AppLocalizationsRu extends AppLocalizations {
   String get event => 'ID события';
 
   @override
-  String get swapOptionAvailable => 'Swap Option Available';
+  String get swapOptionAvailable => 'Опция обмена доступна';
 
   @override
   String swapOptionRate(String amount, String asset, String cc) {
-    return 'Rate $amount $cc/$asset';
+    return 'Курс $amount $cc/$asset';
   }
 
   @override
   String swapOptionCcLimit(String amount, String cc) {
-    return '$cc Limit: $amount $cc';
+    return 'Лимит $cc: $amount $cc';
   }
 
   @override
   String swapOptionCcToBeSwapped(String amount, String cc) {
-    return '$cc to be swapped: $amount $cc';
+    return '$cc для обмена: $amount $cc';
   }
 
   @override
   String swapOptionLimit(String amount, String asset) {
-    return 'Limit: $amount $asset';
+    return 'Лимит: $amount $asset';
   }
 
   @override
   String exerciseSwapAssetOptionAvailable(String asset) {
-    return '$asset Swap Option Available';
+    return 'Доступна опция обмена $asset';
   }
 
   @override
-  String get exerciseSwapNativeOptionAvailable => 'KSM Swap Option Available';
+  String get exerciseSwapNativeOptionAvailable => 'Доступна опция обмена KSM';
 
   @override
-  String get exerciseSwapOption => 'Exercise Swap Option';
+  String get exerciseSwapOption => 'Использовать опцию обмена';
 
   @override
   String get export => 'Экпорт аккаунта';
@@ -1237,7 +1237,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Появление перевода может занять до 30 секунд';
 
   @override
-  String get treasuryBalanceTooLow => 'Treasury Balance too low';
+  String get treasuryBalanceTooLow => 'Баланс казны слишком низкий';
 
   @override
   String treasuryGlobalBalance(String balance) {
