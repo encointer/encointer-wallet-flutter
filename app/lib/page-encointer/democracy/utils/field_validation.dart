@@ -7,7 +7,6 @@ String? validatePositiveNumberString(BuildContext context, String? value) {
   return validatePositiveNumber(context, double.tryParse(value ?? ''));
 }
 
-
 /// Ensures that the number is positive (doubles)
 String? validatePositiveNumber(BuildContext context, double? value) {
   return validatePositiveNumberWithMax(context, value, null);

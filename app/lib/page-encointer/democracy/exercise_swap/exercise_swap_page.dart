@@ -147,7 +147,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.swapOptionAvailable, style: context.headlineSmall),
+            Text(l10n.swapOption, style: context.headlineSmall),
             const SizedBox(height: 8),
             Text(l10n.swapOptionLimit(
               fmt(widget.option.allowance),
@@ -263,7 +263,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     final l10n = context.l10n;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8), // ← bottom = 8
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16), // ← bottom = 8
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -275,7 +275,6 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
             },
             child: Text(l10n.exerciseSwapOption),
           ),
-          const SizedBox(height: 4), // tiny padding under the button
         ],
       ),
     );

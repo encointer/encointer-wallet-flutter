@@ -4,8 +4,10 @@ import 'dart:math';
 import 'package:encointer_wallet/page-encointer/democracy/exercise_swap/exercise_swap_page.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/asset_id.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/swap_options.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_primitives/treasuries/swap_asset_option.dart'
     show SwapAssetOption;
 import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_primitives/treasuries/swap_native_option.dart'
@@ -48,6 +50,8 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
+const _logTarget = 'AssetsHomepageStore';
+
 /// Getting confused with Assets (gen) while importing
 /// thus changed name to [AssetsView]
 class AssetsView extends StatefulWidget {
@@ -69,6 +73,11 @@ class _AssetsViewState extends State<AssetsView> {
   final double _panelHeightClosed = 0;
   late AppLocalizations l10n;
 
+  NativeSwap? nativeSwap;
+  AssetSwap? assetSwap;
+
+  final devSwap = true;
+
   @override
   void initState() {
     _connectNodeAll();
@@ -89,6 +98,41 @@ class _AssetsViewState extends State<AssetsView> {
       panelHeight,
     );
     super.didChangeDependencies();
+  }
+
+  Future<void> getSwapOptions() async {
+    if (devSwap) {
+      Log.d('DEV: Getting Swap Options', _logTarget);
+      nativeSwap = NativeSwap(SwapNativeOption(
+        cid: widget.store.encointer.chosenCid!.toPolkadart(),
+        nativeAllowance: BigInt.from(1.2 * pow(10, ertDecimals)),
+        rate: fixedU128FromDouble(0.94 * pow(10, -ertDecimals)),
+        doBurn: true,
+      ));
+
+      assetSwap = AssetSwap(
+        SwapAssetOption(
+          cid: widget.store.encointer.chosenCid!.toPolkadart(),
+          assetId: AssetToSpend.usdc.versionedLocatableAsset,
+          assetAllowance: BigInt.from(1.2 * pow(10, AssetToSpend.usdc.decimals)),
+          rate: fixedU128FromDouble(0.94 * pow(10, -AssetToSpend.usdc.decimals)),
+          doBurn: true,
+        ),
+      );
+    } else {
+      Log.d('Getting Swap Options', _logTarget);
+      final accountId = AddressUtils.addressToPubKey(widget.store.account.currentAddress).toList();
+
+      final swapAssetOption = await webApi.encointer.getSwapAssetOptionForAccount(widget.store.encointer.chosenCid!, accountId);
+      if (swapAssetOption != null) {
+        assetSwap = AssetSwap(swapAssetOption);
+      }
+
+      final swapNativeOption = await webApi.encointer.getSwapNativeOptionForAccount(widget.store.encointer.chosenCid!, accountId);
+      if (swapNativeOption != null) {
+        nativeSwap = NativeSwap(swapNativeOption);
+      }
+    }
   }
 
   @override
@@ -219,20 +263,13 @@ class _AssetsViewState extends State<AssetsView> {
                           ),
                         ),
                       ),
-                    if (true)
+                    if (true && nativeSwap != null)
                       ElevatedButton(
                         child: Text(l10n.exerciseSwapNativeOptionAvailable),
                         onPressed: () => Navigator.pushNamed(
                           context,
                           ExerciseSwapPage.route,
-                          arguments: NativeSwap(
-                            SwapNativeOption(
-                              cid: widget.store.encointer.chosenCid!.toPolkadart(),
-                              nativeAllowance: BigInt.from(1.2 * pow(10, ertDecimals)),
-                              rate: fixedU128FromDouble(0.94 * pow(10, -ertDecimals)),
-                              doBurn: true,
-                            ),
-                          ),
+                          arguments: nativeSwap,
                         ),
                       ),
                     const SizedBox(height: 42),
@@ -462,6 +499,8 @@ class _AssetsViewState extends State<AssetsView> {
       if (context.read<AppStore>().encointer.community?.communityIcon == null) {
         context.read<AppStore>().encointer.community?.getCommunityIcon();
       }
+
+      getSwapOptions();
     });
   }
 

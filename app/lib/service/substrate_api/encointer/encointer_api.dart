@@ -773,8 +773,10 @@ class EncointerApi {
     }
   }
 
-  Future<et.SwapAssetOption?> getSwapAssetOptionForAccount(CommunityIdentifier cid, AccountId32 accountId,
-      {BlockHash? at}) async {
+  Future<et.SwapAssetOption?> getSwapAssetOptionForAccount(
+      CommunityIdentifier cid,
+      AccountId32 accountId,
+      {BlockHash? at,}) async {
     try {
       final option = await encointerKusama.query.encointerTreasuries
           .swapAssetOptions(cid.toPolkadart(), accountId, at: at ?? store.chain.latestHash);
@@ -785,6 +787,24 @@ class EncointerApi {
       return option;
     } catch (e, s) {
       Log.e('[getSwapAssetOptions] Error: $e', 'EncointerApi', s);
+      return null;
+    }
+  }
+
+  Future<et.SwapNativeOption?> getSwapNativeOptionForAccount(
+      CommunityIdentifier cid,
+      AccountId32 accountId,
+      {BlockHash? at,}) async {
+    try {
+      final option = await encointerKusama.query.encointerTreasuries
+          .swapNativeOptions(cid.toPolkadart(), accountId, at: at ?? store.chain.latestHash);
+
+      // Keys including storage prefix.
+      Log.d("[getSwapNativeOptions] got Option: ${option?.toJson()}')}");
+
+      return option;
+    } catch (e, s) {
+      Log.e('[getSwapNativeOptions] Error: $e', 'EncointerApi', s);
       return null;
     }
   }
