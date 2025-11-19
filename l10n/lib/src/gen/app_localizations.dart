@@ -854,6 +854,12 @@ abstract class AppLocalizations {
   /// **'{cc} Limit: {amount} {cc}'**
   String swapOptionCcLimit(String amount, String cc);
 
+  /// No description provided for @swapOptionCcToBeSwapped.
+  ///
+  /// In en, this message translates to:
+  /// **'{cc} to be swapped: {amount} {cc}'**
+  String swapOptionCcToBeSwapped(String amount, String cc);
+
   /// No description provided for @swapOptionLimit.
   ///
   /// In en, this message translates to:

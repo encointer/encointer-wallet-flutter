@@ -101,7 +101,9 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     final store = context.read<AppStore>();
     final l10n = context.l10n;
 
-    String fmt(num number) => Fmt.formatNumber(context, number, decimals: 4);
+    final ccSymbol = store.encointer.community!.symbol!;
+    final ccBalance = store.encointer.communityBalance!;
+
     final headlineSmall = context.headlineSmall;
 
     return Scaffold(
@@ -133,17 +135,15 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                               style: headlineSmall,
                             ),
                             Text(
-                              '${fmt(store.encointer.communityBalance!)} ${store.encointer.community!.symbol!}',
+                              '${fmt(ccBalance)} $ccSymbol',
                             ),
                             Text(
                               l10n.swapOptionAvailable,
                               style: headlineSmall,
                             ),
                             Text(l10n.swapOptionLimit(fmt(widget.option.allowance), widget.option.symbol)),
-                            Text(l10n.swapOptionRate(
-                                fmt(widget.option.rate), store.encointer.community!.symbol!, widget.option.symbol)),
-                            Text(
-                                l10n.swapOptionCcLimit(fmt(widget.option.ccLimit), store.encointer.community!.symbol!)),
+                            Text(l10n.swapOptionRate(fmt(widget.option.rate), ccSymbol, widget.option.symbol)),
+                            Text(l10n.swapOptionCcLimit(fmt(widget.option.ccLimit), ccSymbol)),
                             TextFormField(
                               controller: amountController,
                               decoration: InputDecoration(
@@ -158,10 +158,11 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                               validator: (String? val) => validatePositiveNumber(context, val),
                               onChanged: (value) {
                                 setState(() {
-                                  amountError = validateAmount(value, 2, 1);
+                                  amountError = validateAmount(value, ccBalance, treasuryBalance());
                                 });
                               },
                             ),
+                            Text(l10n.swapOptionCcToBeSwapped(fmt(ccToBeSwapped()), ccSymbol)),
                             const SizedBox(height: 10),
                             SubmitButton(
                               // disable button for non-bootstrappers/reputables
@@ -171,17 +172,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                               },
                               child: Text(l10n.proposalSubmit),
                             ),
-                            if (widget.option is NativeSwap)
-                              Text(l10n.treasuryLocalBalance(Fmt.token(localTreasuryBalance, ertDecimals, length: 4))),
-                            if (widget.option is AssetSwap)
-                              Text(l10n.treasuryLocalBalanceOnAHK(
-                                Fmt.token(
-                                  localTreasuryBalanceOnAHK,
-                                  (widget.option as AssetSwap).assetToSpend.decimals,
-                                  length: 4,
-                                ),
-                                widget.option.symbol,
-                              )),
+                            treasuryBalanceTextWidget(),
                           ],
                         )
                       ],
@@ -195,6 +186,30 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
       ),
     );
   }
+
+  Widget treasuryBalanceTextWidget() {
+    final l10n = context.l10n;
+
+    final balance = treasuryBalance();
+
+    return switch (widget.option) {
+      NativeSwap() => Text(l10n.treasuryLocalBalance(fmt(balance))),
+      AssetSwap() => Text(l10n.treasuryLocalBalanceOnAHK(
+          fmt(balance),
+          widget.option.symbol,
+        )),
+    };
+  }
+
+  double treasuryBalance() {
+    final treasuryBalance = widget.option is NativeSwap
+        ? Fmt.bigIntToDouble(localTreasuryBalance, ertDecimals)
+        : Fmt.bigIntToDouble(localTreasuryBalanceOnAHK, (widget.option as AssetSwap).assetToSpend.decimals);
+
+    return treasuryBalance;
+  }
+
+  String fmt(num number) => Fmt.formatNumber(context, number, decimals: 4);
 
   /// Handles form submission
   Future<void> _submitSwap() async {
@@ -250,6 +265,14 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
       },
       onFinish: (_, __) => Navigator.of(context).pop(),
     );
+  }
+
+  double ccToBeSwapped() {
+    final amount = amountController.text.isNotEmpty ? double.tryParse(amountController.text) : null;
+    final rate = widget.option.rate;
+    final ccLimit = amount != null ? amount * rate : 0.0;
+
+    return ccLimit;
   }
 
   String? validateAmount(String? value, double balance, double treasuryBalance) {

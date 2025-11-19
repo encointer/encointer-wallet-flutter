@@ -153,6 +153,19 @@
             }
         }
     },
+    "swapOptionCcToBeSwapped": "{cc} to be swapped: {amount} {cc}",
+    "@swapOptionCcToBeSwapped": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "cc": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
     "swapOptionLimit": "Limit: {amount} {asset}",
     "@swapOptionLimit": {
         "placeholders": {

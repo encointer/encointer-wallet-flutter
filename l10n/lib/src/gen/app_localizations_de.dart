@@ -421,6 +421,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String swapOptionCcToBeSwapped(String amount, String cc) {
+    return '$cc to be swapped: $amount $cc';
+  }
+
+  @override
   String swapOptionLimit(String amount, String asset) {
     return 'Limit: $amount $asset';
   }
