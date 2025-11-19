@@ -513,10 +513,10 @@ class _ProposePageState extends State<ProposePage> {
           // Only numbers & decimal
           FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         ],
-        validator: (v) => validatePositiveNumberWithMax(context, double.tryParse(v ?? ''), null),
+        validator: (v) => validatePositiveNumberWithMax(context, double.tryParse(v ?? ''), maxValue),
         onChanged: (value) {
           setState(() {
-            allowanceError = validatePositiveNumberWithMax(context, double.tryParse(value), null);
+            allowanceError = validatePositiveNumberWithMax(context, double.tryParse(value), maxValue);
           });
         },
       ),
