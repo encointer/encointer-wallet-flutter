@@ -26,6 +26,8 @@ sealed class SwapOption {
 
   /// Either `KSM` for native options, or the asset's symbol e.g. USDC.
   String get symbol;
+
+  int get decimals;
 }
 
 final class NativeSwap extends SwapOption {
@@ -47,6 +49,9 @@ final class NativeSwap extends SwapOption {
 
   @override
   String get symbol => 'KSM';
+
+  @override
+  int get decimals => ertDecimals;
 }
 
 final class AssetSwap extends SwapOption {
@@ -72,4 +77,7 @@ final class AssetSwap extends SwapOption {
 
   @override
   String get symbol => assetToSpend.symbol;
+
+  @override
+  int get decimals => assetToSpend.decimals;
 }

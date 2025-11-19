@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:encointer_wallet/common/components/submit_button.dart';
-import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/page-encointer/democracy/utils/asset_id.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/field_validation.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/swap_options.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -170,7 +168,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                                 _formKey.currentState!.validate();
                                 await _submitSwap();
                               },
-                              child: Text(l10n.proposalSubmit),
+                              child: Text(l10n.exerciseSwapOption),
                             ),
                             treasuryBalanceTextWidget(),
                           ],
@@ -202,9 +200,11 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
   }
 
   double treasuryBalance() {
+    final decimals = widget.option.decimals;
+
     final treasuryBalance = widget.option is NativeSwap
-        ? Fmt.bigIntToDouble(localTreasuryBalance, ertDecimals)
-        : Fmt.bigIntToDouble(localTreasuryBalanceOnAHK, (widget.option as AssetSwap).assetToSpend.decimals);
+        ? Fmt.bigIntToDouble(localTreasuryBalance, decimals)
+        : Fmt.bigIntToDouble(localTreasuryBalanceOnAHK, decimals);
 
     return treasuryBalance;
   }
@@ -235,7 +235,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
       webApi,
       store.account.getKeyringAccount(store.account.currentAccountPubKey!),
       store.encointer.chosenCid!,
-      BigInt.from(amount * pow(10, assetSwap.assetToSpend.decimals)),
+      BigInt.from(amount * pow(10, assetSwap.decimals)),
       txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
       onError: (dispatchError) {
         final message = getLocalizedTxErrorMessage(l10n, dispatchError);
@@ -257,7 +257,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
       webApi,
       store.account.getKeyringAccount(store.account.currentAccountPubKey!),
       store.encointer.chosenCid!,
-      BigInt.from(amount * pow(10, ertDecimals)),
+      BigInt.from(amount * pow(10, nativeSwap.decimals)),
       txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
       onError: (dispatchError) {
         final message = getLocalizedTxErrorMessage(l10n, dispatchError);
