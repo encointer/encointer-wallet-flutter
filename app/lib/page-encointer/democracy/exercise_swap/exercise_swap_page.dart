@@ -18,8 +18,6 @@ import 'package:ew_l10n/l10n.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'package:ew_polkadart/encointer_types.dart' as et;
-
 const logTarget = 'ExerciseSwapOptionPage';
 
 class ExerciseSwapPage extends StatefulWidget {
@@ -35,14 +33,10 @@ class ExerciseSwapPage extends StatefulWidget {
 
 class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController amountController = TextEditingController();
 
   late AssetHubWebApi assetHubApi;
 
-  // Controllers for text fields
-  final TextEditingController amountController = TextEditingController();
-
-  // Store errors of the text form fields. This is necessary for
-  // input verification as we type.
   String? amountError;
 
   BigInt localTreasuryBalance = BigInt.zero;
@@ -66,31 +60,30 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
 
     Log.d('[getTreasuryBalances] querying data', logTarget);
 
-    final localTreasuryAccount = await webApi.encointer.getTreasuryAccount(chosenCid);
-    Log.d('[getTreasuryBalances] got encointer treasury accounts: $localTreasuryAccount', logTarget);
+    final treasuryAccount = await webApi.encointer.getTreasuryAccount(chosenCid);
 
     await assetHubApi.ensureReady();
 
-    final futures = await Future.wait([
-      webApi.assets.getBalanceOf(localTreasuryAccount),
-      if (widget.option is AssetSwap)
-        assetHubApi.api
-            .getForeignAssetBalanceOfEncointerAccount(localTreasuryAccount, (widget.option as AssetSwap).assetId)
-    ]);
+    final onEncointer = await webApi.assets.getBalanceOf(treasuryAccount);
 
-    // cast object type from futures to target type.
-    final localTreasuryAccountDataOnEncointer = futures[1] as et.AccountData;
-    final localTreasuryAssetBalanceOnAHK = futures[2] as BigInt;
+    var onAHK = BigInt.zero;
+    if (widget.option is AssetSwap) {
+      onAHK = await assetHubApi.api.getForeignAssetBalanceOfEncointerAccount(
+        treasuryAccount,
+        (widget.option as AssetSwap).assetId,
+      );
+    }
 
     setState(() {
-      localTreasuryBalance = localTreasuryAccountDataOnEncointer.free;
-      localTreasuryBalanceOnAHK = localTreasuryAssetBalanceOnAHK;
+      localTreasuryBalance = onEncointer.free;
+      localTreasuryBalanceOnAHK = onAHK;
     });
   }
 
   @override
   void dispose() {
     assetHubApi.close();
+    amountController.dispose();
     super.dispose();
   }
 
@@ -98,127 +91,203 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
   Widget build(BuildContext context) {
     final store = context.read<AppStore>();
     final l10n = context.l10n;
-
     final ccSymbol = store.encointer.community!.symbol!;
     final ccBalance = store.encointer.communityBalance!;
-
-    final headlineSmall = context.headlineSmall;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.exerciseSwapOption),
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.close),
+          onPressed: () => Navigator.pop(context),
         ),
       ),
+      bottomNavigationBar: _buildBottomSubmit(),
       body: SafeArea(
-        child: Padding(
+        child: ListView(
           padding: const EdgeInsets.all(16),
-          child: Form(
-            key: _formKey,
-            child: LayoutBuilder(
-              builder: (context, constraints) => SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                  child: IntrinsicHeight(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              l10n.balance,
-                              style: headlineSmall,
-                            ),
-                            Text(
-                              '${fmt(ccBalance)} $ccSymbol',
-                            ),
-                            Text(
-                              l10n.swapOptionAvailable,
-                              style: headlineSmall,
-                            ),
-                            Text(l10n.swapOptionLimit(fmt(widget.option.allowance), widget.option.symbol)),
-                            Text(l10n.swapOptionRate(fmt(widget.option.rate), ccSymbol, widget.option.symbol)),
-                            Text(l10n.swapOptionCcLimit(fmt(widget.option.ccLimit), ccSymbol)),
-                            TextFormField(
-                              controller: amountController,
-                              decoration: InputDecoration(
-                                labelText: l10n.proposalFieldAmount(widget.option.symbol),
-                                errorText: amountError,
-                              ),
-                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                              inputFormatters: [
-                                // Only numbers & decimal
-                                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-                              ],
-                              validator: (String? val) => validatePositiveNumber(context, val),
-                              onChanged: (value) {
-                                setState(() {
-                                  amountError = validateAmount(value, ccBalance, treasuryBalance());
-                                });
-                              },
-                            ),
-                            Text(l10n.swapOptionCcToBeSwapped(fmt(ccToBeSwapped()), ccSymbol)),
-                            const SizedBox(height: 10),
-                            SubmitButton(
-                              onPressed: (context) async {
-                                _formKey.currentState!.validate();
-                                await _submitSwap();
-                              },
-                              child: Text(l10n.exerciseSwapOption),
-                            ),
-                            treasuryBalanceTextWidget(),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+          children: [
+            _buildBalanceCard(ccBalance, ccSymbol),
+            const SizedBox(height: 16),
+            _buildSwapDetailsCard(l10n, ccSymbol),
+            const SizedBox(height: 16),
+            _buildAmountInputCard(l10n, ccBalance),
+            const SizedBox(height: 16),
+            _buildToBeSwappedCard(l10n, ccSymbol),
+            const SizedBox(height: 16),
+            _buildTreasuryCard(l10n),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ────────────────────────────────────────────────
+  // SECTION: UI Cards
+  // ────────────────────────────────────────────────
+
+  Widget _buildBalanceCard(double ccBalance, String ccSymbol) {
+    return Card(
+      child: ListTile(
+        title: Text(context.l10n.balance, style: context.headlineSmall),
+        subtitle: Text('${fmt(ccBalance)} $ccSymbol'),
+      ),
+    );
+  }
+
+  Widget _buildSwapDetailsCard(AppLocalizations l10n, String ccSymbol) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(l10n.swapOptionAvailable, style: context.headlineSmall),
+            const SizedBox(height: 8),
+            Text(l10n.swapOptionLimit(
+              fmt(widget.option.allowance),
+              widget.option.symbol,
+            )),
+            Text(l10n.swapOptionRate(
+              fmt(widget.option.rate),
+              ccSymbol,
+              widget.option.symbol,
+            )),
+            Text(l10n.swapOptionCcLimit(
+              fmt(widget.option.ccLimit),
+              ccSymbol,
+            )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAmountInputCard(
+      AppLocalizations l10n, double ccBalance) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: TextFormField(
+            controller: amountController,
+            decoration: InputDecoration(
+              labelText: l10n.proposalFieldAmount(widget.option.symbol),
+              errorText: amountError,
             ),
+            keyboardType:
+            const TextInputType.numberWithOptions(decimal: true),
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
+            ],
+            validator: (val) => validatePositiveNumber(context, val),
+            onChanged: (value) {
+              setState(() {
+                amountError =
+                    validateAmount(value, ccBalance, treasuryBalance());
+              });
+            },
           ),
         ),
       ),
     );
   }
 
-  Widget treasuryBalanceTextWidget() {
-    final l10n = context.l10n;
+  Widget _buildToBeSwappedCard(AppLocalizations l10n, String ccSymbol) {
+    return Card(
+      child: ListTile(
+        title: Text(
+          l10n.swapOptionCcToBeSwapped(fmt(ccToBeSwapped()), ccSymbol),
+        ),
+      ),
+    );
+  }
 
+  Widget _buildTreasuryCard(AppLocalizations l10n) {
     final balance = treasuryBalance();
 
-    return switch (widget.option) {
-      NativeSwap() => Text(l10n.treasuryLocalBalance(fmt(balance))),
-      AssetSwap() => Text(l10n.treasuryLocalBalanceOnAHK(
-          fmt(balance),
-          widget.option.symbol,
-        )),
-    };
+    return Card(
+      child: ListTile(
+        title: switch (widget.option) {
+          NativeSwap() => Text(
+            l10n.treasuryLocalBalance(fmt(balance)),
+          ),
+          AssetSwap() => Text(
+            l10n.treasuryLocalBalanceOnAHK(
+              fmt(balance),
+              widget.option.symbol,
+            ),
+          ),
+        },
+      ),
+    );
   }
+
+  // ────────────────────────────────────────────────
+  // SECTION: Bottom Submit Button
+  // ────────────────────────────────────────────────
+
+  Widget _buildBottomSubmit() {
+    final l10n = context.l10n;
+
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: SubmitButton(
+        onPressed: (context) async {
+          if (_formKey.currentState!.validate()) {
+            await _submitSwap();
+          }
+        },
+        child: Text(l10n.exerciseSwapOption),
+      ),
+    );
+  }
+
+  // ────────────────────────────────────────────────
+  // SECTION: Logic
+  // ────────────────────────────────────────────────
 
   double treasuryBalance() {
     final decimals = widget.option.decimals;
 
-    final treasuryBalance = widget.option is NativeSwap
-        ? Fmt.bigIntToDouble(localTreasuryBalance, decimals)
-        : Fmt.bigIntToDouble(localTreasuryBalanceOnAHK, decimals);
-
-    return treasuryBalance;
+    if (widget.option is NativeSwap) {
+      return Fmt.bigIntToDouble(localTreasuryBalance, decimals);
+    } else {
+      return Fmt.bigIntToDouble(localTreasuryBalanceOnAHK, decimals);
+    }
   }
 
-  String fmt(num number) => Fmt.formatNumber(context, number, decimals: 4);
+  String fmt(num number) =>
+      Fmt.formatNumber(context, number, decimals: 4);
 
-  /// Handles form submission
+  double ccToBeSwapped() {
+    final amount = double.tryParse(amountController.text) ?? 0;
+    return amount * widget.option.rate;
+  }
+
+  String? validateAmount(
+      String? value, double balance, double treasuryBalance) {
+    final l10n = context.l10n;
+
+    final e1 = validatePositiveNumber(context, value);
+    if (e1 != null) return e1;
+
+    final e2 = validatePositiveNumberWithMax(context, value, balance);
+    if (e2 != null) return l10n.insufficientBalance;
+
+    final e3 = validatePositiveNumberWithMax(context, value, treasuryBalance);
+    if (e3 != null) return l10n.treasuryBalanceTooLow;
+
+    return null;
+  }
+
   Future<void> _submitSwap() async {
-    if (_formKey.currentState!.validate()) {
-      switch (widget.option) {
-        case NativeSwap():
-          await _submitSwapNative(widget.option as NativeSwap);
-        case AssetSwap():
-          await _submitSwapAsset(widget.option as AssetSwap);
-      }
+    switch (widget.option) {
+      case NativeSwap():
+        await _submitSwapNative(widget.option as NativeSwap);
+      case AssetSwap():
+        await _submitSwapAsset(widget.option as AssetSwap);
     }
   }
 
@@ -226,7 +295,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     final store = context.read<AppStore>();
     final l10n = context.l10n;
 
-    final amount = double.tryParse(amountController.text)!;
+    final amount = double.parse(amountController.text);
 
     await submitSwapAsset(
       context,
@@ -235,20 +304,19 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
       store.account.getKeyringAccount(store.account.currentAccountPubKey!),
       store.encointer.chosenCid!,
       BigInt.from(amount * pow(10, assetSwap.decimals)),
-      txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
-      onError: (dispatchError) {
-        final message = getLocalizedTxErrorMessage(l10n, dispatchError);
-        showTxErrorDialog(context, message, false);
+      txPaymentAsset: store.encointer
+          .getTxPaymentAsset(store.encointer.chosenCid),
+      onError: (err) {
+        showTxErrorDialog(context, getLocalizedTxErrorMessage(l10n, err), false);
       },
-      onFinish: (_, __) => Navigator.of(context).pop(),
+      onFinish: (_, __) => Navigator.pop(context),
     );
   }
 
   Future<void> _submitSwapNative(NativeSwap nativeSwap) async {
     final store = context.read<AppStore>();
     final l10n = context.l10n;
-
-    final amount = double.tryParse(amountController.text)!;
+    final amount = double.parse(amountController.text);
 
     await submitSwapNative(
       context,
@@ -257,43 +325,12 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
       store.account.getKeyringAccount(store.account.currentAccountPubKey!),
       store.encointer.chosenCid!,
       BigInt.from(amount * pow(10, nativeSwap.decimals)),
-      txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
-      onError: (dispatchError) {
-        final message = getLocalizedTxErrorMessage(l10n, dispatchError);
-        showTxErrorDialog(context, message, false);
+      txPaymentAsset: store.encointer
+          .getTxPaymentAsset(store.encointer.chosenCid),
+      onError: (err) {
+        showTxErrorDialog(context, getLocalizedTxErrorMessage(l10n, err), false);
       },
-      onFinish: (_, __) => Navigator.of(context).pop(),
+      onFinish: (_, __) => Navigator.pop(context),
     );
-  }
-
-  double ccToBeSwapped() {
-    final amount = amountController.text.isNotEmpty ? double.tryParse(amountController.text) : null;
-    final rate = widget.option.rate;
-    final ccLimit = amount != null ? amount * rate : 0.0;
-
-    return ccLimit;
-  }
-
-  String? validateAmount(String? value, double balance, double treasuryBalance) {
-    final l10n = context.l10n;
-
-    var err = validatePositiveNumber(context, value);
-    if (err != null) {
-      return err;
-    }
-
-    err = validatePositiveNumberWithMax(context, value, balance);
-
-    if (err != null) {
-      return l10n.insufficientBalance;
-    }
-
-    err = validatePositiveNumberWithMax(context, value, treasuryBalance);
-
-    if (err != null) {
-      return l10n.treasuryBalanceTooLow;
-    }
-
-    return null;
   }
 }
