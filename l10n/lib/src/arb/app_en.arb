@@ -122,7 +122,16 @@
     "errorOccurred": "An error occurred:",
     "errorUserNameIsRequired": "User name cannot be blank",
     "event": "Event ID",
-    "exerciseSwapOptionAvailable": "Swap Option Available",
+    "exerciseSwapAssetOptionAvailable": "{asset} Swap Option Available",
+    "@exerciseSwapAssetOptionAvailable": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "exerciseSwapNativeOptionAvailable": "KSM Swap Option Available",
     "exerciseSwapOption": "Exercise Swap Option",
     "export": "Export Account",
     "exportAccount": "export",

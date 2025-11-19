@@ -836,11 +836,17 @@ abstract class AppLocalizations {
   /// **'Event ID'**
   String get event;
 
-  /// No description provided for @exerciseSwapOptionAvailable.
+  /// No description provided for @exerciseSwapAssetOptionAvailable.
   ///
   /// In en, this message translates to:
-  /// **'Swap Option Available'**
-  String get exerciseSwapOptionAvailable;
+  /// **'{asset} Swap Option Available'**
+  String exerciseSwapAssetOptionAvailable(String asset);
+
+  /// No description provided for @exerciseSwapNativeOptionAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'KSM Swap Option Available'**
+  String get exerciseSwapNativeOptionAvailable;
 
   /// No description provided for @exerciseSwapOption.
   ///

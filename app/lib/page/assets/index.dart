@@ -8,6 +8,7 @@ import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_primitives/treasuries/swap_asset_option.dart'
     show SwapAssetOption;
+import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_primitives/treasuries/swap_native_option.dart' show SwapNativeOption;
 import 'package:ew_primitives/ew_primitives.dart' show fixedU128FromDouble;
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
@@ -202,7 +203,7 @@ class _AssetsViewState extends State<AssetsView> {
                       ),
                     if (true)
                       ElevatedButton(
-                        child: Text(l10n.exerciseSwapOptionAvailable),
+                        child: Text(l10n.exerciseSwapAssetOptionAvailable('USDC')),
                         onPressed: () => Navigator.pushNamed(context, ExerciseSwapPage.route,
                             arguments: AssetSwap(SwapAssetOption(
                               cid: widget.store.encointer.chosenCid!.toPolkadart(),
@@ -211,6 +212,18 @@ class _AssetsViewState extends State<AssetsView> {
                               rate: fixedU128FromDouble(0.94 * pow(10, -AssetToSpend.usdc.decimals)),
                               doBurn: true,
                             ),),
+                        ),
+                      ),
+                    if (true)
+                      ElevatedButton(
+                        child: Text(l10n.exerciseSwapNativeOptionAvailable),
+                        onPressed: () => Navigator.pushNamed(context, ExerciseSwapPage.route,
+                          arguments: NativeSwap(SwapNativeOption(
+                            cid: widget.store.encointer.chosenCid!.toPolkadart(),
+                            nativeAllowance: BigInt.from(1.2 * pow(10, ertDecimals)),
+                            rate: fixedU128FromDouble(0.94 * pow(10, -ertDecimals)),
+                            doBurn: true,
+                          ),),
                         ),
                       ),
                     const SizedBox(height: 42),

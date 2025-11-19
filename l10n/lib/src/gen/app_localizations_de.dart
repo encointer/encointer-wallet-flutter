@@ -408,7 +408,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get event => 'Event ID';
 
   @override
-  String get exerciseSwapOptionAvailable => 'Swap Option Available';
+  String exerciseSwapAssetOptionAvailable(String asset) {
+    return '$asset Swap Option Available';
+  }
+
+  @override
+  String get exerciseSwapNativeOptionAvailable => 'KSM Swap Option Available';
 
   @override
   String get exerciseSwapOption => 'Exercise Swap Option';
