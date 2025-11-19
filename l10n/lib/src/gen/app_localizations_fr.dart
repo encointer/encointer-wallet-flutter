@@ -407,6 +407,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get event => 'ID d\'événement';
 
   @override
+  String get exerciseSwapOptionAvailable => 'Swap Option Available';
+
+  @override
+  String get exerciseSwapOption => 'Exercise Swap Option';
+
+  @override
   String get export => 'Activer le Bazaar';
 
   @override

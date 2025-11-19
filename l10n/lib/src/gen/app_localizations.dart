@@ -836,6 +836,18 @@ abstract class AppLocalizations {
   /// **'Event ID'**
   String get event;
 
+  /// No description provided for @exerciseSwapOptionAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Swap Option Available'**
+  String get exerciseSwapOptionAvailable;
+
+  /// No description provided for @exerciseSwapOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise Swap Option'**
+  String get exerciseSwapOption;
+
   /// No description provided for @export.
   ///
   /// In en, this message translates to:

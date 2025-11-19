@@ -1,16 +1,16 @@
 import 'dart:math';
 
 import 'package:encointer_wallet/config/consts.dart' show ertDecimals;
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/asset_id.dart';
 import 'package:encointer_wallet/utils/format.dart' show Fmt;
-import 'package:ew_polkadart/ew_polkadart.dart'
-    show SwapNativeOption, SwapAssetOption;
+import 'package:ew_polkadart/ew_polkadart.dart' show SwapNativeOption, SwapAssetOption, XcmLocation;
 import 'package:ew_substrate_fixed/substrate_fixed.dart' show i64F64Parser;
 
 sealed class SwapOption {
   const SwapOption();
 
-  bool get isNative;
+  CommunityIdentifier get cid;
 
   double get rate;
 
@@ -23,10 +23,10 @@ final class NativeSwap extends SwapOption {
   final SwapNativeOption value;
 
   @override
-  double get allowance => Fmt.bigIntToDouble(value.nativeAllowance, ertDecimals);
+  CommunityIdentifier get cid => CommunityIdentifier.fromPolkadart(value.cid);
 
   @override
-  bool get isNative => true;
+  double get allowance => Fmt.bigIntToDouble(value.nativeAllowance, ertDecimals);
 
   @override
   double get rate => i64F64Parser.toDouble(value.rate!.bits) * pow(10, ertDecimals);
@@ -37,13 +37,15 @@ final class AssetSwap extends SwapOption {
 
   final SwapAssetOption value;
 
+  @override
+  CommunityIdentifier get cid => CommunityIdentifier.fromPolkadart(value.cid);
+
   AssetToSpend get assetToSpend => fromVersionedLocatableAsset(value.assetId);
 
-  @override
-  double get allowance =>  Fmt.bigIntToDouble(value.assetAllowance, ertDecimals);
+  XcmLocation get assetId => assetToSpend.assetId;
 
   @override
-  bool get isNative => false;
+  double get allowance => Fmt.bigIntToDouble(value.assetAllowance, ertDecimals);
 
   @override
   double get rate => i64F64Parser.toDouble(value.rate!.bits) * pow(10, ertDecimals);

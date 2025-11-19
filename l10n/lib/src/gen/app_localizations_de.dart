@@ -408,6 +408,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get event => 'Event ID';
 
   @override
+  String get exerciseSwapOptionAvailable => 'Swap Option Available';
+
+  @override
+  String get exerciseSwapOption => 'Exercise Swap Option';
+
+  @override
   String get export => 'Konto exportieren';
 
   @override

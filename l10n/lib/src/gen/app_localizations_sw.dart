@@ -404,6 +404,12 @@ class AppLocalizationsSw extends AppLocalizations {
   String get event => 'ID ya tukio';
 
   @override
+  String get exerciseSwapOptionAvailable => 'Swap Option Available';
+
+  @override
+  String get exerciseSwapOption => 'Exercise Swap Option';
+
+  @override
   String get export =>
       'Onyesha taarifa za siri za akaunti yako kuweza kuisafirisha';
 

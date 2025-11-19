@@ -402,6 +402,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get event => 'ID события';
 
   @override
+  String get exerciseSwapOptionAvailable => 'Swap Option Available';
+
+  @override
+  String get exerciseSwapOption => 'Exercise Swap Option';
+
+  @override
   String get export => 'Экпорт аккаунта';
 
   @override
