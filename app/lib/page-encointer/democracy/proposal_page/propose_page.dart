@@ -550,18 +550,20 @@ class _ProposePageState extends State<ProposePage> {
     final store = context.read<AppStore>();
 
     final knownCommunity = KnownCommunity.tryFromSymbol(store.encointer.community!.symbol!);
+
     final isKnown = knownCommunity != null;
+    Log.d('[rateInput] communityKnown: $isKnown');
+    Log.d('[rateInput] deriveRate: $tryDeriveRate');
 
     var ccToUsdAfterMarkup = '1';
     if (isKnown) {
-      ccToUsdAfterMarkup = Fmt.formatNumber(
-          context, knownCommunity.ccPerUsd(rate?.value ?? 0), decimals: 4);
+      ccToUsdAfterMarkup = Fmt.formatNumber(context, knownCommunity.ccPerUsd(rate?.value ?? 0), decimals: 4);
     }
     return TextFormField(
       // set constant value if needed
       controller: rateController..text = tryDeriveRate && isKnown ? ccToUsdAfterMarkup : rateController.text,
       // We want to derive a sane value for well-known communities and disable editing.
-      enabled: !tryDeriveRate && !isKnown,
+      enabled: !tryDeriveRate || !isKnown,
       decoration: InputDecoration(
         labelText: l10n.proposalFieldRate(
           currency,
