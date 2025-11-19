@@ -513,10 +513,10 @@ class _ProposePageState extends State<ProposePage> {
           // Only numbers & decimal
           FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         ],
-        validator: (v) => validatePositiveNumberWithMax(context, double.tryParse(v ?? ''), maxValue),
+        validator: (v) => validatePositiveNumberWithMax(context, double.tryParse(v ?? ''), null),
         onChanged: (value) {
           setState(() {
-            allowanceError = validatePositiveNumberWithMax(context, double.tryParse(value), maxValue);
+            allowanceError = validatePositiveNumberWithMax(context, double.tryParse(value), null);
           });
         },
       ),
@@ -551,13 +551,17 @@ class _ProposePageState extends State<ProposePage> {
 
     final knownCommunity = KnownCommunity.tryFromSymbol(store.encointer.community!.symbol!);
     final isKnown = knownCommunity != null;
-    final ccToUsdAfterMarkup = Fmt.formatNumber(context, knownCommunity!.ccPerUsd(rate?.value ?? 0), decimals: 4);
 
+    var ccToUsdAfterMarkup = '1';
+    if (isKnown) {
+      ccToUsdAfterMarkup = Fmt.formatNumber(
+          context, knownCommunity.ccPerUsd(rate?.value ?? 0), decimals: 4);
+    }
     return TextFormField(
       // set constant value if needed
       controller: rateController..text = tryDeriveRate && isKnown ? ccToUsdAfterMarkup : rateController.text,
       // We want to derive a sane value for well-known communities and disable editing.
-      enabled: !tryDeriveRate && isKnown,
+      enabled: !tryDeriveRate && !isKnown,
       decoration: InputDecoration(
         labelText: l10n.proposalFieldRate(
           currency,
