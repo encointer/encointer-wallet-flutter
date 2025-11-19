@@ -10,6 +10,7 @@ import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart'
 import 'package:encointer_wallet/page-encointer/democracy/utils/asset_id.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/utf8_limited_byte_field.dart';
+import 'package:encointer_wallet/page-encointer/democracy/utils/field_validation.dart';
 import 'package:encointer_wallet/service/forex/forex_service.dart';
 import 'package:encointer_wallet/service/forex/known_community.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -512,10 +513,10 @@ class _ProposePageState extends State<ProposePage> {
           FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
           // Only numbers & decimal
         ],
-        validator: (v) => validatePositiveNumberWithMax(v, maxValue),
+        validator: (v) => validatePositiveNumberWithMax(context, v, maxValue),
         onChanged: (value) {
           setState(() {
-            allowanceError = validatePositiveNumberWithMax(value, maxValue);
+            allowanceError = validatePositiveNumberWithMax(context, value, maxValue);
           });
         },
       ),
@@ -569,10 +570,10 @@ class _ProposePageState extends State<ProposePage> {
         // Only numbers & decimal
         FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
       ],
-      validator: validatePositiveNumber,
+      validator: (String? val) => validatePositiveNumber(context, val),
       onChanged: (value) {
         setState(() {
-          rateError = validatePositiveNumber(value);
+          rateError = validatePositiveNumber(context, value);
         });
       },
     );
@@ -649,10 +650,10 @@ class _ProposePageState extends State<ProposePage> {
           FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
           // Only numbers & decimal
         ],
-        validator: validatePositiveNumber,
+        validator: (String? val) => validatePositiveNumber(context, val),
         onChanged: (value) {
           setState(() {
-            amountError = validatePositiveNumberWithMax(value, max);
+            amountError = validatePositiveNumberWithMax(context, value, max);
           });
         },
       ),
@@ -708,10 +709,10 @@ class _ProposePageState extends State<ProposePage> {
         FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         // Only numbers & decimal
       ],
-      validator: validatePositiveNumber,
+      validator: (String? val) => validatePositiveNumber(context, val),
       onChanged: (value) {
         setState(() {
-          nominalIncomeError = validatePositiveNumber(value);
+          nominalIncomeError = validatePositiveNumber(context, value);
         });
       },
     );
@@ -846,28 +847,6 @@ class _ProposePageState extends State<ProposePage> {
     }
   }
 
-  /// Ensures that the number is positive (doubles)
-  String? validatePositiveNumber(String? value) {
-    return validatePositiveNumberWithMax(value, null);
-  }
-
-  /// Ensures that the number is positive (doubles)
-  String? validatePositiveNumberWithMax(String? value, double? max) {
-    final l10n = context.l10n;
-    if (value == null || value.isEmpty) {
-      return l10n.proposalFieldErrorEnterPositiveNumber;
-    } else {
-      final number = double.tryParse(value);
-      if (number == null || number <= 0) {
-        return l10n.proposalFieldErrorPositiveNumberRange;
-      } else if (max != null && number > max) {
-        final maxFmt = Fmt.formatNumber(context, max, decimals: 4);
-        return l10n.proposalFieldErrorPositiveNumberTooBig(maxFmt);
-      } else {
-        return null;
-      }
-    }
-  }
 
   bool isBootstrapperOrReputable(AppStore store, String address) {
     if (store.encointer.community!.bootstrappers!.contains(address)) {

@@ -1,13 +1,14 @@
 import 'dart:async';
 
+import 'package:encointer_wallet/page-encointer/democracy/utils/field_validation.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/swap_options.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/asset_hub/asset_hub_web_api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/material.dart';
 import 'package:ew_l10n/l10n.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:ew_polkadart/encointer_types.dart' as et;
@@ -134,6 +135,24 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                               Text('Local KSM Treasury Balance on Encointer: $localTreasuryBalance'),
                             if (widget.option is AssetSwap)
                               Text('Local ${widget.option.symbol} Treasury Balance on AHK: $localTreasuryBalanceOnAHK'),
+                            TextFormField(
+                              controller: amountController,
+                              decoration: InputDecoration(
+                                labelText: l10n.proposalFieldAmount(widget.option.symbol),
+                                errorText: amountError,
+                              ),
+                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                              inputFormatters: [
+                                // Only numbers & decimal
+                                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
+                              ],
+                              validator: (String? val) => validatePositiveNumber(context, val),
+                              onChanged: (value) {
+                                setState(() {
+                                  amountError = validatePositiveNumberWithMax(context, value, 2);
+                                });
+                              },
+                            ),
                           ],
                         )
                       ],
@@ -146,28 +165,5 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
         ),
       ),
     );
-  }
-
-  /// Ensures that the number is positive (doubles)
-  String? validatePositiveNumber(String? value) {
-    return validatePositiveNumberWithMax(value, null);
-  }
-
-  /// Ensures that the number is positive (doubles)
-  String? validatePositiveNumberWithMax(String? value, double? max) {
-    final l10n = context.l10n;
-    if (value == null || value.isEmpty) {
-      return l10n.proposalFieldErrorEnterPositiveNumber;
-    } else {
-      final number = double.tryParse(value);
-      if (number == null || number <= 0) {
-        return l10n.proposalFieldErrorPositiveNumberRange;
-      } else if (max != null && number > max) {
-        final maxFmt = Fmt.formatNumber(context, max, decimals: 4);
-        return l10n.proposalFieldErrorPositiveNumberTooBig(maxFmt);
-      } else {
-        return null;
-      }
-    }
   }
 }
