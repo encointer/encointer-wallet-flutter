@@ -76,6 +76,9 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
       );
     }
 
+    Log.d('[getTreasuryBalances] On Encointer ${onEncointer.free}', logTarget);
+    Log.d('[getTreasuryBalances] On AH $onAHK', logTarget);
+
     setState(() {
       localTreasuryBalance = onEncointer.free;
       localTreasuryBalanceOnAHK = onAHK;
@@ -204,11 +207,8 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
               // ───────────────────────────────────────
               TextButton(
                 onPressed: () {
-                  final maxCC = min(ccBalance, treasuryBalance());
-                  final maxTarget = maxCC / widget.option.rate;
-
                   setState(() {
-                    amountController.text = fmt(maxTarget);
+                    amountController.text = fmt(maxSwappable(ccBalance));
                     amountError = validateSwapAmount(
                       amountController.text,
                       ccBalance,
@@ -300,6 +300,18 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
   double ccToBeSwapped() {
     final amount = double.tryParse(amountController.text) ?? 0;
     return amount * widget.option.rate;
+  }
+
+  double maxSwappable(double ccBalance) {
+    // We first check the max that we could get with our balance
+    // and give some slack.
+    final maxTargetSwap = ccBalance * 0.98 / widget.option.rate;
+
+    // But we still need to cap it at the max treasury balance
+    final available = min(maxTargetSwap, treasuryBalance());
+
+    // finally, we need to respect the SwapOptions limit
+    return min(available, widget.option.allowance);
   }
 
   String? validateSwapAmount(
