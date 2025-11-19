@@ -163,7 +163,6 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                             Text(l10n.swapOptionCcToBeSwapped(fmt(ccToBeSwapped()), ccSymbol)),
                             const SizedBox(height: 10),
                             SubmitButton(
-                              // disable button for non-bootstrappers/reputables
                               onPressed: (context) async {
                                 _formKey.currentState!.validate();
                                 await _submitSwap();
