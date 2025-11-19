@@ -76,7 +76,7 @@ class _AssetsViewState extends State<AssetsView> {
   NativeSwap? nativeSwap;
   AssetSwap? assetSwap;
 
-  final devSwap = true;
+  final devSwap = false;
 
   @override
   void initState() {
@@ -101,36 +101,50 @@ class _AssetsViewState extends State<AssetsView> {
   }
 
   Future<void> getSwapOptions() async {
+    setState(() {
+      nativeSwap = null;
+      assetSwap = null;
+    });
     if (devSwap) {
       Log.d('DEV: Getting Swap Options', _logTarget);
-      nativeSwap = NativeSwap(SwapNativeOption(
+      final swapNativeOption = SwapNativeOption(
         cid: widget.store.encointer.chosenCid!.toPolkadart(),
         nativeAllowance: BigInt.from(1.2 * pow(10, ertDecimals)),
         rate: fixedU128FromDouble(0.94 * pow(10, -ertDecimals)),
         doBurn: true,
-      ));
+      );
 
-      assetSwap = AssetSwap(
-        SwapAssetOption(
+      final swapAssetOption = SwapAssetOption(
           cid: widget.store.encointer.chosenCid!.toPolkadart(),
           assetId: AssetToSpend.usdc.versionedLocatableAsset,
           assetAllowance: BigInt.from(1.2 * pow(10, AssetToSpend.usdc.decimals)),
           rate: fixedU128FromDouble(0.94 * pow(10, -AssetToSpend.usdc.decimals)),
           doBurn: true,
-        ),
       );
+      setState(() {
+        nativeSwap = NativeSwap(swapNativeOption);
+        assetSwap = AssetSwap(swapAssetOption);
+      });
     } else {
       Log.d('Getting Swap Options', _logTarget);
       final accountId = AddressUtils.addressToPubKey(widget.store.account.currentAddress).toList();
 
       final swapAssetOption = await webApi.encointer.getSwapAssetOptionForAccount(widget.store.encointer.chosenCid!, accountId);
       if (swapAssetOption != null) {
-        assetSwap = AssetSwap(swapAssetOption);
+        setState(() {
+          assetSwap = AssetSwap(swapAssetOption);
+        });
+      } else {
+        Log.d('No Swap Asset Options Found', _logTarget);
       }
 
       final swapNativeOption = await webApi.encointer.getSwapNativeOptionForAccount(widget.store.encointer.chosenCid!, accountId);
       if (swapNativeOption != null) {
-        nativeSwap = NativeSwap(swapNativeOption);
+        setState(() {
+          nativeSwap = NativeSwap(swapNativeOption);
+        });
+      } else {
+        Log.d('No Swap Native Options Found', _logTarget);
       }
     }
   }
@@ -243,24 +257,19 @@ class _AssetsViewState extends State<AssetsView> {
                     ),
                     if (_appSettingsStore.developerMode)
                       ElevatedButton(
-                        onPressed: widget.store.dataUpdate.setInvalidated,
-                        child: const Text('Invalidate data to trigger state update'),
+                        onPressed: () {
+                          getSwapOptions();
+                            widget.store.dataUpdate.setInvalidated();
+                          },
+                          child: const Text('Invalidate data to trigger state update'),
                       ),
-                    if (true)
+                    if (true && assetSwap != null)
                       ElevatedButton(
                         child: Text(l10n.exerciseSwapAssetOptionAvailable('USDC')),
                         onPressed: () => Navigator.pushNamed(
                           context,
                           ExerciseSwapPage.route,
-                          arguments: AssetSwap(
-                            SwapAssetOption(
-                              cid: widget.store.encointer.chosenCid!.toPolkadart(),
-                              assetId: AssetToSpend.usdc.versionedLocatableAsset,
-                              assetAllowance: BigInt.from(1.2 * pow(10, AssetToSpend.usdc.decimals)),
-                              rate: fixedU128FromDouble(0.94 * pow(10, -AssetToSpend.usdc.decimals)),
-                              doBurn: true,
-                            ),
-                          ),
+                          arguments: assetSwap
                         ),
                       ),
                     if (true && nativeSwap != null)
