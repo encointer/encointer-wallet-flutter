@@ -144,6 +144,11 @@ Integration test app.dart for IOS system
 .\.flutter\bin\dart run melos integration-app-test-ios
 ```
 
+## Run Against Local Zombienet
+Make sure that the parachain is compile with a runtime from this branch: https://github.com/encointer/runtimes/tree/cl/fast-encointer-runtime
+
+Then choose the Zombienet in the network selection. The rest should work as usual.
+
 ### Automated screenshots
 * Github actions is used to create automated screenshots for the specified devices there. However, running the integration tests locally will create screenshots for the currently running device.
 
