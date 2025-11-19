@@ -124,7 +124,17 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                                '${l10n.balance}: ${store.encointer.communityBalance!} ${store.encointer.community!.symbol!}')
+                                '${l10n.balance}: ${store.encointer.communityBalance!} ${store.encointer.community!.symbol!}',
+                            ),
+                            const Text(
+                              'Available Swap Option:',
+                            ),
+                            Text(
+                              'Limit: ${widget.option.allowance}',
+                            ),
+                            Text(
+                              'Rate: ${widget.option.rate}',
+                            ),
                           ],
                         )
                       ],

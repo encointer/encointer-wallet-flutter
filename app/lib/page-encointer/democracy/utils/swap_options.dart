@@ -45,8 +45,8 @@ final class AssetSwap extends SwapOption {
   XcmLocation get assetId => assetToSpend.assetId;
 
   @override
-  double get allowance => Fmt.bigIntToDouble(value.assetAllowance, ertDecimals);
+  double get allowance => Fmt.bigIntToDouble(value.assetAllowance, assetToSpend.decimals);
 
   @override
-  double get rate => i64F64Parser.toDouble(value.rate!.bits) * pow(10, ertDecimals);
+  double get rate => i64F64Parser.toDouble(value.rate!.bits) * pow(10, assetToSpend.decimals);
 }

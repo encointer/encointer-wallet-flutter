@@ -9,6 +9,7 @@ import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:ew_polkadart/generated/asset_hub_kusama/types/sp_arithmetic/fixed_point/fixed_u128.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_primitives/treasuries/swap_asset_option.dart'
     show SwapAssetOption;
+import 'package:ew_primitives/ew_primitives.dart' show fixedU128FromDouble;
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -207,7 +208,8 @@ class _AssetsViewState extends State<AssetsView> {
                             arguments: AssetSwap(SwapAssetOption(
                               cid: widget.store.encointer.chosenCid!.toPolkadart(),
                               assetId: AssetToSpend.usdc.versionedLocatableAsset,
-                              assetAllowance: FixedU128.from(1.2),
+                              assetAllowance: BigInt.from(1.2 * pow(10, AssetToSpend.usdc.decimals)),
+                              rate: fixedU128FromDouble(0.94 * pow(10, -AssetToSpend.usdc.decimals)),
                               doBurn: true,
                             ),),
                         ),
