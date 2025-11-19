@@ -115,11 +115,11 @@ class _AssetsViewState extends State<AssetsView> {
       );
 
       final swapAssetOption = SwapAssetOption(
-          cid: widget.store.encointer.chosenCid!.toPolkadart(),
-          assetId: AssetToSpend.usdc.versionedLocatableAsset,
-          assetAllowance: BigInt.from(1.2 * pow(10, AssetToSpend.usdc.decimals)),
-          rate: fixedU128FromDouble(0.94 * pow(10, -AssetToSpend.usdc.decimals)),
-          doBurn: true,
+        cid: widget.store.encointer.chosenCid!.toPolkadart(),
+        assetId: AssetToSpend.usdc.versionedLocatableAsset,
+        assetAllowance: BigInt.from(1.2 * pow(10, AssetToSpend.usdc.decimals)),
+        rate: fixedU128FromDouble(0.94 * pow(10, -AssetToSpend.usdc.decimals)),
+        doBurn: true,
       );
       setState(() {
         nativeSwap = NativeSwap(swapNativeOption);
@@ -129,7 +129,8 @@ class _AssetsViewState extends State<AssetsView> {
       Log.d('Getting Swap Options', _logTarget);
       final accountId = AddressUtils.addressToPubKey(widget.store.account.currentAddress).toList();
 
-      final swapAssetOption = await webApi.encointer.getSwapAssetOptionForAccount(widget.store.encointer.chosenCid!, accountId);
+      final swapAssetOption =
+          await webApi.encointer.getSwapAssetOptionForAccount(widget.store.encointer.chosenCid!, accountId);
       if (swapAssetOption != null) {
         setState(() {
           assetSwap = AssetSwap(swapAssetOption);
@@ -138,7 +139,8 @@ class _AssetsViewState extends State<AssetsView> {
         Log.d('No Swap Asset Options Found', _logTarget);
       }
 
-      final swapNativeOption = await webApi.encointer.getSwapNativeOptionForAccount(widget.store.encointer.chosenCid!, accountId);
+      final swapNativeOption =
+          await webApi.encointer.getSwapNativeOptionForAccount(widget.store.encointer.chosenCid!, accountId);
       if (swapNativeOption != null) {
         setState(() {
           nativeSwap = NativeSwap(swapNativeOption);
@@ -259,18 +261,14 @@ class _AssetsViewState extends State<AssetsView> {
                       ElevatedButton(
                         onPressed: () {
                           getSwapOptions();
-                            widget.store.dataUpdate.setInvalidated();
-                          },
-                          child: const Text('Invalidate data to trigger state update'),
+                          widget.store.dataUpdate.setInvalidated();
+                        },
+                        child: const Text('Invalidate data to trigger state update'),
                       ),
                     if (true && assetSwap != null)
                       ElevatedButton(
                         child: Text(l10n.exerciseSwapAssetOptionAvailable('USDC')),
-                        onPressed: () => Navigator.pushNamed(
-                          context,
-                          ExerciseSwapPage.route,
-                          arguments: assetSwap
-                        ),
+                        onPressed: () => Navigator.pushNamed(context, ExerciseSwapPage.route, arguments: assetSwap),
                       ),
                     if (true && nativeSwap != null)
                       ElevatedButton(
