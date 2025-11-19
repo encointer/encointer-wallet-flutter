@@ -847,7 +847,6 @@ class _ProposePageState extends State<ProposePage> {
     }
   }
 
-
   bool isBootstrapperOrReputable(AppStore store, String address) {
     if (store.encointer.community!.bootstrappers!.contains(address)) {
       return true;

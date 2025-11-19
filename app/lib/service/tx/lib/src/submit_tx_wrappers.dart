@@ -549,17 +549,18 @@ Future<void> submitDemocracyProposal(
 }
 
 Future<void> submitSwapAsset(
-    BuildContext context,
-    AppStore store,
-    Api api,
-    KeyringAccount signer,
-    CommunityIdentifier cid,
-    BigInt desiredSwapAmount, {
-      required CommunityIdentifier? txPaymentAsset,
-      dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
-      void Function(DispatchError report)? onError,
-    }) async {
-  final call = api.encointer.encointerKusama.tx.encointerTreasuries.swapAsset(cid: cid.toPolkadart(),  desiredAssetAmount: desiredSwapAmount);
+  BuildContext context,
+  AppStore store,
+  Api api,
+  KeyringAccount signer,
+  CommunityIdentifier cid,
+  BigInt desiredSwapAmount, {
+  required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
+}) async {
+  final call = api.encointer.encointerKusama.tx.encointerTreasuries
+      .swapAsset(cid: cid.toPolkadart(), desiredAssetAmount: desiredSwapAmount);
 
   final xt = await TxBuilder(api.provider).createSignedExtrinsic(
     signer.pair,
@@ -579,17 +580,18 @@ Future<void> submitSwapAsset(
 }
 
 Future<void> submitSwapNative(
-    BuildContext context,
-    AppStore store,
-    Api api,
-    KeyringAccount signer,
-    CommunityIdentifier cid,
-    BigInt desiredNativeAmount, {
-      required CommunityIdentifier? txPaymentAsset,
-      dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
-      void Function(DispatchError report)? onError,
-    }) async {
-  final call = api.encointer.encointerKusama.tx.encointerTreasuries.swapNative(cid: cid.toPolkadart(),  desiredNativeAmount: desiredNativeAmount);
+  BuildContext context,
+  AppStore store,
+  Api api,
+  KeyringAccount signer,
+  CommunityIdentifier cid,
+  BigInt desiredNativeAmount, {
+  required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
+}) async {
+  final call = api.encointer.encointerKusama.tx.encointerTreasuries
+      .swapNative(cid: cid.toPolkadart(), desiredNativeAmount: desiredNativeAmount);
 
   final xt = await TxBuilder(api.provider).createSignedExtrinsic(
     signer.pair,

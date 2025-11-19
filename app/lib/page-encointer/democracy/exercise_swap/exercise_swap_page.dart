@@ -13,6 +13,8 @@ import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/theme/custom/typography/typography_theme.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/material.dart';
 import 'package:ew_l10n/l10n.dart';
 import 'package:flutter/services.dart';
@@ -99,6 +101,9 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     final store = context.read<AppStore>();
     final l10n = context.l10n;
 
+    String fmt(num number) => Fmt.formatNumber(context, number, decimals: 4);
+    final headlineSmall = context.headlineSmall;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.exerciseSwapOption),
@@ -124,24 +129,24 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                                '${l10n.balance}: ${store.encointer.communityBalance!} ${store.encointer.community!.symbol!}',
-                            ),
-                            const Text(
-                              'Available Swap Option:',
+                              l10n.balance,
+                              style: headlineSmall,
                             ),
                             Text(
-                              'Limit: ${widget.option.allowance} ${widget.option.symbol}',
+                              '${fmt(store.encointer.communityBalance!)} ${store.encointer.community!.symbol!}',
                             ),
                             Text(
-                              'Rate: ${widget.option.rate}',
+                              'Available Swap Option:', style: headlineSmall,
                             ),
                             Text(
-                              'CC Limit: ${widget.option.ccLimit}',
+                              'Limit: ${fmt(widget.option.allowance)} ${widget.option.symbol}',
                             ),
-                            if (widget.option is NativeSwap)
-                              Text('Local KSM Treasury Balance on Encointer: $localTreasuryBalance'),
-                            if (widget.option is AssetSwap)
-                              Text('Local ${widget.option.symbol} Treasury Balance on AHK: $localTreasuryBalanceOnAHK'),
+                            Text(
+                              'Rate: ${fmt(widget.option.rate)}',
+                            ),
+                            Text(
+                              'CC Limit: ${fmt(widget.option.ccLimit)}',
+                            ),
                             TextFormField(
                               controller: amountController,
                               decoration: InputDecoration(
@@ -169,6 +174,12 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                               },
                               child: Text(l10n.proposalSubmit),
                             ),
+                            if (widget.option is NativeSwap)
+                              Text(
+                                  'Local KSM Treasury Balance on Encointer: ${Fmt.token(localTreasuryBalance, ertDecimals, length: 4)}'),
+                            if (widget.option is AssetSwap)
+                              Text(
+                                  'Local ${widget.option.symbol} Treasury Balance on AHK: ${Fmt.token(localTreasuryBalanceOnAHK, (widget.option as AssetSwap).assetToSpend.decimals, length: 4)}'),
                           ],
                         )
                       ],
@@ -202,20 +213,20 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     final amount = double.tryParse(amountController.text)!;
 
     await submitSwapAsset(
-        context,
-        store,
-        webApi,
-        store.account.getKeyringAccount(store.account.currentAccountPubKey!),
-        store.encointer.chosenCid!,
-        BigInt.from(amount * pow(10, assetSwap.assetToSpend.decimals)),
-        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
-        onError: (dispatchError) {
-          final message = getLocalizedTxErrorMessage(l10n, dispatchError);
-          showTxErrorDialog(context, message, false);
-        },
-        onFinish: (_, __) => Navigator.of(context).pop(),
-      );
-    }
+      context,
+      store,
+      webApi,
+      store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+      store.encointer.chosenCid!,
+      BigInt.from(amount * pow(10, assetSwap.assetToSpend.decimals)),
+      txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+      onError: (dispatchError) {
+        final message = getLocalizedTxErrorMessage(l10n, dispatchError);
+        showTxErrorDialog(context, message, false);
+      },
+      onFinish: (_, __) => Navigator.of(context).pop(),
+    );
+  }
 
   Future<void> _submitSwapNative(NativeSwap nativeSwap) async {
     final store = context.read<AppStore>();
