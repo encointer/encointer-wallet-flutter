@@ -2276,6 +2276,12 @@ abstract class AppLocalizations {
   /// **'It may take up to 30 seconds for a transfer to appear here'**
   String get transferHistoryTop;
 
+  /// No description provided for @treasuryBalanceTooLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Treasury Balance too low'**
+  String get treasuryBalanceTooLow;
+
   /// No description provided for @treasuryGlobalBalance.
   ///
   /// In en, this message translates to:

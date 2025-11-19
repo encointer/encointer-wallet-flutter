@@ -156,7 +156,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                               validator: (String? val) => validatePositiveNumber(context, val),
                               onChanged: (value) {
                                 setState(() {
-                                  amountError = validatePositiveNumberWithMax(context, value, 2);
+                                  amountError = validateAmount(value, 2, 1);
                                 });
                               },
                             ),
@@ -237,5 +237,28 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
       },
       onFinish: (_, __) => Navigator.of(context).pop(),
     );
+  }
+
+  String? validateAmount(String? value, double balance, double treasuryBalance) {
+    final l10n = context.l10n;
+
+    var err = validatePositiveNumber(context, value);
+    if (err != null) {
+      return err;
+    }
+
+    err = validatePositiveNumberWithMax(context, value, balance);
+
+    if (err != null) {
+      return l10n.insufficientBalance;
+    }
+
+    err = validatePositiveNumberWithMax(context, value, treasuryBalance);
+
+    if (err != null) {
+      return l10n.treasuryBalanceTooLow;
+    }
+
+    return null;
   }
 }

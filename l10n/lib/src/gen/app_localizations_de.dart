@@ -1223,6 +1223,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Es kann bis zu 30 Sekunden dauern, bis der Transfer hier auftaucht';
 
   @override
+  String get treasuryBalanceTooLow => 'Treasury Balance too low';
+
+  @override
   String treasuryGlobalBalance(String balance) {
     return 'Freies globales Schatzkammerguthaben: $balance KSM.';
   }

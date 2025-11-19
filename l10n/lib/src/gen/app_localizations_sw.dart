@@ -1217,6 +1217,9 @@ class AppLocalizationsSw extends AppLocalizations {
       'Inaweza kuchukua hadi sekunde 30 kwa ajili ya uhamishaji kuonekana hapa';
 
   @override
+  String get treasuryBalanceTooLow => 'Treasury Balance too low';
+
+  @override
   String treasuryGlobalBalance(String balance) {
     return 'Salio huru la hazina ya kimataifa: $balance KSM.';
   }
