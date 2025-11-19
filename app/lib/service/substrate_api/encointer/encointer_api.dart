@@ -952,7 +952,7 @@ class EncointerApi {
       Network.encointerRococo => encointerKusamaParams(),
       Network.gesell => encointerSoloParams(),
       Network.gesellDev => encointerSoloParams(),
-      Network.zombienetLocal => encointerKusamaParams()
+      Network.zombienetLocal => fastRuntimeParams()
     };
   }
 
@@ -972,6 +972,19 @@ class EncointerApi {
     final minTurnout = encointerKusama.constant.encointerDemocracy.minTurnout;
     final confirmationPeriod = encointerKusama.constant.encointerDemocracy.confirmationPeriod;
     final proposalLifetime = encointerKusama.constant.encointerDemocracy.proposalLifetime;
+
+    return DemocracyParams(
+      minTurnout: minTurnout,
+      confirmationPeriod: confirmationPeriod,
+      proposalLifetime: proposalLifetime,
+    );
+  }
+
+  DemocracyParams fastRuntimeParams() {
+    // Taken from: https://github.com/encointer/runtimes/tree/cl/fast-encointer-runtime
+    final minTurnout = encointerKusama.constant.encointerDemocracy.minTurnout;
+    final confirmationPeriod = BigInt.zero;
+    final proposalLifetime = BigInt.from(100 * 60 * 1000);
 
     return DemocracyParams(
       minTurnout: minTurnout,

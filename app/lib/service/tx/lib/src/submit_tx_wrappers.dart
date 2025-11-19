@@ -419,6 +419,7 @@ Future<dynamic> submitNextPhaseWithAlice(BuildContext context, AppStore store, A
 
 /// Valid for encointer solonodes.
 const sudoNextPhaseCall = '05003c00';
+
 /// Valid for encointer parachains.
 const collectiveProposeNextPhaseCall = '3202043c00419c';
 
