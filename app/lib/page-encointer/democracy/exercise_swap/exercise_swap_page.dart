@@ -33,6 +33,8 @@ class ExerciseSwapPage extends StatefulWidget {
 
 class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
   final _formKey = GlobalKey<FormState>();
+
+  // Native/Asset amount to swap into
   final TextEditingController amountController = TextEditingController();
 
   late AssetHubWebApi assetHubApi;
@@ -182,10 +184,10 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
                   ],
-                  validator: (val) => validatePositiveNumber(context, val),
+                  validator: (val) => validatePositiveNumberString(context, val),
                   onChanged: (_) {
                     setState(() {
-                      amountError = validateAmount(
+                      amountError = validateSwapAmount(
                         amountController.text,
                         ccBalance,
                         treasuryBalance(),
@@ -202,11 +204,12 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
               // ───────────────────────────────────────
               TextButton(
                 onPressed: () {
-                  final maxValue = min(ccBalance, treasuryBalance());
+                  final maxCC = min(ccBalance, treasuryBalance());
+                  final maxTarget = maxCC / widget.option.rate;
 
                   setState(() {
-                    amountController.text = fmt(maxValue);
-                    amountError = validateAmount(
+                    amountController.text = fmt(maxTarget);
+                    amountError = validateSwapAmount(
                       amountController.text,
                       ccBalance,
                       treasuryBalance(),
@@ -299,20 +302,22 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     return amount * widget.option.rate;
   }
 
-  String? validateAmount(
-    String? value,
-    double balance,
+  String? validateSwapAmount(
+    String? swapTargetValue,
+    double accountBalance,
     double treasuryBalance,
   ) {
     final l10n = context.l10n;
 
-    final e1 = validatePositiveNumber(context, value);
+    final e1 = validatePositiveNumberString(context, swapTargetValue);
     if (e1 != null) return e1;
 
-    final e2 = validatePositiveNumberWithMax(context, value, balance);
+    final swapTargetInCC = double.parse(swapTargetValue!) * widget.option.rate;
+
+    final e2 = validatePositiveNumberWithMax(context, swapTargetInCC, accountBalance);
     if (e2 != null) return l10n.insufficientBalance;
 
-    final e3 = validatePositiveNumberWithMax(context, value, treasuryBalance);
+    final e3 = validatePositiveNumberWithMax(context, swapTargetInCC, treasuryBalance);
     if (e3 != null) return l10n.treasuryBalanceTooLow;
 
     return null;

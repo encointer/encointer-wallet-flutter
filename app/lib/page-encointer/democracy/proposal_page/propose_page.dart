@@ -513,10 +513,10 @@ class _ProposePageState extends State<ProposePage> {
           // Only numbers & decimal
           FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         ],
-        validator: (v) => validatePositiveNumberWithMax(context, v, maxValue),
+        validator: (v) => validatePositiveNumberWithMax(context, double.tryParse(v ?? ''), maxValue),
         onChanged: (value) {
           setState(() {
-            allowanceError = validatePositiveNumberWithMax(context, value, maxValue);
+            allowanceError = validatePositiveNumberWithMax(context, double.tryParse(value), maxValue);
           });
         },
       ),
@@ -570,10 +570,10 @@ class _ProposePageState extends State<ProposePage> {
         // Only numbers & decimal
         FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
       ],
-      validator: (String? val) => validatePositiveNumber(context, val),
+      validator: (String? val) => validatePositiveNumberString(context, val),
       onChanged: (value) {
         setState(() {
-          rateError = validatePositiveNumber(context, value);
+          rateError = validatePositiveNumberString(context, value);
         });
       },
     );
@@ -650,10 +650,10 @@ class _ProposePageState extends State<ProposePage> {
           // Only numbers & decimal
           FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         ],
-        validator: (String? val) => validatePositiveNumber(context, val),
+        validator: (String? val) => validatePositiveNumberString(context, val),
         onChanged: (value) {
           setState(() {
-            amountError = validatePositiveNumberWithMax(context, value, max);
+            amountError = validatePositiveNumberWithMax(context, double.tryParse(value), max);
           });
         },
       ),
@@ -709,10 +709,10 @@ class _ProposePageState extends State<ProposePage> {
         FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         // Only numbers & decimal
       ],
-      validator: (String? val) => validatePositiveNumber(context, val),
+      validator: (String? val) => validatePositiveNumberString(context, val),
       onChanged: (value) {
         setState(() {
-          nominalIncomeError = validatePositiveNumber(context, value);
+          nominalIncomeError = validatePositiveNumberString(context, value);
         });
       },
     );
