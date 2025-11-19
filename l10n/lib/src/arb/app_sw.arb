@@ -123,7 +123,7 @@
     "errorOccurred": "Kuna hitilafu imetokea:",
     "errorUserNameIsRequired": "Jina la mtumiaji haliwezi kuwa baki",
     "event": "ID ya tukio",
-    "swapOptionAvailable": "Chaguo la kubadilisha linapatikana",
+    "swapOption": "Chaguo la kubadilisha",
     "swapOptionRate": "Kiwango {amount} {cc}/{asset}",
     "swapOptionCcLimit": "Kikomo cha {cc}: {amount} {cc}",
     "swapOptionCcToBeSwapped": "{cc} ya kubadilishwa: {amount} {cc}",

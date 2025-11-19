@@ -407,7 +407,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get event => 'ID d\'événement';
 
   @override
-  String get swapOptionAvailable => 'Option d’échange disponible';
+  String get swapOption => 'Option d’échange';
 
   @override
   String swapOptionRate(String amount, String asset, String cc) {

@@ -836,11 +836,11 @@ abstract class AppLocalizations {
   /// **'Event ID'**
   String get event;
 
-  /// No description provided for @swapOptionAvailable.
+  /// No description provided for @swapOption.
   ///
   /// In en, this message translates to:
-  /// **'Swap Option Available'**
-  String get swapOptionAvailable;
+  /// **'Swap Option'**
+  String get swapOption;
 
   /// No description provided for @swapOptionRate.
   ///

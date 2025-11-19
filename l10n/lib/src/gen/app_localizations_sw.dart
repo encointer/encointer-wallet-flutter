@@ -404,7 +404,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get event => 'ID ya tukio';
 
   @override
-  String get swapOptionAvailable => 'Chaguo la kubadilisha linapatikana';
+  String get swapOption => 'Chaguo la kubadilisha';
 
   @override
   String swapOptionRate(String amount, String asset, String cc) {

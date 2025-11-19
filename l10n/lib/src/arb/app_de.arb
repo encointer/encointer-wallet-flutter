@@ -122,7 +122,7 @@
     "errorOccurred": "Es ist ein Fehler aufgetreten:",
     "errorUserNameIsRequired": "Benutzername darf nicht leer sein",
     "event": "Event ID",
-    "swapOptionAvailable": "Swap-Option verfügbar",
+    "swapOption": "Swap-Option",
     "swapOptionRate": "Kurs {amount} {cc}/{asset}",
     "@swapOptionRate": {
         "placeholders": {

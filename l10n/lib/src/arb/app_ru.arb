@@ -122,7 +122,7 @@
     "errorOccurred": "Возникла ошибка:",
     "errorUserNameIsRequired": "Имя пользователя не может быть пустым",
     "event": "ID события",
-    "swapOptionAvailable": "Опция обмена доступна",
+    "swapOption": "Опция обмена",
     "swapOptionRate": "Курс {amount} {cc}/{asset}",
     "swapOptionCcLimit": "Лимит {cc}: {amount} {cc}",
     "swapOptionCcToBeSwapped": "{cc} для обмена: {amount} {cc}",

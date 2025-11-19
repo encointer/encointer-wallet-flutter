@@ -122,7 +122,7 @@
     "errorOccurred": "An error occurred:",
     "errorUserNameIsRequired": "User name cannot be blank",
     "event": "Event ID",
-    "swapOptionAvailable": "Swap Option Available",
+    "swapOption": "Swap Option",
     "swapOptionRate": "Rate {amount} {cc}/{asset}",
     "@swapOptionRate": {
         "placeholders": {
