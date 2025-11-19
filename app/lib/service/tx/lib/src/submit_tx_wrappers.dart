@@ -393,15 +393,15 @@ Future<void> submitEncointerTransfer(
 ///
 /// This will only work on the local dev-setup.
 Future<dynamic> submitNextPhaseWithAlice(BuildContext context, AppStore store, Api api) async {
-  // This is valid for the encointer-node dev chain config.
-  // We currently don't have access to the dev nodes metadata
-  // so we hardcode the call.
-  const sudoNextPhaseCall = '05003c00';
+  var nextPhaseCall = sudoNextPhaseCall;
+  if (store.settings.currentNetwork == Network.zombienetLocal) {
+    nextPhaseCall = collectiveProposeNextPhaseCall;
+  }
   final alice = await KeyringAccount.fromUri('Alice', '//Alice');
 
   final xt = await TxBuilder(api.provider).createSignedExtrinsicWithEncodedCall(
     alice.pair,
-    Uint8List.fromList(hex.decode(sudoNextPhaseCall)),
+    Uint8List.fromList(hex.decode(nextPhaseCall)),
   );
 
   try {
@@ -412,10 +412,15 @@ Future<dynamic> submitNextPhaseWithAlice(BuildContext context, AppStore store, A
     // this will always throw an exception with the current implementation
     // because we use the kusama metadata, which does not know the sudo
     // pallet.
-    Log.p('sudo.nextPhase() threw an exception, decoding error is expected though: $e');
+    Log.p('nextPhase() threw an exception, decoding error is expected though: $e');
     return "called next phase, but can't evaluate result";
   }
 }
+
+/// Valid for encointer solonodes.
+const sudoNextPhaseCall = '05003c00';
+/// Valid for encointer parachains.
+const collectiveProposeNextPhaseCall = '3202043c00419c';
 
 Future<void> submitEncointerTransferAll(
   BuildContext context,
