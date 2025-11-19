@@ -774,9 +774,10 @@ class EncointerApi {
   }
 
   Future<et.SwapAssetOption?> getSwapAssetOptionForAccount(
-      CommunityIdentifier cid,
-      AccountId32 accountId,
-      {BlockHash? at,}) async {
+    CommunityIdentifier cid,
+    AccountId32 accountId, {
+    BlockHash? at,
+  }) async {
     try {
       final option = await encointerKusama.query.encointerTreasuries
           .swapAssetOptions(cid.toPolkadart(), accountId, at: at ?? store.chain.latestHash);
@@ -792,9 +793,10 @@ class EncointerApi {
   }
 
   Future<et.SwapNativeOption?> getSwapNativeOptionForAccount(
-      CommunityIdentifier cid,
-      AccountId32 accountId,
-      {BlockHash? at,}) async {
+    CommunityIdentifier cid,
+    AccountId32 accountId, {
+    BlockHash? at,
+  }) async {
     try {
       final option = await encointerKusama.query.encointerTreasuries
           .swapNativeOptions(cid.toPolkadart(), accountId, at: at ?? store.chain.latestHash);
