@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:encointer_wallet/page-encointer/democracy/utils/swap_options.dart';
-import 'package:encointer_wallet/service/forex/forex_service.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/asset_hub/asset_hub_web_api.dart';
@@ -31,12 +30,6 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
 
   late AssetHubWebApi assetHubApi;
 
-  // Default selected values
-  ForexRate? rate;
-
-  // Forex service to get exchange rate of a community's local fiat to usd.
-  final forexService = ForexService();
-
   // Controllers for text fields
   final TextEditingController amountController = TextEditingController();
 
@@ -44,7 +37,6 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
   // input verification as we type.
   String? amountError;
 
-  BigInt globalTreasuryBalance = BigInt.zero;
   BigInt localTreasuryBalance = BigInt.zero;
   BigInt localTreasuryBalanceOnAHK = BigInt.zero;
 
@@ -138,6 +130,10 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                             Text(
                               'CC Limit: ${widget.option.ccLimit}',
                             ),
+                            if (widget.option is NativeSwap)
+                              Text('Local KSM Treasury Balance on Encointer: $localTreasuryBalance'),
+                            if (widget.option is AssetSwap)
+                              Text('Local ${widget.option.symbol} Treasury Balance on AHK: $localTreasuryBalanceOnAHK'),
                           ],
                         )
                       ],
