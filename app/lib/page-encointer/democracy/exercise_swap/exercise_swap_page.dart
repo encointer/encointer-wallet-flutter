@@ -136,17 +136,14 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                               '${fmt(store.encointer.communityBalance!)} ${store.encointer.community!.symbol!}',
                             ),
                             Text(
-                              'Available Swap Option:', style: headlineSmall,
+                              l10n.swapOptionAvailable,
+                              style: headlineSmall,
                             ),
+                            Text(l10n.swapOptionLimit(fmt(widget.option.allowance), widget.option.symbol)),
+                            Text(l10n.swapOptionRate(
+                                fmt(widget.option.rate), store.encointer.community!.symbol!, widget.option.symbol)),
                             Text(
-                              'Limit: ${fmt(widget.option.allowance)} ${widget.option.symbol}',
-                            ),
-                            Text(
-                              'Rate: ${fmt(widget.option.rate)}',
-                            ),
-                            Text(
-                              'CC Limit: ${fmt(widget.option.ccLimit)}',
-                            ),
+                                l10n.swapOptionCcLimit(fmt(widget.option.ccLimit), store.encointer.community!.symbol!)),
                             TextFormField(
                               controller: amountController,
                               decoration: InputDecoration(
@@ -175,11 +172,16 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                               child: Text(l10n.proposalSubmit),
                             ),
                             if (widget.option is NativeSwap)
-                              Text(
-                                  'Local KSM Treasury Balance on Encointer: ${Fmt.token(localTreasuryBalance, ertDecimals, length: 4)}'),
+                              Text(l10n.treasuryLocalBalance(Fmt.token(localTreasuryBalance, ertDecimals, length: 4))),
                             if (widget.option is AssetSwap)
-                              Text(
-                                  'Local ${widget.option.symbol} Treasury Balance on AHK: ${Fmt.token(localTreasuryBalanceOnAHK, (widget.option as AssetSwap).assetToSpend.decimals, length: 4)}'),
+                              Text(l10n.treasuryLocalBalanceOnAHK(
+                                Fmt.token(
+                                  localTreasuryBalanceOnAHK,
+                                  (widget.option as AssetSwap).assetToSpend.decimals,
+                                  length: 4,
+                                ),
+                                widget.option.symbol,
+                              )),
                           ],
                         )
                       ],

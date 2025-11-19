@@ -402,6 +402,24 @@ class AppLocalizationsRu extends AppLocalizations {
   String get event => 'ID события';
 
   @override
+  String get swapOptionAvailable => 'Swap Option Available';
+
+  @override
+  String swapOptionRate(String amount, String asset, String cc) {
+    return 'Rate $amount $cc/$asset';
+  }
+
+  @override
+  String swapOptionCcLimit(String amount, String cc) {
+    return '$cc Limit: $amount $cc';
+  }
+
+  @override
+  String swapOptionLimit(String amount, String asset) {
+    return 'Limit: $amount $asset';
+  }
+
+  @override
   String exerciseSwapAssetOptionAvailable(String asset) {
     return '$asset Swap Option Available';
   }

@@ -836,6 +836,30 @@ abstract class AppLocalizations {
   /// **'Event ID'**
   String get event;
 
+  /// No description provided for @swapOptionAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Swap Option Available'**
+  String get swapOptionAvailable;
+
+  /// No description provided for @swapOptionRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate {amount} {cc}/{asset}'**
+  String swapOptionRate(String amount, String asset, String cc);
+
+  /// No description provided for @swapOptionCcLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'{cc} Limit: {amount} {cc}'**
+  String swapOptionCcLimit(String amount, String cc);
+
+  /// No description provided for @swapOptionLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Limit: {amount} {asset}'**
+  String swapOptionLimit(String amount, String asset);
+
   /// No description provided for @exerciseSwapAssetOptionAvailable.
   ///
   /// In en, this message translates to:

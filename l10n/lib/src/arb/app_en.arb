@@ -122,6 +122,50 @@
     "errorOccurred": "An error occurred:",
     "errorUserNameIsRequired": "User name cannot be blank",
     "event": "Event ID",
+    "swapOptionAvailable": "Swap Option Available",
+    "swapOptionRate": "Rate {amount} {cc}/{asset}",
+    "@swapOptionRate": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            },
+            "cc": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "swapOptionCcLimit": "{cc} Limit: {amount} {cc}",
+    "@swapOptionCcLimit": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "cc": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "swapOptionLimit": "Limit: {amount} {asset}",
+    "@swapOptionLimit": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
     "exerciseSwapAssetOptionAvailable": "{asset} Swap Option Available",
     "@exerciseSwapAssetOptionAvailable": {
         "placeholders": {
