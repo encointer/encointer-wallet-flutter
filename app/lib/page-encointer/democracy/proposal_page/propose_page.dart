@@ -356,6 +356,7 @@ class _ProposePageState extends State<ProposePage> {
 
                             const SizedBox(height: 5),
                             SubmitButton(
+                              // disable button for non-bootstrappers/reputables
                               onPressed: isBootstrapperOrReputable(store, store.account.currentAddress) &&
                                       !hasSameProposalForSameScope(enactmentQueue, selectedAction,
                                           selectedScope.isLocal ? store.encointer.chosenCid! : null)
@@ -364,7 +365,6 @@ class _ProposePageState extends State<ProposePage> {
                                       await _submitProposal();
                                     }
                                   : null,
-                              // disable button for non-bootstrappers/reputables
                               child: Text(l10n.proposalSubmit),
                             ),
                           ],
@@ -510,8 +510,8 @@ class _ProposePageState extends State<ProposePage> {
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
           // Only numbers & decimal
+          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         ],
         validator: (v) => validatePositiveNumberWithMax(context, v, maxValue),
         onChanged: (value) {
@@ -647,8 +647,8 @@ class _ProposePageState extends State<ProposePage> {
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
           // Only numbers & decimal
+          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         ],
         validator: (String? val) => validatePositiveNumber(context, val),
         onChanged: (value) {
@@ -729,8 +729,8 @@ class _ProposePageState extends State<ProposePage> {
       ),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         // Only numbers & decimal
+        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
       ],
       validator: validateDemurrage,
       onChanged: (value) {
