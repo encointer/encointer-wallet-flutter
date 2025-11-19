@@ -1,10 +1,17 @@
 import 'dart:async';
+import 'dart:math';
 
+import 'package:encointer_wallet/common/components/submit_button.dart';
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/page-encointer/democracy/utils/asset_id.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/field_validation.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/swap_options.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/asset_hub/asset_hub_web_api.dart';
+import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
+import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
+import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:ew_l10n/l10n.dart';
@@ -153,6 +160,15 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                                 });
                               },
                             ),
+                            const SizedBox(height: 10),
+                            SubmitButton(
+                              // disable button for non-bootstrappers/reputables
+                              onPressed: (context) async {
+                                _formKey.currentState!.validate();
+                                await _submitSwap();
+                              },
+                              child: Text(l10n.proposalSubmit),
+                            ),
                           ],
                         )
                       ],
@@ -164,6 +180,62 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
           ),
         ),
       ),
+    );
+  }
+
+  /// Handles form submission
+  Future<void> _submitSwap() async {
+    if (_formKey.currentState!.validate()) {
+      switch (widget.option) {
+        case NativeSwap():
+          await _submitSwapNative(widget.option as NativeSwap);
+        case AssetSwap():
+          await _submitSwapAsset(widget.option as AssetSwap);
+      }
+    }
+  }
+
+  Future<void> _submitSwapAsset(AssetSwap assetSwap) async {
+    final store = context.read<AppStore>();
+    final l10n = context.l10n;
+
+    final amount = double.tryParse(amountController.text)!;
+
+    await submitSwapAsset(
+        context,
+        store,
+        webApi,
+        store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+        store.encointer.chosenCid!,
+        BigInt.from(amount * pow(10, assetSwap.assetToSpend.decimals)),
+        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+        onError: (dispatchError) {
+          final message = getLocalizedTxErrorMessage(l10n, dispatchError);
+          showTxErrorDialog(context, message, false);
+        },
+        onFinish: (_, __) => Navigator.of(context).pop(),
+      );
+    }
+
+  Future<void> _submitSwapNative(NativeSwap nativeSwap) async {
+    final store = context.read<AppStore>();
+    final l10n = context.l10n;
+
+    final amount = double.tryParse(amountController.text)!;
+
+    await submitSwapNative(
+      context,
+      store,
+      webApi,
+      store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+      store.encointer.chosenCid!,
+      BigInt.from(amount * pow(10, ertDecimals)),
+      txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+      onError: (dispatchError) {
+        final message = getLocalizedTxErrorMessage(l10n, dispatchError);
+        showTxErrorDialog(context, message, false);
+      },
+      onFinish: (_, __) => Navigator.of(context).pop(),
     );
   }
 }

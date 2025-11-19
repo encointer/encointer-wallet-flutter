@@ -548,6 +548,66 @@ Future<void> submitDemocracyProposal(
   );
 }
 
+Future<void> submitSwapAsset(
+    BuildContext context,
+    AppStore store,
+    Api api,
+    KeyringAccount signer,
+    CommunityIdentifier cid,
+    BigInt desiredSwapAmount, {
+      required CommunityIdentifier? txPaymentAsset,
+      dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+      void Function(DispatchError report)? onError,
+    }) async {
+  final call = api.encointer.encointerKusama.tx.encointerTreasuries.swapAsset(cid: cid.toPolkadart(),  desiredAssetAmount: desiredSwapAmount);
+
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
+  );
+
+  return submitTx(
+    context,
+    store,
+    api,
+    OpaqueExtrinsic(xt),
+    TxNotification.democracySubmitProposal(context.l10n),
+    onFinish: onFinish,
+    onError: onError,
+  );
+}
+
+Future<void> submitSwapNative(
+    BuildContext context,
+    AppStore store,
+    Api api,
+    KeyringAccount signer,
+    CommunityIdentifier cid,
+    BigInt desiredNativeAmount, {
+      required CommunityIdentifier? txPaymentAsset,
+      dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+      void Function(DispatchError report)? onError,
+    }) async {
+  final call = api.encointer.encointerKusama.tx.encointerTreasuries.swapNative(cid: cid.toPolkadart(),  desiredNativeAmount: desiredNativeAmount);
+
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
+  );
+
+  return submitTx(
+    context,
+    store,
+    api,
+    OpaqueExtrinsic(xt),
+    TxNotification.democracySubmitProposal(context.l10n),
+    onFinish: onFinish,
+    onError: onError,
+  );
+}
+
 void _showEducationalDialog(ParticipantType registrationType, BuildContext context) {
   final l10n = context.l10n;
   final texts = _getEducationalDialogTexts(registrationType, context);
