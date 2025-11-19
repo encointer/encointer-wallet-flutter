@@ -7,6 +7,11 @@ import 'package:encointer_wallet/utils/format.dart' show Fmt;
 import 'package:ew_polkadart/ew_polkadart.dart' show SwapNativeOption, SwapAssetOption, XcmLocation;
 import 'package:ew_substrate_fixed/substrate_fixed.dart' show i64F64Parser;
 
+/// Helper sealed class with the intention to:
+///
+/// * Some helper methods for common computations
+/// * Allow stuff to be generic over `SwapOption` it the behaviour is almost
+///   the same for native and asset swap options.
 sealed class SwapOption {
   const SwapOption();
 
@@ -15,6 +20,12 @@ sealed class SwapOption {
   double get rate;
 
   double get allowance;
+
+  /// Maximum community currency be used to trade for up to `allowance`.
+  double get ccLimit;
+
+  /// Either `KSM` for native options, or the asset's symbol e.g. USDC.
+  String get symbol;
 }
 
 final class NativeSwap extends SwapOption {
@@ -30,6 +41,12 @@ final class NativeSwap extends SwapOption {
 
   @override
   double get rate => i64F64Parser.toDouble(value.rate!.bits) * pow(10, ertDecimals);
+
+  @override
+  double get ccLimit => allowance * rate;
+
+  @override
+  String get symbol => 'KSM';
 }
 
 final class AssetSwap extends SwapOption {
@@ -49,4 +66,10 @@ final class AssetSwap extends SwapOption {
 
   @override
   double get rate => i64F64Parser.toDouble(value.rate!.bits) * pow(10, assetToSpend.decimals);
+
+  @override
+  double get ccLimit => allowance * rate;
+
+  @override
+  String get symbol => assetToSpend.symbol;
 }

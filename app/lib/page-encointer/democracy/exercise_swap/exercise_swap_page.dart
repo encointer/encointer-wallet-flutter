@@ -130,10 +130,13 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                               'Available Swap Option:',
                             ),
                             Text(
-                              'Limit: ${widget.option.allowance}',
+                              'Limit: ${widget.option.allowance} ${widget.option.symbol}',
                             ),
                             Text(
                               'Rate: ${widget.option.rate}',
+                            ),
+                            Text(
+                              'CC Limit: ${widget.option.ccLimit}',
                             ),
                           ],
                         )

@@ -6,7 +6,6 @@ import 'package:encointer_wallet/page-encointer/democracy/utils/asset_id.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/swap_options.dart';
 import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
-import 'package:ew_polkadart/generated/asset_hub_kusama/types/sp_arithmetic/fixed_point/fixed_u128.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_primitives/treasuries/swap_asset_option.dart'
     show SwapAssetOption;
 import 'package:ew_primitives/ew_primitives.dart' show fixedU128FromDouble;
