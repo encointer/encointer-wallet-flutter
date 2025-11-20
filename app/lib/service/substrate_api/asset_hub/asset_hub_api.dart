@@ -44,7 +44,7 @@ class AssetHubApi {
   Future<BigInt> getForeignAssetBalanceOfEncointerAccount(String address, XcmLocation assetId, {BlockHash? at}) async {
     final accountId = await encointerAccountOnAHK(address);
     final addressOnAssetHub = AddressUtils.pubKeyToAddress(accountId, prefix: 2);
-    Log.d('Encointer address $address corresponds to Asset Hub accountId: $accountId', logTarget);
+    Log.d('Encointer address $address corresponds to Asset Hub accountId: $addressOnAssetHub', logTarget);
     return getForeignAssetBalanceOf(addressOnAssetHub, assetId);
   }
 
