@@ -782,7 +782,6 @@ class EncointerApi {
       final option = await encointerKusama.query.encointerTreasuries
           .swapAssetOptions(cid.toPolkadart(), accountId, at: at ?? store.chain.latestHash);
 
-      // Keys including storage prefix.
       Log.d("[getSwapAssetOptions] got Option: ${option?.toJson()}')}");
 
       return option;
@@ -801,7 +800,6 @@ class EncointerApi {
       final option = await encointerKusama.query.encointerTreasuries
           .swapNativeOptions(cid.toPolkadart(), accountId, at: at ?? store.chain.latestHash);
 
-      // Keys including storage prefix.
       Log.d("[getSwapNativeOptions] got Option: ${option?.toJson()}')}");
 
       return option;
