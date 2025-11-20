@@ -34,7 +34,7 @@ class ExerciseSwapPage extends StatefulWidget {
 class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
   final _formKey = GlobalKey<FormState>();
 
-  // Native/Asset amount to swap into
+  // User INPUT = CC amount
   final TextEditingController amountController = TextEditingController();
 
   late AssetHubWebApi assetHubApi;
@@ -47,12 +47,10 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
   @override
   void initState() {
     super.initState();
-
     assetHubApi = AssetHubWebApi.endpoints(
       context.read<AppStore>().settings.currentNetwork.assetHubEndpoints(),
     );
     unawaited(assetHubApi.init());
-
     _getTreasuryBalances();
   }
 
@@ -118,7 +116,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
             const SizedBox(height: 16),
             _buildAmountInputCard(l10n, ccBalance),
             const SizedBox(height: 16),
-            _buildToBeSwappedCard(l10n, ccSymbol),
+            _buildToBeReceivedCard(l10n),
             const SizedBox(height: 16),
             _buildTreasuryCard(l10n),
           ],
@@ -158,16 +156,13 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
               ccSymbol,
               widget.option.symbol,
             )),
-            Text(l10n.swapOptionCcLimit(
-              fmt(widget.option.ccLimit),
-              ccSymbol,
-            )),
           ],
         ),
       ),
     );
   }
 
+  /// User enters CC amount here
   Widget _buildAmountInputCard(AppLocalizations l10n, double ccBalance) {
     return Card(
       child: Padding(
@@ -180,7 +175,9 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                 child: TextFormField(
                   controller: amountController,
                   decoration: InputDecoration(
-                    labelText: l10n.proposalFieldAmount(widget.option.symbol),
+                    labelText: l10n.proposalFieldAmount(
+                      context.read<AppStore>().encointer.community!.symbol!,
+                    ),
                     errorText: amountError,
                   ),
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -199,12 +196,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                   },
                 ),
               ),
-
               const SizedBox(width: 8),
-
-              // ───────────────────────────────────────
-              // MAX BUTTON
-              // ───────────────────────────────────────
               TextButton(
                 onPressed: () {
                   setState(() {
@@ -225,11 +217,14 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     );
   }
 
-  Widget _buildToBeSwappedCard(AppLocalizations l10n, String ccSymbol) {
+  Widget _buildToBeReceivedCard(AppLocalizations l10n) {
     return Card(
       child: ListTile(
         title: Text(
-          l10n.swapOptionCcToBeSwapped(fmt(ccToBeSwapped()), ccSymbol),
+          l10n.swapOptionAssetToReceive(
+            fmt(assetToReceive()),
+            widget.option.symbol,
+          ),
         ),
       ),
     );
@@ -256,14 +251,14 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
   }
 
   // ────────────────────────────────────────────────
-  // SECTION: Bottom Submit Button
+  // Bottom Submit Button
   // ────────────────────────────────────────────────
 
   Widget _buildBottomSubmit() {
     final l10n = context.l10n;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16), // ← bottom = 8
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -280,10 +275,6 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     );
   }
 
-  // ────────────────────────────────────────────────
-  // SECTION: Logic
-  // ────────────────────────────────────────────────
-
   double treasuryBalance() {
     final decimals = widget.option.decimals;
 
@@ -296,39 +287,46 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
 
   String fmt(num number) => Fmt.formatNumber(context, number, decimals: 4);
 
-  double ccToBeSwapped() {
-    final amount = double.tryParse(amountController.text) ?? 0;
-    return amount * widget.option.rate;
+  /// User enters **CC amount**
+  /// We compute: assetAmount = ccAmount / rate
+  double assetToReceive() {
+    final cc = double.tryParse(amountController.text) ?? 0;
+    return cc / widget.option.rate;
   }
 
+  /// Input is CC, check max CC swappable:
   double maxSwappable(double ccBalance) {
-    // We first check the max that we could get with our balance
-    // and give some slack.
-    final maxTargetSwap = ccBalance * 0.98 / widget.option.rate;
+    // CC available from user (and keep some spare)
+    final userCC = ccBalance * 0.98;
 
-    // But we still need to cap it at the max treasury balance
-    final available = min(maxTargetSwap, treasuryBalance());
+    // CC equivalent of treasury assets
+    final treasuryCC = treasuryBalance() * widget.option.rate;
 
-    // finally, we need to respect the SwapOptions limit
-    return min(available, widget.option.allowance);
+    // Option limit (in CC)
+    final limitCC = widget.option.allowance * widget.option.rate;
+
+    return min(userCC, min(treasuryCC, limitCC));
   }
 
   String? validateSwapAmount(
-    String? swapTargetValue,
+    String? ccAmountStr,
     double accountBalance,
-    double treasuryBalance,
+    double treasuryBalanceAsset,
   ) {
     final l10n = context.l10n;
 
-    final e1 = validatePositiveNumberString(context, swapTargetValue);
+    final e1 = validatePositiveNumberString(context, ccAmountStr);
     if (e1 != null) return e1;
 
-    final swapTargetInCC = double.parse(swapTargetValue!) * widget.option.rate;
+    final ccAmount = double.parse(ccAmountStr!);
 
-    final e2 = validatePositiveNumberWithMax(context, swapTargetInCC, accountBalance);
+    final e2 = validatePositiveNumberWithMax(context, ccAmount, accountBalance);
     if (e2 != null) return l10n.insufficientBalance;
 
-    final e3 = validatePositiveNumberWithMax(context, swapTargetInCC, treasuryBalance);
+    // converted treasury asset → CC equivalent
+    final treasuryCC = treasuryBalanceAsset * widget.option.rate;
+
+    final e3 = validatePositiveNumberWithMax(context, ccAmount, treasuryCC);
     if (e3 != null) return l10n.treasuryBalanceTooLow;
 
     return null;
@@ -347,7 +345,9 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     final store = context.read<AppStore>();
     final l10n = context.l10n;
 
-    final amount = double.parse(amountController.text);
+    // user enters CC → convert to asset
+    final cc = double.parse(amountController.text);
+    final assetAmount = cc / assetSwap.rate;
 
     await submitSwapAsset(
       context,
@@ -355,7 +355,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
       webApi,
       store.account.getKeyringAccount(store.account.currentAccountPubKey!),
       store.encointer.chosenCid!,
-      BigInt.from(amount * pow(10, assetSwap.decimals)),
+      BigInt.from(assetAmount * pow(10, assetSwap.decimals)),
       txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
       onError: (err) {
         showTxErrorDialog(context, getLocalizedTxErrorMessage(l10n, err), false);
@@ -367,7 +367,9 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
   Future<void> _submitSwapNative(NativeSwap nativeSwap) async {
     final store = context.read<AppStore>();
     final l10n = context.l10n;
-    final amount = double.parse(amountController.text);
+
+    final cc = double.parse(amountController.text);
+    final nativeAmount = cc / nativeSwap.rate;
 
     await submitSwapNative(
       context,
@@ -375,7 +377,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
       webApi,
       store.account.getKeyringAccount(store.account.currentAccountPubKey!),
       store.encointer.chosenCid!,
-      BigInt.from(amount * pow(10, nativeSwap.decimals)),
+      BigInt.from(nativeAmount * pow(10, nativeSwap.decimals)),
       txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
       onError: (err) {
         showTxErrorDialog(context, getLocalizedTxErrorMessage(l10n, err), false);

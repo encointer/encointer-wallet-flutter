@@ -125,7 +125,7 @@
     "swapOption": "Опция обмена",
     "swapOptionRate": "Курс {amount} {cc}/{asset}",
     "swapOptionCcLimit": "Лимит {cc}: {amount} {cc}",
-    "swapOptionCcToBeSwapped": "{cc} для обмена: {amount} {cc}",
+    "swapOptionAssetToReceive": "Вы получаете: {amount} {asset}",
     "swapOptionLimit": "Лимит: {amount} {asset}",
     "exerciseSwapAssetOptionAvailable": "Доступна опция обмена {asset}",
     "exerciseSwapNativeOptionAvailable": "Доступна опция обмена KSM",

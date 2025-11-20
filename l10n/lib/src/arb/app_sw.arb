@@ -126,7 +126,7 @@
     "swapOption": "Chaguo la kubadilisha",
     "swapOptionRate": "Kiwango {amount} {cc}/{asset}",
     "swapOptionCcLimit": "Kikomo cha {cc}: {amount} {cc}",
-    "swapOptionCcToBeSwapped": "{cc} ya kubadilishwa: {amount} {cc}",
+    "swapOptionAssetToReceive": "Unapokea: {amount} {asset}",
     "swapOptionLimit": "Kikomo: {amount} {asset}",
     "exerciseSwapAssetOptionAvailable": "Chaguo la kubadilisha {asset} linapatikana",
     "exerciseSwapNativeOptionAvailable": "Chaguo la kubadilisha KSM linapatikana",

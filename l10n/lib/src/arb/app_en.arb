@@ -153,14 +153,14 @@
             }
         }
     },
-    "swapOptionCcToBeSwapped": "{cc} to be swapped: {amount} {cc}",
-    "@swapOptionCcToBeSwapped": {
+    "swapOptionAssetToReceive": "You receive: {amount} {asset}",
+    "@swapOptionAssetToReceive": {
         "placeholders": {
             "amount": {
                 "type": "String",
                 "example": "0.1"
             },
-            "cc": {
+            "asset": {
                 "type": "String",
                 "example": "Leu"
             }

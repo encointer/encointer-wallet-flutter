@@ -854,11 +854,11 @@ abstract class AppLocalizations {
   /// **'{cc} Limit: {amount} {cc}'**
   String swapOptionCcLimit(String amount, String cc);
 
-  /// No description provided for @swapOptionCcToBeSwapped.
+  /// No description provided for @swapOptionAssetToReceive.
   ///
   /// In en, this message translates to:
-  /// **'{cc} to be swapped: {amount} {cc}'**
-  String swapOptionCcToBeSwapped(String amount, String cc);
+  /// **'You receive: {amount} {asset}'**
+  String swapOptionAssetToReceive(String amount, String asset);
 
   /// No description provided for @swapOptionLimit.
   ///

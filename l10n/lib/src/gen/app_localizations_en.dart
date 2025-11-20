@@ -415,8 +415,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String swapOptionCcToBeSwapped(String amount, String cc) {
-    return '$cc to be swapped: $amount $cc';
+  String swapOptionAssetToReceive(String amount, String asset) {
+    return 'You receive: $amount $asset';
   }
 
   @override
