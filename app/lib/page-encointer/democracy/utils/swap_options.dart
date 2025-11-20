@@ -5,6 +5,7 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/asset_id.dart';
 import 'package:encointer_wallet/utils/format.dart' show Fmt;
 import 'package:ew_polkadart/ew_polkadart.dart' show SwapNativeOption, SwapAssetOption, XcmLocation;
+import 'package:ew_primitives/ew_primitives.dart' show fixedU128FromDouble;
 import 'package:ew_substrate_fixed/substrate_fixed.dart' show i64F64Parser;
 
 /// Helper sealed class with the intention to:
@@ -81,3 +82,22 @@ final class AssetSwap extends SwapOption {
   @override
   int get decimals => assetToSpend.decimals;
 }
+
+NativeSwap mockNativeSwap(CommunityIdentifier cid) => NativeSwap(
+      SwapNativeOption(
+        cid: cid.toPolkadart(),
+        nativeAllowance: BigInt.from(1.2 * pow(10, ertDecimals)),
+        rate: fixedU128FromDouble(0.94 * pow(10, -ertDecimals)),
+        doBurn: true,
+      ),
+    );
+
+AssetSwap mockAssetSwap(CommunityIdentifier cid) => AssetSwap(
+  SwapAssetOption(
+    cid: cid.toPolkadart(),
+    assetId: AssetToSpend.usdc.versionedLocatableAsset,
+    assetAllowance: BigInt.from(1.2 * pow(10, AssetToSpend.usdc.decimals)),
+    rate: fixedU128FromDouble(0.94 * pow(10, -AssetToSpend.usdc.decimals)),
+    doBurn: true,
+  ),
+);

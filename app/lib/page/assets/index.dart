@@ -105,50 +105,49 @@ class _AssetsViewState extends State<AssetsView> {
       nativeSwap = null;
       assetSwap = null;
     });
+
+    final cid = widget.store.encointer.chosenCid;
+
+    if (cid == null) {
+      Log.d('[getSwapOptions]: No cid chosen returning...', _logTarget);
+      return;
+    }
+
+    final accountId = AddressUtils.addressToPubKey(widget.store.account.currentAddress).toList();
+
     if (devSwap) {
       Log.d('DEV: Getting Swap Options', _logTarget);
-      final swapNativeOption = SwapNativeOption(
-        cid: widget.store.encointer.chosenCid!.toPolkadart(),
-        nativeAllowance: BigInt.from(1.2 * pow(10, ertDecimals)),
-        rate: fixedU128FromDouble(0.94 * pow(10, -ertDecimals)),
-        doBurn: true,
-      );
-
-      final swapAssetOption = SwapAssetOption(
-        cid: widget.store.encointer.chosenCid!.toPolkadart(),
-        assetId: AssetToSpend.usdc.versionedLocatableAsset,
-        assetAllowance: BigInt.from(1.2 * pow(10, AssetToSpend.usdc.decimals)),
-        rate: fixedU128FromDouble(0.94 * pow(10, -AssetToSpend.usdc.decimals)),
-        doBurn: true,
-      );
       setState(() {
-        nativeSwap = NativeSwap(swapNativeOption);
-        assetSwap = AssetSwap(swapAssetOption);
+        nativeSwap = mockNativeSwap(cid);
+        assetSwap = mockAssetSwap(cid);
       });
-    } else {
-      Log.d('Getting Swap Options', _logTarget);
-      final accountId = AddressUtils.addressToPubKey(widget.store.account.currentAddress).toList();
+      return;
+    }
 
-      final swapAssetOption =
-          await webApi.encointer.getSwapAssetOptionForAccount(widget.store.encointer.chosenCid!, accountId);
-      if (swapAssetOption != null) {
-        setState(() {
-          assetSwap = AssetSwap(swapAssetOption);
-        });
+    Log.d('Getting Swap Options', _logTarget);
+
+    // Fetch swaps from API concurrently
+    final results = await Future.wait([
+      webApi.encointer.getSwapAssetOptionForAccount(cid, accountId),
+      webApi.encointer.getSwapNativeOptionForAccount(cid, accountId),
+    ]);
+
+    final fetchedAssetOption = results[0] as SwapAssetOption?;
+    final fetchedNativeOption = results[1] as SwapNativeOption?;
+
+    setState(() {
+      if (fetchedAssetOption != null) {
+        assetSwap = AssetSwap(fetchedAssetOption);
       } else {
         Log.d('No Swap Asset Options Found', _logTarget);
       }
 
-      final swapNativeOption =
-          await webApi.encointer.getSwapNativeOptionForAccount(widget.store.encointer.chosenCid!, accountId);
-      if (swapNativeOption != null) {
-        setState(() {
-          nativeSwap = NativeSwap(swapNativeOption);
-        });
+      if (fetchedNativeOption != null) {
+        nativeSwap = NativeSwap(fetchedNativeOption);
       } else {
         Log.d('No Swap Native Options Found', _logTarget);
       }
-    }
+    });
   }
 
   @override
