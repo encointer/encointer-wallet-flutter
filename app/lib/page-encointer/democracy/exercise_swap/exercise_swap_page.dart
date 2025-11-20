@@ -153,8 +153,8 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
             )),
             Text(l10n.swapOptionRate(
               fmt(widget.option.rate),
-              ccSymbol,
               widget.option.symbol,
+              ccSymbol,
             )),
           ],
         ),
