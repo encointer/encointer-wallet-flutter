@@ -265,12 +265,12 @@ class _AssetsViewState extends State<AssetsView> {
                         },
                         child: const Text('Invalidate data to trigger state update'),
                       ),
-                    if (true && assetSwap != null)
+                    if (assetSwap != null)
                       ElevatedButton(
                         child: Text(l10n.exerciseSwapAssetOptionAvailable('USDC')),
                         onPressed: () => Navigator.pushNamed(context, ExerciseSwapPage.route, arguments: assetSwap),
                       ),
-                    if (true && nativeSwap != null)
+                    if (nativeSwap != null)
                       ElevatedButton(
                         child: Text(l10n.exerciseSwapNativeOptionAvailable),
                         onPressed: () => Navigator.pushNamed(
