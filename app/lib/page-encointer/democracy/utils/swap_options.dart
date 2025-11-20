@@ -93,11 +93,11 @@ NativeSwap mockNativeSwap(CommunityIdentifier cid) => NativeSwap(
     );
 
 AssetSwap mockAssetSwap(CommunityIdentifier cid) => AssetSwap(
-  SwapAssetOption(
-    cid: cid.toPolkadart(),
-    assetId: AssetToSpend.usdc.versionedLocatableAsset,
-    assetAllowance: BigInt.from(1.2 * pow(10, AssetToSpend.usdc.decimals)),
-    rate: fixedU128FromDouble(0.94 * pow(10, -AssetToSpend.usdc.decimals)),
-    doBurn: true,
-  ),
-);
+      SwapAssetOption(
+        cid: cid.toPolkadart(),
+        assetId: AssetToSpend.usdc.versionedLocatableAsset,
+        assetAllowance: BigInt.from(1.2 * pow(10, AssetToSpend.usdc.decimals)),
+        rate: fixedU128FromDouble(0.94 * pow(10, -AssetToSpend.usdc.decimals)),
+        doBurn: true,
+      ),
+    );
