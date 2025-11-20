@@ -10,7 +10,7 @@ import 'package:ew_substrate_fixed/substrate_fixed.dart' show i64F64Parser;
 /// Helper sealed class with the intention to:
 ///
 /// * Some helper methods for common computations
-/// * Allow stuff to be generic over `SwapOption` it the behaviour is almost
+/// * Allow stuff to be generic over `SwapOption` as the behaviour is almost
 ///   the same for native and asset swap options.
 sealed class SwapOption {
   const SwapOption();
