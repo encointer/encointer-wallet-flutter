@@ -404,6 +404,41 @@ class AppLocalizationsSw extends AppLocalizations {
   String get event => 'ID ya tukio';
 
   @override
+  String get swapOption => 'Chaguo la kubadilisha';
+
+  @override
+  String swapOptionRate(String amount, String asset, String cc) {
+    return 'Kiwango $amount $cc/$asset';
+  }
+
+  @override
+  String swapOptionCcLimit(String amount, String cc) {
+    return 'Kikomo cha $cc: $amount $cc';
+  }
+
+  @override
+  String swapOptionAssetToReceive(String amount, String asset) {
+    return 'Unapokea: $amount $asset';
+  }
+
+  @override
+  String swapOptionLimit(String amount, String asset) {
+    return 'Kikomo: $amount $asset';
+  }
+
+  @override
+  String exerciseSwapAssetOptionAvailable(String asset) {
+    return 'Chaguo la kubadilisha $asset linapatikana';
+  }
+
+  @override
+  String get exerciseSwapNativeOptionAvailable =>
+      'Chaguo la kubadilisha KSM linapatikana';
+
+  @override
+  String get exerciseSwapOption => 'Tumia chaguo la kubadilisha';
+
+  @override
   String get export =>
       'Onyesha taarifa za siri za akaunti yako kuweza kuisafirisha';
 
@@ -1204,6 +1239,9 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String get transferHistoryTop =>
       'Inaweza kuchukua hadi sekunde 30 kwa ajili ya uhamishaji kuonekana hapa';
+
+  @override
+  String get treasuryBalanceTooLow => 'Salio la hazina ni dogo sana';
 
   @override
   String treasuryGlobalBalance(String balance) {

@@ -402,6 +402,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get event => 'Event ID';
 
   @override
+  String get swapOption => 'Swap Option';
+
+  @override
+  String swapOptionRate(String amount, String asset, String cc) {
+    return 'Rate $amount $cc/$asset';
+  }
+
+  @override
+  String swapOptionCcLimit(String amount, String cc) {
+    return '$cc Limit: $amount $cc';
+  }
+
+  @override
+  String swapOptionAssetToReceive(String amount, String asset) {
+    return 'You receive: $amount $asset';
+  }
+
+  @override
+  String swapOptionLimit(String amount, String asset) {
+    return 'Limit: $amount $asset';
+  }
+
+  @override
+  String exerciseSwapAssetOptionAvailable(String asset) {
+    return '$asset Swap Option Available';
+  }
+
+  @override
+  String get exerciseSwapNativeOptionAvailable => 'KSM Swap Option Available';
+
+  @override
+  String get exerciseSwapOption => 'Exercise Swap Option';
+
+  @override
   String get export => 'Export Account';
 
   @override
@@ -1198,6 +1232,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get transferHistoryTop =>
       'It may take up to 30 seconds for a transfer to appear here';
+
+  @override
+  String get treasuryBalanceTooLow => 'Treasury Balance too low';
 
   @override
   String treasuryGlobalBalance(String balance) {

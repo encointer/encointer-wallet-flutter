@@ -407,6 +407,41 @@ class AppLocalizationsFr extends AppLocalizations {
   String get event => 'ID d\'événement';
 
   @override
+  String get swapOption => 'Option d’échange';
+
+  @override
+  String swapOptionRate(String amount, String asset, String cc) {
+    return 'Taux $amount $cc/$asset';
+  }
+
+  @override
+  String swapOptionCcLimit(String amount, String cc) {
+    return 'Limite $cc : $amount $cc';
+  }
+
+  @override
+  String swapOptionAssetToReceive(String amount, String asset) {
+    return 'Vous recevez : $amount $asset';
+  }
+
+  @override
+  String swapOptionLimit(String amount, String asset) {
+    return 'Limite : $amount $asset';
+  }
+
+  @override
+  String exerciseSwapAssetOptionAvailable(String asset) {
+    return 'Option d’échange $asset disponible';
+  }
+
+  @override
+  String get exerciseSwapNativeOptionAvailable =>
+      'Option d’échange KSM disponible';
+
+  @override
+  String get exerciseSwapOption => 'Exercer l’option d’échange';
+
+  @override
   String get export => 'Activer le Bazaar';
 
   @override
@@ -1208,6 +1243,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get transferHistoryTop =>
       'Le transfert peut prendre jusqu\'à 30 secondes avant d\'apparaître ici';
+
+  @override
+  String get treasuryBalanceTooLow => 'Solde du trésor trop bas';
 
   @override
   String treasuryGlobalBalance(String balance) {

@@ -773,6 +773,42 @@ class EncointerApi {
     }
   }
 
+  Future<et.SwapAssetOption?> getSwapAssetOptionForAccount(
+    CommunityIdentifier cid,
+    AccountId32 accountId, {
+    BlockHash? at,
+  }) async {
+    try {
+      final option = await encointerKusama.query.encointerTreasuries
+          .swapAssetOptions(cid.toPolkadart(), accountId, at: at ?? store.chain.latestHash);
+
+      Log.d("[getSwapAssetOptions] got Option: ${option?.toJson()}')}");
+
+      return option;
+    } catch (e, s) {
+      Log.e('[getSwapAssetOptions] Error: $e', 'EncointerApi', s);
+      return null;
+    }
+  }
+
+  Future<et.SwapNativeOption?> getSwapNativeOptionForAccount(
+    CommunityIdentifier cid,
+    AccountId32 accountId, {
+    BlockHash? at,
+  }) async {
+    try {
+      final option = await encointerKusama.query.encointerTreasuries
+          .swapNativeOptions(cid.toPolkadart(), accountId, at: at ?? store.chain.latestHash);
+
+      Log.d("[getSwapNativeOptions] got Option: ${option?.toJson()}')}");
+
+      return option;
+    } catch (e, s) {
+      Log.e('[getSwapNativeOptions] Error: $e', 'EncointerApi', s);
+      return null;
+    }
+  }
+
   Future<Map<String, Faucet>> getAllFaucetsWithAccount({BlockHash? at}) async {
     try {
       final prefix = encointerKusama.query.encointerFaucet.faucetsMapPrefix();
@@ -914,7 +950,7 @@ class EncointerApi {
       Network.encointerRococo => encointerKusamaParams(),
       Network.gesell => encointerSoloParams(),
       Network.gesellDev => encointerSoloParams(),
-      Network.zombienetLocal => encointerKusamaParams()
+      Network.zombienetLocal => fastRuntimeParams()
     };
   }
 
@@ -934,6 +970,19 @@ class EncointerApi {
     final minTurnout = encointerKusama.constant.encointerDemocracy.minTurnout;
     final confirmationPeriod = encointerKusama.constant.encointerDemocracy.confirmationPeriod;
     final proposalLifetime = encointerKusama.constant.encointerDemocracy.proposalLifetime;
+
+    return DemocracyParams(
+      minTurnout: minTurnout,
+      confirmationPeriod: confirmationPeriod,
+      proposalLifetime: proposalLifetime,
+    );
+  }
+
+  DemocracyParams fastRuntimeParams() {
+    // Taken from: https://github.com/encointer/runtimes/tree/cl/fast-encointer-runtime
+    final minTurnout = encointerKusama.constant.encointerDemocracy.minTurnout;
+    final confirmationPeriod = BigInt.zero;
+    final proposalLifetime = BigInt.from(100 * 60 * 1000);
 
     return DemocracyParams(
       minTurnout: minTurnout,

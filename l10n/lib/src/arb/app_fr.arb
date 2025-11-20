@@ -122,6 +122,74 @@
     "errorOccurred": "Une erreur est apparue:",
     "errorUserNameIsRequired": "Le nom d'utilisateur ne doit pas être vide",
     "event": "ID d'événement",
+    "swapOption": "Option d’échange",
+    "swapOptionRate": "Taux {amount} {cc}/{asset}",
+    "@swapOptionRate": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            },
+            "cc": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "swapOptionCcLimit": "Limite {cc} : {amount} {cc}",
+    "@swapOptionCcLimit": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "cc": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "swapOptionAssetToReceive": "Vous recevez : {amount} {asset}",
+    "@swapOptionCcToBeSwapped": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "cc": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "swapOptionLimit": "Limite : {amount} {asset}",
+    "@swapOptionLimit": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "exerciseSwapAssetOptionAvailable": "Option d’échange {asset} disponible",
+    "@exerciseSwapAssetOptionAvailable": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "exerciseSwapNativeOptionAvailable": "Option d’échange KSM disponible",
+    "exerciseSwapOption": "Exercer l’option d’échange",
     "export": "Activer le Bazaar",
     "exportAccount": "exporter",
     "exportMnemonicOk": "Mnémonique a été copié dans le clipboard.",
@@ -358,6 +426,7 @@
     "transferHistory": "Transferts",
     "transferHistoryEnd": "Le chargement des transactions plus anciennes n'est pas encore pris en charge",
     "transferHistoryTop": "Le transfert peut prendre jusqu'à 30 secondes avant d'apparaître ici",
+    "treasuryBalanceTooLow": "Solde du trésor trop bas",
     "treasuryGlobalBalance": "Solde libre du trésor global : {balance} KSM.",
     "treasuryLocalBalance": "Solde libre du trésor communautaire : {balance} KSM.",
     "treasuryLocalBalanceOnAHK": "Solde libre du trésor communautaire sur Asset Hub: {balance} {asset}.",

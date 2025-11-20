@@ -122,6 +122,74 @@
     "errorOccurred": "Es ist ein Fehler aufgetreten:",
     "errorUserNameIsRequired": "Benutzername darf nicht leer sein",
     "event": "Event ID",
+    "swapOption": "Swap-Option",
+    "swapOptionRate": "Kurs {amount} {cc}/{asset}",
+    "@swapOptionRate": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            },
+            "cc": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "swapOptionCcLimit": "{cc}-Limit: {amount} {cc}",
+    "@swapOptionCcLimit": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "cc": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "swapOptionAssetToReceive": "Du erhältst: {amount} {asset}",
+    "@swapOptionCcToBeSwapped": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "cc": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "swapOptionLimit": "Limit: {amount} {asset}",
+    "@swapOptionLimit": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "exerciseSwapAssetOptionAvailable": "{asset}-Swap-Option verfügbar",
+    "@exerciseSwapAssetOptionAvailable": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "exerciseSwapNativeOptionAvailable": "KSM-Swap-Option verfügbar",
+    "exerciseSwapOption": "Swap-Option ausführen",
     "export": "Konto exportieren",
     "exportAccount": "exportieren",
     "exportMnemonicOk": "Mnemonik wurde in die Zwischenablage kopiert.",
@@ -358,6 +426,7 @@
     "transferHistory": "Transfers",
     "transferHistoryEnd": "Das Laden älterer Transaktionen wird noch nicht unterstützt",
     "transferHistoryTop": "Es kann bis zu 30 Sekunden dauern, bis der Transfer hier auftaucht",
+    "treasuryBalanceTooLow": "Schatzkammerguthaben zu niedrig",
     "treasuryGlobalBalance": "Freies globales Schatzkammerguthaben: {balance} KSM.",
     "treasuryLocalBalance": "Freies Gemeinschaftsschatzkammerguthaben: {balance} KSM.",
     "treasuryLocalBalanceOnAHK": "Freies Gemeinschaftsschatzkammerguthaben auf Asset Hub: {balance} {asset}.",

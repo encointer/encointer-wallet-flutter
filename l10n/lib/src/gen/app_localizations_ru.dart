@@ -402,6 +402,40 @@ class AppLocalizationsRu extends AppLocalizations {
   String get event => 'ID события';
 
   @override
+  String get swapOption => 'Опция обмена';
+
+  @override
+  String swapOptionRate(String amount, String asset, String cc) {
+    return 'Курс $amount $cc/$asset';
+  }
+
+  @override
+  String swapOptionCcLimit(String amount, String cc) {
+    return 'Лимит $cc: $amount $cc';
+  }
+
+  @override
+  String swapOptionAssetToReceive(String amount, String asset) {
+    return 'Вы получаете: $amount $asset';
+  }
+
+  @override
+  String swapOptionLimit(String amount, String asset) {
+    return 'Лимит: $amount $asset';
+  }
+
+  @override
+  String exerciseSwapAssetOptionAvailable(String asset) {
+    return 'Доступна опция обмена $asset';
+  }
+
+  @override
+  String get exerciseSwapNativeOptionAvailable => 'Доступна опция обмена KSM';
+
+  @override
+  String get exerciseSwapOption => 'Использовать опцию обмена';
+
+  @override
   String get export => 'Экпорт аккаунта';
 
   @override
@@ -1201,6 +1235,9 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get transferHistoryTop =>
       'Появление перевода может занять до 30 секунд';
+
+  @override
+  String get treasuryBalanceTooLow => 'Баланс казны слишком низкий';
 
   @override
   String treasuryGlobalBalance(String balance) {

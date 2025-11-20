@@ -836,6 +836,54 @@ abstract class AppLocalizations {
   /// **'Event ID'**
   String get event;
 
+  /// No description provided for @swapOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Swap Option'**
+  String get swapOption;
+
+  /// No description provided for @swapOptionRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate {amount} {cc}/{asset}'**
+  String swapOptionRate(String amount, String asset, String cc);
+
+  /// No description provided for @swapOptionCcLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'{cc} Limit: {amount} {cc}'**
+  String swapOptionCcLimit(String amount, String cc);
+
+  /// No description provided for @swapOptionAssetToReceive.
+  ///
+  /// In en, this message translates to:
+  /// **'You receive: {amount} {asset}'**
+  String swapOptionAssetToReceive(String amount, String asset);
+
+  /// No description provided for @swapOptionLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Limit: {amount} {asset}'**
+  String swapOptionLimit(String amount, String asset);
+
+  /// No description provided for @exerciseSwapAssetOptionAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'{asset} Swap Option Available'**
+  String exerciseSwapAssetOptionAvailable(String asset);
+
+  /// No description provided for @exerciseSwapNativeOptionAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'KSM Swap Option Available'**
+  String get exerciseSwapNativeOptionAvailable;
+
+  /// No description provided for @exerciseSwapOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise Swap Option'**
+  String get exerciseSwapOption;
+
   /// No description provided for @export.
   ///
   /// In en, this message translates to:
@@ -2257,6 +2305,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'It may take up to 30 seconds for a transfer to appear here'**
   String get transferHistoryTop;
+
+  /// No description provided for @treasuryBalanceTooLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Treasury Balance too low'**
+  String get treasuryBalanceTooLow;
 
   /// No description provided for @treasuryGlobalBalance.
   ///

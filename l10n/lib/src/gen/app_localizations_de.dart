@@ -408,6 +408,40 @@ class AppLocalizationsDe extends AppLocalizations {
   String get event => 'Event ID';
 
   @override
+  String get swapOption => 'Swap-Option';
+
+  @override
+  String swapOptionRate(String amount, String asset, String cc) {
+    return 'Kurs $amount $cc/$asset';
+  }
+
+  @override
+  String swapOptionCcLimit(String amount, String cc) {
+    return '$cc-Limit: $amount $cc';
+  }
+
+  @override
+  String swapOptionAssetToReceive(String amount, String asset) {
+    return 'Du erhältst: $amount $asset';
+  }
+
+  @override
+  String swapOptionLimit(String amount, String asset) {
+    return 'Limit: $amount $asset';
+  }
+
+  @override
+  String exerciseSwapAssetOptionAvailable(String asset) {
+    return '$asset-Swap-Option verfügbar';
+  }
+
+  @override
+  String get exerciseSwapNativeOptionAvailable => 'KSM-Swap-Option verfügbar';
+
+  @override
+  String get exerciseSwapOption => 'Swap-Option ausführen';
+
+  @override
   String get export => 'Konto exportieren';
 
   @override
@@ -1210,6 +1244,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get transferHistoryTop =>
       'Es kann bis zu 30 Sekunden dauern, bis der Transfer hier auftaucht';
+
+  @override
+  String get treasuryBalanceTooLow => 'Schatzkammerguthaben zu niedrig';
 
   @override
   String treasuryGlobalBalance(String balance) {

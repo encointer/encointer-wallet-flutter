@@ -4,7 +4,7 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:ew_l10n/l10n.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/location/location.dart';
-import 'package:encointer_wallet/page-encointer/democracy/proposal_page/asset_id.dart';
+import 'package:encointer_wallet/page-encointer/democracy/utils/asset_id.dart';
 import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/store/app.dart';

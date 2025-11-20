@@ -7,9 +7,10 @@ import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
-import 'package:encointer_wallet/page-encointer/democracy/proposal_page/asset_id.dart';
+import 'package:encointer_wallet/page-encointer/democracy/utils/asset_id.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/utf8_limited_byte_field.dart';
+import 'package:encointer_wallet/page-encointer/democracy/utils/field_validation.dart';
 import 'package:encointer_wallet/service/forex/forex_service.dart';
 import 'package:encointer_wallet/service/forex/known_community.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -355,6 +356,7 @@ class _ProposePageState extends State<ProposePage> {
 
                             const SizedBox(height: 5),
                             SubmitButton(
+                              // disable button for non-bootstrappers/reputables
                               onPressed: isBootstrapperOrReputable(store, store.account.currentAddress) &&
                                       !hasSameProposalForSameScope(enactmentQueue, selectedAction,
                                           selectedScope.isLocal ? store.encointer.chosenCid! : null)
@@ -363,7 +365,6 @@ class _ProposePageState extends State<ProposePage> {
                                       await _submitProposal();
                                     }
                                   : null,
-                              // disable button for non-bootstrappers/reputables
                               child: Text(l10n.proposalSubmit),
                             ),
                           ],
@@ -509,13 +510,13 @@ class _ProposePageState extends State<ProposePage> {
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
           // Only numbers & decimal
+          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         ],
-        validator: (v) => validatePositiveNumberWithMax(v, maxValue),
+        validator: (v) => validatePositiveNumberWithMax(context, double.tryParse(v ?? ''), maxValue),
         onChanged: (value) {
           setState(() {
-            allowanceError = validatePositiveNumberWithMax(value, maxValue);
+            allowanceError = validatePositiveNumberWithMax(context, double.tryParse(value), maxValue);
           });
         },
       ),
@@ -549,14 +550,20 @@ class _ProposePageState extends State<ProposePage> {
     final store = context.read<AppStore>();
 
     final knownCommunity = KnownCommunity.tryFromSymbol(store.encointer.community!.symbol!);
-    final isKnown = knownCommunity != null;
-    final ccToUsdAfterMarkup = Fmt.formatNumber(context, knownCommunity!.ccPerUsd(rate?.value ?? 0), decimals: 4);
 
+    final isKnown = knownCommunity != null;
+    Log.d('[rateInput] communityKnown: $isKnown');
+    Log.d('[rateInput] deriveRate: $tryDeriveRate');
+
+    var ccToUsdAfterMarkup = '1';
+    if (isKnown) {
+      ccToUsdAfterMarkup = Fmt.formatNumber(context, knownCommunity.ccPerUsd(rate?.value ?? 0), decimals: 4);
+    }
     return TextFormField(
       // set constant value if needed
       controller: rateController..text = tryDeriveRate && isKnown ? ccToUsdAfterMarkup : rateController.text,
       // We want to derive a sane value for well-known communities and disable editing.
-      enabled: !tryDeriveRate && isKnown,
+      enabled: !tryDeriveRate || !isKnown,
       decoration: InputDecoration(
         labelText: l10n.proposalFieldRate(
           currency,
@@ -569,10 +576,10 @@ class _ProposePageState extends State<ProposePage> {
         // Only numbers & decimal
         FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
       ],
-      validator: validatePositiveNumber,
+      validator: (String? val) => validatePositiveNumberString(context, val),
       onChanged: (value) {
         setState(() {
-          rateError = validatePositiveNumber(value);
+          rateError = validatePositiveNumberString(context, value);
         });
       },
     );
@@ -646,13 +653,13 @@ class _ProposePageState extends State<ProposePage> {
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
           // Only numbers & decimal
+          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         ],
-        validator: validatePositiveNumber,
+        validator: (String? val) => validatePositiveNumberString(context, val),
         onChanged: (value) {
           setState(() {
-            amountError = validatePositiveNumberWithMax(value, max);
+            amountError = validatePositiveNumberWithMax(context, double.tryParse(value), max);
           });
         },
       ),
@@ -708,10 +715,10 @@ class _ProposePageState extends State<ProposePage> {
         FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         // Only numbers & decimal
       ],
-      validator: validatePositiveNumber,
+      validator: (String? val) => validatePositiveNumberString(context, val),
       onChanged: (value) {
         setState(() {
-          nominalIncomeError = validatePositiveNumber(value);
+          nominalIncomeError = validatePositiveNumberString(context, value);
         });
       },
     );
@@ -728,8 +735,8 @@ class _ProposePageState extends State<ProposePage> {
       ),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         // Only numbers & decimal
+        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
       ],
       validator: validateDemurrage,
       onChanged: (value) {
@@ -840,29 +847,6 @@ class _ProposePageState extends State<ProposePage> {
       final demurrage = double.tryParse(value);
       if (demurrage == null || demurrage < 0 || demurrage > 100) {
         return l10n.proposalFieldErrorDemurrageRange;
-      } else {
-        return null;
-      }
-    }
-  }
-
-  /// Ensures that the number is positive (doubles)
-  String? validatePositiveNumber(String? value) {
-    return validatePositiveNumberWithMax(value, null);
-  }
-
-  /// Ensures that the number is positive (doubles)
-  String? validatePositiveNumberWithMax(String? value, double? max) {
-    final l10n = context.l10n;
-    if (value == null || value.isEmpty) {
-      return l10n.proposalFieldErrorEnterPositiveNumber;
-    } else {
-      final number = double.tryParse(value);
-      if (number == null || number <= 0) {
-        return l10n.proposalFieldErrorPositiveNumberRange;
-      } else if (max != null && number > max) {
-        final maxFmt = Fmt.formatNumber(context, max, decimals: 4);
-        return l10n.proposalFieldErrorPositiveNumberTooBig(maxFmt);
       } else {
         return null;
       }
