@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:encointer_wallet/page-encointer/democracy/exercise_swap/exercise_swap_page.dart';
-import 'package:encointer_wallet/page-encointer/democracy/utils/asset_id.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/swap_options.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
@@ -12,7 +11,6 @@ import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_primitiv
     show SwapAssetOption;
 import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_primitives/treasuries/swap_native_option.dart'
     show SwapNativeOption;
-import 'package:ew_primitives/ew_primitives.dart' show fixedU128FromDouble;
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
