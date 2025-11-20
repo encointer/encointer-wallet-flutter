@@ -264,7 +264,7 @@ class _AssetsViewState extends State<AssetsView> {
                       ),
                     if (assetSwap != null)
                       ElevatedButton(
-                        child: Text(l10n.exerciseSwapAssetOptionAvailable('USDC')),
+                        child: Text(l10n.exerciseSwapAssetOptionAvailable(assetSwap!.symbol)),
                         onPressed: () => Navigator.pushNamed(context, ExerciseSwapPage.route, arguments: assetSwap),
                       ),
                     if (nativeSwap != null)
