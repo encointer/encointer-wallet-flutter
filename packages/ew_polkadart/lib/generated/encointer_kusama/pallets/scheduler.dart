@@ -114,6 +114,57 @@ class Queries {
     return null; /* Nullable */
   }
 
+  /// Items to be executed, indexed by the block number that they should be executed on.
+  _i6.Future<List<List<_i3.Scheduled?>>> multiAgenda(
+    List<int> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _agenda.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _agenda.decodeValue(v.key)).toList();
+    }
+    return (keys.map((key) => []).toList() as List<List<_i3.Scheduled?>>); /* Default */
+  }
+
+  /// Retry configurations for items to be executed, indexed by task address.
+  _i6.Future<List<_i5.RetryConfig?>> multiRetries(
+    List<_i4.Tuple2<int, int>> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _retries.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _retries.decodeValue(v.key)).toList();
+    }
+    return []; /* Nullable */
+  }
+
+  /// Lookup from a name to the block number and index of the task.
+  ///
+  /// For v3 -> v4 the previously unbounded identities are Blake2-256 hashed to form the v4
+  /// identities.
+  _i6.Future<List<_i4.Tuple2<int, int>?>> multiLookup(
+    List<List<int>> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _lookup.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _lookup.decodeValue(v.key)).toList();
+    }
+    return []; /* Nullable */
+  }
+
   /// Returns the storage key for `incompleteSince`.
   _i7.Uint8List incompleteSinceKey() {
     final hashedKey = _incompleteSince.hashedKey();
@@ -161,89 +212,83 @@ class Txs {
   const Txs();
 
   /// Anonymously schedule a task.
-  _i8.RuntimeCall schedule({
+  _i8.Scheduler schedule({
     required int when,
     _i4.Tuple2<int, int>? maybePeriodic,
     required int priority,
     required _i8.RuntimeCall call,
   }) {
-    final _call = _i9.Call.values.schedule(
+    return _i8.Scheduler(_i9.Schedule(
       when: when,
       maybePeriodic: maybePeriodic,
       priority: priority,
       call: call,
-    );
-    return _i8.RuntimeCall.values.scheduler(_call);
+    ));
   }
 
   /// Cancel an anonymously scheduled task.
-  _i8.RuntimeCall cancel({
+  _i8.Scheduler cancel({
     required int when,
     required int index,
   }) {
-    final _call = _i9.Call.values.cancel(
+    return _i8.Scheduler(_i9.Cancel(
       when: when,
       index: index,
-    );
-    return _i8.RuntimeCall.values.scheduler(_call);
+    ));
   }
 
   /// Schedule a named task.
-  _i8.RuntimeCall scheduleNamed({
+  _i8.Scheduler scheduleNamed({
     required List<int> id,
     required int when,
     _i4.Tuple2<int, int>? maybePeriodic,
     required int priority,
     required _i8.RuntimeCall call,
   }) {
-    final _call = _i9.Call.values.scheduleNamed(
+    return _i8.Scheduler(_i9.ScheduleNamed(
       id: id,
       when: when,
       maybePeriodic: maybePeriodic,
       priority: priority,
       call: call,
-    );
-    return _i8.RuntimeCall.values.scheduler(_call);
+    ));
   }
 
   /// Cancel a named scheduled task.
-  _i8.RuntimeCall cancelNamed({required List<int> id}) {
-    final _call = _i9.Call.values.cancelNamed(id: id);
-    return _i8.RuntimeCall.values.scheduler(_call);
+  _i8.Scheduler cancelNamed({required List<int> id}) {
+    return _i8.Scheduler(_i9.CancelNamed(id: id));
   }
 
   /// Anonymously schedule a task after a delay.
-  _i8.RuntimeCall scheduleAfter({
+  _i8.Scheduler scheduleAfter({
     required int after,
     _i4.Tuple2<int, int>? maybePeriodic,
     required int priority,
     required _i8.RuntimeCall call,
   }) {
-    final _call = _i9.Call.values.scheduleAfter(
+    return _i8.Scheduler(_i9.ScheduleAfter(
       after: after,
       maybePeriodic: maybePeriodic,
       priority: priority,
       call: call,
-    );
-    return _i8.RuntimeCall.values.scheduler(_call);
+    ));
   }
 
   /// Schedule a named task after a delay.
-  _i8.RuntimeCall scheduleNamedAfter({
+  _i8.Scheduler scheduleNamedAfter({
     required List<int> id,
     required int after,
     _i4.Tuple2<int, int>? maybePeriodic,
     required int priority,
     required _i8.RuntimeCall call,
   }) {
-    final _call = _i9.Call.values.scheduleNamedAfter(
+    return _i8.Scheduler(_i9.ScheduleNamedAfter(
       id: id,
       after: after,
       maybePeriodic: maybePeriodic,
       priority: priority,
       call: call,
-    );
-    return _i8.RuntimeCall.values.scheduler(_call);
+    ));
   }
 
   /// Set a retry configuration for a task so that, in case its scheduled run fails, it will
@@ -258,17 +303,16 @@ class Txs {
   /// clones of the original task. Their retry configuration will be derived from the
   /// original task's configuration, but will have a lower value for `remaining` than the
   /// original `total_retries`.
-  _i8.RuntimeCall setRetry({
+  _i8.Scheduler setRetry({
     required _i4.Tuple2<int, int> task,
     required int retries,
     required int period,
   }) {
-    final _call = _i9.Call.values.setRetry(
+    return _i8.Scheduler(_i9.SetRetry(
       task: task,
       retries: retries,
       period: period,
-    );
-    return _i8.RuntimeCall.values.scheduler(_call);
+    ));
   }
 
   /// Set a retry configuration for a named task so that, in case its scheduled run fails, it
@@ -283,29 +327,26 @@ class Txs {
   /// clones of the original task. Their retry configuration will be derived from the
   /// original task's configuration, but will have a lower value for `remaining` than the
   /// original `total_retries`.
-  _i8.RuntimeCall setRetryNamed({
+  _i8.Scheduler setRetryNamed({
     required List<int> id,
     required int retries,
     required int period,
   }) {
-    final _call = _i9.Call.values.setRetryNamed(
+    return _i8.Scheduler(_i9.SetRetryNamed(
       id: id,
       retries: retries,
       period: period,
-    );
-    return _i8.RuntimeCall.values.scheduler(_call);
+    ));
   }
 
   /// Removes the retry configuration of a task.
-  _i8.RuntimeCall cancelRetry({required _i4.Tuple2<int, int> task}) {
-    final _call = _i9.Call.values.cancelRetry(task: task);
-    return _i8.RuntimeCall.values.scheduler(_call);
+  _i8.Scheduler cancelRetry({required _i4.Tuple2<int, int> task}) {
+    return _i8.Scheduler(_i9.CancelRetry(task: task));
   }
 
   /// Cancel the retry configuration of a named task.
-  _i8.RuntimeCall cancelRetryNamed({required List<int> id}) {
-    final _call = _i9.Call.values.cancelRetryNamed(id: id);
-    return _i8.RuntimeCall.values.scheduler(_call);
+  _i8.Scheduler cancelRetryNamed({required List<int> id}) {
+    return _i8.Scheduler(_i9.CancelRetryNamed(id: id));
   }
 }
 

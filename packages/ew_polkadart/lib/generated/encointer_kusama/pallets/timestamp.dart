@@ -89,9 +89,8 @@ class Txs {
   /// - 1 storage read and 1 storage mutation (codec `O(1)` because of `DidUpdate::take` in
   ///  `on_finalize`)
   /// - 1 event handler `on_timestamp_set`. Must be `O(1)`.
-  _i5.RuntimeCall set({required BigInt now}) {
-    final _call = _i6.Call.values.set(now: now);
-    return _i5.RuntimeCall.values.timestamp(_call);
+  _i5.Timestamp set({required BigInt now}) {
+    return _i5.Timestamp(_i6.Set(now: now));
   }
 }
 

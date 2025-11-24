@@ -1,5 +1,5 @@
 import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
 class InputValidation {

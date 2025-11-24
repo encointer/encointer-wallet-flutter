@@ -10,7 +10,8 @@ enum Error {
   swapRateNotDefined('SwapRateNotDefined', 1),
   swapOverflow('SwapOverflow', 2),
   insufficientNativeFunds('InsufficientNativeFunds', 3),
-  insufficientAllowance('InsufficientAllowance', 4);
+  insufficientAllowance('InsufficientAllowance', 4),
+  payoutError('PayoutError', 5);
 
   const Error(
     this.variantName,
@@ -28,6 +29,7 @@ enum Error {
   static const $ErrorCodec codec = $ErrorCodec();
 
   String toJson() => variantName;
+
   _i2.Uint8List encode() {
     return codec.encode(this);
   }
@@ -50,6 +52,8 @@ class $ErrorCodec with _i1.Codec<Error> {
         return Error.insufficientNativeFunds;
       case 4:
         return Error.insufficientAllowance;
+      case 5:
+        return Error.payoutError;
       default:
         throw Exception('Error: Invalid variant index: "$index"');
     }

@@ -67,6 +67,14 @@ class $ProposalActionIdentifier {
   IssueSwapNativeOption issueSwapNativeOption(_i3.CommunityIdentifier value0) {
     return IssueSwapNativeOption(value0);
   }
+
+  SpendAsset spendAsset(_i3.CommunityIdentifier? value0) {
+    return SpendAsset(value0);
+  }
+
+  IssueSwapAssetOption issueSwapAssetOption(_i3.CommunityIdentifier value0) {
+    return IssueSwapAssetOption(value0);
+  }
 }
 
 class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
@@ -94,6 +102,10 @@ class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
         return SpendNative._decode(input);
       case 8:
         return IssueSwapNativeOption._decode(input);
+      case 9:
+        return SpendAsset._decode(input);
+      case 10:
+        return IssueSwapAssetOption._decode(input);
       default:
         throw Exception('ProposalActionIdentifier: Invalid variant index: "$index"');
     }
@@ -132,6 +144,12 @@ class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
       case IssueSwapNativeOption:
         (value as IssueSwapNativeOption).encodeTo(output);
         break;
+      case SpendAsset:
+        (value as SpendAsset).encodeTo(output);
+        break;
+      case IssueSwapAssetOption:
+        (value as IssueSwapAssetOption).encodeTo(output);
+        break;
       default:
         throw Exception('ProposalActionIdentifier: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -158,6 +176,10 @@ class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
         return (value as SpendNative)._sizeHint();
       case IssueSwapNativeOption:
         return (value as IssueSwapNativeOption)._sizeHint();
+      case SpendAsset:
+        return (value as SpendAsset)._sizeHint();
+      case IssueSwapAssetOption:
+        return (value as IssueSwapAssetOption)._sizeHint();
       default:
         throw Exception('ProposalActionIdentifier: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -515,6 +537,90 @@ class IssueSwapNativeOption extends ProposalActionIdentifier {
         other,
       ) ||
       other is IssueSwapNativeOption && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
+}
+
+class SpendAsset extends ProposalActionIdentifier {
+  const SpendAsset(this.value0);
+
+  factory SpendAsset._decode(_i1.Input input) {
+    return SpendAsset(const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).decode(input));
+  }
+
+  /// Option<CommunityIdentifier>
+  final _i3.CommunityIdentifier? value0;
+
+  @override
+  Map<String, Map<String, List<int>>?> toJson() => {'SpendAsset': value0?.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      9,
+      output,
+    );
+    const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SpendAsset && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
+}
+
+class IssueSwapAssetOption extends ProposalActionIdentifier {
+  const IssueSwapAssetOption(this.value0);
+
+  factory IssueSwapAssetOption._decode(_i1.Input input) {
+    return IssueSwapAssetOption(_i3.CommunityIdentifier.codec.decode(input));
+  }
+
+  /// CommunityIdentifier
+  final _i3.CommunityIdentifier value0;
+
+  @override
+  Map<String, Map<String, List<int>>> toJson() => {'IssueSwapAssetOption': value0.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i3.CommunityIdentifier.codec.sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      10,
+      output,
+    );
+    _i3.CommunityIdentifier.codec.encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is IssueSwapAssetOption && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;

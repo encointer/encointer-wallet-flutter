@@ -45,9 +45,8 @@ class Txs {
   const Txs();
 
   /// Authenticates the sudo key and dispatches a function call with `Root` origin.
-  _i5.RuntimeCall sudo({required _i5.RuntimeCall call}) {
-    final _call = _i6.Call.values.sudo(call: call);
-    return _i5.RuntimeCall.values.sudo(_call);
+  _i5.Sudo sudo({required _i5.RuntimeCall call}) {
+    return _i5.Sudo(_i6.Sudo(call: call));
   }
 
   /// Authenticates the sudo key and dispatches a function call with `Root` origin.
@@ -55,44 +54,40 @@ class Txs {
   /// Sudo user to specify the weight of the call.
   ///
   /// The dispatch origin for this call must be _Signed_.
-  _i5.RuntimeCall sudoUncheckedWeight({
+  _i5.Sudo sudoUncheckedWeight({
     required _i5.RuntimeCall call,
     required _i7.Weight weight,
   }) {
-    final _call = _i6.Call.values.sudoUncheckedWeight(
+    return _i5.Sudo(_i6.SudoUncheckedWeight(
       call: call,
       weight: weight,
-    );
-    return _i5.RuntimeCall.values.sudo(_call);
+    ));
   }
 
   /// Authenticates the current sudo key and sets the given AccountId (`new`) as the new sudo
   /// key.
-  _i5.RuntimeCall setKey({required _i8.MultiAddress new_}) {
-    final _call = _i6.Call.values.setKey(new_: new_);
-    return _i5.RuntimeCall.values.sudo(_call);
+  _i5.Sudo setKey({required _i8.MultiAddress new_}) {
+    return _i5.Sudo(_i6.SetKey(new_: new_));
   }
 
   /// Authenticates the sudo key and dispatches a function call with `Signed` origin from
   /// a given account.
   ///
   /// The dispatch origin for this call must be _Signed_.
-  _i5.RuntimeCall sudoAs({
+  _i5.Sudo sudoAs({
     required _i8.MultiAddress who,
     required _i5.RuntimeCall call,
   }) {
-    final _call = _i6.Call.values.sudoAs(
+    return _i5.Sudo(_i6.SudoAs(
       who: who,
       call: call,
-    );
-    return _i5.RuntimeCall.values.sudo(_call);
+    ));
   }
 
   /// Permanently removes the sudo key.
   ///
   /// **This cannot be un-done.**
-  _i5.RuntimeCall removeKey() {
-    final _call = _i6.Call.values.removeKey();
-    return _i5.RuntimeCall.values.sudo(_call);
+  _i5.Sudo removeKey() {
+    return _i5.Sudo(_i6.RemoveKey());
   }
 }

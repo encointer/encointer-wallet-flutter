@@ -1,0 +1,23 @@
+name: ew_l10n
+description: An Encointer package to have common test keys.
+version: 0.1.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+
+dev_dependencies:
+  test: ^1.24.9
+  very_good_analysis: ^10.0.0
+
+flutter:
+  generate: true

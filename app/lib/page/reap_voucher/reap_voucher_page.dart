@@ -20,7 +20,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 
 class ReapVoucherParams {
   ReapVoucherParams({
@@ -184,7 +184,12 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     if (_voucherBalance! < 0.04) return showRedeemFailedDialog(context, context.l10n.voucherBalanceTooLow);
 
     await submitEncointerTransferAll(
-      context, context.read<AppStore>(), widget.api, voucherKeyringAccount, recipientAddress, cid,
+      context,
+      context.read<AppStore>(),
+      widget.api,
+      voucherKeyringAccount,
+      recipientAddress,
+      cid,
       // the voucher obviously has tokens in cid.
       txPaymentAsset: cid,
       onError: (report) async {

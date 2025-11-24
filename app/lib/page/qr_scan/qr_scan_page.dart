@@ -11,7 +11,7 @@ import 'package:encointer_wallet/page/qr_scan/qr_scan_service.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_l10n/l10n.dart';
 
 export 'qr_codes/qr_code_base.dart';
 export 'qr_scan_service.dart';
@@ -72,9 +72,11 @@ class ScanPage extends StatelessWidget {
                 onScan: (barcode, args) async {
                   if (barcode == null) {
                     Log.e('Failed to scan Barcode', 'ScanPage');
+                    return true;
                   } else {
                     log('barcode: $barcode');
                     await _onScan(context, barcode);
+                    return true;
                   }
                 },
               ),
