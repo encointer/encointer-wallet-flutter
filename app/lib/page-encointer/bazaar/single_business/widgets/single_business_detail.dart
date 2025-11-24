@@ -31,9 +31,9 @@ class SingleBusinessDetail extends StatelessWidget {
     final appStore = context.watch<AppStore>();
     final l10n = context.l10n;
 
-    // final store = context.read<AppStore>();
-    // final currentAddress = stosre.account.currentAddress;
-    const currentAddress = '5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK';
+    final store = context.read<AppStore>();
+    final currentAddress = store.account.currentAddress;
+    // const currentAddress = '5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK';
 
     return SingleChildScrollView(
       child: Card(

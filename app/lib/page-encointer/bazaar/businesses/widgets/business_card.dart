@@ -2,6 +2,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_imag
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/propose_page.dart';
 import 'package:encointer_wallet/service/service.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_l10n/l10n.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,9 @@ class BusinessCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final store = context.read<AppStore>();
-    // final currentAddress = store.account.currentAddress;
-    const currentAddress = '5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK';
+    final store = context.read<AppStore>();
+    final currentAddress = store.account.currentAddress;
+    // const currentAddress = '5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK';
 
     return InkWell(
       borderRadius: BorderRadius.circular(16),
