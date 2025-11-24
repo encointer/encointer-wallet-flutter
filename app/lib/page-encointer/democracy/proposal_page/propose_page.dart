@@ -51,9 +51,11 @@ import 'package:ew_polkadart/ew_polkadart.dart'
 const logTarget = 'ProposePage';
 
 class ProposePage extends StatefulWidget {
-  const ProposePage({super.key});
+  const ProposePage({super.key, this.initialAction});
 
   static const String route = '/propose';
+
+  final ProposalActionIdentifier? initialAction;
 
   @override
   State<ProposePage> createState() => _ProposePageState();
@@ -67,7 +69,7 @@ class _ProposePageState extends State<ProposePage> {
   late AssetHubWebApi assetHubApi;
 
   // Default selected values
-  ProposalActionIdentifier selectedAction = ProposalActionIdentifier.petition;
+  late ProposalActionIdentifier selectedAction;
   late ProposalScope selectedScope;
   List<ProposalScope> allowedScopes = [];
   AssetToSpend selectedAsset = AssetToSpend.usdc;
@@ -123,6 +125,7 @@ class _ProposePageState extends State<ProposePage> {
   @override
   void initState() {
     super.initState();
+    selectedAction = widget.initialAction ?? ProposalActionIdentifier.petition;
 
     assetHubApi = AssetHubWebApi.endpoints(
       context.read<AppStore>().settings.currentNetwork.assetHubEndpoints(),

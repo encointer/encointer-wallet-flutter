@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_gallery.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
+import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/propose_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:ew_keyring/ew_keyring.dart';
@@ -67,7 +68,10 @@ class SingleBusinessDetail extends StatelessWidget {
                       if (AddressUtils.areEqual(business.controller!, currentAddress))
                         FilledButton.tonal(
                           onPressed: () {
-                            Navigator.of(context).pushNamed(ProposePage.route);
+                            Navigator.of(context).pushNamed(
+                              ProposePage.route,
+                              arguments: ProposalActionIdentifier.issueSwapNativeOption,
+                            );
                           },
                           style: FilledButton.styleFrom(
                             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),

@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
+import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/propose_page.dart';
 import 'package:encointer_wallet/service/service.dart';
 import 'package:ew_keyring/ew_keyring.dart';
@@ -110,10 +111,12 @@ class BusinessCard extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 10),
                         child: Align(
                           alignment: Alignment.centerRight,
-                          child: FilledButton.tonal( // 👈 lighter button style
+                          child: FilledButton.tonal(
                             onPressed: () {
-                              Navigator.of(context).pushNamed(ProposePage.route);
-                            },
+                              Navigator.of(context).pushNamed(
+                                ProposePage.route,
+                                arguments: ProposalActionIdentifier.issueSwapNativeOption,
+                              );                            },
                             style: FilledButton.styleFrom(
                               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                               minimumSize: Size.zero, // << keeps button small
