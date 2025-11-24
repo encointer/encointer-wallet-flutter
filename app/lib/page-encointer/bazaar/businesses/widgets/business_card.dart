@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
+import 'package:encointer_wallet/page-encointer/democracy/proposal_page/propose_page.dart';
 import 'package:encointer_wallet/service/service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +8,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/single_business/logic/sin
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/views/single_business_view.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/theme/theme.dart';
+import 'package:encointer_wallet/store/app.dart';
 
 class BusinessCard extends StatelessWidget {
   const BusinessCard({super.key, required this.business});
@@ -15,25 +17,28 @@ class BusinessCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = context.read<AppStore>();
+    final currentAddress = store.account.currentAddress;
+
     return InkWell(
       onTap: () {
-        Navigator.push<Widget>(
+        Navigator.push(
           context,
-          MaterialPageRoute(
+          MaterialPageRoute<Widget>(
             builder: (context) => Provider(
-              create: (context) => SingleBusinessStore(business),
+              create: (_) => SingleBusinessStore(business),
               child: const SingleBusinessView(),
             ),
           ),
         );
       },
-      child: SizedBox(
-        height: 160,
-        child: Card(
-          margin: const EdgeInsets.only(top: 10),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      child: Card(
+        margin: const EdgeInsets.only(top: 10),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        child: SizedBox(
+          // Enlarge height so button has its own space
+          height: 190,
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               IpfsImage(
                 ipfs: webApi.ipfsApi,
@@ -46,39 +51,69 @@ class BusinessCard extends StatelessWidget {
                   bottomLeft: Radius.circular(20),
                 ),
                 loadingBuilder: (_) => const Center(child: CircularProgressIndicator()),
-                errorBuilder: (_, error) => const Center(child: Icon(Icons.broken_image, size: 40)),
+                errorBuilder: (_, __) => const Center(child: Icon(Icons.broken_image, size: 40)),
               ),
+
               Expanded(
-                child: ListTile(
-                  contentPadding: const EdgeInsets.all(10),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(child: Text(business.category.name, style: context.bodySmall)),
-                      Text(
-                        business.status?.name ?? '',
-                        style: context.bodySmall.copyWith(color: business.status?.textColor ?? Colors.black),
-                      )
-                    ],
-                  ),
-                  subtitle: Column(
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 28),
+                      // --- Top row ---
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(child: Text(business.category.name, style: context.bodySmall)),
+                          Text(
+                            business.status?.name ?? '',
+                            style: context.bodySmall.copyWith(
+                              color: business.status?.textColor ?? Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      // --- Name ---
                       Text(
                         business.name,
                         style: context.labelLarge,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
+
                       const SizedBox(height: 8),
+
+                      // --- Description ---
                       Text(
                         business.description,
                         style: context.bodyMedium,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                       ),
-                      const SizedBox(height: 18),
+
+                      const Spacer(),
+
+                      // --- Button row (safe, no overlap) ---
+                      // if (business.controller == currentAddress)
+                      if (true)
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(ProposePage.route);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: const Text('IssueSwapOption Proposal'),
+                          ),
+                        ),
                     ],
                   ),
                 ),
