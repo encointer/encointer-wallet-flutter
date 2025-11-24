@@ -63,5 +63,22 @@ void main() {
       );
       expect(aliceAddress, 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F');
     });
+
+    test('areEqual works with different prefixes', () {
+      const alicePrefix2 = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F';
+      const alicePrefix42 = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY';
+      expect(AddressUtils.areEqual(alicePrefix2, alicePrefix42), true);
+    });
+
+    test('areEqual works with same prefixes', () {
+      const alicePrefix2 = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F';
+      expect(AddressUtils.areEqual(alicePrefix2, alicePrefix2), true);
+    });
+
+    test('areEqual returns false for different addresses', () {
+      const alicePrefix42 = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY';
+      const bobPrefix42 = '5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty';
+      expect(AddressUtils.areEqual(alicePrefix42, bobPrefix42), false);
+    });
   });
 }
