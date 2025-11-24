@@ -68,7 +68,10 @@ class SingleBusinessDetail extends StatelessWidget {
                       if (AddressUtils.areEqual(business.controller!, currentAddress))
                         ElevatedButton.icon(
                           onPressed: () {
-                            Navigator.of(context).pushNamed(ProposePage.route, arguments: ProposalActionIdentifier.issueSwapAssetOption,);
+                            Navigator.of(context).pushNamed(
+                              ProposePage.route,
+                              arguments: ProposalActionIdentifier.issueSwapAssetOption,
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

@@ -52,10 +52,9 @@ class BusinessCard extends StatelessWidget {
               width: 110,
               height: 120,
               fit: BoxFit.contain,
-              loadingBuilder: (_) =>
-              const SizedBox(height: 120, child: Center(child: CircularProgressIndicator())),
+              loadingBuilder: (_) => const SizedBox(height: 120, child: Center(child: CircularProgressIndicator())),
               errorBuilder: (_, __) =>
-              const SizedBox(height: 120, child: Center(child: Icon(Icons.broken_image, size: 40))),
+                  const SizedBox(height: 120, child: Center(child: Icon(Icons.broken_image, size: 40))),
             ),
 
             // --- Right side ---
@@ -110,21 +109,23 @@ class BusinessCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Align(
-                          alignment: Alignment.centerRight,
-                          child: ElevatedButton.icon(
-                            onPressed: () {
-                              Navigator.of(context).pushNamed(ProposePage.route, arguments: ProposalActionIdentifier.issueSwapAssetOption,);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+                            alignment: Alignment.centerRight,
+                            child: ElevatedButton.icon(
+                              onPressed: () {
+                                Navigator.of(context).pushNamed(
+                                  ProposePage.route,
+                                  arguments: ProposalActionIdentifier.issueSwapAssetOption,
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
                               ),
-                            ),
-                            icon: const Icon(Icons.add, size: 16),
-                            label: Text(context.l10n.swapOption),
-                          )
-                        ),
+                              icon: const Icon(Icons.add, size: 16),
+                              label: Text(context.l10n.swapOption),
+                            )),
                       ),
                   ],
                 ),
