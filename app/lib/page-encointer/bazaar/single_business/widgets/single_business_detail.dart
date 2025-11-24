@@ -66,25 +66,18 @@ class SingleBusinessDetail extends StatelessWidget {
                       //     style: context.bodySmall.copyWith(color: const Color(0xFF35B731)),
                       //   )
                       if (AddressUtils.areEqual(business.controller!, currentAddress))
-                        FilledButton.tonal(
+                        ElevatedButton.icon(
                           onPressed: () {
-                            Navigator.of(context).pushNamed(
-                              ProposePage.route,
-                              arguments: ProposalActionIdentifier.issueSwapNativeOption,
-                            );
+                            Navigator.of(context).pushNamed(ProposePage.route, arguments: ProposalActionIdentifier.issueSwapAssetOption,);
                           },
-                          style: FilledButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                            minimumSize: Size.zero,
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: Text(
-                            context.l10n.swapOption,
-                            style: const TextStyle(fontSize: 13),
-                          ),
+                          icon: const Icon(Icons.add, size: 16),
+                          label: Text(context.l10n.swapOption),
                         ),
                     ],
                   ),

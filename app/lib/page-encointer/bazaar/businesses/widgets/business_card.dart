@@ -111,22 +111,19 @@ class BusinessCard extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 10),
                         child: Align(
                           alignment: Alignment.centerRight,
-                          child: FilledButton.tonal(
+                          child: ElevatedButton.icon(
                             onPressed: () {
-                              Navigator.of(context).pushNamed(
-                                ProposePage.route,
-                                arguments: ProposalActionIdentifier.issueSwapNativeOption,
-                              );                            },
-                            style: FilledButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                              minimumSize: Size.zero, // << keeps button small
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              Navigator.of(context).pushNamed(ProposePage.route, arguments: ProposalActionIdentifier.issueSwapAssetOption,);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                             ),
-                            child: Text(
-                              context.l10n.swapOption,
-                              style: const TextStyle(fontSize: 13),
-                            ),
-                          ),
+                            icon: const Icon(Icons.add, size: 16),
+                            label: Text(context.l10n.swapOption),
+                          )
                         ),
                       ),
                   ],
