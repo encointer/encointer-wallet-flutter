@@ -8,7 +8,6 @@ import 'package:encointer_wallet/page-encointer/bazaar/single_business/logic/sin
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/views/single_business_view.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/store/app.dart';
 
 class BusinessCard extends StatelessWidget {
   const BusinessCard({super.key, required this.business});
@@ -17,15 +16,17 @@ class BusinessCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final store = context.read<AppStore>();
-    final currentAddress = store.account.currentAddress;
+    // final store = context.read<AppStore>();
+    // final currentAddress = stosre.account.currentAddress;
+    const currentAddress = '5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK';
 
     return InkWell(
+      borderRadius: BorderRadius.circular(16),
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute<Widget>(
-            builder: (context) => Provider(
+            builder: (_) => Provider(
               create: (_) => SingleBusinessStore(business),
               child: const SingleBusinessView(),
             ),
@@ -33,93 +34,101 @@ class BusinessCard extends StatelessWidget {
         );
       },
       child: Card(
-        margin: const EdgeInsets.only(top: 10),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: SizedBox(
-          // Enlarge height so button has its own space
-          height: 190,
-          child: Row(
-            children: [
-              IpfsImage(
-                ipfs: webApi.ipfsApi,
-                cidOrFolder: business.logo!,
-                width: 130,
-                height: double.infinity,
-                fit: BoxFit.contain,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  bottomLeft: Radius.circular(20),
-                ),
-                loadingBuilder: (_) => const Center(child: CircularProgressIndicator()),
-                errorBuilder: (_, __) => const Center(child: Icon(Icons.broken_image, size: 40)),
-              ),
+        margin: const EdgeInsets.symmetric(vertical: 6),
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Row(
+          children: [
+            // --- Left image ---
+            IpfsImage(
+              ipfs: webApi.ipfsApi,
+              cidOrFolder: business.logo!,
+              width: 110,
+              height: 120,
+              fit: BoxFit.contain,
+              loadingBuilder: (_) =>
+              const SizedBox(height: 120, child: Center(child: CircularProgressIndicator())),
+              errorBuilder: (_, __) =>
+              const SizedBox(height: 120, child: Center(child: Icon(Icons.broken_image, size: 40))),
+            ),
 
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // --- Top row ---
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(child: Text(business.category.name, style: context.bodySmall)),
-                          Text(
-                            business.status?.name ?? '',
-                            style: context.bodySmall.copyWith(
-                              color: business.status?.textColor ?? Colors.black,
-                            ),
+            // --- Right side ---
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Category + Status
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            business.category.name,
+                            style: context.bodySmall,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ],
-                      ),
+                        ),
+                        Text(
+                          business.status?.name ?? '',
+                          style: context.bodySmall.copyWith(
+                            color: business.status?.textColor ?? Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
 
-                      const SizedBox(height: 20),
+                    const SizedBox(height: 8),
 
-                      // --- Name ---
-                      Text(
-                        business.name,
-                        style: context.labelLarge,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
+                    // Name
+                    Text(
+                      business.name,
+                      style: context.labelLarge,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
 
-                      const SizedBox(height: 8),
+                    const SizedBox(height: 6),
 
-                      // --- Description ---
-                      Text(
-                        business.description,
-                        style: context.bodyMedium,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                      ),
+                    // Description
+                    Text(
+                      business.description,
+                      style: context.bodyMedium,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
 
-                      const Spacer(),
-
-                      // --- Button row (safe, no overlap) ---
-                      // if (business.controller == currentAddress)
-                      if (true)
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: ElevatedButton(
+                    // Button (compact)
+                    if (business.controller == currentAddress)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: FilledButton.tonal( // 👈 lighter button style
                             onPressed: () {
                               Navigator.of(context).pushNamed(ProposePage.route);
                             },
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
+                            style: FilledButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              minimumSize: Size.zero, // << keeps button small
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            child: const Text('IssueSwapOption Proposal'),
+                            child: const Text(
+                              'Issue Swap Option',
+                              style: TextStyle(fontSize: 13),
+                            ),
                           ),
                         ),
-                    ],
-                  ),
+                      ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
