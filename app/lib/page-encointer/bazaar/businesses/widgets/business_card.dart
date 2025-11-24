@@ -1,6 +1,8 @@
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/propose_page.dart';
 import 'package:encointer_wallet/service/service.dart';
+import 'package:ew_keyring/ew_keyring.dart';
+import 'package:ew_l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +19,7 @@ class BusinessCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final store = context.read<AppStore>();
-    // final currentAddress = stosre.account.currentAddress;
+    // final currentAddress = store.account.currentAddress;
     const currentAddress = '5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK';
 
     return InkWell(
@@ -103,7 +105,7 @@ class BusinessCard extends StatelessWidget {
                     ),
 
                     // Button (compact)
-                    if (business.controller == currentAddress)
+                    if (AddressUtils.areEqual(business.controller!, currentAddress))
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Align(
@@ -117,9 +119,9 @@ class BusinessCard extends StatelessWidget {
                               minimumSize: Size.zero, // << keeps button small
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            child: const Text(
-                              'Issue Swap Option',
-                              style: TextStyle(fontSize: 13),
+                            child: Text(
+                              context.l10n.swapOption,
+                              style: const TextStyle(fontSize: 13),
                             ),
                           ),
                         ),
