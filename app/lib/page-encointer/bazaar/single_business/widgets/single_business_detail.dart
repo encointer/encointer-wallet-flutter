@@ -1,7 +1,10 @@
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_gallery.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
+import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
+import 'package:encointer_wallet/page-encointer/democracy/proposal_page/propose_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +30,11 @@ class SingleBusinessDetail extends StatelessWidget {
     final businessStore = context.watch<SingleBusinessStore>();
     final appStore = context.watch<AppStore>();
     final l10n = context.l10n;
+
+    final store = context.read<AppStore>();
+    final currentAddress = store.account.currentAddress;
+    // const currentAddress = '5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK';
+
     return SingleChildScrollView(
       child: Card(
         child: Column(
@@ -57,6 +65,23 @@ class SingleBusinessDetail extends StatelessWidget {
                       //     business.status!,
                       //     style: context.bodySmall.copyWith(color: const Color(0xFF35B731)),
                       //   )
+                      if (AddressUtils.areEqual(business.controller!, currentAddress))
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(
+                              ProposePage.route,
+                              arguments: ProposalActionIdentifier.issueSwapAssetOption,
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          icon: const Icon(Icons.add, size: 16),
+                          label: Text(context.l10n.swapOption),
+                        ),
                     ],
                   ),
                   const SizedBox(height: 8),
