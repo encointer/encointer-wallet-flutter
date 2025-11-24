@@ -56,7 +56,7 @@ dependencies:
     git:
       url: https://github.com/encointer/flutter_qr_reader.git
       # Get fixed version on master
-      ref: 647977de0d71a2e421d8dff7357d483329581e65
+      ref: f6a2c4310a1ee55180ec34862d7dd4f5c98e39bf
   permission_handler: ^12.0.1
   flutter_svg: ^2.0.17
   url_launcher: ^6.3.1

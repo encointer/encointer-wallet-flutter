@@ -72,9 +72,11 @@ class ScanPage extends StatelessWidget {
                 onScan: (barcode, args) async {
                   if (barcode == null) {
                     Log.e('Failed to scan Barcode', 'ScanPage');
+                    return true;
                   } else {
                     log('barcode: $barcode');
                     await _onScan(context, barcode);
+                    return true;
                   }
                 },
               ),

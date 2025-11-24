@@ -636,8 +636,8 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: "647977de0d71a2e421d8dff7357d483329581e65"
-      resolved-ref: "647977de0d71a2e421d8dff7357d483329581e65"
+      ref: f6a2c4310a1ee55180ec34862d7dd4f5c98e39bf
+      resolved-ref: f6a2c4310a1ee55180ec34862d7dd4f5c98e39bf
       url: "https://github.com/encointer/flutter_qr_reader.git"
     source: git
     version: "1.0.7"

@@ -98,8 +98,10 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
                   onScan: (barcode, args) async {
                     if (barcode == null) {
                       Log.e('Failed to scan Barcode', 'ScanClaimQrCode');
+                      return true;
                     } else {
                       onScan(context.read<AppStore>(), l10n, barcode);
+                      return true;
                     }
                   },
                   helpWidget: Column(
