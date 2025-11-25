@@ -372,9 +372,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get enable => 'Aktivieren';
 
   @override
-  String get enableBazaar => 'Bazaar aktivieren';
-
-  @override
   String get endorseeContent =>
       'Du wurdest von einem Bootstrapper als vertrauenswürdiges Mitglied bestätigt. Deswegen ist dein Sitz garantiert.';
 

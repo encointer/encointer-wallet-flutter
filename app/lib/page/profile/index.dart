@@ -228,16 +228,6 @@ class _ProfileState extends State<Profile> {
                             : const CupertinoActivityIndicator(),
                       ),
                     ),
-                    ListTile(
-                      title: Text(l10n.enableBazaar, style: h3Grey),
-                      trailing: Checkbox(
-                        value: store.settings.enableBazaar,
-                        // Fixme: Need to change the tab to update the tabList. But, do we care? This is only
-                        // temporary, and a developer option. It is unnecessary to include the complexity to update
-                        // the parent widget from here.
-                        onChanged: (_) => store.settings.toggleEnableBazaar(),
-                      ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.all(8),
                       child: SubmitButton(

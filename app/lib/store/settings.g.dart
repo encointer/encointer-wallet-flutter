@@ -32,21 +32,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
   bool get isConnected =>
       (_$isConnectedComputed ??= Computed<bool>(() => super.isConnected, name: '_SettingsStore.isConnected')).value;
 
-  late final _$enableBazaarAtom = Atom(name: '_SettingsStore.enableBazaar', context: context);
-
-  @override
-  bool get enableBazaar {
-    _$enableBazaarAtom.reportRead();
-    return super.enableBazaar;
-  }
-
-  @override
-  set enableBazaar(bool value) {
-    _$enableBazaarAtom.reportWrite(value, super.enableBazaar, () {
-      super.enableBazaar = value;
-    });
-  }
-
   late final _$loadingAtom = Atom(name: '_SettingsStore.loading', context: context);
 
   @override
@@ -166,16 +151,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
   late final _$_SettingsStoreActionController = ActionController(name: '_SettingsStore', context: context);
 
   @override
-  void toggleEnableBazaar() {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.toggleEnableBazaar');
-    try {
-      return super.toggleEnableBazaar();
-    } finally {
-      _$_SettingsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setNetworkLoading(bool isLoading) {
     final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setNetworkLoading');
     try {
@@ -198,7 +173,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
   @override
   String toString() {
     return '''
-enableBazaar: ${enableBazaar},
 loading: ${loading},
 localeCode: ${localeCode},
 currentNetwork: ${currentNetwork},
