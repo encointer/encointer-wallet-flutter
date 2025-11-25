@@ -19,10 +19,6 @@ abstract class _SettingsStore with Store {
   final String localStorageLocaleKey = 'locale';
   final String localStorageNetworkKey = 'network';
 
-  /// The bazaar is not active currently. This variable can only be set under profile -> developer options.
-  @observable
-  bool enableBazaar = false;
-
   @observable
   bool loading = true;
 
@@ -66,11 +62,6 @@ abstract class _SettingsStore with Store {
   Future<void> setLocalCode(String code) async {
     await rootStore.localStorage.setObject(localStorageLocaleKey, code);
     localeCode = code;
-  }
-
-  @action
-  void toggleEnableBazaar() {
-    enableBazaar = !enableBazaar;
   }
 
   @action
