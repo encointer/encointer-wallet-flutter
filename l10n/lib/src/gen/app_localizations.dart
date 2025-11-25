@@ -863,7 +863,7 @@ abstract class AppLocalizations {
   /// No description provided for @exerciseSwapAssetOptionAvailable.
   ///
   /// In en, this message translates to:
-  /// **'{asset} Swap Option Available'**
+  /// **'Swap Option Available'**
   String exerciseSwapAssetOptionAvailable(String asset);
 
   /// No description provided for @exerciseSwapNativeOptionAvailable.
@@ -2597,7 +2597,7 @@ abstract class AppLocalizations {
   /// No description provided for @verifyAuthTitle.
   ///
   /// In en, this message translates to:
-  /// **'Please verify the {useBioAuth, select, true{your identity} false{your PIN} other{ }}.'**
+  /// **'Please verify {useBioAuth, select, true{your identity} false{your PIN} other{ }}.'**
   String verifyAuthTitle(String useBioAuth);
 
   /// No description provided for @offersForCommunity.

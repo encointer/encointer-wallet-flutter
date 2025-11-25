@@ -178,7 +178,7 @@
             }
         }
     },
-    "exerciseSwapAssetOptionAvailable": "{asset} Swap Option Available",
+    "exerciseSwapAssetOptionAvailable": "Swap Option Available",
     "@exerciseSwapAssetOptionAvailable": {
         "placeholders": {
             "asset": {
@@ -755,7 +755,7 @@
             }
         }
     },
-    "verifyAuthTitle": "Please verify the {useBioAuth, select, true{your identity} false{your PIN} other{ }}.",
+    "verifyAuthTitle": "Please verify {useBioAuth, select, true{your identity} false{your PIN} other{ }}.",
     "@verifyAuthTitle": {
         "placeholders": {
             "useBioAuth": {

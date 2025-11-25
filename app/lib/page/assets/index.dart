@@ -262,21 +262,7 @@ class _AssetsViewState extends State<AssetsView> {
                         },
                         child: const Text('Invalidate data to trigger state update'),
                       ),
-                    if (assetSwap != null)
-                      ElevatedButton(
-                        child: Text(l10n.exerciseSwapAssetOptionAvailable(assetSwap!.symbol)),
-                        onPressed: () => Navigator.pushNamed(context, ExerciseSwapPage.route, arguments: assetSwap),
-                      ),
-                    if (nativeSwap != null)
-                      ElevatedButton(
-                        child: Text(l10n.exerciseSwapNativeOptionAvailable),
-                        onPressed: () => Navigator.pushNamed(
-                          context,
-                          ExerciseSwapPage.route,
-                          arguments: nativeSwap,
-                        ),
-                      ),
-                    const SizedBox(height: 42),
+                    const SizedBox(height: 24),
                     Row(
                       children: [
                         ActionButton(
@@ -324,9 +310,34 @@ class _AssetsViewState extends State<AssetsView> {
                   ],
                 );
               }),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 6),
-              ),
+              if (assetSwap != null)
+                ElevatedButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Iconsax.trade),
+                      const SizedBox(width: 4),
+                      Text(l10n.exerciseSwapAssetOptionAvailable(assetSwap!.symbol)),
+                    ],
+                  ),
+                  onPressed: () => Navigator.pushNamed(context, ExerciseSwapPage.route, arguments: assetSwap),
+                ),
+              if (nativeSwap != null)
+                ElevatedButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Iconsax.trade),
+                      const SizedBox(width: 4),
+                      Text(l10n.exerciseSwapNativeOptionAvailable),
+                    ],
+                  ),
+                  onPressed: () => Navigator.pushNamed(
+                    context,
+                    ExerciseSwapPage.route,
+                    arguments: nativeSwap,
+                  ),
+                ),
               Observer(builder: (_) {
                 final shouldFetch = widget.store.encointer.currentPhase == CeremonyPhase.Registering ||
                     (widget.store.encointer.communityAccount?.meetupCompleted ?? false);
@@ -510,6 +521,7 @@ class _AssetsViewState extends State<AssetsView> {
 
   Future<void> _refreshEncointerState() async {
     // getCurrentPhase is the root of all state updates.
+    unawaited(getSwapOptions());
     await webApi.encointer.getCurrentPhase();
     await widget.store.encointer.getEncointerBalance();
   }

@@ -429,7 +429,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String exerciseSwapAssetOptionAvailable(String asset) {
-    return '$asset-Swap-Option verfügbar';
+    return 'Swap-Option verfügbar';
   }
 
   @override

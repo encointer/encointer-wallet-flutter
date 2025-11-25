@@ -423,7 +423,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String exerciseSwapAssetOptionAvailable(String asset) {
-    return '$asset Swap Option Available';
+    return 'Swap Option Available';
   }
 
   @override
@@ -1436,7 +1436,7 @@ class AppLocalizationsEn extends AppLocalizations {
         'other': ' ',
       },
     );
-    return 'Please verify the $_temp0.';
+    return 'Please verify $_temp0.';
   }
 
   @override
