@@ -126,7 +126,7 @@ final class LoginDialog {
       content: CupertinoTextFormFieldRow(
         key: const Key(EWTestKeys.inputPasswordDialog),
         decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
-        padding: EdgeInsets.zero,
+        padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
         autofocus: true,
         keyboardType: TextInputType.number,
         placeholder: l10n.passOld,

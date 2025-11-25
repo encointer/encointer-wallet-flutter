@@ -13,9 +13,6 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/models/bazaar/businesses.dart';
-import 'package:encointer_wallet/models/bazaar/ipfs_product.dart';
-import 'package:encointer_wallet/models/bazaar/item_offered.dart';
 import 'package:encointer_wallet/models/faucet/faucet.dart';
 import 'package:encointer_wallet/service/encointer_feed/feed.dart' as feed;
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -99,7 +96,6 @@ class EncointerApi {
   }
 
   void getCommunityData() {
-    getBusinesses();
     getCommunityMetadata();
     getAllMeetupLocations();
     getDemurrage();
@@ -777,6 +773,42 @@ class EncointerApi {
     }
   }
 
+  Future<et.SwapAssetOption?> getSwapAssetOptionForAccount(
+    CommunityIdentifier cid,
+    AccountId32 accountId, {
+    BlockHash? at,
+  }) async {
+    try {
+      final option = await encointerKusama.query.encointerTreasuries
+          .swapAssetOptions(cid.toPolkadart(), accountId, at: at ?? store.chain.latestHash);
+
+      Log.d("[getSwapAssetOptions] got Option: ${option?.toJson()}')}");
+
+      return option;
+    } catch (e, s) {
+      Log.e('[getSwapAssetOptions] Error: $e', 'EncointerApi', s);
+      return null;
+    }
+  }
+
+  Future<et.SwapNativeOption?> getSwapNativeOptionForAccount(
+    CommunityIdentifier cid,
+    AccountId32 accountId, {
+    BlockHash? at,
+  }) async {
+    try {
+      final option = await encointerKusama.query.encointerTreasuries
+          .swapNativeOptions(cid.toPolkadart(), accountId, at: at ?? store.chain.latestHash);
+
+      Log.d("[getSwapNativeOptions] got Option: ${option?.toJson()}')}");
+
+      return option;
+    } catch (e, s) {
+      Log.e('[getSwapNativeOptions] Error: $e', 'EncointerApi', s);
+      return null;
+    }
+  }
+
   Future<Map<String, Faucet>> getAllFaucetsWithAccount({BlockHash? at}) async {
     try {
       final prefix = encointerKusama.query.encointerFaucet.faucetsMapPrefix();
@@ -918,7 +950,7 @@ class EncointerApi {
       Network.encointerRococo => encointerKusamaParams(),
       Network.gesell => encointerSoloParams(),
       Network.gesellDev => encointerSoloParams(),
-      Network.zombienetLocal => encointerKusamaParams()
+      Network.zombienetLocal => fastRuntimeParams()
     };
   }
 
@@ -938,6 +970,19 @@ class EncointerApi {
     final minTurnout = encointerKusama.constant.encointerDemocracy.minTurnout;
     final confirmationPeriod = encointerKusama.constant.encointerDemocracy.confirmationPeriod;
     final proposalLifetime = encointerKusama.constant.encointerDemocracy.proposalLifetime;
+
+    return DemocracyParams(
+      minTurnout: minTurnout,
+      confirmationPeriod: confirmationPeriod,
+      proposalLifetime: proposalLifetime,
+    );
+  }
+
+  DemocracyParams fastRuntimeParams() {
+    // Taken from: https://github.com/encointer/runtimes/tree/cl/fast-encointer-runtime
+    final minTurnout = encointerKusama.constant.encointerDemocracy.minTurnout;
+    final confirmationPeriod = BigInt.zero;
+    final proposalLifetime = BigInt.from(100 * 60 * 1000);
 
     return DemocracyParams(
       minTurnout: minTurnout,
@@ -979,28 +1024,11 @@ class EncointerApi {
     }
   }
 
-  /// Get all the registered businesses for the current `chosenCid`
-  Future<List<AccountBusinessTuple>> getBusinesses({BlockHash? at}) async {
-    // set the store because the current bazaar data model reads the values from the store.
-    store.encointer.bazaar?.setBusinessRegistry(allMockBusinesses);
-    return allMockBusinesses;
-  }
-
   Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid, {BlockHash? at}) async {
-    return _dartApi.bazaarGetBusinesses(cid, at: at ?? store.chain.latestHash);
-  }
+    final businesses = await _dartApi.bazaarGetBusinesses(cid, at: at ?? store.chain.latestHash);
 
-  Future<Either<Businesses, EwHttpException>> getBusinessesIpfs(String ipfsUrlHash) async {
-    final url = '$infuraIpfsUrl/$ipfsUrlHash';
-    return ewHttp.getType(url, fromJson: Businesses.fromJson);
-  }
-
-  ///TODO(Azamat): method not working, fix it
-  Future<Either<Map<String, dynamic>, EwHttpException>> getBusinessesPhotos(String ipfsUrlHash) async {
-    final url = '$infuraIpfsUrl/$ipfsUrlHash';
-    final response = ewHttp.get<Map<String, dynamic>>(url);
-
-    return response;
+    Log.d('[bazaarGetBusinesses] got businesses $businesses');
+    return businesses;
   }
 
   /// Get all the registered offerings for the current `chosenCid`
@@ -1018,16 +1046,6 @@ class EncointerApi {
   Future<List<OfferingData>> bazaarGetOfferingsForBusiness(CommunityIdentifier cid, String? controller,
       {BlockHash? at}) async {
     return _dartApi.bazaarGetOfferingsForBusiness(cid, controller, at: at ?? store.chain.latestHash);
-  }
-
-  Future<Either<ItemOffered, EwHttpException>> getItemOffered(String ipfsUrlHash) async {
-    final url = '$infuraIpfsUrl/$ipfsUrlHash';
-    return ewHttp.getType(url, fromJson: ItemOffered.fromJson);
-  }
-
-  Future<Either<IpfsProduct, EwHttpException>> getSingleBusinessProduct(String ipfsUrlHash) async {
-    final url = '$infuraIpfsUrl/$ipfsUrlHash';
-    return ewHttp.getType(url, fromJson: IpfsProduct.fromJson);
   }
 }
 

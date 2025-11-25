@@ -87,6 +87,14 @@ class Fmt {
     return doubleFormat(bigIntToDouble(balanceInt(raw), decimals), length: length);
   }
 
+  static String formatNumber(BuildContext context, num value, {int decimals = 2}) {
+    final localeName = Localizations.localeOf(context).toString();
+    final formatter = NumberFormat.decimalPattern(localeName)
+      ..minimumFractionDigits = 0
+      ..maximumFractionDigits = decimals;
+    return formatter.format(value);
+  }
+
   /// combined number transform 1-2:
   /// from raw <String> to <double>
   static double balanceDouble(String raw, int decimals) {

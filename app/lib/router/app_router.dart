@@ -1,5 +1,8 @@
 import 'package:encointer_wallet/page-encointer/democracy/democracy_page.dart';
+import 'package:encointer_wallet/page-encointer/democracy/exercise_swap/exercise_swap_page.dart';
+import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart' show ProposalActionIdentifier;
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/propose_page.dart';
+import 'package:encointer_wallet/page-encointer/democracy/utils/swap_options.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -182,7 +185,14 @@ class AppRoute {
       case DemocracyPage.route:
         return CupertinoPageRoute(builder: (_) => const DemocracyPage(), settings: settings);
       case ProposePage.route:
-        return CupertinoPageRoute(builder: (_) => const ProposePage(), settings: settings);
+        final action = settings.arguments as ProposalActionIdentifier?;
+        return CupertinoPageRoute(builder: (_) => ProposePage(initialAction: action), settings: settings);
+      case ExerciseSwapPage.route:
+        final option = settings.arguments! as SwapOption;
+        return CupertinoPageRoute(
+          builder: (_) => ExerciseSwapPage(option: option),
+          settings: settings,
+        );
       default:
         throw Exception('no builder specified for route named: [${settings.name}]');
     }

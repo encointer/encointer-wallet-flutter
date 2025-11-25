@@ -1,8 +1,16 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:encointer_wallet/page-encointer/democracy/exercise_swap/exercise_swap_page.dart';
+import 'package:encointer_wallet/page-encointer/democracy/utils/swap_options.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
+import 'package:ew_keyring/ew_keyring.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_primitives/treasuries/swap_asset_option.dart'
+    show SwapAssetOption;
+import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_primitives/treasuries/swap_native_option.dart'
+    show SwapNativeOption;
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +48,8 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
+const _logTarget = 'AssetsHomepageStore';
+
 /// Getting confused with Assets (gen) while importing
 /// thus changed name to [AssetsView]
 class AssetsView extends StatefulWidget {
@@ -61,6 +71,11 @@ class _AssetsViewState extends State<AssetsView> {
   final double _panelHeightClosed = 0;
   late AppLocalizations l10n;
 
+  NativeSwap? nativeSwap;
+  AssetSwap? assetSwap;
+
+  final devSwap = false;
+
   @override
   void initState() {
     _connectNodeAll();
@@ -81,6 +96,56 @@ class _AssetsViewState extends State<AssetsView> {
       panelHeight,
     );
     super.didChangeDependencies();
+  }
+
+  Future<void> getSwapOptions() async {
+    setState(() {
+      nativeSwap = null;
+      assetSwap = null;
+    });
+
+    final cid = widget.store.encointer.chosenCid;
+
+    if (cid == null) {
+      Log.d('[getSwapOptions]: No cid chosen returning...', _logTarget);
+      return;
+    }
+
+    final accountId = AddressUtils.addressToPubKey(widget.store.account.currentAddress).toList();
+
+    if (devSwap) {
+      Log.d('DEV: Getting Swap Options', _logTarget);
+      setState(() {
+        nativeSwap = mockNativeSwap(cid);
+        assetSwap = mockAssetSwap(cid);
+      });
+      return;
+    }
+
+    Log.d('Getting Swap Options', _logTarget);
+
+    // Fetch swaps from API concurrently
+    final results = await Future.wait([
+      webApi.encointer.getSwapAssetOptionForAccount(cid, accountId),
+      webApi.encointer.getSwapNativeOptionForAccount(cid, accountId),
+    ]);
+
+    final fetchedAssetOption = results[0] as SwapAssetOption?;
+    final fetchedNativeOption = results[1] as SwapNativeOption?;
+
+    setState(() {
+      if (fetchedAssetOption != null) {
+        assetSwap = AssetSwap(fetchedAssetOption);
+      } else {
+        Log.d('No Swap Asset Options Found', _logTarget);
+      }
+
+      if (fetchedNativeOption != null) {
+        nativeSwap = NativeSwap(fetchedNativeOption);
+      } else {
+        Log.d('No Swap Native Options Found', _logTarget);
+      }
+    });
   }
 
   @override
@@ -191,10 +256,13 @@ class _AssetsViewState extends State<AssetsView> {
                     ),
                     if (_appSettingsStore.developerMode)
                       ElevatedButton(
-                        onPressed: widget.store.dataUpdate.setInvalidated,
+                        onPressed: () {
+                          getSwapOptions();
+                          widget.store.dataUpdate.setInvalidated();
+                        },
                         child: const Text('Invalidate data to trigger state update'),
                       ),
-                    const SizedBox(height: 42),
+                    const SizedBox(height: 24),
                     Row(
                       children: [
                         ActionButton(
@@ -242,9 +310,34 @@ class _AssetsViewState extends State<AssetsView> {
                   ],
                 );
               }),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 6),
-              ),
+              if (assetSwap != null)
+                ElevatedButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Iconsax.trade),
+                      const SizedBox(width: 4),
+                      Text(l10n.exerciseSwapAssetOptionAvailable(assetSwap!.symbol)),
+                    ],
+                  ),
+                  onPressed: () => Navigator.pushNamed(context, ExerciseSwapPage.route, arguments: assetSwap),
+                ),
+              if (nativeSwap != null)
+                ElevatedButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Iconsax.trade),
+                      const SizedBox(width: 4),
+                      Text(l10n.exerciseSwapNativeOptionAvailable),
+                    ],
+                  ),
+                  onPressed: () => Navigator.pushNamed(
+                    context,
+                    ExerciseSwapPage.route,
+                    arguments: nativeSwap,
+                  ),
+                ),
               Observer(builder: (_) {
                 final shouldFetch = widget.store.encointer.currentPhase == CeremonyPhase.Registering ||
                     (widget.store.encointer.communityAccount?.meetupCompleted ?? false);
@@ -421,11 +514,14 @@ class _AssetsViewState extends State<AssetsView> {
       if (context.read<AppStore>().encointer.community?.communityIcon == null) {
         context.read<AppStore>().encointer.community?.getCommunityIcon();
       }
+
+      getSwapOptions();
     });
   }
 
   Future<void> _refreshEncointerState() async {
     // getCurrentPhase is the root of all state updates.
+    unawaited(getSwapOptions());
     await webApi.encointer.getCurrentPhase();
     await widget.store.encointer.getEncointerBalance();
   }

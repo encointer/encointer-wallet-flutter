@@ -14,6 +14,7 @@
     "accountsDeleteAll": "Ondoa akaunti zote",
     "accountShare": "Shea akaunti",
     "addAccount": "Ongeza akaunti",
+    "addBusiness": "Ongeza biashara",
     "addContact": "Ongeza mawasiliano",
     "addInvoiceQrToAddress": "Ongeza QR-invoice kwenye anuani",
     "address": "Anuani",
@@ -48,7 +49,17 @@
     "categories": "Kategoria",
     "canUseFaucetOnlyWithCurrentAccount": "Unaweza kutumia vipengele vya kisima tu ikiwa ukurasa huu wa akaunti unaonyesha akaunti hai kwa sasa.",
     "changeYourPin": "Badilisha PIN",
+    "category_all": "Zote",
+    "category_art_music": "Sanaa & Muziki",
+    "category_body_soul": "Mwili & Nafsi",
+    "category_fashion_clothing": "Mitindo & Mavazi",
+    "category_food_beverage_store": "Duka la Chakula & Vinywaji",
+    "category_restaurants_bars": "Migahawa & Baa",
+    "category_it_hardware": "Vifaa vya IT",
+    "category_food": "Chakula",
+    "category_other": "Nyingine",
     "checkEmailApp": "Cheki kama umedownload app ya Email, Tafadhali badili jamii kuweza kutuma mali.",
+    "emailFailedToOpen": "Imeshindikana kufungua programu ya barua pepe.",
     "chosenRightCommunity": "Data ni za jamii tofauti. Tafadhali badilisha jamii ili kutuma fedha..",
     "claim": "Dai",
     "claimRewardsNotificationBody": "Tayari umeshapokea mapato yako ya jamii!",
@@ -101,7 +112,6 @@
     "done": "Tayari",
     "doYouAlreadyHaveAnAccount": "Je una akaunti tayari?",
     "enable": "Wezesha",
-    "enableBazaar": "Wezesha Bazaar",
     "endorseeContent": "Umeidhinishwa kama mwanachama mwaminifu wa jamii ya Nyota. Hivyo, kuna uhakika wa wewe kuteuliwa kuhudhuria kikao cha mzunguko huu.",
     "endorseeTitle": "Umesajiliwa kama muidhinishwa - nafasi yako imehakikishwa",
     "endorseNewcomerNotificationBody": "Asante kwa kumuidhinisha mwanachama mpya!",
@@ -112,6 +122,14 @@
     "errorOccurred": "Kuna hitilafu imetokea:",
     "errorUserNameIsRequired": "Jina la mtumiaji haliwezi kuwa baki",
     "event": "ID ya tukio",
+    "swapOption": "Chaguo la kubadilisha",
+    "swapOptionRate": "Kiwango {amount} {cc}/{asset}",
+    "swapOptionCcLimit": "Kikomo cha {cc}: {amount} {cc}",
+    "swapOptionAssetToReceive": "Unapokea: {amount} {asset}",
+    "swapOptionLimit": "Kikomo: {amount} {asset}",
+    "exerciseSwapAssetOptionAvailable": "Chaguo la kubadilisha linapatikana",
+    "exerciseSwapNativeOptionAvailable": "Chaguo la kubadilisha KSM linapatikana",
+    "exerciseSwapOption": "Tumia chaguo la kubadilisha",
     "export": "Onyesha taarifa za siri za akaunti yako kuweza kuisafirisha",
     "exportAccount": "Safirisha",
     "exportMnemonicOk": "Maneno ya siri yamenakiliwa.",
@@ -216,26 +234,9 @@
     "proposalExplainerSetInactivityTimeout": "Pendekezo hili linapendekeza muda mpya wa kimataifa wa kutokufanya kazi. Ikiwa jamii haitafanya mikutano kwa idadi iliyopendekezwa ya mizunguko, itafutwa.",
     "proposalExplainerPetition": "Pendekezo hili linatumika kama ombi, iwe kimataifa au ndani ya jamii yako. Ingawa halina athari ya moja kwa moja kwenye mnyororo wa vizuizi, linaonyesha nia, kuruhusu jamii kuitambua na kuchukua hatua.",
     "proposalExplainerSpendNative": "Pendekezo hili linapendekeza kutumia KSM kwa faida ya mfaidi kutoka hazina ya jamii, ama kupitia kura za kimataifa au za jamii. Fedha hizi zinaweza kutumika kureward michango ya jamii au kusaidia mipango ya jamii.",
-    "proposalExplainerIssueSwapNativeOption": "Pendekezo hili linamruhusu mnufaika kubadilisha tokeni za jamii kuwa KSM kwa kiwango kilichowekwa mara nyingi hadi kikomo cha KSM kilichopangwa. Mnufaika anaweza kuwa biashara ya ndani inayokubali tokeni za jamii na inaweza kukusanya ziada.\n\nMfano kwa kiwango cha 3 {currency}/KSM na kikomo cha 2 KSM:\n\nMnufaika anaweza kubadilisha hadi 2 KSM kwa kiwango cha 3 {currency}/KSM. Hivyo basi, kiwango cha juu ni 6 {currency} => 2 KSM.",
-    "@proposalExplainerIssueSwapNativeOption": {
-        "placeholders": {
-            "currency": {
-                "type": "String",
-                "example": "0.5"
-            }
-        }
-    },
-    "proposalExplainerSpendAsset": "Pendekezo hili linapendekeza kutumia tokeni maalum kwa mnufaika kutoka hazina ya jamii, ama kupitia kura ya jumla au ya jamii. Fedha hizi zinaweza kutumika kuponyesha michango ya jamii au kusaidia miradi ya jamii.\n\nKumbuka: Utapokea tokeni hii moja kwa moja kwenye Asset Hub Kusama.",
-    "proposalExplainerIssueSwapAssetOption": "Pendekezo hili linakuruhusu kubadilisha tokeni za jamii kwa tokeni maalum kwa kiwango kilichowekwa mara nyingi hadi kikomo kilichowekwa cha tokeni.\n\nMfano kwa kiwango cha 3 {currency}/Token na kikomo cha 2 Token:\n\nUnaweza kubadilisha hadi 2 Token kwa kiwango cha 3 {currency}/Token. Hivyo, kiwango cha juu ni 6 {currency} => 2 Token.\n\nKumbuka: Utapokea tokeni hii moja kwa moja kwenye Asset Hub Kusama.",
-    "@proposalExplainerIssueSwapAssetOption": {
-        "placeholders": {
-            "currency": {
-                "type": "String",
-                "example": "0.5"
-            }
-        }
-    },
-    "proposalExplainerCannotVoteYet": "Utaweza kuanza kupiga kura kwa kutumia sifa yako kuanzia mzunguko ujao!",
+    "proposalExplainerIssueSwapNativeOption": "Pendekezo hili linamruhusu mpokeaji kubadilisha {cc} kwa KSM kwa kiwango kilichowekwa mara kadhaa hadi kufikia kikomo cha KSM. Mpokeaji anaweza kuwa biashara ya eneo inayokubali {cc} na inaweza kujikusanyia ziada.\n\nMfano ukiwa na kiwango cha 3 {cc}/KSM na kikomo cha 2 KSM:\n\nMpokeaji anaweza kubadilisha hadi KSM 2 kwa kiwango cha 3 {cc}/KSM. Kiwango cha juu zaidi ni 6 {cc} => 2 KSM.",
+    "proposalExplainerSpendAsset": "Pendekezo hili linapendekeza kutumia {asset} kwa mnufaika kutoka hazina ya jumuiya, ama kupitia kura ya kimataifa au ya kijumuiya. Fedha hizi zinaweza kutumika kupongeza michango ya wanajumuiya au kusaidia miradi ya kijumuiya.\n\nKumbuka: Utapokea {asset} moja kwa moja kwenye Asset Hub Kusama.",
+    "proposalExplainerIssueSwapAssetOption": "Pendekezo hili linamruhusu mpokeaji kubadilisha {cc} kwa {asset} kwa kiwango kilichowekwa mara kadhaa hadi kufikia kikomo cha {asset}. Mpokeaji anaweza kuwa biashara ya eneo inayokubali {cc} na inaweza kujikusanyia ziada.\n\nMfano ukiwa na kiwango cha 3 {cc}/{asset} na kikomo cha 2 {asset}:\n\nMpokeaji anaweza kubadilisha hadi {asset} 2 kwa kiwango cha 3 {cc}/{asset}. Kiwango cha juu zaidi ni {cc} 6 => {asset} 2.\n\nKumbuka: Utapokea {asset} moja kwa moja kwenye Asset Hub Kusama.",    "proposalExplainerCannotVoteYet": "Utaweza kuanza kupiga kura kwa kutumia sifa yako kuanzia mzunguko ujao!",
     "proposalType": "Aina ya pendekezo",
     "proposalTypeAddLocation": "Ongeza eneo",
     "proposalTypeRemoveLocation": "Ondoa eneo",
@@ -245,46 +246,10 @@
     "proposalTypePetition": "Ombi rasmi",
     "proposalTypeSpendNative": "KSM asili",
     "proposalTypeIssueSwapNativeOption": "Badilisha {cc} kwa KSM",
-    "@proposalTypeIssueSwapNativeOption": {
-        "placeholders": {
-            "cc": {
-                "type": "String",
-                "example": "MTA"
-            }
-        }
-    },
     "proposalTypeSpendAsset": "Tumia {asset}",
-    "@proposalTypeSpendAsset": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "USDC"
-            }
-        }
-    },
     "proposalTypeIssueSwapAssetOption": "Badilisha {cc} kwa {asset}",
-    "@proposalTypeIssueSwapAssetOption": {
-        "placeholders": {
-            "cc": {
-                "type": "String",
-                "example": "MTA"
-            },
-            "asset": {
-                "type": "String",
-                "example": "USDC"
-            }
-        }
-    },
     "proposalScope": "Wigo",
     "proposalScopeLocal": "Kitaifa ({community})",
-    "@proposalScopeLocal": {
-        "placeholders": {
-            "community": {
-                "type": "String",
-                "example": "Mediterranea"
-            }
-        }
-    },
     "proposalScopeGlobal": "Kimataifa",
     "proposalFieldLatitude": "Latitudo",
     "proposalFieldLongitude": "Longitudo",
@@ -294,37 +259,9 @@
     "proposalFieldPetitionText": "Maandishi ya ombi rasmi",
     "proposalFieldAssetToSpend": "Tokeni ya kutumia",
     "proposalFieldAmount": "Kiasi ({asset})",
-    "@proposalFieldAmount": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "6"
-            }
-        }
-    },
     "proposalFieldBeneficiary": "Mnufaika",
     "proposalFieldAllowance": "Kikomo ({asset})",
-    "@proposalFieldAllowance": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "6"
-            }
-        }
-    },
     "proposalFieldRate": "Kiwango ({cc}/{asset})",
-    "@proposalFieldRate": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "6"
-            },
-            "cc": {
-                "type": "String",
-                "example": "6"
-            }
-        }
-    },
     "proposalFieldBurn": "Teketeza",
     "proposalFieldValidity": "Uhalali",
     "proposalFieldErrorEnterPetitionText": "Weka maandishi ya ombi rasmi",
@@ -337,10 +274,11 @@
     "proposalFieldErrorDemurrageRange": "Ada ya kuchelewesha lazima iwe kati ya 0 na 100",
     "proposalFieldErrorEnterPositiveNumber": "Weka namba chanya",
     "proposalFieldErrorPositiveNumberRange": "Lazima iwe namba chanya",
-    "proposalFieldErrorPositiveNumberTooBig": "Nambari ni kubwa sana",
+    "proposalFieldErrorPositiveNumberTooBig": "Nambari ni kubwa sana (Kikomo: {amount})",
     "proposalFieldErrorEnterInactivityTimeout": "Weka muda wa kutokufanya kazi",
     "proposalFieldErrorPositiveIntegerRange": "Lazima iwe namba kamili chanya",
     "proposalOnlyBootstrappersOrReputablesCanSubmit": "Ni bootstrappers au waheshimika pekee wanaoweza kuwasilisha pendekezo.",
+    "proposalOnlyBusinessOwnersCanSubmit": "Ni wamiliki wa biashara pekee wanaoweza kuwasilisha pendekezo hili.",
     "proposalCannotSubmitProposalTypePendingEnactment": "Haiwezi kuwasilisha pendekezo la aina hii kwa sababu tayari kuna moja linalosubiri kutekelezwa.",
     "proposalClose": "Funga",
     "proposalUpdateState": "Sasisha",
@@ -430,42 +368,11 @@
     "transferHistory": "Miamala",
     "transferHistoryEnd": "Kupakia miamala ya zamani haijasapotiwa bado",
     "transferHistoryTop": "Inaweza kuchukua hadi sekunde 30 kwa ajili ya uhamishaji kuonekana hapa",
+    "treasuryBalanceTooLow": "Salio la hazina ni dogo sana",
     "treasuryGlobalBalance": "Salio huru la hazina ya kimataifa: {balance} KSM.",
-    "@treasuryGlobalBalance": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
     "treasuryLocalBalance": "Salio huru la hazina ya jamii: {balance} KSM.",
-    "@treasuryLocalBalance": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
     "treasuryLocalBalanceOnAHK": "Salio huru la hazina ya jamii kwenye AHK: {balance} KSM.",
-    "@treasuryLocalBalanceOnAHK": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
     "treasuryPendingSpends": "Matumizi yanayosubiri: {spends} KSM.",
-    "@treasuryPendingSpends": {
-        "placeholders": {
-            "spends": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
     "txBroadcast": "Muamala umetumwa.",
     "txError": "Kuna hitilafu kwenye muamala",
     "txInBlock": "Muamala uko kwenye block.",
@@ -494,381 +401,38 @@
     "youAreNotRegisteredPleaseRegisterNextTime": "Hujawekwa kwenye mzunguko huu. Tafadhali jiunge na mzunguko ujao ili upokee mapato yako ya jamii.",
     "yourNewPin": "PIN mpya.",
     "unlockAccount": "Fungua akaunti {currentAccountName} na PIN",
-    "@unlockAccount": {
-        "placeholders": {
-            "currentAccountName": {
-                "type": "String",
-                "example": "Alice"
-            }
-        }
-    },
     "errorMessageWithStatusCode": "Kuna kitu hakijaenda sawa, tafadhali jaribu tena! StatusCode: {errorText}",
-    "@errorMessageWithStatusCode": {
-        "placeholders": {
-            "errorText": {
-                "type": "String",
-                "example": "Format exception"
-            }
-        }
-    },
     "yourBalanceFor": "Salio lako, {accountName}",
-    "@yourBalanceFor": {
-        "placeholders": {
-            "accountName": {
-                "type": "String",
-                "example": "Format exception"
-            }
-        }
-    },
     "incomingConfirmed": "Salio la {amount} {cidSymbol} Linaloingia kwa {accountName} imethibitishwa",
-    "@incomingConfirmed": {
-        "placeholders": {
-            "amount": {
-                "type": "num",
-                "example": "0.1"
-            },
-            "cidSymbol": {
-                "type": "String",
-                "example": "#"
-            },
-            "accountName": {
-                "type": "String",
-                "example": "Alice"
-            }
-        }
-    },
     "voucherDifferentNetworkAndCommunity": "Vocha hii ni ya mtandao tofauti. Je, unataka kubadilisha mtandao kwenda {network} na {community}? Unaweza kubadilisha mtandao chini ya Wasifu > Developer mode",
-    "@voucherDifferentNetworkAndCommunity": {
-        "placeholders": {
-            "network": {
-                "type": "String",
-                "example": "Dev-Gesell"
-            },
-            "community": {
-                "type": "String",
-                "example": "Leu"
-            }
-        }
-    },
     "voucherDifferentCommunity": "Vocha hii ni ya jamii tofauti. Je, unataka kubadilisha jamii kwenda {community}?",
-    "@voucherDifferentCommunity": {
-        "placeholders": {
-            "community": {
-                "type": "String",
-                "example": "Leu"
-            }
-        }
-    },
     "doYouWantToRedeemThisVoucher": "Je, unataka kutumia vocha hii kwa {accountName}?",
-    "@doYouWantToRedeemThisVoucher": {
-        "placeholders": {
-            "accountName": {
-                "type": "String",
-                "example": "Alice"
-            }
-        }
-    },
     "claimsSubmitN": "Tuma madai {count}",
-    "@claimsSubmitN": {
-        "placeholders": {
-            "count": {
-                "type": "int",
-                "example": "3"
-            }
-        }
-    },
     "claimsScanned": "Umeskani madai {amount}",
-    "@claimsScanned": {
-        "placeholders": {
-            "amount": {
-                "type": "num",
-                "example": "0.1"
-            }
-        }
-    },
     "claimsScannedNOfM": "Madai yaliyoskaniwa {scannedCount} / madai {totalCount}",
-    "@claimsScannedNOfM": {
-        "placeholders": {
-            "scannedCount": {
-                "type": "int",
-                "example": "2"
-            },
-            "totalCount": {
-                "type": "int",
-                "example": "3"
-            }
-        }
-    },
     "claimsSubmitDetail": "Inatuma madai {amount} kwa mkusanyiko wa hivi karibuni",
-    "@claimsSubmitDetail": {
-        "placeholders": {
-            "amount": {
-                "type": "num",
-                "example": "0.1"
-            }
-        }
-    },
     "youAreRegisteredAs": "Umejisajili kwenye kikao kijacho kama {participantType}.",
-    "@youAreRegisteredAs": {
-        "placeholders": {
-            "participantType": {
-                "type": "String",
-                "example": "Newbie"
-            }
-        }
-    },
     "youAreAssignedToAGatheringWithNParticipants": "Umewekwa kwenye mkusanyiko na watu {participantsCount}",
-    "@youAreAssignedToAGatheringWithNParticipants": {
-        "placeholders": {
-            "participantsCount": {
-                "type": "int",
-                "example": "3"
-            }
-        }
-    },
     "successfullySentNAttestations": "Umefanikiwa kuwasilisha uthibitisho wa watu {participantsCount} wengine.",
-    "@successfullySentNAttestations": {
-        "placeholders": {
-            "participantsCount": {
-                "type": "int",
-                "example": "3"
-            }
-        }
-    },
     "tokenSend": "Tuma {symbol}",
-    "@tokenSend": {
-        "placeholders": {
-            "symbol": {
-                "type": "String",
-                "example": "#"
-            }
-        }
-    },
     "communityWithName": "Jamii ya {name}",
-    "@communityWithName": {
-        "placeholders": {
-            "name": {
-                "type": "String",
-                "example": "LEU"
-            }
-        }
-    },
     "verifyAuthTitle": "Tafadhali thibitisha {useBioAuth, select, true{utambulisho wako} false{PIN yako} other{ }}.",
-    "@verifyAuthTitle": {
-        "placeholders": {
-            "useBioAuth": {
-                "type": "String",
-                "example": "true"
-            }
-        }
-    },
     "offersForCommunity": "Ofa za {value}",
-    "@offersForCommunity": {
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "LEU"
-            }
-        }
-    },
     "proposalApprovalThreshold": "Kiwango cha Uhakiki: {percentage}%",
-    "@proposalApprovalThreshold": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalPassed": "Imepita kwa {percentage}% Aye",
-    "@proposalPassed": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalFailed": "imefeli kwa {percentage}% Aye",
-    "@proposalFailed": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalIsPassing": "Kwa sasa inapita kwa {percentage}% Aye",
-    "@proposalIsPassing": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalIsFailing": "Kwa sasa inafeli kwa {percentage}% Aye",
-    "@proposalIsFailing": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalUpdateNominalIncome": "Sahisha mapato ya jamii kuwa {value} {currency}",
-    "@proposalUpdateNominalIncome": {
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "currency": {
-                "type": "String",
-                "example": "LEU"
-            }
-        }
-    },
     "proposalSetInactivityTimeoutTo": "Kimataifa: Weka muda mpya wa kutokufanya kazi kuwa {value}",
-    "@proposalSetInactivityTimeoutTo": {
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalAddLocation": "{cid}: Ongeza eneo jipya",
-    "@proposalAddLocation": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            }
-        }
-    },
     "proposalRemoveLocation": "{cid}: Ondoa eneo",
-    "@proposalRemoveLocation": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            }
-        }
-    },
     "proposalUpdateDemurrage": "Sasisha demurrage kuwa {value}%/mwezi",
-    "@proposalUpdateDemurrage": {
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalPetition": "{cid} petitioni: {value}",
-    "@proposalPetition": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "value": {
-                "type": "String",
-                "example": "Peace to the World"
-            }
-        }
-    },
     "proposalSpendNative": "{cid} hazina itatuma {amount} KSM kwa {beneficiary}",
-    "@proposalSpendNative": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "amount": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "beneficiary": {
-                "type": "String",
-                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
-            }
-        }
-    },
     "proposalSpendAsset": "{cid} hazina itatuma {amount} {asset} kwa {beneficiary}",
-    "@proposalSpendAsset": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "global"
-            },
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "amount": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "beneficiary": {
-                "type": "String",
-                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
-            }
-        }
-    },
     "proposalIssueSwapNativeOption": "{cid}: Mruhusu {beneficiary} kubadilisha hadi {allowance} KSM kwa kiwango cha {rate} {cid}/KSM.",
-    "@proposalIssueSwapNativeOption": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "beneficiary": {
-                "type": "String",
-                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
-            },
-            "allowance": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "rate": {
-                "type": "String",
-                "example": "1.2"
-            }
-        }
-    },
+    "proposalIssueSwapOptionCCLimit": "Unaweza kubadilisha hadi {allowance} {cc} kufikia kikomo chako cha {asset} kilichowekwa.",
     "proposalIssueSwapAssetOption": "{cid}: Mruhusu {beneficiary} kubadilisha hadi {allowance} {asset} kwa kiwango cha {rate} {cid}/{asset}.",
-    "@proposalIssueSwapAssetOption": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "global"
-            },
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "beneficiary": {
-                "type": "String",
-                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
-            },
-            "allowance": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "rate": {
-                "type": "String",
-                "example": "1.2"
-            }
-        }
-    },
-    "proposalSupersededBy": "Imetanguliwa na: {id}",
-    "@proposalSupersededBy": {
-        "placeholders": {
-            "id": {
-                "type": "String",
-                "example": "6"
-            }
-        }
-    }
+    "proposalSupersededBy": "Imetanguliwa na: {id}"
 }

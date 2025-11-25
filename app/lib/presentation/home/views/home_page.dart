@@ -58,11 +58,10 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         controller: _pageController,
         children: [
           AssetsView(_service.appStore),
-          if (context.select<AppStore, bool>((store) => _service.appStore.settings.enableBazaar))
-            Provider(
-              create: (context) => BusinessesStore(),
-              child: const BazaarPage(),
-            ),
+          Provider(
+            create: (context) => BusinessesStore(),
+            child: const BazaarPage(),
+          ),
 
           /// empty widget here because when qr code is clicked, we navigate to [ScanPage]
           const SizedBox(),
@@ -102,11 +101,10 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         TabKey.wallet,
         Iconsax.home_2,
       ),
-      if (context.select<AppStore, bool>((store) => _service.appStore.settings.enableBazaar))
-        TabData(
-          TabKey.bazaar,
-          Iconsax.shop,
-        ), // dart collection if
+      TabData(
+        TabKey.bazaar,
+        Iconsax.shop,
+      ), // dart collection if
       TabData(
         TabKey.scan,
         Iconsax.scan_barcode,

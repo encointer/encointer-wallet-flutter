@@ -188,6 +188,12 @@ abstract class AppLocalizations {
   /// **'Add account'**
   String get addAccount;
 
+  /// No description provided for @addBusiness.
+  ///
+  /// In en, this message translates to:
+  /// **'Add business'**
+  String get addBusiness;
+
   /// No description provided for @addContact.
   ///
   /// In en, this message translates to:
@@ -392,11 +398,65 @@ abstract class AppLocalizations {
   /// **'Change PIN'**
   String get changeYourPin;
 
-  /// No description provided for @checkEmailApp.
+  /// No description provided for @category_all.
   ///
   /// In en, this message translates to:
-  /// **'Check that you have downloaded the Email app'**
-  String get checkEmailApp;
+  /// **'All'**
+  String get category_all;
+
+  /// No description provided for @category_art_music.
+  ///
+  /// In en, this message translates to:
+  /// **'Art & Music'**
+  String get category_art_music;
+
+  /// No description provided for @category_body_soul.
+  ///
+  /// In en, this message translates to:
+  /// **'Body & Soul'**
+  String get category_body_soul;
+
+  /// No description provided for @category_fashion_clothing.
+  ///
+  /// In en, this message translates to:
+  /// **'Fashion & Clothing'**
+  String get category_fashion_clothing;
+
+  /// No description provided for @category_food_beverage_store.
+  ///
+  /// In en, this message translates to:
+  /// **'Food & Beverage Store'**
+  String get category_food_beverage_store;
+
+  /// No description provided for @category_restaurants_bars.
+  ///
+  /// In en, this message translates to:
+  /// **'Restaurants & Bars'**
+  String get category_restaurants_bars;
+
+  /// No description provided for @category_it_hardware.
+  ///
+  /// In en, this message translates to:
+  /// **'IT Hardware'**
+  String get category_it_hardware;
+
+  /// No description provided for @category_food.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get category_food;
+
+  /// No description provided for @category_other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get category_other;
+
+  /// No description provided for @emailFailedToOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open email client.'**
+  String get emailFailedToOpen;
 
   /// No description provided for @chosenRightCommunity.
   ///
@@ -710,12 +770,6 @@ abstract class AppLocalizations {
   /// **'Enable'**
   String get enable;
 
-  /// No description provided for @enableBazaar.
-  ///
-  /// In en, this message translates to:
-  /// **'Enable Bazaar'**
-  String get enableBazaar;
-
   /// No description provided for @endorseeContent.
   ///
   /// In en, this message translates to:
@@ -775,6 +829,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Event ID'**
   String get event;
+
+  /// No description provided for @swapOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Swap Option'**
+  String get swapOption;
+
+  /// No description provided for @swapOptionRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate {amount} {cc}/{asset}'**
+  String swapOptionRate(String amount, String asset, String cc);
+
+  /// No description provided for @swapOptionCcLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'{cc} Limit: {amount} {cc}'**
+  String swapOptionCcLimit(String amount, String cc);
+
+  /// No description provided for @swapOptionAssetToReceive.
+  ///
+  /// In en, this message translates to:
+  /// **'You receive: {amount} {asset}'**
+  String swapOptionAssetToReceive(String amount, String asset);
+
+  /// No description provided for @swapOptionLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Limit: {amount} {asset}'**
+  String swapOptionLimit(String amount, String asset);
+
+  /// No description provided for @exerciseSwapAssetOptionAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Swap Option Available'**
+  String exerciseSwapAssetOptionAvailable(String asset);
+
+  /// No description provided for @exerciseSwapNativeOptionAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'KSM Swap Option Available'**
+  String get exerciseSwapNativeOptionAvailable;
+
+  /// No description provided for @exerciseSwapOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise Swap Option'**
+  String get exerciseSwapOption;
 
   /// No description provided for @export.
   ///
@@ -1403,20 +1505,20 @@ abstract class AppLocalizations {
   /// No description provided for @proposalExplainerIssueSwapNativeOption.
   ///
   /// In en, this message translates to:
-  /// **'This proposal allows the beneficiary to exchange community tokens for KSM at a defined rate multiple times up to a set KSM limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 {currency}/KSM and limit 2 KSM:\n\nThe beneficiary can exchange up to 2 KSM at a rate of 3 {currency}/KSM. Hence, the maximum is 6 {currency} => 2 KSM.'**
-  String proposalExplainerIssueSwapNativeOption(String currency);
+  /// **'This proposal allows the beneficiary to exchange {cc} for KSM at a defined rate multiple times up to a set KSM limit. The beneficiary might be a local business that accepts {cc} and may accumulate a surplus.\n\nExample with rate 3 {cc}/KSM and limit 2 KSM:\n\nThe beneficiary can exchange up to 2 KSM at a rate of 3 {cc}/KSM. Hence, the maximum is 6 {cc} => 2 KSM.'**
+  String proposalExplainerIssueSwapNativeOption(String cc);
 
   /// No description provided for @proposalExplainerSpendAsset.
   ///
   /// In en, this message translates to:
-  /// **'This proposal suggests spending a specified Asset for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.\n\nNote: You will receive this asset on Asset Hub Kusama directly.'**
-  String get proposalExplainerSpendAsset;
+  /// **'This proposal suggests spending {asset} for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.\n\nNote: You will receive the {asset} on Asset Hub Kusama directly.'**
+  String proposalExplainerSpendAsset(String asset);
 
   /// No description provided for @proposalExplainerIssueSwapAssetOption.
   ///
   /// In en, this message translates to:
-  /// **'This proposal allows the beneficiary to exchange community tokens for a specified Asset at a defined rate multiple times up to a set Asset limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 {currency}/Asset and limit 2 Asset:\n\nThe beneficiary can exchange up to 2 Assets at a rate of 3 {currency}/Asset. Hence, the maximum is 6 {currency} => 2 Asset.\n\nNote: You will receive this asset on Asset Hub Kusama directly.'**
-  String proposalExplainerIssueSwapAssetOption(String currency);
+  /// **'This proposal allows the beneficiary to exchange {cc} for {asset} at a defined rate multiple times up to a set {asset} limit. The beneficiary might be a local business that accepts {cc} and may accumulate a surplus.\n\nExample with rate 3 {cc}/{asset} and limit 2 {asset}:\n\nThe beneficiary can exchange up to 2 {asset} at a rate of 3 {cc}/{asset}. Hence, the maximum is 6 {cc} => 2 {asset}.\n\nNote: You will receive the {asset} on Asset Hub Kusama directly.'**
+  String proposalExplainerIssueSwapAssetOption(String cc, String asset);
 
   /// No description provided for @proposalExplainerCannotVoteYet.
   ///
@@ -1649,8 +1751,8 @@ abstract class AppLocalizations {
   /// No description provided for @proposalFieldErrorPositiveNumberTooBig.
   ///
   /// In en, this message translates to:
-  /// **'Number is too big'**
-  String get proposalFieldErrorPositiveNumberTooBig;
+  /// **'Number is too big (Limit: {amount})'**
+  String proposalFieldErrorPositiveNumberTooBig(String amount);
 
   /// No description provided for @proposalFieldErrorEnterInactivityTimeout.
   ///
@@ -1669,6 +1771,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Only bootstrappers or reputables can submit a proposal.'**
   String get proposalOnlyBootstrappersOrReputablesCanSubmit;
+
+  /// No description provided for @proposalOnlyBusinessOwnersCanSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Only business owners can submit this proposal.'**
+  String get proposalOnlyBusinessOwnersCanSubmit;
 
   /// No description provided for @proposalCannotSubmitProposalTypePendingEnactment.
   ///
@@ -2198,6 +2306,12 @@ abstract class AppLocalizations {
   /// **'It may take up to 30 seconds for a transfer to appear here'**
   String get transferHistoryTop;
 
+  /// No description provided for @treasuryBalanceTooLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Treasury Balance too low'**
+  String get treasuryBalanceTooLow;
+
   /// No description provided for @treasuryGlobalBalance.
   ///
   /// In en, this message translates to:
@@ -2483,7 +2597,7 @@ abstract class AppLocalizations {
   /// No description provided for @verifyAuthTitle.
   ///
   /// In en, this message translates to:
-  /// **'Please verify the {useBioAuth, select, true{your identity} false{your PIN} other{ }}.'**
+  /// **'Please verify {useBioAuth, select, true{your identity} false{your PIN} other{ }}.'**
   String verifyAuthTitle(String useBioAuth);
 
   /// No description provided for @offersForCommunity.
@@ -2577,6 +2691,13 @@ abstract class AppLocalizations {
   /// **'{cid}: Let {beneficiary} exchange up to {allowance} KSM at a rate of {rate} {cid}/KSM'**
   String proposalIssueSwapNativeOption(
       String cid, String beneficiary, String allowance, String rate);
+
+  /// No description provided for @proposalIssueSwapOptionCCLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'You can exchange up to {allowance} {cc} to reach your defined {asset} limit.'**
+  String proposalIssueSwapOptionCCLimit(
+      String asset, String cc, String allowance);
 
   /// No description provided for @proposalIssueSwapAssetOption.
   ///

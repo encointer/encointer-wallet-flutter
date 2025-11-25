@@ -12,13 +12,13 @@ mixin _$BusinessesStore on _BusinessesStoreBase, Store {
   late final _$businessesAtom = Atom(name: '_BusinessesStoreBase.businesses', context: context);
 
   @override
-  List<Businesses> get businesses {
+  List<IpfsBusiness> get businesses {
     _$businessesAtom.reportRead();
     return super.businesses;
   }
 
   @override
-  set businesses(List<Businesses> value) {
+  set businesses(List<IpfsBusiness> value) {
     _$businessesAtom.reportWrite(value, super.businesses, () {
       super.businesses = value;
     });
@@ -27,13 +27,13 @@ mixin _$BusinessesStore on _BusinessesStoreBase, Store {
   late final _$sortedBusinessesAtom = Atom(name: '_BusinessesStoreBase.sortedBusinesses', context: context);
 
   @override
-  List<Businesses> get sortedBusinesses {
+  List<IpfsBusiness> get sortedBusinesses {
     _$sortedBusinessesAtom.reportRead();
     return super.sortedBusinesses;
   }
 
   @override
-  set sortedBusinesses(List<Businesses> value) {
+  set sortedBusinesses(List<IpfsBusiness> value) {
     _$sortedBusinessesAtom.reportWrite(value, super.sortedBusinesses, () {
       super.sortedBusinesses = value;
     });

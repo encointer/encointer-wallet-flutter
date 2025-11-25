@@ -40,4 +40,8 @@ abstract class AddressUtils {
     final addr = Address.decode(address);
     return Address(prefix: newPrefix, pubkey: addr.pubkey).encode();
   }
+
+  static bool areEqual(String address1, String address2) {
+    return Address.decode(address1).toPubHex() == Address.decode(address2).toPubHex();
+  }
 }
