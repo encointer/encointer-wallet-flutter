@@ -9,7 +9,7 @@ const fallBackCommunityIcon = 'assets/nctr_logo_faces_only_thick.svg';
 const communityIconName = 'community_icon.svg';
 
 // AVD: ${Platform.isAndroid ? androidLocalHost : iosLocalHost} = 127.0.0.1
-const String ipfsGatewayEncointer = 'https://ipfs2.encointer.org/ipfs/';
+const String ipfsGatewayEncointer = 'https://ipfs2.encointer.org';
 final String ipfsGatewayLocal = 'http://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:8080';
 
 const encointerFeed = 'https://encointer.github.io/feed';
