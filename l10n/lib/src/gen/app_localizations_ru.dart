@@ -948,6 +948,10 @@ class AppLocalizationsRu extends AppLocalizations {
       'Только бутстраперы или уважаемые участники могут подать предложение.';
 
   @override
+  String get proposalOnlyBusinessOwnersCanSubmit =>
+      'Только владельцы бизнеса могут подать это предложение.';
+
+  @override
   String get proposalCannotSubmitProposalTypePendingEnactment =>
       'Невозможно подать предложение этого типа, так как уже есть одно ожидающее принятия.';
 

@@ -953,6 +953,10 @@ class AppLocalizationsSw extends AppLocalizations {
       'Ni bootstrappers au waheshimika pekee wanaoweza kuwasilisha pendekezo.';
 
   @override
+  String get proposalOnlyBusinessOwnersCanSubmit =>
+      'Ni wamiliki wa biashara pekee wanaoweza kuwasilisha pendekezo hili.';
+
+  @override
   String get proposalCannotSubmitProposalTypePendingEnactment =>
       'Haiwezi kuwasilisha pendekezo la aina hii kwa sababu tayari kuna moja linalosubiri kutekelezwa.';
 

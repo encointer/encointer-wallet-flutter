@@ -957,6 +957,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Seuls les bootstrappers ou les Reputables peuvent soumettre une proposition.';
 
   @override
+  String get proposalOnlyBusinessOwnersCanSubmit =>
+      'Seuls les propriétaires d’entreprises peuvent soumettre cette proposition.';
+
+  @override
   String get proposalCannotSubmitProposalTypePendingEnactment =>
       'Impossible de soumettre une proposition de ce type, car une autre est déjà en attente d\'adoption.';
 

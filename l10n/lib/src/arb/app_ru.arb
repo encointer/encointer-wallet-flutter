@@ -278,6 +278,7 @@
     "proposalFieldErrorEnterInactivityTimeout": "Введите тайм-аут неактивности",
     "proposalFieldErrorPositiveIntegerRange": "Должно быть положительное целое число",
     "proposalOnlyBootstrappersOrReputablesCanSubmit": "Только бутстраперы или уважаемые участники могут подать предложение.",
+    "proposalOnlyBusinessOwnersCanSubmit": "Только владельцы бизнеса могут подать это предложение.",
     "proposalCannotSubmitProposalTypePendingEnactment": "Невозможно подать предложение этого типа, так как уже есть одно ожидающее принятия.",
     "proposalClose": "Закрыть",
     "proposalUpdateState": "Обновить",

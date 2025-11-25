@@ -337,6 +337,7 @@
     "proposalFieldErrorEnterInactivityTimeout": "Entrez le délai d'inactivité",
     "proposalFieldErrorPositiveIntegerRange": "Doit être un entier positif",
     "proposalOnlyBootstrappersOrReputablesCanSubmit": "Seuls les bootstrappers ou les Reputables peuvent soumettre une proposition.",
+    "proposalOnlyBusinessOwnersCanSubmit": "Seuls les propriétaires d’entreprises peuvent soumettre cette proposition.",
     "proposalCannotSubmitProposalTypePendingEnactment": "Impossible de soumettre une proposition de ce type, car une autre est déjà en attente d'adoption.",
     "proposalClose": "Fermer",
     "proposalUpdateState": "Mettre à jour",

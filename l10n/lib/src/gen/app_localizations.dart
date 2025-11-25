@@ -1772,6 +1772,12 @@ abstract class AppLocalizations {
   /// **'Only bootstrappers or reputables can submit a proposal.'**
   String get proposalOnlyBootstrappersOrReputablesCanSubmit;
 
+  /// No description provided for @proposalOnlyBusinessOwnersCanSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Only business owners can submit this proposal.'**
+  String get proposalOnlyBusinessOwnersCanSubmit;
+
   /// No description provided for @proposalCannotSubmitProposalTypePendingEnactment.
   ///
   /// In en, this message translates to:

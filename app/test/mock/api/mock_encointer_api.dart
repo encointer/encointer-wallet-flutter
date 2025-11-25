@@ -97,12 +97,6 @@ class MockEncointerApi extends EncointerApi {
   Future<void> getDemurrage({BlockHash? at}) async {}
 
   @override
-  Future<List<AccountBusinessTuple>> getBusinesses({BlockHash? at}) async {
-    Log.d('warn: getBusinessRegistry mock is unimplemented', 'MockEncointerApi');
-    return Future.value([]);
-  }
-
-  @override
   Future<void> getCommunityMetadata({BlockHash? at}) {
     return Future.value();
   }

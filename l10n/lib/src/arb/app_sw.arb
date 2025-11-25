@@ -278,6 +278,7 @@
     "proposalFieldErrorEnterInactivityTimeout": "Weka muda wa kutokufanya kazi",
     "proposalFieldErrorPositiveIntegerRange": "Lazima iwe namba kamili chanya",
     "proposalOnlyBootstrappersOrReputablesCanSubmit": "Ni bootstrappers au waheshimika pekee wanaoweza kuwasilisha pendekezo.",
+    "proposalOnlyBusinessOwnersCanSubmit": "Ni wamiliki wa biashara pekee wanaoweza kuwasilisha pendekezo hili.",
     "proposalCannotSubmitProposalTypePendingEnactment": "Haiwezi kuwasilisha pendekezo la aina hii kwa sababu tayari kuna moja linalosubiri kutekelezwa.",
     "proposalClose": "Funga",
     "proposalUpdateState": "Sasisha",
