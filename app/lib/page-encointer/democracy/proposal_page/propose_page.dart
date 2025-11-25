@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:convert/convert.dart';
@@ -176,10 +177,28 @@ class _ProposePageState extends State<ProposePage> {
     final store = context.read<AppStore>();
     final accountBusiness = await webApi.encointer.bazaarGetBusinesses(store.encointer.chosenCid!);
 
-    final currentAddress = store.account.currentAddress;
-    // const currentAddress = '5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK';
+    // final currentAddress = store.account.currentAddress;
+    const currentAddress = 'GwytKmGdtqtqEJLAqMSg1yAbNN1bSdY3nKvN2ob3QqCZcY9';
 
-    final isOwner = accountBusiness.any((business) => AddressUtils.areEqual(business.controller, currentAddress));
+    final accountId = AddressUtils.addressToPubKey(currentAddress).toList();
+    final proxies = await webApi.encointer.getProxyAccounts(accountId);
+    Log.d('[checkBusinessOwners] Got Proxies ${proxies.length}');
+    Log.d('[checkBusinessOwners] Got Proxies ${jsonEncode(proxies)}');
+
+    final isOwner = accountBusiness.any((business) {
+      if (AddressUtils.areEqual(business.controller, currentAddress)) {
+        // Account is direct owner
+        return true;
+      }
+
+      final controllerAccount = AddressUtils.addressToPubKey(business.controller).toList();
+      if (proxies.map((p) => p.delegate).contains(controllerAccount)) {
+        // One of our proxies is the controller
+        return true;
+      }
+
+      return false;
+    });
 
     setState(() {
       isBusinessOwner = isOwner;
