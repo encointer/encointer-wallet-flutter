@@ -169,10 +169,19 @@ class EwHttp {
 
 // -------------------- Extensions --------------------
 
-extension on http.Response {
+extension DecodeExtension on http.Response {
   T decode<T>() {
     try {
-      return jsonDecode(utf8.decode(bodyBytes)) as T;
+      final stringResponse = utf8.decode(bodyBytes);
+      // Check if caller requested a raw String
+      if (T == String) {
+        return stringResponse as T;
+      }
+
+      // Otherwise decode JSON into a Dart structure
+      final decoded = jsonDecode(stringResponse);
+
+      return decoded as T;
     } catch (e, s) {
       throw EwHttpException(FailureType.decode, error: e, stackTrace: s);
     }

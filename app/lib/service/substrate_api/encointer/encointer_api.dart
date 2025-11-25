@@ -1038,13 +1038,6 @@ class EncointerApi {
     return businesses;
   }
 
-  Future<Either<Map<String, dynamic>, EwHttpException>> getBusinessesPhotos(String ipfsUrlHash) async {
-    final url = '$encointerIpfsUrl/$ipfsUrlHash';
-    final response = ewHttp.get<Map<String, dynamic>>(url);
-
-    return response;
-  }
-
   /// Get all the registered offerings for the current `chosenCid`
   Future<List<OfferingData>> getOfferings({BlockHash? at}) async {
     // Todo: @armin you'd probably extend the encointer store and also set the store here.
