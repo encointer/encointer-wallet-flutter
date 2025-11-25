@@ -315,7 +315,7 @@ class _AssetsViewState extends State<AssetsView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                  const Icon(Iconsax.trade),
+                      const Icon(Iconsax.trade),
                       const SizedBox(width: 4),
                       Text(l10n.exerciseSwapAssetOptionAvailable(assetSwap!.symbol)),
                     ],
@@ -521,6 +521,7 @@ class _AssetsViewState extends State<AssetsView> {
 
   Future<void> _refreshEncointerState() async {
     // getCurrentPhase is the root of all state updates.
+    unawaited(getSwapOptions());
     await webApi.encointer.getCurrentPhase();
     await widget.store.encointer.getEncointerBalance();
   }
