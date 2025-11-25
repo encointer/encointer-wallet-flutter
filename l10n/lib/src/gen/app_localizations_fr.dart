@@ -370,9 +370,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get enable => 'Activer';
 
   @override
-  String get enableBazaar => 'Activer le Bazaar';
-
-  @override
   String get endorseeContent =>
       'Tu as été confirmé comme membre de confiance par un Bootstrapper. Ta place est donc garantie.';
 

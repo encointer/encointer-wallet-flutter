@@ -367,9 +367,6 @@ class AppLocalizationsSw extends AppLocalizations {
   String get enable => 'Wezesha';
 
   @override
-  String get enableBazaar => 'Wezesha Bazaar';
-
-  @override
   String get endorseeContent =>
       'Umeidhinishwa kama mwanachama mwaminifu wa jamii ya Nyota. Hivyo, kuna uhakika wa wewe kuteuliwa kuhudhuria kikao cha mzunguko huu.';
 

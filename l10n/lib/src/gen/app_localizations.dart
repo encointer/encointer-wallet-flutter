@@ -770,12 +770,6 @@ abstract class AppLocalizations {
   /// **'Enable'**
   String get enable;
 
-  /// No description provided for @enableBazaar.
-  ///
-  /// In en, this message translates to:
-  /// **'Enable Bazaar'**
-  String get enableBazaar;
-
   /// No description provided for @endorseeContent.
   ///
   /// In en, this message translates to:

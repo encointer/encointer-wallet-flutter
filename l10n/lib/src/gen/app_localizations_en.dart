@@ -366,9 +366,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enable => 'Enable';
 
   @override
-  String get enableBazaar => 'Enable Bazaar';
-
-  @override
   String get endorseeContent =>
       'You have been endorsed as a trustworthy community member. Hence, you are guaranteed to be assigned to a gathering this cycle.';
 

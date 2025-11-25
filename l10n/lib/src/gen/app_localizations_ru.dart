@@ -366,9 +366,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get enable => 'Включить';
 
   @override
-  String get enableBazaar => 'Включить Базар';
-
-  @override
   String get endorseeContent =>
       'Вы былы одобрены, как заслуживающий доверия член общины. Следовательно, Вы гарантированно будете назначены на этот цикл.';
 
