@@ -143,6 +143,7 @@ class IpfsApi {
   /// Fallback: parse HTML from public gateway directory listings
   Future<IpfsObject> _listViaGateway(String folderCid) async {
     final url = Uri.parse('$gateway/ipfs/$folderCid/');
+
     final response = await ewHttp.get<String>(url.toString());
 
     return response.fold((l) {
@@ -150,22 +151,59 @@ class IpfsApi {
       return IpfsObject(links: <IpfsLink>[]);
     }, (htmlContent) {
       final document = html.parse(htmlContent);
-      final anchors = document.querySelectorAll('a');
 
-      final links = anchors
-          .map((a) => a.text.trim())
-          .where((name) => name.isNotEmpty && name != 'Parent directory')
-          .map((name) => IpfsLink(
-                name: name,
-                hash: '', // fallback has no hash
-                size: 0, // unknown size
-                type: name.contains('.') ? 'File' : 'Dir',
-              ))
-          .toList();
+      // Each entry in modern gateways is a 4-column row:
+      // 1. icon
+      // 2. name (<a>filename</a>)
+      // 3. hash (<a class="ipfs-hash">Qm...</a>)
+      // 4. size
+      //
+      // These rows live inside: <div class="grid dir"> ... </div>
+
+      final rows = document.querySelectorAll('.grid.dir > div');
+
+      final List<IpfsLink> links = [];
+
+      // Process in chunks of 4 columns per row
+      for (var i = 0; i + 3 < rows.length; i += 4) {
+        final nameCell = rows[i + 1];
+        final hashCell = rows[i + 2];
+
+        final nameAnchor = nameCell.querySelector('a');
+        if (nameAnchor == null) continue;
+
+        final name = nameAnchor.text.trim();
+        if (name.isEmpty || name == 'Parent directory') continue;
+
+        // ---- 2) Extract hash from the hash column ----
+        String hash = '';
+        final hashAnchor = hashCell.querySelector('a.ipfs-hash');
+        if (hashAnchor != null) {
+          final href = hashAnchor.attributes['href'] ?? '';
+
+          // extract /ipfs/<CID>
+          final idx = href.indexOf('/ipfs/');
+          if (idx != -1) {
+            final after = href.substring(idx + 6); // skip "/ipfs/"
+            hash = after.split('?').first.split('/').first;
+          }
+        }
+
+        // ---- 3) Determine type ----
+        final type = name.contains('.') ? 'File' : 'Dir';
+
+        links.add(IpfsLink(
+          name: name,
+          hash: hash,
+          size: 0,
+          type: type,
+        ));
+      }
 
       return IpfsObject(links: links);
     });
   }
+
 
   /// Lists just the file/folder names
   Future<List<String>> listFolder(String folderCid) async {
