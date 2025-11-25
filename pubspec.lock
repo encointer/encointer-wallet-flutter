@@ -628,10 +628,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_plugin_android_lifecycle
-      sha256: b0694b7fb1689b0e6cc193b3f1fcac6423c4f93c74fb20b806c6b6f196db0c31
+      sha256: c2fe1001710127dfa7da89977a08d591398370d099aacdaa6d44da7eb14b8476
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.30"
+    version: "2.0.31"
   flutter_qr_scan:
     dependency: transitive
     description:
@@ -876,10 +876,10 @@ packages:
     dependency: transitive
     description:
       name: json_schema
-      sha256: fc8c3e280c7647ed8e94f2565ba107ef4aff94b096764b8460a7e1ae39f20382
+      sha256: f37d9c3fdfe8c9aae55fdfd5af815d24ce63c3a0f6a2c1f0982c30f43643fa1a
       url: "https://pub.dev"
     source: hosted
-    version: "5.2.1"
+    version: "5.2.2"
   json_serializable:
     dependency: transitive
     description:
@@ -983,10 +983,10 @@ packages:
     dependency: transitive
     description:
       name: local_auth_android
-      sha256: "1ee0e63fb8b5c6fa286796b5fb1570d256857c2f4a262127e728b36b80a570cf"
+      sha256: b2446c74fab1db37f828d4c54adaa3f003df80a29f5cbd710bbb8883d302e991
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.53"
+    version: "1.0.55"
   local_auth_darwin:
     dependency: transitive
     description:
@@ -999,10 +999,10 @@ packages:
     dependency: transitive
     description:
       name: local_auth_platform_interface
-      sha256: "1b842ff177a7068442eae093b64abe3592f816afd2a533c0ebcdbe40f9d2075a"
+      sha256: f98b8e388588583d3f781f6806e4f4c9f9e189d898d27f0c249b93a1973dd122
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.10"
+    version: "1.1.0"
   local_auth_windows:
     dependency: transitive
     description:
@@ -1015,10 +1015,10 @@ packages:
     dependency: transitive
     description:
       name: logger
-      sha256: "55d6c23a6c15db14920e037fe7e0dc32e7cdaf3b64b4b25df2d541b5b6b81c0c"
+      sha256: a7967e31b703831a893bbc3c3dd11db08126fe5f369b5c648a36f821979f5be3
       url: "https://pub.dev"
     source: hosted
-    version: "2.6.1"
+    version: "2.6.2"
   logging:
     dependency: transitive
     description:
@@ -1199,10 +1199,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_android
-      sha256: "993381400e94d18469750e5b9dcb8206f15bc09f9da86b9e44a9b0092a0066db"
+      sha256: "3b4c1fc3aa55ddc9cd4aa6759984330d5c8e66aa7702a6223c61540dc6380c37"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.18"
+    version: "2.2.19"
   path_provider_foundation:
     dependency: transitive
     description:
@@ -1615,10 +1615,10 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_android
-      sha256: bd14436108211b0d4ee5038689a56d4ae3620fd72fd6036e113bf1345bc74d9e
+      sha256: "34266009473bf71d748912da4bf62d439185226c03e01e2d9687bc65bbfcb713"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.13"
+    version: "2.4.15"
   shared_preferences_foundation:
     dependency: transitive
     description:
@@ -1908,10 +1908,10 @@ packages:
     dependency: transitive
     description:
       name: unorm_dart
-      sha256: "8e3870a1caa60bde8352f9597dd3535d8068613269444f8e35ea8925ec84c1f5"
+      sha256: "0c69186b03ca6addab0774bcc0f4f17b88d4ce78d9d4d8f0619e30a99ead58e7"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.1+1"
+    version: "0.3.2"
   upgrader:
     dependency: transitive
     description:
@@ -1940,10 +1940,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_android
-      sha256: "199bc33e746088546a39cc5f36bac5a278c5e53b40cb3196f99e7345fdcfae6b"
+      sha256: "5c8b6c2d89a78f5a1cca70a73d9d5f86c701b36b42f9c9dac7bad592113c28e9"
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.22"
+    version: "6.3.24"
   url_launcher_ios:
     dependency: transitive
     description:
@@ -2092,10 +2092,10 @@ packages:
     dependency: transitive
     description:
       name: watcher
-      sha256: "5bf046f41320ac97a469d506261797f35254fa61c641741ef32dacda98b7d39c"
+      sha256: "592ab6e2892f67760543fb712ff0177f4ec76c031f02f5b4ff8d3fc5eb9fb61a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.3"
+    version: "1.1.4"
   web:
     dependency: transitive
     description:
@@ -2148,10 +2148,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "66814138c3562338d05613a6e368ed8cfb237ad6d64a9e9334be3f309acfca03"
+      sha256: d7cb55e04cd34096cd3a79b3330245f54cb96a370a1c27adb3c84b917de8b08e
       url: "https://pub.dev"
     source: hosted
-    version: "5.14.0"
+    version: "5.15.0"
   win32_registry:
     dependency: transitive
     description:

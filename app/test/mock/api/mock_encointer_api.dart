@@ -1,8 +1,5 @@
 import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
-import 'package:encointer_wallet/models/bazaar/businesses.dart';
-import 'package:encointer_wallet/models/bazaar/ipfs_product.dart';
-import 'package:encointer_wallet/models/bazaar/item_offered.dart';
 import 'package:encointer_wallet/models/bazaar/offering_data.dart';
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
@@ -10,7 +7,6 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
-import 'package:ew_http/ew_http.dart';
 import 'package:ew_polkadart/ew_polkadart.dart' show BlockHash;
 
 import '../data/mock_encointer_data.dart';
@@ -101,12 +97,6 @@ class MockEncointerApi extends EncointerApi {
   Future<void> getDemurrage({BlockHash? at}) async {}
 
   @override
-  Future<List<AccountBusinessTuple>> getBusinesses({BlockHash? at}) async {
-    Log.d('warn: getBusinessRegistry mock is unimplemented', 'MockEncointerApi');
-    return Future.value([]);
-  }
-
-  @override
   Future<void> getCommunityMetadata({BlockHash? at}) {
     return Future.value();
   }
@@ -155,26 +145,8 @@ class MockEncointerApi extends EncointerApi {
   }
 
   @override
-  Future<Either<Businesses, EwHttpException>> getBusinessesIpfs(String ipfsUrlHash) async {
-    Either<Businesses, EwHttpException> getRight() => Right(Businesses.fromJson(mockBusinessData));
-    return Future.value(getRight());
-  }
-
-  @override
   Future<List<OfferingData>> bazaarGetOfferingsForBusiness(CommunityIdentifier cid, String? controller,
       {BlockHash? at}) async {
     return Future.value(offeringDataMockList);
-  }
-
-  @override
-  Future<Either<ItemOffered, EwHttpException>> getItemOffered(String ipfsUrlHash) async {
-    Either<ItemOffered, EwHttpException> getRight() => Right(ItemOffered.fromJson(itemOfferedMock));
-    return Future.value(getRight());
-  }
-
-  @override
-  Future<Either<IpfsProduct, EwHttpException>> getSingleBusinessProduct(String ipfsUrlHash) async {
-    Either<IpfsProduct, EwHttpException> getRight() => Right(IpfsProduct.fromJson(ipfsProductMock));
-    return Future.value(getRight());
   }
 }

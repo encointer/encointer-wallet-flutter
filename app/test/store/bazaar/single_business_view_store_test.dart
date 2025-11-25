@@ -5,7 +5,6 @@ import 'package:encointer_wallet/page-encointer/bazaar/single_business/logic/sin
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/account/services/legacy_storage.dart';
-import 'package:encointer_wallet/utils/fetch_status.dart';
 import 'package:ew_storage/ew_storage.dart' show SecureStorageMock;
 
 import '../../mock/api/mock_api.dart';
@@ -18,25 +17,10 @@ void main() {
     webApi = getMockApi(AppStore(MockLocalStorage(), SecureStorageMock(), LegacyLocalStorageMock()));
     await webApi.init();
 
-    businessesStore = SingleBusinessStore(businessesMockForSingleBusiness, cidEdisonPaula);
+    businessesStore = SingleBusinessStore(businessesMockForSingleBusiness);
   });
 
   group('SingleBusinessStore Test', () {
-    test('`getSingleBusiness()` should update fetchStatus to success and populate ipfsProducts list and singleBusiness',
-        () async {
-      expect(businessesStore.fetchStatus, FetchStatus.loading);
-      expect(businessesStore.singleBusiness, isNull);
-
-      await businessesStore.getSingleBusiness();
-
-      expect(businessesStore.fetchStatus, FetchStatus.success);
-      expect(businessesStore.singleBusiness, isNotNull);
-      expect(businessesStore.singleBusiness!.name, businessesMockForSingleBusiness.name);
-
-      expect(businessesStore.ipfsProducts, isNotNull);
-      expect(businessesStore.ipfsProducts.length, greaterThan(0));
-    });
-
     test('`toggleLikes()` test likes', () async {
       expect(businessesStore.isLiked, false);
 

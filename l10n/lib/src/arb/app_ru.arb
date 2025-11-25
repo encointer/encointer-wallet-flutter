@@ -14,6 +14,7 @@
     "accountsDeleteAll": "Удалить все аккаунты",
     "accountShare": "Поделиться аккаунтом",
     "addAccount": "Добавить аккаунт",
+    "addBusiness": "Добавить бизнес",
     "addContact": "Добавить контакт",
     "addInvoiceQrToAddress": "Добавить QR-инвойс к адресу",
     "address": "Адрес",
@@ -48,7 +49,16 @@
     "cantEndorseBootstrapper": "Бутсрепперы уже помечены как надежные",
     "categories": "Категории",
     "changeYourPin": "Изменить PIN-код",
-    "checkEmailApp": "Убедитесь, что вы загрузили приложение электронной почты",
+    "category_all": "Все",
+    "category_art_music": "Искусство и музыка",
+    "category_body_soul": "Тело и душа",
+    "category_fashion_clothing": "Мода и одежда",
+    "category_food_beverage_store": "Магазин еды и напитков",
+    "category_restaurants_bars": "Рестораны и бары",
+    "category_it_hardware": "IT-оборудование",
+    "category_food": "Еда",
+    "category_other": "Другое",
+    "emailFailedToOpen": "Не удалось открыть почтовое приложение.",
     "chosenRightCommunity": "Данные относятся к другому сообществу. Пожалуйста, измените сообщество, чтобы отправить средства.",
     "claim": "Заявление",
     "claimRewardsNotificationBody": "Ваш запрос на вознаграждение получен и будет обработан в кратчайшие сроки. Вы получили свой доход сообщества!",
@@ -101,7 +111,6 @@
     "done": "Выполнено",
     "doYouAlreadyHaveAnAccount": "У вас уже есть аккаунт?",
     "enable": "Включить",
-    "enableBazaar": "Включить Базар",
     "endorseeContent": "Вы былы одобрены, как заслуживающий доверия член общины. Следовательно, Вы гарантированно будете назначены на этот цикл.",
     "endorseeTitle": "Зарегистрирован в качестве Индоссанта - ваше место гарантировано",
     "endorseNewcomerNotificationBody": "Благодарим за одобрение новичка в нашем сообществе!",
@@ -112,6 +121,14 @@
     "errorOccurred": "Возникла ошибка:",
     "errorUserNameIsRequired": "Имя пользователя не может быть пустым",
     "event": "ID события",
+    "swapOption": "Опция обмена",
+    "swapOptionRate": "Курс {amount} {cc}/{asset}",
+    "swapOptionCcLimit": "Лимит {cc}: {amount} {cc}",
+    "swapOptionAssetToReceive": "Вы получаете: {amount} {asset}",
+    "swapOptionLimit": "Лимит: {amount} {asset}",
+    "exerciseSwapAssetOptionAvailable": "Доступна опция обмена",
+    "exerciseSwapNativeOptionAvailable": "Доступна опция обмена KSM",
+    "exerciseSwapOption": "Использовать опцию обмена",
     "export": "Экпорт аккаунта",
     "exportAccount": "Экспорт",
     "exportMnemonicOk": "Мнемоника скопирована в буфер обмена",
@@ -216,25 +233,10 @@
     "proposalExplainerSetInactivityTimeout": "Это предложение предлагает новый глобальный тайм-аут неактивности. Если сообщество не проводит встречи в течение предложенного количества циклов, оно будет удалено.",
     "proposalExplainerPetition": "Это предложение служит петицией, либо на глобальном уровне, либо в вашем сообществе. Хотя оно не имеет прямого влияния на блокчейн, оно выражает намерение, позволяя сообществу его распознать и отреагировать.",
     "proposalExplainerSpendNative": "Это предложение предлагает потратить KSM для получателя из казны сообщества, либо через глобальное, либо через голосование внутри сообщества. Эти средства могут быть использованы для вознаграждения вкладов в сообщество или поддержки инициатив сообщества.",
-    "proposalExplainerIssueSwapNativeOption": "Это предложение позволяет получателю многократно обменивать токены сообщества на KSM по установленному курсу, но не превышая заданного лимита KSM. Получателем может быть местный бизнес, который принимает токены сообщества и может накапливать их избыток.\n\nПример с курсом 3 {currency}/KSM и лимитом 2 KSM:\n\nПолучатель может обменять до 2 KSM по курсу 3 {currency}/KSM. Таким образом, максимум составит 6 {currency} => 2 KSM.",    "proposalType": "Тип предложения",
-    "@proposalExplainerIssueSwapNativeOption": {
-        "placeholders": {
-            "currency": {
-                "type": "String",
-                "example": "0.5"
-            }
-        }
-    },
-    "proposalExplainerSpendAsset": "Это предложение предлагает потратить указанный токен для тебя из казны сообщества, либо через глобальное голосование, либо через голосование сообщества. Эти средства могут вознаградить вклад в сообщество или поддержать инициативы сообщества.\n\nПримечание: Ты получишь этот токен напрямую на Asset Hub Kusama.",
-    "proposalExplainerIssueSwapAssetOption": "Это предложение позволяет тебе обменивать токены сообщества на указанный токен по заданной ставке несколько раз до установленного лимита токенов.\n\nПример с курсом 3 {currency}/Токен и лимитом 2 Токена:\n\nТы можешь обменять до 2 Токенов по курсу 3 {currency}/Токен. Таким образом, максимум составляет 6 {currency} => 2 Токена.\n\nПримечание: Ты получишь этот токен напрямую на Asset Hub Kusama.",
-    "@proposalExplainerIssueSwapAssetOption": {
-        "placeholders": {
-            "currency": {
-                "type": "String",
-                "example": "0.5"
-            }
-        }
-    },
+    "proposalExplainerIssueSwapNativeOption": "Это предложение позволяет получателю обменивать {cc} на KSM по установленному курсу несколько раз, вплоть до определённого лимита KSM. Получателем может быть местный бизнес, который принимает {cc} и может накапливать излишки.\n\nПример: курс 3 {cc}/KSM, лимит 2 KSM:\n\nПолучатель может обменять до 2 KSM по курсу 3 {cc}/KSM. Максимум составляет 6 {cc} => 2 KSM.",
+    "proposalExplainerSpendAsset": "Это предложение предлагает потратить {asset} из казны сообщества для получателя — через глобальное или локальное голосование. Эти средства могут вознаграждать участников сообщества или поддерживать инициативы.\n\nПримечание: Ты получишь {asset} напрямую на Asset Hub Kusama.",
+    "proposalExplainerIssueSwapAssetOption": "Это предложение позволяет получателю обменивать {cc} на {asset} по установленному курсу несколько раз, вплоть до определённого лимита {asset}. Получателем может быть местный бизнес, который принимает {cc} и может накапливать излишки.\n\nПример: курс 3 {cc}/{asset}, лимит 2 {asset}:\n\nПолучатель может обменять до 2 {asset} по курсу 3 {cc}/{asset}. Максимум составляет 6 {cc} => 2 {asset}.\n\nПримечание: Ты получишь {asset} напрямую на Asset Hub Kusama.",
+    "proposalType": "Тип предложения",
     "proposalExplainerCannotVoteYet": "Ты сможешь начать голосовать с репутацией со следующего цикла!",
     "proposalTypeAddLocation": "Добавить местоположение",
     "proposalTypeRemoveLocation": "Удалить местоположение",
@@ -244,46 +246,10 @@
     "proposalTypePetition": "Петиция",
     "proposalTypeSpendNative": "Потратить KSM",
     "proposalTypeIssueSwapNativeOption": "Обменять {cc} на KSM",
-    "@proposalTypeIssueSwapNativeOption": {
-        "placeholders": {
-            "cc": {
-                "type": "String",
-                "example": "MTA"
-            }
-        }
-    },
     "proposalTypeSpendAsset": "Потратить {asset}",
-    "@proposalTypeSpendAsset": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "USDC"
-            }
-        }
-    },
     "proposalTypeIssueSwapAssetOption": "Обменять {cc} на {asset}",
-    "@proposalTypeIssueSwapAssetOption": {
-        "placeholders": {
-            "cc": {
-                "type": "String",
-                "example": "MTA"
-            },
-            "asset": {
-                "type": "String",
-                "example": "USDC"
-            }
-        }
-    },
     "proposalScope": "Область действия",
     "proposalScopeLocal": "Локальный ({community})",
-    "@proposalScopeLocal": {
-        "placeholders": {
-            "community": {
-                "type": "String",
-                "example": "Mediterranea"
-            }
-        }
-    },
     "proposalScopeGlobal": "Глобальный",
     "proposalFieldLatitude": "Широта",
     "proposalFieldLongitude": "Долгота",
@@ -293,37 +259,9 @@
     "proposalFieldPetitionText": "Текст петиции",
     "proposalFieldAssetToSpend": "Токен для траты",
     "proposalFieldAmount": "Сумма ({asset})",
-    "@proposalFieldAmount": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "6"
-            }
-        }
-    },
     "proposalFieldBeneficiary": "Получатель",
     "proposalFieldAllowance": "Лимит ({asset})",
-    "@proposalFieldAllowance": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "6"
-            }
-        }
-    },
     "proposalFieldRate": "Ставка ({cc}/{asset})",
-    "@proposalFieldRate": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "6"
-            },
-            "cc": {
-                "type": "String",
-                "example": "6"
-            }
-        }
-    },
     "proposalFieldBurn": "Сжигание",
     "proposalFieldValidity": "Срок действия",
     "proposalFieldErrorEnterPetitionText": "Введите текст петиции",
@@ -336,10 +274,11 @@
     "proposalFieldErrorDemurrageRange": "Демерредж должен быть от 0 до 100",
     "proposalFieldErrorEnterPositiveNumber": "Введите положительное число",
     "proposalFieldErrorPositiveNumberRange": "Должно быть положительное число",
-    "proposalFieldErrorPositiveNumberTooBig": "Число слишком большое",
+    "proposalFieldErrorPositiveNumberTooBig": "Число слишком большое (предел: {amount})",
     "proposalFieldErrorEnterInactivityTimeout": "Введите тайм-аут неактивности",
     "proposalFieldErrorPositiveIntegerRange": "Должно быть положительное целое число",
     "proposalOnlyBootstrappersOrReputablesCanSubmit": "Только бутстраперы или уважаемые участники могут подать предложение.",
+    "proposalOnlyBusinessOwnersCanSubmit": "Только владельцы бизнеса могут подать это предложение.",
     "proposalCannotSubmitProposalTypePendingEnactment": "Невозможно подать предложение этого типа, так как уже есть одно ожидающее принятия.",
     "proposalClose": "Закрыть",
     "proposalUpdateState": "Обновить",
@@ -428,42 +367,11 @@
     "transferHistoryEnd": "Загрузка более старых транзакций пока не поддерживается",
     "transferHistoryTop": "Появление перевода может занять до 30 секунд",
     "transferHistory": "Транзакции",
+    "treasuryBalanceTooLow": "Баланс казны слишком низкий",
     "treasuryGlobalBalance": "Свободный баланс глобального казначейства: {balance} KSM.",
-    "@treasuryGlobalBalance": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
     "treasuryLocalBalance": "Свободный баланс казначейства сообщества: {balance} KSM.",
-    "@treasuryLocalBalance": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
     "treasuryLocalBalanceOnAHK": "Свободный баланс казначейства сообщества на Asset Hub: {balance} KSM.",
-    "@treasuryLocalBalanceOnAHK": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
     "treasuryPendingSpends": "Ожидающие расходы: {spends} KSM.",
-    "@treasuryPendingSpends": {
-        "placeholders": {
-            "spends": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
     "txBroadcast": "Транзакция передана в эфир",
     "txError": "Ошибка транзакции",
     "txInBlock": "Транзакция заблокирована",
@@ -509,212 +417,21 @@
     "communityWithName": "Сообщество {name}",
     "verifyAuthTitle": "Пожалуйста подтвердите{useBioAuth, select, true{вашу личность} false{ваш PIN-код} other{}}.",
     "offersForCommunity": "Предложения за {value}",
-    "@offersForCommunity": {
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "LEU"
-            }
-        }
-    },
     "proposalApprovalThreshold": "Порог приемлемости: {percentage}%",
-    "@proposalApprovalThreshold": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalPassed": "Отклонено, взято с {percentage}% Aye",
-    "@proposalPassed": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalFailed": "Отклонено с {percentage}% Aye",
-    "@proposalFailed": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalIsPassing": "Только что приняли с {percentage}% Aye",
-    "@proposalIsPassing": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalIsFailing": "В настоящее время отвергается с {percentage}% Aye",
-    "@proposalIsFailing": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalUpdateNominalIncome": "скорректировать доходы населения с учетом {value} {currency}",
-    "@proposalUpdateNominalIncome": {
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "currency": {
-                "type": "String",
-                "example": "LEU"
-            }
-        }
-    },
     "proposalSetInactivityTimeoutTo": "Глобально: Установить новый тайм-аут неактивности на {value}",
-    "@proposalSetInactivityTimeoutTo": {
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalAddLocation": "{cid}: Добавить новое местоположение",
-    "@proposalAddLocation": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            }
-        }
-    },
     "proposalRemoveLocation": "{cid}: Удалить местоположение",
-    "@proposalRemoveLocation": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            }
-        }
-    },
     "proposalUpdateDemurrage": "Обновить Demurrage до {value}%/месяц",
-    "@proposalUpdateDemurrage": {
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalPetition": "{cid} петиция: {value}",
-    "@proposalPetition": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "value": {
-                "type": "String",
-                "example": "Peace to the World"
-            }
-        }
-    },
     "proposalSpendNative": "{cid} Казначейство отправит {amount} KSM {beneficiary}",
-    "@proposalSpendNative": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "amount": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "beneficiary": {
-                "type": "String",
-                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
-            }
-        }
-    },
     "proposalSpendAsset": "{cid} Казначейство отправит {amount} {asset} {beneficiary}",
-    "@proposalSpendAsset": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "global"
-            },
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "amount": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "beneficiary": {
-                "type": "String",
-                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
-            }
-        }
-    },
     "proposalIssueSwapNativeOption": "{cid}: Разрешить {beneficiary} обменять до {allowance} KSM по курсу {rate} {cid}/KSM.",
-    "@proposalIssueSwapNativeOption": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "beneficiary": {
-                "type": "String",
-                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
-            },
-            "allowance": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "rate": {
-                "type": "String",
-                "example": "1.2"
-            }
-        }
-    },
+    "proposalIssueSwapOptionCCLimit": "Ты можешь обменять до {allowance} {cc}, чтобы достичь установленного лимита {asset}.",
     "proposalIssueSwapAssetOption": "{cid}: Разрешить {beneficiary} обменять до {allowance} {asset} по курсу {rate} {cid}/{asset}.",
-    "@proposalIssueSwapAssetOption": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "global"
-            },
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "beneficiary": {
-                "type": "String",
-                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
-            },
-            "allowance": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "rate": {
-                "type": "String",
-                "example": "1.2"
-            }
-        }
-    },
-    "proposalSupersededBy": "заменен на: {id}",
-    "@proposalSupersededBy": {
-        "placeholders": {
-            "id": {
-                "type": "String",
-                "example": "6"
-            }
-        }
-    }
+    "proposalSupersededBy": "заменен на: {id}"
 }

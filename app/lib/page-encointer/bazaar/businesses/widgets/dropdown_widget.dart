@@ -1,6 +1,6 @@
+import 'package:encointer_wallet/models/bazaar/category.dart';
 import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/theme/custom/colors/app_colors.dart';
@@ -34,7 +34,7 @@ class _DropdownWidgetState extends State<DropdownWidget> {
           .map(
             (e) => DropdownMenuEntry<Category>(
               value: e,
-              label: e.name,
+              label: e.localized(context),
               style: ButtonStyle(
                 textStyle: WidgetStateProperty.all(context.textTheme.bodySmall),
               ),
@@ -71,24 +71,4 @@ class _DropdownWidgetState extends State<DropdownWidget> {
       ),
     );
   }
-}
-
-enum Category {
-  @JsonValue('all')
-  all('All'),
-  @JsonValue('art_music')
-  artAndMusic('Art & Music'),
-  @JsonValue('body_soul')
-  bodyAndSoul('Body & Soul'),
-  @JsonValue('fashion_clothing')
-  fashionAndClothing('Fashion & Clothing'),
-  @JsonValue('food_beverage_store')
-  foodAndBeverageStore('Food & Beverage Store'),
-  @JsonValue('restaurants_bars')
-  restaurantsAndBars('Restaurants & Bars'),
-  @JsonValue('food')
-  food('Food');
-
-  const Category(this.name);
-  final String name;
 }

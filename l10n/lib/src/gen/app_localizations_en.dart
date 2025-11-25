@@ -52,6 +52,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addAccount => 'Add account';
 
   @override
+  String get addBusiness => 'Add business';
+
+  @override
   String get addContact => 'Add contact';
 
   @override
@@ -167,7 +170,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get changeYourPin => 'Change PIN';
 
   @override
-  String get checkEmailApp => 'Check that you have downloaded the Email app';
+  String get category_all => 'All';
+
+  @override
+  String get category_art_music => 'Art & Music';
+
+  @override
+  String get category_body_soul => 'Body & Soul';
+
+  @override
+  String get category_fashion_clothing => 'Fashion & Clothing';
+
+  @override
+  String get category_food_beverage_store => 'Food & Beverage Store';
+
+  @override
+  String get category_restaurants_bars => 'Restaurants & Bars';
+
+  @override
+  String get category_it_hardware => 'IT Hardware';
+
+  @override
+  String get category_food => 'Food';
+
+  @override
+  String get category_other => 'Other';
+
+  @override
+  String get emailFailedToOpen => 'Could not open email client.';
 
   @override
   String get chosenRightCommunity =>
@@ -336,9 +366,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enable => 'Enable';
 
   @override
-  String get enableBazaar => 'Enable Bazaar';
-
-  @override
   String get endorseeContent =>
       'You have been endorsed as a trustworthy community member. Hence, you are guaranteed to be assigned to a gathering this cycle.';
 
@@ -370,6 +397,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get event => 'Event ID';
+
+  @override
+  String get swapOption => 'Swap Option';
+
+  @override
+  String swapOptionRate(String amount, String asset, String cc) {
+    return 'Rate $amount $cc/$asset';
+  }
+
+  @override
+  String swapOptionCcLimit(String amount, String cc) {
+    return '$cc Limit: $amount $cc';
+  }
+
+  @override
+  String swapOptionAssetToReceive(String amount, String asset) {
+    return 'You receive: $amount $asset';
+  }
+
+  @override
+  String swapOptionLimit(String amount, String asset) {
+    return 'Limit: $amount $asset';
+  }
+
+  @override
+  String exerciseSwapAssetOptionAvailable(String asset) {
+    return 'Swap Option Available';
+  }
+
+  @override
+  String get exerciseSwapNativeOptionAvailable => 'KSM Swap Option Available';
+
+  @override
+  String get exerciseSwapOption => 'Exercise Swap Option';
 
   @override
   String get export => 'Export Account';
@@ -718,17 +779,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'This proposal suggests spending KSM for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.';
 
   @override
-  String proposalExplainerIssueSwapNativeOption(String currency) {
-    return 'This proposal allows the beneficiary to exchange community tokens for KSM at a defined rate multiple times up to a set KSM limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 $currency/KSM and limit 2 KSM:\n\nThe beneficiary can exchange up to 2 KSM at a rate of 3 $currency/KSM. Hence, the maximum is 6 $currency => 2 KSM.';
+  String proposalExplainerIssueSwapNativeOption(String cc) {
+    return 'This proposal allows the beneficiary to exchange $cc for KSM at a defined rate multiple times up to a set KSM limit. The beneficiary might be a local business that accepts $cc and may accumulate a surplus.\n\nExample with rate 3 $cc/KSM and limit 2 KSM:\n\nThe beneficiary can exchange up to 2 KSM at a rate of 3 $cc/KSM. Hence, the maximum is 6 $cc => 2 KSM.';
   }
 
   @override
-  String get proposalExplainerSpendAsset =>
-      'This proposal suggests spending a specified Asset for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.\n\nNote: You will receive this asset on Asset Hub Kusama directly.';
+  String proposalExplainerSpendAsset(String asset) {
+    return 'This proposal suggests spending $asset for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.\n\nNote: You will receive the $asset on Asset Hub Kusama directly.';
+  }
 
   @override
-  String proposalExplainerIssueSwapAssetOption(String currency) {
-    return 'This proposal allows the beneficiary to exchange community tokens for a specified Asset at a defined rate multiple times up to a set Asset limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 $currency/Asset and limit 2 Asset:\n\nThe beneficiary can exchange up to 2 Assets at a rate of 3 $currency/Asset. Hence, the maximum is 6 $currency => 2 Asset.\n\nNote: You will receive this asset on Asset Hub Kusama directly.';
+  String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
+    return 'This proposal allows the beneficiary to exchange $cc for $asset at a defined rate multiple times up to a set $asset limit. The beneficiary might be a local business that accepts $cc and may accumulate a surplus.\n\nExample with rate 3 $cc/$asset and limit 2 $asset:\n\nThe beneficiary can exchange up to 2 $asset at a rate of 3 $cc/$asset. Hence, the maximum is 6 $cc => 2 $asset.\n\nNote: You will receive the $asset on Asset Hub Kusama directly.';
   }
 
   @override
@@ -867,7 +929,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Must be a positive number';
 
   @override
-  String get proposalFieldErrorPositiveNumberTooBig => 'Number is too big';
+  String proposalFieldErrorPositiveNumberTooBig(String amount) {
+    return 'Number is too big (Limit: $amount)';
+  }
 
   @override
   String get proposalFieldErrorEnterInactivityTimeout =>
@@ -880,6 +944,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get proposalOnlyBootstrappersOrReputablesCanSubmit =>
       'Only bootstrappers or reputables can submit a proposal.';
+
+  @override
+  String get proposalOnlyBusinessOwnersCanSubmit =>
+      'Only business owners can submit this proposal.';
 
   @override
   String get proposalCannotSubmitProposalTypePendingEnactment =>
@@ -1167,6 +1235,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'It may take up to 30 seconds for a transfer to appear here';
 
   @override
+  String get treasuryBalanceTooLow => 'Treasury Balance too low';
+
+  @override
   String treasuryGlobalBalance(String balance) {
     return 'Free global treasury balance: $balance KSM.';
   }
@@ -1365,7 +1436,7 @@ class AppLocalizationsEn extends AppLocalizations {
         'other': ' ',
       },
     );
-    return 'Please verify the $_temp0.';
+    return 'Please verify $_temp0.';
   }
 
   @override
@@ -1443,6 +1514,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String proposalIssueSwapNativeOption(
       String cid, String beneficiary, String allowance, String rate) {
     return '$cid: Let $beneficiary exchange up to $allowance KSM at a rate of $rate $cid/KSM';
+  }
+
+  @override
+  String proposalIssueSwapOptionCCLimit(
+      String asset, String cc, String allowance) {
+    return 'You can exchange up to $allowance $cc to reach your defined $asset limit.';
   }
 
   @override

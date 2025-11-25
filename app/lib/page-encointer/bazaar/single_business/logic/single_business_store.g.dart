@@ -63,36 +63,6 @@ mixin _$SingleBusinessStore on _SingleBusinessStoreBase, Store {
     });
   }
 
-  late final _$singleBusinessAtom = Atom(name: '_SingleBusinessStoreBase.singleBusiness', context: context);
-
-  @override
-  SingleBusiness? get singleBusiness {
-    _$singleBusinessAtom.reportRead();
-    return super.singleBusiness;
-  }
-
-  @override
-  set singleBusiness(SingleBusiness? value) {
-    _$singleBusinessAtom.reportWrite(value, super.singleBusiness, () {
-      super.singleBusiness = value;
-    });
-  }
-
-  late final _$fetchStatusAtom = Atom(name: '_SingleBusinessStoreBase.fetchStatus', context: context);
-
-  @override
-  FetchStatus get fetchStatus {
-    _$fetchStatusAtom.reportRead();
-    return super.fetchStatus;
-  }
-
-  @override
-  set fetchStatus(FetchStatus value) {
-    _$fetchStatusAtom.reportWrite(value, super.fetchStatus, () {
-      super.fetchStatus = value;
-    });
-  }
-
   late final _$ipfsProductsAtom = Atom(name: '_SingleBusinessStoreBase.ipfsProducts', context: context);
 
   @override
@@ -121,14 +91,6 @@ mixin _$SingleBusinessStore on _SingleBusinessStoreBase, Store {
     _$errorAtom.reportWrite(value, super.error, () {
       super.error = value;
     });
-  }
-
-  late final _$getSingleBusinessAsyncAction =
-      AsyncAction('_SingleBusinessStoreBase.getSingleBusiness', context: context);
-
-  @override
-  Future<void> getSingleBusiness() {
-    return _$getSingleBusinessAsyncAction.run(() => super.getSingleBusiness());
   }
 
   late final _$_SingleBusinessStoreBaseActionController =
@@ -162,8 +124,6 @@ mixin _$SingleBusinessStore on _SingleBusinessStoreBase, Store {
 isLiked: ${isLiked},
 isLikedPersonally: ${isLikedPersonally},
 countLikes: ${countLikes},
-singleBusiness: ${singleBusiness},
-fetchStatus: ${fetchStatus},
 ipfsProducts: ${ipfsProducts},
 error: ${error}
     ''';

@@ -14,6 +14,7 @@
     "accountsDeleteAll": "Lösche alle Konten",
     "accountShare": "Konto teilen",
     "addAccount": "Konto hinzufügen",
+    "addBusiness": "Geschäft hinzufügen",
     "addContact": "Kontakt hinzufügen",
     "addInvoiceQrToAddress": "QR-Rechnung zu Adresse hinzufügen",
     "address": "Adresse",
@@ -48,7 +49,16 @@
     "categories": "Kategorien",
     "canUseFaucetOnlyWithCurrentAccount": "Du kannst das Faucet nur benutzen, wenn das angezeigte Konto das zurzeit gewählte Konto ist.",
     "changeYourPin": "PIN ändern",
-    "checkEmailApp": "Keine Email-App installiert",
+    "category_all": "Alle",
+    "category_art_music": "Kunst & Musik",
+    "category_body_soul": "Körper & Seele",
+    "category_fashion_clothing": "Mode & Kleidung",
+    "category_food_beverage_store": "Lebensmittel- & Getränkemarkt",
+    "category_restaurants_bars": "Restaurants & Bars",
+    "category_it_hardware": "IT-Hardware",
+    "category_food": "Essen",
+    "category_other": "Andere",
+    "emailFailedToOpen": "E-Mail-App konnte nicht geöffnet werden.",
     "chosenRightCommunity": "Die Daten sind für eine andere Gemeinschaft. Bitte wechsle die Gemeinschaft um Geld zu senden.",
     "claim": "Einfordern",
     "claimRewardsNotificationBody": "Du hast dein Gemeinschaftseinkommen bereits erhalten.",
@@ -101,7 +111,6 @@
     "done": "Erledigt",
     "doYouAlreadyHaveAnAccount": "Hast du bereits ein Konto?",
     "enable": "Aktivieren",
-    "enableBazaar": "Bazaar aktivieren",
     "endorseeContent": "Du wurdest von einem Bootstrapper als vertrauenswürdiges Mitglied bestätigt. Deswegen ist dein Sitz garantiert.",
     "endorseeTitle": "Als Endorsee registriert - Dein Platz is garantiert.",
     "endorseNewcomerNotificationBody": "Danke für das Endorsen des Newbies!",
@@ -112,6 +121,74 @@
     "errorOccurred": "Es ist ein Fehler aufgetreten:",
     "errorUserNameIsRequired": "Benutzername darf nicht leer sein",
     "event": "Event ID",
+    "swapOption": "Swap-Option",
+    "swapOptionRate": "Kurs {amount} {cc}/{asset}",
+    "@swapOptionRate": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            },
+            "cc": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "swapOptionCcLimit": "{cc}-Limit: {amount} {cc}",
+    "@swapOptionCcLimit": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "cc": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "swapOptionAssetToReceive": "Du erhältst: {amount} {asset}",
+    "@swapOptionCcToBeSwapped": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "cc": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "swapOptionLimit": "Limit: {amount} {asset}",
+    "@swapOptionLimit": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "exerciseSwapAssetOptionAvailable": "Swap-Option verfügbar",
+    "@exerciseSwapAssetOptionAvailable": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "exerciseSwapNativeOptionAvailable": "KSM-Swap-Option verfügbar",
+    "exerciseSwapOption": "Swap-Option ausführen",
     "export": "Konto exportieren",
     "exportAccount": "exportieren",
     "exportMnemonicOk": "Mnemonik wurde in die Zwischenablage kopiert.",
@@ -216,26 +293,9 @@
     "proposalExplainerSetInactivityTimeout": "Dieser Vorschlag setzt eine neue globale Inaktivitätsfrist fest. Falls eine Gemeinschaft über die vorgeschriebene Anzahl an VersammlungsZyklen keine Treffen abhält, wird sie gelöscht.",
     "proposalExplainerPetition": "Dieser Vorschlag dient als Petition – entweder global oder innerhalb deiner Gemeinschaft. Er hat keine direkte Wirkung auf der Blockchain, signalisiert jedoch ein Anliegen, auf das die Gemeinschaft reagieren kann.",
     "proposalExplainerSpendNative": "Dieser Vorschlag schlägt vor, KSM aus der Gemeinschaftsreserve für einen Begünstigten auszugeben, entweder durch eine globale oder Gemeinschaftsabstimmung. Diese Mittel können zur Belohnung von Beiträgen oder zur Unterstützung von Gemeinschaftsprojekten verwendet werden.",
-    "proposalExplainerIssueSwapNativeOption": "Dieser Vorschlag ermöglicht es dem Begünstigten, Gemeinschaftswährung zu einem festgelegten Kurs mehrfach gegen KSM einzutauschen, bis zu einem bestimmten KSM-Limit. Der Begünstigte könnte ein lokales Unternehmen sein, das Gemeinschaftswährung akzeptiert und möglicherweise einen Überschuss ansammelt.\n\nBeispiel mit Kurs 3 {currency}/KSM und Limit von 2 KSM:\n\nDer Begünstigte kann bis zu 2 KSM zu einem Kurs von 3 {currency}/KSM eintauschen. Das bedeutet, dass maximal 6 {currency} gegen 2 KSM getauscht werden können.",
-    "@proposalExplainerIssueSwapNativeOption": {
-        "placeholders": {
-            "currency": {
-                "type": "String",
-                "example": "0.5"
-            }
-        }
-    },
-    "proposalExplainerSpendAsset": "Dieser Vorschlag schlägt vor, einen bestimmten Token für dich aus der Community-Treasury auszugeben, entweder durch eine globale oder Community-Abstimmung. Diese Mittel können für Community-Beiträge belohnen oder Community-Initiativen unterstützen.\n\nHinweis: Du erhältst diesen Token direkt auf Asset Hub Kusama.",
-    "proposalExplainerIssueSwapAssetOption": "Dieser Vorschlag erlaubt dir, Community-Token gegen einen festgelegten Token zu einem definierten Kurs mehrfach bis zu einem festgelegten Token-Limit zu tauschen. Du könntest ein lokales Unternehmen sein, das Community-Token annimmt und einen Überschuss ansammeln kann.\n\nBeispiel mit Kurs 3 {currency}/Token und Limit 2 Token:\n\nDu kannst bis zu 2 Token zu einem Kurs von 3 {currency}/Token tauschen. Somit beträgt das Maximum 6 {currency} => 2 Token.\n\nHinweis: Du erhältst diesen Token direkt auf Asset Hub Kusama.",
-    "@proposalExplainerIssueSwapAssetOption": {
-        "placeholders": {
-            "currency": {
-                "type": "String",
-                "example": "0.5"
-            }
-        }
-    },
-    "proposalExplainerCannotVoteYet": "Du kannst ab dem nächsten Zyklus mit deiner Reputation abstimmen!",
+    "proposalExplainerIssueSwapNativeOption": "Dieser Vorschlag erlaubt es dem Empfänger, {cc} zu einem festgelegten Kurs mehrfach gegen KSM zu tauschen, bis ein festes KSM-Limit erreicht ist. Der Empfänger könnte ein lokales Geschäft sein, das {cc} akzeptiert und eventuell einen Überschuss ansammelt.\n\nBeispiel mit Kurs 3 {cc}/KSM und Limit 2 KSM:\n\nDer Empfänger kann bis zu 2 KSM zu einem Kurs von 3 {cc}/KSM tauschen. Das Maximum ist also 6 {cc} => 2 KSM.",
+    "proposalExplainerSpendAsset": "Dieser Vorschlag schlägt vor, {asset} aus der Community-Treasury für eine begünstigte Person auszugeben – entweder durch eine globale oder lokale Abstimmung. Diese Mittel können Community-Beiträge belohnen oder Initiativen unterstützen.\n\nHinweis: Du erhältst das {asset} direkt auf dem Asset Hub Kusama.",
+    "proposalExplainerIssueSwapAssetOption": "Dieser Vorschlag erlaubt es dem Empfänger, {cc} zu einem festgelegten Kurs mehrfach gegen {asset} zu tauschen, bis ein festes {asset}-Limit erreicht ist. Der Empfänger könnte ein lokales Geschäft sein, das {cc} akzeptiert und eventuell einen Überschuss ansammelt.\n\nBeispiel mit Kurs 3 {cc}/{asset} und Limit 2 {asset}:\n\nDer Empfänger kann bis zu 2 {asset} zu einem Kurs von 3 {cc}/{asset} tauschen. Das Maximum ist also 6 {cc} => 2 {asset}.\n\nHinweis: Du erhältst die {asset} direkt auf Asset Hub Kusama.",    "proposalExplainerCannotVoteYet": "Du kannst ab dem nächsten Zyklus mit deiner Reputation abstimmen!",
     "proposalType": "Vorschlagstyp",
     "proposalTypeAddLocation": "Standort hinzufügen",
     "proposalTypeRemoveLocation": "Standort entfernen",
@@ -245,46 +305,10 @@
     "proposalTypePetition": "Petition",
     "proposalTypeSpendNative": "KSM ausgeben",
     "proposalTypeIssueSwapNativeOption": "{cc} für KSM tauschen",
-    "@proposalTypeIssueSwapNativeOption": {
-        "placeholders": {
-            "cc": {
-                "type": "String",
-                "example": "MTA"
-            }
-        }
-    },
     "proposalTypeSpendAsset": "{asset} ausgeben",
-    "@proposalTypeSpendAsset": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "USDC"
-            }
-        }
-    },
     "proposalTypeIssueSwapAssetOption": "{cc} für {asset} tauschen",
-    "@proposalTypeIssueSwapAssetOption": {
-        "placeholders": {
-            "cc": {
-                "type": "String",
-                "example": "MTA"
-            },
-            "asset": {
-                "type": "String",
-                "example": "USDC"
-            }
-        }
-    },
     "proposalScope": "Geltungsbereich",
     "proposalScopeLocal": "Lokal ({community})",
-    "@proposalScopeLocal": {
-        "placeholders": {
-            "community": {
-                "type": "String",
-                "example": "Mediterranea"
-            }
-        }
-    },
     "proposalScopeGlobal": "Global",
     "proposalFieldLatitude": "Breitengrad",
     "proposalFieldLongitude": "Längengrad",
@@ -294,37 +318,9 @@
     "proposalFieldPetitionText": "Petitionstext",
     "proposalFieldAssetToSpend": "Zu vergebender Token",
     "proposalFieldAmount": "Betrag ({asset})",
-    "@proposalFieldAmount": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "6"
-            }
-        }
-    },
     "proposalFieldBeneficiary": "Begünstigter",
     "proposalFieldAllowance": "Limit ({asset})",
-    "@proposalFieldAllowance": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "6"
-            }
-        }
-    },
     "proposalFieldRate": "Kurs ({cc}/{asset})",
-    "@proposalFieldRate": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "6"
-            },
-            "cc": {
-                "type": "String",
-                "example": "6"
-            }
-        }
-    },
     "proposalFieldBurn": "Verbrennen",
     "proposalFieldValidity": "Gültigkeit",
     "proposalFieldErrorEnterPetitionText": "Petitionstext eingeben",
@@ -337,13 +333,14 @@
     "proposalFieldErrorDemurrageRange": "Demurrage muss zwischen 0 und 100 liegen",
     "proposalFieldErrorEnterPositiveNumber": "Geben Sie eine positive Zahl ein",
     "proposalFieldErrorPositiveNumberRange": "Muss eine positive Zahl sein",
-    "proposalFieldErrorPositiveNumberTooBig": "Die Zahl ist zu gross",
+    "proposalFieldErrorPositiveNumberTooBig": "Zahl ist zu groß (Limit: {amount})",
     "proposalFieldErrorEnterInactivityTimeout": "Inaktivitätszeitlimit eingeben",
     "proposalFieldErrorPositiveIntegerRange": "Muss eine positive ganze Zahl sein",
     "proposalClose": "Schliessen",
     "proposalUpdateState": "Aktualisieren",
     "proposalUpdateExplanation": "Dies wird den Status des Vorschlags aktualisieren. Wenn er zu alt ist und nicht genügend Aye-Stimmen hat, wird er abgelehnt. Wenn er lange genug bestätigt wurde, wird er angenommen.",
     "proposalOnlyBootstrappersOrReputablesCanSubmit": "Nur Bootstrappers oder Reputables können einen Vorschlag einreichen.",
+    "proposalOnlyBusinessOwnersCanSubmit": "Nur Geschäftsinhaber können diesen Vorschlag einreichen.",
     "proposalCannotSubmitProposalTypePendingEnactment": "Ein Vorschlag dieses Typs kann nicht eingereicht werden, da bereits einer auf die Umsetzung wartet.",
     "proposalSubmit": "Vorschlag einreichen",
     "proposalSuperseded": "Verdrängt",
@@ -429,46 +426,11 @@
     "transferHistory": "Transfers",
     "transferHistoryEnd": "Das Laden älterer Transaktionen wird noch nicht unterstützt",
     "transferHistoryTop": "Es kann bis zu 30 Sekunden dauern, bis der Transfer hier auftaucht",
+    "treasuryBalanceTooLow": "Schatzkammerguthaben zu niedrig",
     "treasuryGlobalBalance": "Freies globales Schatzkammerguthaben: {balance} KSM.",
-    "@treasuryGlobalBalance": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
     "treasuryLocalBalance": "Freies Gemeinschaftsschatzkammerguthaben: {balance} KSM.",
-    "@treasuryLocalBalance": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
     "treasuryLocalBalanceOnAHK": "Freies Gemeinschaftsschatzkammerguthaben auf Asset Hub: {balance} {asset}.",
-    "@treasuryLocalBalanceOnAHK": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            },
-            "asset": {
-                "type": "String",
-                "example": "{Leu}"
-            }
-        }
-    },
     "treasuryPendingSpends": "Ausstehende Ausgaben: {spends} KSM.",
-    "@treasuryPendingSpends": {
-        "placeholders": {
-            "spends": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
     "txBroadcast": "Transaktion wurde im Netzwerk",
     "txError": "Transaktionsfehler",
     "txInBlock": "Transaction ist in einem Block",
@@ -514,212 +476,21 @@
     "communityWithName": "{name} Gemeinschaft",
     "verifyAuthTitle": "Bitte verifiziere {useBioAuth, select, true{deine Identität} false{deine PIN} other{}}.",
     "offersForCommunity": "Angebote für {value}",
-    "@offersForCommunity": {
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "LEU"
-            }
-        }
-    },
     "proposalApprovalThreshold": "Annahme bei {percentage}% Zustimmung",
-    "@proposalApprovalThreshold": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalPassed": "Angenommen mit {percentage}% Aye",
-    "@proposalPassed": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalFailed": "Abgelehnt mit {percentage}% Aye",
-    "@proposalFailed": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalIsPassing": "Wird gerade angenommen mit {percentage}% Aye",
-    "@proposalIsPassing": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalIsFailing": "Wird gerade abgelehnt mit {percentage}% Aye",
-    "@proposalIsFailing": {
-        "placeholders": {
-            "percentage": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalSetInactivityTimeoutTo": "Global: Setze das neue Inaktivitätszeitlimit auf {value}",
-    "@proposalSetInactivityTimeoutTo": {
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalAddLocation": "{cid}: Füge einen neuen Standort hinzu",
-    "@proposalAddLocation": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            }
-        }
-    },
     "proposalRemoveLocation": "{cid}: Entferne einen Standort",
-    "@proposalRemoveLocation": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            }
-        }
-    },
     "proposalUpdateNominalIncome": "Gemeinschaftseinkommen anpassen auf {value} {currency}",
-    "@proposalUpdateNominalIncome": {
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "currency": {
-                "type": "String",
-                "example": "LEU"
-            }
-        }
-    },
     "proposalUpdateDemurrage": "Demurrage anpassen auf {value}%/Monat",
-    "@proposalUpdateDemurrage": {
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "0.00"
-            }
-        }
-    },
     "proposalPetition": "{cid} Petition: {value}",
-    "@proposalPetition": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "value": {
-                "type": "String",
-                "example": "Peace to the World"
-            }
-        }
-    },
     "proposalSpendNative": "{cid} Die Gemeinschaftsreserve soll {amount} KSM an {beneficiary} senden",
-    "@proposalSpendNative": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "amount": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "beneficiary": {
-                "type": "String",
-                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
-            }
-        }
-    },
     "proposalSpendAsset": "{cid} Die Gemeinschaftsreserve soll {amount} {asset} an {beneficiary} senden",
-    "@proposalSpendAsset": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "global"
-            },
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "amount": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "beneficiary": {
-                "type": "String",
-                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
-            }
-        }
-    },
     "proposalIssueSwapNativeOption": "{cid}: Ermögliche {beneficiary}, bis zu {allowance} KSM zu einem Kurs von {rate} {cid}/KSM einzutauschen.",
-    "@proposalIssueSwapNativeOption": {
-        "placeholders": {
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "beneficiary": {
-                "type": "String",
-                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
-            },
-            "allowance": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "rate": {
-                "type": "String",
-                "example": "1.2"
-            }
-        }
-    },
+    "proposalIssueSwapOptionCCLimit": "Du kannst bis zu {allowance} {cc} tauschen, um dein festgelegtes {asset}-Limit zu erreichen.",
     "proposalIssueSwapAssetOption": "{cid}: Ermögliche {beneficiary}, bis zu {allowance} {asset} zu einem Kurs von {rate} {cid}/{asset} einzutauschen.",
-    "@proposalIssueSwapAssetOption": {
-        "placeholders": {
-            "asset": {
-                "type": "String",
-                "example": "global"
-            },
-            "cid": {
-                "type": "String",
-                "example": "global"
-            },
-            "beneficiary": {
-                "type": "String",
-                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
-            },
-            "allowance": {
-                "type": "String",
-                "example": "0.00"
-            },
-            "rate": {
-                "type": "String",
-                "example": "1.2"
-            }
-        }
-    },
-    "proposalSupersededBy": "Verdrängt durch: {id}",
-    "@proposalSupersededBy": {
-        "placeholders": {
-            "id": {
-                "type": "String",
-                "example": "6"
-            }
-        }
-    }
+    "proposalSupersededBy": "Verdrängt durch: {id}"
 }

@@ -54,6 +54,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get addAccount => 'Konto hinzufügen';
 
   @override
+  String get addBusiness => 'Geschäft hinzufügen';
+
+  @override
   String get addContact => 'Kontakt hinzufügen';
 
   @override
@@ -169,7 +172,34 @@ class AppLocalizationsDe extends AppLocalizations {
   String get changeYourPin => 'PIN ändern';
 
   @override
-  String get checkEmailApp => 'Keine Email-App installiert';
+  String get category_all => 'Alle';
+
+  @override
+  String get category_art_music => 'Kunst & Musik';
+
+  @override
+  String get category_body_soul => 'Körper & Seele';
+
+  @override
+  String get category_fashion_clothing => 'Mode & Kleidung';
+
+  @override
+  String get category_food_beverage_store => 'Lebensmittel- & Getränkemarkt';
+
+  @override
+  String get category_restaurants_bars => 'Restaurants & Bars';
+
+  @override
+  String get category_it_hardware => 'IT-Hardware';
+
+  @override
+  String get category_food => 'Essen';
+
+  @override
+  String get category_other => 'Andere';
+
+  @override
+  String get emailFailedToOpen => 'E-Mail-App konnte nicht geöffnet werden.';
 
   @override
   String get chosenRightCommunity =>
@@ -342,9 +372,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get enable => 'Aktivieren';
 
   @override
-  String get enableBazaar => 'Bazaar aktivieren';
-
-  @override
   String get endorseeContent =>
       'Du wurdest von einem Bootstrapper als vertrauenswürdiges Mitglied bestätigt. Deswegen ist dein Sitz garantiert.';
 
@@ -376,6 +403,40 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get event => 'Event ID';
+
+  @override
+  String get swapOption => 'Swap-Option';
+
+  @override
+  String swapOptionRate(String amount, String asset, String cc) {
+    return 'Kurs $amount $cc/$asset';
+  }
+
+  @override
+  String swapOptionCcLimit(String amount, String cc) {
+    return '$cc-Limit: $amount $cc';
+  }
+
+  @override
+  String swapOptionAssetToReceive(String amount, String asset) {
+    return 'Du erhältst: $amount $asset';
+  }
+
+  @override
+  String swapOptionLimit(String amount, String asset) {
+    return 'Limit: $amount $asset';
+  }
+
+  @override
+  String exerciseSwapAssetOptionAvailable(String asset) {
+    return 'Swap-Option verfügbar';
+  }
+
+  @override
+  String get exerciseSwapNativeOptionAvailable => 'KSM-Swap-Option verfügbar';
+
+  @override
+  String get exerciseSwapOption => 'Swap-Option ausführen';
 
   @override
   String get export => 'Konto exportieren';
@@ -727,17 +788,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Vorschlag schlägt vor, KSM aus der Gemeinschaftsreserve für einen Begünstigten auszugeben, entweder durch eine globale oder Gemeinschaftsabstimmung. Diese Mittel können zur Belohnung von Beiträgen oder zur Unterstützung von Gemeinschaftsprojekten verwendet werden.';
 
   @override
-  String proposalExplainerIssueSwapNativeOption(String currency) {
-    return 'Dieser Vorschlag ermöglicht es dem Begünstigten, Gemeinschaftswährung zu einem festgelegten Kurs mehrfach gegen KSM einzutauschen, bis zu einem bestimmten KSM-Limit. Der Begünstigte könnte ein lokales Unternehmen sein, das Gemeinschaftswährung akzeptiert und möglicherweise einen Überschuss ansammelt.\n\nBeispiel mit Kurs 3 $currency/KSM und Limit von 2 KSM:\n\nDer Begünstigte kann bis zu 2 KSM zu einem Kurs von 3 $currency/KSM eintauschen. Das bedeutet, dass maximal 6 $currency gegen 2 KSM getauscht werden können.';
+  String proposalExplainerIssueSwapNativeOption(String cc) {
+    return 'Dieser Vorschlag erlaubt es dem Empfänger, $cc zu einem festgelegten Kurs mehrfach gegen KSM zu tauschen, bis ein festes KSM-Limit erreicht ist. Der Empfänger könnte ein lokales Geschäft sein, das $cc akzeptiert und eventuell einen Überschuss ansammelt.\n\nBeispiel mit Kurs 3 $cc/KSM und Limit 2 KSM:\n\nDer Empfänger kann bis zu 2 KSM zu einem Kurs von 3 $cc/KSM tauschen. Das Maximum ist also 6 $cc => 2 KSM.';
   }
 
   @override
-  String get proposalExplainerSpendAsset =>
-      'Dieser Vorschlag schlägt vor, einen bestimmten Token für dich aus der Community-Treasury auszugeben, entweder durch eine globale oder Community-Abstimmung. Diese Mittel können für Community-Beiträge belohnen oder Community-Initiativen unterstützen.\n\nHinweis: Du erhältst diesen Token direkt auf Asset Hub Kusama.';
+  String proposalExplainerSpendAsset(String asset) {
+    return 'Dieser Vorschlag schlägt vor, $asset aus der Community-Treasury für eine begünstigte Person auszugeben – entweder durch eine globale oder lokale Abstimmung. Diese Mittel können Community-Beiträge belohnen oder Initiativen unterstützen.\n\nHinweis: Du erhältst das $asset direkt auf dem Asset Hub Kusama.';
+  }
 
   @override
-  String proposalExplainerIssueSwapAssetOption(String currency) {
-    return 'Dieser Vorschlag erlaubt dir, Community-Token gegen einen festgelegten Token zu einem definierten Kurs mehrfach bis zu einem festgelegten Token-Limit zu tauschen. Du könntest ein lokales Unternehmen sein, das Community-Token annimmt und einen Überschuss ansammeln kann.\n\nBeispiel mit Kurs 3 $currency/Token und Limit 2 Token:\n\nDu kannst bis zu 2 Token zu einem Kurs von 3 $currency/Token tauschen. Somit beträgt das Maximum 6 $currency => 2 Token.\n\nHinweis: Du erhältst diesen Token direkt auf Asset Hub Kusama.';
+  String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
+    return 'Dieser Vorschlag erlaubt es dem Empfänger, $cc zu einem festgelegten Kurs mehrfach gegen $asset zu tauschen, bis ein festes $asset-Limit erreicht ist. Der Empfänger könnte ein lokales Geschäft sein, das $cc akzeptiert und eventuell einen Überschuss ansammelt.\n\nBeispiel mit Kurs 3 $cc/$asset und Limit 2 $asset:\n\nDer Empfänger kann bis zu 2 $asset zu einem Kurs von 3 $cc/$asset tauschen. Das Maximum ist also 6 $cc => 2 $asset.\n\nHinweis: Du erhältst die $asset direkt auf Asset Hub Kusama.';
   }
 
   @override
@@ -878,7 +940,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Muss eine positive Zahl sein';
 
   @override
-  String get proposalFieldErrorPositiveNumberTooBig => 'Die Zahl ist zu gross';
+  String proposalFieldErrorPositiveNumberTooBig(String amount) {
+    return 'Zahl ist zu groß (Limit: $amount)';
+  }
 
   @override
   String get proposalFieldErrorEnterInactivityTimeout =>
@@ -891,6 +955,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get proposalOnlyBootstrappersOrReputablesCanSubmit =>
       'Nur Bootstrappers oder Reputables können einen Vorschlag einreichen.';
+
+  @override
+  String get proposalOnlyBusinessOwnersCanSubmit =>
+      'Nur Geschäftsinhaber können diesen Vorschlag einreichen.';
 
   @override
   String get proposalCannotSubmitProposalTypePendingEnactment =>
@@ -1179,6 +1247,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Es kann bis zu 30 Sekunden dauern, bis der Transfer hier auftaucht';
 
   @override
+  String get treasuryBalanceTooLow => 'Schatzkammerguthaben zu niedrig';
+
+  @override
   String treasuryGlobalBalance(String balance) {
     return 'Freies globales Schatzkammerguthaben: $balance KSM.';
   }
@@ -1458,6 +1529,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String proposalIssueSwapNativeOption(
       String cid, String beneficiary, String allowance, String rate) {
     return '$cid: Ermögliche $beneficiary, bis zu $allowance KSM zu einem Kurs von $rate $cid/KSM einzutauschen.';
+  }
+
+  @override
+  String proposalIssueSwapOptionCCLimit(
+      String asset, String cc, String allowance) {
+    return 'Du kannst bis zu $allowance $cc tauschen, um dein festgelegtes $asset-Limit zu erreichen.';
   }
 
   @override

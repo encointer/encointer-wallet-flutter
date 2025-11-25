@@ -14,6 +14,7 @@
     "accountsDeleteAll": "Remove all Accounts",
     "accountShare": "Share Account",
     "addAccount": "Add account",
+    "addBusiness": "Add business",
     "addContact": "Add contact",
     "addInvoiceQrToAddress": "Add QR-invoice to Address",
     "address": "Address",
@@ -48,7 +49,16 @@
     "categories": "Categories",
     "canUseFaucetOnlyWithCurrentAccount": "You can only use the faucet features if this account page shows the currently active account.",
     "changeYourPin": "Change PIN",
-    "checkEmailApp": "Check that you have downloaded the Email app",
+    "category_all": "All",
+    "category_art_music": "Art & Music",
+    "category_body_soul": "Body & Soul",
+    "category_fashion_clothing": "Fashion & Clothing",
+    "category_food_beverage_store": "Food & Beverage Store",
+    "category_restaurants_bars": "Restaurants & Bars",
+    "category_it_hardware": "IT Hardware",
+    "category_food": "Food",
+    "category_other": "Other",
+    "emailFailedToOpen": "Could not open email client.",
     "chosenRightCommunity": "The data is for a different community. Please change the community to send funds.",
     "claim": "Claim",
     "claimRewardsNotificationBody": "You have already received your community income!",
@@ -101,7 +111,6 @@
     "done": "done",
     "doYouAlreadyHaveAnAccount": "Do you already have an account?",
     "enable": "Enable",
-    "enableBazaar": "Enable Bazaar",
     "endorseeContent": "You have been endorsed as a trustworthy community member. Hence, you are guaranteed to be assigned to a gathering this cycle.",
     "endorseeTitle": "Registered as endorsee - your seat is guaranteed",
     "endorseNewcomerNotificationBody": "Thanks for endorsing the newbie!",
@@ -112,6 +121,74 @@
     "errorOccurred": "An error occurred:",
     "errorUserNameIsRequired": "User name cannot be blank",
     "event": "Event ID",
+    "swapOption": "Swap Option",
+    "swapOptionRate": "Rate {amount} {cc}/{asset}",
+    "@swapOptionRate": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            },
+            "cc": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "swapOptionCcLimit": "{cc} Limit: {amount} {cc}",
+    "@swapOptionCcLimit": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "cc": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "swapOptionAssetToReceive": "You receive: {amount} {asset}",
+    "@swapOptionAssetToReceive": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "asset": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "swapOptionLimit": "Limit: {amount} {asset}",
+    "@swapOptionLimit": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "exerciseSwapAssetOptionAvailable": "Swap Option Available",
+    "@exerciseSwapAssetOptionAvailable": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "exerciseSwapNativeOptionAvailable": "KSM Swap Option Available",
+    "exerciseSwapOption": "Exercise Swap Option",
     "export": "Export Account",
     "exportAccount": "export",
     "exportMnemonicOk": "Mnemonic was copied to clipboard.",
@@ -216,22 +293,34 @@
     "proposalExplainerSetInactivityTimeout": "This proposal suggests a new global inactivity timeout. If a community has not been performing gatherings for the suggested number of gathering cycles, the community will be deleted.",
     "proposalExplainerPetition": "This proposal serves as a petition, either globally or within your community. While it has no direct on-chain effect, it signals intent, allowing the community to recognize and act upon it.",
     "proposalExplainerSpendNative": "This proposal suggests spending KSM for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.",
-    "proposalExplainerIssueSwapNativeOption": "This proposal allows the beneficiary to exchange community tokens for KSM at a defined rate multiple times up to a set KSM limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 {currency}/KSM and limit 2 KSM:\n\nThe beneficiary can exchange up to 2 KSM at a rate of 3 {currency}/KSM. Hence, the maximum is 6 {currency} => 2 KSM.",
+    "proposalExplainerIssueSwapNativeOption": "This proposal allows the beneficiary to exchange {cc} for KSM at a defined rate multiple times up to a set KSM limit. The beneficiary might be a local business that accepts {cc} and may accumulate a surplus.\n\nExample with rate 3 {cc}/KSM and limit 2 KSM:\n\nThe beneficiary can exchange up to 2 KSM at a rate of 3 {cc}/KSM. Hence, the maximum is 6 {cc} => 2 KSM.",
     "@proposalExplainerIssueSwapNativeOption": {
         "placeholders": {
-            "currency": {
+            "cc": {
                 "type": "String",
-                "example": "0.5"
+                "example": "LEU"
             }
         }
     },
-    "proposalExplainerSpendAsset": "This proposal suggests spending a specified Asset for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.\n\nNote: You will receive this asset on Asset Hub Kusama directly.",
-    "proposalExplainerIssueSwapAssetOption": "This proposal allows the beneficiary to exchange community tokens for a specified Asset at a defined rate multiple times up to a set Asset limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.\n\nExample with rate 3 {currency}/Asset and limit 2 Asset:\n\nThe beneficiary can exchange up to 2 Assets at a rate of 3 {currency}/Asset. Hence, the maximum is 6 {currency} => 2 Asset.\n\nNote: You will receive this asset on Asset Hub Kusama directly.",
+    "proposalExplainerSpendAsset": "This proposal suggests spending {asset} for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.\n\nNote: You will receive the {asset} on Asset Hub Kusama directly.",
+    "@proposalExplainerSpendAsset": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "proposalExplainerIssueSwapAssetOption": "This proposal allows the beneficiary to exchange {cc} for {asset} at a defined rate multiple times up to a set {asset} limit. The beneficiary might be a local business that accepts {cc} and may accumulate a surplus.\n\nExample with rate 3 {cc}/{asset} and limit 2 {asset}:\n\nThe beneficiary can exchange up to 2 {asset} at a rate of 3 {cc}/{asset}. Hence, the maximum is 6 {cc} => 2 {asset}.\n\nNote: You will receive the {asset} on Asset Hub Kusama directly.",
     "@proposalExplainerIssueSwapAssetOption": {
         "placeholders": {
-            "currency": {
+            "cc": {
                 "type": "String",
-                "example": "0.5"
+                "example": "LEU"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
             }
         }
     },
@@ -337,10 +426,19 @@
     "proposalFieldErrorDemurrageRange": "Demurrage must be between 0 and 100",
     "proposalFieldErrorEnterPositiveNumber": "Enter positive number",
     "proposalFieldErrorPositiveNumberRange": "Must be a positive number",
-    "proposalFieldErrorPositiveNumberTooBig": "Number is too big",
+    "proposalFieldErrorPositiveNumberTooBig": "Number is too big (Limit: {amount})",
+    "@proposalFieldErrorPositiveNumberTooBig": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            }
+        }
+    },
     "proposalFieldErrorEnterInactivityTimeout": "Enter inactivity timeout",
     "proposalFieldErrorPositiveIntegerRange": "Must be a positive integer",
     "proposalOnlyBootstrappersOrReputablesCanSubmit": "Only bootstrappers or reputables can submit a proposal.",
+    "proposalOnlyBusinessOwnersCanSubmit": "Only business owners can submit this proposal.",
     "proposalCannotSubmitProposalTypePendingEnactment": "Cannot submit a proposal of this type, as there is already one pending enactment.",
     "proposalClose": "Close",
     "proposalUpdateState": "Update",
@@ -429,6 +527,7 @@
     "transferHistory": "Transfers",
     "transferHistoryEnd": "Loading older transactions is not yet supported",
     "transferHistoryTop": "It may take up to 30 seconds for a transfer to appear here",
+    "treasuryBalanceTooLow": "Treasury Balance too low",
     "treasuryGlobalBalance": "Free global treasury balance: {balance} KSM.",
     "@treasuryGlobalBalance": {
         "placeholders": {
@@ -656,7 +755,7 @@
             }
         }
     },
-    "verifyAuthTitle": "Please verify the {useBioAuth, select, true{your identity} false{your PIN} other{ }}.",
+    "verifyAuthTitle": "Please verify {useBioAuth, select, true{your identity} false{your PIN} other{ }}.",
     "@verifyAuthTitle": {
         "placeholders": {
             "useBioAuth": {
@@ -837,6 +936,23 @@
             "rate": {
                 "type": "String",
                 "example": "1.2"
+            }
+        }
+    },
+    "proposalIssueSwapOptionCCLimit": "You can exchange up to {allowance} {cc} to reach your defined {asset} limit.",
+    "@proposalIssueSwapOptionCCLimit": {
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            },
+            "cc": {
+                "type": "String",
+                "example": "LEU"
+            },
+            "allowance": {
+                "type": "String",
+                "example": "1.1"
             }
         }
     },

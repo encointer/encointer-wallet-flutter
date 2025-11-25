@@ -7,9 +7,10 @@ import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
-import 'package:encointer_wallet/page-encointer/democracy/proposal_page/asset_id.dart';
+import 'package:encointer_wallet/page-encointer/democracy/utils/asset_id.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/utf8_limited_byte_field.dart';
+import 'package:encointer_wallet/page-encointer/democracy/utils/field_validation.dart';
 import 'package:encointer_wallet/service/forex/forex_service.dart';
 import 'package:encointer_wallet/service/forex/known_community.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -23,6 +24,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/theme/custom/typography/typography_theme.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:flutter/material.dart';
 import 'package:ew_l10n/l10n.dart';
@@ -50,9 +52,11 @@ import 'package:ew_polkadart/ew_polkadart.dart'
 const logTarget = 'ProposePage';
 
 class ProposePage extends StatefulWidget {
-  const ProposePage({super.key});
+  const ProposePage({super.key, this.initialAction});
 
   static const String route = '/propose';
+
+  final ProposalActionIdentifier? initialAction;
 
   @override
   State<ProposePage> createState() => _ProposePageState();
@@ -66,11 +70,12 @@ class _ProposePageState extends State<ProposePage> {
   late AssetHubWebApi assetHubApi;
 
   // Default selected values
-  ProposalActionIdentifier selectedAction = ProposalActionIdentifier.petition;
+  late ProposalActionIdentifier selectedAction;
   late ProposalScope selectedScope;
   List<ProposalScope> allowedScopes = [];
   AssetToSpend selectedAsset = AssetToSpend.usdc;
   ForexRate? rate;
+  bool isBusinessOwner = false;
 
   // Forex service to get exchange rate of a community's local fiat to usd.
   final forexService = ForexService();
@@ -122,6 +127,7 @@ class _ProposePageState extends State<ProposePage> {
   @override
   void initState() {
     super.initState();
+    selectedAction = widget.initialAction ?? ProposalActionIdentifier.petition;
 
     assetHubApi = AssetHubWebApi.endpoints(
       context.read<AppStore>().settings.currentNetwork.assetHubEndpoints(),
@@ -131,6 +137,7 @@ class _ProposePageState extends State<ProposePage> {
     _updateAllowedScopes();
     _updateEnactmentQueue();
     _updateExchangeRate();
+    _checkBusinessOwners();
 
     beneficiary = context.read<AppStore>().account.currentAccount;
   }
@@ -140,6 +147,20 @@ class _ProposePageState extends State<ProposePage> {
     setState(() {
       allowedScopes = selectedAction.allowedPolicies();
       selectedScope = allowedScopes.first; // Default to the first allowed scope
+    });
+  }
+
+  Future<void> _checkBusinessOwners() async {
+    final store = context.read<AppStore>();
+    final accountBusiness = await webApi.encointer.bazaarGetBusinesses(store.encointer.chosenCid!);
+
+    final currentAddress = store.account.currentAddress;
+    // const currentAddress = '5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK';
+
+    final isOwner = accountBusiness.any((business) => AddressUtils.areEqual(business.controller, currentAddress));
+
+    setState(() {
+      isBusinessOwner = isOwner;
     });
   }
 
@@ -350,20 +371,19 @@ class _ProposePageState extends State<ProposePage> {
                             if (hasSameProposalForSameScope(enactmentQueue, selectedAction,
                                 selectedScope.isLocal ? store.encointer.chosenCid! : null))
                               Text(l10n.proposalCannotSubmitProposalTypePendingEnactment, textAlign: TextAlign.center),
+                            // if (requireBusinessOwner() && !isBusinessOwner)
+                            //   Text(l10n.proposalOnlyBusinessOwnersCanSubmit, textAlign: TextAlign.center),
 
                             // Submit button
 
                             const SizedBox(height: 5),
                             SubmitButton(
-                              onPressed: isBootstrapperOrReputable(store, store.account.currentAddress) &&
-                                      !hasSameProposalForSameScope(enactmentQueue, selectedAction,
-                                          selectedScope.isLocal ? store.encointer.chosenCid! : null)
+                              onPressed: shouldEnableSubmit()
                                   ? (context) async {
                                       _formKey.currentState!.validate();
                                       await _submitProposal();
                                     }
                                   : null,
-                              // disable button for non-bootstrappers/reputables
                               child: Text(l10n.proposalSubmit),
                             ),
                           ],
@@ -378,6 +398,37 @@ class _ProposePageState extends State<ProposePage> {
         ),
       ),
     );
+  }
+
+  bool shouldEnableSubmit() {
+    final store = context.read<AppStore>();
+
+    if (!isBootstrapperOrReputable(store, store.account.currentAddress)) {
+      return false;
+    }
+
+    final sameProposalExists = hasSameProposalForSameScope(
+        enactmentQueue, selectedAction, selectedScope.isLocal ? store.encointer.chosenCid! : null);
+    if (sameProposalExists) {
+      return false;
+    }
+
+    // if (requireBusinessOwner()) {
+    //   final devMode = RepositoryProvider.of<AppSettings>(context).developerMode;
+    //   if (devMode) {
+    //     // Enable submitting arbitrary proposals in devMode
+    //     return true;
+    //   } else {
+    //     return isBusinessOwner;
+    //   }
+    // }
+
+    return true;
+  }
+
+  bool requireBusinessOwner() {
+    return selectedAction == ProposalActionIdentifier.issueSwapNativeOption ||
+        selectedAction == ProposalActionIdentifier.issueSwapAssetOption;
   }
 
   /// Dynamically generates form fields based on selected proposal type
@@ -421,9 +472,9 @@ class _ProposePageState extends State<ProposePage> {
       case ProposalActionIdentifier.issueSwapNativeOption:
         return l10n.proposalExplainerIssueSwapNativeOption(store.encointer.community!.symbol!);
       case ProposalActionIdentifier.spendAsset:
-        return l10n.proposalExplainerSpendAsset;
+        return l10n.proposalExplainerSpendAsset(selectedAsset.symbol);
       case ProposalActionIdentifier.issueSwapAssetOption:
-        return l10n.proposalExplainerIssueSwapAssetOption(store.encointer.community!.symbol!);
+        return l10n.proposalExplainerIssueSwapAssetOption(store.encointer.community!.symbol!, selectedAsset.symbol);
     }
   }
 
@@ -463,19 +514,37 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget issueSwapNativeOptionInput() {
-    final maxSwapValue = selectedScope.isLocal
-        ? maxTreasuryPayoutFraction * Fmt.bigIntToDouble(localTreasuryBalance - pendingLocalSpends, ertDecimals)
-        : maxTreasuryPayoutFraction * Fmt.bigIntToDouble(globalTreasuryBalance - pendingGlobalSpends, ertDecimals);
+    final maxSwapValue = nativeTreasuryUnallocatedLiquidity();
     return Column(children: issueSwapOptionInput('KSM', maxSwapValue, false));
   }
 
   Widget issueSwapAssetOptionInput() {
-    final maxSwapValue =
-        maxTreasuryPayoutFraction * Fmt.bigIntToDouble(assetTreasuryLiquidity(selectedAsset), selectedAsset.decimals);
+    final maxSwapValue = assetTreasuryUnallocatedLiquidity();
     return Column(children: [
       selectAssetDropDown(),
-      ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), maxSwapValue, true)
+      ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), maxSwapValue, true),
     ]);
+  }
+
+  double assetTreasuryUnallocatedLiquidity() {
+    final unallocated =
+        maxTreasuryPayoutFraction * Fmt.bigIntToDouble(assetTreasuryLiquidity(selectedAsset), selectedAsset.decimals);
+    return unallocated;
+  }
+
+  double nativeTreasuryUnallocatedLiquidity() {
+    final unallocated = selectedScope.isLocal
+        ? maxTreasuryPayoutFraction * Fmt.bigIntToDouble(localTreasuryBalance - pendingLocalSpends, ertDecimals)
+        : maxTreasuryPayoutFraction * Fmt.bigIntToDouble(globalTreasuryBalance - pendingGlobalSpends, ertDecimals);
+    return unallocated;
+  }
+
+  double ccSwapLimit() {
+    final allowance = allowanceController.text.isNotEmpty ? double.tryParse(allowanceController.text) : null;
+    final rate = rateController.text.isNotEmpty ? double.tryParse(rateController.text) : null;
+    final ccLimit = allowance != null && rate != null ? allowance * rate : 0.0;
+
+    return ccLimit;
   }
 
   List<Widget> issueSwapOptionInput(String currency, double? maxValue, bool tryDeriveRate) {
@@ -491,17 +560,24 @@ class _ProposePageState extends State<ProposePage> {
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
           // Only numbers & decimal
+          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         ],
-        validator: (v) => validatePositiveNumberWithMax(v, maxValue),
+        validator: (v) => validatePositiveNumberWithMax(context, double.tryParse(v ?? ''), maxValue),
         onChanged: (value) {
           setState(() {
-            allowanceError = validatePositiveNumberWithMax(value, maxValue);
+            allowanceError = validatePositiveNumberWithMax(context, double.tryParse(value), maxValue);
           });
         },
       ),
       rateInput(currency, tryDeriveRate),
+      Text(
+        l10n.proposalIssueSwapOptionCCLimit(
+          currency,
+          store.encointer.community!.symbol!,
+          Fmt.formatNumber(context, ccSwapLimit(), decimals: 4),
+        ),
+      ),
       const SizedBox(height: 10),
       EncointerAddressInputField(
         store,
@@ -524,15 +600,20 @@ class _ProposePageState extends State<ProposePage> {
     final store = context.read<AppStore>();
 
     final knownCommunity = KnownCommunity.tryFromSymbol(store.encointer.community!.symbol!);
-    final isKnown = knownCommunity != null;
-    final ccToUsdAfterDiscount = knownCommunity!.ccPerUsd(rate?.value ?? 0);
 
+    final isKnown = knownCommunity != null;
+    Log.d('[rateInput] communityKnown: $isKnown');
+    Log.d('[rateInput] deriveRate: $tryDeriveRate');
+
+    var ccToUsdAfterMarkup = '1';
+    if (isKnown) {
+      ccToUsdAfterMarkup = Fmt.formatNumber(context, knownCommunity.ccPerUsd(rate?.value ?? 0), decimals: 4);
+    }
     return TextFormField(
       // set constant value if needed
-      controller: rateController
-        ..text = tryDeriveRate && isKnown ? ccToUsdAfterDiscount.toString() : rateController.text,
+      controller: rateController..text = tryDeriveRate && isKnown ? ccToUsdAfterMarkup : rateController.text,
       // We want to derive a sane value for well-known communities and disable editing.
-      enabled: !tryDeriveRate && isKnown,
+      enabled: !tryDeriveRate || !isKnown,
       decoration: InputDecoration(
         labelText: l10n.proposalFieldRate(
           currency,
@@ -545,10 +626,10 @@ class _ProposePageState extends State<ProposePage> {
         // Only numbers & decimal
         FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
       ],
-      validator: validatePositiveNumber,
+      validator: (String? val) => validatePositiveNumberString(context, val),
       onChanged: (value) {
         setState(() {
-          rateError = validatePositiveNumber(value);
+          rateError = validatePositiveNumberString(context, value);
         });
       },
     );
@@ -575,13 +656,15 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget spendNativeInput(BuildContext context) {
-    return Column(children: spendInputWidgets('KSM'));
+    final maxSpend = nativeTreasuryUnallocatedLiquidity();
+    return Column(children: spendInputWidgets('KSM', maxSpend));
   }
 
   Widget spendAssetInput(BuildContext context) {
+    final maxSpend = assetTreasuryUnallocatedLiquidity();
     return Column(children: [
       selectAssetDropDown(),
-      ...spendInputWidgets(selectedAsset.symbol),
+      ...spendInputWidgets(selectedAsset.symbol, maxSpend),
     ]);
   }
 
@@ -609,7 +692,7 @@ class _ProposePageState extends State<ProposePage> {
             : null);
   }
 
-  List<Widget> spendInputWidgets(String currency) {
+  List<Widget> spendInputWidgets(String currency, double max) {
     final l10n = context.l10n;
     return [
       TextFormField(
@@ -620,13 +703,13 @@ class _ProposePageState extends State<ProposePage> {
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
           // Only numbers & decimal
+          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         ],
-        validator: validatePositiveNumber,
+        validator: (String? val) => validatePositiveNumberString(context, val),
         onChanged: (value) {
           setState(() {
-            amountError = validatePositiveNumber(value);
+            amountError = validatePositiveNumberWithMax(context, double.tryParse(value), max);
           });
         },
       ),
@@ -682,10 +765,10 @@ class _ProposePageState extends State<ProposePage> {
         FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         // Only numbers & decimal
       ],
-      validator: validatePositiveNumber,
+      validator: (String? val) => validatePositiveNumberString(context, val),
       onChanged: (value) {
         setState(() {
-          nominalIncomeError = validatePositiveNumber(value);
+          nominalIncomeError = validatePositiveNumberString(context, value);
         });
       },
     );
@@ -702,8 +785,8 @@ class _ProposePageState extends State<ProposePage> {
       ),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         // Only numbers & decimal
+        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
       ],
       validator: validateDemurrage,
       onChanged: (value) {
@@ -814,28 +897,6 @@ class _ProposePageState extends State<ProposePage> {
       final demurrage = double.tryParse(value);
       if (demurrage == null || demurrage < 0 || demurrage > 100) {
         return l10n.proposalFieldErrorDemurrageRange;
-      } else {
-        return null;
-      }
-    }
-  }
-
-  /// Ensures that the number is positive (doubles)
-  String? validatePositiveNumber(String? value) {
-    return validatePositiveNumberWithMax(value, null);
-  }
-
-  /// Ensures that the number is positive (doubles)
-  String? validatePositiveNumberWithMax(String? value, double? max) {
-    final l10n = context.l10n;
-    if (value == null || value.isEmpty) {
-      return l10n.proposalFieldErrorEnterPositiveNumber;
-    } else {
-      final number = double.tryParse(value);
-      if (number == null || number <= 0) {
-        return l10n.proposalFieldErrorPositiveNumberRange;
-      } else if (max != null && number > max) {
-        return l10n.proposalFieldErrorPositiveNumberTooBig;
       } else {
         return null;
       }
