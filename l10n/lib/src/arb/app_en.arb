@@ -178,7 +178,7 @@
             }
         }
     },
-    "exerciseSwapAssetOptionAvailable": "{asset} Swap Option Available",
+    "exerciseSwapAssetOptionAvailable": "Swap Option Available",
     "@exerciseSwapAssetOptionAvailable": {
         "placeholders": {
             "asset": {

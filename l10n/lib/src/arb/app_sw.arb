@@ -127,7 +127,7 @@
     "swapOptionCcLimit": "Kikomo cha {cc}: {amount} {cc}",
     "swapOptionAssetToReceive": "Unapokea: {amount} {asset}",
     "swapOptionLimit": "Kikomo: {amount} {asset}",
-    "exerciseSwapAssetOptionAvailable": "Chaguo la kubadilisha {asset} linapatikana",
+    "exerciseSwapAssetOptionAvailable": "Chaguo la kubadilisha linapatikana",
     "exerciseSwapNativeOptionAvailable": "Chaguo la kubadilisha KSM linapatikana",
     "exerciseSwapOption": "Tumia chaguo la kubadilisha",
     "export": "Onyesha taarifa za siri za akaunti yako kuweza kuisafirisha",

@@ -425,7 +425,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String exerciseSwapAssetOptionAvailable(String asset) {
-    return 'Chaguo la kubadilisha $asset linapatikana';
+    return 'Chaguo la kubadilisha linapatikana';
   }
 
   @override

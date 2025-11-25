@@ -423,7 +423,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String exerciseSwapAssetOptionAvailable(String asset) {
-    return 'Доступна опция обмена $asset';
+    return 'Доступна опция обмена';
   }
 
   @override

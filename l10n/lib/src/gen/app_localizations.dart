@@ -863,7 +863,7 @@ abstract class AppLocalizations {
   /// No description provided for @exerciseSwapAssetOptionAvailable.
   ///
   /// In en, this message translates to:
-  /// **'{asset} Swap Option Available'**
+  /// **'Swap Option Available'**
   String exerciseSwapAssetOptionAvailable(String asset);
 
   /// No description provided for @exerciseSwapNativeOptionAvailable.

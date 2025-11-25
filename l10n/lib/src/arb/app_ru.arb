@@ -126,7 +126,7 @@
     "swapOptionCcLimit": "Лимит {cc}: {amount} {cc}",
     "swapOptionAssetToReceive": "Вы получаете: {amount} {asset}",
     "swapOptionLimit": "Лимит: {amount} {asset}",
-    "exerciseSwapAssetOptionAvailable": "Доступна опция обмена {asset}",
+    "exerciseSwapAssetOptionAvailable": "Доступна опция обмена",
     "exerciseSwapNativeOptionAvailable": "Доступна опция обмена KSM",
     "exerciseSwapOption": "Использовать опцию обмена",
     "export": "Экпорт аккаунта",
