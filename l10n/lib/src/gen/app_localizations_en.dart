@@ -1436,7 +1436,7 @@ class AppLocalizationsEn extends AppLocalizations {
         'other': ' ',
       },
     );
-    return 'Please verify the $_temp0.';
+    return 'Please verify $_temp0.';
   }
 
   @override
