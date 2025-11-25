@@ -12,7 +12,7 @@ import 'package:html/parser.dart' as html;
 const logTarget = 'Ipfs';
 
 class IpfsApi {
-  const IpfsApi(this.ewHttp, {this.gateway = encointerIpfsUrl, Directory? cacheDir}) : _cacheDir = cacheDir;
+  const IpfsApi(this.ewHttp, {this.gateway = ipfsGatewayEncointer, Directory? cacheDir}) : _cacheDir = cacheDir;
 
   final EwHttp ewHttp;
   final String gateway;

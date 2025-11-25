@@ -9,7 +9,7 @@ const fallBackCommunityIcon = 'assets/nctr_logo_faces_only_thick.svg';
 const communityIconName = 'community_icon.svg';
 
 // AVD: ${Platform.isAndroid ? androidLocalHost : iosLocalHost} = 127.0.0.1
-const String ipfsGatewayEncointer = 'http://ipfs.encointer.org:8080';
+const String ipfsGatewayEncointer = 'https://ipfs2.encointer.org/ipfs/';
 final String ipfsGatewayLocal = 'http://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:8080';
 
 const encointerFeed = 'https://encointer.github.io/feed';
@@ -44,7 +44,6 @@ String ceremonyInfoLink(String locale, String? cid) {
 
 const assignmentFAQLinkEN = 'https://leu.zuerich/en/#why-have-i-not-been-assigned-to-a-cycle';
 const assignmentFAQLinkDE = 'https://leu.zuerich/#warum-wurde-ich-keinem-cycle-zugewiesen';
-const encointerIpfsUrl = 'http://ipfs.encointer.org:8080';
 
 String leuZurichCycleAssignmentFAQLink(String locale) {
   return switch (locale) {
