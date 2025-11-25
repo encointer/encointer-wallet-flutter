@@ -204,7 +204,6 @@ class IpfsApi {
     });
   }
 
-
   /// Lists just the file/folder names
   Future<List<String>> listFolder(String folderCid) async {
     final detailed = await listFolderDetailed(folderCid);
