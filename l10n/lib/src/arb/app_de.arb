@@ -340,6 +340,7 @@
     "proposalUpdateState": "Aktualisieren",
     "proposalUpdateExplanation": "Dies wird den Status des Vorschlags aktualisieren. Wenn er zu alt ist und nicht genügend Aye-Stimmen hat, wird er abgelehnt. Wenn er lange genug bestätigt wurde, wird er angenommen.",
     "proposalOnlyBootstrappersOrReputablesCanSubmit": "Nur Bootstrappers oder Reputables können einen Vorschlag einreichen.",
+    "proposalOnlyBusinessOwnersCanSubmit": "Nur Geschäftsinhaber können diesen Vorschlag einreichen.",
     "proposalCannotSubmitProposalTypePendingEnactment": "Ein Vorschlag dieses Typs kann nicht eingereicht werden, da bereits einer auf die Umsetzung wartet.",
     "proposalSubmit": "Vorschlag einreichen",
     "proposalSuperseded": "Verdrängt",

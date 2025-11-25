@@ -1024,13 +1024,6 @@ class EncointerApi {
     }
   }
 
-  /// Get all the registered businesses for the current `chosenCid`
-  Future<List<AccountBusinessTuple>> getBusinesses({BlockHash? at}) async {
-    // set the store because the current bazaar data model reads the values from the store.
-    store.encointer.bazaar?.setBusinessRegistry(allMockBusinesses);
-    return allMockBusinesses;
-  }
-
   Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid, {BlockHash? at}) async {
     final businesses = await _dartApi.bazaarGetBusinesses(cid, at: at ?? store.chain.latestHash);
 

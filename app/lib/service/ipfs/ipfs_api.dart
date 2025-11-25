@@ -162,7 +162,7 @@ class IpfsApi {
 
       final rows = document.querySelectorAll('.grid.dir > div');
 
-      final List<IpfsLink> links = [];
+      final links = <IpfsLink>[];
 
       // Process in chunks of 4 columns per row
       for (var i = 0; i + 3 < rows.length; i += 4) {
@@ -176,7 +176,7 @@ class IpfsApi {
         if (name.isEmpty || name == 'Parent directory') continue;
 
         // ---- 2) Extract hash from the hash column ----
-        String hash = '';
+        var hash = '';
         final hashAnchor = hashCell.querySelector('a.ipfs-hash');
         if (hashAnchor != null) {
           final href = hashAnchor.attributes['href'] ?? '';

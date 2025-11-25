@@ -24,6 +24,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/theme/custom/typography/typography_theme.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:flutter/material.dart';
 import 'package:ew_l10n/l10n.dart';
@@ -74,6 +75,7 @@ class _ProposePageState extends State<ProposePage> {
   List<ProposalScope> allowedScopes = [];
   AssetToSpend selectedAsset = AssetToSpend.usdc;
   ForexRate? rate;
+  bool isBusinessOwner = false;
 
   // Forex service to get exchange rate of a community's local fiat to usd.
   final forexService = ForexService();
@@ -135,6 +137,7 @@ class _ProposePageState extends State<ProposePage> {
     _updateAllowedScopes();
     _updateEnactmentQueue();
     _updateExchangeRate();
+    _checkBusinessOwners();
 
     beneficiary = context.read<AppStore>().account.currentAccount;
   }
@@ -144,6 +147,20 @@ class _ProposePageState extends State<ProposePage> {
     setState(() {
       allowedScopes = selectedAction.allowedPolicies();
       selectedScope = allowedScopes.first; // Default to the first allowed scope
+    });
+  }
+
+  Future<void> _checkBusinessOwners() async {
+    final store = context.read<AppStore>();
+    final accountBusiness = await webApi.encointer.bazaarGetBusinesses(store.encointer.chosenCid!);
+
+    final currentAddress = store.account.currentAddress;
+    // const currentAddress = '5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK';
+
+    final isOwner = accountBusiness.any((business) => AddressUtils.areEqual(business.controller, currentAddress));
+
+    setState(() {
+      isBusinessOwner = isOwner;
     });
   }
 
@@ -354,15 +371,14 @@ class _ProposePageState extends State<ProposePage> {
                             if (hasSameProposalForSameScope(enactmentQueue, selectedAction,
                                 selectedScope.isLocal ? store.encointer.chosenCid! : null))
                               Text(l10n.proposalCannotSubmitProposalTypePendingEnactment, textAlign: TextAlign.center),
+                            if (requireBusinessOwner() && !isBusinessOwner)
+                              Text(l10n.proposalOnlyBusinessOwnersCanSubmit, textAlign: TextAlign.center),
 
                             // Submit button
 
                             const SizedBox(height: 5),
                             SubmitButton(
-                              // disable button for non-bootstrappers/reputables
-                              onPressed: isBootstrapperOrReputable(store, store.account.currentAddress) &&
-                                      !hasSameProposalForSameScope(enactmentQueue, selectedAction,
-                                          selectedScope.isLocal ? store.encointer.chosenCid! : null)
+                              onPressed: shouldEnableSubmit()
                                   ? (context) async {
                                       _formKey.currentState!.validate();
                                       await _submitProposal();
@@ -382,6 +398,37 @@ class _ProposePageState extends State<ProposePage> {
         ),
       ),
     );
+  }
+
+  bool shouldEnableSubmit() {
+    final store = context.read<AppStore>();
+
+    if (!isBootstrapperOrReputable(store, store.account.currentAddress)) {
+      return false;
+    }
+
+    final sameProposalExists = hasSameProposalForSameScope(
+        enactmentQueue, selectedAction, selectedScope.isLocal ? store.encointer.chosenCid! : null);
+    if (sameProposalExists) {
+      return false;
+    }
+
+    if (requireBusinessOwner()) {
+      final devMode = RepositoryProvider.of<AppSettings>(context).developerMode;
+      if (devMode) {
+        // Enable submitting arbitrary proposals in devMode
+        return true;
+      } else {
+        return isBusinessOwner;
+      }
+    }
+
+    return true;
+  }
+
+  bool requireBusinessOwner() {
+    return selectedAction == ProposalActionIdentifier.issueSwapNativeOption ||
+        selectedAction == ProposalActionIdentifier.issueSwapAssetOption;
   }
 
   /// Dynamically generates form fields based on selected proposal type

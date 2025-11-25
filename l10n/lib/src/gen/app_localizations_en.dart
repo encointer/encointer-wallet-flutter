@@ -946,6 +946,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Only bootstrappers or reputables can submit a proposal.';
 
   @override
+  String get proposalOnlyBusinessOwnersCanSubmit =>
+      'Only business owners can submit this proposal.';
+
+  @override
   String get proposalCannotSubmitProposalTypePendingEnactment =>
       'Cannot submit a proposal of this type, as there is already one pending enactment.';
 
