@@ -371,8 +371,8 @@ class _ProposePageState extends State<ProposePage> {
                             if (hasSameProposalForSameScope(enactmentQueue, selectedAction,
                                 selectedScope.isLocal ? store.encointer.chosenCid! : null))
                               Text(l10n.proposalCannotSubmitProposalTypePendingEnactment, textAlign: TextAlign.center),
-                            if (requireBusinessOwner() && !isBusinessOwner)
-                              Text(l10n.proposalOnlyBusinessOwnersCanSubmit, textAlign: TextAlign.center),
+                            // if (requireBusinessOwner() && !isBusinessOwner)
+                            //   Text(l10n.proposalOnlyBusinessOwnersCanSubmit, textAlign: TextAlign.center),
 
                             // Submit button
 
@@ -413,15 +413,15 @@ class _ProposePageState extends State<ProposePage> {
       return false;
     }
 
-    if (requireBusinessOwner()) {
-      final devMode = RepositoryProvider.of<AppSettings>(context).developerMode;
-      if (devMode) {
-        // Enable submitting arbitrary proposals in devMode
-        return true;
-      } else {
-        return isBusinessOwner;
-      }
-    }
+    // if (requireBusinessOwner()) {
+    //   final devMode = RepositoryProvider.of<AppSettings>(context).developerMode;
+    //   if (devMode) {
+    //     // Enable submitting arbitrary proposals in devMode
+    //     return true;
+    //   } else {
+    //     return isBusinessOwner;
+    //   }
+    // }
 
     return true;
   }
