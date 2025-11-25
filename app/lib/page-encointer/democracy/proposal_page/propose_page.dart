@@ -407,12 +407,11 @@ class _ProposePageState extends State<ProposePage> {
       return false;
     }
 
-    final sameProposalExists = hasSameProposalForSameScope(enactmentQueue, selectedAction,
-        selectedScope.isLocal ? store.encointer.chosenCid! : null);
+    final sameProposalExists = hasSameProposalForSameScope(
+        enactmentQueue, selectedAction, selectedScope.isLocal ? store.encointer.chosenCid! : null);
     if (sameProposalExists) {
       return false;
     }
-
 
     if (requireBusinessOwner()) {
       final devMode = RepositoryProvider.of<AppSettings>(context).developerMode;
@@ -428,8 +427,8 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   bool requireBusinessOwner() {
-    return selectedAction == ProposalActionIdentifier.issueSwapNativeOption
-        || selectedAction == ProposalActionIdentifier.issueSwapAssetOption;
+    return selectedAction == ProposalActionIdentifier.issueSwapNativeOption ||
+        selectedAction == ProposalActionIdentifier.issueSwapAssetOption;
   }
 
   /// Dynamically generates form fields based on selected proposal type
