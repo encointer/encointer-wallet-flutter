@@ -514,12 +514,14 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget issueSwapNativeOptionInput() {
-    final maxSwapValue = nativeTreasuryUnallocatedLiquidity();
+    final maxSwapValue =
+        RepositoryProvider.of<AppSettings>(context).developerMode ? null : nativeTreasuryUnallocatedLiquidity();
     return Column(children: issueSwapOptionInput('KSM', maxSwapValue, false));
   }
 
   Widget issueSwapAssetOptionInput() {
-    final maxSwapValue = assetTreasuryUnallocatedLiquidity();
+    final maxSwapValue =
+        RepositoryProvider.of<AppSettings>(context).developerMode ? null : assetTreasuryUnallocatedLiquidity();
     return Column(children: [
       selectAssetDropDown(),
       ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), maxSwapValue, true),
@@ -656,12 +658,14 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget spendNativeInput(BuildContext context) {
-    final maxSpend = nativeTreasuryUnallocatedLiquidity();
+    final maxSpend =
+        RepositoryProvider.of<AppSettings>(context).developerMode ? null : nativeTreasuryUnallocatedLiquidity();
     return Column(children: spendInputWidgets('KSM', maxSpend));
   }
 
   Widget spendAssetInput(BuildContext context) {
-    final maxSpend = assetTreasuryUnallocatedLiquidity();
+    final maxSpend =
+        RepositoryProvider.of<AppSettings>(context).developerMode ? null : assetTreasuryUnallocatedLiquidity();
     return Column(children: [
       selectAssetDropDown(),
       ...spendInputWidgets(selectedAsset.symbol, maxSpend),
@@ -692,7 +696,7 @@ class _ProposePageState extends State<ProposePage> {
             : null);
   }
 
-  List<Widget> spendInputWidgets(String currency, double max) {
+  List<Widget> spendInputWidgets(String currency, double? max) {
     final l10n = context.l10n;
     return [
       TextFormField(
