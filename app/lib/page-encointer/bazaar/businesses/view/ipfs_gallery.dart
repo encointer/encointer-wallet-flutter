@@ -117,7 +117,7 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery> with SingleTickerPr
       height: widget.imageHeight,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.symmetric(),
         itemCount: _images.length,
         separatorBuilder: (_, __) => const SizedBox(width: 8),
         itemBuilder: (context, i) {

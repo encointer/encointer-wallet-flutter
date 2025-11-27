@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/models/bazaar/category.dart';
+import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -57,6 +58,14 @@ class IpfsBusiness {
     final cat = category;
     if (cat != Category.other) return cat.localized(context);
     return _prettifySlug(categoryRaw);
+  }
+
+  bool get hasSomeAddressInfo {
+    return addressDescription.isNotNullOrEmpty |
+        address.isNotNullOrEmpty |
+        zipcode.isNotNullOrEmpty |
+        email.isNotNullOrEmpty |
+        telephone.isNotNullOrEmpty;
   }
 
   /// Human-readable fallback name, for unknown backend values.

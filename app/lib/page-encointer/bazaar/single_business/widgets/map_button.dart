@@ -19,7 +19,7 @@ class MapButton extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: context.colorScheme.onSecondary,
-          padding: const EdgeInsets.fromLTRB(30, 12, 30, 12),
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
           elevation: 7,
         ),
         child: Text(
