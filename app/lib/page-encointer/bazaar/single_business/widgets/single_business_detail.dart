@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_gallery.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/propose_page.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +23,8 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
 
+const logTarget = 'SingleBusinessDetail';
+
 class SingleBusinessDetail extends StatelessWidget {
   const SingleBusinessDetail({required this.business, super.key});
 
@@ -34,6 +39,8 @@ class SingleBusinessDetail extends StatelessWidget {
     final store = context.read<AppStore>();
     final currentAddress = store.account.currentAddress;
     // const currentAddress = '5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK';
+
+    Log.d('Business: ${jsonEncode(business)}', logTarget);
 
     return SingleChildScrollView(
       child: Card(
@@ -112,7 +119,7 @@ class SingleBusinessDetail extends StatelessWidget {
                     business.description ?? '',
                     style: context.bodyMedium.copyWith(height: 1.5),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 20),
                   if (businessStore.ipfsProducts.isNotEmpty)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,28 +146,25 @@ class SingleBusinessDetail extends StatelessWidget {
                         ),
                       ],
                     ),
-                  const SizedBox(height: 20),
-                  BusinessDetailAddressWidget(
-                    text: l10n.address,
-                    description: business.addressDescription ?? '',
-                    address: business.address ?? '',
-                    zipCode: business.zipcode ?? '',
-                    email: business.email ?? '',
-                    phoneNum: business.telephone ?? '',
-                  ),
-                  MapButton(
-                      onPressed: (business.latitude != null && business.longitude != null)
-                          ? () {
-                              {
-                                final location = Location(
-                                  double.parse(business.latitude!),
-                                  double.parse(business.longitude!),
-                                );
-                                AppLaunch.launchMap(location);
-                              }
-                            }
-                          : null),
-                  const SizedBox(height: 40),
+                  if (business.hasSomeAddressInfo)
+                    BusinessDetailAddressWidget(
+                      text: l10n.address,
+                      description: business.addressDescription,
+                      address: business.address,
+                      zipCode: business.zipcode,
+                      email: business.email,
+                      phoneNum: business.telephone,
+                    ),
+                  if (business.latitude != null && business.longitude != null)
+                    MapButton(
+                      onPressed: () {
+                        final location = Location(
+                          double.parse(business.latitude!),
+                          double.parse(business.longitude!),
+                        );
+                        AppLaunch.launchMap(location);
+                      },
+                    ),
                   if (business.photos != null)
                     IpfsImageGallery(
                       ipfs: webApi.ipfsApi,
