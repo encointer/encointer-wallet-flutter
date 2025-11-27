@@ -99,7 +99,7 @@ class BusinessCard extends StatelessWidget {
 
                     // Description
                     Text(
-                      business.description,
+                      business.description ?? '',
                       style: context.bodyMedium,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,

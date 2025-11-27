@@ -30,16 +30,16 @@ class IpfsBusiness {
   Map<String, dynamic> toJson() => _$IpfsBusinessToJson(this);
 
   final String name;
-  final String description;
+  final String? description;
   final String? photo;
-  final String address;
+  final String? address;
   final String? zipcode;
   final String? addressDescription;
   final String? telephone;
   final String? email;
-  final String longitude;
-  final String latitude;
-  final String openingHours;
+  final String? longitude;
+  final String? latitude;
+  final String? openingHours;
   final String? moreInfo;
   final String? photos;
   String? controller;
