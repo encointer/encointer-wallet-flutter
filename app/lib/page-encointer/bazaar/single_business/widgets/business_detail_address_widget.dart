@@ -31,18 +31,18 @@ class BusinessDetailAddressWidget extends StatelessWidget {
               style: context.textTheme.titleLarge!.copyWith(color: context.colorScheme.primary, fontSize: 18),
             ),
             if (description.isNotNullOrEmpty)
-            TextSpan(
-              text: '$description\n',
-              style: context.textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
-            ),
+              TextSpan(
+                text: '$description\n',
+                style: context.textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+              ),
             if (address.isNotNullOrEmpty)
-            TextSpan(text: '$address\n', style: context.textTheme.bodyMedium!.copyWith(height: 1.3)),
+              TextSpan(text: '$address\n', style: context.textTheme.bodyMedium!.copyWith(height: 1.3)),
             if (zipCode.isNotNullOrEmpty)
-            TextSpan(text: '$zipCode\n', style: context.textTheme.bodyMedium!.copyWith(height: 1.3)),
+              TextSpan(text: '$zipCode\n', style: context.textTheme.bodyMedium!.copyWith(height: 1.3)),
             if (email.isNotNullOrEmpty)
-            TextSpan(text: '$email\n', style: context.textTheme.bodyMedium!.copyWith(height: 1.3)),
+              TextSpan(text: '$email\n', style: context.textTheme.bodyMedium!.copyWith(height: 1.3)),
             if (phoneNum.isNotNullOrEmpty)
-            TextSpan(text: phoneNum, style: context.textTheme.bodyMedium!.copyWith(height: 1.5)),
+              TextSpan(text: phoneNum, style: context.textTheme.bodyMedium!.copyWith(height: 1.5)),
           ],
         ),
       ),
