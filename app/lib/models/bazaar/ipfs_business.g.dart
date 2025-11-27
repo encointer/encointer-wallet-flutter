@@ -8,12 +8,12 @@ part of 'ipfs_business.dart';
 
 IpfsBusiness _$IpfsBusinessFromJson(Map<String, dynamic> json) => IpfsBusiness(
       name: json['name'] as String,
-      description: json['description'] as String,
+      description: json['description'] as String?,
       categoryRaw: json['category'] as String,
-      address: json['address'] as String,
-      longitude: json['longitude'] as String,
-      latitude: json['latitude'] as String,
-      openingHours: json['openingHours'] as String,
+      address: json['address'] as String?,
+      longitude: json['longitude'] as String?,
+      latitude: json['latitude'] as String?,
+      openingHours: json['openingHours'] as String?,
       addressDescription: json['addressDescription'] as String?,
       zipcode: json['zipcode'] as String?,
       logo: json['logo'] as String?,

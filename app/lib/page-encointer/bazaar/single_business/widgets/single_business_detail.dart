@@ -109,7 +109,7 @@ class SingleBusinessDetail extends StatelessWidget {
                   }),
                   const SizedBox(height: 20),
                   Text(
-                    business.description,
+                    business.description ?? '',
                     style: context.bodyMedium.copyWith(height: 1.5),
                   ),
                   const SizedBox(height: 40),
@@ -132,7 +132,7 @@ class SingleBusinessDetail extends StatelessWidget {
                               title: ipfsProduct.name,
                               description: ipfsProduct.description,
                               price: '${appStore.encointer.community?.symbol} ${ipfsProduct.price ?? 0}',
-                              openingHours: businessStore.business.openingHours,
+                              openingHours: businessStore.business.openingHours ?? '',
                               businessName: businessStore.business.name,
                             );
                           },
@@ -143,20 +143,23 @@ class SingleBusinessDetail extends StatelessWidget {
                   BusinessDetailAddressWidget(
                     text: l10n.address,
                     description: business.addressDescription ?? '',
-                    address: business.address,
+                    address: business.address ?? '',
                     zipCode: business.zipcode ?? '',
                     email: business.email ?? '',
                     phoneNum: business.telephone ?? '',
                   ),
                   MapButton(
-                    onPressed: () {
-                      final location = Location(
-                        double.parse(business.latitude),
-                        double.parse(business.longitude),
-                      );
-                      AppLaunch.launchMap(location);
-                    },
-                  ),
+                      onPressed: (business.latitude != null && business.longitude != null)
+                          ? () {
+                              {
+                                final location = Location(
+                                  double.parse(business.latitude!),
+                                  double.parse(business.longitude!),
+                                );
+                                AppLaunch.launchMap(location);
+                              }
+                            }
+                          : null),
                   const SizedBox(height: 40),
                   if (business.photos != null)
                     IpfsImageGallery(
