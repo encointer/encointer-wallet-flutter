@@ -140,26 +140,25 @@ class SingleBusinessDetail extends StatelessWidget {
                       ],
                     ),
                   const SizedBox(height: 20),
-                  BusinessDetailAddressWidget(
-                    text: l10n.address,
-                    description: business.addressDescription ?? '',
-                    address: business.address ?? '',
-                    zipCode: business.zipcode ?? '',
-                    email: business.email ?? '',
-                    phoneNum: business.telephone ?? '',
-                  ),
-                  MapButton(
-                      onPressed: (business.latitude != null && business.longitude != null)
-                          ? () {
-                              {
-                                final location = Location(
-                                  double.parse(business.latitude!),
-                                  double.parse(business.longitude!),
-                                );
-                                AppLaunch.launchMap(location);
-                              }
-                            }
-                          : null),
+                  if (business.hasSomeAddressInfo)
+                    BusinessDetailAddressWidget(
+                      text: l10n.address,
+                      description: business.addressDescription ?? '',
+                      address: business.address ?? '',
+                      zipCode: business.zipcode ?? '',
+                      email: business.email ?? '',
+                      phoneNum: business.telephone ?? '',
+                    ),
+                  if (business.latitude != null && business.longitude != null)
+                    MapButton(
+                      onPressed: () {
+                        final location = Location(
+                          double.parse(business.latitude!),
+                          double.parse(business.longitude!),
+                        );
+                        AppLaunch.launchMap(location);
+                      },
+                    ),
                   const SizedBox(height: 40),
                   if (business.photos != null)
                     IpfsImageGallery(
