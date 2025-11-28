@@ -65,3 +65,6 @@ export 'generated/encointer_kusama/types/encointer_primitives/faucet/faucet.dart
 // export types from scheduler
 export 'generated/encointer_kusama/types/encointer_primitives/scheduler/ceremony_phase_type.dart'
     show CeremonyPhaseType;
+
+// export proxy types
+export 'generated/encointer_kusama/types/pallet_proxy/proxy_definition.dart' show ProxyDefinition;
