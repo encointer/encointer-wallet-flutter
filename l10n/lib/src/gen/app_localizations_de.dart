@@ -798,13 +798,14 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
-    return 'Dieser Vorschlag erlaubt es dem Empfänger, $cc zu einem festgelegten Kurs mehrfach gegen $asset zu tauschen, bis ein festes $asset-Limit erreicht ist. Der Empfänger könnte ein lokales Geschäft sein, das $cc akzeptiert und eventuell einen Überschuss ansammelt.\n\nBeispiel mit Kurs 3 $cc/$asset und Limit 2 $asset:\n\nDer Empfänger kann bis zu 2 $asset zu einem Kurs von 3 $cc/$asset tauschen. Das Maximum ist also 6 $cc => 2 $asset.\n\nHinweis: Du erhältst die $asset direkt auf Asset Hub Kusama.';
+  String proposalExplainerIssueSwapAssetOption(
+      String cc, String asset, String ccLimit, String swapLimit, String rate) {
+    return 'Dieser Vorschlag ermöglicht es dem Begünstigten, $cc zu einem festen Kurs mehrfach gegen $asset zu tauschen, bis ein festgelegtes $asset-Limit erreicht ist. Der Begünstigte ist typischerweise ein lokales Unternehmen, das $cc akzeptiert und möglicherweise einen Überschuss ansammelt.\n\nBasierend auf deinen Eingaben beträgt der maximal austauschbare Betrag:\n\n$ccLimit $cc / $rate $cc/$asset = $swapLimit $asset.\n\nHinweis: Das $asset wird direkt auf dein Asset Hub Kusama-Konto gesendet.';
   }
 
   @override
   String get proposalExplainerCannotVoteYet =>
-      'Du kannst ab dem nächsten Zyklus mit deiner Reputation abstimmen!';
+      'You can start voting with your reputation as of the next cycle!';
 
   @override
   String get proposalType => 'Vorschlagstyp';

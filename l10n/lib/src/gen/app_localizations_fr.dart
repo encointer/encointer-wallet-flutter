@@ -796,13 +796,14 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
-    return 'Cette proposition permet au bénéficiaire d’échanger des $cc contre des $asset à un taux défini, plusieurs fois, jusqu’à une limite de $asset fixée. Le bénéficiaire peut être un commerce local qui accepte les $cc et peut accumuler un surplus.\n\nExemple avec un taux de 3 $cc/$asset et une limite de 2 $asset :\n\nLe bénéficiaire peut échanger jusqu’à 2 $asset à un taux de 3 $cc/$asset. Le maximum est donc 6 $cc => 2 $asset.\n\nRemarque : Tu recevras les $asset directement sur Asset Hub Kusama.';
+  String proposalExplainerIssueSwapAssetOption(
+      String cc, String asset, String ccLimit, String swapLimit, String rate) {
+    return 'Cette proposition permet au bénéficiaire d’échanger des $cc contre des $asset à un taux fixe, plusieurs fois, jusqu’à ce qu’une limite définie en $asset soit atteinte. Le bénéficiaire est généralement une entreprise locale qui accepte les $cc et peut accumuler un surplus.\n\nSelon vos paramètres, le montant maximal échangeable est :\n\n$ccLimit $cc / $rate $cc/$asset = $swapLimit $asset.\n\nRemarque : Les $asset seront envoyés directement sur votre compte Asset Hub Kusama.';
   }
 
   @override
   String get proposalExplainerCannotVoteYet =>
-      'Tu pourras commencer à voter avec ta réputation à partir du prochain cycle !';
+      'You can start voting with your reputation as of the next cycle!';
 
   @override
   String get proposalType => 'Type de proposition';

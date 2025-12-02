@@ -789,8 +789,9 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
-    return 'Это предложение позволяет получателю обменивать $cc на $asset по установленному курсу несколько раз, вплоть до определённого лимита $asset. Получателем может быть местный бизнес, который принимает $cc и может накапливать излишки.\n\nПример: курс 3 $cc/$asset, лимит 2 $asset:\n\nПолучатель может обменять до 2 $asset по курсу 3 $cc/$asset. Максимум составляет 6 $cc => 2 $asset.\n\nПримечание: Ты получишь $asset напрямую на Asset Hub Kusama.';
+  String proposalExplainerIssueSwapAssetOption(
+      String cc, String asset, String ccLimit, String swapLimit, String rate) {
+    return 'Это предложение позволяет получателю обменивать $cc на $asset по фиксированному курсу, многократно, до достижения установленного лимита в $asset. Получателем обычно является местный бизнес, который принимает $cc и может накапливать излишки.\n\nНа основе ваших данных максимальная сумма для обмена составляет:\n\n$ccLimit $cc / $rate $cc/$asset = $swapLimit $asset.\n\nПримечание: $asset будет отправлен напрямую на ваш аккаунт Asset Hub Kusama.';
   }
 
   @override

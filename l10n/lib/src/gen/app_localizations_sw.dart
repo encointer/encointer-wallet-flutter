@@ -794,13 +794,14 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
-    return 'Pendekezo hili linamruhusu mpokeaji kubadilisha $cc kwa $asset kwa kiwango kilichowekwa mara kadhaa hadi kufikia kikomo cha $asset. Mpokeaji anaweza kuwa biashara ya eneo inayokubali $cc na inaweza kujikusanyia ziada.\n\nMfano ukiwa na kiwango cha 3 $cc/$asset na kikomo cha 2 $asset:\n\nMpokeaji anaweza kubadilisha hadi $asset 2 kwa kiwango cha 3 $cc/$asset. Kiwango cha juu zaidi ni $cc 6 => $asset 2.\n\nKumbuka: Utapokea $asset moja kwa moja kwenye Asset Hub Kusama.';
+  String proposalExplainerIssueSwapAssetOption(
+      String cc, String asset, String ccLimit, String swapLimit, String rate) {
+    return 'Pendekezo hili linamruhusu mnufaika kubadilisha $cc kuwa $asset kwa kiwango cha kudumu, mara nyingi, hadi kikomo maalum cha $asset kifikiwe. Mnufaika kwa kawaida ni biashara ya eneo hilo inayokubali $cc na inaweza kukusanya ziada.\n\nKulingana na maingizo yako, kiasi cha juu kinachoweza kubadilishwa ni:\n\n$ccLimit $cc / $rate $cc/$asset = $swapLimit $asset.\n\nKumbuka: $asset itatumwa moja kwa moja kwenye akaunti yako ya Asset Hub Kusama.';
   }
 
   @override
   String get proposalExplainerCannotVoteYet =>
-      'Utaweza kuanza kupiga kura kwa kutumia sifa yako kuanzia mzunguko ujao!';
+      'You can start voting with your reputation as of the next cycle!';
 
   @override
   String get proposalType => 'Aina ya pendekezo';
