@@ -805,7 +805,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get proposalExplainerCannotVoteYet =>
-      'You can start voting with your reputation as of the next cycle!';
+      'Du kannst ab dem nächsten Zyklus mit deiner Reputation abstimmen!';
 
   @override
   String get proposalType => 'Vorschlagstyp';

@@ -801,7 +801,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get proposalExplainerCannotVoteYet =>
-      'You can start voting with your reputation as of the next cycle!';
+      'Utaweza kuanza kupiga kura kwa kutumia sifa yako kuanzia mzunguko ujao!';
 
   @override
   String get proposalType => 'Aina ya pendekezo';

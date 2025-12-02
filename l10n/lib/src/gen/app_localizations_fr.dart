@@ -803,7 +803,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get proposalExplainerCannotVoteYet =>
-      'You can start voting with your reputation as of the next cycle!';
+      'Tu pourras commencer à voter avec ta réputation à partir du prochain cycle !';
 
   @override
   String get proposalType => 'Type de proposition';
