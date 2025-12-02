@@ -94,12 +94,6 @@ I am looking forward to your response.
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.acceptancePoints, style: context.headlineSmall),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.menu),
-          ),
-        ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(56),
           child: Padding(
