@@ -28,3 +28,29 @@ String? validatePositiveNumberWithMax(BuildContext context, double? number, doub
     }
   }
 }
+
+String? validateSwapAmount(
+  BuildContext context,
+  String? ccAmountStr,
+  double accountBalance,
+  double treasuryBalanceAsset,
+  double exchangeRate,
+) {
+  final l10n = context.l10n;
+
+  final e1 = validatePositiveNumberString(context, ccAmountStr);
+  if (e1 != null) return e1;
+
+  final ccAmount = double.parse(ccAmountStr!);
+
+  final e2 = validatePositiveNumberWithMax(context, ccAmount, accountBalance);
+  if (e2 != null) return l10n.insufficientBalance;
+
+  // converted treasury asset → CC equivalent
+  final treasuryCC = treasuryBalanceAsset * exchangeRate;
+
+  final e3 = validatePositiveNumberWithMax(context, ccAmount, treasuryCC);
+  if (e3 != null) return l10n.treasuryBalanceTooLow;
+
+  return null;
+}
