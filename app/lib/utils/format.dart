@@ -49,15 +49,21 @@ class Fmt {
   /// from <double> to <String> in token format of ",##0.000"
   static String doubleFormat(
     double? value, {
-    int? length = 3,
+    int length = 3,
     int round = 0,
+    bool normalize = false,
   }) {
     if (value == null) {
       return '~';
     }
-    value.toStringAsFixed(3);
-    final f = NumberFormat(",##0${length! > 0 ? '.' : ''}${'#' * length}", 'en_US');
-    return f.format(value);
+    value.toStringAsFixed(length);
+    final f = NumberFormat(",##0${length > 0 ? '.' : ''}${'#' * length}", 'en_US');
+    final formatted = f.format(value);
+    return normalize ? Fmt.normalizeNumber(formatted) : formatted;
+  }
+
+  static String normalizeNumber(String s) {
+    return s.replaceAll(',', '');
   }
 
   /// number transform 3a:
@@ -79,7 +85,7 @@ class Fmt {
   static String balance(
     String? raw,
     int decimals, {
-    int? length = 3,
+    int length = 3,
   }) {
     if (raw == null || raw.isEmpty) {
       return '~';
@@ -106,7 +112,7 @@ class Fmt {
   static String token(
     BigInt value,
     int decimals, {
-    int? length = 3,
+    int length = 3,
   }) {
     return doubleFormat(bigIntToDouble(value, decimals), length: length);
   }

@@ -474,7 +474,15 @@ class _ProposePageState extends State<ProposePage> {
       case ProposalActionIdentifier.spendAsset:
         return l10n.proposalExplainerSpendAsset(selectedAsset.symbol);
       case ProposalActionIdentifier.issueSwapAssetOption:
-        return l10n.proposalExplainerIssueSwapAssetOption(store.encointer.community!.symbol!, selectedAsset.symbol);
+        final swapAmount = swapLimit();
+        final rate = double.parse(rateController.text);
+        return l10n.proposalExplainerIssueSwapAssetOption(
+          store.encointer.community!.symbol!,
+          selectedAsset.symbol,
+          allowanceController.text,
+          Fmt.doubleFormat(swapAmount),
+          rate.toString(),
+        );
     }
   }
 
@@ -542,11 +550,16 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   double swapLimit() {
-    final ccAmount = allowanceController.text.isNotEmpty ? double.tryParse(allowanceController.text) : null;
-    final rate = rateController.text.isNotEmpty ? double.tryParse(rateController.text) : null;
+    final ccAmount = double.tryParse(allowanceController.text);
+    final rate = double.tryParse(rateController.text);
     final usdcLimit = ccAmount != null && rate != null ? ccAmount / rate : 0.0;
 
     return usdcLimit;
+  }
+
+  double rateValue() {
+    final rate = double.tryParse(rateController.text);
+    return rate ?? 0.0;
   }
 
   List<Widget> issueSwapOptionInput(String currency, double? maxSwapValue, bool tryDeriveRate) {
@@ -569,11 +582,11 @@ class _ProposePageState extends State<ProposePage> {
         onChanged: (value) {
           setState(() {
             allowanceError = validateSwapAmount(
-                context,
-                value,
-                store.encointer.communityBalance!,
-                maxSwapValue ?? double.infinity,
-                double.tryParse(rateController.text) ?? 0
+              context,
+              value,
+              store.encointer.communityBalance!,
+              maxSwapValue ?? double.infinity,
+              double.tryParse(rateController.text) ?? 0,
             );
           });
         },
@@ -608,7 +621,7 @@ class _ProposePageState extends State<ProposePage> {
 
     var ccToUsdAfterMarkup = '1';
     if (isKnown) {
-      ccToUsdAfterMarkup = Fmt.formatNumber(context, knownCommunity.ccPerUsd(rate?.value ?? 0), decimals: 4);
+      ccToUsdAfterMarkup = Fmt.doubleFormat(knownCommunity.ccPerUsd(rate?.value ?? 0), length: 4, normalize: true);
     }
     return TextFormField(
       // set constant value if needed
@@ -1025,7 +1038,7 @@ class _ProposePageState extends State<ProposePage> {
         final maybeCid = selectedScope.isLocal ? cid : null;
         final ben = beneficiary!.pubKey;
 
-        final amount = double.tryParse(allowanceController.text)!;
+        final amount = swapLimit();
         final rate = double.tryParse(rateController.text)!;
         final issueOption = SwapAssetOption(
           cid: cid,
