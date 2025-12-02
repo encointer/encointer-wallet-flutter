@@ -784,19 +784,19 @@ class AppLocalizationsSw extends AppLocalizations {
       'Pendekezo hili linapendekeza kutumia KSM kwa faida ya mfaidi kutoka hazina ya jamii, ama kupitia kura za kimataifa au za jamii. Fedha hizi zinaweza kutumika kureward michango ya jamii au kusaidia mipango ya jamii.';
 
   @override
-  String proposalExplainerIssueSwapNativeOption(String cc) {
-    return 'Pendekezo hili linamruhusu mpokeaji kubadilisha $cc kwa KSM kwa kiwango kilichowekwa mara kadhaa hadi kufikia kikomo cha KSM. Mpokeaji anaweza kuwa biashara ya eneo inayokubali $cc na inaweza kujikusanyia ziada.\n\nMfano ukiwa na kiwango cha 3 $cc/KSM na kikomo cha 2 KSM:\n\nMpokeaji anaweza kubadilisha hadi KSM 2 kwa kiwango cha 3 $cc/KSM. Kiwango cha juu zaidi ni 6 $cc => 2 KSM.';
-  }
-
-  @override
   String proposalExplainerSpendAsset(String asset) {
     return 'Pendekezo hili linapendekeza kutumia $asset kwa mnufaika kutoka hazina ya jumuiya, ama kupitia kura ya kimataifa au ya kijumuiya. Fedha hizi zinaweza kutumika kupongeza michango ya wanajumuiya au kusaidia miradi ya kijumuiya.\n\nKumbuka: Utapokea $asset moja kwa moja kwenye Asset Hub Kusama.';
   }
 
   @override
-  String proposalExplainerIssueSwapAssetOption(
+  String proposalExplainerIssueSwapOption(
       String cc, String asset, String ccLimit, String swapLimit, String rate) {
-    return 'Pendekezo hili linamruhusu mnufaika kubadilisha $cc kuwa $asset kwa kiwango cha kudumu, mara nyingi, hadi kikomo maalum cha $asset kifikiwe. Mnufaika kwa kawaida ni biashara ya eneo hilo inayokubali $cc na inaweza kukusanya ziada.\n\nKulingana na maingizo yako, kiasi cha juu kinachoweza kubadilishwa ni:\n\n$ccLimit $cc / $rate $cc/$asset = $swapLimit $asset.\n\nKumbuka: $asset itatumwa moja kwa moja kwenye akaunti yako ya Asset Hub Kusama.';
+    return 'Pendekezo hili linamruhusu mnufaika kubadilisha $cc kuwa $asset kwa kiwango cha kudumu, mara nyingi, hadi kikomo maalum cha $asset kifikiwe. Mnufaika kwa kawaida ni biashara ya eneo hilo inayokubali $cc na inaweza kukusanya ziada.\n\nKulingana na maingizo yako, kiasi cha juu kinachoweza kubadilishwa ni:\n\n$ccLimit $cc / $rate $cc/$asset = $swapLimit $asset.';
+  }
+
+  @override
+  String proposalExplainerPaymentWillBeOnAH(String asset) {
+    return 'Kumbuka: $asset itatumwa moja kwa moja kwenye akaunti yako ya Asset Hub Kusama.';
   }
 
   @override

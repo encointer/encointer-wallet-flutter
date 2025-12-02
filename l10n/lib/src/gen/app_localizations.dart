@@ -1502,24 +1502,24 @@ abstract class AppLocalizations {
   /// **'This proposal suggests spending KSM for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.'**
   String get proposalExplainerSpendNative;
 
-  /// No description provided for @proposalExplainerIssueSwapNativeOption.
-  ///
-  /// In en, this message translates to:
-  /// **'This proposal allows the beneficiary to exchange {cc} for KSM at a defined rate multiple times up to a set KSM limit. The beneficiary might be a local business that accepts {cc} and may accumulate a surplus.\n\nExample with rate 3 {cc}/KSM and limit 2 KSM:\n\nThe beneficiary can exchange up to 2 KSM at a rate of 3 {cc}/KSM. Hence, the maximum is 6 {cc} => 2 KSM.'**
-  String proposalExplainerIssueSwapNativeOption(String cc);
-
   /// No description provided for @proposalExplainerSpendAsset.
   ///
   /// In en, this message translates to:
   /// **'This proposal suggests spending {asset} for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.\n\nNote: You will receive the {asset} on Asset Hub Kusama directly.'**
   String proposalExplainerSpendAsset(String asset);
 
-  /// No description provided for @proposalExplainerIssueSwapAssetOption.
+  /// No description provided for @proposalExplainerIssueSwapOption.
   ///
   /// In en, this message translates to:
-  /// **'This proposal allows the beneficiary to exchange {cc} for {asset} at a fixed rate, multiple times, until a defined {asset} limit is reached. The beneficiary is typically a local business that accepts {cc} and may accumulate a surplus.\n\nBased on your inputs, the maximum exchangeable amount is:\n\n{ccLimit} {cc} / {rate} {cc}/{asset} = {swapLimit} {asset}.\n\nNote: The {asset} will be sent directly to your Asset Hub Kusama account.'**
-  String proposalExplainerIssueSwapAssetOption(
+  /// **'This proposal allows the beneficiary to exchange {cc} for {asset} at a fixed rate, multiple times, until a defined {asset} limit is reached. The beneficiary is typically a local business that accepts {cc} and may accumulate a surplus.\n\nBased on your inputs, the maximum exchangeable amount is:\n\n{ccLimit} {cc} / {rate} {cc}/{asset} = {swapLimit} {asset}.'**
+  String proposalExplainerIssueSwapOption(
       String cc, String asset, String ccLimit, String swapLimit, String rate);
+
+  /// No description provided for @proposalExplainerPaymentWillBeOnAH.
+  ///
+  /// In en, this message translates to:
+  /// **'Note: The {asset} will be sent directly to your Asset Hub Kusama account.'**
+  String proposalExplainerPaymentWillBeOnAH(String asset);
 
   /// No description provided for @proposalExplainerCannotVoteYet.
   ///

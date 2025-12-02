@@ -788,19 +788,19 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Vorschlag schlägt vor, KSM aus der Gemeinschaftsreserve für einen Begünstigten auszugeben, entweder durch eine globale oder Gemeinschaftsabstimmung. Diese Mittel können zur Belohnung von Beiträgen oder zur Unterstützung von Gemeinschaftsprojekten verwendet werden.';
 
   @override
-  String proposalExplainerIssueSwapNativeOption(String cc) {
-    return 'Dieser Vorschlag erlaubt es dem Empfänger, $cc zu einem festgelegten Kurs mehrfach gegen KSM zu tauschen, bis ein festes KSM-Limit erreicht ist. Der Empfänger könnte ein lokales Geschäft sein, das $cc akzeptiert und eventuell einen Überschuss ansammelt.\n\nBeispiel mit Kurs 3 $cc/KSM und Limit 2 KSM:\n\nDer Empfänger kann bis zu 2 KSM zu einem Kurs von 3 $cc/KSM tauschen. Das Maximum ist also 6 $cc => 2 KSM.';
-  }
-
-  @override
   String proposalExplainerSpendAsset(String asset) {
     return 'Dieser Vorschlag schlägt vor, $asset aus der Community-Treasury für eine begünstigte Person auszugeben – entweder durch eine globale oder lokale Abstimmung. Diese Mittel können Community-Beiträge belohnen oder Initiativen unterstützen.\n\nHinweis: Du erhältst das $asset direkt auf dem Asset Hub Kusama.';
   }
 
   @override
-  String proposalExplainerIssueSwapAssetOption(
+  String proposalExplainerIssueSwapOption(
       String cc, String asset, String ccLimit, String swapLimit, String rate) {
-    return 'Dieser Vorschlag ermöglicht es dem Begünstigten, $cc zu einem festen Kurs mehrfach gegen $asset zu tauschen, bis ein festgelegtes $asset-Limit erreicht ist. Der Begünstigte ist typischerweise ein lokales Unternehmen, das $cc akzeptiert und möglicherweise einen Überschuss ansammelt.\n\nBasierend auf deinen Eingaben beträgt der maximal austauschbare Betrag:\n\n$ccLimit $cc / $rate $cc/$asset = $swapLimit $asset.\n\nHinweis: Das $asset wird direkt auf dein Asset Hub Kusama-Konto gesendet.';
+    return 'Dieser Vorschlag ermöglicht es dem Begünstigten, $cc zu einem festen Kurs mehrfach gegen $asset zu tauschen, bis ein festgelegtes $asset-Limit erreicht ist. Der Begünstigte ist typischerweise ein lokales Unternehmen, das $cc akzeptiert und möglicherweise einen Überschuss ansammelt.\n\nBasierend auf deinen Eingaben beträgt der maximal austauschbare Betrag:\n\n$ccLimit $cc / $rate $cc/$asset = $swapLimit $asset.';
+  }
+
+  @override
+  String proposalExplainerPaymentWillBeOnAH(String asset) {
+    return 'Hinweis: Das $asset wird direkt auf dein Asset Hub Kusama-Konto gesendet.';
   }
 
   @override

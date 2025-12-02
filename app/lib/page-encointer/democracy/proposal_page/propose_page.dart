@@ -488,19 +488,32 @@ class _ProposePageState extends State<ProposePage> {
       case ProposalActionIdentifier.spendNative:
         return l10n.proposalExplainerSpendNative;
       case ProposalActionIdentifier.issueSwapNativeOption:
-        return l10n.proposalExplainerIssueSwapNativeOption(store.encointer.community!.symbol!);
-      case ProposalActionIdentifier.spendAsset:
-        return l10n.proposalExplainerSpendAsset(selectedAsset.symbol);
-      case ProposalActionIdentifier.issueSwapAssetOption:
         final swapAmount = swapLimit();
-        final rate = double.parse(rateController.text);
-        return l10n.proposalExplainerIssueSwapAssetOption(
+        final rate = double.tryParse(rateController.text) ?? 0.0;
+        return l10n.proposalExplainerIssueSwapOption(
           store.encointer.community!.symbol!,
-          selectedAsset.symbol,
+          'KSM',
           allowanceController.text,
           Fmt.doubleFormat(swapAmount),
           rate.toString(),
         );
+      case ProposalActionIdentifier.spendAsset:
+        return l10n.proposalExplainerSpendAsset(selectedAsset.symbol);
+      case ProposalActionIdentifier.issueSwapAssetOption:
+        final swapAmount = swapLimit();
+        final rate = double.tryParse(rateController.text) ?? 0.0;
+        return [
+          l10n.proposalExplainerIssueSwapOption(
+            store.encointer.community!.symbol!,
+            selectedAsset.symbol,
+            allowanceController.text,
+            Fmt.doubleFormat(swapAmount),
+            rate.toString(),
+          ),
+          l10n.proposalExplainerPaymentWillBeOnAH(
+            selectedAsset.symbol,
+          )
+        ].join('\n\n');
     }
   }
 
