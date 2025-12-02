@@ -786,18 +786,19 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette proposition suggère de dépenser des KSM pour un bénéficiaire provenant du trésor de la communauté, soit par un vote global, soit par un vote de la communauté. Ces fonds peuvent récompenser les contributions à la communauté ou soutenir des initiatives communautaires.';
 
   @override
-  String proposalExplainerIssueSwapNativeOption(String cc) {
-    return 'Cette proposition permet au bénéficiaire d’échanger des $cc contre des KSM à un taux défini, plusieurs fois, jusqu’à une limite KSM fixée. Le bénéficiaire peut être un commerce local qui accepte les $cc et peut accumuler un surplus.\n\nExemple avec un taux de 3 $cc/KSM et une limite de 2 KSM :\n\nLe bénéficiaire peut échanger jusqu’à 2 KSM à un taux de 3 $cc/KSM. Le maximum est donc 6 $cc => 2 KSM.';
-  }
-
-  @override
   String proposalExplainerSpendAsset(String asset) {
     return 'Cette proposition suggère de dépenser des $asset pour un bénéficiaire à partir du trésor de la communauté, soit par un vote global, soit par un vote communautaire. Ces fonds peuvent récompenser les contributions ou soutenir des initiatives communautaires.\n\nRemarque : Tu recevras les $asset directement sur Asset Hub Kusama.';
   }
 
   @override
-  String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
-    return 'Cette proposition permet au bénéficiaire d’échanger des $cc contre des $asset à un taux défini, plusieurs fois, jusqu’à une limite de $asset fixée. Le bénéficiaire peut être un commerce local qui accepte les $cc et peut accumuler un surplus.\n\nExemple avec un taux de 3 $cc/$asset et une limite de 2 $asset :\n\nLe bénéficiaire peut échanger jusqu’à 2 $asset à un taux de 3 $cc/$asset. Le maximum est donc 6 $cc => 2 $asset.\n\nRemarque : Tu recevras les $asset directement sur Asset Hub Kusama.';
+  String proposalExplainerIssueSwapOption(
+      String cc, String asset, String ccLimit, String swapLimit, String rate) {
+    return 'Cette proposition permet au bénéficiaire d’échanger des $cc contre des $asset à un taux fixe, plusieurs fois, jusqu’à ce qu’une limite définie en $asset soit atteinte. Le bénéficiaire est généralement une entreprise locale qui accepte les $cc et peut accumuler un surplus.\n\nSelon vos paramètres, le montant maximal échangeable est :\n\n$ccLimit $cc / $rate $cc/$asset = $swapLimit $asset.';
+  }
+
+  @override
+  String proposalExplainerPaymentWillBeOnAH(String asset) {
+    return 'Remarque : Les $asset seront envoyés directement sur votre compte Asset Hub Kusama.';
   }
 
   @override
@@ -1246,7 +1247,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le transfert peut prendre jusqu\'à 30 secondes avant d\'apparaître ici';
 
   @override
-  String get treasuryBalanceTooLow => 'Solde du trésor trop bas';
+  String treasuryBalanceTooLow(String balance, String cc) {
+    return 'Solde du trésor trop bas. Limite : $balance $cc';
+  }
 
   @override
   String treasuryGlobalBalance(String balance) {

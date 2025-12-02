@@ -18,6 +18,7 @@ sealed class SwapOption {
 
   CommunityIdentifier get cid;
 
+  /// [CC per asset] exchange rate.
   double get rate;
 
   double get allowance;

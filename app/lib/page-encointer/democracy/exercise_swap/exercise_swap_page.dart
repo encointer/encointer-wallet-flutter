@@ -188,9 +188,12 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                   onChanged: (_) {
                     setState(() {
                       amountError = validateSwapAmount(
+                        context,
                         amountController.text,
                         ccBalance,
+                        widget.option.symbol,
                         treasuryBalance(),
+                        widget.option.rate,
                       );
                     });
                   },
@@ -202,9 +205,12 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                   setState(() {
                     amountController.text = fmt(maxSwappable(ccBalance));
                     amountError = validateSwapAmount(
+                      context,
                       amountController.text,
                       ccBalance,
+                      widget.option.symbol,
                       treasuryBalance(),
+                      widget.option.rate,
                     );
                   });
                 },
@@ -306,30 +312,6 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     final limitCC = widget.option.allowance * widget.option.rate;
 
     return min(userCC, min(treasuryCC, limitCC));
-  }
-
-  String? validateSwapAmount(
-    String? ccAmountStr,
-    double accountBalance,
-    double treasuryBalanceAsset,
-  ) {
-    final l10n = context.l10n;
-
-    final e1 = validatePositiveNumberString(context, ccAmountStr);
-    if (e1 != null) return e1;
-
-    final ccAmount = double.parse(ccAmountStr!);
-
-    final e2 = validatePositiveNumberWithMax(context, ccAmount, accountBalance);
-    if (e2 != null) return l10n.insufficientBalance;
-
-    // converted treasury asset → CC equivalent
-    final treasuryCC = treasuryBalanceAsset * widget.option.rate;
-
-    final e3 = validatePositiveNumberWithMax(context, ccAmount, treasuryCC);
-    if (e3 != null) return l10n.treasuryBalanceTooLow;
-
-    return null;
   }
 
   Future<void> _submitSwap() async {

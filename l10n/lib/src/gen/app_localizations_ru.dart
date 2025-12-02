@@ -779,18 +779,19 @@ class AppLocalizationsRu extends AppLocalizations {
       'Это предложение предлагает потратить KSM для получателя из казны сообщества, либо через глобальное, либо через голосование внутри сообщества. Эти средства могут быть использованы для вознаграждения вкладов в сообщество или поддержки инициатив сообщества.';
 
   @override
-  String proposalExplainerIssueSwapNativeOption(String cc) {
-    return 'Это предложение позволяет получателю обменивать $cc на KSM по установленному курсу несколько раз, вплоть до определённого лимита KSM. Получателем может быть местный бизнес, который принимает $cc и может накапливать излишки.\n\nПример: курс 3 $cc/KSM, лимит 2 KSM:\n\nПолучатель может обменять до 2 KSM по курсу 3 $cc/KSM. Максимум составляет 6 $cc => 2 KSM.';
-  }
-
-  @override
   String proposalExplainerSpendAsset(String asset) {
     return 'Это предложение предлагает потратить $asset из казны сообщества для получателя — через глобальное или локальное голосование. Эти средства могут вознаграждать участников сообщества или поддерживать инициативы.\n\nПримечание: Ты получишь $asset напрямую на Asset Hub Kusama.';
   }
 
   @override
-  String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
-    return 'Это предложение позволяет получателю обменивать $cc на $asset по установленному курсу несколько раз, вплоть до определённого лимита $asset. Получателем может быть местный бизнес, который принимает $cc и может накапливать излишки.\n\nПример: курс 3 $cc/$asset, лимит 2 $asset:\n\nПолучатель может обменять до 2 $asset по курсу 3 $cc/$asset. Максимум составляет 6 $cc => 2 $asset.\n\nПримечание: Ты получишь $asset напрямую на Asset Hub Kusama.';
+  String proposalExplainerIssueSwapOption(
+      String cc, String asset, String ccLimit, String swapLimit, String rate) {
+    return 'Это предложение позволяет получателю обменивать $cc на $asset по фиксированному курсу, многократно, до достижения установленного лимита в $asset. Получателем обычно является местный бизнес, который принимает $cc и может накапливать излишки.\n\nНа основе ваших данных максимальная сумма для обмена составляет:\n\n$ccLimit $cc / $rate $cc/$asset = $swapLimit $asset.';
+  }
+
+  @override
+  String proposalExplainerPaymentWillBeOnAH(String asset) {
+    return 'Примечание: $asset будет отправлен напрямую на ваш аккаунт Asset Hub Kusama.';
   }
 
   @override
@@ -1238,7 +1239,9 @@ class AppLocalizationsRu extends AppLocalizations {
       'Появление перевода может занять до 30 секунд';
 
   @override
-  String get treasuryBalanceTooLow => 'Баланс казны слишком низкий';
+  String treasuryBalanceTooLow(String balance, String cc) {
+    return 'Баланс казны слишком низкий. Лимит: $balance $cc';
+  }
 
   @override
   String treasuryGlobalBalance(String balance) {

@@ -92,9 +92,9 @@ List<ProposalActionIdentifier> supportedProposalIds(bool developerMode) {
     ProposalActionIdentifier.setInactivityTimeout,
     ProposalActionIdentifier.petition,
     ProposalActionIdentifier.spendNative,
-    ProposalActionIdentifier.issueSwapNativeOption,
+    if (developerMode) ProposalActionIdentifier.issueSwapNativeOption,
     if (developerMode) ProposalActionIdentifier.spendAsset,
-    if (developerMode) ProposalActionIdentifier.issueSwapAssetOption,
+    ProposalActionIdentifier.issueSwapAssetOption,
   ];
 }
 
