@@ -36,8 +36,8 @@ String? validateSwapAmount(
   BuildContext context,
   String? ccAmountStr,
   double accountBalance,
-    String symbol,
-    double treasuryBalanceAsset,
+  String symbol,
+  double treasuryBalanceAsset,
   double exchangeRate,
 ) {
   final l10n = context.l10n;

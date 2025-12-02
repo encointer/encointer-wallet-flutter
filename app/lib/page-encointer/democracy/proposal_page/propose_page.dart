@@ -1092,11 +1092,7 @@ class _ProposePageState extends State<ProposePage> {
           selectedAction == ProposalActionIdentifier.issueSwapAssetOption)
         Text(
           l10n.treasuryLocalBalanceOnAHK(
-            Fmt.formatNumber(
-              context,
-              assetTreasuryUnallocatedLiquidity(),
-              decimals: 4
-            ),
+            Fmt.formatNumber(context, assetTreasuryUnallocatedLiquidity(), decimals: 4),
             selectedAsset.symbol,
           ),
         )
