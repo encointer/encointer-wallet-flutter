@@ -541,15 +541,15 @@ class _ProposePageState extends State<ProposePage> {
     return unallocated;
   }
 
-  double ccSwapLimit() {
-    final allowance = allowanceController.text.isNotEmpty ? double.tryParse(allowanceController.text) : null;
+  double swapLimit() {
+    final ccAmount = allowanceController.text.isNotEmpty ? double.tryParse(allowanceController.text) : null;
     final rate = rateController.text.isNotEmpty ? double.tryParse(rateController.text) : null;
-    final ccLimit = allowance != null && rate != null ? allowance * rate : 0.0;
+    final usdcLimit = ccAmount != null && rate != null ? ccAmount / rate : 0.0;
 
-    return ccLimit;
+    return usdcLimit;
   }
 
-  List<Widget> issueSwapOptionInput(String currency, double? maxValue, bool tryDeriveRate) {
+  List<Widget> issueSwapOptionInput(String currency, double? maxSwapValue, bool tryDeriveRate) {
     final l10n = context.l10n;
     final store = context.read<AppStore>();
 
@@ -557,7 +557,7 @@ class _ProposePageState extends State<ProposePage> {
       TextFormField(
         controller: allowanceController,
         decoration: InputDecoration(
-          labelText: l10n.proposalFieldAllowance(currency),
+          labelText: l10n.proposalFieldAllowance(store.encointer.community!.symbol!),
           errorText: allowanceError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -565,21 +565,20 @@ class _ProposePageState extends State<ProposePage> {
           // Only numbers & decimal
           FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         ],
-        validator: (v) => validatePositiveNumberWithMax(context, double.tryParse(v ?? ''), maxValue),
+        validator: (v) => validatePositiveNumberString(context, v),
         onChanged: (value) {
           setState(() {
-            allowanceError = validatePositiveNumberWithMax(context, double.tryParse(value), maxValue);
+            allowanceError = validateSwapAmount(
+                context,
+                value,
+                store.encointer.communityBalance!,
+                maxSwapValue ?? double.infinity,
+                double.tryParse(rateController.text) ?? 0
+            );
           });
         },
       ),
       rateInput(currency, tryDeriveRate),
-      Text(
-        l10n.proposalIssueSwapOptionCCLimit(
-          currency,
-          store.encointer.community!.symbol!,
-          Fmt.formatNumber(context, ccSwapLimit(), decimals: 4),
-        ),
-      ),
       const SizedBox(height: 10),
       EncointerAddressInputField(
         store,
@@ -1003,7 +1002,7 @@ class _ProposePageState extends State<ProposePage> {
         final maybeCid = selectedScope.isLocal ? cid : null;
         final ben = beneficiary!.pubKey;
 
-        final amount = double.tryParse(allowanceController.text)!;
+        final amount = swapLimit();
         final rate = double.tryParse(rateController.text)!;
         final issueOption = SwapNativeOption(
           cid: cid,
@@ -1018,7 +1017,7 @@ class _ProposePageState extends State<ProposePage> {
         final maybeCid = selectedScope.isLocal ? cid : null;
         final ben = beneficiary!.pubKey;
 
-        final amount = double.tryParse(amountController.text)!;
+        final amount = swapLimit();
         return SpendAsset(maybeCid, hex.decode(ben.replaceFirst('0x', '')),
             BigInt.from(amount * pow(10, selectedAsset.decimals)), selectedAsset.versionedLocatableAsset);
 
