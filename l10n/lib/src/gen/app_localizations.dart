@@ -2310,8 +2310,8 @@ abstract class AppLocalizations {
   /// No description provided for @treasuryBalanceTooLow.
   ///
   /// In en, this message translates to:
-  /// **'Treasury Balance too low'**
-  String get treasuryBalanceTooLow;
+  /// **'Treasury Balance too low. Limit: {balance} {cc}'**
+  String treasuryBalanceTooLow(String balance, String cc);
 
   /// No description provided for @treasuryGlobalBalance.
   ///

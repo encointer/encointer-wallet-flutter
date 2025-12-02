@@ -1239,7 +1239,9 @@ class AppLocalizationsRu extends AppLocalizations {
       'Появление перевода может занять до 30 секунд';
 
   @override
-  String get treasuryBalanceTooLow => 'Баланс казны слишком низкий';
+  String treasuryBalanceTooLow(String balance, String cc) {
+    return 'Баланс казны слишком низкий. Лимит: $balance $cc';
+  }
 
   @override
   String treasuryGlobalBalance(String balance) {

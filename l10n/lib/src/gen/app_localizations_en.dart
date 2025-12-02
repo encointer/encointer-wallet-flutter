@@ -1236,7 +1236,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'It may take up to 30 seconds for a transfer to appear here';
 
   @override
-  String get treasuryBalanceTooLow => 'Treasury Balance too low';
+  String treasuryBalanceTooLow(String balance, String cc) {
+    return 'Treasury Balance too low. Limit: $balance $cc';
+  }
 
   @override
   String treasuryGlobalBalance(String balance) {

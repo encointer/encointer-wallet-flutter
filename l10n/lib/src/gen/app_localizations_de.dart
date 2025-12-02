@@ -1248,7 +1248,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Es kann bis zu 30 Sekunden dauern, bis der Transfer hier auftaucht';
 
   @override
-  String get treasuryBalanceTooLow => 'Schatzkammerguthaben zu niedrig';
+  String treasuryBalanceTooLow(String balance, String cc) {
+    return 'Treasury-Guthaben zu niedrig. Limit: $balance $cc';
+  }
 
   @override
   String treasuryGlobalBalance(String balance) {

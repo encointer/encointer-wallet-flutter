@@ -426,7 +426,7 @@
     "transferHistory": "Transfers",
     "transferHistoryEnd": "Das Laden älterer Transaktionen wird noch nicht unterstützt",
     "transferHistoryTop": "Es kann bis zu 30 Sekunden dauern, bis der Transfer hier auftaucht",
-    "treasuryBalanceTooLow": "Schatzkammerguthaben zu niedrig",
+    "treasuryBalanceTooLow": "Treasury-Guthaben zu niedrig. Limit: {balance} {cc}",
     "treasuryGlobalBalance": "Freies globales Schatzkammerguthaben: {balance} KSM.",
     "treasuryLocalBalance": "Freies Gemeinschaftsschatzkammerguthaben: {balance} KSM.",
     "treasuryLocalBalanceOnAHK": "Freies Gemeinschaftsschatzkammerguthaben auf Asset Hub: {balance} {asset}.",

@@ -426,7 +426,7 @@
     "transferHistory": "Transferts",
     "transferHistoryEnd": "Le chargement des transactions plus anciennes n'est pas encore pris en charge",
     "transferHistoryTop": "Le transfert peut prendre jusqu'à 30 secondes avant d'apparaître ici",
-    "treasuryBalanceTooLow": "Solde du trésor trop bas",
+    "treasuryBalanceTooLow": "Solde du trésor trop bas. Limite : {balance} {cc}",
     "treasuryGlobalBalance": "Solde libre du trésor global : {balance} KSM.",
     "treasuryLocalBalance": "Solde libre du trésor communautaire : {balance} KSM.",
     "treasuryLocalBalanceOnAHK": "Solde libre du trésor communautaire sur Asset Hub: {balance} {asset}.",

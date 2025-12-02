@@ -191,6 +191,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                         context,
                         amountController.text,
                         ccBalance,
+                        widget.option.symbol,
                         treasuryBalance(),
                         widget.option.rate,
                       );
@@ -207,6 +208,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                       context,
                       amountController.text,
                       ccBalance,
+                      widget.option.symbol,
                       treasuryBalance(),
                       widget.option.rate,
                     );

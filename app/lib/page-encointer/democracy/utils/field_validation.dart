@@ -1,6 +1,9 @@
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:ew_l10n/l10n.dart';
 import 'package:flutter/material.dart';
+
+const logTarget = 'FieldValidation';
 
 /// Ensures that the number is positive (doubles)
 String? validatePositiveNumberString(BuildContext context, String? value) {
@@ -33,7 +36,8 @@ String? validateSwapAmount(
   BuildContext context,
   String? ccAmountStr,
   double accountBalance,
-  double treasuryBalanceAsset,
+    String symbol,
+    double treasuryBalanceAsset,
   double exchangeRate,
 ) {
   final l10n = context.l10n;
@@ -43,14 +47,18 @@ String? validateSwapAmount(
 
   final ccAmount = double.parse(ccAmountStr!);
 
-  final e2 = validatePositiveNumberWithMax(context, ccAmount, accountBalance);
-  if (e2 != null) return l10n.insufficientBalance;
+  // final e2 = validatePositiveNumberWithMax(context, ccAmount, accountBalance);
+  // if (e2 != null) return l10n.insufficientBalance;
 
   // converted treasury asset → CC equivalent
-  final treasuryCC = treasuryBalanceAsset * exchangeRate;
+  final swapLimitDesired = ccAmount / exchangeRate;
+  final swapLimitMax = treasuryBalanceAsset * exchangeRate;
+  Log.d('validateSwapAmount: treasuryBalance: $treasuryBalanceAsset', logTarget);
+  Log.d('validateSwapAmount: swapLimitDesired: $swapLimitDesired $symbol}', logTarget);
+  Log.d('validateSwapAmount: swapLimitMax: $swapLimitMax $symbol', logTarget);
 
-  final e3 = validatePositiveNumberWithMax(context, ccAmount, treasuryCC);
-  if (e3 != null) return l10n.treasuryBalanceTooLow;
+  final e3 = validatePositiveNumberWithMax(context, swapLimitDesired, treasuryBalanceAsset);
+  if (e3 != null) return l10n.treasuryBalanceTooLow(Fmt.formatNumber(context, swapLimitMax, decimals: 4), symbol);
 
   return null;
 }

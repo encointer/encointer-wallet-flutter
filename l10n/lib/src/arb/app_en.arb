@@ -539,7 +539,19 @@
     "transferHistory": "Transfers",
     "transferHistoryEnd": "Loading older transactions is not yet supported",
     "transferHistoryTop": "It may take up to 30 seconds for a transfer to appear here",
-    "treasuryBalanceTooLow": "Treasury Balance too low",
+    "treasuryBalanceTooLow": "Treasury Balance too low. Limit: {balance} {cc}",
+    "@treasuryBalanceTooLow": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            },
+            "cc": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
     "treasuryGlobalBalance": "Free global treasury balance: {balance} KSM.",
     "@treasuryGlobalBalance": {
         "placeholders": {

@@ -585,6 +585,7 @@ class _ProposePageState extends State<ProposePage> {
               context,
               value,
               store.encointer.communityBalance!,
+              store.encointer.community!.symbol!,
               maxSwapValue ?? double.infinity,
               double.tryParse(rateController.text) ?? 0,
             );
@@ -1073,9 +1074,10 @@ class _ProposePageState extends State<ProposePage> {
           selectedAction == ProposalActionIdentifier.issueSwapAssetOption)
         Text(
           l10n.treasuryLocalBalanceOnAHK(
-            Fmt.token(
-              assetTreasuryLiquidity(selectedAsset),
-              selectedAsset.decimals,
+            Fmt.formatNumber(
+              context,
+              assetTreasuryUnallocatedLiquidity(),
+              decimals: 4
             ),
             selectedAsset.symbol,
           ),
