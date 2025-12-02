@@ -47,8 +47,8 @@ String? validateSwapAmount(
 
   final ccAmount = double.parse(ccAmountStr!);
 
-  // final e2 = validatePositiveNumberWithMax(context, ccAmount, accountBalance);
-  // if (e2 != null) return l10n.insufficientBalance;
+  final e2 = validatePositiveNumberWithMax(context, ccAmount, accountBalance);
+  if (e2 != null) return l10n.insufficientBalance;
 
   // converted treasury asset → CC equivalent
   final swapLimitDesired = ccAmount / exchangeRate;
