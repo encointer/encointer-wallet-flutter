@@ -81,15 +81,15 @@ class _ProposePageState extends State<ProposePage> {
   final forexService = ForexService();
 
   // Controllers for text fields
-  final TextEditingController latController = TextEditingController();
-  final TextEditingController lonController = TextEditingController();
-  final TextEditingController demurrageController = TextEditingController();
-  final TextEditingController nominalIncomeController = TextEditingController();
-  final TextEditingController inactivityTimeoutController = TextEditingController();
-  final TextEditingController petitionTextController = TextEditingController();
-  final TextEditingController amountController = TextEditingController();
-  final TextEditingController allowanceController = TextEditingController();
-  final TextEditingController rateController = TextEditingController();
+  late final TextEditingController latController;
+  late final TextEditingController lonController;
+  late final TextEditingController demurrageController;
+  late final TextEditingController nominalIncomeController;
+  late final TextEditingController inactivityTimeoutController;
+  late final TextEditingController petitionTextController;
+  late final TextEditingController amountController;
+  late final TextEditingController allowanceController;
+  late final TextEditingController rateController;
 
   // Store errors of the text form fields. This is necessary for
   // input verification as we type.
@@ -128,6 +128,15 @@ class _ProposePageState extends State<ProposePage> {
   void initState() {
     super.initState();
     selectedAction = widget.initialAction ?? ProposalActionIdentifier.petition;
+    latController = TextEditingController();
+    lonController = TextEditingController();
+    demurrageController = TextEditingController();
+    nominalIncomeController = TextEditingController();
+    inactivityTimeoutController = TextEditingController();
+    petitionTextController = TextEditingController();
+    amountController = TextEditingController();
+    allowanceController = TextEditingController(text: '1');
+    rateController = TextEditingController();
 
     assetHubApi = AssetHubWebApi.endpoints(
       context.read<AppStore>().settings.currentNetwork.assetHubEndpoints(),
@@ -280,6 +289,15 @@ class _ProposePageState extends State<ProposePage> {
   @override
   void dispose() {
     assetHubApi.close();
+    latController.dispose();
+    lonController.dispose();
+    demurrageController.dispose();
+    nominalIncomeController.dispose();
+    inactivityTimeoutController.dispose();
+    petitionTextController.dispose();
+    amountController.dispose();
+    allowanceController.dispose();
+    rateController.dispose();
     super.dispose();
   }
 
