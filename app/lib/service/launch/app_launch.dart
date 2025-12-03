@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:encointer_wallet/models/location/location.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 
 class AppLaunch {
   static Future<bool> sendEmail(String email, {String? snackBarText, BuildContext? context}) async {

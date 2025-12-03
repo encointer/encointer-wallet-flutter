@@ -21,7 +21,7 @@ import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/components/ceremony_notification.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/meetup_info.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_step1_count.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';

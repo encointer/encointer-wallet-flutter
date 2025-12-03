@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:ew_log/ew_log.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:local_auth/local_auth.dart';
-import 'package:encointer_wallet/service/service.dart';
 
 @immutable
 final class LocalAuthService {

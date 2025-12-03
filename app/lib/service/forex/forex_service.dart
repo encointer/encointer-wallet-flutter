@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 import 'package:encointer_wallet/service/forex/currency.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

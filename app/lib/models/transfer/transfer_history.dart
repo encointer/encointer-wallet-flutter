@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:ew_l10n/l10n.dart';
 import 'package:encointer_wallet/utils/extensions/double/double_extension.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 
 part 'transfer_history.g.dart';

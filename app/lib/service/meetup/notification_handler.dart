@@ -4,7 +4,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/meetup/feed_model.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 
 class NotificationHandler {
   static Future<void> fetchMessagesAndScheduleNotifications(

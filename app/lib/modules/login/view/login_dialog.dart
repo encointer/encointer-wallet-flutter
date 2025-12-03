@@ -1,3 +1,4 @@
+import 'package:ew_log/ew_log.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/config/biometric_auth_state.dart';
-import 'package:encointer_wallet/service/service.dart';
 import 'package:ew_l10n/l10n.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/modules/modules.dart';

@@ -2,7 +2,7 @@ import 'package:collection/collection.dart' show IterableExtension;
 
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 
 Future<DateTime?> getMeetupTimeOverride({
   required String network,

@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:encointer_wallet/page-encointer/democracy/exercise_swap/exercise_swap_page.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/swap_options.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:ew_keyring/ew_keyring.dart';
