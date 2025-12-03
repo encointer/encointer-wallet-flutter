@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
 
 // Todo: Upstream does no also reconnect automatically, so we can simplify.

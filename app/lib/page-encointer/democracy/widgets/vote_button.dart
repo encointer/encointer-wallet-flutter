@@ -5,6 +5,7 @@ import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.d
 import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

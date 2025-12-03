@@ -80,6 +80,7 @@ dependencies:
   ew_endpoint_manager: 0.1.0
   ew_encointer_utils: 0.1.0
   ew_l10n: 0.1.0
+  ew_log: 0.1.0
   ew_storage: 0.1.0
   ew_http: 0.1.0
   ew_keyring: 0.1.0

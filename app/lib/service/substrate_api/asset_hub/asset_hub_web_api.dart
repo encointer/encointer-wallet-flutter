@@ -5,7 +5,7 @@ import 'package:encointer_wallet/service/substrate_api/asset_hub/asset_hub_api.d
 import 'package:encointer_wallet/service/substrate_api/core/reconnecting_ws_provider.dart';
 import 'package:ew_endpoint_manager/endpoint_manager.dart';
 import 'package:ew_polkadart/ew_polkadart.dart' show WsProvider;
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 
 const logTarget = 'assetHubWebApi';
 

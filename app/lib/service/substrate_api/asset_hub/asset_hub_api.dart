@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/service/substrate_api/core/location_to_account_api.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/asset_hub_types.dart' show XcmAssetHubLocation;

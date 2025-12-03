@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/utils/extensions/extensions.dart';
 
 // Fixme #589: add nominal income dependent fee computation instead

@@ -5,7 +5,7 @@ import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/service/ipfs/models.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:path/path.dart' as p;
 import 'package:html/parser.dart' as html;
 

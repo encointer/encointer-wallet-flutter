@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/service/substrate_api/chain_api.dart';
 
 import 'mock_polkadart_provider.dart';
