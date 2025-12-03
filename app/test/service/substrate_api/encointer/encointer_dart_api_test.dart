@@ -40,8 +40,8 @@ void main() {
       final businesses = await encointerDartApi.bazaarGetBusinesses(cid);
 
       final expectedBusiness = AccountBusinessTuple(
-        '5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK',
-        BusinessData('QmTvnruvcgvcW9K5AN4p47mwcDQytaBckNzndvRzNnEHx6', 1),
+        '5FLHLP61LgMsdzwWziyCmZqdKQyQZz4FeAadhMZj1AGFZo3Z',
+        BusinessData('Qmc1vTFJEyWUdHLe4bS58HqyusiE5NMLgziZf765dL93Vs', 1),
       );
 
       await provider.disconnect();
