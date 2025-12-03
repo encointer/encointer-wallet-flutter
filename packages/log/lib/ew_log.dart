@@ -22,7 +22,7 @@ class Log {
 
   static String _replaceSensitiveInfo(String value) {
     final updatedString =
-    value.replaceAllMapped(RegExp(r'(mnemonic:|rawSeed:)\s*\S+'), (match) => '${match.group(1)} $replacement');
+        value.replaceAllMapped(RegExp(r'(mnemonic:|rawSeed:)\s*\S+'), (match) => '${match.group(1)} $replacement');
 
     return updatedString;
   }
