@@ -109,19 +109,19 @@ melos:
     unit-test-app-with-encointer-node-e2e:
       run: >-
         dart run melos exec --scope="encointer_wallet" -- \
-        flutter test --tags encointer-node-e2e
+        flutter test --tags encointer-node-e2e --exclude-tags production-e2e,endpoint-health-e2e
       description: "Run unit tests with the `encointer-node-e2e` tag"
 
     unit-test-app-with-production-e2e:
       run: >-
         dart run melos exec --scope="encointer_wallet" -- \
-        flutter test --tags production-e2e
+        flutter test --tags production-e2e --exclude-tags encointer-node-e2e,endpoint-health-e2e
       description: "Run unit tests with the `encointer-node-e2e` tag"
 
     unit-test-app-with-endpoint-health-e2e:
       run: >-
         dart run melos exec --scope="encointer_wallet" -- \
-        flutter test --tags endpoint-health-e2e
+        flutter test --tags endpoint-health-e2e --exclude-tags encointer-node-e2e,production-e2e
       description: "Run unit tests with the `endpoint-health-e2e` tag"
 
     unit-test-packages:
