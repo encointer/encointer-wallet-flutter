@@ -56,7 +56,7 @@ class SingleBusinessDetail extends StatelessWidget {
               errorBuilder: (_, error) => const Center(child: Icon(Icons.broken_image, size: 40)),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(30, 20, 30, 60),
+              padding: const EdgeInsets.fromLTRB(30, 20, 30, 30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -165,6 +165,7 @@ class SingleBusinessDetail extends StatelessWidget {
                         AppLaunch.launchMap(location);
                       },
                     ),
+                  const SizedBox(height: 20),
                   if (business.photos != null)
                     IpfsImageGallery(
                       ipfs: webApi.ipfsApi,
