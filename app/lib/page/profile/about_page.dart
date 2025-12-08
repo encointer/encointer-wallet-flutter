@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:encointer_wallet/common/components/jump_to_browser_link.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:ew_l10n/l10n.dart';

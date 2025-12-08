@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/field_validation.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/swap_options.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/asset_hub/asset_hub_web_api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';

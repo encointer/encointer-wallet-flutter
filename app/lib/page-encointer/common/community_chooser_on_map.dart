@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dart_geohash/dart_geohash.dart';
 import 'package:encointer_wallet/service/service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';

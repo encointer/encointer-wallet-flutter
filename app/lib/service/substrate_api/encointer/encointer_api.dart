@@ -15,7 +15,7 @@ import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dar
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/models/faucet/faucet.dart';
 import 'package:encointer_wallet/service/encointer_feed/feed.dart' as feed;
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_dart_api.dart';
 import 'package:encointer_wallet/store/app.dart';

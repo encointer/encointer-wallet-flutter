@@ -13,7 +13,7 @@ import 'package:encointer_wallet/page-encointer/democracy/proposal_page/utf8_lim
 import 'package:encointer_wallet/page-encointer/democracy/utils/field_validation.dart';
 import 'package:encointer_wallet/service/forex/forex_service.dart';
 import 'package:encointer_wallet/service/forex/known_community.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/asset_hub/asset_hub_web_api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';

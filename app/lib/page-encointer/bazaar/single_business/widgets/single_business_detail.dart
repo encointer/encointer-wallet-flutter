@@ -5,7 +5,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_gall
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/propose_page.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:flutter/material.dart';

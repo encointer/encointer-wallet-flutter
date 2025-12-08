@@ -6,7 +6,7 @@ import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 
