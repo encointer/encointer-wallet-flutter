@@ -22,19 +22,16 @@ class BusinessDetailAddressWidget extends StatelessWidget {
   final String? email;
   final String? phoneNum;
 
-  bool _isValidEmail(String e) =>
-      RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(e);
+  bool _isValidEmail(String e) => RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(e);
 
-  bool _isValidPhone(String p) =>
-      RegExp(r'^[0-9+\-\s()]{6,}$').hasMatch(p);
+  bool _isValidPhone(String p) => RegExp(r'^[0-9+\-\s()]{6,}$').hasMatch(p);
 
   @override
   Widget build(BuildContext context) {
     final spans = <InlineSpan>[
       TextSpan(
         text: '$text\n',
-        style: context.textTheme.titleLarge!
-            .copyWith(color: context.colorScheme.primary, fontSize: 18),
+        style: context.textTheme.titleLarge!.copyWith(color: context.colorScheme.primary, fontSize: 18),
       ),
     ];
 
@@ -80,10 +77,10 @@ class BusinessDetailAddressWidget extends StatelessWidget {
           ),
           recognizer: isValid
               ? (TapGestureRecognizer()
-            ..onTap = () async {
-              final uri = Uri(scheme: 'mailto', path: e);
-              await launchUrl(uri);
-            })
+                ..onTap = () async {
+                  final uri = Uri(scheme: 'mailto', path: e);
+                  await launchUrl(uri);
+                })
               : null,
         ),
       );
@@ -104,10 +101,10 @@ class BusinessDetailAddressWidget extends StatelessWidget {
           ),
           recognizer: isValid
               ? (TapGestureRecognizer()
-            ..onTap = () async {
-              final uri = Uri(scheme: 'tel', path: p);
-              await launchUrl(uri);
-            })
+                ..onTap = () async {
+                  final uri = Uri(scheme: 'tel', path: p);
+                  await launchUrl(uri);
+                })
               : null,
         ),
       );
