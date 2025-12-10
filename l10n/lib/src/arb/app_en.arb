@@ -202,6 +202,19 @@
     },
     "exerciseSwapNativeOptionAvailable": "KSM Swap Option Available",
     "exerciseSwapOption": "Exercise Swap Option",
+    "exerciseSwapOptionAllowanceExceeded": "Swap Allowance Exceeded (max: {amount} {asset})",
+    "@exerciseSwapOptionAllowanceExceeded": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "1"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
     "exerciseSwapOptionAmount": "Amount to Swap ({cc})",
     "@exerciseSwapOptionAmount": {
         "placeholders": {

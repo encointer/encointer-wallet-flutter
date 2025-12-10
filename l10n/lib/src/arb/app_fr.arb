@@ -190,6 +190,7 @@
     },
     "exerciseSwapNativeOptionAvailable": "Option d’échange KSM disponible",
     "exerciseSwapOption": "Exercer l’option d’échange",
+    "exerciseSwapOptionAllowanceExceeded": "Allocation d’échange dépassée (max : {amount} {asset})",
     "exerciseSwapOptionAmount": "Montant à échanger ({cc})",
     "export": "Activer le Bazaar",
     "exportAccount": "exporter",

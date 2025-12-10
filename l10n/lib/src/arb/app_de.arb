@@ -191,6 +191,7 @@
     "exerciseSwapNativeOptionAvailable": "KSM-Swap-Option verfügbar",
     "exerciseSwapOption": "Swap-Option ausführen",
     "exerciseSwapOptionAmount": "Zu tauschender Betrag ({cc})",
+    "exerciseSwapOptionAllowanceExceeded": "Tauschfreibetrag überschritten (max: {amount} {asset})",
     "export": "Konto exportieren",
     "exportAccount": "exportieren",
     "exportMnemonicOk": "Mnemonik wurde in die Zwischenablage kopiert.",

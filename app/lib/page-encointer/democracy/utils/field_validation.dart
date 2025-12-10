@@ -36,7 +36,8 @@ String? validateSwapAmount(
   BuildContext context,
   String? ccAmountStr,
   double accountBalance,
-  String symbol,
+    String ccSymbol,
+    String assetSymbol,
   double treasuryBalanceAsset,
   double exchangeRate,
 ) {
@@ -48,17 +49,17 @@ String? validateSwapAmount(
   final ccAmount = double.parse(ccAmountStr!);
 
   final e2 = validatePositiveNumberWithMax(context, ccAmount, accountBalance);
-  if (e2 != null) return l10n.insufficientBalance(symbol);
+  if (e2 != null) return l10n.insufficientBalance(ccSymbol);
 
   // converted treasury asset → CC equivalent
   final swapLimitDesired = ccAmount / exchangeRate;
   final swapLimitMax = treasuryBalanceAsset * exchangeRate;
   Log.d('validateSwapAmount: treasuryBalance: $treasuryBalanceAsset', logTarget);
-  Log.d('validateSwapAmount: swapLimitDesired: $swapLimitDesired $symbol}', logTarget);
-  Log.d('validateSwapAmount: swapLimitMax: $swapLimitMax $symbol', logTarget);
+  Log.d('validateSwapAmount: swapLimitDesired: $swapLimitDesired $assetSymbol}', logTarget);
+  Log.d('validateSwapAmount: swapLimitMax: $swapLimitMax $assetSymbol', logTarget);
 
   final e3 = validatePositiveNumberWithMax(context, swapLimitDesired, treasuryBalanceAsset);
-  if (e3 != null) return l10n.treasuryBalanceTooLow(Fmt.formatNumber(context, swapLimitMax, decimals: 4), symbol);
+  if (e3 != null) return l10n.treasuryBalanceTooLow(Fmt.formatNumber(context, swapLimitMax, decimals: 4), assetSymbol);
 
   return null;
 }

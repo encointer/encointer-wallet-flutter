@@ -131,6 +131,7 @@
     "exerciseSwapAssetOptionAvailable": "Chaguo la kubadilisha linapatikana",
     "exerciseSwapNativeOptionAvailable": "Chaguo la kubadilisha KSM linapatikana",
     "exerciseSwapOption": "Tumia chaguo la kubadilisha",
+    "exerciseSwapOptionAllowanceExceeded": "Kiwango cha kubadilisha kimezidi (kikomo: {amount} {asset})",
     "exerciseSwapOptionAmount": "Kiasi cha kubadilisha ({cc})",
     "export": "Onyesha taarifa za siri za akaunti yako kuweza kuisafirisha",
     "exportAccount": "Safirisha",

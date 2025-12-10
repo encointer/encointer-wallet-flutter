@@ -441,6 +441,11 @@ class AppLocalizationsSw extends AppLocalizations {
   String get exerciseSwapOption => 'Tumia chaguo la kubadilisha';
 
   @override
+  String exerciseSwapOptionAllowanceExceeded(String amount, String asset) {
+    return 'Kiwango cha kubadilisha kimezidi (kikomo: $amount $asset)';
+  }
+
+  @override
   String exerciseSwapOptionAmount(String cc) {
     return 'Kiasi cha kubadilisha ($cc)';
   }

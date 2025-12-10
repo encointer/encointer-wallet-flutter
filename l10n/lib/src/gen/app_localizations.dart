@@ -884,6 +884,12 @@ abstract class AppLocalizations {
   /// **'Exercise Swap Option'**
   String get exerciseSwapOption;
 
+  /// No description provided for @exerciseSwapOptionAllowanceExceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Swap Allowance Exceeded (max: {amount} {asset})'**
+  String exerciseSwapOptionAllowanceExceeded(String amount, String asset);
+
   /// No description provided for @exerciseSwapOptionAmount.
   ///
   /// In en, this message translates to:

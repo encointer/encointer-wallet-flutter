@@ -705,6 +705,7 @@ class _ProposePageState extends State<ProposePage> {
           v,
           store.encointer.communityBalance!,
           store.encointer.community!.symbol!,
+          currency,
           maxSwapValue ?? double.infinity,
           double.tryParse(rateController.text) ?? 0,
         ),
@@ -715,6 +716,7 @@ class _ProposePageState extends State<ProposePage> {
               value,
               store.encointer.communityBalance!,
               store.encointer.community!.symbol!,
+              currency,
               maxSwapValue ?? double.infinity,
               double.tryParse(rateController.text) ?? 0,
             );

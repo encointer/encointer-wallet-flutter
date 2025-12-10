@@ -438,6 +438,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get exerciseSwapOption => 'Использовать опцию обмена';
 
   @override
+  String exerciseSwapOptionAllowanceExceeded(String amount, String asset) {
+    return 'Лимит обмена превышен (макс: $amount $asset)';
+  }
+
+  @override
   String exerciseSwapOptionAmount(String cc) {
     return 'Сумма для обмена ($cc)';
   }
