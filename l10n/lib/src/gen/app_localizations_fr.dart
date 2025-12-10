@@ -806,7 +806,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get proposalExplainerSwapFee => 'Frais d’échange';
 
   @override
-  String get proposalExplainerYouWillGet => 'Tu recevras';
+  String get proposalExplainerBeneficiaryWillGet => 'Le bénéficiaire recevra';
 
   @override
   String proposalExplainerPaymentWillBeOnAH(String asset) {
@@ -890,6 +890,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get proposalFieldAssetToSpend => 'Jeton à dépenser';
+
+  @override
+  String proposalFieldAssetToSwap(String cc) {
+    return 'Actif à recevoir pour $cc';
+  }
 
   @override
   String proposalFieldAmount(String asset) {

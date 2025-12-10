@@ -1532,11 +1532,11 @@ abstract class AppLocalizations {
   /// **'Swap Fee'**
   String get proposalExplainerSwapFee;
 
-  /// No description provided for @proposalExplainerYouWillGet.
+  /// No description provided for @proposalExplainerBeneficiaryWillGet.
   ///
   /// In en, this message translates to:
-  /// **'You will get'**
-  String get proposalExplainerYouWillGet;
+  /// **'Beneficiary will get'**
+  String get proposalExplainerBeneficiaryWillGet;
 
   /// No description provided for @proposalExplainerPaymentWillBeOnAH.
   ///
@@ -1675,6 +1675,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Asset to spend'**
   String get proposalFieldAssetToSpend;
+
+  /// No description provided for @proposalFieldAssetToSwap.
+  ///
+  /// In en, this message translates to:
+  /// **'Asset to receive for {cc}'**
+  String proposalFieldAssetToSwap(String cc);
 
   /// No description provided for @proposalFieldAmount.
   ///

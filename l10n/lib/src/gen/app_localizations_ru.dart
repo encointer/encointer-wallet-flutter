@@ -798,7 +798,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get proposalExplainerSwapFee => 'Комиссия за обмен';
 
   @override
-  String get proposalExplainerYouWillGet => 'Ты получишь';
+  String get proposalExplainerBeneficiaryWillGet => 'Получатель получит';
 
   @override
   String proposalExplainerPaymentWillBeOnAH(String asset) {
@@ -881,6 +881,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get proposalFieldAssetToSpend => 'Токен для траты';
+
+  @override
+  String proposalFieldAssetToSwap(String cc) {
+    return 'Актив, который нужно получить для $cc';
+  }
 
   @override
   String proposalFieldAmount(String asset) {

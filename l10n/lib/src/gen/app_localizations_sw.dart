@@ -804,7 +804,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get proposalExplainerSwapFee => 'Ada ya kubadilisha';
 
   @override
-  String get proposalExplainerYouWillGet => 'Utapokea';
+  String get proposalExplainerBeneficiaryWillGet => 'Mfaidika atapokea';
 
   @override
   String proposalExplainerPaymentWillBeOnAH(String asset) {
@@ -888,6 +888,11 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get proposalFieldAssetToSpend => 'Tokeni ya kutumia';
+
+  @override
+  String proposalFieldAssetToSwap(String cc) {
+    return 'Rasilimali ya kupokea kwa ajili ya $cc';
+  }
 
   @override
   String proposalFieldAmount(String asset) {

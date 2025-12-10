@@ -318,7 +318,7 @@
     "proposalExplainerSwapOptionComputation": "Calculation with your input",
     "proposalExplainerRate": "Rate",
     "proposalExplainerSwapFee": "Swap Fee",
-    "proposalExplainerYouWillGet": "You will get",
+    "proposalExplainerBeneficiaryWillGet": "Beneficiary will get",
     "proposalExplainerPaymentWillBeOnAH": "Note: The {asset} will be sent directly to your Asset Hub Kusama account.",
     "@proposalExplainerPaymentWillBeOnAH": {
         "placeholders": {
@@ -386,6 +386,15 @@
     "proposalFieldInactivityTimeoutCycles": "Inactivity Timeout (gathering cycles)",
     "proposalFieldPetitionText": "Petition Text",
     "proposalFieldAssetToSpend": "Asset to spend",
+    "proposalFieldAssetToSwap": "Asset to receive for {cc}",
+    "@proposalFieldAssetToSwap": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
     "proposalFieldAmount": "Amount ({asset})",
     "@proposalFieldAmount": {
         "placeholders": {
