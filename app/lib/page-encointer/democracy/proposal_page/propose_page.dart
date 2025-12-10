@@ -389,7 +389,6 @@ class _ProposePageState extends State<ProposePage> {
                         _getProposalExplainer(context),
                         _maybeGetSwapExplainer(context),
 
-
                         const Spacer(),
                         Column(
                           mainAxisSize: MainAxisSize.min,
