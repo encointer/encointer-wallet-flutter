@@ -193,6 +193,7 @@ class _ProposePageState extends State<ProposePage> {
       final fiat = knownCommunity!.fiatCurrency;
       final usdRate = await forexService.getUsdRate(fiat);
       Log.d('[updateExchangeRate] got forex exchange rate usd->$fiat: ${usdRate?.value}');
+      if (!mounted) return;
       setState(() {
         forexRate = usdRate;
       });
