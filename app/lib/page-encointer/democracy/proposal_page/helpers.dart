@@ -137,6 +137,11 @@ extension PropsalActionExt on ProposalActionIdentifier {
       ProposalActionIdentifier.issueSwapAssetOption => l10n.proposalTypeIssueSwapAssetOption(cidSymbol, asset.symbol)
     };
   }
+
+  bool isSwapAction() {
+    return this == ProposalActionIdentifier.issueSwapNativeOption ||
+        this == ProposalActionIdentifier.issueSwapAssetOption;
+  }
 }
 
 bool hasSameProposalForSameScope(

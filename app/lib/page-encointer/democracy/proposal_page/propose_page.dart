@@ -74,6 +74,7 @@ class _ProposePageState extends State<ProposePage> {
   late ProposalScope selectedScope;
   List<ProposalScope> allowedScopes = [];
   AssetToSpend selectedAsset = AssetToSpend.usdc;
+
   /// USD -> Fiat rate
   ForexRate? forexRate;
   bool isBusinessOwner = false;
@@ -385,6 +386,7 @@ class _ProposePageState extends State<ProposePage> {
                         // Dynamic Fields Based on Selected Proposal Action
                         _buildDynamicFields(context),
                         const SizedBox(height: 10),
+                        _maybeGetSwapExplainer(context),
                         _getProposalExplainer(context),
 
                         const Spacer(),
@@ -479,6 +481,41 @@ class _ProposePageState extends State<ProposePage> {
     );
   }
 
+  Widget _maybeGetSwapExplainer(BuildContext context) {
+    if (!isKnownCommunity || !selectedAction.isSwapAction()) {
+      return const SizedBox.shrink();
+    }
+
+    final l10n = context.l10n;
+    final store = context.read<AppStore>();
+    final theme = context.textTheme.bodyMedium;
+
+    final swapAmountAsset = swapLimit();
+    final allowanceCC = allowanceController.text;
+    final symbol = store.encointer.community!.symbol!;
+
+    final text = [
+      l10n.proposalExplainerSwapOptionComputation,
+      ccToUsd(allowanceCC, symbol, knownCommunity!),
+      swapFee(swapAmountAsset),
+      '${l10n.proposalExplainerYouWillGet} ${Fmt.doubleFormat(swapAmountAsset, length: 4)} ${selectedAsset.symbol}'
+    ].join('\n\n');
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(4),
+              child: Icon(Iconsax.info_circle),
+            ),
+            Text(text, style: theme),
+          ],
+        ),
+      ),
+    );
+  }
+
   String _explainerText() {
     final store = context.read<AppStore>();
     final l10n = context.l10n;
@@ -523,14 +560,6 @@ class _ProposePageState extends State<ProposePage> {
             Fmt.doubleFormat(swapAmountAsset),
             rate.toString(),
           ),
-          if (isKnownCommunity)
-            l10n.proposalExplainerSwapOptionComputation,
-          if (isKnownCommunity)
-            ccToUsd(allowanceCC,symbol, knownCommunity!),
-          if (isKnownCommunity)
-            swapFee(swapAmountAsset),
-          if (isKnownCommunity)
-            '${l10n.proposalExplainerYouWillGet} ${Fmt.doubleFormat(swapAmountAsset, length: 4)} ${selectedAsset.symbol}',
           l10n.proposalExplainerPaymentWillBeOnAH(
             selectedAsset.symbol,
           )
@@ -540,12 +569,12 @@ class _ProposePageState extends State<ProposePage> {
 
   String ccToUsd(String allowanceCC, String symbol, KnownCommunity community) {
     return '$allowanceCC $symbol = ${Fmt.doubleFormat(community.localFiatRate.toDouble(), length: 4)} ${community.fiatCurrency.symbol}'
-        '= ${Fmt.doubleFormat(1/forexRate!.value, length: 4)} ${selectedAsset.symbol}';
+        '= ${Fmt.doubleFormat(1 / forexRate!.value, length: 4)} ${selectedAsset.symbol}';
   }
 
   String swapFee(double swapAmountAsset) {
     final l10n = context.l10n;
-    return '${l10n.proposalExplainerSwapFee} ${knownCommunity!.markup*100}% = ${Fmt.doubleFormat(swapAmountAsset*knownCommunity!.markup/forexRate!.value, length: 4, normalize: true)} ${selectedAsset.symbol}';
+    return '${l10n.proposalExplainerSwapFee} ${knownCommunity!.markup * 100}% = ${Fmt.doubleFormat(swapAmountAsset * knownCommunity!.markup / forexRate!.value, length: 4, normalize: true)} ${selectedAsset.symbol}';
   }
 
   /// Dynamically generates form fields based on selected proposal type
@@ -681,7 +710,8 @@ class _ProposePageState extends State<ProposePage> {
 
     var ccToUsdAfterMarkup = '1';
     if (isKnownCommunity) {
-      ccToUsdAfterMarkup = Fmt.doubleFormat(knownCommunity!.ccPerUsd(forexRate?.value ?? 0), length: 4, normalize: true);
+      ccToUsdAfterMarkup =
+          Fmt.doubleFormat(knownCommunity!.ccPerUsd(forexRate?.value ?? 0), length: 4, normalize: true);
     }
     return TextFormField(
       // set constant value if needed
