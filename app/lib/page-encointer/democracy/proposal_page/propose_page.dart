@@ -494,8 +494,7 @@ class _ProposePageState extends State<ProposePage> {
     final allowanceCC = allowanceController.text;
 
     final swapAmountAsset = swapLimit();
-    final youWillGet =
-        '${Fmt.doubleFormat(swapAmountAsset, length: 4)} ${selectedAsset.symbol}';
+    final youWillGet = '${Fmt.doubleFormat(swapAmountAsset, length: 4)} ${selectedAsset.symbol}';
 
     final calculationLine = ccToUsd(allowanceCC, symbol, knownCommunity!);
     final feeLine = swapFee(swapAmountAsset);
@@ -1189,7 +1188,6 @@ class _ProposePageState extends State<ProposePage> {
         pendingAssetSpends[selectedAsset]!;
   }
 }
-
 
 class _InfoKV extends StatelessWidget {
   const _InfoKV({
