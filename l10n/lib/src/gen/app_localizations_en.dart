@@ -433,6 +433,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exerciseSwapOption => 'Exercise Swap Option';
 
   @override
+  String exerciseSwapOptionAmount(String cc) {
+    return 'Amount to Swap ($cc)';
+  }
+
+  @override
   String get export => 'Export Account';
 
   @override

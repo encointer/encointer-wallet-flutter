@@ -436,6 +436,11 @@ class AppLocalizationsSw extends AppLocalizations {
   String get exerciseSwapOption => 'Tumia chaguo la kubadilisha';
 
   @override
+  String exerciseSwapOptionAmount(String cc) {
+    return 'Kiasi cha kubadilisha ($cc)';
+  }
+
+  @override
   String get export =>
       'Onyesha taarifa za siri za akaunti yako kuweza kuisafirisha';
 

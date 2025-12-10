@@ -439,6 +439,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get exerciseSwapOption => 'Exercer l’option d’échange';
 
   @override
+  String exerciseSwapOptionAmount(String cc) {
+    return 'Montant à échanger ($cc)';
+  }
+
+  @override
   String get export => 'Activer le Bazaar';
 
   @override

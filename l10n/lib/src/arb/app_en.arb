@@ -189,6 +189,15 @@
     },
     "exerciseSwapNativeOptionAvailable": "KSM Swap Option Available",
     "exerciseSwapOption": "Exercise Swap Option",
+    "exerciseSwapOptionAmount": "Amount to Swap ({cc})",
+    "@exerciseSwapOptionAmount": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
     "export": "Export Account",
     "exportAccount": "export",
     "exportMnemonicOk": "Mnemonic was copied to clipboard.",

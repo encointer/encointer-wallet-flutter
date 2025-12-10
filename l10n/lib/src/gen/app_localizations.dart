@@ -878,6 +878,12 @@ abstract class AppLocalizations {
   /// **'Exercise Swap Option'**
   String get exerciseSwapOption;
 
+  /// No description provided for @exerciseSwapOptionAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount to Swap ({cc})'**
+  String exerciseSwapOptionAmount(String cc);
+
   /// No description provided for @export.
   ///
   /// In en, this message translates to:

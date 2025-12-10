@@ -189,6 +189,7 @@
     },
     "exerciseSwapNativeOptionAvailable": "Option d’échange KSM disponible",
     "exerciseSwapOption": "Exercer l’option d’échange",
+    "exerciseSwapOptionAmount": "Montant à échanger ({cc})",
     "export": "Activer le Bazaar",
     "exportAccount": "exporter",
     "exportMnemonicOk": "Mnémonique a été copié dans le clipboard.",

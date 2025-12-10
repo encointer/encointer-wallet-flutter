@@ -433,6 +433,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get exerciseSwapOption => 'Использовать опцию обмена';
 
   @override
+  String exerciseSwapOptionAmount(String cc) {
+    return 'Сумма для обмена ($cc)';
+  }
+
+  @override
   String get export => 'Экпорт аккаунта';
 
   @override

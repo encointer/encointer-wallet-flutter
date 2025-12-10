@@ -129,6 +129,7 @@
     "exerciseSwapAssetOptionAvailable": "Доступна опция обмена",
     "exerciseSwapNativeOptionAvailable": "Доступна опция обмена KSM",
     "exerciseSwapOption": "Использовать опцию обмена",
+    "exerciseSwapOptionAmount": "Сумма для обмена ({cc})",
     "export": "Экпорт аккаунта",
     "exportAccount": "Экспорт",
     "exportMnemonicOk": "Мнемоника скопирована в буфер обмена",

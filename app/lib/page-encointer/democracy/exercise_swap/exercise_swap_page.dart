@@ -175,7 +175,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                 child: TextFormField(
                   controller: amountController,
                   decoration: InputDecoration(
-                    labelText: l10n.proposalFieldAmount(
+                    labelText: l10n.exerciseSwapOptionAmount(
                       context.read<AppStore>().encointer.community!.symbol!,
                     ),
                     errorText: amountError,
