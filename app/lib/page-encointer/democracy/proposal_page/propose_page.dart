@@ -74,8 +74,12 @@ class _ProposePageState extends State<ProposePage> {
   late ProposalScope selectedScope;
   List<ProposalScope> allowedScopes = [];
   AssetToSpend selectedAsset = AssetToSpend.usdc;
-  ForexRate? rate;
+  /// USD -> Fiat rate
+  ForexRate? forexRate;
   bool isBusinessOwner = false;
+
+  late KnownCommunity? knownCommunity;
+  late bool isKnownCommunity;
 
   // Forex service to get exchange rate of a community's local fiat to usd.
   final forexService = ForexService();
@@ -127,6 +131,14 @@ class _ProposePageState extends State<ProposePage> {
   @override
   void initState() {
     super.initState();
+
+    // initialize late fields
+
+    final store = context.read<AppStore>();
+    beneficiary = store.account.currentAccount;
+    knownCommunity = KnownCommunity.tryFromSymbol(store.encointer.community!.symbol!);
+    isKnownCommunity = knownCommunity != null;
+
     selectedAction = widget.initialAction ?? ProposalActionIdentifier.petition;
     latController = TextEditingController();
     lonController = TextEditingController();
@@ -143,12 +155,12 @@ class _ProposePageState extends State<ProposePage> {
     );
     unawaited(assetHubApi.init());
 
+    // fetch data
+
     _updateAllowedScopes();
     _updateEnactmentQueue();
     _updateExchangeRate();
     _checkBusinessOwners();
-
-    beneficiary = context.read<AppStore>().account.currentAccount;
   }
 
   /// Updates the allowed scope options and resets the selectedScope
@@ -177,14 +189,12 @@ class _ProposePageState extends State<ProposePage> {
     final store = context.read<AppStore>();
     final symbol = store.encointer.community!.symbol!;
 
-    final knownCommunity = KnownCommunity.tryFromSymbol(symbol);
-
     if (knownCommunity != null) {
-      final fiat = knownCommunity.fiatCurrency;
-      final forexRate = await forexService.getUsdRate(fiat);
-      Log.d('[updateExchangeRate] got forex exchange rate usd->$fiat: ${forexRate?.value}');
+      final fiat = knownCommunity!.fiatCurrency;
+      final usdRate = await forexService.getUsdRate(fiat);
+      Log.d('[updateExchangeRate] got forex exchange rate usd->$fiat: ${usdRate?.value}');
       setState(() {
-        rate = forexRate;
+        forexRate = usdRate;
       });
     } else {
       Log.d('[updateExchangeRate] Will not fetch exchange rate for not well-known community $symbol');
@@ -500,21 +510,41 @@ class _ProposePageState extends State<ProposePage> {
       case ProposalActionIdentifier.spendAsset:
         return l10n.proposalExplainerSpendAsset(selectedAsset.symbol);
       case ProposalActionIdentifier.issueSwapAssetOption:
-        final swapAmount = swapLimit();
+        final swapAmountAsset = swapLimit();
+        final allowanceCC = allowanceController.text;
         final rate = double.tryParse(rateController.text) ?? 0.0;
+        final symbol = store.encointer.community!.symbol!;
         return [
           l10n.proposalExplainerIssueSwapOption(
-            store.encointer.community!.symbol!,
+            symbol,
             selectedAsset.symbol,
-            allowanceController.text,
-            Fmt.doubleFormat(swapAmount),
+            allowanceCC,
+            Fmt.doubleFormat(swapAmountAsset),
             rate.toString(),
           ),
+          if (isKnownCommunity)
+            l10n.proposalExplainerSwapOptionComputation,
+          if (isKnownCommunity)
+            ccToUsd(allowanceCC,symbol, knownCommunity!),
+          if (isKnownCommunity)
+            swapFee(swapAmountAsset),
+          if (isKnownCommunity)
+            '${l10n.proposalExplainerYouWillGet} ${Fmt.doubleFormat(swapAmountAsset, length: 4)} ${selectedAsset.symbol}',
           l10n.proposalExplainerPaymentWillBeOnAH(
             selectedAsset.symbol,
           )
         ].join('\n\n');
     }
+  }
+
+  String ccToUsd(String allowanceCC, String symbol, KnownCommunity community) {
+    return '$allowanceCC $symbol = ${Fmt.doubleFormat(community.localFiatRate.toDouble(), length: 4)} ${community.fiatCurrency.symbol}'
+        '= ${Fmt.doubleFormat(1/forexRate!.value, length: 4)} ${selectedAsset.symbol}';
+  }
+
+  String swapFee(double swapAmountAsset) {
+    final l10n = context.l10n;
+    return '${l10n.proposalExplainerSwapFee} ${knownCommunity!.markup*100}% = ${Fmt.doubleFormat(swapAmountAsset*knownCommunity!.markup/forexRate!.value, length: 4, normalize: true)} ${selectedAsset.symbol}';
   }
 
   /// Dynamically generates form fields based on selected proposal type
@@ -645,21 +675,18 @@ class _ProposePageState extends State<ProposePage> {
     final l10n = context.l10n;
     final store = context.read<AppStore>();
 
-    final knownCommunity = KnownCommunity.tryFromSymbol(store.encointer.community!.symbol!);
-
-    final isKnown = knownCommunity != null;
-    Log.d('[rateInput] communityKnown: $isKnown');
+    Log.d('[rateInput] communityKnown: $isKnownCommunity');
     Log.d('[rateInput] deriveRate: $tryDeriveRate');
 
     var ccToUsdAfterMarkup = '1';
-    if (isKnown) {
-      ccToUsdAfterMarkup = Fmt.doubleFormat(knownCommunity.ccPerUsd(rate?.value ?? 0), length: 4, normalize: true);
+    if (isKnownCommunity) {
+      ccToUsdAfterMarkup = Fmt.doubleFormat(knownCommunity!.ccPerUsd(forexRate?.value ?? 0), length: 4, normalize: true);
     }
     return TextFormField(
       // set constant value if needed
-      controller: rateController..text = tryDeriveRate && isKnown ? ccToUsdAfterMarkup : rateController.text,
+      controller: rateController..text = tryDeriveRate && isKnownCommunity ? ccToUsdAfterMarkup : rateController.text,
       // We want to derive a sane value for well-known communities and disable editing.
-      enabled: !tryDeriveRate || !isKnown,
+      enabled: !tryDeriveRate || !isKnownCommunity,
       decoration: InputDecoration(
         labelText: l10n.proposalFieldRate(
           currency,

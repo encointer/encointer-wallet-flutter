@@ -785,9 +785,19 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String proposalExplainerIssueSwapOption(
-      String cc, String asset, String ccLimit, String swapLimit, String rate) {
+      String cc, String asset, Object ccLimit, Object rate, Object swapLimit) {
     return 'Это предложение позволяет получателю обменивать $cc на $asset по фиксированному курсу, многократно, до достижения установленного лимита в $asset. Получателем обычно является местный бизнес, который принимает $cc и может накапливать излишки.\n\nНа основе ваших данных максимальная сумма для обмена составляет:\n\n$ccLimit $cc / $rate $cc/$asset = $swapLimit $asset.';
   }
+
+  @override
+  String get proposalExplainerSwapOptionComputation =>
+      'Calculation with your input';
+
+  @override
+  String get proposalExplainerSwapFee => 'Swap Fee';
+
+  @override
+  String get proposalExplainerYouWillGet => 'You will get';
 
   @override
   String proposalExplainerPaymentWillBeOnAH(String asset) {

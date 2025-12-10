@@ -302,7 +302,7 @@
             }
         }
     },
-    "proposalExplainerIssueSwapOption": "This proposal allows the beneficiary to exchange {cc} for {asset} at a fixed rate, multiple times, until a defined {asset} limit is reached. The beneficiary is typically a local business that accepts {cc} and may accumulate a surplus.\n\nBased on your inputs, the maximum exchangeable amount is:\n\n{ccLimit} {cc} / {rate} {cc}/{asset} = {swapLimit} {asset}.",
+    "proposalExplainerIssueSwapOption": "This proposal allows the beneficiary to exchange {cc} for {asset} at a fixed rate, multiple times, until a defined {asset} limit is reached. The beneficiary is typically a local business that accepts {cc} and may accumulate a surplus.",
     "@proposalExplainerIssueSwapOption": {
         "placeholders": {
             "cc": {
@@ -312,21 +312,12 @@
             "asset": {
                 "type": "String",
                 "example": "USDC"
-            },
-            "ccLimit": {
-                "type": "String",
-                "example": "6"
-            },
-            "swapLimit": {
-                "type": "String",
-                "example": "2"
-            },
-            "rate": {
-                "type": "String",
-                "example": "3"
             }
         }
     },
+    "proposalExplainerSwapOptionComputation": "Calculation with your input",
+    "proposalExplainerSwapFee": "Swap Fee",
+    "proposalExplainerYouWillGet": "You will get",
     "proposalExplainerPaymentWillBeOnAH": "Note: The {asset} will be sent directly to your Asset Hub Kusama account.",
     "@proposalExplainerPaymentWillBeOnAH": {
         "placeholders": {

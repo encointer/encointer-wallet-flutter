@@ -1511,9 +1511,27 @@ abstract class AppLocalizations {
   /// No description provided for @proposalExplainerIssueSwapOption.
   ///
   /// In en, this message translates to:
-  /// **'This proposal allows the beneficiary to exchange {cc} for {asset} at a fixed rate, multiple times, until a defined {asset} limit is reached. The beneficiary is typically a local business that accepts {cc} and may accumulate a surplus.\n\nBased on your inputs, the maximum exchangeable amount is:\n\n{ccLimit} {cc} / {rate} {cc}/{asset} = {swapLimit} {asset}.'**
+  /// **'This proposal allows the beneficiary to exchange {cc} for {asset} at a fixed rate, multiple times, until a defined {asset} limit is reached. The beneficiary is typically a local business that accepts {cc} and may accumulate a surplus.'**
   String proposalExplainerIssueSwapOption(
-      String cc, String asset, String ccLimit, String swapLimit, String rate);
+      String cc, String asset, Object ccLimit, Object rate, Object swapLimit);
+
+  /// No description provided for @proposalExplainerSwapOptionComputation.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculation with your input'**
+  String get proposalExplainerSwapOptionComputation;
+
+  /// No description provided for @proposalExplainerSwapFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Swap Fee'**
+  String get proposalExplainerSwapFee;
+
+  /// No description provided for @proposalExplainerYouWillGet.
+  ///
+  /// In en, this message translates to:
+  /// **'You will get'**
+  String get proposalExplainerYouWillGet;
 
   /// No description provided for @proposalExplainerPaymentWillBeOnAH.
   ///

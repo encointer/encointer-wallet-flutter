@@ -790,9 +790,19 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String proposalExplainerIssueSwapOption(
-      String cc, String asset, String ccLimit, String swapLimit, String rate) {
+      String cc, String asset, Object ccLimit, Object rate, Object swapLimit) {
     return 'Pendekezo hili linamruhusu mnufaika kubadilisha $cc kuwa $asset kwa kiwango cha kudumu, mara nyingi, hadi kikomo maalum cha $asset kifikiwe. Mnufaika kwa kawaida ni biashara ya eneo hilo inayokubali $cc na inaweza kukusanya ziada.\n\nKulingana na maingizo yako, kiasi cha juu kinachoweza kubadilishwa ni:\n\n$ccLimit $cc / $rate $cc/$asset = $swapLimit $asset.';
   }
+
+  @override
+  String get proposalExplainerSwapOptionComputation =>
+      'Calculation with your input';
+
+  @override
+  String get proposalExplainerSwapFee => 'Swap Fee';
+
+  @override
+  String get proposalExplainerYouWillGet => 'You will get';
 
   @override
   String proposalExplainerPaymentWillBeOnAH(String asset) {
