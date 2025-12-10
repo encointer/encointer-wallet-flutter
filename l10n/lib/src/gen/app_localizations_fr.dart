@@ -427,6 +427,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String swapOptionRemaining(String amount, String asset) {
+    return 'Allocation restante : $amount $asset';
+  }
+
+  @override
   String exerciseSwapAssetOptionAvailable(String asset) {
     return 'Option d’échange disponible';
   }

@@ -422,6 +422,11 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String swapOptionRemaining(String amount, String asset) {
+    return 'Оставшийся лимит: $amount $asset';
+  }
+
+  @override
   String exerciseSwapAssetOptionAvailable(String asset) {
     return 'Доступна опция обмена';
   }

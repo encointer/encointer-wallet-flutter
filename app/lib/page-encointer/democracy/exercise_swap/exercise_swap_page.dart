@@ -147,7 +147,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
           children: [
             Text(l10n.swapOption, style: context.headlineSmall),
             const SizedBox(height: 8),
-            Text(l10n.swapOptionLimit(
+            Text(l10n.swapOptionRemaining(
               fmt(widget.option.allowance),
               widget.option.symbol,
             )),

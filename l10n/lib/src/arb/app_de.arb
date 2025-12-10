@@ -178,6 +178,7 @@
             }
         }
     },
+    "swapOptionRemaining": "Verbleibender Freibetrag: {amount} {asset}",
     "exerciseSwapAssetOptionAvailable": "Swap-Option verfügbar",
     "@exerciseSwapAssetOptionAvailable": {
         "placeholders": {

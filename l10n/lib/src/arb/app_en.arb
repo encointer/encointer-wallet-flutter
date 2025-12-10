@@ -178,6 +178,19 @@
             }
         }
     },
+    "swapOptionRemaining": "Remaining allowance: {amount} {asset}",
+    "@swapOptionRemaining": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
     "exerciseSwapAssetOptionAvailable": "Swap Option Available",
     "@exerciseSwapAssetOptionAvailable": {
         "placeholders": {

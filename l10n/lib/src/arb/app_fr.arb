@@ -178,6 +178,7 @@
             }
         }
     },
+    "swapOptionRemaining": "Allocation restante : {amount} {asset}",
     "exerciseSwapAssetOptionAvailable": "Option d’échange disponible",
     "@exerciseSwapAssetOptionAvailable": {
         "placeholders": {

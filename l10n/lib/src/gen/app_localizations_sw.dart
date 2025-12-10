@@ -424,6 +424,11 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
+  String swapOptionRemaining(String amount, String asset) {
+    return 'Kiasi kilichobaki: $amount $asset';
+  }
+
+  @override
   String exerciseSwapAssetOptionAvailable(String asset) {
     return 'Chaguo la kubadilisha linapatikana';
   }

@@ -860,6 +860,12 @@ abstract class AppLocalizations {
   /// **'Limit: {amount} {asset}'**
   String swapOptionLimit(String amount, String asset);
 
+  /// No description provided for @swapOptionRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining allowance: {amount} {asset}'**
+  String swapOptionRemaining(String amount, String asset);
+
   /// No description provided for @exerciseSwapAssetOptionAvailable.
   ///
   /// In en, this message translates to:
