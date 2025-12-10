@@ -521,7 +521,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get incomeIssuance => 'Доход сообщества';
 
   @override
-  String get insufficientBalance => 'Недостаточный баланс';
+  String insufficientBalance(String cc) {
+    return 'Недостаточный баланс';
+  }
 
   @override
   String get insufficientFundsErrorBody =>

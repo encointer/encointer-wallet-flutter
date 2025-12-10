@@ -530,7 +530,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get incomeIssuance => 'Gemeinschaftseinkommen';
 
   @override
-  String get insufficientBalance => 'Ungenügender Saldo';
+  String insufficientBalance(String cc) {
+    return 'Ungenügender Saldo';
+  }
 
   @override
   String get insufficientFundsErrorBody =>

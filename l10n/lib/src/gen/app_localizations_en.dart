@@ -523,7 +523,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get incomeIssuance => 'Community income';
 
   @override
-  String get insufficientBalance => 'Insufficient balance';
+  String insufficientBalance(String cc) {
+    return 'Insufficient balance ($cc)';
+  }
 
   @override
   String get insufficientFundsErrorBody =>

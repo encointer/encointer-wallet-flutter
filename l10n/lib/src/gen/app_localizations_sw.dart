@@ -526,7 +526,9 @@ class AppLocalizationsSw extends AppLocalizations {
   String get incomeIssuance => 'Mapato ya jamii';
 
   @override
-  String get insufficientBalance => 'Kiasi hakitoshi';
+  String insufficientBalance(String cc) {
+    return 'Kiasi hakitoshi';
+  }
 
   @override
   String get insufficientFundsErrorBody =>

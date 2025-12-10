@@ -235,7 +235,15 @@
     "importMustNotBeEmpty": "Input must not be empty",
     "importPrivateKeyUnsupported": "Private key account import is not yet supported.",
     "incomeIssuance": "Community income",
-    "insufficientBalance": "Insufficient balance",
+    "insufficientBalance": "Insufficient balance ({cc})",
+    "@insufficientBalance": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    },
     "insufficientFundsErrorBody": "You do not have sufficient funds on this account. See on the website of your local community how to get some.",
     "insufficientFundsErrorTitle": "Insufficient Funds",
     "invalidTransactionFormatErrorBody": "The transaction had an invalid format, which might be a bug. If you think this is a bug, please tap the corresponding field below.",

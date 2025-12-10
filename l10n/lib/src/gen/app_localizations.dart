@@ -1037,8 +1037,8 @@ abstract class AppLocalizations {
   /// No description provided for @insufficientBalance.
   ///
   /// In en, this message translates to:
-  /// **'Insufficient balance'**
-  String get insufficientBalance;
+  /// **'Insufficient balance ({cc})'**
+  String insufficientBalance(String cc);
 
   /// No description provided for @insufficientFundsErrorBody.
   ///

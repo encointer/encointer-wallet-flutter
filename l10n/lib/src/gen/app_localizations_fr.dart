@@ -527,7 +527,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get incomeIssuance => 'Revenu communautaire';
 
   @override
-  String get insufficientBalance => 'Solde insuffisant';
+  String insufficientBalance(String cc) {
+    return 'Solde insuffisant';
+  }
 
   @override
   String get insufficientFundsErrorBody =>
