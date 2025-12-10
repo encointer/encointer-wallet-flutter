@@ -184,7 +184,14 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
                   ],
-                  validator: (val) => validatePositiveNumberString(context, val),
+                  validator: (val) => validateSwapAmount(
+                    context,
+                    amountController.text,
+                    ccBalance,
+                    widget.option.symbol,
+                    treasuryBalance(),
+                    widget.option.rate,
+                  ),
                   onChanged: (_) {
                     setState(() {
                       amountError = validateSwapAmount(
