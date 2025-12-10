@@ -398,10 +398,10 @@ class _ProposePageState extends State<ProposePage> {
                             // Hint text for accounts without reputation
 
                             if (!isBootstrapperOrReputable(store, store.account.currentAddress))
-                              Text(l10n.proposalOnlyBootstrappersOrReputablesCanSubmit, textAlign: TextAlign.center),
+                              Text(l10n.proposalOnlyBootstrappersOrReputablesCanSubmit, textAlign: TextAlign.start),
                             if (hasSameProposalForSameScope(enactmentQueue, selectedAction,
                                 selectedScope.isLocal ? store.encointer.chosenCid! : null))
-                              Text(l10n.proposalCannotSubmitProposalTypePendingEnactment, textAlign: TextAlign.center),
+                              Text(l10n.proposalCannotSubmitProposalTypePendingEnactment, textAlign: TextAlign.start),
                             // if (requireBusinessOwner() && !isBusinessOwner)
                             //   Text(l10n.proposalOnlyBusinessOwnersCanSubmit, textAlign: TextAlign.center),
 
