@@ -531,7 +531,7 @@ class _ProposePageState extends State<ProposePage> {
               ),
             const SizedBox(height: 6),
             _InfoKV(
-              label: l10n.proposalExplainerYouWillGet,
+              label: l10n.proposalExplainerBeneficiaryWillGet,
               value: youWillGetLine,
             ),
           ],
@@ -647,8 +647,12 @@ class _ProposePageState extends State<ProposePage> {
   Widget issueSwapAssetOptionInput() {
     final maxSwapValue =
         RepositoryProvider.of<AppSettings>(context).developerMode ? null : assetTreasuryUnallocatedLiquidity();
+
+    final store = context.read<AppStore>();
+    final l10n = context.l10n;
+
     return Column(children: [
-      selectAssetDropDown(),
+      selectAssetDropDown(l10n.proposalFieldAssetToSwap(store.encointer.community!.symbol!)),
       ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), maxSwapValue, true),
     ]);
   }
@@ -792,20 +796,22 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget spendAssetInput(BuildContext context) {
+    final l10n = context.l10n;
     final maxSpend =
         RepositoryProvider.of<AppSettings>(context).developerMode ? null : assetTreasuryUnallocatedLiquidity();
+
+
     return Column(children: [
-      selectAssetDropDown(),
+      selectAssetDropDown(l10n.proposalFieldAssetToSpend),
       ...spendInputWidgets(selectedAsset.symbol, maxSpend),
     ]);
   }
 
-  Widget selectAssetDropDown() {
-    final l10n = context.l10n;
+  Widget selectAssetDropDown(String assetDropDownLabel) {
     return DropdownButtonFormField<AssetToSpend>(
         initialValue: selectedAsset,
         decoration: InputDecoration(
-          labelText: l10n.proposalFieldAssetToSpend,
+          labelText: assetDropDownLabel,
         ),
         items: AssetToSpend.values.map((asset) {
           return DropdownMenuItem(
@@ -1222,7 +1228,7 @@ class _InfoKV extends StatelessWidget {
       children: [
         // Left label (fixed width for perfect alignment)
         SizedBox(
-          width: 110, // adjust if needed
+          width: 130,
           child: Text(
             label,
             style: theme.bodyMedium?.copyWith(
