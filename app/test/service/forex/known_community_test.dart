@@ -15,7 +15,7 @@ void main() {
 
     group('computeCcUsdFromApiRate', () {
       // Unparameterized example for LEU community (for better understanding)
-      test('1 USD -> 0.79 CHF, LEU community', () {
+      test('1 USD -> 0.8058 CHF, LEU community', () {
         const community = KnownCommunity.leu;
 
         const usdToChfRate = 0.79; // 1 USD = 0.79 CHF
@@ -29,7 +29,7 @@ void main() {
         expect(ccUsdRate, closeTo(0.8058, 1e-6));
       });
 
-      test('1 USD -> 0.1484.76300699 NGN, PNQ community', () {
+      test('1 USD -> 1250.8311 NGN, PNQ community', () {
         const community = KnownCommunity.pnq;
 
         const usdToNgnRate = 2452.61; // 1 USD = 2452.61339866 CHF
