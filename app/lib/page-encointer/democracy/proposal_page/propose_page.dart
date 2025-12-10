@@ -386,8 +386,9 @@ class _ProposePageState extends State<ProposePage> {
                         // Dynamic Fields Based on Selected Proposal Action
                         _buildDynamicFields(context),
                         const SizedBox(height: 10),
-                        _maybeGetSwapExplainer(context),
                         _getProposalExplainer(context),
+                        _maybeGetSwapExplainer(context),
+
 
                         const Spacer(),
                         Column(
@@ -499,7 +500,7 @@ class _ProposePageState extends State<ProposePage> {
 
     final calculationLine = ccToUsd(allowanceCC, symbol, knownCommunity!);
     final feeLine = swapFee(swapAmountAsset);
-    final youWillGetLine = '${l10n.proposalExplainerYouWillGet} $youWillGet';
+    final youWillGetLine = youWillGet;
 
     return Card(
       elevation: 1,
@@ -509,27 +510,36 @@ class _ProposePageState extends State<ProposePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // --- Header ---
-            Row(
-              children: [
-                Text(
-                  l10n.proposalExplainerSwapOptionComputation,
-                  style: theme.bodyLarge?.copyWith(color: context.theme.colorScheme.primary),
-                ),
-              ],
+            // Header
+            Text(
+              l10n.proposalExplainerSwapOptionComputation,
+              style: theme.bodyLarge?.copyWith(
+                color: context.theme.colorScheme.primary,
+                fontWeight: FontWeight.w600,
+              ),
             ),
 
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
 
-            // --- Info Lines ---
-            _InfoLine(text: calculationLine),
-            _InfoLine(text: feeLine),
-            _InfoLine(text: youWillGetLine),
+            // Key–Value lines
+            _InfoKV(
+              label: 'Rate',
+              value: calculationLine,
+            ),
+            _InfoKV(
+              label: l10n.proposalExplainerSwapFee,
+              value: feeLine,
+            ),
+            _InfoKV(
+              label: l10n.proposalExplainerYouWillGet,
+              value: youWillGetLine,
+            ),
           ],
         ),
       ),
     );
   }
+
 
   String _explainerText() {
     final store = context.read<AppStore>();
@@ -588,8 +598,7 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   String swapFee(double swapAmountAsset) {
-    final l10n = context.l10n;
-    return '${l10n.proposalExplainerSwapFee} ${knownCommunity!.markup * 100}% = ${Fmt.doubleFormat(swapAmountAsset * knownCommunity!.markup / forexRate!.value, length: 4, normalize: true)} ${selectedAsset.symbol}';
+    return '${knownCommunity!.markup * 100}% = ${Fmt.doubleFormat(swapAmountAsset * knownCommunity!.markup / forexRate!.value, length: 4, normalize: true)} ${selectedAsset.symbol}';
   }
 
   /// Dynamically generates form fields based on selected proposal type
@@ -1194,29 +1203,39 @@ class _ProposePageState extends State<ProposePage> {
 }
 
 
-/// A reusable styled line for the explainer.
-/// You can change spacing / bullets / layout easily in one place.
-class _InfoLine extends StatelessWidget {
-  final String text;
+class _InfoKV extends StatelessWidget {
+  const _InfoKV({
+    required this.label,
+    required this.value,
+  });
 
-  const _InfoLine({required this.text});
+  final String label;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
+
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Bullet or dash – easy to customize
-          Text(
-            '• ',
-            style: Theme.of(context).textTheme.bodyMedium,
+          // Left label (fixed width for perfect alignment)
+          SizedBox(
+            width: 110, // adjust if needed
+            child: Text(
+              label,
+              style: theme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
+          // Right side (flexible)
           Expanded(
             child: Text(
-              text,
-              style: Theme.of(context).textTheme.bodyMedium,
+              value,
+              style: theme.bodyMedium,
             ),
           ),
         ],
