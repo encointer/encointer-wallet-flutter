@@ -437,6 +437,7 @@
     "treasuryGlobalBalance": "Freies globales Schatzkammerguthaben: {balance} KSM.",
     "treasuryLocalBalance": "Freies Gemeinschaftsschatzkammerguthaben: {balance} KSM.",
     "treasuryLocalBalanceOnAHK": "Freies Gemeinschaftsschatzkammerguthaben auf Asset Hub: {balance} {asset}.",
+    "treasuryLocalBalanceOnAHKBeforeSwap": "Freies Gemeinschaftsschatzguthaben auf dem Asset Hub vor dem Tausch: {balance} {asset}.",
     "treasuryPendingSpends": "Ausstehende Ausgaben: {spends} KSM.",
     "txBroadcast": "Transaktion wurde im Netzwerk",
     "txError": "Transaktionsfehler",

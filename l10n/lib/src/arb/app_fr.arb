@@ -437,6 +437,7 @@
     "treasuryGlobalBalance": "Solde libre du trésor global : {balance} KSM.",
     "treasuryLocalBalance": "Solde libre du trésor communautaire : {balance} KSM.",
     "treasuryLocalBalanceOnAHK": "Solde libre du trésor communautaire sur Asset Hub: {balance} {asset}.",
+    "treasuryLocalBalanceOnAHKBeforeSwap": "Solde libre du trésor communautaire sur l’Asset Hub avant l’échange : {balance} {asset}.",
     "treasuryPendingSpends": "Dépenses en attente : {spends} KSM.",
     "txBroadcast": "La transaction a été envoyée sur le réseau",
     "txError": "Erreur de transaction",

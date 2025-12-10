@@ -593,6 +593,19 @@
             }
         }
     },
+    "treasuryLocalBalanceOnAHKBeforeSwap": "Free community treasury balance on Asset Hub before swap: {balance} {asset}.",
+    "@treasuryLocalBalanceOnAHKBeforeSwap": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            },
+            "asset": {
+                "type": "String",
+                "example": "{Leu}"
+            }
+        }
+    },
     "treasuryPendingSpends": "Pending spends: {spends} KSM.",
     "@treasuryPendingSpends": {
         "placeholders": {

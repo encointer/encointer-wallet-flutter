@@ -380,6 +380,7 @@
     "treasuryGlobalBalance": "Salio huru la hazina ya kimataifa: {balance} KSM.",
     "treasuryLocalBalance": "Salio huru la hazina ya jamii: {balance} KSM.",
     "treasuryLocalBalanceOnAHK": "Salio huru la hazina ya jamii kwenye AHK: {balance} KSM.",
+    "treasuryLocalBalanceOnAHKBeforeSwap": "Salio huru la hazina ya jamii kwenye Asset Hub kabla ya kubadilisha: {balance} {asset}.",
     "treasuryPendingSpends": "Matumizi yanayosubiri: {spends} KSM.",
     "txBroadcast": "Muamala umetumwa.",
     "txError": "Kuna hitilafu kwenye muamala",

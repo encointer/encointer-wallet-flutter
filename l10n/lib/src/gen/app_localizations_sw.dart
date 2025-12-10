@@ -1285,6 +1285,11 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
+  String treasuryLocalBalanceOnAHKBeforeSwap(String balance, String asset) {
+    return 'Salio huru la hazina ya jamii kwenye Asset Hub kabla ya kubadilisha: $balance $asset.';
+  }
+
+  @override
   String treasuryPendingSpends(String spends) {
     return 'Matumizi yanayosubiri: $spends KSM.';
   }

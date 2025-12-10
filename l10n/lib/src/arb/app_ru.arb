@@ -377,6 +377,7 @@
     "treasuryGlobalBalance": "Свободный баланс глобального казначейства: {balance} KSM.",
     "treasuryLocalBalance": "Свободный баланс казначейства сообщества: {balance} KSM.",
     "treasuryLocalBalanceOnAHK": "Свободный баланс казначейства сообщества на Asset Hub: {balance} KSM.",
+    "treasuryLocalBalanceOnAHKBeforeSwap": "Свободный баланс казны сообщества на Asset Hub перед обменом: {balance} {asset}.",
     "treasuryPendingSpends": "Ожидающие расходы: {spends} KSM.",
     "txBroadcast": "Транзакция передана в эфир",
     "txError": "Ошибка транзакции",

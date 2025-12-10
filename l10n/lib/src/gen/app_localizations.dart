@@ -2366,6 +2366,12 @@ abstract class AppLocalizations {
   /// **'Free community treasury balance on Asset Hub: {balance} {asset}.'**
   String treasuryLocalBalanceOnAHK(String balance, String asset);
 
+  /// No description provided for @treasuryLocalBalanceOnAHKBeforeSwap.
+  ///
+  /// In en, this message translates to:
+  /// **'Free community treasury balance on Asset Hub before swap: {balance} {asset}.'**
+  String treasuryLocalBalanceOnAHKBeforeSwap(String balance, String asset);
+
   /// No description provided for @treasuryPendingSpends.
   ///
   /// In en, this message translates to:

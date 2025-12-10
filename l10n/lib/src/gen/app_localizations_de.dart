@@ -1290,6 +1290,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String treasuryLocalBalanceOnAHKBeforeSwap(String balance, String asset) {
+    return 'Freies Gemeinschaftsschatzguthaben auf dem Asset Hub vor dem Tausch: $balance $asset.';
+  }
+
+  @override
   String treasuryPendingSpends(String spends) {
     return 'Ausstehende Ausgaben: $spends KSM.';
   }

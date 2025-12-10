@@ -253,7 +253,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
               l10n.treasuryLocalBalance(fmt(balance)),
             ),
           AssetSwap() => Text(
-              l10n.treasuryLocalBalanceOnAHK(
+              l10n.treasuryLocalBalanceOnAHKBeforeSwap(
                 fmt(balance),
                 widget.option.symbol,
               ),
