@@ -784,8 +784,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String proposalExplainerIssueSwapOption(
-      String cc, String asset, Object ccLimit, Object rate, Object swapLimit) {
+  String proposalExplainerIssueSwapOption(String cc, String asset) {
     return 'This proposal allows the beneficiary to exchange $cc for $asset at a fixed rate, multiple times, until a defined $asset limit is reached. The beneficiary is typically a local business that accepts $cc and may accumulate a surplus.';
   }
 

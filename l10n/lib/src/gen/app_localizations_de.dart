@@ -793,23 +793,22 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String proposalExplainerIssueSwapOption(
-      String cc, String asset, Object ccLimit, Object rate, Object swapLimit) {
-    return 'Dieser Vorschlag ermöglicht es dem Begünstigten, $cc zu einem festen Kurs mehrfach gegen $asset zu tauschen, bis ein festgelegtes $asset-Limit erreicht ist. Der Begünstigte ist typischerweise ein lokales Unternehmen, das $cc akzeptiert und möglicherweise einen Überschuss ansammelt.\n\nBasierend auf deinen Eingaben beträgt der maximal austauschbare Betrag:\n\n$ccLimit $cc / $rate $cc/$asset = $swapLimit $asset.';
+  String proposalExplainerIssueSwapOption(String cc, String asset) {
+    return 'Dieser Vorschlag ermöglicht es der begünstigten Person, $cc zu einem festen Kurs mehrfach gegen $asset zu tauschen, bis ein festgelegtes $asset-Limit erreicht ist. Die begünstigte Person ist typischerweise ein lokales Unternehmen, das $cc akzeptiert und möglicherweise einen Überschuss ansammelt.';
   }
 
   @override
   String get proposalExplainerSwapOptionComputation =>
-      'Calculation with your input';
+      'Berechnung mit deinen Eingaben';
 
   @override
   String get proposalExplainerRate => 'Rate';
 
   @override
-  String get proposalExplainerSwapFee => 'Swap Fee';
+  String get proposalExplainerSwapFee => 'Swap-Gebühr';
 
   @override
-  String get proposalExplainerYouWillGet => 'You will get';
+  String get proposalExplainerYouWillGet => 'Du erhältst';
 
   @override
   String proposalExplainerPaymentWillBeOnAH(String asset) {
