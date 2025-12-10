@@ -494,11 +494,10 @@ class _ProposePageState extends State<ProposePage> {
     final allowanceCC = allowanceController.text;
 
     final swapAmountAsset = swapLimit();
-    final youWillGet = '${Fmt.doubleFormat(swapAmountAsset, length: 4)} ${selectedAsset.symbol}';
 
-    final calculationLine = ccToUsd(allowanceCC, symbol, knownCommunity!);
-    final feeLine = swapFee(swapAmountAsset);
-    final youWillGetLine = youWillGet;
+    final calculationLine = ccToUsd(allowanceCC, symbol, knownCommunity!, forexRate?.value ?? 0);
+    final feeLine = swapFee(swapAmountAsset, knownCommunity!, forexRate?.value ?? 0);
+    final youWillGetLine = '${Fmt.doubleFormat(swapAmountAsset, length: 4)} ${selectedAsset.symbol}';
 
     return Card(
       elevation: 1,
@@ -579,13 +578,17 @@ class _ProposePageState extends State<ProposePage> {
     }
   }
 
-  String ccToUsd(String allowanceCC, String symbol, KnownCommunity community) {
-    return '$allowanceCC $symbol = ${Fmt.doubleFormat(community.localFiatRate.toDouble(), length: 4)} ${community.fiatCurrency.symbol}'
-        ' = ${Fmt.doubleFormat(1 / forexRate!.value, length: 4)} ${selectedAsset.symbol}';
+  String ccToUsd(String allowanceCC, String ccSymbol, KnownCommunity community, double forexRate) {
+    final usdcValue = forexRate != 0 ? Fmt.doubleFormat(1 / forexRate, length: 4) : '--';
+
+    return '$allowanceCC $ccSymbol = ${Fmt.doubleFormat(community.localFiatRate.toDouble(), length: 4)} ${community.fiatCurrency.symbol}'
+        ' = $usdcValue ${selectedAsset.symbol}';
   }
 
-  String swapFee(double swapAmountAsset) {
-    return '${knownCommunity!.markup * 100}% = ${Fmt.doubleFormat(swapAmountAsset * knownCommunity!.markup / forexRate!.value, length: 4, normalize: true)} ${selectedAsset.symbol}';
+  String swapFee(double swapAmountAsset, KnownCommunity community, double forexRate) {
+    final usdcFee = forexRate != 0 ? Fmt.doubleFormat(swapAmountAsset * community.markup / forexRate, length: 4) : '--';
+
+    return '${community.markup * 100}% = $usdcFee ${selectedAsset.symbol}';
   }
 
   /// Dynamically generates form fields based on selected proposal type
@@ -654,7 +657,7 @@ class _ProposePageState extends State<ProposePage> {
   double swapLimit() {
     final ccAmount = double.tryParse(allowanceController.text);
     final rate = double.tryParse(rateController.text);
-    final usdcLimit = ccAmount != null && rate != null ? ccAmount / rate : 0.0;
+    final usdcLimit = ccAmount != null && rate != null && rate != 0 ? ccAmount / rate : 0.0;
 
     return usdcLimit;
   }
