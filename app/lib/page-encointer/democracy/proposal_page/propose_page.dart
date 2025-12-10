@@ -488,28 +488,43 @@ class _ProposePageState extends State<ProposePage> {
 
     final l10n = context.l10n;
     final store = context.read<AppStore>();
-    final theme = context.textTheme.bodyMedium;
+    final theme = context.textTheme;
+
+    final symbol = store.encointer.community!.symbol!;
+    final allowanceCC = allowanceController.text;
 
     final swapAmountAsset = swapLimit();
-    final allowanceCC = allowanceController.text;
-    final symbol = store.encointer.community!.symbol!;
+    final youWillGet =
+        '${Fmt.doubleFormat(swapAmountAsset, length: 4)} ${selectedAsset.symbol}';
 
-    final text = [
-      l10n.proposalExplainerSwapOptionComputation,
-      ccToUsd(allowanceCC, symbol, knownCommunity!),
-      swapFee(swapAmountAsset),
-      '${l10n.proposalExplainerYouWillGet} ${Fmt.doubleFormat(swapAmountAsset, length: 4)} ${selectedAsset.symbol}'
-    ].join('\n\n');
+    final calculationLine = ccToUsd(allowanceCC, symbol, knownCommunity!);
+    final feeLine = swapFee(swapAmountAsset);
+    final youWillGetLine = '${l10n.proposalExplainerYouWillGet} $youWillGet';
+
     return Card(
+      elevation: 1,
+      margin: const EdgeInsets.symmetric(vertical: 12),
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(4),
-              child: Icon(Iconsax.info_circle),
+            // --- Header ---
+            Row(
+              children: [
+                Text(
+                  l10n.proposalExplainerSwapOptionComputation,
+                  style: theme.bodyLarge?.copyWith(color: context.theme.colorScheme.primary),
+                ),
+              ],
             ),
-            Text(text, style: theme),
+
+            const SizedBox(height: 12),
+
+            // --- Info Lines ---
+            _InfoLine(text: calculationLine),
+            _InfoLine(text: feeLine),
+            _InfoLine(text: youWillGetLine),
           ],
         ),
       ),
@@ -569,7 +584,7 @@ class _ProposePageState extends State<ProposePage> {
 
   String ccToUsd(String allowanceCC, String symbol, KnownCommunity community) {
     return '$allowanceCC $symbol = ${Fmt.doubleFormat(community.localFiatRate.toDouble(), length: 4)} ${community.fiatCurrency.symbol}'
-        '= ${Fmt.doubleFormat(1 / forexRate!.value, length: 4)} ${selectedAsset.symbol}';
+        ' = ${Fmt.doubleFormat(1 / forexRate!.value, length: 4)} ${selectedAsset.symbol}';
   }
 
   String swapFee(double swapAmountAsset) {
@@ -1175,5 +1190,37 @@ class _ProposePageState extends State<ProposePage> {
         swapAssetOptions[selectedAsset]! -
         pendingSwapAssetOptions[selectedAsset]! -
         pendingAssetSpends[selectedAsset]!;
+  }
+}
+
+
+/// A reusable styled line for the explainer.
+/// You can change spacing / bullets / layout easily in one place.
+class _InfoLine extends StatelessWidget {
+  final String text;
+
+  const _InfoLine({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Bullet or dash – easy to customize
+          Text(
+            '• ',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          Expanded(
+            child: Text(
+              text,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
