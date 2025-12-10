@@ -74,8 +74,13 @@ class _ProposePageState extends State<ProposePage> {
   late ProposalScope selectedScope;
   List<ProposalScope> allowedScopes = [];
   AssetToSpend selectedAsset = AssetToSpend.usdc;
-  ForexRate? rate;
+
+  /// USD -> Fiat rate
+  ForexRate? forexRate;
   bool isBusinessOwner = false;
+
+  late KnownCommunity? knownCommunity;
+  late bool isKnownCommunity;
 
   // Forex service to get exchange rate of a community's local fiat to usd.
   final forexService = ForexService();
@@ -127,6 +132,14 @@ class _ProposePageState extends State<ProposePage> {
   @override
   void initState() {
     super.initState();
+
+    // initialize late fields
+
+    final store = context.read<AppStore>();
+    beneficiary = store.account.currentAccount;
+    knownCommunity = KnownCommunity.tryFromSymbol(store.encointer.community!.symbol!);
+    isKnownCommunity = knownCommunity != null;
+
     selectedAction = widget.initialAction ?? ProposalActionIdentifier.petition;
     latController = TextEditingController();
     lonController = TextEditingController();
@@ -143,12 +156,12 @@ class _ProposePageState extends State<ProposePage> {
     );
     unawaited(assetHubApi.init());
 
+    // fetch data
+
     _updateAllowedScopes();
     _updateEnactmentQueue();
     _updateExchangeRate();
     _checkBusinessOwners();
-
-    beneficiary = context.read<AppStore>().account.currentAccount;
   }
 
   /// Updates the allowed scope options and resets the selectedScope
@@ -177,14 +190,13 @@ class _ProposePageState extends State<ProposePage> {
     final store = context.read<AppStore>();
     final symbol = store.encointer.community!.symbol!;
 
-    final knownCommunity = KnownCommunity.tryFromSymbol(symbol);
-
     if (knownCommunity != null) {
-      final fiat = knownCommunity.fiatCurrency;
-      final forexRate = await forexService.getUsdRate(fiat);
-      Log.d('[updateExchangeRate] got forex exchange rate usd->$fiat: ${forexRate?.value}');
+      final fiat = knownCommunity!.fiatCurrency;
+      final usdRate = await forexService.getUsdRate(fiat);
+      Log.d('[updateExchangeRate] got forex exchange rate usd->$fiat: ${usdRate?.value}');
+      if (!mounted) return;
       setState(() {
-        rate = forexRate;
+        forexRate = usdRate;
       });
     } else {
       Log.d('[updateExchangeRate] Will not fetch exchange rate for not well-known community $symbol');
@@ -375,6 +387,7 @@ class _ProposePageState extends State<ProposePage> {
                         _buildDynamicFields(context),
                         const SizedBox(height: 10),
                         _getProposalExplainer(context),
+                        _maybeGetSwapExplainer(context),
 
                         const Spacer(),
                         Column(
@@ -385,10 +398,10 @@ class _ProposePageState extends State<ProposePage> {
                             // Hint text for accounts without reputation
 
                             if (!isBootstrapperOrReputable(store, store.account.currentAddress))
-                              Text(l10n.proposalOnlyBootstrappersOrReputablesCanSubmit, textAlign: TextAlign.center),
+                              Text(l10n.proposalOnlyBootstrappersOrReputablesCanSubmit, textAlign: TextAlign.start),
                             if (hasSameProposalForSameScope(enactmentQueue, selectedAction,
                                 selectedScope.isLocal ? store.encointer.chosenCid! : null))
-                              Text(l10n.proposalCannotSubmitProposalTypePendingEnactment, textAlign: TextAlign.center),
+                              Text(l10n.proposalCannotSubmitProposalTypePendingEnactment, textAlign: TextAlign.start),
                             // if (requireBusinessOwner() && !isBusinessOwner)
                             //   Text(l10n.proposalOnlyBusinessOwnersCanSubmit, textAlign: TextAlign.center),
 
@@ -468,6 +481,65 @@ class _ProposePageState extends State<ProposePage> {
     );
   }
 
+  Widget _maybeGetSwapExplainer(BuildContext context) {
+    if (!selectedAction.isSwapAction()) {
+      return const SizedBox.shrink();
+    }
+
+    final l10n = context.l10n;
+    final store = context.read<AppStore>();
+    final theme = context.textTheme;
+
+    final symbol = store.encointer.community!.symbol!;
+    final allowanceCC = double.tryParse(allowanceController.text) ?? 0;
+    final ccRate = double.tryParse(rateController.text) ?? 0;
+
+    final swapAmountAsset = swapLimit();
+    final calculationLine = isKnownCommunity
+        ? ccToFiatToAssetExplainerText(allowanceCC, symbol, knownCommunity!, forexRate?.value ?? 0)
+        : ccToAssetExplainerText(allowanceCC, symbol, ccRate);
+
+    final youWillGetLine = '${Fmt.doubleFormat(swapAmountAsset, length: 4)} ${selectedAsset.symbol}';
+
+    return Card(
+      elevation: 1,
+      margin: const EdgeInsets.symmetric(vertical: 12),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header
+            Text(
+              l10n.proposalExplainerSwapOptionComputation,
+              style: theme.bodyLarge?.copyWith(
+                color: context.theme.colorScheme.primary,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+
+            const SizedBox(height: 16),
+            _InfoKV(
+              label: l10n.proposalExplainerRate,
+              value: calculationLine,
+            ),
+            const SizedBox(height: 6),
+            if (isKnownCommunity)
+              _InfoKV(
+                label: l10n.proposalExplainerSwapFee,
+                value: swapFee(swapAmountAsset, knownCommunity!, forexRate?.value ?? 0),
+              ),
+            const SizedBox(height: 6),
+            _InfoKV(
+              label: l10n.proposalExplainerBeneficiaryWillGet,
+              value: youWillGetLine,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   String _explainerText() {
     final store = context.read<AppStore>();
     final l10n = context.l10n;
@@ -488,33 +560,47 @@ class _ProposePageState extends State<ProposePage> {
       case ProposalActionIdentifier.spendNative:
         return l10n.proposalExplainerSpendNative;
       case ProposalActionIdentifier.issueSwapNativeOption:
-        final swapAmount = swapLimit();
-        final rate = double.tryParse(rateController.text) ?? 0.0;
         return l10n.proposalExplainerIssueSwapOption(
           store.encointer.community!.symbol!,
           'KSM',
-          allowanceController.text,
-          Fmt.doubleFormat(swapAmount),
-          rate.toString(),
         );
       case ProposalActionIdentifier.spendAsset:
         return l10n.proposalExplainerSpendAsset(selectedAsset.symbol);
       case ProposalActionIdentifier.issueSwapAssetOption:
-        final swapAmount = swapLimit();
-        final rate = double.tryParse(rateController.text) ?? 0.0;
+        final symbol = store.encointer.community!.symbol!;
         return [
           l10n.proposalExplainerIssueSwapOption(
-            store.encointer.community!.symbol!,
+            symbol,
             selectedAsset.symbol,
-            allowanceController.text,
-            Fmt.doubleFormat(swapAmount),
-            rate.toString(),
           ),
           l10n.proposalExplainerPaymentWillBeOnAH(
             selectedAsset.symbol,
           )
         ].join('\n\n');
     }
+  }
+
+  /// Simplified explainer text just showing the conversion from CC to selected asset.
+
+  String ccToFiatToAssetExplainerText(double allowanceCC, String ccSymbol, KnownCommunity community, double forexRate) {
+    final localFiatValue = allowanceCC / community.localFiatRate;
+    final usdcValue = forexRate != 0 ? Fmt.doubleFormat(allowanceCC / forexRate, length: 4) : '--';
+
+    return '$allowanceCC $ccSymbol = ${Fmt.doubleFormat(localFiatValue, length: 4)} ${community.fiatCurrency.symbol}'
+        ' = $usdcValue ${selectedAsset.symbol}';
+  }
+
+  /// Simplified explainer text just showing the conversion from CC to selected asset.
+  String ccToAssetExplainerText(double allowanceCC, String ccSymbol, double ccRate) {
+    final usdcValue = ccRate != 0 ? Fmt.doubleFormat(allowanceCC / ccRate, length: 4) : '--';
+
+    return '$allowanceCC $ccSymbol = $usdcValue ${selectedAsset.symbol}';
+  }
+
+  String swapFee(double swapAmountAsset, KnownCommunity community, double forexRate) {
+    final usdcFee = forexRate != 0 ? Fmt.doubleFormat(swapAmountAsset * community.markup / forexRate, length: 4) : '--';
+
+    return '${community.markup * 100}% = $usdcFee ${selectedAsset.symbol}';
   }
 
   /// Dynamically generates form fields based on selected proposal type
@@ -561,8 +647,12 @@ class _ProposePageState extends State<ProposePage> {
   Widget issueSwapAssetOptionInput() {
     final maxSwapValue =
         RepositoryProvider.of<AppSettings>(context).developerMode ? null : assetTreasuryUnallocatedLiquidity();
+
+    final store = context.read<AppStore>();
+    final l10n = context.l10n;
+
     return Column(children: [
-      selectAssetDropDown(),
+      selectAssetDropDown(l10n.proposalFieldAssetToSwap(store.encointer.community!.symbol!)),
       ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), maxSwapValue, true),
     ]);
   }
@@ -583,7 +673,7 @@ class _ProposePageState extends State<ProposePage> {
   double swapLimit() {
     final ccAmount = double.tryParse(allowanceController.text);
     final rate = double.tryParse(rateController.text);
-    final usdcLimit = ccAmount != null && rate != null ? ccAmount / rate : 0.0;
+    final usdcLimit = ccAmount != null && rate != null && rate != 0 ? ccAmount / rate : 0.0;
 
     return usdcLimit;
   }
@@ -645,21 +735,19 @@ class _ProposePageState extends State<ProposePage> {
     final l10n = context.l10n;
     final store = context.read<AppStore>();
 
-    final knownCommunity = KnownCommunity.tryFromSymbol(store.encointer.community!.symbol!);
-
-    final isKnown = knownCommunity != null;
-    Log.d('[rateInput] communityKnown: $isKnown');
+    Log.d('[rateInput] communityKnown: $isKnownCommunity');
     Log.d('[rateInput] deriveRate: $tryDeriveRate');
 
     var ccToUsdAfterMarkup = '1';
-    if (isKnown) {
-      ccToUsdAfterMarkup = Fmt.doubleFormat(knownCommunity.ccPerUsd(rate?.value ?? 0), length: 4, normalize: true);
+    if (isKnownCommunity) {
+      ccToUsdAfterMarkup =
+          Fmt.doubleFormat(knownCommunity!.ccPerUsd(forexRate?.value ?? 0), length: 4, normalize: true);
     }
     return TextFormField(
       // set constant value if needed
-      controller: rateController..text = tryDeriveRate && isKnown ? ccToUsdAfterMarkup : rateController.text,
+      controller: rateController..text = tryDeriveRate && isKnownCommunity ? ccToUsdAfterMarkup : rateController.text,
       // We want to derive a sane value for well-known communities and disable editing.
-      enabled: !tryDeriveRate || !isKnown,
+      enabled: !tryDeriveRate || !isKnownCommunity,
       decoration: InputDecoration(
         labelText: l10n.proposalFieldRate(
           currency,
@@ -708,20 +796,21 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget spendAssetInput(BuildContext context) {
+    final l10n = context.l10n;
     final maxSpend =
         RepositoryProvider.of<AppSettings>(context).developerMode ? null : assetTreasuryUnallocatedLiquidity();
+
     return Column(children: [
-      selectAssetDropDown(),
+      selectAssetDropDown(l10n.proposalFieldAssetToSpend),
       ...spendInputWidgets(selectedAsset.symbol, maxSpend),
     ]);
   }
 
-  Widget selectAssetDropDown() {
-    final l10n = context.l10n;
+  Widget selectAssetDropDown(String assetDropDownLabel) {
     return DropdownButtonFormField<AssetToSpend>(
         initialValue: selectedAsset,
         decoration: InputDecoration(
-          labelText: l10n.proposalFieldAssetToSpend,
+          labelText: assetDropDownLabel,
         ),
         items: AssetToSpend.values.map((asset) {
           return DropdownMenuItem(
@@ -1117,5 +1206,43 @@ class _ProposePageState extends State<ProposePage> {
         swapAssetOptions[selectedAsset]! -
         pendingSwapAssetOptions[selectedAsset]! -
         pendingAssetSpends[selectedAsset]!;
+  }
+}
+
+class _InfoKV extends StatelessWidget {
+  const _InfoKV({
+    required this.label,
+    required this.value,
+  });
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Left label (fixed width for perfect alignment)
+        SizedBox(
+          width: 130,
+          child: Text(
+            label,
+            style: theme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        // Right side (flexible)
+        Expanded(
+          child: Text(
+            value,
+            style: theme.bodyMedium,
+          ),
+        ),
+      ],
+    );
   }
 }

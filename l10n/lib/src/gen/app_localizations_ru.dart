@@ -784,10 +784,21 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String proposalExplainerIssueSwapOption(
-      String cc, String asset, String ccLimit, String swapLimit, String rate) {
-    return 'Это предложение позволяет получателю обменивать $cc на $asset по фиксированному курсу, многократно, до достижения установленного лимита в $asset. Получателем обычно является местный бизнес, который принимает $cc и может накапливать излишки.\n\nНа основе ваших данных максимальная сумма для обмена составляет:\n\n$ccLimit $cc / $rate $cc/$asset = $swapLimit $asset.';
+  String proposalExplainerIssueSwapOption(String cc, String asset) {
+    return 'Это предложение позволяет получателю обменивать $cc на $asset по фиксированному курсу многократно, пока не будет достигнут установленный лимит $asset. Получателем, как правило, является местный бизнес, который принимает $cc и может накапливать излишки.';
   }
+
+  @override
+  String get proposalExplainerSwapOptionComputation => 'Расчёт по твоим данным';
+
+  @override
+  String get proposalExplainerRate => 'Курс';
+
+  @override
+  String get proposalExplainerSwapFee => 'Комиссия за обмен';
+
+  @override
+  String get proposalExplainerBeneficiaryWillGet => 'Получатель получит';
 
   @override
   String proposalExplainerPaymentWillBeOnAH(String asset) {
@@ -870,6 +881,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get proposalFieldAssetToSpend => 'Токен для траты';
+
+  @override
+  String proposalFieldAssetToSwap(String cc) {
+    return 'Актив, который нужно получить для $cc';
+  }
 
   @override
   String proposalFieldAmount(String asset) {

@@ -791,10 +791,22 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String proposalExplainerIssueSwapOption(
-      String cc, String asset, String ccLimit, String swapLimit, String rate) {
-    return 'Cette proposition permet au bénéficiaire d’échanger des $cc contre des $asset à un taux fixe, plusieurs fois, jusqu’à ce qu’une limite définie en $asset soit atteinte. Le bénéficiaire est généralement une entreprise locale qui accepte les $cc et peut accumuler un surplus.\n\nSelon vos paramètres, le montant maximal échangeable est :\n\n$ccLimit $cc / $rate $cc/$asset = $swapLimit $asset.';
+  String proposalExplainerIssueSwapOption(String cc, String asset) {
+    return 'Cette proposition permet au bénéficiaire d’échanger des $cc contre des $asset à un taux fixe, plusieurs fois, jusqu’à atteindre une limite définie de $asset. Le bénéficiaire est généralement une entreprise locale qui accepte les $cc et peut accumuler un surplus.';
   }
+
+  @override
+  String get proposalExplainerSwapOptionComputation =>
+      'Calcul avec tes données';
+
+  @override
+  String get proposalExplainerRate => 'Taux';
+
+  @override
+  String get proposalExplainerSwapFee => 'Frais d’échange';
+
+  @override
+  String get proposalExplainerBeneficiaryWillGet => 'Le bénéficiaire recevra';
 
   @override
   String proposalExplainerPaymentWillBeOnAH(String asset) {
@@ -878,6 +890,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get proposalFieldAssetToSpend => 'Jeton à dépenser';
+
+  @override
+  String proposalFieldAssetToSwap(String cc) {
+    return 'Actif à recevoir pour $cc';
+  }
 
   @override
   String proposalFieldAmount(String asset) {

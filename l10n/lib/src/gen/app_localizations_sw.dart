@@ -789,10 +789,22 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String proposalExplainerIssueSwapOption(
-      String cc, String asset, String ccLimit, String swapLimit, String rate) {
-    return 'Pendekezo hili linamruhusu mnufaika kubadilisha $cc kuwa $asset kwa kiwango cha kudumu, mara nyingi, hadi kikomo maalum cha $asset kifikiwe. Mnufaika kwa kawaida ni biashara ya eneo hilo inayokubali $cc na inaweza kukusanya ziada.\n\nKulingana na maingizo yako, kiasi cha juu kinachoweza kubadilishwa ni:\n\n$ccLimit $cc / $rate $cc/$asset = $swapLimit $asset.';
+  String proposalExplainerIssueSwapOption(String cc, String asset) {
+    return 'Pendekezo hili linamruhusu mnufaika kubadilisha $cc kuwa $asset kwa kiwango kilichowekwa, mara nyingi, hadi kufikiwa kwa kikomo cha $asset. Mnufaika kwa kawaida ni biashara ya ndani inayokubali $cc na inaweza kukusanya ziada.';
   }
+
+  @override
+  String get proposalExplainerSwapOptionComputation =>
+      'Hesabu kulingana na kiasi chako';
+
+  @override
+  String get proposalExplainerRate => 'Kiwango';
+
+  @override
+  String get proposalExplainerSwapFee => 'Ada ya kubadilisha';
+
+  @override
+  String get proposalExplainerBeneficiaryWillGet => 'Mfaidika atapokea';
 
   @override
   String proposalExplainerPaymentWillBeOnAH(String asset) {
@@ -876,6 +888,11 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get proposalFieldAssetToSpend => 'Tokeni ya kutumia';
+
+  @override
+  String proposalFieldAssetToSwap(String cc) {
+    return 'Rasilimali ya kupokea kwa ajili ya $cc';
+  }
 
   @override
   String proposalFieldAmount(String asset) {

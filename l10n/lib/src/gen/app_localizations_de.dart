@@ -793,10 +793,22 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String proposalExplainerIssueSwapOption(
-      String cc, String asset, String ccLimit, String swapLimit, String rate) {
-    return 'Dieser Vorschlag ermöglicht es dem Begünstigten, $cc zu einem festen Kurs mehrfach gegen $asset zu tauschen, bis ein festgelegtes $asset-Limit erreicht ist. Der Begünstigte ist typischerweise ein lokales Unternehmen, das $cc akzeptiert und möglicherweise einen Überschuss ansammelt.\n\nBasierend auf deinen Eingaben beträgt der maximal austauschbare Betrag:\n\n$ccLimit $cc / $rate $cc/$asset = $swapLimit $asset.';
+  String proposalExplainerIssueSwapOption(String cc, String asset) {
+    return 'Dieser Vorschlag ermöglicht es der begünstigten Person, $cc zu einem festen Kurs mehrfach gegen $asset zu tauschen, bis ein festgelegtes $asset-Limit erreicht ist. Die begünstigte Person ist typischerweise ein lokales Unternehmen, das $cc akzeptiert und möglicherweise einen Überschuss ansammelt.';
   }
+
+  @override
+  String get proposalExplainerSwapOptionComputation =>
+      'Berechnung mit deinen Eingaben';
+
+  @override
+  String get proposalExplainerRate => 'Rate';
+
+  @override
+  String get proposalExplainerSwapFee => 'Swap-Gebühr';
+
+  @override
+  String get proposalExplainerBeneficiaryWillGet => 'Begünstigte/r erhält';
 
   @override
   String proposalExplainerPaymentWillBeOnAH(String asset) {
@@ -879,6 +891,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get proposalFieldAssetToSpend => 'Zu vergebender Token';
+
+  @override
+  String proposalFieldAssetToSwap(String cc) {
+    return 'Asset, das für $cc empfangen werden soll';
+  }
 
   @override
   String proposalFieldAmount(String asset) {

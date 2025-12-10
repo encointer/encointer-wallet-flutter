@@ -1511,9 +1511,32 @@ abstract class AppLocalizations {
   /// No description provided for @proposalExplainerIssueSwapOption.
   ///
   /// In en, this message translates to:
-  /// **'This proposal allows the beneficiary to exchange {cc} for {asset} at a fixed rate, multiple times, until a defined {asset} limit is reached. The beneficiary is typically a local business that accepts {cc} and may accumulate a surplus.\n\nBased on your inputs, the maximum exchangeable amount is:\n\n{ccLimit} {cc} / {rate} {cc}/{asset} = {swapLimit} {asset}.'**
-  String proposalExplainerIssueSwapOption(
-      String cc, String asset, String ccLimit, String swapLimit, String rate);
+  /// **'This proposal allows the beneficiary to exchange {cc} for {asset} at a fixed rate, multiple times, until a defined {asset} limit is reached. The beneficiary is typically a local business that accepts {cc} and may accumulate a surplus.'**
+  String proposalExplainerIssueSwapOption(String cc, String asset);
+
+  /// No description provided for @proposalExplainerSwapOptionComputation.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculation with your input'**
+  String get proposalExplainerSwapOptionComputation;
+
+  /// No description provided for @proposalExplainerRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get proposalExplainerRate;
+
+  /// No description provided for @proposalExplainerSwapFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Swap Fee'**
+  String get proposalExplainerSwapFee;
+
+  /// No description provided for @proposalExplainerBeneficiaryWillGet.
+  ///
+  /// In en, this message translates to:
+  /// **'Beneficiary will get'**
+  String get proposalExplainerBeneficiaryWillGet;
 
   /// No description provided for @proposalExplainerPaymentWillBeOnAH.
   ///
@@ -1652,6 +1675,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Asset to spend'**
   String get proposalFieldAssetToSpend;
+
+  /// No description provided for @proposalFieldAssetToSwap.
+  ///
+  /// In en, this message translates to:
+  /// **'Asset to receive for {cc}'**
+  String proposalFieldAssetToSwap(String cc);
 
   /// No description provided for @proposalFieldAmount.
   ///
