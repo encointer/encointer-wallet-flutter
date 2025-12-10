@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/logo/participant_avatar.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';

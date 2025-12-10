@@ -7,7 +7,7 @@ const num _leuPerChf = 1;
 const num _nytPerTzs = 2;
 const num _pnqPerNgn = 2;
 
-const double _defaultMarkup = 0.2;
+const double _defaultMarkup = 0.02;
 
 enum KnownCommunity {
   leu(symbol: 'leu', fiatCurrency: Currency.chf, localFiatRate: _leuPerChf, markup: _defaultMarkup),

@@ -16,7 +16,7 @@ import 'package:encointer_wallet/common/components/animation/animated_check.dart
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/payment_overview.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/transfer_state.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';

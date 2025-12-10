@@ -293,15 +293,6 @@
     "proposalExplainerSetInactivityTimeout": "This proposal suggests a new global inactivity timeout. If a community has not been performing gatherings for the suggested number of gathering cycles, the community will be deleted.",
     "proposalExplainerPetition": "This proposal serves as a petition, either globally or within your community. While it has no direct on-chain effect, it signals intent, allowing the community to recognize and act upon it.",
     "proposalExplainerSpendNative": "This proposal suggests spending KSM for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.",
-    "proposalExplainerIssueSwapNativeOption": "This proposal allows the beneficiary to exchange {cc} for KSM at a defined rate multiple times up to a set KSM limit. The beneficiary might be a local business that accepts {cc} and may accumulate a surplus.\n\nExample with rate 3 {cc}/KSM and limit 2 KSM:\n\nThe beneficiary can exchange up to 2 KSM at a rate of 3 {cc}/KSM. Hence, the maximum is 6 {cc} => 2 KSM.",
-    "@proposalExplainerIssueSwapNativeOption": {
-        "placeholders": {
-            "cc": {
-                "type": "String",
-                "example": "LEU"
-            }
-        }
-    },
     "proposalExplainerSpendAsset": "This proposal suggests spending {asset} for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.\n\nNote: You will receive the {asset} on Asset Hub Kusama directly.",
     "@proposalExplainerSpendAsset": {
         "placeholders": {
@@ -311,13 +302,26 @@
             }
         }
     },
-    "proposalExplainerIssueSwapAssetOption": "This proposal allows the beneficiary to exchange {cc} for {asset} at a defined rate multiple times up to a set {asset} limit. The beneficiary might be a local business that accepts {cc} and may accumulate a surplus.\n\nExample with rate 3 {cc}/{asset} and limit 2 {asset}:\n\nThe beneficiary can exchange up to 2 {asset} at a rate of 3 {cc}/{asset}. Hence, the maximum is 6 {cc} => 2 {asset}.\n\nNote: You will receive the {asset} on Asset Hub Kusama directly.",
-    "@proposalExplainerIssueSwapAssetOption": {
+    "proposalExplainerIssueSwapOption": "This proposal allows the beneficiary to exchange {cc} for {asset} at a fixed rate, multiple times, until a defined {asset} limit is reached. The beneficiary is typically a local business that accepts {cc} and may accumulate a surplus.",
+    "@proposalExplainerIssueSwapOption": {
         "placeholders": {
             "cc": {
                 "type": "String",
                 "example": "LEU"
             },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "proposalExplainerSwapOptionComputation": "Calculation with your input",
+    "proposalExplainerRate": "Rate",
+    "proposalExplainerSwapFee": "Swap Fee",
+    "proposalExplainerBeneficiaryWillGet": "Beneficiary will get",
+    "proposalExplainerPaymentWillBeOnAH": "Note: The {asset} will be sent directly to your Asset Hub Kusama account.",
+    "@proposalExplainerPaymentWillBeOnAH": {
+        "placeholders": {
             "asset": {
                 "type": "String",
                 "example": "USDC"
@@ -382,6 +386,15 @@
     "proposalFieldInactivityTimeoutCycles": "Inactivity Timeout (gathering cycles)",
     "proposalFieldPetitionText": "Petition Text",
     "proposalFieldAssetToSpend": "Asset to spend",
+    "proposalFieldAssetToSwap": "Asset to receive for {cc}",
+    "@proposalFieldAssetToSwap": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
     "proposalFieldAmount": "Amount ({asset})",
     "@proposalFieldAmount": {
         "placeholders": {
@@ -527,7 +540,19 @@
     "transferHistory": "Transfers",
     "transferHistoryEnd": "Loading older transactions is not yet supported",
     "transferHistoryTop": "It may take up to 30 seconds for a transfer to appear here",
-    "treasuryBalanceTooLow": "Treasury Balance too low",
+    "treasuryBalanceTooLow": "Treasury Balance too low. Limit: {balance} {cc}",
+    "@treasuryBalanceTooLow": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            },
+            "cc": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
     "treasuryGlobalBalance": "Free global treasury balance: {balance} KSM.",
     "@treasuryGlobalBalance": {
         "placeholders": {

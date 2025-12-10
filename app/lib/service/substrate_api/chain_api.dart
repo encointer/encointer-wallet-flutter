@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:convert/convert.dart';
-import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/chain/types/header.dart';
 import 'package:encointer_wallet/service/substrate_api/core/reconnecting_ws_provider.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
 
 class ChainApi {

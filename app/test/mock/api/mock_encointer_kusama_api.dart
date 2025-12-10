@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/service/service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/encointer_kusama.dart';
 
 class MockEncointerKusamaApi implements EncointerKusama {

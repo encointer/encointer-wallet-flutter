@@ -15,7 +15,7 @@ void main() {
 
     group('computeCcUsdFromApiRate', () {
       // Unparameterized example for LEU community (for better understanding)
-      test('1 USD -> 0.79 CHF, LEU community', () {
+      test('1 USD -> 0.8058 CHF, LEU community', () {
         const community = KnownCommunity.leu;
 
         const usdToChfRate = 0.79; // 1 USD = 0.79 CHF
@@ -25,11 +25,11 @@ void main() {
         // Manual calculation:
         // 1 CC = 1 CHF
         // 1 USD = 0.79 CHF
-        // Apply markup 0.2 → 1 CHF/CC * 0.79 [USD/CHF] * 1.2 ≈ 0.948 USD/CC
-        expect(ccUsdRate, closeTo(0.948, 1e-6));
+        // Apply markup 0.02 → 1 CHF/CC * 0.79 [USD/CHF] * 1.2 ≈ 0.8058 USD/CC
+        expect(ccUsdRate, closeTo(0.8058, 1e-6));
       });
 
-      test('1 USD -> 0.1484.76300699 NGN, PNQ community', () {
+      test('1 USD -> 1250.8311 NGN, PNQ community', () {
         const community = KnownCommunity.pnq;
 
         const usdToNgnRate = 2452.61; // 1 USD = 2452.61339866 CHF
@@ -39,8 +39,8 @@ void main() {
         // Manual calculation:
         // 2 CC = 1 CHF
         // 1 USD = 2452.61 NGN
-        // Apply markup 0.2 → 1/2 CHF/CC * 2452.61 [USD/CHF] * 1.2 ≈ 1471.566 USD/CC
-        expect(ccUsdRate, closeTo(1471.566, 1e-6));
+        // Apply markup 0.02 → 1/2 CHF/CC * 2452.61 [USD/CHF] * 1.2 ≈ 1250.8311 USD/CC
+        expect(ccUsdRate, closeTo(1250.8311, 1e-6));
       });
 
       // Mock API rates: 1 USD = x local fiat

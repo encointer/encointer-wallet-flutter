@@ -1502,23 +1502,47 @@ abstract class AppLocalizations {
   /// **'This proposal suggests spending KSM for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.'**
   String get proposalExplainerSpendNative;
 
-  /// No description provided for @proposalExplainerIssueSwapNativeOption.
-  ///
-  /// In en, this message translates to:
-  /// **'This proposal allows the beneficiary to exchange {cc} for KSM at a defined rate multiple times up to a set KSM limit. The beneficiary might be a local business that accepts {cc} and may accumulate a surplus.\n\nExample with rate 3 {cc}/KSM and limit 2 KSM:\n\nThe beneficiary can exchange up to 2 KSM at a rate of 3 {cc}/KSM. Hence, the maximum is 6 {cc} => 2 KSM.'**
-  String proposalExplainerIssueSwapNativeOption(String cc);
-
   /// No description provided for @proposalExplainerSpendAsset.
   ///
   /// In en, this message translates to:
   /// **'This proposal suggests spending {asset} for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.\n\nNote: You will receive the {asset} on Asset Hub Kusama directly.'**
   String proposalExplainerSpendAsset(String asset);
 
-  /// No description provided for @proposalExplainerIssueSwapAssetOption.
+  /// No description provided for @proposalExplainerIssueSwapOption.
   ///
   /// In en, this message translates to:
-  /// **'This proposal allows the beneficiary to exchange {cc} for {asset} at a defined rate multiple times up to a set {asset} limit. The beneficiary might be a local business that accepts {cc} and may accumulate a surplus.\n\nExample with rate 3 {cc}/{asset} and limit 2 {asset}:\n\nThe beneficiary can exchange up to 2 {asset} at a rate of 3 {cc}/{asset}. Hence, the maximum is 6 {cc} => 2 {asset}.\n\nNote: You will receive the {asset} on Asset Hub Kusama directly.'**
-  String proposalExplainerIssueSwapAssetOption(String cc, String asset);
+  /// **'This proposal allows the beneficiary to exchange {cc} for {asset} at a fixed rate, multiple times, until a defined {asset} limit is reached. The beneficiary is typically a local business that accepts {cc} and may accumulate a surplus.'**
+  String proposalExplainerIssueSwapOption(String cc, String asset);
+
+  /// No description provided for @proposalExplainerSwapOptionComputation.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculation with your input'**
+  String get proposalExplainerSwapOptionComputation;
+
+  /// No description provided for @proposalExplainerRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get proposalExplainerRate;
+
+  /// No description provided for @proposalExplainerSwapFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Swap Fee'**
+  String get proposalExplainerSwapFee;
+
+  /// No description provided for @proposalExplainerBeneficiaryWillGet.
+  ///
+  /// In en, this message translates to:
+  /// **'Beneficiary will get'**
+  String get proposalExplainerBeneficiaryWillGet;
+
+  /// No description provided for @proposalExplainerPaymentWillBeOnAH.
+  ///
+  /// In en, this message translates to:
+  /// **'Note: The {asset} will be sent directly to your Asset Hub Kusama account.'**
+  String proposalExplainerPaymentWillBeOnAH(String asset);
 
   /// No description provided for @proposalExplainerCannotVoteYet.
   ///
@@ -1651,6 +1675,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Asset to spend'**
   String get proposalFieldAssetToSpend;
+
+  /// No description provided for @proposalFieldAssetToSwap.
+  ///
+  /// In en, this message translates to:
+  /// **'Asset to receive for {cc}'**
+  String proposalFieldAssetToSwap(String cc);
 
   /// No description provided for @proposalFieldAmount.
   ///
@@ -2309,8 +2339,8 @@ abstract class AppLocalizations {
   /// No description provided for @treasuryBalanceTooLow.
   ///
   /// In en, this message translates to:
-  /// **'Treasury Balance too low'**
-  String get treasuryBalanceTooLow;
+  /// **'Treasury Balance too low. Limit: {balance} {cc}'**
+  String treasuryBalanceTooLow(String balance, String cc);
 
   /// No description provided for @treasuryGlobalBalance.
   ///

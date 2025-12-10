@@ -779,18 +779,31 @@ class AppLocalizationsEn extends AppLocalizations {
       'This proposal suggests spending KSM for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.';
 
   @override
-  String proposalExplainerIssueSwapNativeOption(String cc) {
-    return 'This proposal allows the beneficiary to exchange $cc for KSM at a defined rate multiple times up to a set KSM limit. The beneficiary might be a local business that accepts $cc and may accumulate a surplus.\n\nExample with rate 3 $cc/KSM and limit 2 KSM:\n\nThe beneficiary can exchange up to 2 KSM at a rate of 3 $cc/KSM. Hence, the maximum is 6 $cc => 2 KSM.';
-  }
-
-  @override
   String proposalExplainerSpendAsset(String asset) {
     return 'This proposal suggests spending $asset for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.\n\nNote: You will receive the $asset on Asset Hub Kusama directly.';
   }
 
   @override
-  String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
-    return 'This proposal allows the beneficiary to exchange $cc for $asset at a defined rate multiple times up to a set $asset limit. The beneficiary might be a local business that accepts $cc and may accumulate a surplus.\n\nExample with rate 3 $cc/$asset and limit 2 $asset:\n\nThe beneficiary can exchange up to 2 $asset at a rate of 3 $cc/$asset. Hence, the maximum is 6 $cc => 2 $asset.\n\nNote: You will receive the $asset on Asset Hub Kusama directly.';
+  String proposalExplainerIssueSwapOption(String cc, String asset) {
+    return 'This proposal allows the beneficiary to exchange $cc for $asset at a fixed rate, multiple times, until a defined $asset limit is reached. The beneficiary is typically a local business that accepts $cc and may accumulate a surplus.';
+  }
+
+  @override
+  String get proposalExplainerSwapOptionComputation =>
+      'Calculation with your input';
+
+  @override
+  String get proposalExplainerRate => 'Rate';
+
+  @override
+  String get proposalExplainerSwapFee => 'Swap Fee';
+
+  @override
+  String get proposalExplainerBeneficiaryWillGet => 'Beneficiary will get';
+
+  @override
+  String proposalExplainerPaymentWillBeOnAH(String asset) {
+    return 'Note: The $asset will be sent directly to your Asset Hub Kusama account.';
   }
 
   @override
@@ -868,6 +881,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get proposalFieldAssetToSpend => 'Asset to spend';
+
+  @override
+  String proposalFieldAssetToSwap(String cc) {
+    return 'Asset to receive for $cc';
+  }
 
   @override
   String proposalFieldAmount(String asset) {
@@ -1235,7 +1253,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'It may take up to 30 seconds for a transfer to appear here';
 
   @override
-  String get treasuryBalanceTooLow => 'Treasury Balance too low';
+  String treasuryBalanceTooLow(String balance, String cc) {
+    return 'Treasury Balance too low. Limit: $balance $cc';
+  }
 
   @override
   String treasuryGlobalBalance(String balance) {

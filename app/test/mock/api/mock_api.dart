@@ -1,6 +1,6 @@
 import 'dart:core';
 
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:encointer_wallet/mocks/ipfs_api.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';

@@ -1,5 +1,5 @@
 import 'package:encointer_wallet/modules/login/service/login_service.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/store/account/services/account_storage_service.dart';
 import 'package:ew_storage/ew_storage.dart';
 import 'package:flutter/foundation.dart';

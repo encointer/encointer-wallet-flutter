@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:convert/convert.dart';
 import 'package:mobx/mobx.dart';
 
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/store/account/services/account_storage_service.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';

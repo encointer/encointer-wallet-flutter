@@ -2,7 +2,7 @@ import 'package:encointer_wallet/store/account/services/legacy_storage.dart';
 import 'package:ew_storage/ew_storage.dart';
 import 'package:mobx/mobx.dart';
 
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/assets/assets.dart';

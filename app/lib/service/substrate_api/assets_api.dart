@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/ew_polkadart.dart' show BlockHash, ByteInput, EncointerKusama, StorageChangeSet;

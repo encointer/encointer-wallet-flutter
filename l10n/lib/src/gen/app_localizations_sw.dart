@@ -784,18 +784,31 @@ class AppLocalizationsSw extends AppLocalizations {
       'Pendekezo hili linapendekeza kutumia KSM kwa faida ya mfaidi kutoka hazina ya jamii, ama kupitia kura za kimataifa au za jamii. Fedha hizi zinaweza kutumika kureward michango ya jamii au kusaidia mipango ya jamii.';
 
   @override
-  String proposalExplainerIssueSwapNativeOption(String cc) {
-    return 'Pendekezo hili linamruhusu mpokeaji kubadilisha $cc kwa KSM kwa kiwango kilichowekwa mara kadhaa hadi kufikia kikomo cha KSM. Mpokeaji anaweza kuwa biashara ya eneo inayokubali $cc na inaweza kujikusanyia ziada.\n\nMfano ukiwa na kiwango cha 3 $cc/KSM na kikomo cha 2 KSM:\n\nMpokeaji anaweza kubadilisha hadi KSM 2 kwa kiwango cha 3 $cc/KSM. Kiwango cha juu zaidi ni 6 $cc => 2 KSM.';
-  }
-
-  @override
   String proposalExplainerSpendAsset(String asset) {
     return 'Pendekezo hili linapendekeza kutumia $asset kwa mnufaika kutoka hazina ya jumuiya, ama kupitia kura ya kimataifa au ya kijumuiya. Fedha hizi zinaweza kutumika kupongeza michango ya wanajumuiya au kusaidia miradi ya kijumuiya.\n\nKumbuka: Utapokea $asset moja kwa moja kwenye Asset Hub Kusama.';
   }
 
   @override
-  String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
-    return 'Pendekezo hili linamruhusu mpokeaji kubadilisha $cc kwa $asset kwa kiwango kilichowekwa mara kadhaa hadi kufikia kikomo cha $asset. Mpokeaji anaweza kuwa biashara ya eneo inayokubali $cc na inaweza kujikusanyia ziada.\n\nMfano ukiwa na kiwango cha 3 $cc/$asset na kikomo cha 2 $asset:\n\nMpokeaji anaweza kubadilisha hadi $asset 2 kwa kiwango cha 3 $cc/$asset. Kiwango cha juu zaidi ni $cc 6 => $asset 2.\n\nKumbuka: Utapokea $asset moja kwa moja kwenye Asset Hub Kusama.';
+  String proposalExplainerIssueSwapOption(String cc, String asset) {
+    return 'Pendekezo hili linamruhusu mnufaika kubadilisha $cc kuwa $asset kwa kiwango kilichowekwa, mara nyingi, hadi kufikiwa kwa kikomo cha $asset. Mnufaika kwa kawaida ni biashara ya ndani inayokubali $cc na inaweza kukusanya ziada.';
+  }
+
+  @override
+  String get proposalExplainerSwapOptionComputation =>
+      'Hesabu kulingana na kiasi chako';
+
+  @override
+  String get proposalExplainerRate => 'Kiwango';
+
+  @override
+  String get proposalExplainerSwapFee => 'Ada ya kubadilisha';
+
+  @override
+  String get proposalExplainerBeneficiaryWillGet => 'Mfaidika atapokea';
+
+  @override
+  String proposalExplainerPaymentWillBeOnAH(String asset) {
+    return 'Kumbuka: $asset itatumwa moja kwa moja kwenye akaunti yako ya Asset Hub Kusama.';
   }
 
   @override
@@ -875,6 +888,11 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get proposalFieldAssetToSpend => 'Tokeni ya kutumia';
+
+  @override
+  String proposalFieldAssetToSwap(String cc) {
+    return 'Rasilimali ya kupokea kwa ajili ya $cc';
+  }
 
   @override
   String proposalFieldAmount(String asset) {
@@ -1242,7 +1260,9 @@ class AppLocalizationsSw extends AppLocalizations {
       'Inaweza kuchukua hadi sekunde 30 kwa ajili ya uhamishaji kuonekana hapa';
 
   @override
-  String get treasuryBalanceTooLow => 'Salio la hazina ni dogo sana';
+  String treasuryBalanceTooLow(String balance, String cc) {
+    return 'Salio la hazina ni la chini sana. Kiwango: $balance $cc';
+  }
 
   @override
   String treasuryGlobalBalance(String balance) {

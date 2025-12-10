@@ -5,7 +5,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_gall
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/propose_page.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +56,7 @@ class SingleBusinessDetail extends StatelessWidget {
               errorBuilder: (_, error) => const Center(child: Icon(Icons.broken_image, size: 40)),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(30, 20, 30, 60),
+              padding: const EdgeInsets.fromLTRB(30, 20, 30, 30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -165,6 +165,7 @@ class SingleBusinessDetail extends StatelessWidget {
                         AppLaunch.launchMap(location);
                       },
                     ),
+                  const SizedBox(height: 20),
                   if (business.photos != null)
                     IpfsImageGallery(
                       ipfs: webApi.ipfsApi,

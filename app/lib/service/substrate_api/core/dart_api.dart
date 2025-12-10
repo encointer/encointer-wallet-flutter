@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_log/ew_log.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
 
 /// Api to talk to an substrate node via the websocket protocol.

@@ -92,9 +92,9 @@ List<ProposalActionIdentifier> supportedProposalIds(bool developerMode) {
     ProposalActionIdentifier.setInactivityTimeout,
     ProposalActionIdentifier.petition,
     ProposalActionIdentifier.spendNative,
-    ProposalActionIdentifier.issueSwapNativeOption,
+    if (developerMode) ProposalActionIdentifier.issueSwapNativeOption,
     if (developerMode) ProposalActionIdentifier.spendAsset,
-    if (developerMode) ProposalActionIdentifier.issueSwapAssetOption,
+    ProposalActionIdentifier.issueSwapAssetOption,
   ];
 }
 
@@ -136,6 +136,11 @@ extension PropsalActionExt on ProposalActionIdentifier {
       ProposalActionIdentifier.spendAsset => l10n.proposalTypeSpendAsset(asset.symbol),
       ProposalActionIdentifier.issueSwapAssetOption => l10n.proposalTypeIssueSwapAssetOption(cidSymbol, asset.symbol)
     };
+  }
+
+  bool isSwapAction() {
+    return this == ProposalActionIdentifier.issueSwapNativeOption ||
+        this == ProposalActionIdentifier.issueSwapAssetOption;
   }
 }
 

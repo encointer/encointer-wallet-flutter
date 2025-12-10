@@ -788,18 +788,31 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Vorschlag schlägt vor, KSM aus der Gemeinschaftsreserve für einen Begünstigten auszugeben, entweder durch eine globale oder Gemeinschaftsabstimmung. Diese Mittel können zur Belohnung von Beiträgen oder zur Unterstützung von Gemeinschaftsprojekten verwendet werden.';
 
   @override
-  String proposalExplainerIssueSwapNativeOption(String cc) {
-    return 'Dieser Vorschlag erlaubt es dem Empfänger, $cc zu einem festgelegten Kurs mehrfach gegen KSM zu tauschen, bis ein festes KSM-Limit erreicht ist. Der Empfänger könnte ein lokales Geschäft sein, das $cc akzeptiert und eventuell einen Überschuss ansammelt.\n\nBeispiel mit Kurs 3 $cc/KSM und Limit 2 KSM:\n\nDer Empfänger kann bis zu 2 KSM zu einem Kurs von 3 $cc/KSM tauschen. Das Maximum ist also 6 $cc => 2 KSM.';
-  }
-
-  @override
   String proposalExplainerSpendAsset(String asset) {
     return 'Dieser Vorschlag schlägt vor, $asset aus der Community-Treasury für eine begünstigte Person auszugeben – entweder durch eine globale oder lokale Abstimmung. Diese Mittel können Community-Beiträge belohnen oder Initiativen unterstützen.\n\nHinweis: Du erhältst das $asset direkt auf dem Asset Hub Kusama.';
   }
 
   @override
-  String proposalExplainerIssueSwapAssetOption(String cc, String asset) {
-    return 'Dieser Vorschlag erlaubt es dem Empfänger, $cc zu einem festgelegten Kurs mehrfach gegen $asset zu tauschen, bis ein festes $asset-Limit erreicht ist. Der Empfänger könnte ein lokales Geschäft sein, das $cc akzeptiert und eventuell einen Überschuss ansammelt.\n\nBeispiel mit Kurs 3 $cc/$asset und Limit 2 $asset:\n\nDer Empfänger kann bis zu 2 $asset zu einem Kurs von 3 $cc/$asset tauschen. Das Maximum ist also 6 $cc => 2 $asset.\n\nHinweis: Du erhältst die $asset direkt auf Asset Hub Kusama.';
+  String proposalExplainerIssueSwapOption(String cc, String asset) {
+    return 'Dieser Vorschlag ermöglicht es der begünstigten Person, $cc zu einem festen Kurs mehrfach gegen $asset zu tauschen, bis ein festgelegtes $asset-Limit erreicht ist. Die begünstigte Person ist typischerweise ein lokales Unternehmen, das $cc akzeptiert und möglicherweise einen Überschuss ansammelt.';
+  }
+
+  @override
+  String get proposalExplainerSwapOptionComputation =>
+      'Berechnung mit deinen Eingaben';
+
+  @override
+  String get proposalExplainerRate => 'Rate';
+
+  @override
+  String get proposalExplainerSwapFee => 'Swap-Gebühr';
+
+  @override
+  String get proposalExplainerBeneficiaryWillGet => 'Begünstigte/r erhält';
+
+  @override
+  String proposalExplainerPaymentWillBeOnAH(String asset) {
+    return 'Hinweis: Das $asset wird direkt auf dein Asset Hub Kusama-Konto gesendet.';
   }
 
   @override
@@ -878,6 +891,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get proposalFieldAssetToSpend => 'Zu vergebender Token';
+
+  @override
+  String proposalFieldAssetToSwap(String cc) {
+    return 'Asset, das für $cc empfangen werden soll';
+  }
 
   @override
   String proposalFieldAmount(String asset) {
@@ -1247,7 +1265,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Es kann bis zu 30 Sekunden dauern, bis der Transfer hier auftaucht';
 
   @override
-  String get treasuryBalanceTooLow => 'Schatzkammerguthaben zu niedrig';
+  String treasuryBalanceTooLow(String balance, String cc) {
+    return 'Treasury-Guthaben zu niedrig. Limit: $balance $cc';
+  }
 
   @override
   String treasuryGlobalBalance(String balance) {

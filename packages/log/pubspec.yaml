@@ -1,0 +1,17 @@
+name: ew_log
+description: Logger used by Encointer packages.
+version: 0.1.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  test: ^1.24.9
+  very_good_analysis: ^10.0.0
