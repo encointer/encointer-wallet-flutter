@@ -411,8 +411,9 @@ class _ProposePageState extends State<ProposePage> {
                             SubmitButton(
                               onPressed: shouldEnableSubmit()
                                   ? (context) async {
-                                      _formKey.currentState!.validate();
-                                      await _submitProposal();
+                                      if (_formKey.currentState!.validate()) {
+                                        await _submitProposal();
+                                      }
                                     }
                                   : null,
                               child: Text(l10n.proposalSubmit),
@@ -699,7 +700,14 @@ class _ProposePageState extends State<ProposePage> {
           // Only numbers & decimal
           FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         ],
-        validator: (v) => validatePositiveNumberString(context, v),
+        validator: (v) => validateSwapAmount(
+          context,
+          v,
+          store.encointer.communityBalance!,
+          store.encointer.community!.symbol!,
+          maxSwapValue ?? double.infinity,
+          double.tryParse(rateController.text) ?? 0,
+        ),
         onChanged: (value) {
           setState(() {
             allowanceError = validateSwapAmount(
@@ -843,7 +851,7 @@ class _ProposePageState extends State<ProposePage> {
           // Only numbers & decimal
           FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         ],
-        validator: (String? val) => validatePositiveNumberString(context, val),
+        validator: (String? val) => validatePositiveNumberWithMax(context, double.tryParse(val ?? ''), max),
         onChanged: (value) {
           setState(() {
             amountError = validatePositiveNumberWithMax(context, double.tryParse(value), max);
