@@ -482,7 +482,7 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget _maybeGetSwapExplainer(BuildContext context) {
-    if (!isKnownCommunity || !selectedAction.isSwapAction()) {
+    if (!selectedAction.isSwapAction()) {
       return const SizedBox.shrink();
     }
 
@@ -491,12 +491,14 @@ class _ProposePageState extends State<ProposePage> {
     final theme = context.textTheme;
 
     final symbol = store.encointer.community!.symbol!;
-    final allowanceCC = allowanceController.text;
+    final allowanceCC = double.tryParse(allowanceController.text) ?? 0;
+    final ccRate = double.tryParse(rateController.text) ?? 0;
 
     final swapAmountAsset = swapLimit();
+    final calculationLine = isKnownCommunity
+        ? ccToFiatToAssetExplainerText(allowanceCC, symbol, knownCommunity!, forexRate?.value ?? 0)
+        : ccToAssetExplainerText(allowanceCC, symbol, ccRate);
 
-    final calculationLine = ccToUsd(allowanceCC, symbol, knownCommunity!, forexRate?.value ?? 0);
-    final feeLine = swapFee(swapAmountAsset, knownCommunity!, forexRate?.value ?? 0);
     final youWillGetLine = '${Fmt.doubleFormat(swapAmountAsset, length: 4)} ${selectedAsset.symbol}';
 
     return Card(
@@ -517,16 +519,16 @@ class _ProposePageState extends State<ProposePage> {
             ),
 
             const SizedBox(height: 16),
-
             _InfoKV(
               label: l10n.proposalExplainerRate,
               value: calculationLine,
             ),
             const SizedBox(height: 6),
-            _InfoKV(
-              label: l10n.proposalExplainerSwapFee,
-              value: feeLine,
-            ),
+            if (isKnownCommunity)
+              _InfoKV(
+                label: l10n.proposalExplainerSwapFee,
+                value: swapFee(swapAmountAsset, knownCommunity!, forexRate?.value ?? 0),
+              ),
             const SizedBox(height: 6),
             _InfoKV(
               label: l10n.proposalExplainerYouWillGet,
@@ -578,11 +580,21 @@ class _ProposePageState extends State<ProposePage> {
     }
   }
 
-  String ccToUsd(String allowanceCC, String ccSymbol, KnownCommunity community, double forexRate) {
-    final usdcValue = forexRate != 0 ? Fmt.doubleFormat(1 / forexRate, length: 4) : '--';
+  /// Simplified explainer text just showing the conversion from CC to selected asset.
 
-    return '$allowanceCC $ccSymbol = ${Fmt.doubleFormat(community.localFiatRate.toDouble(), length: 4)} ${community.fiatCurrency.symbol}'
+  String ccToFiatToAssetExplainerText(double allowanceCC, String ccSymbol, KnownCommunity community, double forexRate) {
+    final localFiatValue = allowanceCC / community.localFiatRate;
+    final usdcValue = forexRate != 0 ? Fmt.doubleFormat(allowanceCC / forexRate, length: 4) : '--';
+
+    return '$allowanceCC $ccSymbol = ${Fmt.doubleFormat(localFiatValue, length: 4)} ${community.fiatCurrency.symbol}'
         ' = $usdcValue ${selectedAsset.symbol}';
+  }
+
+  /// Simplified explainer text just showing the conversion from CC to selected asset.
+  String ccToAssetExplainerText(double allowanceCC, String ccSymbol, double ccRate) {
+    final usdcValue = ccRate != 0 ? Fmt.doubleFormat(allowanceCC / ccRate, length: 4) : '--';
+
+    return '$allowanceCC $ccSymbol = $usdcValue ${selectedAsset.symbol}';
   }
 
   String swapFee(double swapAmountAsset, KnownCommunity community, double forexRate) {
