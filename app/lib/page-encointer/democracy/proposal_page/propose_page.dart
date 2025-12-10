@@ -515,21 +515,22 @@ class _ProposePageState extends State<ProposePage> {
               l10n.proposalExplainerSwapOptionComputation,
               style: theme.bodyLarge?.copyWith(
                 color: context.theme.colorScheme.primary,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w400,
               ),
             ),
 
             const SizedBox(height: 16),
 
-            // Key–Value lines
             _InfoKV(
-              label: 'Rate',
+              label: l10n.proposalExplainerRate,
               value: calculationLine,
             ),
+            const SizedBox(height: 6),
             _InfoKV(
               label: l10n.proposalExplainerSwapFee,
               value: feeLine,
             ),
+            const SizedBox(height: 6),
             _InfoKV(
               label: l10n.proposalExplainerYouWillGet,
               value: youWillGetLine,
@@ -539,7 +540,6 @@ class _ProposePageState extends State<ProposePage> {
       ),
     );
   }
-
 
   String _explainerText() {
     final store = context.read<AppStore>();
@@ -1216,30 +1216,27 @@ class _InfoKV extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Left label (fixed width for perfect alignment)
-          SizedBox(
-            width: 110, // adjust if needed
-            child: Text(
-              label,
-              style: theme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Left label (fixed width for perfect alignment)
+        SizedBox(
+          width: 110, // adjust if needed
+          child: Text(
+            label,
+            style: theme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w600,
             ),
           ),
-          // Right side (flexible)
-          Expanded(
-            child: Text(
-              value,
-              style: theme.bodyMedium,
-            ),
+        ),
+        // Right side (flexible)
+        Expanded(
+          child: Text(
+            value,
+            style: theme.bodyMedium,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

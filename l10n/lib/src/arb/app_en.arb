@@ -316,6 +316,7 @@
         }
     },
     "proposalExplainerSwapOptionComputation": "Calculation with your input",
+    "proposalExplainerRate": "Rate",
     "proposalExplainerSwapFee": "Swap Fee",
     "proposalExplainerYouWillGet": "You will get",
     "proposalExplainerPaymentWillBeOnAH": "Note: The {asset} will be sent directly to your Asset Hub Kusama account.",

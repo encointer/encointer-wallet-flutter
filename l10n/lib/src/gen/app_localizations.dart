@@ -1521,6 +1521,12 @@ abstract class AppLocalizations {
   /// **'Calculation with your input'**
   String get proposalExplainerSwapOptionComputation;
 
+  /// No description provided for @proposalExplainerRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get proposalExplainerRate;
+
   /// No description provided for @proposalExplainerSwapFee.
   ///
   /// In en, this message translates to:

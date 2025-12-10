@@ -794,6 +794,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Calculation with your input';
 
   @override
+  String get proposalExplainerRate => 'Rate';
+
+  @override
   String get proposalExplainerSwapFee => 'Swap Fee';
 
   @override
