@@ -428,6 +428,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String swapOptionRemaining(String amount, String asset) {
+    return 'Verbleibender Freibetrag: $amount $asset';
+  }
+
+  @override
   String exerciseSwapAssetOptionAvailable(String asset) {
     return 'Swap-Option verfügbar';
   }
@@ -437,6 +442,16 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get exerciseSwapOption => 'Swap-Option ausführen';
+
+  @override
+  String exerciseSwapOptionAllowanceExceeded(String amount, String asset) {
+    return 'Tauschfreibetrag überschritten (max: $amount $asset)';
+  }
+
+  @override
+  String exerciseSwapOptionAmount(String cc) {
+    return 'Zu tauschender Betrag ($cc)';
+  }
 
   @override
   String get export => 'Konto exportieren';
@@ -520,7 +535,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get incomeIssuance => 'Gemeinschaftseinkommen';
 
   @override
-  String get insufficientBalance => 'Ungenügender Saldo';
+  String insufficientBalance(String cc) {
+    return 'Ungenügender Saldo';
+  }
 
   @override
   String get insufficientFundsErrorBody =>
@@ -1282,6 +1299,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String treasuryLocalBalanceOnAHK(String balance, String asset) {
     return 'Freies Gemeinschaftsschatzkammerguthaben auf Asset Hub: $balance $asset.';
+  }
+
+  @override
+  String treasuryLocalBalanceOnAHKBeforeSwap(String balance, String asset) {
+    return 'Freies Gemeinschaftsschatzguthaben auf dem Asset Hub vor dem Tausch: $balance $asset.';
   }
 
   @override

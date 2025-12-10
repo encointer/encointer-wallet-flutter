@@ -190,7 +190,7 @@ class _TransferPageState extends State<TransferPage> {
                   return l10n.amountError;
                 }
                 if (balanceTooLow(value, available!, encointerCurrenciesDecimals)) {
-                  return l10n.insufficientBalance;
+                  return l10n.insufficientBalance(store.encointer.community!.symbol!);
                 }
                 return null;
               },

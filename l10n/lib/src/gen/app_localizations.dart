@@ -860,6 +860,12 @@ abstract class AppLocalizations {
   /// **'Limit: {amount} {asset}'**
   String swapOptionLimit(String amount, String asset);
 
+  /// No description provided for @swapOptionRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining allowance: {amount} {asset}'**
+  String swapOptionRemaining(String amount, String asset);
+
   /// No description provided for @exerciseSwapAssetOptionAvailable.
   ///
   /// In en, this message translates to:
@@ -877,6 +883,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Exercise Swap Option'**
   String get exerciseSwapOption;
+
+  /// No description provided for @exerciseSwapOptionAllowanceExceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Swap Allowance Exceeded (max: {amount} {asset})'**
+  String exerciseSwapOptionAllowanceExceeded(String amount, String asset);
+
+  /// No description provided for @exerciseSwapOptionAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount to Swap ({cc})'**
+  String exerciseSwapOptionAmount(String cc);
 
   /// No description provided for @export.
   ///
@@ -1025,8 +1043,8 @@ abstract class AppLocalizations {
   /// No description provided for @insufficientBalance.
   ///
   /// In en, this message translates to:
-  /// **'Insufficient balance'**
-  String get insufficientBalance;
+  /// **'Insufficient balance ({cc})'**
+  String insufficientBalance(String cc);
 
   /// No description provided for @insufficientFundsErrorBody.
   ///
@@ -2359,6 +2377,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Free community treasury balance on Asset Hub: {balance} {asset}.'**
   String treasuryLocalBalanceOnAHK(String balance, String asset);
+
+  /// No description provided for @treasuryLocalBalanceOnAHKBeforeSwap.
+  ///
+  /// In en, this message translates to:
+  /// **'Free community treasury balance on Asset Hub before swap: {balance} {asset}.'**
+  String treasuryLocalBalanceOnAHKBeforeSwap(String balance, String asset);
 
   /// No description provided for @treasuryPendingSpends.
   ///

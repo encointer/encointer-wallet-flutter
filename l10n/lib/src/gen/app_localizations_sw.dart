@@ -424,6 +424,11 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
+  String swapOptionRemaining(String amount, String asset) {
+    return 'Kiasi kilichobaki: $amount $asset';
+  }
+
+  @override
   String exerciseSwapAssetOptionAvailable(String asset) {
     return 'Chaguo la kubadilisha linapatikana';
   }
@@ -434,6 +439,16 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get exerciseSwapOption => 'Tumia chaguo la kubadilisha';
+
+  @override
+  String exerciseSwapOptionAllowanceExceeded(String amount, String asset) {
+    return 'Kiwango cha kubadilisha kimezidi (kikomo: $amount $asset)';
+  }
+
+  @override
+  String exerciseSwapOptionAmount(String cc) {
+    return 'Kiasi cha kubadilisha ($cc)';
+  }
 
   @override
   String get export =>
@@ -516,7 +531,9 @@ class AppLocalizationsSw extends AppLocalizations {
   String get incomeIssuance => 'Mapato ya jamii';
 
   @override
-  String get insufficientBalance => 'Kiasi hakitoshi';
+  String insufficientBalance(String cc) {
+    return 'Kiasi hakitoshi';
+  }
 
   @override
   String get insufficientFundsErrorBody =>
@@ -1277,6 +1294,11 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String treasuryLocalBalanceOnAHK(String balance, String asset) {
     return 'Salio huru la hazina ya jamii kwenye AHK: $balance KSM.';
+  }
+
+  @override
+  String treasuryLocalBalanceOnAHKBeforeSwap(String balance, String asset) {
+    return 'Salio huru la hazina ya jamii kwenye Asset Hub kabla ya kubadilisha: $balance $asset.';
   }
 
   @override

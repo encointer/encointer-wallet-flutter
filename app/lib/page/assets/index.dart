@@ -74,7 +74,7 @@ class _AssetsViewState extends State<AssetsView> {
   NativeSwap? nativeSwap;
   AssetSwap? assetSwap;
 
-  final devSwap = false;
+  final devSwap = true;
 
   @override
   void initState() {
@@ -116,7 +116,7 @@ class _AssetsViewState extends State<AssetsView> {
     if (devSwap) {
       Log.d('DEV: Getting Swap Options', _logTarget);
       setState(() {
-        nativeSwap = mockNativeSwap(cid);
+        // nativeSwap = mockNativeSwap(cid);
         assetSwap = mockAssetSwap(cid);
       });
       return;

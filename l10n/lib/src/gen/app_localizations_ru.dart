@@ -422,6 +422,11 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String swapOptionRemaining(String amount, String asset) {
+    return 'Оставшийся лимит: $amount $asset';
+  }
+
+  @override
   String exerciseSwapAssetOptionAvailable(String asset) {
     return 'Доступна опция обмена';
   }
@@ -431,6 +436,16 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get exerciseSwapOption => 'Использовать опцию обмена';
+
+  @override
+  String exerciseSwapOptionAllowanceExceeded(String amount, String asset) {
+    return 'Лимит обмена превышен (макс: $amount $asset)';
+  }
+
+  @override
+  String exerciseSwapOptionAmount(String cc) {
+    return 'Сумма для обмена ($cc)';
+  }
 
   @override
   String get export => 'Экпорт аккаунта';
@@ -511,7 +526,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get incomeIssuance => 'Доход сообщества';
 
   @override
-  String get insufficientBalance => 'Недостаточный баланс';
+  String insufficientBalance(String cc) {
+    return 'Недостаточный баланс';
+  }
 
   @override
   String get insufficientFundsErrorBody =>
@@ -1272,6 +1289,11 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String treasuryLocalBalanceOnAHK(String balance, String asset) {
     return 'Свободный баланс казначейства сообщества на Asset Hub: $balance KSM.';
+  }
+
+  @override
+  String treasuryLocalBalanceOnAHKBeforeSwap(String balance, String asset) {
+    return 'Свободный баланс казны сообщества на Asset Hub перед обменом: $balance $asset.';
   }
 
   @override

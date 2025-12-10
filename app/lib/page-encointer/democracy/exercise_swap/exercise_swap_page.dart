@@ -147,7 +147,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
           children: [
             Text(l10n.swapOption, style: context.headlineSmall),
             const SizedBox(height: 8),
-            Text(l10n.swapOptionLimit(
+            Text(l10n.swapOptionRemaining(
               fmt(widget.option.allowance),
               widget.option.symbol,
             )),
@@ -175,7 +175,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                 child: TextFormField(
                   controller: amountController,
                   decoration: InputDecoration(
-                    labelText: l10n.proposalFieldAmount(
+                    labelText: l10n.exerciseSwapOptionAmount(
                       context.read<AppStore>().encointer.community!.symbol!,
                     ),
                     errorText: amountError,
@@ -184,24 +184,10 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
                   ],
-                  validator: (val) => validateSwapAmount(
-                    context,
-                    amountController.text,
-                    ccBalance,
-                    widget.option.symbol,
-                    treasuryBalance(),
-                    widget.option.rate,
-                  ),
+                  validator: (val) => validate(),
                   onChanged: (_) {
                     setState(() {
-                      amountError = validateSwapAmount(
-                        context,
-                        amountController.text,
-                        ccBalance,
-                        widget.option.symbol,
-                        treasuryBalance(),
-                        widget.option.rate,
-                      );
+                      amountError = validate();
                     });
                   },
                 ),
@@ -211,14 +197,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                 onPressed: () {
                   setState(() {
                     amountController.text = fmt(maxSwappable(ccBalance));
-                    amountError = validateSwapAmount(
-                      context,
-                      amountController.text,
-                      ccBalance,
-                      widget.option.symbol,
-                      treasuryBalance(),
-                      widget.option.rate,
-                    );
+                    amountError = validate();
                   });
                 },
                 child: const Text('Max'),
@@ -227,6 +206,32 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
           ),
         ),
       ),
+    );
+  }
+
+  String? validate() {
+    final store = context.read<AppStore>();
+
+    final ccBalance = store.encointer.communityBalance!;
+    final ccSymbol = store.encointer.community!.symbol!;
+
+    final swapAmountDesiredCC = double.tryParse(amountController.text) ?? 0;
+
+    final ccAllowance = ccRemainingAllowance();
+    Log.p('[validate] CC remaining allowance ${ccRemainingAllowance()}', logTarget);
+
+    if (swapAmountDesiredCC > ccAllowance) {
+      return context.l10n.exerciseSwapOptionAllowanceExceeded(fmt(ccAllowance), ccSymbol);
+    }
+
+    return validateSwapAmount(
+      context,
+      amountController.text,
+      ccBalance,
+      ccSymbol,
+      widget.option.symbol,
+      treasuryBalance(),
+      widget.option.rate,
     );
   }
 
@@ -253,7 +258,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
               l10n.treasuryLocalBalance(fmt(balance)),
             ),
           AssetSwap() => Text(
-              l10n.treasuryLocalBalanceOnAHK(
+              l10n.treasuryLocalBalanceOnAHKBeforeSwap(
                 fmt(balance),
                 widget.option.symbol,
               ),
@@ -316,9 +321,14 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     final treasuryCC = treasuryBalance() * widget.option.rate;
 
     // Option limit (in CC)
-    final limitCC = widget.option.allowance * widget.option.rate;
+    final limitCC = ccRemainingAllowance();
 
     return min(userCC, min(treasuryCC, limitCC));
+  }
+
+  /// Option limit (in CC)
+  double ccRemainingAllowance() {
+    return widget.option.allowance * widget.option.rate;
   }
 
   Future<void> _submitSwap() async {

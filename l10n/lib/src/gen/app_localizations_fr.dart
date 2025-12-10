@@ -427,6 +427,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String swapOptionRemaining(String amount, String asset) {
+    return 'Allocation restante : $amount $asset';
+  }
+
+  @override
   String exerciseSwapAssetOptionAvailable(String asset) {
     return 'Option d’échange disponible';
   }
@@ -437,6 +442,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get exerciseSwapOption => 'Exercer l’option d’échange';
+
+  @override
+  String exerciseSwapOptionAllowanceExceeded(String amount, String asset) {
+    return 'Allocation d’échange dépassée (max : $amount $asset)';
+  }
+
+  @override
+  String exerciseSwapOptionAmount(String cc) {
+    return 'Montant à échanger ($cc)';
+  }
 
   @override
   String get export => 'Activer le Bazaar';
@@ -517,7 +532,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get incomeIssuance => 'Revenu communautaire';
 
   @override
-  String get insufficientBalance => 'Solde insuffisant';
+  String insufficientBalance(String cc) {
+    return 'Solde insuffisant';
+  }
 
   @override
   String get insufficientFundsErrorBody =>
@@ -1281,6 +1298,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String treasuryLocalBalanceOnAHK(String balance, String asset) {
     return 'Solde libre du trésor communautaire sur Asset Hub: $balance $asset.';
+  }
+
+  @override
+  String treasuryLocalBalanceOnAHKBeforeSwap(String balance, String asset) {
+    return 'Solde libre du trésor communautaire sur l’Asset Hub avant l’échange : $balance $asset.';
   }
 
   @override
