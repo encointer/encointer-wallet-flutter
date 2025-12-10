@@ -800,7 +800,6 @@ class _ProposePageState extends State<ProposePage> {
     final maxSpend =
         RepositoryProvider.of<AppSettings>(context).developerMode ? null : assetTreasuryUnallocatedLiquidity();
 
-
     return Column(children: [
       selectAssetDropDown(l10n.proposalFieldAssetToSpend),
       ...spendInputWidgets(selectedAsset.symbol, maxSpend),
