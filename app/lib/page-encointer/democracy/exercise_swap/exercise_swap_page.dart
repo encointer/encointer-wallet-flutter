@@ -13,6 +13,7 @@ import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/theme/custom/typography/typography_theme.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:ew_primitives/ew_primitives.dart';
 import 'package:flutter/material.dart';
 import 'package:ew_l10n/l10n.dart';
 import 'package:flutter/services.dart';
@@ -196,7 +197,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
               TextButton(
                 onPressed: () {
                   setState(() {
-                    amountController.text = fmt(maxSwappable(ccBalance));
+                    amountController.text = Fmt.formatNumber(context, maxSwappable(ccBalance), decimals: 6);
                     amountError = validate();
                   });
                 },
@@ -218,9 +219,10 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     final swapAmountDesiredCC = double.tryParse(amountController.text) ?? 0;
 
     final ccAllowance = ccRemainingAllowance();
+    Log.p('[validate] CC amount desired $swapAmountDesiredCC', logTarget);
     Log.p('[validate] CC remaining allowance ${ccRemainingAllowance()}', logTarget);
 
-    if (swapAmountDesiredCC > ccAllowance) {
+    if (swapAmountDesiredCC.greaterThanWithPrecision(ccAllowance, places: 3)) {
       return context.l10n.exerciseSwapOptionAllowanceExceeded(fmt(ccAllowance), ccSymbol);
     }
 
@@ -348,13 +350,20 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     final cc = double.parse(amountController.text);
     final assetAmount = cc / assetSwap.rate;
 
+    var assetAmountBigInt = BigInt.from(assetAmount * pow(10, assetSwap.decimals));
+
+    if (assetAmount.equalWithPrecision(assetSwap.allowance, places: 3)) {
+      // Ensure that we do not have dust swaps due to rounding incoherence
+      assetAmountBigInt = assetSwap.value.assetAllowance;
+    }
+
     await submitSwapAsset(
       context,
       store,
       webApi,
       store.account.getKeyringAccount(store.account.currentAccountPubKey!),
       store.encointer.chosenCid!,
-      BigInt.from(assetAmount * pow(10, assetSwap.decimals)),
+      assetAmountBigInt,
       txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
       onError: (err) {
         showTxErrorDialog(context, getLocalizedTxErrorMessage(l10n, err), false);
@@ -370,13 +379,20 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     final cc = double.parse(amountController.text);
     final nativeAmount = cc / nativeSwap.rate;
 
+    var nativeAmountBigInt =  BigInt.from(nativeAmount * pow(10, nativeSwap.decimals));
+
+    if (nativeAmount.equalWithPrecision(nativeSwap.allowance, places: 3)) {
+      // Ensure that we do not have dust swaps due to rounding incoherence
+      nativeAmountBigInt = nativeSwap.value.nativeAllowance;
+    }
+
     await submitSwapNative(
       context,
       store,
       webApi,
       store.account.getKeyringAccount(store.account.currentAccountPubKey!),
       store.encointer.chosenCid!,
-      BigInt.from(nativeAmount * pow(10, nativeSwap.decimals)),
+      nativeAmountBigInt,
       txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
       onError: (err) {
         showTxErrorDialog(context, getLocalizedTxErrorMessage(l10n, err), false);
