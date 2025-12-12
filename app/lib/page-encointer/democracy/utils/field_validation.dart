@@ -53,13 +53,13 @@ String? validateSwapAmount(
 
   // converted treasury asset → CC equivalent
   final swapLimitDesired = ccAmount / exchangeRate;
-  final swapLimitMax = treasuryBalanceAsset * exchangeRate;
-  Log.d('validateSwapAmount: treasuryBalance: $treasuryBalanceAsset', logTarget);
-  Log.d('validateSwapAmount: swapLimitDesired: $swapLimitDesired $ccSymbol}', logTarget);
-  Log.d('validateSwapAmount: swapLimitMax: $swapLimitMax $ccSymbol', logTarget);
+  final treasuryBalanceCC = treasuryBalanceAsset * exchangeRate;
+  Log.d('[validateSwapAmount] treasuryBalance: $treasuryBalanceAsset $assetSymbol', logTarget);
+  Log.d('[validateSwapAmount] swapLimitDesired: $swapLimitDesired $ccSymbol}', logTarget);
+  Log.d('[validateSwapAmount] treasuryBalanceCC: $treasuryBalanceCC $ccSymbol', logTarget);
 
   final e3 = validatePositiveNumberWithMax(context, swapLimitDesired, treasuryBalanceAsset);
-  if (e3 != null) return l10n.treasuryBalanceTooLow(Fmt.formatNumber(context, swapLimitMax, decimals: 4), ccSymbol);
+  if (e3 != null) return l10n.treasuryBalanceTooLow(Fmt.formatNumber(context, treasuryBalanceCC, decimals: 4), ccSymbol);
 
   return null;
 }
