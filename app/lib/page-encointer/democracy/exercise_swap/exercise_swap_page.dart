@@ -212,11 +212,17 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
 
   String? validate() {
     final store = context.read<AppStore>();
+    final l10n = context.l10n;
 
-    final ccBalance = store.encointer.communityBalance!;
     final ccSymbol = store.encointer.community!.symbol!;
-
+    final ccBalance = store.encointer.communityBalance!;
     final swapAmountDesiredCC = double.tryParse(amountController.text) ?? 0;
+
+    final e1 = validatePositiveNumber(context, swapAmountDesiredCC);
+    if (e1 != null) return e1;
+
+    final e2 = validatePositiveNumberWithMax(context, swapAmountDesiredCC, ccBalance);
+    if (e2 != null) return l10n.insufficientBalance(ccSymbol);
 
     final ccAllowance = ccRemainingAllowance();
     Log.p('[validate] CC amount desired $swapAmountDesiredCC', logTarget);
@@ -226,15 +232,13 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
       return context.l10n.exerciseSwapOptionAllowanceExceeded(fmt(ccAllowance), ccSymbol);
     }
 
-    return validateSwapAmount(
-      context,
-      amountController.text,
-      ccBalance,
-      ccSymbol,
-      widget.option.symbol,
-      treasuryBalance(),
-      widget.option.rate,
-    );
+    final treasury = treasuryCC();
+    Log.p('[validate] CC treasury balance $treasury', logTarget);
+    if (swapAmountDesiredCC.greaterThanWithPrecision(treasury)) {
+      return l10n.treasuryBalanceTooLow(Fmt.formatNumber(context, treasury, decimals: 4), ccSymbol);
+    }
+
+    return null;
   }
 
   Widget _buildToBeReceivedCard(AppLocalizations l10n) {
@@ -319,13 +323,16 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     // CC available from user (and keep some spare)
     final userCC = ccBalance * 0.98;
 
-    // CC equivalent of treasury assets
-    final treasuryCC = treasuryBalance() * widget.option.rate * 0.99;
-
     // Option limit (in CC)
     final limitCC = ccRemainingAllowance();
 
-    return min(userCC, min(treasuryCC, limitCC));
+    return min(userCC, min(treasuryCC(), limitCC));
+  }
+
+  double treasuryCC() {
+    // CC equivalent of treasury assets (and floor to a reasonable value to
+    // prevent rounding errors and exceeding the treasury balance).
+    return (treasuryBalance() * widget.option.rate).floorToDecimals(4);
   }
 
   /// Option limit (in CC)
