@@ -228,6 +228,20 @@ class _ProfileState extends State<Profile> {
                             : const CupertinoActivityIndicator(),
                       ),
                     ),
+                    ListTile(
+                      title: Text('Enable KSM Mock Swap', style: h3Grey),
+                      trailing: Checkbox(
+                        value: store.settings.ksmMockSwapEnabled,
+                        onChanged: (_) => store.settings.toggleKsmMockSwapEnabled(),
+                      ),
+                    ),
+                    ListTile(
+                      title: Text('Enable USDC Mock Swap', style: h3Grey),
+                      trailing: Checkbox(
+                        value: store.settings.usdcMockSwapEnabled,
+                        onChanged: (_) => store.settings.toggleUsdcMockSwapEnabled(),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8),
                       child: SubmitButton(
