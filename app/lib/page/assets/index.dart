@@ -74,7 +74,9 @@ class _AssetsViewState extends State<AssetsView> {
   NativeSwap? nativeSwap;
   AssetSwap? assetSwap;
 
-  final devSwap = true;
+  // UI mocks that can be enabled via the dev options
+  NativeSwap? nativeSwapMock;
+  AssetSwap? assetSwapMock;
 
   @override
   void initState() {
@@ -113,13 +115,18 @@ class _AssetsViewState extends State<AssetsView> {
 
     final accountId = AddressUtils.addressToPubKey(widget.store.account.currentAddress).toList();
 
-    if (devSwap) {
-      Log.d('DEV: Getting Swap Options', _logTarget);
+    if (widget.store.settings.ksmMockSwapEnabled) {
+      Log.d('DEV: Getting KSM Swap Options', _logTarget);
       setState(() {
-        // nativeSwap = mockNativeSwap(cid);
-        assetSwap = mockAssetSwap(cid);
+        nativeSwapMock = mockNativeSwap(cid);
       });
-      return;
+    }
+
+    if (widget.store.settings.usdcMockSwapEnabled) {
+      Log.d('DEV: Getting USDC Swap Options', _logTarget);
+      setState(() {
+        assetSwapMock = mockAssetSwap(cid);
+      });
     }
 
     Log.d('Getting Swap Options', _logTarget);
@@ -322,6 +329,18 @@ class _AssetsViewState extends State<AssetsView> {
                   ),
                   onPressed: () => Navigator.pushNamed(context, ExerciseSwapPage.route, arguments: assetSwap),
                 ),
+              if (assetSwapMock != null)
+                ElevatedButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Iconsax.trade),
+                      const SizedBox(width: 4),
+                      Text(l10n.exerciseSwapAssetOptionAvailable(assetSwapMock!.symbol)),
+                    ],
+                  ),
+                  onPressed: () => Navigator.pushNamed(context, ExerciseSwapPage.route, arguments: assetSwapMock),
+                ),
               if (nativeSwap != null)
                 ElevatedButton(
                   child: Row(
@@ -336,6 +355,22 @@ class _AssetsViewState extends State<AssetsView> {
                     context,
                     ExerciseSwapPage.route,
                     arguments: nativeSwap,
+                  ),
+                ),
+              if (nativeSwapMock != null)
+                ElevatedButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Iconsax.trade),
+                      const SizedBox(width: 4),
+                      Text(l10n.exerciseSwapNativeOptionAvailable),
+                    ],
+                  ),
+                  onPressed: () => Navigator.pushNamed(
+                    context,
+                    ExerciseSwapPage.route,
+                    arguments: nativeSwapMock,
                   ),
                 ),
               Observer(builder: (_) {
