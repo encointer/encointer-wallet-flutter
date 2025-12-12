@@ -392,7 +392,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     final cc = double.parse(amountController.text);
     final nativeAmount = cc / nativeSwap.rate;
 
-    var nativeAmountBigInt =  BigInt.from(nativeAmount * pow(10, nativeSwap.decimals));
+    var nativeAmountBigInt = BigInt.from(nativeAmount * pow(10, nativeSwap.decimals));
 
     if (nativeAmount.equalWithPrecision(nativeSwap.allowance, places: 3)) {
       // Ensure that we do not have dust swaps due to rounding incoherence
