@@ -1,4 +1,4 @@
-import 'package:ew_primitives/src/double_extensions.dart';
+import 'package:ew_primitives/ew_primitives.dart';
 import 'package:test/test.dart';
 
 void main() {
