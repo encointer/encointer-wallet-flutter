@@ -640,13 +640,13 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget issueSwapNativeOptionInput() {
-    final maxSwapValue =
+    final unallocatedTreasuryFunds =
         RepositoryProvider.of<AppSettings>(context).developerMode ? null : nativeTreasuryUnallocatedLiquidity();
-    return Column(children: issueSwapOptionInput('KSM', maxSwapValue, false));
+    return Column(children: issueSwapOptionInput('KSM', unallocatedTreasuryFunds, false));
   }
 
   Widget issueSwapAssetOptionInput() {
-    final maxSwapValue =
+    final unallocatedTreasuryFunds =
         RepositoryProvider.of<AppSettings>(context).developerMode ? null : assetTreasuryUnallocatedLiquidity();
 
     final store = context.read<AppStore>();
@@ -654,7 +654,7 @@ class _ProposePageState extends State<ProposePage> {
 
     return Column(children: [
       selectAssetDropDown(l10n.proposalFieldAssetToSwap(store.encointer.community!.symbol!)),
-      ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), maxSwapValue, true),
+      ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), unallocatedTreasuryFunds, true),
     ]);
   }
 
@@ -684,7 +684,7 @@ class _ProposePageState extends State<ProposePage> {
     return rate ?? 0.0;
   }
 
-  List<Widget> issueSwapOptionInput(String currency, double? maxSwapValue, bool tryDeriveRate) {
+  List<Widget> issueSwapOptionInput(String currency, double? unallocatedTreasuryFunds, bool tryDeriveRate) {
     final l10n = context.l10n;
     final store = context.read<AppStore>();
 
@@ -700,26 +700,10 @@ class _ProposePageState extends State<ProposePage> {
           // Only numbers & decimal
           FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
         ],
-        validator: (v) => validateSwapAmount(
-          context,
-          v,
-          store.encointer.communityBalance!,
-          store.encointer.community!.symbol!,
-          currency,
-          maxSwapValue ?? double.infinity,
-          double.tryParse(rateController.text) ?? 0,
-        ),
+        validator: (v) => validateSwap(unallocatedTreasuryFunds, currency),
         onChanged: (value) {
           setState(() {
-            allowanceError = validateSwapAmount(
-              context,
-              value,
-              store.encointer.communityBalance!,
-              store.encointer.community!.symbol!,
-              currency,
-              maxSwapValue ?? double.infinity,
-              double.tryParse(rateController.text) ?? 0,
-            );
+            allowanceError = validateSwap(unallocatedTreasuryFunds, currency);
           });
         },
       ),
@@ -739,6 +723,28 @@ class _ProposePageState extends State<ProposePage> {
       // Text(l10n.proposalFieldBurn, style: const TextStyle(fontWeight: FontWeight.bold)),
       // Text(l10n.proposalFieldValidity, style: const TextStyle(fontWeight: FontWeight.bold)),
     ];
+  }
+
+  String? validateSwap(double? unallocatedTreasuryFunds, String currency) {
+    final store = context.read<AppStore>();
+    final l10n = context.l10n;
+    final ccSymbol = store.encointer.community!.symbol!;
+
+    final swapAmountDesiredCC = double.tryParse(allowanceController.text) ?? 0;
+
+    final e1 = validatePositiveNumber(context, swapAmountDesiredCC);
+    if (e1 != null) return e1;
+
+    final rate = double.tryParse(rateController.text) ?? 0;
+    if (unallocatedTreasuryFunds != null) {
+      final ccTreasuryFreeCC = unallocatedTreasuryFunds * rate;
+      Log.p('[validate] CC treasury balance $ccTreasuryFreeCC', logTarget);
+      if (swapAmountDesiredCC.greaterThanWithPrecision(ccTreasuryFreeCC)) {
+        return l10n.treasuryBalanceTooLow(Fmt.formatNumber(context, ccTreasuryFreeCC, decimals: 4), ccSymbol);
+      }
+    }
+
+    return null;
   }
 
   Widget rateInput(String currency, bool tryDeriveRate) {

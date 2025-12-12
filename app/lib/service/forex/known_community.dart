@@ -4,8 +4,8 @@
 import 'package:encointer_wallet/service/forex/currency.dart';
 
 const num _leuPerChf = 1;
-const num _nytPerTzs = 2;
-const num _pnqPerNgn = 2;
+const num _nytPerTzs = 0.001;
+const num _pnqPerNgn = 0.001; // [PNQ/NGN]
 
 const double _defaultMarkup = 0.02;
 
@@ -25,7 +25,7 @@ enum KnownCommunity {
   final String symbol;
   // Local fiat
   final Currency fiatCurrency;
-  // How many CC per 1 unit local fiat ([LocalFiat/CC])
+  // How many CC per 1 unit local fiat ([CC/LocalFiat])
   final num localFiatRate;
   // Markup applied
   final double markup;
@@ -39,10 +39,10 @@ enum KnownCommunity {
 }
 
 extension UsdRateExtension on KnownCommunity {
-  /// [CC/LocalFiat] * [localFiat/USD] * discount
+  /// [CC/LocalFiat] * [localFiat/USD] * markup
   ///
   /// [usdRate] needs to be in [localFiat/USD]
   double ccPerUsd(double usdRate) {
-    return (1 / localFiatRate) * usdRate * (1 + markup);
+    return localFiatRate * usdRate * (1 + markup);
   }
 }

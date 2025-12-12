@@ -15,7 +15,7 @@ void main() {
 
     group('computeCcUsdFromApiRate', () {
       // Unparameterized example for LEU community (for better understanding)
-      test('1 USD -> 0.8058 CHF, LEU community', () {
+      test('1 USD -> 0.8058 CHF -> 0.8058 LEU', () {
         const community = KnownCommunity.leu;
 
         const usdToChfRate = 0.79; // 1 USD = 0.79 CHF
@@ -25,22 +25,36 @@ void main() {
         // Manual calculation:
         // 1 CC = 1 CHF
         // 1 USD = 0.79 CHF
-        // Apply markup 0.02 → 1 CHF/CC * 0.79 [USD/CHF] * 1.2 ≈ 0.8058 USD/CC
+        // Apply markup 0.02 → 1 CC/CHF * 0.79 [CHF/USD] * 1.02 ≈ 0.8058 CC/USD
         expect(ccUsdRate, closeTo(0.8058, 1e-6));
       });
 
-      test('1 USD -> 1250.8311 NGN, PNQ community', () {
+      test('1 USD -> 1444.719 NGN -> 1.473 PNQ', () {
         const community = KnownCommunity.pnq;
 
-        const usdToNgnRate = 2452.61; // 1 USD = 2452.61339866 CHF
+        const ngnPerUsd = 1444.719; // [NGN/USD]
 
-        final ccUsdRate = community.ccPerUsd(usdToNgnRate);
+        final ccUsdRate = community.ccPerUsd(ngnPerUsd);
 
         // Manual calculation:
-        // 2 CC = 1 CHF
-        // 1 USD = 2452.61 NGN
-        // Apply markup 0.02 → 1/2 CHF/CC * 2452.61 [USD/CHF] * 1.2 ≈ 1250.8311 USD/CC
-        expect(ccUsdRate, closeTo(1250.8311, 1e-6));
+        // 1 CC = 1000 NGN -> 1000 [NGN/CC]
+        // 1 USD = 1444.719 NGN
+        // Apply markup 0.02 → 1/1000 CC/NGN * 1444.719 [NGN/USD] * 1.02 ≈ 1.473 CC/USD
+        expect(ccUsdRate, closeTo(1.47361338, 1e-6));
+      });
+
+      test('1 USD -> 2457.06 TZS -> 2.5062 NYT', () {
+        const community = KnownCommunity.pnq;
+
+        const ngnPerUsd = 2457.06; // [TZS/USD]
+
+        final ccUsdRate = community.ccPerUsd(ngnPerUsd);
+
+        // Manual calculation:
+        // 1 CC = 1000 NGN -> 1000 [TZS/CC]
+        // 1 USD = 2457.06 TZS
+        // Apply markup 0.02 → 1/1000 CC/TZS * 2457.06 [TZS/USD] * 1.02 ≈ 2.5062 CC/USD
+        expect(ccUsdRate, closeTo(2.5062012, 1e-6));
       });
 
       // Mock API rates: 1 USD = x local fiat
@@ -56,7 +70,7 @@ void main() {
 
           final ccUsdRate = community.ccPerUsd(usdToLocal);
 
-          final expected = (1 / community.localFiatRate) * usdToLocal * (1 + community.markup);
+          final expected = community.localFiatRate * usdToLocal * (1 + community.markup);
 
           expect(ccUsdRate, closeTo(expected, 1e-6), reason: 'CC → USD failed for ${community.symbol}');
         }
