@@ -9,6 +9,7 @@ environment:
   sdk: ">=3.6.0 <4.0.0"
 
 dependencies:
+  decimal: ^3.2.4
   ew_keyring: 0.1.0
   ew_polkadart: 0.1.0
   ew_substrate_fixed: 0.1.0

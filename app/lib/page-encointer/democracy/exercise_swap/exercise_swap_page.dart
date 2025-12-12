@@ -43,7 +43,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
   String? amountError;
 
   BigInt localTreasuryBalance = BigInt.zero;
-  BigInt localTreasuryBalanceOnAHK = BigInt.zero;
+  BigInt localTreasuryBalanceOnAHK = BigInt.from(1000000);
 
   @override
   void initState() {
@@ -80,7 +80,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
 
     setState(() {
       localTreasuryBalance = onEncointer.free;
-      localTreasuryBalanceOnAHK = onAHK;
+      // localTreasuryBalanceOnAHK = BigInt.from(100000);
     });
   }
 
@@ -96,7 +96,8 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     final store = context.read<AppStore>();
     final l10n = context.l10n;
     final ccSymbol = store.encointer.community!.symbol!;
-    final ccBalance = store.encointer.communityBalance!;
+    // final ccBalance = store.encointer.communityBalance!;
+    const ccBalance = 100.0;
 
     return Scaffold(
       appBar: AppBar(
@@ -215,7 +216,8 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     final l10n = context.l10n;
 
     final ccSymbol = store.encointer.community!.symbol!;
-    final ccBalance = store.encointer.communityBalance!;
+    // final ccBalance = store.encointer.communityBalance!;
+    const ccBalance = 100.0;
     final swapAmountDesiredCC = double.tryParse(amountController.text) ?? 0;
 
     final e1 = validatePositiveNumber(context, swapAmountDesiredCC);
