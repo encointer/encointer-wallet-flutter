@@ -364,6 +364,12 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
       assetAmountBigInt = assetSwap.value.assetAllowance;
     }
 
+    if (assetAmount.equalWithPrecision(treasuryBalance(), places: 3)) {
+      // double ensure that we do not try to send more than the treasury
+      // has due to rounding errors.
+      assetAmountBigInt = localTreasuryBalanceOnAHK;
+    }
+
     await submitSwapAsset(
       context,
       store,
@@ -391,6 +397,12 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     if (nativeAmount.equalWithPrecision(nativeSwap.allowance, places: 3)) {
       // Ensure that we do not have dust swaps due to rounding incoherence
       nativeAmountBigInt = nativeSwap.value.nativeAllowance;
+    }
+
+    if (nativeAmount.equalWithPrecision(treasuryBalance(), places: 3)) {
+      // double ensure that we do not try to send more than the treasury
+      // has due to rounding errors.
+      nativeAmountBigInt = localTreasuryBalance;
     }
 
     await submitSwapNative(
