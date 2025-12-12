@@ -54,7 +54,7 @@ void main() {
         // 1 CC = 1000 NGN -> 1000 [TZS/CC]
         // 1 USD = 2457.06 TZS
         // Apply markup 0.02 → 1/1000 CC/TZS * 2457.06 [TZS/USD] * 1.02 ≈ 2.5062 CC/USD
-        expect(ccUsdRate, closeTo(2.5062, 1e-6));
+        expect(ccUsdRate, closeTo(2.5062012, 1e-6));
       });
 
       // Mock API rates: 1 USD = x local fiat
