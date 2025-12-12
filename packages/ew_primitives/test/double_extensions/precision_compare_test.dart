@@ -59,7 +59,7 @@ void main() {
       });
 
       test('different precision levels', () {
-        expect(1.23456.greaterThanWithPrecision(1.23412, places: 4), isTrue);
+        expect(1.23456.greaterThanWithPrecision(1.23412), isTrue);
         expect(1.23456.greaterThanWithPrecision(1.23455, places: 5), isTrue);
         expect(1.23456.greaterThanWithPrecision(1.23456, places: 5), isFalse);
       });
@@ -91,7 +91,7 @@ void main() {
       });
 
       test('different precision levels', () {
-        expect(1.23412.lessThanWithPrecision(1.23456, places: 4), isTrue);
+        expect(1.23412.lessThanWithPrecision(1.23456), isTrue);
         expect(1.23455.lessThanWithPrecision(1.23456, places: 5), isTrue);
       });
 

@@ -23,9 +23,9 @@ extension DoublePrecision on double {
     final next = places < frac.length ? frac[places] : '0';
     final remainder = frac.substring(places); // includes next and beyond
 
-    final scaledStr = (intPart) + (kept.isEmpty ? '' : kept);
+    final scaledStr = intPart + (kept.isEmpty ? '' : kept);
     final scaled = BigInt.parse(scaledStr.isEmpty ? '0' : scaledStr);
-    final hadTrailingNonZero = remainder.contains(RegExp(r'[1-9]'));
+    final hadTrailingNonZero = remainder.contains(RegExp('[1-9]'));
 
     return {
       'scaled': scaled,
