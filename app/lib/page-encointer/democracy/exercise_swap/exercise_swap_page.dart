@@ -318,7 +318,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     final userCC = ccBalance * 0.98;
 
     // CC equivalent of treasury assets
-    final treasuryCC = treasuryBalance() * widget.option.rate;
+    final treasuryCC = treasuryBalance() * widget.option.rate * 0.99;
 
     // Option limit (in CC)
     final limitCC = ccRemainingAllowance();
