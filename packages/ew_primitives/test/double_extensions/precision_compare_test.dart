@@ -2,142 +2,134 @@ import 'package:ew_primitives/ew_primitives.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('PrecisionCompare extension', () {
-    group('greaterOrEqualWithPrecision', () {
-      test('greater OR equal (simple)', () {
-        expect(1.2346.greaterOrEqualWithPrecision(1.2345), isTrue);
-        expect(1.2345.greaterOrEqualWithPrecision(1.2345), isTrue);
-        expect(1.2344.greaterOrEqualWithPrecision(1.2345), isFalse);
-      });
-
-      test('rounding equality makes them >=', () {
-        expect(1.23456.greaterOrEqualWithPrecision(1.23454), isTrue);
-      });
-
-      test('negative numbers', () {
-        expect((-1.2346).greaterOrEqualWithPrecision(-1.2347), isTrue);
-        expect((-1.2347).greaterOrEqualWithPrecision(-1.2347), isTrue);
-        expect((-1.2348).greaterOrEqualWithPrecision(-1.2347), isFalse);
-      });
-
-      test('boundary rounding', () {
-        expect(1.00005.greaterOrEqualWithPrecision(1.00004), isTrue);
-      });
-    });
-
-    group('lessOrEqualWithPrecision', () {
-      test('less OR equal (simple)', () {
-        expect(1.2344.lessOrEqualWithPrecision(1.2345), isTrue);
-        expect(1.2345.lessOrEqualWithPrecision(1.2345), isTrue);
-        expect(1.2346.lessOrEqualWithPrecision(1.2345), isFalse);
-      });
-
-      test('rounding equality makes them <=', () {
-        expect(1.23454.lessOrEqualWithPrecision(1.23456), isTrue);
-      });
-
-      test('negative numbers', () {
-        expect((-1.2347).lessOrEqualWithPrecision(-1.2346), isTrue);
-        expect((-1.2346).lessOrEqualWithPrecision(-1.2346), isTrue);
-        expect((-1.2345).lessOrEqualWithPrecision(-1.2346), isFalse);
-      });
-
-      test('boundary rounding', () {
-        expect(1.00004.lessOrEqualWithPrecision(1.00005), isTrue);
-      });
-    });
-
-    // keep the existing tests for >, <, ==
+  group('DecimalPrecisionCompare extension', () {
     group('greaterThanWithPrecision', () {
-      test('simple greater', () {
-        expect(1.2346.greaterThanWithPrecision(1.2345), isTrue);
-        expect(1.2345.greaterThanWithPrecision(1.2346), isFalse);
+      test('works for simple comparisons', () {
+        expect(1.2345.greaterThanWithPrecision(1.2344), isTrue);
+        expect(1.2344.greaterThanWithPrecision(1.2345), isFalse);
       });
 
-      test('equal rounded values should not be greater', () {
-        expect(1.23457.greaterThanWithPrecision(1.23456), isFalse);
+      test('respects precision', () {
+        // Rounded: 1.23456 → 1.2350; 1.23451 → 1.2345
+        expect(1.23456.greaterThanWithPrecision(1.23451), isTrue);
       });
 
-      test('different precision levels', () {
-        expect(1.23456.greaterThanWithPrecision(1.23412), isTrue);
-        expect(1.23456.greaterThanWithPrecision(1.23455, places: 5), isTrue);
-        expect(1.23456.greaterThanWithPrecision(1.23456, places: 5), isFalse);
-      });
-
-      test('negative numbers', () {
-        expect((-1.2346).greaterThanWithPrecision(-1.2347), isTrue);
-        expect((-1.2347).greaterThanWithPrecision(-1.2346), isFalse);
-      });
-
-      test('zero comparison', () {
-        expect(0.00011.greaterThanWithPrecision(0), isTrue);
-        expect(0.00009.greaterThanWithPrecision(0), isTrue);
-        expect(0.00004.greaterThanWithPrecision(0), isFalse);
-      });
-
-      test('rounding boundary', () {
-        expect(1.00005.greaterThanWithPrecision(1.00004), isTrue);
+      test('edge case: 1.005 vs rounding issue', () {
+        expect(1.005.greaterThanWithPrecision(1.0049, decimals: 2), isTrue);
+        expect(1.005.greaterThanWithPrecision(1.0051, decimals: 2), isFalse);
       });
     });
 
     group('lessThanWithPrecision', () {
-      test('simple less', () {
+      test('works for simple comparisons', () {
         expect(1.2344.lessThanWithPrecision(1.2345), isTrue);
-        expect(1.2345.lessThanWithPrecision(1.2344), isFalse);
+        expect(1.2346.lessThanWithPrecision(1.2345), isFalse);
       });
 
-      test('equal rounded values should not be less', () {
-        expect(1.23456.lessThanWithPrecision(1.23454), isFalse);
+      test('precision consistency', () {
+        expect(1.23451.lessThanWithPrecision(1.23456), isTrue);
       });
 
-      test('different precision levels', () {
-        expect(1.23412.lessThanWithPrecision(1.23456), isTrue);
-        expect(1.23455.lessThanWithPrecision(1.23456, places: 5), isTrue);
-      });
-
-      test('negative numbers', () {
-        expect((-1.2347).lessThanWithPrecision(-1.2346), isTrue);
-        expect((-1.2346).lessThanWithPrecision(-1.2347), isFalse);
-      });
-
-      test('zero comparison', () {
-        expect(0.0.lessThanWithPrecision(0.00011), isTrue);
-        expect(0.0.lessThanWithPrecision(0.00009), isTrue);
-        expect(0.0.lessThanWithPrecision(0.00004), isFalse);
-      });
-
-      test('rounding boundary', () {
-        expect(1.00004.lessThanWithPrecision(1.00005), isTrue);
+      test('edge: rounded boundary', () {
+        expect(1.0049.lessThanWithPrecision(1.01, decimals: 2), isTrue);
       });
     });
 
     group('equalWithPrecision', () {
-      test('equal rounded values', () {
-        expect(1.23456.equalWithPrecision(1.23457), isTrue);
-        expect(1.234501.equalWithPrecision(1.234499), isTrue);
+      test('equal when rounded precision matches', () {
+        expect(1.23456.equalWithPrecision(1.23459, decimals: 3), isTrue);
+        expect(1.23454.equalWithPrecision(1.23459), isFalse);
       });
 
-      test('not equal when rounding differs', () {
-        expect(1.23455.equalWithPrecision(1.23449), isFalse);
+      test('classic example: 1.005 == 1.005 at 2 decimals', () {
+        expect(1.005.equalWithPrecision(1.005, decimals: 2), isTrue);
       });
 
-      test('different precision levels', () {
-        expect(1.23436.equalWithPrecision(1.23412, places: 3), isTrue);
-        expect(1.23456.equalWithPrecision(1.23412), isFalse); // places: 4
+      test('edge: 2.675 → 2.68', () {
+        expect(2.675.equalWithPrecision(2.6751, decimals: 2), isTrue);
+      });
+    });
+
+    group('greaterOrEqualWithPrecision', () {
+      test('greater or equal basic', () {
+        expect(1.2345.greaterOrEqualWithPrecision(1.2345), isTrue);
+        expect(1.2346.greaterOrEqualWithPrecision(1.2345), isTrue);
+        expect(1.2344.greaterOrEqualWithPrecision(1.2345), isFalse);
       });
 
-      test('negative numbers', () {
-        expect((-1.23456).equalWithPrecision(-1.23457), isTrue);
-        expect((-1.23450).equalWithPrecision(-1.23440), isFalse);
+      test('boundary: equal after rounding', () {
+        expect(1.23456.greaterOrEqualWithPrecision(1.23454), isTrue);
       });
+    });
 
-      test('near zero', () {
-        expect(0.00004.equalWithPrecision(0.00001), isTrue);
-        expect(0.00011.equalWithPrecision(0.00004), isFalse);
+    group('lessOrEqualWithPrecision', () {
+      test('basic cases', () {
+        expect(1.2345.lessOrEqualWithPrecision(1.2345), isTrue);
+        expect(1.2344.lessOrEqualWithPrecision(1.2345), isTrue);
+        expect(1.2346.lessOrEqualWithPrecision(1.2345), isFalse);
       });
 
       test('boundary rounding', () {
-        expect(1.0005.equalWithPrecision(1.00049), isTrue);
+        expect(1.23454.lessOrEqualWithPrecision(1.23456), isTrue);
+      });
+    });
+
+    group('negative numbers', () {
+      test('rounding preserves negativity', () {
+        expect((-1.2345).lessThanWithPrecision(-1.2344), isTrue);
+        expect((-1.2344).greaterThanWithPrecision(-1.2345), isTrue);
+      });
+
+      test('equal after rounding', () {
+        expect((-1.23456).equalWithPrecision(-1.23459, decimals: 3), isTrue);
+      });
+    });
+
+    group('small numbers', () {
+      test('precision makes tiny values equal', () {
+        expect(0.00031.equalWithPrecision(0.00049, decimals: 3), isTrue);
+      });
+
+      test('still distinguishable at higher precision', () {
+        expect(0.00031.equalWithPrecision(0.00049), isFalse);
+      });
+    });
+
+    group('large numbers', () {
+      test('behaves correctly', () {
+        expect(
+          123456.78901.equalWithPrecision(123456.78902, decimals: 3),
+          isTrue,
+        );
+        expect(
+          123456.78901.equalWithPrecision(123456.78902, decimals: 5),
+          isFalse,
+        );
+      });
+    });
+
+    group('symmetry & reflexivity', () {
+      test('equalWithPrecision is symmetric', () {
+        expect(
+          1.23456.equalWithPrecision(1.23454),
+          equals(1.23454.equalWithPrecision(1.23456)),
+        );
+      });
+
+      test('reflexive', () {
+        expect(1.23456.equalWithPrecision(1.23456), isTrue);
+      });
+    });
+
+    group('transitivity (approximate)', () {
+      test('if A == B and B == C then A == C at same precision', () {
+        const a = 1.23456;
+        const b = 1.23455;
+        const c = 1.234549;
+
+        expect(a.equalWithPrecision(b, decimals: 3), isTrue);
+        expect(b.equalWithPrecision(c, decimals: 3), isTrue);
+        expect(a.equalWithPrecision(c, decimals: 3), isTrue);
       });
     });
   });

@@ -1,38 +1,35 @@
-import 'dart:math';
+import 'package:decimal/decimal.dart';
 
 extension PrecisionCompare on double {
-  bool greaterThanWithPrecision(double other, {int places = 4}) {
-    final factor = pow(10, places).toInt();
-    final a = (this * factor).round();
-    final b = (other * factor).round();
+  Decimal _toDecimal() => Decimal.parse(toString());
+
+  bool greaterThanWithPrecision(double other, {int decimals = 4}) {
+    final a = _toDecimal().round(scale: decimals);
+    final b = Decimal.parse(other.toString()).round(scale: decimals);
     return a > b;
   }
 
-  bool lessThanWithPrecision(double other, {int places = 4}) {
-    final factor = pow(10, places).toInt();
-    final a = (this * factor).round();
-    final b = (other * factor).round();
+  bool lessThanWithPrecision(double other, {int decimals = 4}) {
+    final a = _toDecimal().round(scale: decimals);
+    final b = Decimal.parse(other.toString()).round(scale: decimals);
     return a < b;
   }
 
-  bool equalWithPrecision(double other, {int places = 4}) {
-    final factor = pow(10, places).toInt();
-    return (this * factor).round() == (other * factor).round();
+  bool equalWithPrecision(double other, {int decimals = 4}) {
+    final a = _toDecimal().round(scale: decimals);
+    final b = Decimal.parse(other.toString()).round(scale: decimals);
+    return a == b;
   }
 
-  /// a >= b with precision
-  bool greaterOrEqualWithPrecision(double other, {int places = 4}) {
-    final factor = pow(10, places).toInt();
-    final a = (this * factor).round();
-    final b = (other * factor).round();
+  bool greaterOrEqualWithPrecision(double other, {int decimals = 4}) {
+    final a = _toDecimal().round(scale: decimals);
+    final b = Decimal.parse(other.toString()).round(scale: decimals);
     return a >= b;
   }
 
-  /// a <= b with precision
-  bool lessOrEqualWithPrecision(double other, {int places = 4}) {
-    final factor = pow(10, places).toInt();
-    final a = (this * factor).round();
-    final b = (other * factor).round();
+  bool lessOrEqualWithPrecision(double other, {int decimals = 4}) {
+    final a = _toDecimal().round(scale: decimals);
+    final b = Decimal.parse(other.toString()).round(scale: decimals);
     return a <= b;
   }
 }

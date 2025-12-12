@@ -230,7 +230,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     Log.p('[validate] CC amount desired $swapAmountDesiredCC', logTarget);
     Log.p('[validate] CC remaining allowance ${ccRemainingAllowance()}', logTarget);
 
-    if (swapAmountDesiredCC.greaterThanWithPrecision(ccAllowance, places: 3)) {
+    if (swapAmountDesiredCC.greaterThanWithPrecision(ccAllowance, decimals: 3)) {
       return context.l10n.exerciseSwapOptionAllowanceExceeded(fmt(ccAllowance), ccSymbol);
     }
 
@@ -361,12 +361,12 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
 
     var assetAmountBigInt = BigInt.from(assetAmount * pow(10, assetSwap.decimals));
 
-    if (assetAmount.equalWithPrecision(assetSwap.allowance, places: 3)) {
+    if (assetAmount.equalWithPrecision(assetSwap.allowance, decimals: 3)) {
       // Ensure that we do not have dust swaps due to rounding incoherence
       assetAmountBigInt = assetSwap.value.assetAllowance;
     }
 
-    if (assetAmount.equalWithPrecision(treasuryBalance(), places: 3)) {
+    if (assetAmount.equalWithPrecision(treasuryBalance(), decimals: 3)) {
       // double ensure that we do not try to send more than the treasury
       // has due to rounding errors.
       assetAmountBigInt = localTreasuryBalanceOnAHK;
@@ -396,12 +396,12 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
 
     var nativeAmountBigInt = BigInt.from(nativeAmount * pow(10, nativeSwap.decimals));
 
-    if (nativeAmount.equalWithPrecision(nativeSwap.allowance, places: 3)) {
+    if (nativeAmount.equalWithPrecision(nativeSwap.allowance, decimals: 3)) {
       // Ensure that we do not have dust swaps due to rounding incoherence
       nativeAmountBigInt = nativeSwap.value.nativeAllowance;
     }
 
-    if (nativeAmount.equalWithPrecision(treasuryBalance(), places: 3)) {
+    if (nativeAmount.equalWithPrecision(treasuryBalance(), decimals: 3)) {
       // double ensure that we do not try to send more than the treasury
       // has due to rounding errors.
       nativeAmountBigInt = localTreasuryBalance;
