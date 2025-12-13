@@ -281,20 +281,23 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
   Widget _buildBottomSubmit() {
     final l10n = context.l10n;
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SubmitButton(
-            onPressed: (context) async {
-              if (_formKey.currentState!.validate()) {
-                await _submitSwap();
-              }
-            },
-            child: Text(l10n.exerciseSwapOption),
-          ),
-        ],
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SubmitButton(
+              onPressed: (context) async {
+                if (_formKey.currentState!.validate()) {
+                  await _submitSwap();
+                }
+              },
+              child: Text(l10n.exerciseSwapOption),
+            ),
+          ],
+        ),
       ),
     );
   }
