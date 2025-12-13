@@ -318,10 +318,12 @@ class _AssetsViewState extends State<AssetsView> {
                     children: [
                       const Icon(Iconsax.trade),
                       const SizedBox(width: 4),
-                      Text(l10n.exerciseSwapAssetOptionAvailable(mockAssetSwap(widget.store.encointer.chosenCid!).symbol)),
+                      Text(l10n
+                          .exerciseSwapAssetOptionAvailable(mockAssetSwap(widget.store.encointer.chosenCid!).symbol)),
                     ],
                   ),
-                  onPressed: () => Navigator.pushNamed(context, ExerciseSwapPage.route, arguments: mockAssetSwap(widget.store.encointer.chosenCid!)),
+                  onPressed: () => Navigator.pushNamed(context, ExerciseSwapPage.route,
+                      arguments: mockAssetSwap(widget.store.encointer.chosenCid!)),
                 ),
               if (nativeSwap != null)
                 ElevatedButton(
