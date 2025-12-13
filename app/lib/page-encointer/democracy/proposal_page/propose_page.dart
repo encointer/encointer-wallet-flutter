@@ -13,6 +13,7 @@ import 'package:encointer_wallet/page-encointer/democracy/proposal_page/utf8_lim
 import 'package:encointer_wallet/page-encointer/democracy/utils/field_validation.dart';
 import 'package:encointer_wallet/service/forex/forex_service.dart';
 import 'package:encointer_wallet/service/forex/known_community.dart';
+import 'package:encointer_wallet/utils/ui.dart';
 import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/asset_hub/asset_hub_web_api.dart';
@@ -411,8 +412,9 @@ class _ProposePageState extends State<ProposePage> {
                             SubmitButton(
                               onPressed: shouldEnableSubmit()
                                   ? (context) async {
-                                      _formKey.currentState!.validate();
-                                      await _submitProposal();
+                                      if (_formKey.currentState!.validate()) {
+                                        await _submitProposal();
+                                      }
                                     }
                                   : null,
                               child: Text(l10n.proposalSubmit),
@@ -639,13 +641,13 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget issueSwapNativeOptionInput() {
-    final maxSwapValue =
+    final unallocatedTreasuryFunds =
         RepositoryProvider.of<AppSettings>(context).developerMode ? null : nativeTreasuryUnallocatedLiquidity();
-    return Column(children: issueSwapOptionInput('KSM', maxSwapValue, false));
+    return Column(children: issueSwapOptionInput('KSM', unallocatedTreasuryFunds, false));
   }
 
   Widget issueSwapAssetOptionInput() {
-    final maxSwapValue =
+    final unallocatedTreasuryFunds =
         RepositoryProvider.of<AppSettings>(context).developerMode ? null : assetTreasuryUnallocatedLiquidity();
 
     final store = context.read<AppStore>();
@@ -653,7 +655,7 @@ class _ProposePageState extends State<ProposePage> {
 
     return Column(children: [
       selectAssetDropDown(l10n.proposalFieldAssetToSwap(store.encointer.community!.symbol!)),
-      ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), maxSwapValue, true),
+      ...issueSwapOptionInput(selectedAsset.name.toUpperCase(), unallocatedTreasuryFunds, true),
     ]);
   }
 
@@ -683,7 +685,7 @@ class _ProposePageState extends State<ProposePage> {
     return rate ?? 0.0;
   }
 
-  List<Widget> issueSwapOptionInput(String currency, double? maxSwapValue, bool tryDeriveRate) {
+  List<Widget> issueSwapOptionInput(String currency, double? unallocatedTreasuryFunds, bool tryDeriveRate) {
     final l10n = context.l10n;
     final store = context.read<AppStore>();
 
@@ -695,21 +697,11 @@ class _ProposePageState extends State<ProposePage> {
           errorText: allowanceError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [
-          // Only numbers & decimal
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-        ],
-        validator: (v) => validatePositiveNumberString(context, v),
+        inputFormatters: [UI.decimalInputFormatter()],
+        validator: (v) => validateSwap(unallocatedTreasuryFunds, currency),
         onChanged: (value) {
           setState(() {
-            allowanceError = validateSwapAmount(
-              context,
-              value,
-              store.encointer.communityBalance!,
-              store.encointer.community!.symbol!,
-              maxSwapValue ?? double.infinity,
-              double.tryParse(rateController.text) ?? 0,
-            );
+            allowanceError = validateSwap(unallocatedTreasuryFunds, currency);
           });
         },
       ),
@@ -729,6 +721,28 @@ class _ProposePageState extends State<ProposePage> {
       // Text(l10n.proposalFieldBurn, style: const TextStyle(fontWeight: FontWeight.bold)),
       // Text(l10n.proposalFieldValidity, style: const TextStyle(fontWeight: FontWeight.bold)),
     ];
+  }
+
+  String? validateSwap(double? unallocatedTreasuryFunds, String currency) {
+    final store = context.read<AppStore>();
+    final l10n = context.l10n;
+    final ccSymbol = store.encointer.community!.symbol!;
+
+    final swapAmountDesiredCC = double.tryParse(allowanceController.text) ?? 0;
+
+    final e1 = validatePositiveNumber(context, swapAmountDesiredCC);
+    if (e1 != null) return e1;
+
+    final rate = double.tryParse(rateController.text) ?? 0;
+    if (unallocatedTreasuryFunds != null) {
+      final ccTreasuryFreeCC = unallocatedTreasuryFunds * rate;
+      Log.p('[validate] CC treasury balance $ccTreasuryFreeCC', logTarget);
+      if (swapAmountDesiredCC.greaterThanWithPrecision(ccTreasuryFreeCC)) {
+        return l10n.treasuryBalanceTooLow(Fmt.formatNumber(context, ccTreasuryFreeCC, decimals: 4), ccSymbol);
+      }
+    }
+
+    return null;
   }
 
   Widget rateInput(String currency, bool tryDeriveRate) {
@@ -756,10 +770,7 @@ class _ProposePageState extends State<ProposePage> {
         errorText: rateError,
       ),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: [
-        // Only numbers & decimal
-        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-      ],
+      inputFormatters: [UI.decimalInputFormatter()],
       validator: (String? val) => validatePositiveNumberString(context, val),
       onChanged: (value) {
         setState(() {
@@ -839,11 +850,8 @@ class _ProposePageState extends State<ProposePage> {
           errorText: amountError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [
-          // Only numbers & decimal
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-        ],
-        validator: (String? val) => validatePositiveNumberString(context, val),
+        inputFormatters: [UI.decimalInputFormatter()],
+        validator: (String? val) => validatePositiveNumberWithMax(context, double.tryParse(val ?? ''), max),
         onChanged: (value) {
           setState(() {
             amountError = validatePositiveNumberWithMax(context, double.tryParse(value), max);
@@ -875,10 +883,7 @@ class _ProposePageState extends State<ProposePage> {
         errorText: inactivityTimeoutError,
       ),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-        // Only numbers & decimal
-      ],
+      inputFormatters: [UI.decimalInputFormatter()],
       validator: validateInactivityTimeout,
       onChanged: (value) {
         setState(() {
@@ -898,10 +903,7 @@ class _ProposePageState extends State<ProposePage> {
         errorText: nominalIncomeError,
       ),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-        // Only numbers & decimal
-      ],
+      inputFormatters: [UI.decimalInputFormatter()],
       validator: (String? val) => validatePositiveNumberString(context, val),
       onChanged: (value) {
         setState(() {
@@ -921,10 +923,7 @@ class _ProposePageState extends State<ProposePage> {
         errorText: demurrageError,
       ),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: [
-        // Only numbers & decimal
-        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-      ],
+      inputFormatters: [UI.decimalInputFormatter()],
       validator: validateDemurrage,
       onChanged: (value) {
         setState(() {
@@ -944,10 +943,7 @@ class _ProposePageState extends State<ProposePage> {
           errorText: latError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^-?\d*\.?\d*$')),
-          // Allows negative, decimals, and numbers
-        ],
+        inputFormatters: [UI.decimalInputFormatter()],
         validator: validateLatitude,
         onChanged: (value) {
           setState(() {
@@ -962,9 +958,7 @@ class _ProposePageState extends State<ProposePage> {
           errorText: lonError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^-?\d*\.?\d*$')),
-        ],
+        inputFormatters: [UI.decimalInputFormatter()],
         validator: validateLongitude,
         onChanged: (value) {
           setState(() {

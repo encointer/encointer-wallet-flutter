@@ -74,8 +74,6 @@ class _AssetsViewState extends State<AssetsView> {
   NativeSwap? nativeSwap;
   AssetSwap? assetSwap;
 
-  final devSwap = false;
-
   @override
   void initState() {
     _connectNodeAll();
@@ -112,15 +110,6 @@ class _AssetsViewState extends State<AssetsView> {
     }
 
     final accountId = AddressUtils.addressToPubKey(widget.store.account.currentAddress).toList();
-
-    if (devSwap) {
-      Log.d('DEV: Getting Swap Options', _logTarget);
-      setState(() {
-        nativeSwap = mockNativeSwap(cid);
-        assetSwap = mockAssetSwap(cid);
-      });
-      return;
-    }
 
     Log.d('Getting Swap Options', _logTarget);
 
@@ -322,6 +311,20 @@ class _AssetsViewState extends State<AssetsView> {
                   ),
                   onPressed: () => Navigator.pushNamed(context, ExerciseSwapPage.route, arguments: assetSwap),
                 ),
+              if (widget.store.settings.usdcMockSwapEnabled && widget.store.encointer.chosenCid != null)
+                ElevatedButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Iconsax.trade),
+                      const SizedBox(width: 4),
+                      Text(l10n
+                          .exerciseSwapAssetOptionAvailable(mockAssetSwap(widget.store.encointer.chosenCid!).symbol)),
+                    ],
+                  ),
+                  onPressed: () => Navigator.pushNamed(context, ExerciseSwapPage.route,
+                      arguments: mockAssetSwap(widget.store.encointer.chosenCid!)),
+                ),
               if (nativeSwap != null)
                 ElevatedButton(
                   child: Row(
@@ -336,6 +339,22 @@ class _AssetsViewState extends State<AssetsView> {
                     context,
                     ExerciseSwapPage.route,
                     arguments: nativeSwap,
+                  ),
+                ),
+              if (widget.store.settings.ksmMockSwapEnabled && widget.store.encointer.chosenCid != null)
+                ElevatedButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Iconsax.trade),
+                      const SizedBox(width: 4),
+                      Text(l10n.exerciseSwapNativeOptionAvailable),
+                    ],
+                  ),
+                  onPressed: () => Navigator.pushNamed(
+                    context,
+                    ExerciseSwapPage.route,
+                    arguments: mockNativeSwap(widget.store.encointer.chosenCid!),
                   ),
                 ),
               Observer(builder: (_) {

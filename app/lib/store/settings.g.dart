@@ -77,6 +77,36 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
+  late final _$ksmMockSwapEnabledAtom = Atom(name: '_SettingsStore.ksmMockSwapEnabled', context: context);
+
+  @override
+  bool get ksmMockSwapEnabled {
+    _$ksmMockSwapEnabledAtom.reportRead();
+    return super.ksmMockSwapEnabled;
+  }
+
+  @override
+  set ksmMockSwapEnabled(bool value) {
+    _$ksmMockSwapEnabledAtom.reportWrite(value, super.ksmMockSwapEnabled, () {
+      super.ksmMockSwapEnabled = value;
+    });
+  }
+
+  late final _$usdcMockSwapEnabledAtom = Atom(name: '_SettingsStore.usdcMockSwapEnabled', context: context);
+
+  @override
+  bool get usdcMockSwapEnabled {
+    _$usdcMockSwapEnabledAtom.reportRead();
+    return super.usdcMockSwapEnabled;
+  }
+
+  @override
+  set usdcMockSwapEnabled(bool value) {
+    _$usdcMockSwapEnabledAtom.reportWrite(value, super.usdcMockSwapEnabled, () {
+      super.usdcMockSwapEnabled = value;
+    });
+  }
+
   late final _$contactListAtom = Atom(name: '_SettingsStore.contactList', context: context);
 
   @override
@@ -151,6 +181,26 @@ mixin _$SettingsStore on _SettingsStore, Store {
   late final _$_SettingsStoreActionController = ActionController(name: '_SettingsStore', context: context);
 
   @override
+  void toggleKsmMockSwapEnabled() {
+    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.toggleKsmMockSwapEnabled');
+    try {
+      return super.toggleKsmMockSwapEnabled();
+    } finally {
+      _$_SettingsStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void toggleUsdcMockSwapEnabled() {
+    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.toggleUsdcMockSwapEnabled');
+    try {
+      return super.toggleUsdcMockSwapEnabled();
+    } finally {
+      _$_SettingsStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setNetworkLoading(bool isLoading) {
     final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setNetworkLoading');
     try {
@@ -176,6 +226,8 @@ mixin _$SettingsStore on _SettingsStore, Store {
 loading: ${loading},
 localeCode: ${localeCode},
 currentNetwork: ${currentNetwork},
+ksmMockSwapEnabled: ${ksmMockSwapEnabled},
+usdcMockSwapEnabled: ${usdcMockSwapEnabled},
 contactList: ${contactList},
 endpointIsNoTee: ${endpointIsNoTee},
 ipfsGateway: ${ipfsGateway},

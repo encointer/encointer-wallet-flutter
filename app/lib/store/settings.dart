@@ -29,6 +29,12 @@ abstract class _SettingsStore with Store {
   Network currentNetwork = Network.encointerKusama;
 
   @observable
+  bool ksmMockSwapEnabled = false;
+
+  @observable
+  bool usdcMockSwapEnabled = false;
+
+  @observable
   ObservableList<AccountData> contactList = ObservableList<AccountData>();
 
   @computed
@@ -56,6 +62,16 @@ abstract class _SettingsStore with Store {
     await Future.wait([
       loadContacts(),
     ]);
+  }
+
+  @action
+  void toggleKsmMockSwapEnabled() {
+    ksmMockSwapEnabled = !ksmMockSwapEnabled;
+  }
+
+  @action
+  void toggleUsdcMockSwapEnabled() {
+    usdcMockSwapEnabled = !usdcMockSwapEnabled;
   }
 
   @action

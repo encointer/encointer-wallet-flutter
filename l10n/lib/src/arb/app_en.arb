@@ -178,6 +178,19 @@
             }
         }
     },
+    "swapOptionRemaining": "Remaining allowance: {amount} {asset}",
+    "@swapOptionRemaining": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "0.1"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
     "exerciseSwapAssetOptionAvailable": "Swap Option Available",
     "@exerciseSwapAssetOptionAvailable": {
         "placeholders": {
@@ -189,6 +202,28 @@
     },
     "exerciseSwapNativeOptionAvailable": "KSM Swap Option Available",
     "exerciseSwapOption": "Exercise Swap Option",
+    "exerciseSwapOptionAllowanceExceeded": "Swap Allowance Exceeded (max: {amount} {asset})",
+    "@exerciseSwapOptionAllowanceExceeded": {
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "1"
+            },
+            "asset": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
+    "exerciseSwapOptionAmount": "Amount to Swap ({cc})",
+    "@exerciseSwapOptionAmount": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "USDC"
+            }
+        }
+    },
     "export": "Export Account",
     "exportAccount": "export",
     "exportMnemonicOk": "Mnemonic was copied to clipboard.",
@@ -213,7 +248,15 @@
     "importMustNotBeEmpty": "Input must not be empty",
     "importPrivateKeyUnsupported": "Private key account import is not yet supported.",
     "incomeIssuance": "Community income",
-    "insufficientBalance": "Insufficient balance",
+    "insufficientBalance": "Insufficient balance ({cc})",
+    "@insufficientBalance": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    },
     "insufficientFundsErrorBody": "You do not have sufficient funds on this account. See on the website of your local community how to get some.",
     "insufficientFundsErrorTitle": "Insufficient Funds",
     "invalidTransactionFormatErrorBody": "The transaction had an invalid format, which might be a bug. If you think this is a bug, please tap the corresponding field below.",
@@ -573,6 +616,19 @@
     },
     "treasuryLocalBalanceOnAHK": "Free community treasury balance on Asset Hub: {balance} {asset}.",
     "@treasuryLocalBalanceOnAHK": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            },
+            "asset": {
+                "type": "String",
+                "example": "{Leu}"
+            }
+        }
+    },
+    "treasuryLocalBalanceOnAHKBeforeSwap": "Free community treasury balance on Asset Hub before swap: {balance} {asset}.",
+    "@treasuryLocalBalanceOnAHKBeforeSwap": {
         "placeholders": {
             "balance": {
                 "type": "String",

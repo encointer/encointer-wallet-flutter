@@ -178,6 +178,7 @@
             }
         }
     },
+    "swapOptionRemaining": "Verbleibender Freibetrag: {amount} {asset}",
     "exerciseSwapAssetOptionAvailable": "Swap-Option verfügbar",
     "@exerciseSwapAssetOptionAvailable": {
         "placeholders": {
@@ -189,6 +190,8 @@
     },
     "exerciseSwapNativeOptionAvailable": "KSM-Swap-Option verfügbar",
     "exerciseSwapOption": "Swap-Option ausführen",
+    "exerciseSwapOptionAmount": "Zu tauschender Betrag ({cc})",
+    "exerciseSwapOptionAllowanceExceeded": "Tauschfreibetrag überschritten (max: {amount} {asset})",
     "export": "Konto exportieren",
     "exportAccount": "exportieren",
     "exportMnemonicOk": "Mnemonik wurde in die Zwischenablage kopiert.",
@@ -436,6 +439,7 @@
     "treasuryGlobalBalance": "Freies globales Schatzkammerguthaben: {balance} KSM.",
     "treasuryLocalBalance": "Freies Gemeinschaftsschatzkammerguthaben: {balance} KSM.",
     "treasuryLocalBalanceOnAHK": "Freies Gemeinschaftsschatzkammerguthaben auf Asset Hub: {balance} {asset}.",
+    "treasuryLocalBalanceOnAHKBeforeSwap": "Freies Gemeinschaftsschatzguthaben auf dem Asset Hub vor dem Tausch: {balance} {asset}.",
     "treasuryPendingSpends": "Ausstehende Ausgaben: {spends} KSM.",
     "txBroadcast": "Transaktion wurde im Netzwerk",
     "txError": "Transaktionsfehler",

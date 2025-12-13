@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/field_validation.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/swap_options.dart';
+import 'package:encointer_wallet/utils/ui.dart';
 import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/asset_hub/asset_hub_web_api.dart';
@@ -13,6 +14,7 @@ import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/theme/custom/typography/typography_theme.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:ew_primitives/ew_primitives.dart';
 import 'package:flutter/material.dart';
 import 'package:ew_l10n/l10n.dart';
 import 'package:flutter/services.dart';
@@ -147,7 +149,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
           children: [
             Text(l10n.swapOption, style: context.headlineSmall),
             const SizedBox(height: 8),
-            Text(l10n.swapOptionLimit(
+            Text(l10n.swapOptionRemaining(
               fmt(widget.option.allowance),
               widget.option.symbol,
             )),
@@ -175,26 +177,17 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                 child: TextFormField(
                   controller: amountController,
                   decoration: InputDecoration(
-                    labelText: l10n.proposalFieldAmount(
+                    labelText: l10n.exerciseSwapOptionAmount(
                       context.read<AppStore>().encointer.community!.symbol!,
                     ),
                     errorText: amountError,
                   ),
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-                  ],
-                  validator: (val) => validatePositiveNumberString(context, val),
+                  inputFormatters: [UI.decimalInputFormatter()],
+                  validator: (val) => validate(),
                   onChanged: (_) {
                     setState(() {
-                      amountError = validateSwapAmount(
-                        context,
-                        amountController.text,
-                        ccBalance,
-                        widget.option.symbol,
-                        treasuryBalance(),
-                        widget.option.rate,
-                      );
+                      amountError = validate();
                     });
                   },
                 ),
@@ -203,15 +196,8 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
               TextButton(
                 onPressed: () {
                   setState(() {
-                    amountController.text = fmt(maxSwappable(ccBalance));
-                    amountError = validateSwapAmount(
-                      context,
-                      amountController.text,
-                      ccBalance,
-                      widget.option.symbol,
-                      treasuryBalance(),
-                      widget.option.rate,
-                    );
+                    amountController.text = Fmt.formatNumber(context, maxSwappable(ccBalance), decimals: 6);
+                    amountError = validate();
                   });
                 },
                 child: const Text('Max'),
@@ -221,6 +207,38 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
         ),
       ),
     );
+  }
+
+  String? validate() {
+    final store = context.read<AppStore>();
+    final l10n = context.l10n;
+
+    final ccBalance = store.encointer.communityBalance!;
+    final ccSymbol = store.encointer.community!.symbol!;
+
+    final swapAmountDesiredCC = double.tryParse(amountController.text) ?? 0;
+
+    final e1 = validatePositiveNumber(context, swapAmountDesiredCC);
+    if (e1 != null) return e1;
+
+    final e2 = validatePositiveNumberWithMax(context, swapAmountDesiredCC, ccBalance);
+    if (e2 != null) return l10n.insufficientBalance(ccSymbol);
+
+    final ccAllowance = ccRemainingAllowance();
+    Log.p('[validate] CC amount desired $swapAmountDesiredCC', logTarget);
+    Log.p('[validate] CC remaining allowance ${ccRemainingAllowance()}', logTarget);
+
+    if (swapAmountDesiredCC.greaterThanWithPrecision(ccAllowance, decimals: 3)) {
+      return context.l10n.exerciseSwapOptionAllowanceExceeded(fmt(ccAllowance), ccSymbol);
+    }
+
+    final treasury = treasuryCC();
+    Log.p('[validate] CC treasury balance $treasury', logTarget);
+    if (swapAmountDesiredCC.greaterThanWithPrecision(treasury)) {
+      return l10n.treasuryBalanceTooLow(Fmt.formatNumber(context, treasury, decimals: 4), ccSymbol);
+    }
+
+    return null;
   }
 
   Widget _buildToBeReceivedCard(AppLocalizations l10n) {
@@ -246,7 +264,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
               l10n.treasuryLocalBalance(fmt(balance)),
             ),
           AssetSwap() => Text(
-              l10n.treasuryLocalBalanceOnAHK(
+              l10n.treasuryLocalBalanceOnAHKBeforeSwap(
                 fmt(balance),
                 widget.option.symbol,
               ),
@@ -263,20 +281,23 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
   Widget _buildBottomSubmit() {
     final l10n = context.l10n;
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SubmitButton(
-            onPressed: (context) async {
-              if (_formKey.currentState!.validate()) {
-                await _submitSwap();
-              }
-            },
-            child: Text(l10n.exerciseSwapOption),
-          ),
-        ],
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SubmitButton(
+              onPressed: (context) async {
+                if (_formKey.currentState!.validate()) {
+                  await _submitSwap();
+                }
+              },
+              child: Text(l10n.exerciseSwapOption),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -305,13 +326,21 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     // CC available from user (and keep some spare)
     final userCC = ccBalance * 0.98;
 
-    // CC equivalent of treasury assets
-    final treasuryCC = treasuryBalance() * widget.option.rate;
-
     // Option limit (in CC)
-    final limitCC = widget.option.allowance * widget.option.rate;
+    final limitCC = ccRemainingAllowance();
 
-    return min(userCC, min(treasuryCC, limitCC));
+    return min(userCC, min(treasuryCC(), limitCC));
+  }
+
+  double treasuryCC() {
+    // CC equivalent of treasury assets (and floor to a reasonable value to
+    // prevent rounding errors and exceeding the treasury balance).
+    return (treasuryBalance() * widget.option.rate).floorToDecimals(4);
+  }
+
+  /// Option limit (in CC)
+  double ccRemainingAllowance() {
+    return widget.option.allowance * widget.option.rate;
   }
 
   Future<void> _submitSwap() async {
@@ -331,13 +360,26 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     final cc = double.parse(amountController.text);
     final assetAmount = cc / assetSwap.rate;
 
+    var assetAmountBigInt = BigInt.from(assetAmount * pow(10, assetSwap.decimals));
+
+    if (assetAmount.equalWithPrecision(assetSwap.allowance, decimals: 3)) {
+      // Ensure that we do not have dust swaps due to rounding incoherence
+      assetAmountBigInt = assetSwap.value.assetAllowance;
+    }
+
+    if (assetAmount.equalWithPrecision(treasuryBalance(), decimals: 3)) {
+      // double ensure that we do not try to send more than the treasury
+      // has due to rounding errors.
+      assetAmountBigInt = localTreasuryBalanceOnAHK;
+    }
+
     await submitSwapAsset(
       context,
       store,
       webApi,
       store.account.getKeyringAccount(store.account.currentAccountPubKey!),
       store.encointer.chosenCid!,
-      BigInt.from(assetAmount * pow(10, assetSwap.decimals)),
+      assetAmountBigInt,
       txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
       onError: (err) {
         showTxErrorDialog(context, getLocalizedTxErrorMessage(l10n, err), false);
@@ -353,13 +395,26 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     final cc = double.parse(amountController.text);
     final nativeAmount = cc / nativeSwap.rate;
 
+    var nativeAmountBigInt = BigInt.from(nativeAmount * pow(10, nativeSwap.decimals));
+
+    if (nativeAmount.equalWithPrecision(nativeSwap.allowance, decimals: 3)) {
+      // Ensure that we do not have dust swaps due to rounding incoherence
+      nativeAmountBigInt = nativeSwap.value.nativeAllowance;
+    }
+
+    if (nativeAmount.equalWithPrecision(treasuryBalance(), decimals: 3)) {
+      // double ensure that we do not try to send more than the treasury
+      // has due to rounding errors.
+      nativeAmountBigInt = localTreasuryBalance;
+    }
+
     await submitSwapNative(
       context,
       store,
       webApi,
       store.account.getKeyringAccount(store.account.currentAccountPubKey!),
       store.encointer.chosenCid!,
-      BigInt.from(nativeAmount * pow(10, nativeSwap.decimals)),
+      nativeAmountBigInt,
       txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
       onError: (err) {
         showTxErrorDialog(context, getLocalizedTxErrorMessage(l10n, err), false);
