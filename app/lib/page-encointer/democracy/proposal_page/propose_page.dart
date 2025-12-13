@@ -13,6 +13,7 @@ import 'package:encointer_wallet/page-encointer/democracy/proposal_page/utf8_lim
 import 'package:encointer_wallet/page-encointer/democracy/utils/field_validation.dart';
 import 'package:encointer_wallet/service/forex/forex_service.dart';
 import 'package:encointer_wallet/service/forex/known_community.dart';
+import 'package:encointer_wallet/utils/ui.dart';
 import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/asset_hub/asset_hub_web_api.dart';
@@ -696,10 +697,7 @@ class _ProposePageState extends State<ProposePage> {
           errorText: allowanceError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [
-          // Only numbers & decimal
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-        ],
+        inputFormatters: [UI.decimalInputFormatter()],
         validator: (v) => validateSwap(unallocatedTreasuryFunds, currency),
         onChanged: (value) {
           setState(() {
@@ -772,10 +770,7 @@ class _ProposePageState extends State<ProposePage> {
         errorText: rateError,
       ),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: [
-        // Only numbers & decimal
-        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-      ],
+      inputFormatters: [UI.decimalInputFormatter()],
       validator: (String? val) => validatePositiveNumberString(context, val),
       onChanged: (value) {
         setState(() {
@@ -855,10 +850,7 @@ class _ProposePageState extends State<ProposePage> {
           errorText: amountError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [
-          // Only numbers & decimal
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-        ],
+        inputFormatters: [UI.decimalInputFormatter()],
         validator: (String? val) => validatePositiveNumberWithMax(context, double.tryParse(val ?? ''), max),
         onChanged: (value) {
           setState(() {
@@ -891,10 +883,7 @@ class _ProposePageState extends State<ProposePage> {
         errorText: inactivityTimeoutError,
       ),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-        // Only numbers & decimal
-      ],
+      inputFormatters: [UI.decimalInputFormatter()],
       validator: validateInactivityTimeout,
       onChanged: (value) {
         setState(() {
@@ -914,10 +903,7 @@ class _ProposePageState extends State<ProposePage> {
         errorText: nominalIncomeError,
       ),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-        // Only numbers & decimal
-      ],
+      inputFormatters: [UI.decimalInputFormatter()],
       validator: (String? val) => validatePositiveNumberString(context, val),
       onChanged: (value) {
         setState(() {
@@ -937,10 +923,7 @@ class _ProposePageState extends State<ProposePage> {
         errorText: demurrageError,
       ),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: [
-        // Only numbers & decimal
-        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-      ],
+      inputFormatters: [UI.decimalInputFormatter()],
       validator: validateDemurrage,
       onChanged: (value) {
         setState(() {
@@ -960,10 +943,7 @@ class _ProposePageState extends State<ProposePage> {
           errorText: latError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^-?\d*\.?\d*$')),
-          // Allows negative, decimals, and numbers
-        ],
+        inputFormatters: [UI.decimalInputFormatter()],
         validator: validateLatitude,
         onChanged: (value) {
           setState(() {
@@ -978,9 +958,7 @@ class _ProposePageState extends State<ProposePage> {
           errorText: lonError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^-?\d*\.?\d*$')),
-        ],
+        inputFormatters: [UI.decimalInputFormatter()],
         validator: validateLongitude,
         onChanged: (value) {
           setState(() {

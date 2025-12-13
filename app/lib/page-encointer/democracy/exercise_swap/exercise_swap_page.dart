@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/field_validation.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/swap_options.dart';
+import 'package:encointer_wallet/utils/ui.dart';
 import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/asset_hub/asset_hub_web_api.dart';
@@ -182,9 +183,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
                     errorText: amountError,
                   ),
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-                  ],
+                  inputFormatters: [UI.decimalInputFormatter()],
                   validator: (val) => validate(),
                   onChanged: (_) {
                     setState(() {
