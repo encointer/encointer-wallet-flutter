@@ -15,10 +15,7 @@ on:
       docker_tag:
         required: true
         type: string
-    outputs:
-      ws_endpoint:
-        description: "WebSocket endpoint of encointer-node"
-        value: ${{ jobs.encointer_node.outputs.ws_endpoint }}
+
 env:
   ARTIFACT_PATH: ./screenshots
 
