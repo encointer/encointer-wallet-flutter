@@ -27,9 +27,8 @@ jobs:
 
       - name: Run encointer-node
         run: |
-          docker run -d \
-            -p 9944:9944 \
-            encointer/encointer-node:${{ inputs.docker_tag }}
+          docker_run_encointer_node_notee.sh \
+            --docker-tag=${{ inputs.docker_tag }}
 
       - name: Bootstrap demo community
         run: |
