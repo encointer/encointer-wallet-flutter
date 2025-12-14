@@ -2,7 +2,7 @@ name: IOS Build and Deploy
 
 on:
   push:
-    branches: [ master, beta ]
+    branches: [ master, beta, cl/test-ios-deployment ]
     tags:
       - "*"
   pull_request:
