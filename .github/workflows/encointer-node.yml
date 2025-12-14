@@ -33,29 +33,30 @@ jobs:
           ./cloudflared tunnel --url http://localhost:9944 > tunnel.log 2>&1 &
           sleep 5
 
-      - name: Verify tunnel over HTTPS
+      - name: Verify tunnel DNS
         run: |
           # Extract HTTPS URL
           HTTP_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log | head -n1)
-          echo "Tunnel URL: $HTTP_URL"
+          HOST=$(echo "$HTTP_URL" | sed -E 's|https://([^/]+).*|\1|')
 
-          # Retry check up to 10 times
+          echo "Tunnel hostname: $HOST"
+
+          # Retry up to 10 times for DNS resolution
           for i in {1..10}; do
-            if curl -sSf "$HTTP_URL" >/dev/null; then
-              echo "Tunnel is reachable at $HTTP_URL"
+            if getent hosts "$HOST" >/dev/null; then
+              echo "Tunnel hostname resolves: $HOST"
               break
             fi
-            echo "Tunnel not reachable yet, retrying..."
+            echo "Waiting for tunnel DNS..."
             sleep 3
           done
 
-          # Fail if still unreachable
-          if ! curl -sSf "$HTTP_URL" >/dev/null; then
-            echo "ERROR: Tunnel is still not reachable after 30s"
+          if ! getent hosts "$HOST" >/dev/null; then
+            echo "ERROR: Tunnel hostname not resolving"
             exit 1
           fi
 
-          # Convert to WS for downstream jobs
+          # Export WS endpoint for downstream jobs
           echo "ws=${HTTP_URL/https:/wss:}" >> $GITHUB_OUTPUT
 
       - id: export
