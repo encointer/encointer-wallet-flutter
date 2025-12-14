@@ -18,54 +18,9 @@ env:
 
 jobs:
   encointer_node:
-    name: Encointer Node
-    runs-on: ubuntu-latest
-    outputs:
-      ws_endpoint: ${{ steps.export.outputs.ws }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Run encointer-node
-        run: |
-          ./scripts/docker_run_encointer_node_notee.sh \
-            ${{ inputs.docker_tag }} &
-
-      - name: Bootstrap demo community
-        run: |
-          ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh \
-           --docker-tag=${{ inputs.docker_tag }}
-
-      - name: Start Cloudflare tunnel
-        run: |
-          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 \
-            -o cloudflared
-          chmod +x cloudflared
-          ./cloudflared tunnel --url http://localhost:9944 > tunnel.log 2>&1 &
-          sleep 10
-
-      - id: export
-        name: Export WS endpoint
-        run: |
-          URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log | head -n1)
-          echo "ws=${URL/https:/wss:}" >> $GITHUB_OUTPUT
-
-      - name: Verify Cloudflare tunnel
-        run: |
-          for i in {1..10}; do
-            if curl -sSf "${URL}" >/dev/null; then
-              echo "Tunnel is reachable at $URL"
-              break
-            fi
-            echo "Tunnel not reachable yet, retrying..."
-            sleep 3
-          done
-          if ! curl -sSf "${URL}" >/dev/null; then
-            echo "ERROR: Tunnel is still not reachable after 30s"
-            exit 1
-          fi
-        env:
-          URL: ${{ steps.export.outputs.ws }}
-
+    uses: ./.github/workflows/encointer-node.yml
+    with:
+      docker_tag: "1.16.2"
 
   ios_tests:
     name: iOS Tests
