@@ -18,8 +18,7 @@ on:
     outputs:
       ws_endpoint:
         description: "WebSocket endpoint of encointer-node"
-        value: ${{ needs.encointer_node.outputs.ws_endpoint }}
-
+        value: ${{ jobs.encointer_node.outputs.ws_endpoint }}
 env:
   ARTIFACT_PATH: ./screenshots
 
