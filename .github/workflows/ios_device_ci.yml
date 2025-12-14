@@ -21,8 +21,8 @@ jobs:
     with:
       docker_tag: "1.16.2"
 
-  ios_tests:
-    name: iOS Tests
+  ios_device_tests:
+    name: iOS Device Tests
     runs-on: macos-14
     needs: encointer_node
     timeout-minutes: 60
@@ -40,6 +40,13 @@ jobs:
         run: |
           if [ -z "${WS_ENDPOINT:-}" ]; then
             echo "::error::WS_ENDPOINT is empty or not set"
+            exit 1
+          fi
+
+          HOST=$(echo "$WS_ENDPOINT" | sed -E 's|wss://([^/]+).*|\1|')
+
+          if ! getent hosts "$HOST" >/dev/null; then
+            echo "::error::WS_ENDPOINT host does not resolve: $HOST"
             exit 1
           fi
 

@@ -26,6 +26,7 @@ jobs:
       docker_tag: ${{ inputs.docker_tag }}
 
   android_device_tests:
+    name: Android Device Tests
     needs: encointer_node
     runs-on: ubuntu-latest
     timeout-minutes: 70
@@ -39,6 +40,13 @@ jobs:
         run: |
           if [ -z "${WS_ENDPOINT:-}" ]; then
             echo "::error::WS_ENDPOINT is empty or not set"
+            exit 1
+          fi
+
+          HOST=$(echo "$WS_ENDPOINT" | sed -E 's|wss://([^/]+).*|\1|')
+
+          if ! getent hosts "$HOST" >/dev/null; then
+            echo "::error::WS_ENDPOINT host does not resolve: $HOST"
             exit 1
           fi
 
