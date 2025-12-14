@@ -49,6 +49,24 @@ jobs:
           URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log | head -n1)
           echo "ws=${URL/https:/wss:}" >> $GITHUB_OUTPUT
 
+      - name: Verify Cloudflare tunnel
+        run: |
+          for i in {1..10}; do
+            if curl -sSf "${URL}" >/dev/null; then
+              echo "Tunnel is reachable at $URL"
+              break
+            fi
+            echo "Tunnel not reachable yet, retrying..."
+            sleep 3
+          done
+          if ! curl -sSf "${URL}" >/dev/null; then
+            echo "ERROR: Tunnel is still not reachable after 30s"
+            exit 1
+          fi
+        env:
+          URL: ${{ steps.export.outputs.ws }}
+
+
   ios_tests:
     name: iOS Tests
     runs-on: macos-14
