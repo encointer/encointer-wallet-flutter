@@ -4,10 +4,8 @@ set -euxo pipefail
 ./flutterw doctor -v
 
 if [ -z "${WS_ENDPOINT:-}" ]; then
-  echo "WS_ENDPOINT not set, defaulting to localhost"
-else
-  echo "Using WS_ENDPOINT=$WS_ENDPOINT"
-fi
+  echo "WS_ENDPOINT not set, aborting tests"
+  exit 1
 
 if [ "$RECORD" == "true" ]
 then
