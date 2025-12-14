@@ -1,4 +1,4 @@
-name: IOS CI
+name: Run Encointer Node
 
 on:
   push:
@@ -18,12 +18,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  ios_device_test:
+  run-encointer-node:
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
     steps:
       # Setup Environment
       - uses: actions/checkout@v4
+
+      - run: ls ./.github/workflows
 
       - uses: ./.github/workflows/run-encointer-node.yml
