@@ -33,7 +33,7 @@ jobs:
       - name: Bootstrap demo community
         run: |
           ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh \
-            ${{ inputs.docker_tag }}
+           --docker-tag=${{ inputs.docker_tag }}
 
       - name: Start Cloudflare tunnel
         run: |
