@@ -11,14 +11,13 @@ jobs:
   node:
     runs-on: ubuntu-latest
     outputs:
-      ws_endpoint: ${{ steps.export.outputs.ws }}
+      ws_endpoint: ${{ steps.export_tunnel.outputs.ws }}
     steps:
       - uses: actions/checkout@v4
 
       - name: Run encointer-node
         run: |
-          ./scripts/docker_run_encointer_node_notee.sh \
-            ${{ inputs.docker_tag }} &
+          ./scripts/docker_run_encointer_node_notee.sh ${{ inputs.docker_tag }} &
 
       - name: Bootstrap demo community
         run: |
@@ -27,40 +26,24 @@ jobs:
 
       - name: Start Cloudflare tunnel
         run: |
-          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 \
-            -o cloudflared
+          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
           chmod +x cloudflared
           ./cloudflared tunnel --url http://localhost:9944 > tunnel.log 2>&1 &
           sleep 5
 
-      - name: Verify tunnel DNS
+      - id: export_tunnel
+        name: Export WS endpoint
         run: |
           # Extract HTTPS URL
           HTTP_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log | head -n1)
-          HOST=$(echo "$HTTP_URL" | sed -E 's|https://([^/]+).*|\1|')
-
-          echo "Tunnel hostname: $HOST"
-
-          # Retry up to 10 times for DNS resolution
-          for i in {1..10}; do
-            if getent hosts "$HOST" >/dev/null; then
-              echo "Tunnel hostname resolves: $HOST"
-              break
-            fi
-            echo "Waiting for tunnel DNS..."
-            sleep 3
-          done
-
-          if ! getent hosts "$HOST" >/dev/null; then
-            echo "ERROR: Tunnel hostname not resolving"
+          if [ -z "$HTTP_URL" ]; then
+            echo "ERROR: Could not find tunnel URL in log"
             exit 1
           fi
 
-          # Export WS endpoint for downstream jobs
-          echo "ws=${HTTP_URL/https:/wss:}" >> $GITHUB_OUTPUT
-
-      - id: export
-        run: |
-          # Output WebSocket endpoint for downstream jobs
-          WS_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log | head -n1)
-          echo "ws=${WS_URL/https:/wss:}" >> $GITHUB_OUTPUT
+          echo "Tunnel URL: $HTTP_URL"
+          # Convert to wss
+          WS_URL="${HTTP_URL/https:/wss:}"
+          echo "WS_URL=$WS_URL"
+          # Export as step output
+          echo "ws=$WS_URL" >> $GITHUB_OUTPUT
