@@ -36,6 +36,15 @@ jobs:
       - name: Set Env Vars
         run: cat .github/env >> $GITHUB_ENV
 
+      - name: Verify WS endpoint
+        run: |
+          if [ -z "${WS_ENDPOINT:-}" ]; then
+            echo "::error::WS_ENDPOINT is empty or not set"
+            exit 1
+          fi
+
+          echo "WS_ENDPOINT=$WS_ENDPOINT"
+
       - name: prepare xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
@@ -84,7 +93,6 @@ jobs:
         env:
           TEMP_DIR: ${{ env.ARTIFACT_PATH }}
           RECORD: ${{ inputs.record_video }}
-          WS_ENDPOINT: ${{ env.WS_ENDPOINT }}
 
       - name: Upload screenshots and recording
         if: always()

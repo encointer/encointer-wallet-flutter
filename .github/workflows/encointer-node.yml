@@ -6,12 +6,17 @@ on:
       docker_tag:
         required: true
         type: string
+    outputs:
+      ws_endpoint:
+        description: "Public WebSocket endpoint of encointer-node"
+        value: ${{ jobs.node.outputs.ws_endpoint }}
 
 jobs:
   node:
     runs-on: ubuntu-latest
     outputs:
       ws_endpoint: ${{ steps.export_tunnel.outputs.ws }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -22,7 +27,7 @@ jobs:
       - name: Bootstrap demo community
         run: |
           ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh \
-           --docker-tag=${{ inputs.docker_tag }}
+            --docker-tag=${{ inputs.docker_tag }}
 
       - name: Start Cloudflare tunnel
         run: |
@@ -34,16 +39,11 @@ jobs:
       - id: export_tunnel
         name: Export WS endpoint
         run: |
-          # Extract HTTPS URL
           HTTP_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log | head -n1)
           if [ -z "$HTTP_URL" ]; then
             echo "ERROR: Could not find tunnel URL in log"
             exit 1
           fi
 
-          echo "Tunnel URL: $HTTP_URL"
-          # Convert to wss
           WS_URL="${HTTP_URL/https:/wss:}"
-          echo "WS_URL=$WS_URL"
-          # Export as step output
-          echo "ws=$WS_URL" >> $GITHUB_OUTPUT
+          echo "ws=$WS_URL" >> "$GITHUB_OUTPUT"

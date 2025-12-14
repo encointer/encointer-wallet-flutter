@@ -4,6 +4,7 @@ set -euxo pipefail
 if [ -z "${WS_ENDPOINT:-}" ]; then
     echo "WS_ENDPOINT not set, aborting tests"
     exit 1
+fi
 
 ./flutterw doctor -v
 

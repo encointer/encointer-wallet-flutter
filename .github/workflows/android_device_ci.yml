@@ -35,6 +35,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Verify WS endpoint
+        run: |
+          if [ -z "${WS_ENDPOINT:-}" ]; then
+            echo "::error::WS_ENDPOINT is empty or not set"
+            exit 1
+          fi
+
+          echo "WS_ENDPOINT=$WS_ENDPOINT"
+
       - uses: actions/setup-java@v4
         with:
           java-version: "17"
@@ -91,7 +100,6 @@ jobs:
           ANDROID_DEBUG: "true"
           RECORD: ${{ inputs.record_video }}
           TEMP_DIR: ${{ env.ARTIFACT_PATH }}
-          WS_ENDPOINT: ${{ env.WS_ENDPOINT }}
         with:
           api-level: ${{ inputs.api-level }}
           profile: ${{ inputs.device }}
