@@ -149,13 +149,21 @@ List<NetworkEndpoint> assetHubKusamaEndpoints() {
 // Dev Endpoints
 
 List<NetworkEndpoint> zombienetLocalEndpoints() {
+  final wsEndpoint = String.fromEnvironment(
+    'WS_ENDPOINT',
+    defaultValue: 'ws://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:9944',
+  );
   return [
-    NetworkEndpoint(name: 'Local DevNet', address: 'ws://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:9944')
+    NetworkEndpoint(name: 'Local DevNet', address: wsEndpoint)
   ];
 }
 
 List<NetworkEndpoint> gesellDevEndpoints() {
+  final wsEndpoint = String.fromEnvironment(
+    'WS_ENDPOINT',
+    defaultValue: 'ws://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:9944',
+  );
   return [
-    NetworkEndpoint(name: 'Local DevNet', address: 'ws://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:9944')
+    NetworkEndpoint(name: 'Local DevNet', address: wsEndpoint)
   ];
 }

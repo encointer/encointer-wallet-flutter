@@ -176,7 +176,7 @@ melos:
       description: "Run integration test on iOS"
 
     integration-app-test-ios-screenshot:
-      run: cd app && flutter drive --target=test_driver/app.dart --dart-define=locales=en
+      run: cd app && flutter drive --target=test_driver/app.dart --dart-define=locales=en --dart-define=WS_ENDPOINT=${WS_ENDPOINT}
       description: "Run integration test on IOS with screenshot capturing enabled."
 
     integration-app-test-ios-screenshot-multi-language:
@@ -193,7 +193,7 @@ melos:
       description: "Run integration test for QR scan on Android"
 
     integration-scan-test-ios:
-      run: cd app && flutter drive --target=test_driver/scan_page.dart
+      run: cd app && flutter drive --target=test_driver/scan_page.dart --dart-define=WS_ENDPOINT=${WS_ENDPOINT}
       description: "Run integration test for QR scan on iOS"
 
     flutter-config-no-analytics:

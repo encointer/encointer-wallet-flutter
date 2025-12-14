@@ -3,6 +3,12 @@ set -euxo pipefail
 
 ./flutterw doctor -v
 
+if [ -z "${WS_ENDPOINT:-}" ]; then
+  echo "WS_ENDPOINT not set, defaulting to localhost"
+else
+  echo "Using WS_ENDPOINT=$WS_ENDPOINT"
+fi
+
 if [ "$RECORD" == "true" ]
 then
   # due to a bug in xcode we need to sleep a while, else the recording is empty
