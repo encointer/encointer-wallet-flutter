@@ -1,6 +1,12 @@
 #!/bin/bash
 set -euxo pipefail
 
+if [ -z "${WS_ENDPOINT:-}" ]; then
+  echo "WS_ENDPOINT not set, defaulting to localhost"
+else
+  echo "Using WS_ENDPOINT=$WS_ENDPOINT"
+fi
+
 ./flutterw doctor -v
 
 avdmanager list device || echo "error displaying emulator devices"
