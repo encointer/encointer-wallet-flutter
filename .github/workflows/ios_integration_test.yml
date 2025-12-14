@@ -16,7 +16,7 @@ jobs:
   iphone_14_pro_max:
     uses: ./.github/workflows/ios_device_ci.yml
     with:
-      device: "iPhone 14 Pro Max"
+      device: "iPhone 15 Pro Max"
       record_video: true
       docker_tag: "1.16.2"
 
