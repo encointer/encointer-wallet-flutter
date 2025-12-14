@@ -33,7 +33,6 @@ jobs:
     timeout-minutes: 60
     env:
       WS_ENDPOINT: ${{ needs.encointer_node.outputs.ws_endpoint }}
-      ARTIFACT_PATH: ${{ env.ARTIFACT_PATH }}
 
     steps:
       # Setup Environment

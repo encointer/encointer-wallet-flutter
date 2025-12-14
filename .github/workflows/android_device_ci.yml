@@ -35,7 +35,6 @@ jobs:
     timeout-minutes: 70
     env:
       WS_ENDPOINT: ${{ needs.encointer_node.outputs.ws_endpoint }}
-      ARTIFACT_PATH: ${{ env.ARTIFACT_PATH }}
 
     steps:
       - uses: actions/checkout@v4
