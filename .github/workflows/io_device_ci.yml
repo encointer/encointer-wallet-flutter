@@ -12,6 +12,10 @@ on:
       docker_tag:
         required: true
         type: string
+    outputs:
+      ws_endpoint:
+        description: "WebSocket endpoint of encointer-node"
+        value: ${{ jobs.encointer_node.outputs.ws_endpoint }}
 
 env:
   ARTIFACT_PATH: ./screenshots
@@ -27,6 +31,9 @@ jobs:
     runs-on: macos-14
     needs: encointer_node
     timeout-minutes: 60
+    env:
+      WS_ENDPOINT: ${{ needs.encointer_node.outputs.ws_endpoint }}
+      ARTIFACT_PATH: ${{ env.ARTIFACT_PATH }}
 
     steps:
       # Setup Environment
@@ -83,7 +90,7 @@ jobs:
         env:
           TEMP_DIR: ${{ env.ARTIFACT_PATH }}
           RECORD: ${{ inputs.record_video }}
-          WS_ENDPOINT: ${{ needs.encointer_node.outputs.ws_endpoint }}
+          WS_ENDPOINT: ${{ env.WS_ENDPOINT }}
 
       - name: Upload screenshots and recording
         if: always()

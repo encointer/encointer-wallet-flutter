@@ -15,6 +15,10 @@ on:
       docker_tag:
         required: true
         type: string
+    outputs:
+      ws_endpoint:
+        description: "WebSocket endpoint of encointer-node"
+        value: ${{ jobs.encointer_node.outputs.ws_endpoint }}
 
 env:
   ARTIFACT_PATH: ./screenshots
@@ -29,6 +33,9 @@ jobs:
     needs: encointer_node
     runs-on: ubuntu-latest
     timeout-minutes: 70
+    env:
+      WS_ENDPOINT: ${{ needs.encointer_node.outputs.ws_endpoint }}
+      ARTIFACT_PATH: ${{ env.ARTIFACT_PATH }}
 
     steps:
       - uses: actions/checkout@v4
@@ -89,7 +96,7 @@ jobs:
           ANDROID_DEBUG: "true"
           RECORD: ${{ inputs.record_video }}
           TEMP_DIR: ${{ env.ARTIFACT_PATH }}
-          WS_ENDPOINT: ${{ needs.encointer_node.outputs.ws_endpoint }}
+          WS_ENDPOINT: ${{ env.WS_ENDPOINT }}
         with:
           api-level: ${{ inputs.api-level }}
           profile: ${{ inputs.device }}
