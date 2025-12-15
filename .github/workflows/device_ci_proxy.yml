@@ -1,0 +1,87 @@
+name: Device CI Proxy
+
+on:
+  workflow_call:
+    inputs:
+      workflow_file:
+        required: true
+        type: string
+      device:
+        required: true
+        type: string
+      record_video:
+        required: true
+        type: boolean
+      docker_tag:
+        required: true
+        type: string
+
+jobs:
+  node:
+    runs-on: ubuntu-latest
+    outputs:
+      ws_endpoint: ${{ steps.export_tunnel.outputs.ws }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run encointer-node
+        run: |
+          ./scripts/docker_run_encointer_node_notee.sh ${{ inputs.docker_tag }} &
+
+#      - name: Bootstrap demo community
+#        run: |
+#          ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh \
+#            --docker-tag=${{ inputs.docker_tag }}
+
+      - name: Start Cloudflare tunnel
+        run: |
+          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
+          chmod +x cloudflared
+          ./cloudflared tunnel --url http://localhost:9944 > tunnel.log 2>&1 &
+          sleep 5
+
+      - name: Verify Cloudflare tunnel health
+        run: ./scripts/check_cloudflare_tunnel.sh
+
+      - id: export_tunnel
+        name: Export WS endpoint
+        run: |
+          HTTP_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log | head -n1)
+          WS_URL="${HTTP_URL/https:/wss:}"
+          
+          echo "🔌 Exporting WS endpoint: $WS_URL"
+          echo "ws=$WS_URL" >> "$GITHUB_OUTPUT"
+          
+      # Trigger Device CI workflow
+      - name: Trigger Device CI
+        id: trigger_device
+        env:
+          WS_ENDPOINT: ${{ steps.export_tunnel.outputs.ws }}
+        run: |
+          echo "🔌 Triggering iOS Device CI with WS_ENDPOINT=$WS_ENDPOINT"
+
+          # Trigger workflow_dispatch
+          RUN_ID=$(gh api -X POST \
+            repos/$GITHUB_REPOSITORY/actions/workflows/${{ inputs.device }}/dispatches \
+            -f ref=main \
+            -f inputs="{\"device\":\"${{ inputs.device }}\",\"record_video\":\"${{ inputs.record_video }}\",\"ws_endpoint\":\"$WS_ENDPOINT\"}" \
+            -q '.workflow_run_id')
+
+          echo "Triggered workflow run ID: $RUN_ID"
+          echo "$RUN_ID" > device_run_id.txt
+
+      # Wait for device CI workflow to finish
+      - name: Wait for Device CI Completion
+        env:
+          RUN_ID_FILE: device_run_id.txt
+        run: |
+          RUN_ID=$(cat "$RUN_ID_FILE")
+          STATUS="in_progress"
+          echo "⏳ Waiting for Device CI workflow ($RUN_ID) to finish..."
+          while [[ "$STATUS" == "in_progress" || "$STATUS" == "queued" ]]; do
+            sleep 15
+            STATUS=$(gh api repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID | jq -r '.status')
+          done
+          CONCLUSION=$(gh api repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID | jq -r '.conclusion')
+          echo "Device CI finished with conclusion: $CONCLUSION"

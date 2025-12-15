@@ -12,7 +12,7 @@ on:
       record_video:
         required: true
         type: boolean
-      docker_tag:
+      ws_endpoint:
         required: true
         type: string
 
@@ -20,18 +20,13 @@ env:
   ARTIFACT_PATH: ./screenshots
 
 jobs:
-  encointer_node:
-    uses: ./.github/workflows/encointer-node.yml
-    with:
-      docker_tag: ${{ inputs.docker_tag }}
-
   android_device_tests:
     name: Android Device Tests
     needs: encointer_node
     runs-on: ubuntu-latest
     timeout-minutes: 70
     env:
-      WS_ENDPOINT: ${{ needs.encointer_node.outputs.ws_endpoint }}
+      WS_ENDPOINT: ${{ github.event.inputs.ws_endpoint }}
 
     steps:
       - uses: actions/checkout@v4

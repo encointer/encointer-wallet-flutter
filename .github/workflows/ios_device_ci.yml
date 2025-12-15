@@ -9,53 +9,20 @@ on:
       record_video:
         required: true
         type: boolean
-      docker_tag:
+      ws_endpoint:
         required: true
         type: string
 env:
   ARTIFACT_PATH: ./screenshots
 
 jobs:
-  encointer_node:
-    runs-on: ubuntu-latest
-    outputs:
-      ws_endpoint: ${{ steps.export_tunnel.outputs.ws }}
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Run encointer-node
-        run: |
-          ./scripts/docker_run_encointer_node_notee.sh 1.16.2 &
-
-      - name: Start Cloudflare tunnel
-        run: |
-          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
-          chmod +x cloudflared
-          ./cloudflared tunnel --url http://localhost:9944 > tunnel.log 2>&1 &
-          sleep 5
-
-      - name: Verify Cloudflare tunnel health
-        run: ./scripts/check_cloudflare_tunnel.sh
-
-      - id: export_tunnel
-        run: |
-          HTTP_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log | head -n1)
-          WS_URL="${HTTP_URL/https:/wss:}"
-          echo "ws=$WS_URL" >> "$GITHUB_OUTPUT"
-
-      - name: Keep node & tunnel alive
-        run: |
-          echo "🟢 Node running"
-          while true; do sleep 60; done
-
   ios_device_tests:
     name: iOS Device Tests
     runs-on: macos-14
     needs: encointer_node
     timeout-minutes: 60
     env:
-      WS_ENDPOINT: ${{ needs.encointer_node.outputs.ws_endpoint }}
+      WS_ENDPOINT: ${{ github.event.inputs.ws_endpoint }}
 
     steps:
       # Setup Environment
