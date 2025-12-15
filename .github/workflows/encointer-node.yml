@@ -37,13 +37,38 @@ jobs:
           sleep 5
 
       - id: export_tunnel
-        name: Export WS endpoint
+        name: Export WS endpoint + DNS check
         run: |
+          set -euo pipefail
+
           HTTP_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log | head -n1)
+
           if [ -z "$HTTP_URL" ]; then
-            echo "ERROR: Could not find tunnel URL in log"
+            echo "❌ ERROR: Could not find tunnel URL in cloudflared log"
+            echo "---- cloudflared log ----"
+            cat tunnel.log
+            exit 1
+          fi
+
+          echo "🌍 Tunnel URL: $HTTP_URL"
+
+          # DNS + connectivity check (portable)
+          echo "🔎 Verifying tunnel is reachable…"
+          for i in {1..10}; do
+            if curl -fsS --connect-timeout 3 "$HTTP_URL" >/dev/null; then
+              echo "✅ Tunnel reachable"
+              break
+            fi
+            echo "⏳ Waiting for tunnel..."
+            sleep 3
+          done
+
+          if ! curl -fsS --connect-timeout 3 "$HTTP_URL" >/dev/null; then
+            echo "❌ ERROR: Tunnel not reachable after retries"
             exit 1
           fi
 
           WS_URL="${HTTP_URL/https:/wss:}"
+          echo "🔌 WS endpoint: $WS_URL"
+
           echo "ws=$WS_URL" >> "$GITHUB_OUTPUT"

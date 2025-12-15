@@ -36,21 +36,10 @@ jobs:
       - name: Set Env Vars
         run: cat .github/env >> $GITHUB_ENV
 
-      - name: Verify WS endpoint
+      - name: Debug WS endpoint
         run: |
-          if [ -z "${WS_ENDPOINT:-}" ]; then
-            echo "::error::WS_ENDPOINT is empty or not set"
-            exit 1
-          fi
-
-          HOST=$(echo "$WS_ENDPOINT" | sed -E 's|wss://([^/]+).*|\1|')
-
-          if ! getent hosts "$HOST" >/dev/null; then
-            echo "::error::WS_ENDPOINT host does not resolve: $HOST"
-            exit 1
-          fi
-
           echo "WS_ENDPOINT=$WS_ENDPOINT"
+          [[ -n "$WS_ENDPOINT" ]] || (echo "WS_ENDPOINT is empty" && exit 1)
 
       - name: prepare xcode
         uses: maxim-lobanov/setup-xcode@v1
