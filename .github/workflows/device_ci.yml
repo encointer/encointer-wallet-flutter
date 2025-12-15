@@ -18,7 +18,7 @@ jobs:
     uses: ./.github/workflows/device_ci_proxy.yml
     with:
       workflow_file: ios_device_ci.yml
-      api-level: 33
+      api_level: 33
       device: "iPhone 15 Pro Max"
       record_video: true
       docker_tag: "1.16.2"
