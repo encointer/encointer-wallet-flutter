@@ -64,10 +64,10 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-
+          
           echo "🔌 Triggering iOS Device CI with WS_ENDPOINT=$WS_ENDPOINT"
 
-          # Build valid JSON for inputs
+          # Build proper JSON object
           INPUTS_JSON=$(jq -n \
             --arg device "${{ inputs.device }}" \
             --arg api_level "${{ inputs.api_level }}" \
@@ -75,15 +75,16 @@ jobs:
             --arg ws_endpoint "$WS_ENDPOINT" \
             '{device: $device, api_level: $api_level, record_video: $record_video, ws_endpoint: $ws_endpoint}')
 
-          # Trigger workflow_dispatch
+          # Trigger workflow_dispatch using -f
           RUN_ID=$(gh api -X POST \
             repos/$GITHUB_REPOSITORY/actions/workflows/${{ inputs.workflow_file }}/dispatches \
-            -F ref=main \
-            -F inputs="$INPUTS_JSON" \
-            -q '.workflow_run_id')
+            -f ref=main \
+            -f inputs="$INPUTS_JSON" \
+            -q '.workflow_run.id')
 
           echo "Triggered workflow run ID: $RUN_ID"
           echo "$RUN_ID" > device_run_id.txt
+
 
 
       # Wait for device CI workflow to finish
