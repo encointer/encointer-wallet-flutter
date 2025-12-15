@@ -75,12 +75,12 @@ jobs:
 
       - name: Keep tunnel alive and check every 30s
         run: |
-          echo "⏳ Monitoring Cloudflare tunnel for up to 60 minutes..."
-          MAX_MINUTES=60
+          echo "⏳ Monitoring Cloudflare tunnel for up to 45 minutes..."
+          MAX_MINUTES=45
           INTERVAL=30
           ELAPSED=0
 
-          while [ $ELAPSED -lt $((MAX_MINUTES * 60)) ]; do
+          while [ $ELAPSED -lt $((MAX_MINUTES * 45)) ]; do
             if ./scripts/check_cloudflare_tunnel.sh; then
               echo "✅ Tunnel is healthy (checked at $ELAPSED seconds)"
             else
