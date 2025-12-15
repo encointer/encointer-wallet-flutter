@@ -73,6 +73,8 @@ jobs:
             "${{ inputs.workflow_file }}" \
             "$WS_ENDPOINT" \
 
+      # Todo: Ideally, we should cancel this job afther the CI is done, but GitHub Actions does not
+      # Support cancelling on a job-level (only workflow-level).
       - name: Keep tunnel alive and check every 30s
         run: |
           echo "⏳ Monitoring Cloudflare tunnel for up to 45 minutes..."

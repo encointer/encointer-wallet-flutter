@@ -14,10 +14,11 @@ concurrency:
 
 jobs:
   # IOS Devices
-  iphone_14_pro_max:
+  iphone_15_pro_max:
     uses: ./.github/workflows/device_ci_proxy.yml
     with:
       workflow_file: ios_device_ci.yml
+      # Ignored for IOS, but the field is required
       api_level: 33
       device: "iPhone 15 Pro Max"
       record_video: true
@@ -27,6 +28,7 @@ jobs:
     uses: ./.github/workflows/device_ci_proxy.yml
     with:
       workflow_file: ios_device_ci.yml
+      # Ignored for IOS, but the field is required
       api_level: 33
       device: "iPad Pro (12.9-inch) (6th generation)"
       record_video: true
@@ -36,6 +38,7 @@ jobs:
     uses: ./.github/workflows/device_ci_proxy.yml
     with:
       workflow_file: ios_device_ci.yml
+      # Ignored for IOS, but the field is required
       api_level: 33
       device: "iPad Pro (12.9-inch) (2nd generation)"
       record_video: true
