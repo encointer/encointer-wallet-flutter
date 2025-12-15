@@ -1,5 +1,5 @@
 name: Android CI
-run-name: Android CI (${{ github.event.inputs.device }})
+run-name: Android CI (${{ github.event.inputs.device }}, API ${{ github.event.inputs.api_level }})
 
 on:
   workflow_call:
