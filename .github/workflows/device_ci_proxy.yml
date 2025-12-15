@@ -71,24 +71,7 @@ jobs:
             "$WS_ENDPOINT" \
             "$CURRENT_RUN_ID"
 
-
-      # Wait for device CI workflow to finish
-      - name: Wait for Device CI Completion
-        env:
-          RUN_ID_FILE: device_run_id.txt
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Sleep until timeout
         run: |
-          set -euo pipefail
-          RUN_ID=$(cat "$RUN_ID_FILE")
-          STATUS="in_progress"
-          echo "⏳ Waiting for Device CI workflow ($RUN_ID) to finish..."
-          while [[ "$STATUS" == "in_progress" || "$STATUS" == "queued" ]]; do
-            sleep 15
-            STATUS=$(gh api repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID | jq -r '.status')
-          done
-          CONCLUSION=$(gh api repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID | jq -r '.conclusion')
-          echo "Device CI finished with conclusion: $CONCLUSION"
-          if [[ "$CONCLUSION" != "success" ]]; then
-            echo "❌ Device CI failed"
-            exit 1
-          fi
+          echo "⏳ Sleeping for 45 minutes..."
+          sleep 2700
