@@ -63,17 +63,28 @@ jobs:
           WS_ENDPOINT: ${{ steps.export_tunnel.outputs.ws }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          set -euo pipefail
+
           echo "🔌 Triggering iOS Device CI with WS_ENDPOINT=$WS_ENDPOINT"
+
+          # Build valid JSON for inputs
+          INPUTS_JSON=$(jq -n \
+            --arg device "${{ inputs.device }}" \
+            --arg api_level "${{ inputs.api_level }}" \
+            --arg record_video "${{ inputs.record_video }}" \
+            --arg ws_endpoint "$WS_ENDPOINT" \
+            '{device: $device, api_level: $api_level, record_video: $record_video, ws_endpoint: $ws_endpoint}')
 
           # Trigger workflow_dispatch
           RUN_ID=$(gh api -X POST \
             repos/$GITHUB_REPOSITORY/actions/workflows/${{ inputs.workflow_file }}/dispatches \
-            -f ref=main \
-            -f inputs="{\"device\":\"${{ inputs.device }}\",\"api_level\":\"${{ inputs.api_level }}\",\"record_video\":\"${{ inputs.record_video }}\",\"ws_endpoint\":\"$WS_ENDPOINT\"}" \
+            -F ref=main \
+            -F inputs="$INPUTS_JSON" \
             -q '.workflow_run_id')
 
           echo "Triggered workflow run ID: $RUN_ID"
           echo "$RUN_ID" > device_run_id.txt
+
 
       # Wait for device CI workflow to finish
       - name: Wait for Device CI Completion
