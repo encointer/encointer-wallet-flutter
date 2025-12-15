@@ -59,9 +59,9 @@ void main() {
 
       // Mock API rates: 1 USD = x local fiat
       const apiRates = {
-        'leu': 0.79, // 1 USD = 0.79 CHF
-        'nyt': 2452.61, // 1 USD = 2452.61339866 TZS
-        'pnq': 1484.76, // 1 USD = 1484.76300699 NGN
+        'LEU': 0.79, // 1 USD = 0.79 CHF
+        'NYT': 2452.61, // 1 USD = 2452.61339866 TZS
+        'PNQ': 1484.76, // 1 USD = 1484.76300699 NGN
       };
 
       test('computes CC -> USD for all communities (USD->localFiat)', () {

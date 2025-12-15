@@ -1,0 +1,163 @@
+name: iOS Device CI
+run-name: iOS Device CI (${{ github.event.inputs.device }})
+
+on:
+  workflow_dispatch:
+    inputs:
+      device:
+        description:  "Device"
+        required: true
+        type: string
+      api_level:
+        description: "API Level"
+        required: true
+        type: number
+      record_video:
+        description: "Record Video"
+        required: true
+        type: boolean
+      ws_endpoint:
+        description: "WebSocket Endpoint"
+        required: true
+        type: string
+      git_ref:
+        description: "For concurrency management"
+        required: true
+        type: string
+
+env:
+  ARTIFACT_PATH: ./screenshots
+
+concurrency:
+  group: device-ci-${{ github.event.inputs.git_ref }}-${{ github.event.inputs.device }}-${{ github.event.inputs.api_level }}-${{ github.event.inputs.record_video }}
+  cancel-in-progress: true
+
+jobs:
+  ios_device_tests:
+    name: iOS Device Tests
+    runs-on: macos-14
+    timeout-minutes: 60
+
+    steps:
+      # Setup Environment
+      - uses: actions/checkout@v4
+
+      - name: Set unified input variables
+        run: |
+          echo "DEVICE=${{ github.event.inputs.device }}" >> $GITHUB_ENV
+          echo "API_LEVEL=${{ github.event.inputs.api_level }}" >> $GITHUB_ENV
+          echo "RECORD_VIDEO=${{ github.event.inputs.record_video }}" >> $GITHUB_ENV
+          echo "WS_ENDPOINT=${{ github.event.inputs.ws_endpoint }}" >> $GITHUB_ENV
+
+      - name: Set Env Vars
+        run: cat .github/env >> $GITHUB_ENV
+
+      - name: Debug WS endpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          
+          echo "WS_ENDPOINT=$WS_ENDPOINT"
+          [[ -n "$WS_ENDPOINT" ]] || (echo "❌ WS_ENDPOINT is empty" && exit 1)
+          
+          # Convert WS → HTTP for health check
+          HTTP_URL="${WS_ENDPOINT/wss:/https:}"
+          
+          echo "🌍 HTTP endpoint: $HTTP_URL"
+          echo "🔎 Performing JSON-RPC health check..."
+          
+          JSON_PAYLOAD='{"jsonrpc":"2.0","id":1,"method":"system_health","params":[]}'
+          
+          RESPONSE=$(curl -sS \
+            -H "Content-Type: application/json" \
+            -d "$JSON_PAYLOAD" \
+            "$HTTP_URL" || true)
+          
+          echo "↩️ Raw response:"
+          echo "$RESPONSE"
+          
+          # Validate JSON-RPC success
+          echo "$RESPONSE" | jq -e '.result' >/dev/null
+          
+          echo "✅ JSON-RPC health check passed"
+
+      - name: prepare xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: ${{ env.XCODE_TEST_VERSION }}
+
+      - name: "Prepare environment for ios"
+        working-directory: ./scripts
+        run: ./ios_init_env.sh
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+
+      - name: Install flutter wrapper
+        run: ./scripts/install_flutter_wrapper.sh
+
+      - name: "Create Simulator if iPad Pro 2nd gen"
+        if: ${{ env.DEVICE == 'iPad Pro (12.9-inch) (2nd generation)' }}
+        # Unfortunately it is not deterministic if the 16.2 or the 16.4 runtime is available
+        run: |
+          xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-17-2" || \
+          xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-17-0"
+
+      - name: Get dependencies (i.e., melos)
+        run: .flutter/bin/dart pub get
+
+      - name: Melos Bootstrap
+        run: .flutter/bin/dart run melos bootstrap
+
+      - name: Start simulator
+        working-directory: ./scripts
+        env:
+          DEVICE_ID: ${{ env.DEVICE }}
+        run: source ./ios_emulator.sh
+
+      - name: Start screen recording
+        if: ${{ env.RECORD_VIDEO }}
+        shell: bash
+        run: |
+          echo "Starting screen recording..."
+          xcrun simctl io booted recordVideo --codec=h264 --mask=black recording.mov &
+          echo $! > recording_pid.txt      
+
+      - name: Run Flutter integration tests
+        working-directory: ./app
+        timeout-minutes: 45
+        shell: bash
+        run: |
+          echo "🚀 Running Flutter integration tests with WS_ENDPOINT=$WS_ENDPOINT"
+          ../.flutter/bin/flutter drive \
+            --no-enable-impeller \
+            --target=test_driver/app.dart \
+            --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
+            --dart-define=locales=en
+
+      - name: Stop recording and upload
+        if: always()
+        shell: bash
+        run: |
+          if [ -f recording_pid.txt ]; then
+            RECORDING_PID=$(cat recording_pid.txt)
+            echo "Stopping recording (pid $RECORDING_PID)..."
+            kill -SIGINT $RECORDING_PID || echo "Recording process already stopped"
+            sleep 5
+          else
+            echo "No recording in progress"
+          fi
+      
+          mkdir -p "${{ env.ARTIFACT_PATH }}"
+          cp recording.mov "${{ env.ARTIFACT_PATH }}" || echo "No recording found"
+          cp -r "${{ env.ARTIFACT_PATH }}/test"/* "${{ env.ARTIFACT_PATH }}" || echo "No screenshots found"
+          rm -r "${{ env.ARTIFACT_PATH }}/test" || true
+
+      - name: Upload screenshots and recording
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.DEVICE }}
+          path: ${{ env.ARTIFACT_PATH }}

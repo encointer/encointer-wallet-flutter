@@ -1,0 +1,95 @@
+name: Device CI Proxy
+
+on:
+  workflow_call:
+    inputs:
+      workflow_file:
+        required: true
+        type: string
+      device:
+        required: true
+        type: string
+      api_level:
+        required: true
+        type: string
+      record_video:
+        required: true
+        type: boolean
+      docker_tag:
+        required: true
+        type: string
+
+concurrency:
+  group: device-ci-proxy-${{ inputs.device }}-${{ inputs.api_level }}-${{ inputs.record_video }}
+  cancel-in-progress: true
+
+jobs:
+  setup-node-and-trigger-device-ci:
+    runs-on: ubuntu-latest
+    outputs:
+      ws_endpoint: ${{ steps.export_tunnel.outputs.ws }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run encointer-node
+        run: |
+          ./scripts/docker_run_encointer_node_notee.sh ${{ inputs.docker_tag }} &
+
+      - name: Bootstrap demo community
+        run: |
+          ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh \
+            --docker-tag=${{ inputs.docker_tag }}
+
+      - name: Start Cloudflare tunnel
+        run: |
+          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
+          chmod +x cloudflared
+          ./cloudflared tunnel --url http://localhost:9944 > tunnel.log 2>&1 &
+          sleep 5
+
+      - name: Verify Cloudflare tunnel health
+        run: ./scripts/check_cloudflare_tunnel.sh
+
+      - id: export_tunnel
+        name: Export WS endpoint
+        run: |
+          HTTP_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log | head -n1)
+          WS_URL="${HTTP_URL/https:/wss:}"
+          
+          echo "🔌 Exporting WS endpoint: $WS_URL"
+          echo "ws=$WS_URL" >> "$GITHUB_OUTPUT"
+          
+      - name: Trigger Device CI
+        id: trigger_device
+        env:
+          WS_ENDPOINT: ${{ steps.export_tunnel.outputs.ws }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ./scripts/trigger_device_ci.sh \
+            "${{ inputs.device }}" \
+            "${{ inputs.api_level }}" \
+            "${{ inputs.record_video }}" \
+            "${{ inputs.workflow_file }}" \
+            "$WS_ENDPOINT" \
+
+      # Todo: Ideally, we should cancel this job afther the CI is done, but GitHub Actions does not
+      # Support cancelling on a job-level (only workflow-level).
+      - name: Keep tunnel alive and check every 30s
+        run: |
+          echo "⏳ Monitoring Cloudflare tunnel for up to 45 minutes..."
+          MAX_MINUTES=45
+          INTERVAL=30
+          ELAPSED=0
+
+          while [ $ELAPSED -lt $((MAX_MINUTES * 45)) ]; do
+            if ./scripts/check_cloudflare_tunnel.sh; then
+              echo "✅ Tunnel is healthy (checked at $ELAPSED seconds)"
+            else
+              echo "⚠️ Tunnel check failed at $ELAPSED seconds"
+            fi
+            sleep $INTERVAL
+            ELAPSED=$((ELAPSED + INTERVAL))
+          done
+
+          echo "⏰ Finished 60 minutes monitoring."

@@ -74,6 +74,9 @@ void main() async {
   test('change-network', () async {
     await goToNetworkView(driver);
     await changeDevNetwork(driver, 'Alice');
+    await scrollToNextPhaseButton(driver);
+    await driver.takeLocalScreenshot(Screenshots.profileDevOptions);
+    await driver.tap(find.byValueKey(EWTestKeys.devMode));
   }, timeout: timeout240);
 
   test('change-community', () async {

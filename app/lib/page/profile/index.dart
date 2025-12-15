@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/config/networks/networks.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -241,6 +242,12 @@ class _ProfileState extends State<Profile> {
                         value: store.settings.usdcMockSwapEnabled,
                         onChanged: (_) => store.settings.toggleUsdcMockSwapEnabled(),
                       ),
+                    ),
+                    ListTile(
+                      title: Text('Connected Endpoint: ${webApi.provider.url}', style: h3Grey),
+                    ),
+                    ListTile(
+                      title: Text('WS_Endpoint ENV: $wsFromEnv', style: h3Grey),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8),
