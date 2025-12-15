@@ -15,6 +15,25 @@ on:
       ws_endpoint:
         required: true
         type: string
+
+  workflow_dispatch:
+    inputs:
+      device:
+        description:  "Device"
+        required: true
+        type: string
+      api_level:
+        description: "API Level"
+        required: true
+        type: number
+      record_video:
+        description: "Record Video"
+        required: true
+        type: boolean
+      ws_endpoint:
+        description: "WebSocket Endpoint"
+        required: true
+        type: string
 env:
   ARTIFACT_PATH: ./screenshots
 
