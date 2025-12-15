@@ -35,10 +35,7 @@ on:
         description: "WebSocket Endpoint"
         required: true
         type: string
-      cancel_id:
-        description: "Worfklow to cancel if running (optional)"
-        required: true
-        type: number
+
 env:
   ARTIFACT_PATH: ./screenshots
 
@@ -175,22 +172,3 @@ jobs:
         with:
           name: ${{ env.DEVICE }}
           path: ${{ env.ARTIFACT_PATH }}
-
-      - name: Cancel another workflow if requested
-        if: ${{ always() && github.event.inputs.cancel_id != 0 }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CANCEL_ID: ${{ github.event.inputs.cancel_id }}
-        run: |
-          echo "🔔 Attempting to cancel workflow run ID: $CANCEL_ID"
-          
-          RESPONSE=$(curl -sS -X POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/runs/$CANCEL_ID/cancel)
-          
-          if [[ "$RESPONSE" == *"message"* ]]; then
-            echo "⚠️ API response: $RESPONSE"
-          else
-            echo "✅ Cancel request sent successfully."
-          fi
