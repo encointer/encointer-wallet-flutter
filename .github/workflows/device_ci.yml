@@ -25,14 +25,14 @@ jobs:
     uses: ./.github/workflows/ios_device_ci.yml
     with:
       device: "iPad Pro (12.9-inch) (6th generation)"
-      record_video: false
+      record_video: true
       docker_tag: "1.16.2"
 
   ipad_pro_2:
     uses: ./.github/workflows/ios_device_ci.yml
     with:
       device: "iPad Pro (12.9-inch) (2nd generation)"
-      record_video: false
+      record_video: true
       docker_tag: "1.16.2"
 
   # Android devices
@@ -41,7 +41,7 @@ jobs:
     with:
       api-level: 33
       device: "pixel_3a"
-      record_video: false
+      record_video: true
       docker_tag: "1.16.2"
 
   pixel_3a_api_35:
