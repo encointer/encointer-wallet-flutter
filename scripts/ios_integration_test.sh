@@ -25,14 +25,12 @@ cd app
 .flutter/bin/flutter drive \
   --no-enable-impeller \
   --target=test_driver/scan_page.dart \
-  --flavor dev \
   --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
 
 # Regular Integration test
 flutter drive \
   --no-enable-impeller \
   --target=test_driver/app.dart \
-  --flavor dev \
   --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
   --dart-define=locales=en
 
