@@ -41,6 +41,7 @@ RUN_ID=$(echo "$INPUTS_JSON" | gh api -X POST \
   -H "Accept: application/vnd.github+json" \
   --input - | jq -r '.id')
 
+echo "🔍 Triggered workflow run ID: $RUN_ID"
 
 ALL_RUNS=$(gh api repos/$GITHUB_REPOSITORY/actions/workflows/$WORKFLOW_FILE/runs \
             -f branch="$REF" \
