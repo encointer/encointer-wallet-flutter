@@ -1,4 +1,5 @@
 name: Android CI
+run-name: Android CI ${{ github.event.inputs.device }}
 
 on:
   workflow_call:
@@ -54,21 +55,34 @@ jobs:
           echo "RECORD_VIDEO=${{ inputs.record_video || github.event.inputs.record_video }}" >> $GITHUB_ENV
           echo "WS_ENDPOINT=${{ inputs.ws_endpoint || github.event.inputs.ws_endpoint }}" >> $GITHUB_ENV
 
-      - name: Verify WS endpoint
+      - name: Debug WS endpoint
+        shell: bash
         run: |
-          if [ -z "${WS_ENDPOINT:-}" ]; then
-            echo "::error::WS_ENDPOINT is empty or not set"
-            exit 1
-          fi
-
-          HOST=$(echo "$WS_ENDPOINT" | sed -E 's|wss://([^/]+).*|\1|')
-
-          if ! getent hosts "$HOST" >/dev/null; then
-            echo "::error::WS_ENDPOINT host does not resolve: $HOST"
-            exit 1
-          fi
-
+          set -euo pipefail
+          
           echo "WS_ENDPOINT=$WS_ENDPOINT"
+          [[ -n "$WS_ENDPOINT" ]] || (echo "❌ WS_ENDPOINT is empty" && exit 1)
+          
+          # Convert WS → HTTP for health check
+          HTTP_URL="${WS_ENDPOINT/wss:/https:}"
+          
+          echo "🌍 HTTP endpoint: $HTTP_URL"
+          echo "🔎 Performing JSON-RPC health check..."
+          
+          JSON_PAYLOAD='{"jsonrpc":"2.0","id":1,"method":"system_health","params":[]}'
+          
+          RESPONSE=$(curl -sS \
+            -H "Content-Type: application/json" \
+            -d "$JSON_PAYLOAD" \
+            "$HTTP_URL" || true)
+          
+          echo "↩️ Raw response:"
+          echo "$RESPONSE"
+          
+          # Validate JSON-RPC success
+          echo "$RESPONSE" | jq -e '.result' >/dev/null
+          
+          echo "✅ JSON-RPC health check passed"
 
       - uses: actions/setup-java@v4
         with:
