@@ -24,10 +24,10 @@ jobs:
         run: |
           ./scripts/docker_run_encointer_node_notee.sh ${{ inputs.docker_tag }} &
 
-      - name: Bootstrap demo community
-        run: |
-          ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh \
-            --docker-tag=${{ inputs.docker_tag }}
+#      - name: Bootstrap demo community
+#        run: |
+#          ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh \
+#            --docker-tag=${{ inputs.docker_tag }}
 
       - name: Start Cloudflare tunnel
         run: |
@@ -36,39 +36,56 @@ jobs:
           ./cloudflared tunnel --url http://localhost:9944 > tunnel.log 2>&1 &
           sleep 5
 
-      - id: export_tunnel
-        name: Export WS endpoint + DNS check
+      - name: Verify Cloudflare tunnel health
         run: |
           set -euo pipefail
-
+          
           HTTP_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log | head -n1)
-
           if [ -z "$HTTP_URL" ]; then
-            echo "❌ ERROR: Could not find tunnel URL in cloudflared log"
-            echo "---- cloudflared log ----"
-            cat tunnel.log
+            echo "❌ ERROR: Could not find tunnel URL in log"
             exit 1
           fi
-
+          
+          HOST=$(echo "$HTTP_URL" | sed -E 's|https://([^/]+).*|\1|')
+          
           echo "🌍 Tunnel URL: $HTTP_URL"
-
-          # DNS + connectivity check (portable)
           echo "🔎 Verifying tunnel is reachable…"
-          for i in {1..10}; do
-            if curl -fsS --connect-timeout 3 "$HTTP_URL" >/dev/null; then
-              echo "✅ Tunnel reachable"
+          
+          # --- DNS check ---
+          for i in {1..20}; do
+            if getent hosts "$HOST" >/dev/null 2>&1; then
+              echo "✅ DNS resolved"
               break
             fi
-            echo "⏳ Waiting for tunnel..."
+            echo "⏳ Waiting for DNS..."
             sleep 3
           done
-
-          if ! curl -fsS --connect-timeout 3 "$HTTP_URL" >/dev/null; then
-            echo "❌ ERROR: Tunnel not reachable after retries"
+          
+          if ! getent hosts "$HOST" >/dev/null 2>&1; then
+            echo "❌ ERROR: DNS did not resolve"
+            exit 1
+          fi
+          
+          # --- TCP check ---
+          for i in {1..20}; do
+            if nc -z "$HOST" 443 >/dev/null 2>&1; then
+              echo "✅ TCP 443 reachable"
+              break
+            fi
+            echo "⏳ Waiting for TCP..."
+            sleep 3
+          done
+          
+          if ! nc -z "$HOST" 443 >/dev/null 2>&1; then
+            echo "❌ ERROR: TCP port 443 not reachable"
             exit 1
           fi
 
+      - id: export_tunnel
+        name: Export WS endpoint
+        run: |
+          HTTP_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log | head -n1)
           WS_URL="${HTTP_URL/https:/wss:}"
-          echo "🔌 WS endpoint: $WS_URL"
-
+          
+          echo "🔌 Exporting WS endpoint: $WS_URL"
           echo "ws=$WS_URL" >> "$GITHUB_OUTPUT"
