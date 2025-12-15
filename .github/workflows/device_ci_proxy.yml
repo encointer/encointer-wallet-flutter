@@ -20,7 +20,7 @@ on:
         type: string
 
 jobs:
-  node:
+  setup-node-and-trigger-device-ci:
     runs-on: ubuntu-latest
     outputs:
       ws_endpoint: ${{ steps.export_tunnel.outputs.ws }}
@@ -66,7 +66,7 @@ jobs:
 
           # Trigger workflow_dispatch
           RUN_ID=$(gh api -X POST \
-            repos/$GITHUB_REPOSITORY/actions/workflows/${{ inputs.device }}/dispatches \
+            repos/$GITHUB_REPOSITORY/actions/workflows/${{ inputs.workflow_file }}/dispatches \
             -f ref=main \
             -f inputs="{\"device\":\"${{ inputs.device }}\",\"api_level\":\"${{ inputs.api_level }}\",\"record_video\":\"${{ inputs.record_video }}\",\"ws_endpoint\":\"$WS_ENDPOINT\"}" \
             -q '.workflow_run_id')
