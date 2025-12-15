@@ -10,7 +10,7 @@ WS_ENDPOINT="$5"
 echo "🔌 Triggering Device CI with WS_ENDPOINT=$WS_ENDPOINT"
 
 # Build JSON payload
-read -r -d '' INPUTS_JSON <<EOF
+INPUTS_JSON=$(cat <<EOF
 {
   "ref": "main",
   "inputs": {
@@ -21,6 +21,7 @@ read -r -d '' INPUTS_JSON <<EOF
   }
 }
 EOF
+)
 
 echo "🔌 INPUTS_JSON=$INPUTS_JSON"
 
