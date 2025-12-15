@@ -56,35 +56,18 @@ jobs:
           echo "🔌 Exporting WS endpoint: $WS_URL"
           echo "ws=$WS_URL" >> "$GITHUB_OUTPUT"
           
-      # Trigger Device CI workflow
       - name: Trigger Device CI
         id: trigger_device
         env:
           WS_ENDPOINT: ${{ steps.export_tunnel.outputs.ws }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          set -euo pipefail
-          
-          echo "🔌 Triggering iOS Device CI with WS_ENDPOINT=$WS_ENDPOINT"
-
-          # Build proper JSON object
-          INPUTS_JSON=$(jq -n \
-            --arg device "${{ inputs.device }}" \
-            --arg api_level "${{ inputs.api_level }}" \
-            --arg record_video "${{ inputs.record_video }}" \
-            --arg ws_endpoint "$WS_ENDPOINT" \
-            '{device: $device, api_level: $api_level, record_video: $record_video, ws_endpoint: $ws_endpoint}')
-
-          # Trigger workflow_dispatch using -f
-          RUN_ID=$(gh api -X POST \
-            repos/$GITHUB_REPOSITORY/actions/workflows/${{ inputs.workflow_file }}/dispatches \
-            -f ref=main \
-            -f inputs="$INPUTS_JSON" \
-            -q '.workflow_run.id')
-
-          echo "Triggered workflow run ID: $RUN_ID"
-          echo "$RUN_ID" > device_run_id.txt
-
+          ./scripts/trigger_device_ci.sh \
+            "${{ inputs.device }}" \
+            "${{ inputs.api_level }}" \
+            "${{ inputs.record_video }}" \
+            "${{ inputs.workflow_file }}" \
+            "$WS_ENDPOINT"
 
 
       # Wait for device CI workflow to finish
@@ -92,6 +75,7 @@ jobs:
         env:
           RUN_ID_FILE: device_run_id.txt
         run: |
+          set -euo pipefail
           RUN_ID=$(cat "$RUN_ID_FILE")
           STATUS="in_progress"
           echo "⏳ Waiting for Device CI workflow ($RUN_ID) to finish..."
@@ -101,3 +85,7 @@ jobs:
           done
           CONCLUSION=$(gh api repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID | jq -r '.conclusion')
           echo "Device CI finished with conclusion: $CONCLUSION"
+          if [[ "$CONCLUSION" != "success" ]]; then
+            echo "❌ Device CI failed"
+            exit 1
+          fi
