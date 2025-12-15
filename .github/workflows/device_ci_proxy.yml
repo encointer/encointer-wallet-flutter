@@ -20,7 +20,7 @@ on:
         type: string
 
 concurrency:
-  group: device-ci-${{ inputs.device }}-${{ inputs.api_level }}-${{ inputs.record_video }}
+  group: device-ci-proxy-${{ inputs.device }}-${{ inputs.api_level }}-${{ inputs.record_video }}
   cancel-in-progress: true
 
 jobs:
