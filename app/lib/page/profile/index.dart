@@ -244,7 +244,10 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     ListTile(
-                      title: Text('WS_Endpoint: $wsFromEnv', style: h3Grey),
+                      title: Text('Connected Endpoint: ${webApi.provider.url}', style: h3Grey),
+                    ),
+                    ListTile(
+                      title: Text('WS_Endpoint ENV: $wsFromEnv', style: h3Grey),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8),
