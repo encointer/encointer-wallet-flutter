@@ -3,7 +3,7 @@ name: Android CI
 on:
   workflow_call:
     inputs:
-      api-level:
+      api_level:
         required: true
         type: number
       device:
@@ -82,13 +82,13 @@ jobs:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-${{ inputs.api-level }}-${{ inputs.device }}
+          key: avd-${{ inputs.api_level }}-${{ inputs.device }}
 
       - name: "Create AVD and generate a clean snapshot for caching"
         if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: ${{ inputs.api-level }}
+          api-level: ${{ inputs.api_level }}
           profile: ${{ inputs.device }}
           force-avd-creation: false
           arch: x86_64
@@ -104,7 +104,7 @@ jobs:
           RECORD: ${{ inputs.record_video }}
           TEMP_DIR: ${{ env.ARTIFACT_PATH }}
         with:
-          api-level: ${{ inputs.api-level }}
+          api-level: ${{ inputs.api_level }}
           profile: ${{ inputs.device }}
           force-avd-creation: false
           arch: x86_64
@@ -117,5 +117,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.device }}-api${{ inputs.api-level }}-screenshots
+          name: ${{ inputs.device }}-api${{ inputs.api_level }}-screenshots
           path: ${{ env.ARTIFACT_PATH }}

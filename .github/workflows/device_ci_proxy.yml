@@ -9,6 +9,9 @@ on:
       device:
         required: true
         type: string
+      api_level:
+        required: true
+        type: string
       record_video:
         required: true
         type: boolean
@@ -65,7 +68,7 @@ jobs:
           RUN_ID=$(gh api -X POST \
             repos/$GITHUB_REPOSITORY/actions/workflows/${{ inputs.device }}/dispatches \
             -f ref=main \
-            -f inputs="{\"device\":\"${{ inputs.device }}\",\"record_video\":\"${{ inputs.record_video }}\",\"ws_endpoint\":\"$WS_ENDPOINT\"}" \
+            -f inputs="{\"device\":\"${{ inputs.device }}\",\"api_level\":\"${{ inputs.api_level }}\",\"record_video\":\"${{ inputs.record_video }}\",\"ws_endpoint\":\"$WS_ENDPOINT\"}" \
             -q '.workflow_run_id')
 
           echo "Triggered workflow run ID: $RUN_ID"

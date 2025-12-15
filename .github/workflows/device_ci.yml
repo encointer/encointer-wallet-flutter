@@ -18,6 +18,7 @@ jobs:
     uses: ./.github/workflows/device_ci_proxy.yml
     with:
       workflow_file: ios_device_ci.yml
+      api-level: 33
       device: "iPhone 15 Pro Max"
       record_video: true
       docker_tag: "1.16.2"
@@ -26,6 +27,7 @@ jobs:
     uses: ./.github/workflows/device_ci_proxy.yml
     with:
       workflow_file: ios_device_ci.yml
+      api_level: 33
       device: "iPad Pro (12.9-inch) (6th generation)"
       record_video: true
       docker_tag: "1.16.2"
@@ -34,6 +36,7 @@ jobs:
     uses: ./.github/workflows/device_ci_proxy.yml
     with:
       workflow_file: ios_device_ci.yml
+      api_level: 33
       device: "iPad Pro (12.9-inch) (2nd generation)"
       record_video: true
       docker_tag: "1.16.2"
@@ -43,7 +46,7 @@ jobs:
     uses: ./.github/workflows/device_ci_proxy.yml
     with:
       workflow_file: android_device_ci.yml
-      api-level: 33
+      api_level: 33
       device: "pixel_3a"
       record_video: true
       docker_tag: "1.16.2"
@@ -52,7 +55,7 @@ jobs:
     uses: ./.github/workflows/device_ci_proxy.yml
     with:
       workflow_file: android_device_ci.yml
-      api-level: 35
+      api_level: 35
       device: "pixel_3a"
       record_video: true
       docker_tag: "1.16.2"

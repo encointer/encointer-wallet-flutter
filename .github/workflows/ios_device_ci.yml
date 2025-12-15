@@ -6,6 +6,9 @@ on:
       device:
         required: true
         type: string
+      api_level:
+        required: true
+        type: number
       record_video:
         required: true
         type: boolean
