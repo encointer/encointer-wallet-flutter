@@ -131,7 +131,7 @@ jobs:
         working-directory: ./scripts
         shell: bash
         run: |
-          mkdir -p "$TEMP_DIR"
+          mkdir -p "${{ env.ARTIFACT_PATH }}"
 
           if [ -f recording_pid.txt ]; then
             RECORDING_PID=$(cat recording_pid.txt)
@@ -140,10 +140,10 @@ jobs:
             sleep 5
           fi
 
-          adb pull /sdcard/recording.mp4 "$TEMP_DIR" || echo "No recording found"
+          adb pull /sdcard/recording.mp4 "${{ env.ARTIFACT_PATH }}" || echo "No recording found"
 
-          cp -r "$TEMP_DIR/test"/* "$TEMP_DIR" || echo "No screenshots found"
-          rm -r "$TEMP_DIR/test" || true
+          cp -r "${{ env.ARTIFACT_PATH }}/test"/* "${{ env.ARTIFACT_PATH }}" || echo "No screenshots found"
+          rm -r "${{ env.ARTIFACT_PATH }}/test" || true
 
       - name: "Upload screenshots"
         if: always()

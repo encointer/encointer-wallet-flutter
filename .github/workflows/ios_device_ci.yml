@@ -112,10 +112,10 @@ jobs:
             echo "No recording in progress"
           fi
       
-          mkdir -p "$TEMP_DIR"
-          cp recording.mov "$TEMP_DIR" || echo "No recording found"
-          cp -r "$TEMP_DIR/test"/* "$TEMP_DIR" || echo "No screenshots found"
-          rm -r "$TEMP_DIR/test" || true
+          mkdir -p "${{ env.ARTIFACT_PATH }}"
+          cp recording.mov "${{ env.ARTIFACT_PATH }}" || echo "No recording found"
+          cp -r "${{ env.ARTIFACT_PATH }}/test"/* "${{ env.ARTIFACT_PATH }}" || echo "No screenshots found"
+          rm -r "${{ env.ARTIFACT_PATH }}/test" || true
 
       - name: Upload screenshots and recording
         if: always()
