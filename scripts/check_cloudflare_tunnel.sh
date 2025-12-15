@@ -41,5 +41,9 @@ retry_command "getent hosts $HOST >/dev/null 2>&1" "DNS resolution for $HOST"
 # --- TCP check ---
 retry_command "nc -z $HOST 443 >/dev/null 2>&1" "TCP connectivity to $HOST:443"
 
+# --- JSON-RPC health check ---
+JSON_PAYLOAD='{"jsonrpc":"2.0","id":1,"method":"system_health","params":[]}'
+retry_command "curl -sS -H 'Content-Type: application/json' -d '$JSON_PAYLOAD' $HTTP_URL | jq -e '.result' >/dev/null" "JSON-RPC health check on $HTTP_URL"
+
 echo "🎉 Tunnel is healthy!"
 echo "WebSocket endpoint: ${HTTP_URL/https:/wss:}"
