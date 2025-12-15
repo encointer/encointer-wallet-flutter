@@ -28,7 +28,7 @@ INPUTS_JSON=$(cat <<EOF
     "api_level": "$API_LEVEL",
     "record_video": "$RECORD_VIDEO",
     "ws_endpoint": "$WS_ENDPOINT",
-    "cancel_id": $CANCEL_ID
+    "cancel_id": "$CANCEL_ID"
   }
 }
 EOF

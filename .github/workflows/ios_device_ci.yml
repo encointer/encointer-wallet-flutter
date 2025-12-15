@@ -16,10 +16,6 @@ on:
       ws_endpoint:
         required: true
         type: string
-      cancel_id:
-        description: "Worfklow to cancel if running (optional)"
-        required: true
-        type: number
 
   workflow_dispatch:
     inputs:
@@ -39,6 +35,10 @@ on:
         description: "WebSocket Endpoint"
         required: true
         type: string
+      cancel_id:
+        description: "Worfklow to cancel if running (optional)"
+        required: true
+        type: number
 env:
   ARTIFACT_PATH: ./screenshots
 
