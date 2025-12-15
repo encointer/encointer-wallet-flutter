@@ -88,6 +88,7 @@ jobs:
 
       - name: Run Flutter integration tests
         working-directory: ./app
+        timeout-minutes: 45
         shell: bash
         run: |
           echo "🚀 Running Flutter integration tests with WS_ENDPOINT=$WS_ENDPOINT"
