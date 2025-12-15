@@ -42,12 +42,21 @@ jobs:
     name: iOS Device Tests
     runs-on: macos-14
     timeout-minutes: 60
-    env:
-      WS_ENDPOINT: ${{ github.event.inputs.ws_endpoint }}
 
     steps:
       # Setup Environment
       - uses: actions/checkout@v4
+
+      - name: Set unified input variables
+        run: |
+          export DEVICE="${{ inputs.device || github.event.inputs.device }}"
+          export API_LEVEL="${{ inputs.api_level || github.event.inputs.api_level }}"
+          export RECORD_VIDEO="${{ inputs.record_video || github.event.inputs.record_video }}"
+          export WS_ENDPOINT="${{ inputs.ws_endpoint || github.event.inputs.ws_endpoint }}"
+          echo "DEVICE=$DEVICE" >> $GITHUB_ENV
+          echo "API_LEVEL=$API_LEVEL" >> $GITHUB_ENV
+          echo "RECORD_VIDEO=$RECORD_VIDEO" >> $GITHUB_ENV
+          echo "WS_ENDPOINT=$WS_ENDPOINT" >> $GITHUB_ENV
 
       - name: Set Env Vars
         run: cat .github/env >> $GITHUB_ENV
@@ -99,7 +108,7 @@ jobs:
         run: ./scripts/install_flutter_wrapper.sh
 
       - name: "Create Simulator if iPad Pro 2nd gen"
-        if: ${{ inputs.device == 'iPad Pro (12.9-inch) (2nd generation)' }}
+        if: ${{ $DEVICE == 'iPad Pro (12.9-inch) (2nd generation)' }}
         # Unfortunately it is not deterministic if the 16.2 or the 16.4 runtime is available
         run: |
           xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-17-2" || \
@@ -114,11 +123,11 @@ jobs:
       - name: Start simulator
         working-directory: ./scripts
         env:
-          DEVICE_ID: ${{ inputs.device }}
+          DEVICE_ID: ${{ $DEVICE }}
         run: source ./ios_emulator.sh
 
       - name: Start screen recording
-        if: ${{ inputs.record_video }}
+        if: ${{ $RECORD_VIDEO }}
         shell: bash
         run: |
           echo "Starting screen recording..."
@@ -159,5 +168,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.device }}
+          name: ${{ $DEVICE }}
           path: ${{ env.ARTIFACT_PATH }}

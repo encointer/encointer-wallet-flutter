@@ -43,11 +43,20 @@ jobs:
     name: Android Device Tests
     runs-on: ubuntu-latest
     timeout-minutes: 70
-    env:
-      WS_ENDPOINT: ${{ github.event.inputs.ws_endpoint }}
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set unified input variables
+        run: |
+          export DEVICE="${{ inputs.device || github.event.inputs.device }}"
+          export API_LEVEL="${{ inputs.api_level || github.event.inputs.api_level }}"
+          export RECORD_VIDEO="${{ inputs.record_video || github.event.inputs.record_video }}"
+          export WS_ENDPOINT="${{ inputs.ws_endpoint || github.event.inputs.ws_endpoint }}"
+          echo "DEVICE=$DEVICE" >> $GITHUB_ENV
+          echo "API_LEVEL=$API_LEVEL" >> $GITHUB_ENV
+          echo "RECORD_VIDEO=$RECORD_VIDEO" >> $GITHUB_ENV
+          echo "WS_ENDPOINT=$WS_ENDPOINT" >> $GITHUB_ENV
 
       - name: Verify WS endpoint
         run: |
@@ -101,14 +110,14 @@ jobs:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-${{ inputs.api_level }}-${{ inputs.device }}
+          key: avd-${{ $API_LEVEL }}-${{ $DEVICE }}
 
       - name: "Create AVD and generate a clean snapshot for caching"
         if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: ${{ inputs.api_level }}
-          profile: ${{ inputs.device }}
+          api-level: ${{ $API_LEVEL }}
+          profile: ${{ $DEVICE }}
           force-avd-creation: false
           arch: x86_64
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
@@ -120,11 +129,11 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         env:
           ANDROID_DEBUG: "true"
-          RECORD: ${{ inputs.record_video }}
+          RECORD: ${{ $RECORD_VIDEO }}
           TEMP_DIR: ${{ env.ARTIFACT_PATH }}
         with:
-          api-level: ${{ inputs.api_level }}
-          profile: ${{ inputs.device }}
+          api-level: ${{ $API_LEVEL }}
+          profile: ${{ $DEVICE }}
           force-avd-creation: false
           arch: x86_64
           # as we use the cleanly cached emulator, we need to define `-no-snapshot-save` here.
@@ -136,5 +145,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.device }}-api${{ inputs.api_level }}-screenshots
+          name: ${{ $DEVICE }}-api${{ $API_LEVEL }}-screenshots
           path: ${{ env.ARTIFACT_PATH }}
