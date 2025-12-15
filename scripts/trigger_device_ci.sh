@@ -36,9 +36,10 @@ echo "🔌 WORKFLOW_FILE=$WORKFLOW_FILE"
 echo "🔌 INPUTS_JSON=$INPUTS_JSON"
 
 # Trigger workflow_dispatch
-echo "$INPUTS_JSON" | gh api -X POST \
+RUN_ID=$(echo "$INPUTS_JSON" | gh api -X POST \
   "/repos/$GITHUB_REPOSITORY/actions/workflows/$WORKFLOW_FILE/dispatches" \
-  -H "Accept: application/vnd.github+json"
+  -H "Accept: application/vnd.github+json" \
+  --input - | jq -r '.id')
 
 echo "🔍 Triggered workflow run"
 
@@ -58,8 +59,15 @@ echo "🔍 Fetching triggered workflow run ID for device: $DEVICE on ref: $REF"
 RUN_ID=$(gh api repos/$GITHUB_REPOSITORY/actions/workflows/$WORKFLOW_FILE/runs \
   -f branch="$REF" \
   -f event="workflow_dispatch" \
-  -q '.workflow_runs[] | select(.head_branch=="'"$REF"'" and (.name | contains("'"$DEVICE"'"))) | .id' \
+  -q '.workflow_runs | sort_by(.created_at) | reverse | map(select(.head_branch=="'"$REF"'" and (.name | contains("'"$DEVICE"'")))) | .[0].id'
 )
+
+if [[ -z "$RUN_ID" || "$RUN_ID" == "null" ]]; then
+  echo "❌ Could not find workflow run ID for device: $DEVICE"
+  exit 1
+fi
+
+echo "🔍 Triggered workflow run ID: $RUN_ID"
 
 echo "Triggered workflow run ID: $RUN_ID"
 echo "$RUN_ID" > device_run_id.txt
