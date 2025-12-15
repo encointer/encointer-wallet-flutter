@@ -47,3 +47,13 @@ jobs:
           
           echo "🔌 Exporting WS endpoint: $WS_URL"
           echo "ws=$WS_URL" >> "$GITHUB_OUTPUT"
+          
+      - name: Keep node & tunnel alive
+        run: |
+          echo "🟢 Node and tunnel running."
+          echo "⏳ Waiting for downstream jobs to finish..."
+
+          # Sleep until job timeout or cancellation
+          while true; do
+            sleep 60
+          done
