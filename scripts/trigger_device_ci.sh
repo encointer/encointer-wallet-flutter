@@ -32,6 +32,7 @@ INPUTS_JSON=$(cat <<EOF
 EOF
 )
 
+echo "🔌 WORKFLOW_FILE=$WORKFLOW_FILE"
 echo "🔌 INPUTS_JSON=$INPUTS_JSON"
 
 # Trigger workflow_dispatch
