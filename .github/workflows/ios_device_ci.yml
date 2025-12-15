@@ -77,18 +77,44 @@ jobs:
           DEVICE_ID: ${{ inputs.device }}
         run: source ./ios_emulator.sh
 
-#      - name: Run integration tests with printscreens in all languages
-#        if: startsWith(github.ref, 'refs/tags/')
-#        run: ./scripts/multi_language_screenshot_ci_test.sh
-#        env:
-#          TEMP_DIR: ${{ env.ARTIFACT_PATH }}
-#          RECORD: ${{ matrix.record_video }}
+      - name: Start screen recording
+        if: ${{ inputs.record_video }}
+        working-directory: ./scripts
+        shell: bash
+        run: |
+          echo "Starting screen recording..."
+          xcrun simctl io booted recordVideo --codec=h264 --mask=black recording.mov &
+          echo $! > recording_pid.txt      
 
-      - name: Run integration tests
-        run: ./scripts/ios_integration_test.sh
-        env:
-          TEMP_DIR: ${{ env.ARTIFACT_PATH }}
-          RECORD: ${{ inputs.record_video }}
+      - name: Run Flutter integration tests
+        working-directory: ./app
+        shell: bash
+        run: |
+          echo "🚀 Running Flutter integration tests with WS_ENDPOINT=$WS_ENDPOINT"
+          ../.flutter/bin/flutter drive \
+            --no-enable-impeller \
+            --target=test_driver/app.dart \
+            --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
+            --dart-define=locales=en
+
+      - name: Stop recording and upload
+        if: always()
+        working-directory: ./scripts
+        shell: bash
+        run: |
+          if [ -f recording_pid.txt ]; then
+            RECORDING_PID=$(cat recording_pid.txt)
+            echo "Stopping recording (pid $RECORDING_PID)..."
+            kill -SIGINT $RECORDING_PID || echo "Recording process already stopped"
+            sleep 5
+          else
+            echo "No recording in progress"
+          fi
+      
+          mkdir -p "$TEMP_DIR"
+          cp recording.mov "$TEMP_DIR" || echo "No recording found"
+          cp -r "$TEMP_DIR/test"/* "$TEMP_DIR" || echo "No screenshots found"
+          rm -r "$TEMP_DIR/test" || true
 
       - name: Upload screenshots and recording
         if: always()
