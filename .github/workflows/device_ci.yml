@@ -49,5 +49,5 @@ jobs:
     with:
       api-level: 35
       device: "pixel_3a"
-      record_video: false
+      record_video: true
       docker_tag: "1.16.2"
