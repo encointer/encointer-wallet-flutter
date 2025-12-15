@@ -18,7 +18,7 @@ echo "🔎 Verifying tunnel is reachable…"
 # --- Install dependencies ---
 echo "📦 Installing dependencies..."
 sudo apt-get update -qq
-sudo apt-get install -y dnsutils netcat jq curl
+sudo apt-get install -y dnsutils jq curl
 
 # --- Retry helper ---
 retry_command() {
