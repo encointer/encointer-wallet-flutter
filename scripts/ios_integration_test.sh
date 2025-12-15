@@ -17,8 +17,26 @@ then
   echo "Recording process up with pid: ${RECORDING_PID}"
 fi
 
-.flutter/bin/dart run melos integration-scan-test-ios
-.flutter/bin/dart run melos integration-app-test-ios-screenshot
+echo "🚀 Running Flutter integration tests with WS_ENDPOINT=$WS_ENDPOINT"
+
+cd app
+
+# Scanner print screen
+.flutter/bin/flutter drive \
+  --no-enable-impeller \
+  --target=test_driver/scan_page.dart \
+  --flavor dev \
+  --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
+
+# Regular Integration test
+flutter drive \
+  --no-enable-impeller \
+  --target=test_driver/app.dart \
+  --flavor dev \
+  --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
+  --dart-define=locales=en
+
+cd ..
 
 mkdir -p "$TEMP_DIR"
 
