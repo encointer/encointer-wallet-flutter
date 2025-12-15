@@ -49,14 +49,10 @@ jobs:
 
       - name: Set unified input variables
         run: |
-          export DEVICE="${{ inputs.device || github.event.inputs.device }}"
-          export API_LEVEL="${{ inputs.api_level || github.event.inputs.api_level }}"
-          export RECORD_VIDEO="${{ inputs.record_video || github.event.inputs.record_video }}"
-          export WS_ENDPOINT="${{ inputs.ws_endpoint || github.event.inputs.ws_endpoint }}"
-          echo "DEVICE=$DEVICE" >> $GITHUB_ENV
-          echo "API_LEVEL=$API_LEVEL" >> $GITHUB_ENV
-          echo "RECORD_VIDEO=$RECORD_VIDEO" >> $GITHUB_ENV
-          echo "WS_ENDPOINT=$WS_ENDPOINT" >> $GITHUB_ENV
+          echo "DEVICE=${{ inputs.device || github.event.inputs.device }}" >> $GITHUB_ENV
+          echo "API_LEVEL=${{ inputs.api_level || github.event.inputs.api_level }}" >> $GITHUB_ENV
+          echo "RECORD_VIDEO=${{ inputs.record_video || github.event.inputs.record_video }}" >> $GITHUB_ENV
+          echo "WS_ENDPOINT=${{ inputs.ws_endpoint || github.event.inputs.ws_endpoint }}" >> $GITHUB_ENV
 
       - name: Set Env Vars
         run: cat .github/env >> $GITHUB_ENV
@@ -108,7 +104,7 @@ jobs:
         run: ./scripts/install_flutter_wrapper.sh
 
       - name: "Create Simulator if iPad Pro 2nd gen"
-        if: ${{ $DEVICE == 'iPad Pro (12.9-inch) (2nd generation)' }}
+        if: ${{ env.DEVICE == 'iPad Pro (12.9-inch) (2nd generation)' }}
         # Unfortunately it is not deterministic if the 16.2 or the 16.4 runtime is available
         run: |
           xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-17-2" || \
@@ -123,11 +119,11 @@ jobs:
       - name: Start simulator
         working-directory: ./scripts
         env:
-          DEVICE_ID: ${{ $DEVICE }}
+          DEVICE_ID: ${{ env.DEVICE }}
         run: source ./ios_emulator.sh
 
       - name: Start screen recording
-        if: ${{ $RECORD_VIDEO }}
+        if: ${{ env.RECORD_VIDEO }}
         shell: bash
         run: |
           echo "Starting screen recording..."
@@ -168,5 +164,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ $DEVICE }}
+          name: ${{ env.DEVICE }}
           path: ${{ env.ARTIFACT_PATH }}
