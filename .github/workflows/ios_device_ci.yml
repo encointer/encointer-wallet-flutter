@@ -42,6 +42,10 @@ on:
 env:
   ARTIFACT_PATH: ./screenshots
 
+concurrency:
+  group: device-ci-${{ github.event.inputs.device }}-${{ github.event.inputs.api_level }}-${{ github.event.inputs.record_video }}
+  cancel-in-progress: true
+
 jobs:
   ios_device_tests:
     name: iOS Device Tests

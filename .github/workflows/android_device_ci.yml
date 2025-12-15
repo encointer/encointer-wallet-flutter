@@ -43,6 +43,10 @@ on:
 env:
   ARTIFACT_PATH: ./screenshots
 
+concurrency:
+  group: device-ci-${{ github.event.inputs.device }}-${{ github.event.inputs.api_level }}-${{ github.event.inputs.record_video }}
+  cancel-in-progress: true
+
 jobs:
   android_device_tests:
     name: Android Device Tests

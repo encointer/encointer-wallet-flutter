@@ -19,6 +19,10 @@ on:
         required: true
         type: string
 
+concurrency:
+  group: device-ci-${{ github.event.inputs.device }}-${{ github.event.inputs.api_level }}-${{ github.event.inputs.record_video }}
+  cancel-in-progress: true
+
 jobs:
   setup-node-and-trigger-device-ci:
     runs-on: ubuntu-latest
