@@ -9,10 +9,18 @@ WS_ENDPOINT="$5"
 
 echo "🔌 Triggering Device CI with WS_ENDPOINT=$WS_ENDPOINT"
 
+# Determine ref for workflow_dispatch
+if [[ -n "${GITHUB_HEAD_REF:-}" ]]; then
+  # If this is a PR, use the source branch
+  REF="$GITHUB_HEAD_REF"
+else
+  REF="${GITHUB_REF##*/}"  # normal branch
+fi
+
 # Build JSON payload
 INPUTS_JSON=$(cat <<EOF
 {
-  "ref": "main",
+  "ref": "$REF",
   "inputs": {
     "device": "$DEVICE",
     "api_level": "$API_LEVEL",
