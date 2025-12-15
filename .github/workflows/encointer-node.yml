@@ -37,49 +37,7 @@ jobs:
           sleep 5
 
       - name: Verify Cloudflare tunnel health
-        run: |
-          set -euo pipefail
-          
-          HTTP_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log | head -n1)
-          if [ -z "$HTTP_URL" ]; then
-            echo "❌ ERROR: Could not find tunnel URL in log"
-            exit 1
-          fi
-          
-          HOST=$(echo "$HTTP_URL" | sed -E 's|https://([^/]+).*|\1|')
-          
-          echo "🌍 Tunnel URL: $HTTP_URL"
-          echo "🔎 Verifying tunnel is reachable…"
-          
-          # --- DNS check ---
-          for i in {1..20}; do
-            if getent hosts "$HOST" >/dev/null 2>&1; then
-              echo "✅ DNS resolved"
-              break
-            fi
-            echo "⏳ Waiting for DNS..."
-            sleep 3
-          done
-          
-          if ! getent hosts "$HOST" >/dev/null 2>&1; then
-            echo "❌ ERROR: DNS did not resolve"
-            exit 1
-          fi
-          
-          # --- TCP check ---
-          for i in {1..20}; do
-            if nc -z "$HOST" 443 >/dev/null 2>&1; then
-              echo "✅ TCP 443 reachable"
-              break
-            fi
-            echo "⏳ Waiting for TCP..."
-            sleep 3
-          done
-          
-          if ! nc -z "$HOST" 443 >/dev/null 2>&1; then
-            echo "❌ ERROR: TCP port 443 not reachable"
-            exit 1
-          fi
+        run: ./scripts/check_cloudflare_tunnel.sh
 
       - id: export_tunnel
         name: Export WS endpoint
