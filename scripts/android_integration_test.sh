@@ -36,8 +36,7 @@ cd app
   --target=test_driver/app.dart \
   --flavor dev \
   --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
-  --dart-define=locales=en \
-  --fail-fast
+  --dart-define=locales=en
 
 cd ..
 
