@@ -10,9 +10,9 @@ const num _pnqPerNgn = 0.001; // [PNQ/NGN]
 const double _defaultMarkup = 0.02;
 
 enum KnownCommunity {
-  leu(symbol: 'leu', fiatCurrency: Currency.chf, localFiatRate: _leuPerChf, markup: _defaultMarkup),
-  nyt(symbol: 'nyt', fiatCurrency: Currency.tzs, localFiatRate: _nytPerTzs, markup: _defaultMarkup),
-  pnq(symbol: 'pnq', fiatCurrency: Currency.ngn, localFiatRate: _pnqPerNgn, markup: _defaultMarkup);
+  leu(symbol: 'LEU', fiatCurrency: Currency.chf, localFiatRate: _leuPerChf, markup: _defaultMarkup),
+  nyt(symbol: 'NYT', fiatCurrency: Currency.tzs, localFiatRate: _nytPerTzs, markup: _defaultMarkup),
+  pnq(symbol: 'PNQ', fiatCurrency: Currency.ngn, localFiatRate: _pnqPerNgn, markup: _defaultMarkup);
 
   const KnownCommunity({
     required this.symbol,

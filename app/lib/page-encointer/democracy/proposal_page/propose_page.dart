@@ -529,7 +529,7 @@ class _ProposePageState extends State<ProposePage> {
             if (isKnownCommunity)
               _InfoKV(
                 label: l10n.proposalExplainerSwapFee,
-                value: swapFee(swapAmountAsset, knownCommunity!, forexRate?.value ?? 0),
+                value: swapFee(allowanceCC, knownCommunity!, forexRate?.value ?? 0),
               ),
             const SizedBox(height: 6),
             _InfoKV(
@@ -586,7 +586,7 @@ class _ProposePageState extends State<ProposePage> {
 
   String ccToFiatToAssetExplainerText(double allowanceCC, String ccSymbol, KnownCommunity community, double forexRate) {
     final localFiatValue = allowanceCC / community.localFiatRate;
-    final usdcValue = forexRate != 0 ? Fmt.doubleFormat(allowanceCC / forexRate, length: 4) : '--';
+    final usdcValue = forexRate != 0 ? Fmt.doubleFormat(localFiatValue / forexRate, length: 4) : '--';
 
     return '$allowanceCC $ccSymbol = ${Fmt.doubleFormat(localFiatValue, length: 4)} ${community.fiatCurrency.symbol}'
         ' = $usdcValue ${selectedAsset.symbol}';
@@ -599,10 +599,10 @@ class _ProposePageState extends State<ProposePage> {
     return '$allowanceCC $ccSymbol = $usdcValue ${selectedAsset.symbol}';
   }
 
-  String swapFee(double swapAmountAsset, KnownCommunity community, double forexRate) {
-    final usdcFee = forexRate != 0 ? Fmt.doubleFormat(swapAmountAsset * community.markup / forexRate, length: 4) : '--';
+  String swapFee(double swapAmountCC, KnownCommunity community, double forexRate) {
+    final usdcFee = forexRate != 0 ? Fmt.doubleFormat(swapAmountCC * community.markup, length: 4) : '--';
 
-    return '${community.markup * 100}% = $usdcFee ${selectedAsset.symbol}';
+    return '${community.markup * 100}% = $usdcFee ${community.symbol}';
   }
 
   /// Dynamically generates form fields based on selected proposal type
