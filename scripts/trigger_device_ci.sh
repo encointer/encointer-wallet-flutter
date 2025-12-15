@@ -14,7 +14,8 @@ if [[ -n "${GITHUB_HEAD_REF:-}" ]]; then
   # If this is a PR, use the source branch
   REF="$GITHUB_HEAD_REF"
 else
-  REF="${GITHUB_REF##*/}"  # normal branch
+  # If running on a branch push, remove refs/heads/ prefix but keep full name
+  REF="${GITHUB_REF#refs/heads/}"
 fi
 
 # Build JSON payload
