@@ -15,7 +15,7 @@ concurrency:
 jobs:
   # IOS Devices
   iphone_14_pro_max:
-    uses: ./.github/workflows/ios_device_ci.yml
+    uses: ./.github/workflows/device_ci_proxy.yml
     with:
       workflow_file: ios_device_ci.yml
       device: "iPhone 15 Pro Max"
@@ -23,7 +23,7 @@ jobs:
       docker_tag: "1.16.2"
 
   ipad_pro_6:
-    uses: ./.github/workflows/ios_device_ci.yml
+    uses: ./.github/workflows/device_ci_proxy.yml
     with:
       workflow_file: ios_device_ci.yml
       device: "iPad Pro (12.9-inch) (6th generation)"
@@ -31,7 +31,7 @@ jobs:
       docker_tag: "1.16.2"
 
   ipad_pro_2:
-    uses: ./.github/workflows/ios_device_ci.yml
+    uses: ./.github/workflows/device_ci_proxy.yml
     with:
       workflow_file: ios_device_ci.yml
       device: "iPad Pro (12.9-inch) (2nd generation)"
@@ -40,7 +40,7 @@ jobs:
 
   # Android devices
   pixel_3a_api_33:
-    uses: ./.github/workflows/android_device_ci.yml
+    uses: ./.github/workflows/device_ci_proxy.yml
     with:
       workflow_file: android_device_ci.yml
       api-level: 33
@@ -49,7 +49,7 @@ jobs:
       docker_tag: "1.16.2"
 
   pixel_3a_api_35:
-    uses: ./.github/workflows/android_device_ci.yml
+    uses: ./.github/workflows/device_ci_proxy.yml
     with:
       workflow_file: android_device_ci.yml
       api-level: 35
