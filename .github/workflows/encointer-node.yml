@@ -65,21 +65,6 @@ jobs:
             echo "❌ ERROR: DNS did not resolve"
             exit 1
           fi
-          
-          # --- TCP check ---
-          for i in {1..20}; do
-            if nc -z "$HOST" 443 >/dev/null 2>&1; then
-              echo "✅ TCP 443 reachable"
-              break
-            fi
-            echo "⏳ Waiting for TCP..."
-            sleep 3
-          done
-          
-          if ! nc -z "$HOST" 443 >/dev/null 2>&1; then
-            echo "❌ ERROR: TCP port 443 not reachable"
-            exit 1
-          fi
 
       - id: export_tunnel
         name: Export WS endpoint
