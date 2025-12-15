@@ -2,7 +2,7 @@ name: Device CI
 
 on:
   push:
-    branches: [master, f-droid, cl/node-ci-test]
+    branches: [master, f-droid]
     tags:
       - "*"
   pull_request:
