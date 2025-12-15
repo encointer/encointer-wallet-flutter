@@ -22,6 +22,8 @@ read -r -d '' INPUTS_JSON <<EOF
 }
 EOF
 
+echo "🔌 INPUTS_JSON=$INPUTS_JSON"
+
 # Trigger workflow_dispatch
 RUN_ID=$(echo "$INPUTS_JSON" | gh api -X POST \
   "/repos/$GITHUB_REPOSITORY/actions/workflows/$WORKFLOW_FILE/dispatches" \
