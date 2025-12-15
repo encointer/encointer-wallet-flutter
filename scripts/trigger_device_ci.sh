@@ -6,6 +6,7 @@ API_LEVEL="$2"
 RECORD_VIDEO="$3"
 WORKFLOW_FILE="$4"
 WS_ENDPOINT="$5"
+CANCEL_ID="$6"
 
 echo "🔌 Triggering Device CI with WS_ENDPOINT=$WS_ENDPOINT"
 
@@ -26,7 +27,8 @@ INPUTS_JSON=$(cat <<EOF
     "device": "$DEVICE",
     "api_level": "$API_LEVEL",
     "record_video": "$RECORD_VIDEO",
-    "ws_endpoint": "$WS_ENDPOINT"
+    "ws_endpoint": "$WS_ENDPOINT",
+    "cancel_id": $CANCEL_ID
   }
 }
 EOF
@@ -43,31 +45,3 @@ RUN_ID=$(echo "$INPUTS_JSON" | gh api -X POST \
 
 echo "🔍 Triggered workflow run"
 
-echo "Wait a few seconds for GitHub to register the run"
-sleep 15
-
-ALL_RUNS=$(gh api repos/$GITHUB_REPOSITORY/actions/workflows/$WORKFLOW_FILE/runs \
-            -f branch="$REF" \
-            -f event="workflow_dispatch" \
-            -q '.workflow_runs[] | select(.head_branch=="'"$REF"'" and .event=="workflow_dispatch")'
-)
-echo "🔍 All Runs: $ALL_RUNS"
-
-
-# Get the latess run ID for our device ID
-echo "🔍 Fetching triggered workflow run ID for device: $DEVICE on ref: $REF"
-RUN_ID=$(gh api repos/$GITHUB_REPOSITORY/actions/workflows/$WORKFLOW_FILE/runs \
-  -f branch="$REF" \
-  -f event="workflow_dispatch" \
-  -q '.workflow_runs | sort_by(.created_at) | reverse | map(select(.head_branch=="'"$REF"'" and (.name | contains("'"$DEVICE"'")))) | .[0].id'
-)
-
-if [[ -z "$RUN_ID" || "$RUN_ID" == "null" ]]; then
-  echo "❌ Could not find workflow run ID for device: $DEVICE"
-  exit 1
-fi
-
-echo "🔍 Triggered workflow run ID: $RUN_ID"
-
-echo "Triggered workflow run ID: $RUN_ID"
-echo "$RUN_ID" > device_run_id.txt

@@ -61,13 +61,15 @@ jobs:
         env:
           WS_ENDPOINT: ${{ steps.export_tunnel.outputs.ws }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CURRENT_RUN_ID: ${{ github.run_id }}
         run: |
           ./scripts/trigger_device_ci.sh \
             "${{ inputs.device }}" \
             "${{ inputs.api_level }}" \
             "${{ inputs.record_video }}" \
             "${{ inputs.workflow_file }}" \
-            "$WS_ENDPOINT"
+            "$WS_ENDPOINT" \
+            "$CURRENT_RUN_ID"
 
 
       # Wait for device CI workflow to finish
