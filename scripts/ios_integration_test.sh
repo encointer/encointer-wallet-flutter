@@ -28,7 +28,7 @@ cd app
   --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
 
 # Regular Integration test
-../.flutter/bin/flutter flutter drive \
+../.flutter/bin/flutter drive \
   --no-enable-impeller \
   --target=test_driver/app.dart \
   --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
