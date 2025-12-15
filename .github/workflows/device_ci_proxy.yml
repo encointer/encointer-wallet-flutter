@@ -20,7 +20,7 @@ on:
         type: string
 
 concurrency:
-  group: device-ci-${{ github.event.inputs.device }}-${{ github.event.inputs.api_level }}-${{ github.event.inputs.record_video }}
+  group: device-ci-${{ inputs.device }}-${{ inputs.api_level }}-${{ inputs.record_video }}
   cancel-in-progress: true
 
 jobs:
