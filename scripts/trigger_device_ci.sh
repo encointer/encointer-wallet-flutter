@@ -44,7 +44,7 @@ RUN_ID=$(echo "$INPUTS_JSON" | gh api -X POST \
 echo "🔍 Triggered workflow run"
 
 echo "Wait a few seconds for GitHub to register the run"
-sleep 5
+sleep 15
 
 ALL_RUNS=$(gh api repos/$GITHUB_REPOSITORY/actions/workflows/$WORKFLOW_FILE/runs \
             -f branch="$REF" \
