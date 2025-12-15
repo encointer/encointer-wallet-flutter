@@ -2,21 +2,6 @@ name: Android CI
 run-name: Android CI (${{ github.event.inputs.device }}, API ${{ github.event.inputs.api_level }})
 
 on:
-  workflow_call:
-    inputs:
-      api_level:
-        required: true
-        type: number
-      device:
-        required: true
-        type: string
-      record_video:
-        required: true
-        type: boolean
-      ws_endpoint:
-        required: true
-        type: string
-
   workflow_dispatch:
     inputs:
       device:
@@ -54,10 +39,10 @@ jobs:
 
       - name: Set unified input variables
         run: |
-          echo "DEVICE=${{ inputs.device || github.event.inputs.device }}" >> $GITHUB_ENV
-          echo "API_LEVEL=${{ inputs.api_level || github.event.inputs.api_level }}" >> $GITHUB_ENV
-          echo "RECORD_VIDEO=${{ inputs.record_video || github.event.inputs.record_video }}" >> $GITHUB_ENV
-          echo "WS_ENDPOINT=${{ inputs.ws_endpoint || github.event.inputs.ws_endpoint }}" >> $GITHUB_ENV
+          echo "DEVICE=${{ github.event.inputs.device }}" >> $GITHUB_ENV
+          echo "API_LEVEL=${{ github.event.inputs.api_level }}" >> $GITHUB_ENV
+          echo "RECORD_VIDEO=${{ github.event.inputs.record_video }}" >> $GITHUB_ENV
+          echo "WS_ENDPOINT=${{ github.event.inputs.ws_endpoint }}" >> $GITHUB_ENV
 
       - name: Debug WS endpoint
         shell: bash

@@ -2,21 +2,6 @@ name: iOS Device CI
 run-name: iOS Device CI (${{ github.event.inputs.device }})
 
 on:
-  workflow_call:
-    inputs:
-      device:
-        required: true
-        type: string
-      api_level:
-        required: true
-        type: number
-      record_video:
-        required: true
-        type: boolean
-      ws_endpoint:
-        required: true
-        type: string
-
   workflow_dispatch:
     inputs:
       device:
@@ -55,10 +40,10 @@ jobs:
 
       - name: Set unified input variables
         run: |
-          echo "DEVICE=${{ inputs.device || github.event.inputs.device }}" >> $GITHUB_ENV
-          echo "API_LEVEL=${{ inputs.api_level || github.event.inputs.api_level }}" >> $GITHUB_ENV
-          echo "RECORD_VIDEO=${{ inputs.record_video || github.event.inputs.record_video }}" >> $GITHUB_ENV
-          echo "WS_ENDPOINT=${{ inputs.ws_endpoint || github.event.inputs.ws_endpoint }}" >> $GITHUB_ENV
+          echo "DEVICE=${{ github.event.inputs.device }}" >> $GITHUB_ENV
+          echo "API_LEVEL=${{ github.event.inputs.api_level }}" >> $GITHUB_ENV
+          echo "RECORD_VIDEO=${{ github.event.inputs.record_video }}" >> $GITHUB_ENV
+          echo "WS_ENDPOINT=${{ github.event.inputs.ws_endpoint }}" >> $GITHUB_ENV
 
       - name: Set Env Vars
         run: cat .github/env >> $GITHUB_ENV
