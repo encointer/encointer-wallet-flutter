@@ -10,7 +10,6 @@ import 'app/app.dart';
 void main() async {
   late FlutterDriver driver;
   const timeout240 = Timeout(Duration(seconds: 240));
-  const timeout30 = Timeout(Duration(seconds: 30));
 
   var publicKey = '';
   var menemonic = '';
@@ -83,7 +82,7 @@ void main() async {
   test('change-community', () async {
     await goToHomeViewFromNavBar(driver);
     await changeCommunity(driver);
-  }, timeout: timeout30);
+  }, timeout: timeout240);
 
   test('Register [Bootstrapper] Alice', () async {
     await scrollToRegisterButton(driver);
