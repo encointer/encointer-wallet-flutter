@@ -104,7 +104,6 @@ jobs:
 
       - name: Start Android recording
         if: ${{ inputs.record_video }}
-        working-directory: ./scripts
         shell: bash
         run: |
           adb shell screenrecord /sdcard/recording.mp4 &
@@ -128,7 +127,6 @@ jobs:
 
       - name: Stop Android recording & upload
         if: always()
-        working-directory: ./scripts
         shell: bash
         run: |
           mkdir -p "${{ env.ARTIFACT_PATH }}"

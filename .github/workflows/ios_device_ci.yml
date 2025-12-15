@@ -79,7 +79,6 @@ jobs:
 
       - name: Start screen recording
         if: ${{ inputs.record_video }}
-        working-directory: ./scripts
         shell: bash
         run: |
           echo "Starting screen recording..."
@@ -100,7 +99,6 @@ jobs:
 
       - name: Stop recording and upload
         if: always()
-        working-directory: ./scripts
         shell: bash
         run: |
           if [ -f recording_pid.txt ]; then
