@@ -36,12 +36,14 @@ echo "🔌 WORKFLOW_FILE=$WORKFLOW_FILE"
 echo "🔌 INPUTS_JSON=$INPUTS_JSON"
 
 # Trigger workflow_dispatch
-RUN_ID=$(echo "$INPUTS_JSON" | gh api -X POST \
+echo "$INPUTS_JSON" | gh api -X POST \
   "/repos/$GITHUB_REPOSITORY/actions/workflows/$WORKFLOW_FILE/dispatches" \
-  -H "Accept: application/vnd.github+json" \
-  --input - | jq -r '.id')
+  -H "Accept: application/vnd.github+json"
 
-echo "🔍 Triggered workflow run ID: $RUN_ID"
+echo "🔍 Triggered workflow run"
+
+echo "Wait a few seconds for GitHub to register the run"
+sleep 5
 
 ALL_RUNS=$(gh api repos/$GITHUB_REPOSITORY/actions/workflows/$WORKFLOW_FILE/runs \
             -f branch="$REF" \
