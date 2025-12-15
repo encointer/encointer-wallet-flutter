@@ -37,9 +37,33 @@ jobs:
         run: cat .github/env >> $GITHUB_ENV
 
       - name: Debug WS endpoint
+        shell: bash
         run: |
+          set -euo pipefail
+          
           echo "WS_ENDPOINT=$WS_ENDPOINT"
-          [[ -n "$WS_ENDPOINT" ]] || (echo "WS_ENDPOINT is empty" && exit 1)
+          [[ -n "$WS_ENDPOINT" ]] || (echo "❌ WS_ENDPOINT is empty" && exit 1)
+          
+          # Convert WS → HTTP for health check
+          HTTP_URL="${WS_ENDPOINT/wss:/https:}"
+          
+          echo "🌍 HTTP endpoint: $HTTP_URL"
+          echo "🔎 Performing JSON-RPC health check..."
+          
+          JSON_PAYLOAD='{"jsonrpc":"2.0","id":1,"method":"system_health","params":[]}'
+          
+          RESPONSE=$(curl -sS \
+            -H "Content-Type: application/json" \
+            -d "$JSON_PAYLOAD" \
+            "$HTTP_URL" || true)
+          
+          echo "↩️ Raw response:"
+          echo "$RESPONSE"
+          
+          # Validate JSON-RPC success
+          echo "$RESPONSE" | jq -e '.result' >/dev/null
+          
+          echo "✅ JSON-RPC health check passed"
 
       - name: prepare xcode
         uses: maxim-lobanov/setup-xcode@v1
