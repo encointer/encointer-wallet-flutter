@@ -18,6 +18,16 @@ else
   REF="${GITHUB_REF#refs/heads/}"
 fi
 
+# For concurrency management
+if [[ -n "${GITHUB_HEAD_REF:-}" ]]; then
+  # Pull request → source branch name
+  GIT_REF="pr-${GITHUB_HEAD_REF}"
+else
+  # Push / manual / workflow_call → branch name
+  GIT_REF="branch-${GITHUB_REF_NAME}"
+fi
+
+
 # Build JSON payload
 INPUTS_JSON=$(cat <<EOF
 {
@@ -26,7 +36,8 @@ INPUTS_JSON=$(cat <<EOF
     "device": "$DEVICE",
     "api_level": "$API_LEVEL",
     "record_video": "$RECORD_VIDEO",
-    "ws_endpoint": "$WS_ENDPOINT"
+    "ws_endpoint": "$WS_ENDPOINT",
+    "git_ref": "$GIT_REF"
   }
 }
 EOF
