@@ -90,4 +90,4 @@ jobs:
             ELAPSED=$((ELAPSED + INTERVAL))
           done
 
-          echo "⏰ Finished 45 minutes monitoring."
+          echo "⏰ Finished 60 minutes monitoring."
