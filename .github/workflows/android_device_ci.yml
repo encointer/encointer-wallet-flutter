@@ -102,19 +102,13 @@ jobs:
           disable-animations: false
           script: echo "Generated AVD snapshot for caching."
 
-      - name: Start Android recording
-        if: ${{ inputs.record_video }}
-        shell: bash
-        run: |
-          adb shell screenrecord /sdcard/recording.mp4 &
-          echo $! > recording_pid.txt
-          echo "Recording started with PID $(cat recording_pid.txt)"
-
       - name: "Android Integration Tests"
         timeout-minutes: 45
         uses: reactivecircus/android-emulator-runner@v2
         env:
           ANDROID_DEBUG: "true"
+          RECORD: ${{ inputs.record_video }}
+          TEMP_DIR: ${{ env.ARTIFACT_PATH }}
         with:
           api-level: ${{ inputs.api-level }}
           profile: ${{ inputs.device }}
@@ -124,24 +118,6 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: ./scripts/android_integration_test.sh
-
-      - name: Stop Android recording & upload
-        if: always()
-        shell: bash
-        run: |
-          mkdir -p "${{ env.ARTIFACT_PATH }}"
-
-          if [ -f recording_pid.txt ]; then
-            RECORDING_PID=$(cat recording_pid.txt)
-            echo "Stopping recording (pid $RECORDING_PID)..."
-            kill -SIGINT $RECORDING_PID || echo "Recording process already stopped"
-            sleep 5
-          fi
-
-          adb pull /sdcard/recording.mp4 "${{ env.ARTIFACT_PATH }}" || echo "No recording found"
-
-          cp -r "${{ env.ARTIFACT_PATH }}/test"/* "${{ env.ARTIFACT_PATH }}" || echo "No screenshots found"
-          rm -r "${{ env.ARTIFACT_PATH }}/test" || true
 
       - name: "Upload screenshots"
         if: always()
