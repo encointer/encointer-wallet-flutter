@@ -22,7 +22,6 @@ env:
 jobs:
   android_device_tests:
     name: Android Device Tests
-    needs: encointer_node
     runs-on: ubuntu-latest
     timeout-minutes: 70
     env:

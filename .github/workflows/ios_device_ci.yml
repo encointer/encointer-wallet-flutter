@@ -19,7 +19,6 @@ jobs:
   ios_device_tests:
     name: iOS Device Tests
     runs-on: macos-14
-    needs: encointer_node
     timeout-minutes: 60
     env:
       WS_ENDPOINT: ${{ github.event.inputs.ws_endpoint }}
