@@ -22,13 +22,13 @@ echo "🚀 Running Flutter integration tests with WS_ENDPOINT=$WS_ENDPOINT"
 cd app
 
 # Scanner print screen
-.flutter/bin/flutter drive \
+../.flutter/bin/flutter drive \
   --no-enable-impeller \
   --target=test_driver/scan_page.dart \
   --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
 
 # Regular Integration test
-flutter drive \
+../.flutter/bin/flutter flutter drive \
   --no-enable-impeller \
   --target=test_driver/app.dart \
   --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
