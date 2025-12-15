@@ -36,10 +36,10 @@ jobs:
         run: |
           ./scripts/docker_run_encointer_node_notee.sh ${{ inputs.docker_tag }} &
 
-#      - name: Bootstrap demo community
-#        run: |
-#          ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh \
-#            --docker-tag=${{ inputs.docker_tag }}
+      - name: Bootstrap demo community
+        run: |
+          ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh \
+            --docker-tag=${{ inputs.docker_tag }}
 
       - name: Start Cloudflare tunnel
         run: |
@@ -73,7 +73,21 @@ jobs:
             "${{ inputs.workflow_file }}" \
             "$WS_ENDPOINT" \
 
-      - name: Sleep until timeout
+      - name: Keep tunnel alive and check every 30s
         run: |
-          echo "⏳ Sleeping for 45 minutes..."
-          sleep 2700
+          echo "⏳ Monitoring Cloudflare tunnel for up to 60 minutes..."
+          MAX_MINUTES=60
+          INTERVAL=30
+          ELAPSED=0
+
+          while [ $ELAPSED -lt $((MAX_MINUTES * 60)) ]; do
+            if ./scripts/check_cloudflare_tunnel.sh; then
+              echo "✅ Tunnel is healthy (checked at $ELAPSED seconds)"
+            else
+              echo "⚠️ Tunnel check failed at $ELAPSED seconds"
+            fi
+            sleep $INTERVAL
+            ELAPSED=$((ELAPSED + INTERVAL))
+          done
+
+          echo "⏰ Finished 45 minutes monitoring."
