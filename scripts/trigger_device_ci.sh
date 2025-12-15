@@ -42,7 +42,16 @@ RUN_ID=$(echo "$INPUTS_JSON" | gh api -X POST \
   --input - | jq -r '.id')
 
 
+ALL_RUNS=$(gh api repos/$GITHUB_REPOSITORY/actions/workflows/$WORKFLOW_FILE/runs \
+            -f branch="$REF" \
+            -f event="workflow_dispatch" \
+            -q '.workflow_runs[] | select(.head_branch=="'"$REF"'" and .event=="workflow_dispatch")'
+)
+echo "🔍 All Runs: $ALL_RUNS"
+
+
 # Get the latess run ID for our device ID
+echo "🔍 Fetching triggered workflow run ID for device: $DEVICE on ref: $REF"
 RUN_ID=$(gh api repos/$GITHUB_REPOSITORY/actions/workflows/$WORKFLOW_FILE/runs \
   -f branch="$REF" \
   -f event="workflow_dispatch" \

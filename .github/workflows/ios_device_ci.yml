@@ -1,5 +1,5 @@
 name: iOS Device CI
-run-name: iOS Device CI ${{ github.event.inputs.device }}
+run-name: iOS Device CI (${{ github.event.inputs.device }})
 
 on:
   workflow_call:
