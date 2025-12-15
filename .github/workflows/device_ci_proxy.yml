@@ -61,6 +61,7 @@ jobs:
         id: trigger_device
         env:
           WS_ENDPOINT: ${{ steps.export_tunnel.outputs.ws }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "🔌 Triggering iOS Device CI with WS_ENDPOINT=$WS_ENDPOINT"
 
