@@ -41,5 +41,13 @@ RUN_ID=$(echo "$INPUTS_JSON" | gh api -X POST \
   -H "Accept: application/vnd.github+json" \
   --input - | jq -r '.id')
 
+
+# Get the latess run ID for our device ID
+RUN_ID=$(gh api repos/$GITHUB_REPOSITORY/actions/workflows/$WORKFLOW_FILE/runs \
+  -f branch="$REF" \
+  -f event="workflow_dispatch" \
+  -q '.workflow_runs[] | select(.head_branch=="'"$REF"'" and (.name | contains("'"$DEVICE"'"))) | .id' \
+)
+
 echo "Triggered workflow run ID: $RUN_ID"
 echo "$RUN_ID" > device_run_id.txt
