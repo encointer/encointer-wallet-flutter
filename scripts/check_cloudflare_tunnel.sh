@@ -13,6 +13,9 @@ HOST=$(echo "$HTTP_URL" | sed -E 's|https://([^/]+).*|\1|')
 echo "🌍 Tunnel URL: $HTTP_URL"
 echo "🔎 Verifying tunnel is reachable…"
 
+echo "Installing deps"
+sudo apt-get install -y dnsutils
+
 # Retry helper
 retry_command() {
   local cmd="$1"
@@ -33,7 +36,7 @@ retry_command() {
 }
 
 # --- DNS check ---
-retry_command "ping -c1 $HOST >/dev/null 2>&1" "DNS resolution for $HOST"
+retry_command "getent hosts $HOST >/dev/null 2>&1" "DNS resolution for $HOST"
 
 # --- TCP check ---
 retry_command "nc -z $HOST 443 >/dev/null 2>&1" "TCP connectivity to $HOST:443"
