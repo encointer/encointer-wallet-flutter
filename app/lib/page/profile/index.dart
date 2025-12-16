@@ -249,6 +249,9 @@ class _ProfileState extends State<Profile> {
                     ListTile(
                       title: Text('WS_Endpoint ENV: $wsFromEnv', style: h3Grey),
                     ),
+                    ListTile(
+                      title: Text('WS_Endpoint_Ah ENV: $wsAhFromEnv', style: h3Grey),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8),
                       child: SubmitButton(
