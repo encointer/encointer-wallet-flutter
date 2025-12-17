@@ -491,16 +491,17 @@ class _ProposePageState extends State<ProposePage> {
     final store = context.read<AppStore>();
     final theme = context.textTheme;
 
-    final symbol = store.encointer.community!.symbol!;
+    final ccSymbol = store.encointer.community!.symbol!;
+    final symbol = symbolForTreasury();
     final allowanceCC = double.tryParse(allowanceController.text) ?? 0;
     final ccRate = double.tryParse(rateController.text) ?? 0;
 
     final swapAmountAsset = swapLimit();
-    final calculationLine = isKnownCommunity
-        ? ccToFiatToAssetExplainerText(allowanceCC, symbol, knownCommunity!, forexRate?.value ?? 0)
-        : ccToAssetExplainerText(allowanceCC, symbol, ccRate);
+    final calculationLine = isKnownCommunity && selectedAction.isAssetSwapAction()
+        ? ccToFiatToAssetExplainerText(allowanceCC, ccSymbol, knownCommunity!, forexRate?.value ?? 0)
+        : ccToAssetExplainerText(allowanceCC, ccSymbol, ccRate, symbol);
 
-    final youWillGetLine = '${Fmt.doubleFormat(swapAmountAsset, length: 4)} ${selectedAsset.symbol}';
+    final youWillGetLine = '${Fmt.doubleFormat(swapAmountAsset, length: 4)} $symbol';
 
     return Card(
       elevation: 1,
@@ -585,17 +586,17 @@ class _ProposePageState extends State<ProposePage> {
 
   String ccToFiatToAssetExplainerText(double allowanceCC, String ccSymbol, KnownCommunity community, double forexRate) {
     final localFiatValue = allowanceCC / community.localFiatRate;
-    final usdcValue = forexRate != 0 ? Fmt.doubleFormat(localFiatValue / forexRate, length: 4) : '--';
+    final swapCurrencyValue = forexRate != 0 ? Fmt.doubleFormat(localFiatValue / forexRate, length: 4) : '--';
 
     return '$allowanceCC $ccSymbol = ${Fmt.doubleFormat(localFiatValue, length: 4)} ${community.fiatCurrency.symbol}'
-        ' = $usdcValue ${selectedAsset.symbol}';
+        ' = $swapCurrencyValue ${selectedAsset.symbol}';
   }
 
   /// Simplified explainer text just showing the conversion from CC to selected asset.
-  String ccToAssetExplainerText(double allowanceCC, String ccSymbol, double ccRate) {
+  String ccToAssetExplainerText(double allowanceCC, String ccSymbol, double ccRate, String assetSymbol) {
     final usdcValue = ccRate != 0 ? Fmt.doubleFormat(allowanceCC / ccRate, length: 4) : '--';
 
-    return '$allowanceCC $ccSymbol = $usdcValue ${selectedAsset.symbol}';
+    return '$allowanceCC $ccSymbol = $usdcValue $assetSymbol';
   }
 
   String swapFee(double swapAmountCC, KnownCommunity community, double forexRate) {
@@ -661,14 +662,14 @@ class _ProposePageState extends State<ProposePage> {
   double assetTreasuryUnallocatedLiquidity() {
     final unallocated =
         maxTreasuryPayoutFraction * Fmt.bigIntToDouble(assetTreasuryLiquidity(selectedAsset), selectedAsset.decimals);
-    return unallocated;
+    return max(0, unallocated);
   }
 
   double nativeTreasuryUnallocatedLiquidity() {
     final unallocated = selectedScope.isLocal
         ? maxTreasuryPayoutFraction * Fmt.bigIntToDouble(localTreasuryBalance - pendingLocalSpends, ertDecimals)
         : maxTreasuryPayoutFraction * Fmt.bigIntToDouble(globalTreasuryBalance - pendingGlobalSpends, ertDecimals);
-    return unallocated;
+    return max(0, unallocated);
   }
 
   double swapLimit() {
