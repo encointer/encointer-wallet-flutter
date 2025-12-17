@@ -1,7 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:typed_data' as _i2;
+import 'dart:typed_data' as _i3;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
+
+import '../cow_1.dart' as _i2;
 
 class LastRuntimeUpgradeInfo {
   const LastRuntimeUpgradeInfo({
@@ -16,12 +18,12 @@ class LastRuntimeUpgradeInfo {
   /// codec::Compact<u32>
   final BigInt specVersion;
 
-  /// sp_runtime::RuntimeString
-  final String specName;
+  /// Cow<'static, str>
+  final _i2.Cow specName;
 
   static const $LastRuntimeUpgradeInfoCodec codec = $LastRuntimeUpgradeInfoCodec();
 
-  _i2.Uint8List encode() {
+  _i3.Uint8List encode() {
     return codec.encode(this);
   }
 
@@ -75,7 +77,7 @@ class $LastRuntimeUpgradeInfoCodec with _i1.Codec<LastRuntimeUpgradeInfo> {
   int sizeHint(LastRuntimeUpgradeInfo obj) {
     int size = 0;
     size = size + _i1.CompactBigIntCodec.codec.sizeHint(obj.specVersion);
-    size = size + _i1.StrCodec.codec.sizeHint(obj.specName);
+    size = size + const _i2.CowCodec().sizeHint(obj.specName);
     return size;
   }
 }

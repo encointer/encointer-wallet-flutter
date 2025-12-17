@@ -5,7 +5,7 @@ import 'dart:typed_data' as _i7;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
-import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i8;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i8;
 import '../types/pallet_scheduler/pallet/call.dart' as _i9;
 import '../types/pallet_scheduler/retry_config.dart' as _i5;
 import '../types/pallet_scheduler/scheduled.dart' as _i3;
@@ -51,6 +51,7 @@ class Queries {
     hasher: _i1.StorageHasher.twoxx64Concat(_i2.U8ArrayCodec(32)),
   );
 
+  /// Block number at which the agenda began incomplete execution.
   _i6.Future<int?> incompleteSince({_i1.BlockHash? at}) async {
     final hashedKey = _incompleteSince.hashedKey();
     final bytes = await __api.getStorage(
@@ -356,10 +357,7 @@ class Constants {
   /// The maximum weight that may be scheduled per block for any dispatchables.
   final _i10.Weight maximumWeight = _i10.Weight(
     refTime: BigInt.from(1600000000000),
-    proofSize: BigInt.parse(
-      '14757395258967641292',
-      radix: 10,
-    ),
+    proofSize: BigInt.from(8388608),
   );
 
   /// The maximum number of scheduled calls in the queue for a single block.

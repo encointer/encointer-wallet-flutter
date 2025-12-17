@@ -1,11 +1,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:typed_data' as _i3;
+import 'dart:typed_data' as _i4;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
-import 'package:quiver/collection.dart' as _i4;
+import 'package:quiver/collection.dart' as _i5;
 
-import '../cow.dart' as _i2;
-import '../tuples.dart' as _i5;
+import '../cow_1.dart' as _i2;
+import '../cow_2.dart' as _i3;
+import '../tuples.dart' as _i6;
 
 class RuntimeVersion {
   const RuntimeVersion({
@@ -16,18 +17,18 @@ class RuntimeVersion {
     required this.implVersion,
     required this.apis,
     required this.transactionVersion,
-    required this.stateVersion,
+    required this.systemVersion,
   });
 
   factory RuntimeVersion.decode(_i1.Input input) {
     return codec.decode(input);
   }
 
-  /// RuntimeString
-  final String specName;
+  /// Cow<'static, str>
+  final _i2.Cow specName;
 
-  /// RuntimeString
-  final String implName;
+  /// Cow<'static, str>
+  final _i2.Cow implName;
 
   /// u32
   final int authoringVersion;
@@ -39,17 +40,17 @@ class RuntimeVersion {
   final int implVersion;
 
   /// ApisVec
-  final _i2.Cow apis;
+  final _i3.Cow apis;
 
   /// u32
   final int transactionVersion;
 
   /// u8
-  final int stateVersion;
+  final int systemVersion;
 
   static const $RuntimeVersionCodec codec = $RuntimeVersionCodec();
 
-  _i3.Uint8List encode() {
+  _i4.Uint8List encode() {
     return codec.encode(this);
   }
 
@@ -66,7 +67,7 @@ class RuntimeVersion {
                 ])
             .toList(),
         'transactionVersion': transactionVersion,
-        'stateVersion': stateVersion,
+        'systemVersion': systemVersion,
       };
 
   @override
@@ -81,12 +82,12 @@ class RuntimeVersion {
           other.authoringVersion == authoringVersion &&
           other.specVersion == specVersion &&
           other.implVersion == implVersion &&
-          _i4.listsEqual(
+          _i5.listsEqual(
             other.apis,
             apis,
           ) &&
           other.transactionVersion == transactionVersion &&
-          other.stateVersion == stateVersion;
+          other.systemVersion == systemVersion;
 
   @override
   int get hashCode => Object.hash(
@@ -97,7 +98,7 @@ class RuntimeVersion {
         implVersion,
         apis,
         transactionVersion,
-        stateVersion,
+        systemVersion,
       );
 }
 
@@ -129,7 +130,7 @@ class $RuntimeVersionCodec with _i1.Codec<RuntimeVersion> {
       obj.implVersion,
       output,
     );
-    const _i1.SequenceCodec<_i5.Tuple2<List<int>, int>>(_i5.Tuple2Codec<List<int>, int>(
+    const _i1.SequenceCodec<_i6.Tuple2<List<int>, int>>(_i6.Tuple2Codec<List<int>, int>(
       _i1.U8ArrayCodec(8),
       _i1.U32Codec.codec,
     )).encodeTo(
@@ -141,7 +142,7 @@ class $RuntimeVersionCodec with _i1.Codec<RuntimeVersion> {
       output,
     );
     _i1.U8Codec.codec.encodeTo(
-      obj.stateVersion,
+      obj.systemVersion,
       output,
     );
   }
@@ -154,26 +155,26 @@ class $RuntimeVersionCodec with _i1.Codec<RuntimeVersion> {
       authoringVersion: _i1.U32Codec.codec.decode(input),
       specVersion: _i1.U32Codec.codec.decode(input),
       implVersion: _i1.U32Codec.codec.decode(input),
-      apis: const _i1.SequenceCodec<_i5.Tuple2<List<int>, int>>(_i5.Tuple2Codec<List<int>, int>(
+      apis: const _i1.SequenceCodec<_i6.Tuple2<List<int>, int>>(_i6.Tuple2Codec<List<int>, int>(
         _i1.U8ArrayCodec(8),
         _i1.U32Codec.codec,
       )).decode(input),
       transactionVersion: _i1.U32Codec.codec.decode(input),
-      stateVersion: _i1.U8Codec.codec.decode(input),
+      systemVersion: _i1.U8Codec.codec.decode(input),
     );
   }
 
   @override
   int sizeHint(RuntimeVersion obj) {
     int size = 0;
-    size = size + _i1.StrCodec.codec.sizeHint(obj.specName);
-    size = size + _i1.StrCodec.codec.sizeHint(obj.implName);
+    size = size + const _i2.CowCodec().sizeHint(obj.specName);
+    size = size + const _i2.CowCodec().sizeHint(obj.implName);
     size = size + _i1.U32Codec.codec.sizeHint(obj.authoringVersion);
     size = size + _i1.U32Codec.codec.sizeHint(obj.specVersion);
     size = size + _i1.U32Codec.codec.sizeHint(obj.implVersion);
-    size = size + const _i2.CowCodec().sizeHint(obj.apis);
+    size = size + const _i3.CowCodec().sizeHint(obj.apis);
     size = size + _i1.U32Codec.codec.sizeHint(obj.transactionVersion);
-    size = size + _i1.U8Codec.codec.sizeHint(obj.stateVersion);
+    size = size + _i1.U8Codec.codec.sizeHint(obj.systemVersion);
     return size;
   }
 }

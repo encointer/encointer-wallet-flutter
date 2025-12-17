@@ -4,8 +4,8 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i6;
 
-import '../../encointer_node_notee_runtime/origin_caller.dart' as _i4;
-import '../../encointer_node_notee_runtime/runtime_call.dart' as _i3;
+import '../../encointer_kusama_runtime/origin_caller.dart' as _i4;
+import '../../encointer_kusama_runtime/runtime_call.dart' as _i3;
 import '../../sp_weights/weight_v2/weight.dart' as _i5;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
@@ -77,6 +77,26 @@ class $Call {
       weight: weight,
     );
   }
+
+  IfElse ifElse({
+    required _i3.RuntimeCall main,
+    required _i3.RuntimeCall fallback,
+  }) {
+    return IfElse(
+      main: main,
+      fallback: fallback,
+    );
+  }
+
+  DispatchAsFallible dispatchAsFallible({
+    required _i4.OriginCaller asOrigin,
+    required _i3.RuntimeCall call,
+  }) {
+    return DispatchAsFallible(
+      asOrigin: asOrigin,
+      call: call,
+    );
+  }
 }
 
 class $CallCodec with _i1.Codec<Call> {
@@ -98,6 +118,10 @@ class $CallCodec with _i1.Codec<Call> {
         return ForceBatch._decode(input);
       case 5:
         return WithWeight._decode(input);
+      case 6:
+        return IfElse._decode(input);
+      case 7:
+        return DispatchAsFallible._decode(input);
       default:
         throw Exception('Call: Invalid variant index: "$index"');
     }
@@ -127,6 +151,12 @@ class $CallCodec with _i1.Codec<Call> {
       case WithWeight:
         (value as WithWeight).encodeTo(output);
         break;
+      case IfElse:
+        (value as IfElse).encodeTo(output);
+        break;
+      case DispatchAsFallible:
+        (value as DispatchAsFallible).encodeTo(output);
+        break;
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -147,6 +177,10 @@ class $CallCodec with _i1.Codec<Call> {
         return (value as ForceBatch)._sizeHint();
       case WithWeight:
         return (value as WithWeight)._sizeHint();
+      case IfElse:
+        return (value as IfElse)._sizeHint();
+      case DispatchAsFallible:
+        return (value as DispatchAsFallible)._sizeHint();
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -182,7 +216,7 @@ class Batch extends Call {
   final List<_i3.RuntimeCall> calls;
 
   @override
-  Map<String, Map<String, List<Map<String, Map<String, dynamic>>>>> toJson() => {
+  Map<String, Map<String, List<Map<String, dynamic>>>> toJson() => {
         'batch': {'calls': calls.map((value) => value.toJson()).toList()}
       };
 
@@ -555,5 +589,161 @@ class WithWeight extends Call {
   int get hashCode => Object.hash(
         call,
         weight,
+      );
+}
+
+/// Dispatch a fallback call in the event the main call fails to execute.
+/// May be called from any origin except `None`.
+///
+/// This function first attempts to dispatch the `main` call.
+/// If the `main` call fails, the `fallback` is attemted.
+/// if the fallback is successfully dispatched, the weights of both calls
+/// are accumulated and an event containing the main call error is deposited.
+///
+/// In the event of a fallback failure the whole call fails
+/// with the weights returned.
+///
+/// - `main`: The main call to be dispatched. This is the primary action to execute.
+/// - `fallback`: The fallback call to be dispatched in case the `main` call fails.
+///
+/// ## Dispatch Logic
+/// - If the origin is `root`, both the main and fallback calls are executed without
+///  applying any origin filters.
+/// - If the origin is not `root`, the origin filter is applied to both the `main` and
+///  `fallback` calls.
+///
+/// ## Use Case
+/// - Some use cases might involve submitting a `batch` type call in either main, fallback
+///  or both.
+class IfElse extends Call {
+  const IfElse({
+    required this.main,
+    required this.fallback,
+  });
+
+  factory IfElse._decode(_i1.Input input) {
+    return IfElse(
+      main: _i3.RuntimeCall.codec.decode(input),
+      fallback: _i3.RuntimeCall.codec.decode(input),
+    );
+  }
+
+  /// Box<<T as Config>::RuntimeCall>
+  final _i3.RuntimeCall main;
+
+  /// Box<<T as Config>::RuntimeCall>
+  final _i3.RuntimeCall fallback;
+
+  @override
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {
+        'if_else': {
+          'main': main.toJson(),
+          'fallback': fallback.toJson(),
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i3.RuntimeCall.codec.sizeHint(main);
+    size = size + _i3.RuntimeCall.codec.sizeHint(fallback);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      6,
+      output,
+    );
+    _i3.RuntimeCall.codec.encodeTo(
+      main,
+      output,
+    );
+    _i3.RuntimeCall.codec.encodeTo(
+      fallback,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is IfElse && other.main == main && other.fallback == fallback;
+
+  @override
+  int get hashCode => Object.hash(
+        main,
+        fallback,
+      );
+}
+
+/// Dispatches a function call with a provided origin.
+///
+/// Almost the same as [`Pallet::dispatch_as`] but forwards any error of the inner call.
+///
+/// The dispatch origin for this call must be _Root_.
+class DispatchAsFallible extends Call {
+  const DispatchAsFallible({
+    required this.asOrigin,
+    required this.call,
+  });
+
+  factory DispatchAsFallible._decode(_i1.Input input) {
+    return DispatchAsFallible(
+      asOrigin: _i4.OriginCaller.codec.decode(input),
+      call: _i3.RuntimeCall.codec.decode(input),
+    );
+  }
+
+  /// Box<T::PalletsOrigin>
+  final _i4.OriginCaller asOrigin;
+
+  /// Box<<T as Config>::RuntimeCall>
+  final _i3.RuntimeCall call;
+
+  @override
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {
+        'dispatch_as_fallible': {
+          'asOrigin': asOrigin.toJson(),
+          'call': call.toJson(),
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i4.OriginCaller.codec.sizeHint(asOrigin);
+    size = size + _i3.RuntimeCall.codec.sizeHint(call);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      7,
+      output,
+    );
+    _i4.OriginCaller.codec.encodeTo(
+      asOrigin,
+      output,
+    );
+    _i3.RuntimeCall.codec.encodeTo(
+      call,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is DispatchAsFallible && other.asOrigin == asOrigin && other.call == call;
+
+  @override
+  int get hashCode => Object.hash(
+        asOrigin,
+        call,
       );
 }
