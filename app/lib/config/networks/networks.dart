@@ -133,9 +133,11 @@ List<NetworkEndpoint> kusamaEndpoints() {
     NetworkEndpoint(name: 'Lucky Friday', address: 'wss://rpc-encointer-kusama.luckyfriday.io'),
   ];
 }
+// Dev Endpoints
+const wsAhFromEnv = String.fromEnvironment('WS_ENDPOINT_AH');
 
 List<NetworkEndpoint> assetHubKusamaEndpoints() {
-  return [
+  final wsAhRemote =  [
     NetworkEndpoint(name: 'Dwellir', address: 'wss://asset-hub-kusama-rpc.n.dwellir.com'),
     NetworkEndpoint(name: 'Dwellir Tunisia', address: 'wss://statemine-rpc-tn.dwellir.com'),
     NetworkEndpoint(name: 'IBP1', address: 'wss://sys.ibp.network/asset-hub-kusama'),
@@ -144,6 +146,7 @@ List<NetworkEndpoint> assetHubKusamaEndpoints() {
     NetworkEndpoint(name: 'OnFinality', address: 'wss://assethub-kusama.api.onfinality.io/public-ws'),
     NetworkEndpoint(name: 'RadiumBlock', address: 'wss://statemine.public.curie.radiumblock.co/ws'),
   ];
+  return wsAhFromEnv.isNotEmpty ? [NetworkEndpoint(name: 'Local AhDevNet', address: wsAhFromEnv)] : wsAhRemote;
 }
 
 // Dev Endpoints

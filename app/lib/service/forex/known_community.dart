@@ -6,13 +6,15 @@ import 'package:encointer_wallet/service/forex/currency.dart';
 const num _leuPerChf = 1;
 const num _nytPerTzs = 0.001;
 const num _pnqPerNgn = 0.001; // [PNQ/NGN]
+const num _mtaPerEur = 2; // [MTA/EUR]
 
 const double _defaultMarkup = 0.02;
 
 enum KnownCommunity {
   leu(symbol: 'LEU', fiatCurrency: Currency.chf, localFiatRate: _leuPerChf, markup: _defaultMarkup),
   nyt(symbol: 'NYT', fiatCurrency: Currency.tzs, localFiatRate: _nytPerTzs, markup: _defaultMarkup),
-  pnq(symbol: 'PNQ', fiatCurrency: Currency.ngn, localFiatRate: _pnqPerNgn, markup: _defaultMarkup);
+  pnq(symbol: 'PNQ', fiatCurrency: Currency.ngn, localFiatRate: _pnqPerNgn, markup: _defaultMarkup),
+  mta(symbol: 'MTA', fiatCurrency: Currency.eur, localFiatRate: _mtaPerEur, markup: _defaultMarkup);
 
   const KnownCommunity({
     required this.symbol,
