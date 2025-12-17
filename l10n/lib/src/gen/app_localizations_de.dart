@@ -1287,18 +1287,24 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String treasuryGlobalBalance(String balance) {
-    return 'Freies globales Schatzkammerguthaben: $balance KSM.';
-  }
+  String get treasuryGlobalBalance => 'Globales Schatzguthaben';
 
   @override
-  String treasuryLocalBalance(String balance) {
-    return 'Freies Gemeinschaftsschatzkammerguthaben: $balance KSM.';
-  }
+  String get treasuryLocalBalance => 'Gemeinschaftsschatzguthaben';
 
   @override
-  String treasuryLocalBalanceOnAHK(String balance, String asset) {
-    return 'Freies Gemeinschaftsschatzkammerguthaben auf Asset Hub: $balance $asset.';
+  String get treasuryLocalBalanceOnAHK =>
+      'Gemeinschaftsschatzguthaben auf dem Asset Hub';
+
+  @override
+  String get treasuryTotal => 'Gesamt';
+
+  @override
+  String get treasuryUnreserved => 'Ungebunden';
+
+  @override
+  String treasuryLocalBalanceBeforeSwap(Object asset, Object balance) {
+    return 'Freies Gemeinschaftsschatzguthaben vor dem Tausch: $balance $asset.';
   }
 
   @override

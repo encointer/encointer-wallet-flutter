@@ -1286,18 +1286,24 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String treasuryGlobalBalance(String balance) {
-    return 'Solde libre du trésor global : $balance KSM.';
-  }
+  String get treasuryGlobalBalance => 'Solde global du trésor';
 
   @override
-  String treasuryLocalBalance(String balance) {
-    return 'Solde libre du trésor communautaire : $balance KSM.';
-  }
+  String get treasuryLocalBalance => 'Solde du trésor communautaire';
 
   @override
-  String treasuryLocalBalanceOnAHK(String balance, String asset) {
-    return 'Solde libre du trésor communautaire sur Asset Hub: $balance $asset.';
+  String get treasuryLocalBalanceOnAHK =>
+      'Solde du trésor communautaire sur l’Asset Hub';
+
+  @override
+  String get treasuryTotal => 'Total';
+
+  @override
+  String get treasuryUnreserved => 'Non réservé';
+
+  @override
+  String treasuryLocalBalanceBeforeSwap(Object asset, Object balance) {
+    return 'Solde libre du trésor communautaire avant l’échange : $balance $asset.';
   }
 
   @override

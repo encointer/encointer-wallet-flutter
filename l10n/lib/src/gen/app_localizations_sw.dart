@@ -1282,18 +1282,24 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String treasuryGlobalBalance(String balance) {
-    return 'Salio huru la hazina ya kimataifa: $balance KSM.';
-  }
+  String get treasuryGlobalBalance => 'Salio la hazina ya jumla';
 
   @override
-  String treasuryLocalBalance(String balance) {
-    return 'Salio huru la hazina ya jamii: $balance KSM.';
-  }
+  String get treasuryLocalBalance => 'Salio la hazina ya jamii';
 
   @override
-  String treasuryLocalBalanceOnAHK(String balance, String asset) {
-    return 'Salio huru la hazina ya jamii kwenye AHK: $balance KSM.';
+  String get treasuryLocalBalanceOnAHK =>
+      'Salio la hazina ya jamii kwenye Asset Hub';
+
+  @override
+  String get treasuryTotal => 'Jumla';
+
+  @override
+  String get treasuryUnreserved => 'Isiyohifadhiwa';
+
+  @override
+  String treasuryLocalBalanceBeforeSwap(Object asset, Object balance) {
+    return 'Free community treasury balance before swap: $balance $asset.';
   }
 
   @override

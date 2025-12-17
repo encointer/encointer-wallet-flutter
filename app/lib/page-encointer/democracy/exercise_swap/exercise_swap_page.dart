@@ -260,7 +260,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
       child: ListTile(
         title: switch (widget.option) {
           NativeSwap() => Text(
-              l10n.treasuryLocalBalance(fmt(balance)),
+              l10n.treasuryLocalBalanceBeforeSwap(fmt(balance), 'KSM'),
             ),
           AssetSwap() => Text(
               l10n.treasuryLocalBalanceOnAHKBeforeSwap(

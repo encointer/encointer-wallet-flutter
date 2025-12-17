@@ -596,37 +596,12 @@
             }
         }
     },
-    "treasuryGlobalBalance": "Free global treasury balance: {balance} KSM.",
-    "@treasuryGlobalBalance": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
-    "treasuryLocalBalance": "Free community treasury balance: {balance} KSM.",
-    "@treasuryLocalBalance": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
-    "treasuryLocalBalanceOnAHK": "Free community treasury balance on Asset Hub: {balance} {asset}.",
-    "@treasuryLocalBalanceOnAHK": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            },
-            "asset": {
-                "type": "String",
-                "example": "{Leu}"
-            }
-        }
-    },
+    "treasuryGlobalBalance": "Global treasury balance",
+    "treasuryLocalBalance": "Community treasury balance",
+    "treasuryLocalBalanceOnAHK": "Community treasury balance on Asset Hub",
+    "treasuryTotal": "Total",
+    "treasuryUnreserved": "Unreserved",
+    "treasuryLocalBalanceBeforeSwap": "Free community treasury balance before swap: {balance} {asset}.",
     "treasuryLocalBalanceOnAHKBeforeSwap": "Free community treasury balance on Asset Hub before swap: {balance} {asset}.",
     "@treasuryLocalBalanceOnAHKBeforeSwap": {
         "placeholders": {

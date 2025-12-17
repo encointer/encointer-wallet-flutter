@@ -393,7 +393,7 @@ class _ProposePageState extends State<ProposePage> {
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            ...maybeShowTreasuryBalances(context),
+                            maybeShowTreasuryBalances(context),
 
                             // Hint text for accounts without reputation
 
@@ -1169,29 +1169,111 @@ class _ProposePageState extends State<ProposePage> {
     }
   }
 
-  List<Widget> maybeShowTreasuryBalances(BuildContext context) {
+  Widget maybeShowTreasuryBalances(BuildContext context) {
     final l10n = context.l10n;
-    return [
-      if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isGlobal)
-        Text(
-          l10n.treasuryGlobalBalance(Fmt.token(globalTreasuryBalance - pendingGlobalSpends, ertDecimals)),
+    final store = context.read<AppStore>();
+    final theme = context.textTheme;
+
+    final header = _treasuryBalanceHeader();
+    final total = _totalTreasuryBalance(store);
+    final unreserved = _unreservedTreasuryBalance(store);
+
+    if (header == null || total == null || unreserved == null) {
+      return const SizedBox.shrink();
+    }
+
+    return Card(
+      elevation: 1,
+      margin: const EdgeInsets.symmetric(vertical: 12),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header
+            Text(
+              header, // or hardcode if not localized yet
+              style: theme.bodyLarge?.copyWith(
+                color: context.theme.colorScheme.primary,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            _InfoKV(
+              label: l10n.treasuryTotal,
+              value: total,
+            ),
+            _InfoKV(
+              label: l10n.treasuryUnreserved,
+              value: unreserved,
+            ),
+          ],
         ),
-      if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isLocal ||
-          selectedAction == ProposalActionIdentifier.issueSwapNativeOption)
-        Text(
-          l10n.treasuryLocalBalance(
-            Fmt.token(localTreasuryBalance - pendingLocalSpends, ertDecimals),
-          ),
-        ),
-      if (selectedAction == ProposalActionIdentifier.spendAsset && selectedScope.isLocal ||
-          selectedAction == ProposalActionIdentifier.issueSwapAssetOption)
-        Text(
-          l10n.treasuryLocalBalanceOnAHK(
-            Fmt.doubleFormat(assetTreasuryUnallocatedLiquidity(), length: 4),
-            selectedAsset.symbol,
-          ),
-        )
-    ];
+      ),
+    );
+  }
+
+  String? _treasuryBalanceHeader() {
+    final l10n = context.l10n;
+
+    if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isGlobal) {
+      return l10n.treasuryGlobalBalance;
+    }
+
+    if (selectedAction == ProposalActionIdentifier.spendNative ||
+        selectedAction == ProposalActionIdentifier.issueSwapNativeOption) {
+      return l10n.treasuryLocalBalance;
+    }
+
+    // Asset treasury (Asset Hub)
+    if (selectedAction == ProposalActionIdentifier.spendAsset ||
+        selectedAction == ProposalActionIdentifier.issueSwapAssetOption) {
+      return l10n.treasuryLocalBalanceOnAHK;
+    }
+
+    return null;
+  }
+
+  String? _totalTreasuryBalance(AppStore store) {
+    // Native treasury
+    if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isGlobal) {
+      return '${Fmt.token(globalTreasuryBalance, ertDecimals)} ${store.encointer.community!.symbol!}';
+    }
+
+    if (selectedAction == ProposalActionIdentifier.spendNative ||
+        selectedAction == ProposalActionIdentifier.issueSwapNativeOption) {
+      return '${Fmt.token(localTreasuryBalance, ertDecimals)}  ${store.encointer.community!.symbol!}';
+    }
+
+    // Asset treasury (Asset Hub)
+    if (selectedAction == ProposalActionIdentifier.spendAsset ||
+        selectedAction == ProposalActionIdentifier.issueSwapAssetOption) {
+      return '${Fmt.token(localTreasuryBalanceOnAHK, selectedAsset.decimals)} ${selectedAsset.symbol}';
+    }
+
+    return null;
+  }
+
+  String? _unreservedTreasuryBalance(AppStore store) {
+    // Native treasury
+    if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isGlobal) {
+      return '${Fmt.token(globalTreasuryBalance - pendingGlobalSpends, ertDecimals)} ${store.encointer.community!.symbol!}';
+    }
+
+    if (selectedAction == ProposalActionIdentifier.spendNative ||
+        selectedAction == ProposalActionIdentifier.issueSwapNativeOption) {
+      return '${Fmt.token(localTreasuryBalance - pendingLocalSpends, ertDecimals)} ${store.encointer.community!.symbol!}';
+    }
+
+    // Asset treasury (Asset Hub)
+    if (selectedAction == ProposalActionIdentifier.spendAsset ||
+        selectedAction == ProposalActionIdentifier.issueSwapAssetOption) {
+      return '${Fmt.token(assetTreasuryLiquidity(selectedAsset), selectedAsset.decimals)} ${selectedAsset.symbol}';
+    }
+
+    return null;
   }
 
   BigInt assetTreasuryLiquidity(AssetToSpend asset) {
