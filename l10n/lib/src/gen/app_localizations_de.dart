@@ -454,6 +454,20 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get exerciseSwapSuccess => 'Tausch erfolgreich';
+
+  @override
+  String get exerciseSwapAssetSuccessMessage =>
+      'Du wirst die Transaktion bald auf Subscan sehen.';
+
+  @override
+  String get exerciseSwapNativeSuccessMessage =>
+      'Du wirst die Transaktion bald in deinem Transaktionsverlauf sehen.';
+
+  @override
+  String get exerciseSwapOpenSubscan => 'Subscan öffnen';
+
+  @override
   String get export => 'Konto exportieren';
 
   @override

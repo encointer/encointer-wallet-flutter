@@ -454,7 +454,21 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get export => 'Activer le Bazaar';
+  String get exerciseSwapSuccess => 'Échange réussi';
+
+  @override
+  String get exerciseSwapAssetSuccessMessage =>
+      'Tu verras bientôt la transaction sur Subscan.';
+
+  @override
+  String get exerciseSwapNativeSuccessMessage =>
+      'Tu verras bientôt la transaction dans ton historique de transactions.';
+
+  @override
+  String get exerciseSwapOpenSubscan => 'Ouvrir Subscan';
+
+  @override
+  String get export => 'Exporter compte';
 
   @override
   String get exportAccount => 'exporter';

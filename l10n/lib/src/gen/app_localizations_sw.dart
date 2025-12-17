@@ -451,6 +451,20 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
+  String get exerciseSwapSuccess => 'Kubadilisha kufanikiwa';
+
+  @override
+  String get exerciseSwapAssetSuccessMessage =>
+      'Hivi karibuni utaona muamala kwenye Subscan.';
+
+  @override
+  String get exerciseSwapNativeSuccessMessage =>
+      'Hivi karibuni utaona muamala kwenye historia yako ya miamala.';
+
+  @override
+  String get exerciseSwapOpenSubscan => 'Fungua Subscan';
+
+  @override
   String get export =>
       'Onyesha taarifa za siri za akaunti yako kuweza kuisafirisha';
 

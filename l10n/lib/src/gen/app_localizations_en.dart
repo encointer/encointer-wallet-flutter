@@ -448,6 +448,20 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get exerciseSwapSuccess => 'Swap successful';
+
+  @override
+  String get exerciseSwapAssetSuccessMessage =>
+      'You will soon see the transaction on Subscan.';
+
+  @override
+  String get exerciseSwapNativeSuccessMessage =>
+      'You will soon see the transaction in your transaction history.';
+
+  @override
+  String get exerciseSwapOpenSubscan => 'Open Subscan';
+
+  @override
   String get export => 'Export Account';
 
   @override
