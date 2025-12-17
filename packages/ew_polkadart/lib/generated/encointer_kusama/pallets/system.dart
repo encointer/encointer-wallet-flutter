@@ -895,7 +895,7 @@ class Constants {
     specName: 'encointer-parachain',
     implName: 'encointer-parachain',
     authoringVersion: 1,
-    specVersion: 2000003,
+    specVersion: 2000000,
     implVersion: 1,
     apis: [
       _i9.Tuple2<List<int>, int>(

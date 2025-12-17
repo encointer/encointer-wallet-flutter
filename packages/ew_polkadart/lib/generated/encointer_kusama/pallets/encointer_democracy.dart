@@ -337,7 +337,7 @@ class Constants {
   final int maxReputationCount = 64;
 
   /// The Period in which the proposal has to be in passing state before it is approved.
-  final BigInt confirmationPeriod = BigInt.zero;
+  final BigInt confirmationPeriod = BigInt.from(172800000);
 
   /// The total lifetime of a proposal.
   ///
@@ -345,7 +345,7 @@ class Constants {
   ///
   /// Note: In cycles this must be smaller than `ReputationLifetime`, otherwise the eligible
   /// electorate will be 0.
-  final BigInt proposalLifetime = BigInt.from(6000000);
+  final BigInt proposalLifetime = BigInt.from(777600000);
 
   /// Minimum turnout in perthousand for a proposal to be considered as passing and entering
   /// the `Confirming` state.
