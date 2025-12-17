@@ -1301,15 +1301,11 @@ class _InfoKV extends StatelessWidget {
     required this.label,
     required this.value,
     this.secondaryValue,
-    this.secondaryValueWidth = 40,
   });
 
   final String label;
   final String value;
   final String? secondaryValue;
-
-  /// Fixed width for unit / secondary value
-  final double secondaryValueWidth;
 
   bool get _hasSecondary => secondaryValue != null;
 
@@ -1349,7 +1345,7 @@ class _InfoKV extends StatelessWidget {
               if (_hasSecondary) ...[
                 const SizedBox(width: 6),
                 SizedBox(
-                  width: secondaryValueWidth,
+                  width: 40,
                   child: Text(
                     secondaryValue!,
                     style: theme.bodyMedium?.copyWith(
