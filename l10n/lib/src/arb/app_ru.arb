@@ -381,7 +381,7 @@
     "treasuryLocalBalanceOnAHK": "Баланс казны сообщества на Asset Hub",
     "treasuryTotal": "Итого",
     "treasuryUnreserved": "Незарезервированный",
-    "treasuryLocalBalanceOnBeforeSwap": "Свободный баланс казны сообщества перед обменом: {balance} {asset}.",
+    "treasuryLocalBalanceBeforeSwap": "Свободный баланс казны сообщества перед обменом: {balance} {asset}.",
     "treasuryLocalBalanceOnAHKBeforeSwap": "Свободный баланс казны сообщества на Asset Hub перед обменом: {balance} {asset}.",
     "treasuryPendingSpends": "Ожидающие расходы: {spends} KSM.",
     "txBroadcast": "Транзакция передана в эфир",

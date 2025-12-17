@@ -384,7 +384,7 @@
     "treasuryLocalBalanceOnAHK": "Salio la hazina ya jamii kwenye Asset Hub",
     "treasuryTotal": "Jumla",
     "treasuryUnreserved": "Isiyohifadhiwa",
-    "treasuryLocalBalanceOnBeforeSwap": "Salio huru la hazina ya jamii kabla ya kubadilisha: {balance} {asset}.",
+    "treasuryLocalBalanceBeforeSwap": "Salio huru la hazina ya jamii kabla ya kubadilisha: {balance} {asset}.",
     "treasuryLocalBalanceOnAHKBeforeSwap": "Salio huru la hazina ya jamii kwenye Asset Hub kabla ya kubadilisha: {balance} {asset}.",
     "treasuryPendingSpends": "Matumizi yanayosubiri: {spends} KSM.",
     "txBroadcast": "Muamala umetumwa.",
