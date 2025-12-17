@@ -325,8 +325,11 @@ class _AssetsViewState extends State<AssetsView> {
                       ],
                     ),
                     onPressed: () async {
-                      await Navigator.pushNamed(context, ExerciseSwapPage.route,
-                          arguments: mockAssetSwap(widget.store.encointer.chosenCid!),);
+                      await Navigator.pushNamed(
+                        context,
+                        ExerciseSwapPage.route,
+                        arguments: mockAssetSwap(widget.store.encointer.chosenCid!),
+                      );
                       unawaited(getSwapOptions());
                     }),
               if (nativeSwap != null)
