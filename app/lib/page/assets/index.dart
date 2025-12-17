@@ -309,7 +309,10 @@ class _AssetsViewState extends State<AssetsView> {
                       Text(l10n.exerciseSwapAssetOptionAvailable(assetSwap!.symbol)),
                     ],
                   ),
-                  onPressed: () => Navigator.pushNamed(context, ExerciseSwapPage.route, arguments: assetSwap),
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, ExerciseSwapPage.route, arguments: assetSwap);
+                    unawaited(getSwapOptions());
+                  },
                 ),
               if (widget.store.settings.usdcMockSwapEnabled && widget.store.encointer.chosenCid != null)
                 ElevatedButton(
@@ -322,8 +325,14 @@ class _AssetsViewState extends State<AssetsView> {
                           .exerciseSwapAssetOptionAvailable(mockAssetSwap(widget.store.encointer.chosenCid!).symbol)),
                     ],
                   ),
-                  onPressed: () => Navigator.pushNamed(context, ExerciseSwapPage.route,
-                      arguments: mockAssetSwap(widget.store.encointer.chosenCid!)),
+                  onPressed: () async {
+                    await Navigator.pushNamed(
+                      context,
+                      ExerciseSwapPage.route,
+                      arguments: mockAssetSwap(widget.store.encointer.chosenCid!),
+                    );
+                    unawaited(getSwapOptions());
+                  },
                 ),
               if (nativeSwap != null)
                 ElevatedButton(
@@ -335,11 +344,10 @@ class _AssetsViewState extends State<AssetsView> {
                       Text(l10n.exerciseSwapNativeOptionAvailable),
                     ],
                   ),
-                  onPressed: () => Navigator.pushNamed(
-                    context,
-                    ExerciseSwapPage.route,
-                    arguments: nativeSwap,
-                  ),
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, ExerciseSwapPage.route, arguments: nativeSwap);
+                    unawaited(getSwapOptions());
+                  },
                 ),
               if (widget.store.settings.ksmMockSwapEnabled && widget.store.encointer.chosenCid != null)
                 ElevatedButton(
@@ -351,11 +359,14 @@ class _AssetsViewState extends State<AssetsView> {
                       Text(l10n.exerciseSwapNativeOptionAvailable),
                     ],
                   ),
-                  onPressed: () => Navigator.pushNamed(
-                    context,
-                    ExerciseSwapPage.route,
-                    arguments: mockNativeSwap(widget.store.encointer.chosenCid!),
-                  ),
+                  onPressed: () async {
+                    await Navigator.pushNamed(
+                      context,
+                      ExerciseSwapPage.route,
+                      arguments: mockNativeSwap(widget.store.encointer.chosenCid!),
+                    );
+                    unawaited(getSwapOptions());
+                  },
                 ),
               Observer(builder: (_) {
                 final shouldFetch = widget.store.encointer.currentPhase == CeremonyPhase.Registering ||

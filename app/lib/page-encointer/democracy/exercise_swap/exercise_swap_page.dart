@@ -4,6 +4,8 @@ import 'dart:math';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/field_validation.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/swap_options.dart';
+import 'package:encointer_wallet/service/launch/app_launch.dart';
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -15,6 +17,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/theme/custom/typography/typography_theme.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:ew_primitives/ew_primitives.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ew_l10n/l10n.dart';
 import 'package:provider/provider.dart';
@@ -383,7 +386,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
       onError: (err) {
         showTxErrorDialog(context, getLocalizedTxErrorMessage(l10n, err), false);
       },
-      onFinish: (_, __) => Navigator.pop(context),
+      onFinish: (_, __) => showSwapAssetSuccessDialog(context),
     );
   }
 
@@ -418,7 +421,60 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
       onError: (err) {
         showTxErrorDialog(context, getLocalizedTxErrorMessage(l10n, err), false);
       },
-      onFinish: (_, __) => Navigator.pop(context),
+      onFinish: (_, __) => showSwapNativeSuccessDialog(context),
     );
   }
 }
+
+void showSwapAssetSuccessDialog(BuildContext context) {
+  final l10n = context.l10n;
+  final store = context.read<AppStore>();
+  final address = store.account.currentAddress;
+
+  AppAlert.showDialog<void>(
+    context,
+    title: Text(l10n.exerciseSwapSuccess),
+    content: Text(l10n.exerciseSwapAssetSuccessMessage),
+    actions: [
+      const SizedBox.shrink(),
+      CupertinoButton(
+        child: Text(l10n.exerciseSwapOpenSubscan),
+        onPressed: () {
+          AppLaunch.launchURL(subscanLink(address));
+        },
+      ),
+      CupertinoButton(
+        child: Text(l10n.ok),
+        onPressed: () {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+        },
+      ),
+    ],
+  );
+}
+
+void showSwapNativeSuccessDialog(BuildContext context) {
+  final l10n = context.l10n;
+
+  AppAlert.showDialog<void>(
+    context,
+    title: Text(l10n.exerciseSwapSuccess),
+    content: Text(l10n.exerciseSwapNativeSuccessMessage),
+    actions: [
+      CupertinoButton(
+        child: Text(l10n.ok),
+        onPressed: () {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+        },
+      ),
+    ],
+  );
+}
+
+String subscanLink(String address) {
+  return '$subscanAccountPage$address';
+}
+
+const subscanAccountPage = 'https://assethub-kusama.subscan.io/account/';

@@ -224,6 +224,10 @@
             }
         }
     },
+    "exerciseSwapSuccess": "Swap successful",
+    "exerciseSwapAssetSuccessMessage": "You will soon see the transaction on Subscan.",
+    "exerciseSwapNativeSuccessMessage": "You will soon see the transaction in your transaction history.",
+    "exerciseSwapOpenSubscan": "Open Subscan",
     "export": "Export Account",
     "exportAccount": "export",
     "exportMnemonicOk": "Mnemonic was copied to clipboard.",

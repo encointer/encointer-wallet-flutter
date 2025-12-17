@@ -448,6 +448,20 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String get exerciseSwapSuccess => 'Обмен выполнен успешно';
+
+  @override
+  String get exerciseSwapAssetSuccessMessage =>
+      'Скоро ты увидишь транзакцию на Subscan.';
+
+  @override
+  String get exerciseSwapNativeSuccessMessage =>
+      'Скоро ты увидишь транзакцию в своей истории транзакций.';
+
+  @override
+  String get exerciseSwapOpenSubscan => 'Открыть Subscan';
+
+  @override
   String get export => 'Экпорт аккаунта';
 
   @override

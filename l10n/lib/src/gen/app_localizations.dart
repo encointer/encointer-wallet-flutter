@@ -896,6 +896,30 @@ abstract class AppLocalizations {
   /// **'Amount to Swap ({cc})'**
   String exerciseSwapOptionAmount(String cc);
 
+  /// No description provided for @exerciseSwapSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Swap successful'**
+  String get exerciseSwapSuccess;
+
+  /// No description provided for @exerciseSwapAssetSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You will soon see the transaction on Subscan.'**
+  String get exerciseSwapAssetSuccessMessage;
+
+  /// No description provided for @exerciseSwapNativeSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You will soon see the transaction in your transaction history.'**
+  String get exerciseSwapNativeSuccessMessage;
+
+  /// No description provided for @exerciseSwapOpenSubscan.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Subscan'**
+  String get exerciseSwapOpenSubscan;
+
   /// No description provided for @export.
   ///
   /// In en, this message translates to:
