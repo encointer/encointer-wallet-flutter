@@ -195,7 +195,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
               TextButton(
                 onPressed: () {
                   setState(() {
-                    amountController.text = Fmt.formatNumber(context, maxSwappable(ccBalance), decimals: 6);
+                    amountController.text = Fmt.doubleFormat(maxSwappable(ccBalance), length: 6);
                     amountError = validate();
                   });
                 },
@@ -311,7 +311,7 @@ class _ExerciseSwapPageState extends State<ExerciseSwapPage> {
     }
   }
 
-  String fmt(num number) => Fmt.formatNumber(context, number, decimals: 4);
+  String fmt(double number) => Fmt.doubleFormat(number, length: 4);
 
   /// User enters **CC amount**
   /// We compute: assetAmount = ccAmount / rate

@@ -737,7 +737,7 @@ class _ProposePageState extends State<ProposePage> {
       final ccTreasuryFreeCC = unallocatedTreasuryFunds * rate;
       Log.p('[validate] CC treasury balance $ccTreasuryFreeCC', logTarget);
       if (swapAmountDesiredCC.greaterThanWithPrecision(ccTreasuryFreeCC)) {
-        return l10n.treasuryBalanceTooLow(Fmt.formatNumber(context, ccTreasuryFreeCC, decimals: 4), ccSymbol);
+        return l10n.treasuryBalanceTooLow(Fmt.doubleFormat(ccTreasuryFreeCC, length: 4), ccSymbol);
       }
     }
 
@@ -1187,7 +1187,7 @@ class _ProposePageState extends State<ProposePage> {
           selectedAction == ProposalActionIdentifier.issueSwapAssetOption)
         Text(
           l10n.treasuryLocalBalanceOnAHK(
-            Fmt.formatNumber(context, assetTreasuryUnallocatedLiquidity(), decimals: 4),
+            Fmt.doubleFormat(assetTreasuryUnallocatedLiquidity(), length: 4),
             selectedAsset.symbol,
           ),
         )
