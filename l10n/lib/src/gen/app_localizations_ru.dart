@@ -1277,18 +1277,24 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String treasuryGlobalBalance(String balance) {
-    return 'Свободный баланс глобального казначейства: $balance KSM.';
-  }
+  String get treasuryGlobalBalance => 'Глобальный баланс казны';
 
   @override
-  String treasuryLocalBalance(String balance) {
-    return 'Свободный баланс казначейства сообщества: $balance KSM.';
-  }
+  String get treasuryLocalBalance => 'Баланс казны сообщества';
 
   @override
-  String treasuryLocalBalanceOnAHK(String balance, String asset) {
-    return 'Свободный баланс казначейства сообщества на Asset Hub: $balance KSM.';
+  String get treasuryLocalBalanceOnAHK =>
+      'Баланс казны сообщества на Asset Hub';
+
+  @override
+  String get treasuryTotal => 'Итого';
+
+  @override
+  String get treasuryUnreserved => 'Незарезервированный';
+
+  @override
+  String treasuryLocalBalanceBeforeSwap(Object asset, Object balance) {
+    return 'Свободный баланс казны сообщества перед обменом: $balance $asset.';
   }
 
   @override

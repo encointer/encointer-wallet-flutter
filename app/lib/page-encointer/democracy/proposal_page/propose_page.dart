@@ -393,7 +393,7 @@ class _ProposePageState extends State<ProposePage> {
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            ...maybeShowTreasuryBalances(context),
+                            maybeShowTreasuryBalances(context),
 
                             // Hint text for accounts without reputation
 
@@ -491,16 +491,17 @@ class _ProposePageState extends State<ProposePage> {
     final store = context.read<AppStore>();
     final theme = context.textTheme;
 
-    final symbol = store.encointer.community!.symbol!;
+    final ccSymbol = store.encointer.community!.symbol!;
+    final symbol = symbolForTreasury();
     final allowanceCC = double.tryParse(allowanceController.text) ?? 0;
     final ccRate = double.tryParse(rateController.text) ?? 0;
 
     final swapAmountAsset = swapLimit();
-    final calculationLine = isKnownCommunity
-        ? ccToFiatToAssetExplainerText(allowanceCC, symbol, knownCommunity!, forexRate?.value ?? 0)
-        : ccToAssetExplainerText(allowanceCC, symbol, ccRate);
+    final calculationLine = isKnownCommunity && selectedAction.isAssetSwapAction()
+        ? ccToFiatToAssetExplainerText(allowanceCC, ccSymbol, knownCommunity!, forexRate?.value ?? 0)
+        : ccToAssetExplainerText(allowanceCC, ccSymbol, ccRate, symbol);
 
-    final youWillGetLine = '${Fmt.doubleFormat(swapAmountAsset, length: 4)} ${selectedAsset.symbol}';
+    final youWillGetLine = '${Fmt.doubleFormat(swapAmountAsset, length: 4)} $symbol';
 
     return Card(
       elevation: 1,
@@ -585,17 +586,17 @@ class _ProposePageState extends State<ProposePage> {
 
   String ccToFiatToAssetExplainerText(double allowanceCC, String ccSymbol, KnownCommunity community, double forexRate) {
     final localFiatValue = allowanceCC / community.localFiatRate;
-    final usdcValue = forexRate != 0 ? Fmt.doubleFormat(localFiatValue / forexRate, length: 4) : '--';
+    final swapCurrencyValue = forexRate != 0 ? Fmt.doubleFormat(localFiatValue / forexRate, length: 4) : '--';
 
     return '$allowanceCC $ccSymbol = ${Fmt.doubleFormat(localFiatValue, length: 4)} ${community.fiatCurrency.symbol}'
-        ' = $usdcValue ${selectedAsset.symbol}';
+        ' = $swapCurrencyValue ${selectedAsset.symbol}';
   }
 
   /// Simplified explainer text just showing the conversion from CC to selected asset.
-  String ccToAssetExplainerText(double allowanceCC, String ccSymbol, double ccRate) {
+  String ccToAssetExplainerText(double allowanceCC, String ccSymbol, double ccRate, String assetSymbol) {
     final usdcValue = ccRate != 0 ? Fmt.doubleFormat(allowanceCC / ccRate, length: 4) : '--';
 
-    return '$allowanceCC $ccSymbol = $usdcValue ${selectedAsset.symbol}';
+    return '$allowanceCC $ccSymbol = $usdcValue $assetSymbol';
   }
 
   String swapFee(double swapAmountCC, KnownCommunity community, double forexRate) {
@@ -661,14 +662,14 @@ class _ProposePageState extends State<ProposePage> {
   double assetTreasuryUnallocatedLiquidity() {
     final unallocated =
         maxTreasuryPayoutFraction * Fmt.bigIntToDouble(assetTreasuryLiquidity(selectedAsset), selectedAsset.decimals);
-    return unallocated;
+    return max(0, unallocated);
   }
 
   double nativeTreasuryUnallocatedLiquidity() {
     final unallocated = selectedScope.isLocal
         ? maxTreasuryPayoutFraction * Fmt.bigIntToDouble(localTreasuryBalance - pendingLocalSpends, ertDecimals)
         : maxTreasuryPayoutFraction * Fmt.bigIntToDouble(globalTreasuryBalance - pendingGlobalSpends, ertDecimals);
-    return unallocated;
+    return max(0, unallocated);
   }
 
   double swapLimit() {
@@ -737,7 +738,7 @@ class _ProposePageState extends State<ProposePage> {
       final ccTreasuryFreeCC = unallocatedTreasuryFunds * rate;
       Log.p('[validate] CC treasury balance $ccTreasuryFreeCC', logTarget);
       if (swapAmountDesiredCC.greaterThanWithPrecision(ccTreasuryFreeCC)) {
-        return l10n.treasuryBalanceTooLow(Fmt.formatNumber(context, ccTreasuryFreeCC, decimals: 4), ccSymbol);
+        return l10n.treasuryBalanceTooLow(Fmt.doubleFormat(ccTreasuryFreeCC, length: 4), ccSymbol);
       }
     }
 
@@ -1169,29 +1170,123 @@ class _ProposePageState extends State<ProposePage> {
     }
   }
 
-  List<Widget> maybeShowTreasuryBalances(BuildContext context) {
+  Widget maybeShowTreasuryBalances(BuildContext context) {
     final l10n = context.l10n;
-    return [
-      if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isGlobal)
-        Text(
-          l10n.treasuryGlobalBalance(Fmt.token(globalTreasuryBalance - pendingGlobalSpends, ertDecimals)),
+    final store = context.read<AppStore>();
+    final theme = context.textTheme;
+
+    final header = _treasuryBalanceHeader();
+    final total = _totalTreasuryBalance(store);
+    final unreserved = _unreservedTreasuryBalance(store);
+    final symbol = symbolForTreasury();
+
+    if (header == null || total == null || unreserved == null) {
+      return const SizedBox.shrink();
+    }
+
+    return Card(
+      elevation: 1,
+      margin: const EdgeInsets.symmetric(vertical: 12),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header
+            Text(
+              header, // or hardcode if not localized yet
+              style: theme.bodyLarge?.copyWith(
+                color: context.theme.colorScheme.primary,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            _InfoKV(
+              label: l10n.treasuryTotal,
+              value: total,
+              secondaryValue: symbol,
+            ),
+            _InfoKV(
+              label: l10n.treasuryUnreserved,
+              value: unreserved,
+              secondaryValue: symbol,
+            ),
+          ],
         ),
-      if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isLocal ||
-          selectedAction == ProposalActionIdentifier.issueSwapNativeOption)
-        Text(
-          l10n.treasuryLocalBalance(
-            Fmt.token(localTreasuryBalance - pendingLocalSpends, ertDecimals),
-          ),
-        ),
-      if (selectedAction == ProposalActionIdentifier.spendAsset && selectedScope.isLocal ||
-          selectedAction == ProposalActionIdentifier.issueSwapAssetOption)
-        Text(
-          l10n.treasuryLocalBalanceOnAHK(
-            Fmt.formatNumber(context, assetTreasuryUnallocatedLiquidity(), decimals: 4),
-            selectedAsset.symbol,
-          ),
-        )
-    ];
+      ),
+    );
+  }
+
+  String? _treasuryBalanceHeader() {
+    final l10n = context.l10n;
+
+    if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isGlobal) {
+      return l10n.treasuryGlobalBalance;
+    }
+
+    if (selectedAction == ProposalActionIdentifier.spendNative ||
+        selectedAction == ProposalActionIdentifier.issueSwapNativeOption) {
+      return l10n.treasuryLocalBalance;
+    }
+
+    // Asset treasury (Asset Hub)
+    if (selectedAction == ProposalActionIdentifier.spendAsset ||
+        selectedAction == ProposalActionIdentifier.issueSwapAssetOption) {
+      return l10n.treasuryLocalBalanceOnAHK;
+    }
+
+    return null;
+  }
+
+  String? _totalTreasuryBalance(AppStore store) {
+    // Native treasury
+    if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isGlobal) {
+      return Fmt.token(globalTreasuryBalance, ertDecimals);
+    }
+
+    if (selectedAction == ProposalActionIdentifier.spendNative ||
+        selectedAction == ProposalActionIdentifier.issueSwapNativeOption) {
+      return Fmt.token(localTreasuryBalance, ertDecimals);
+    }
+
+    // Asset treasury (Asset Hub)
+    if (selectedAction == ProposalActionIdentifier.spendAsset ||
+        selectedAction == ProposalActionIdentifier.issueSwapAssetOption) {
+      return Fmt.token(localTreasuryBalanceOnAHK, selectedAsset.decimals);
+    }
+
+    return null;
+  }
+
+  String? _unreservedTreasuryBalance(AppStore store) {
+    // Native treasury
+    if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isGlobal) {
+      return Fmt.token(globalTreasuryBalance - pendingGlobalSpends, ertDecimals);
+    }
+
+    if (selectedAction == ProposalActionIdentifier.spendNative ||
+        selectedAction == ProposalActionIdentifier.issueSwapNativeOption) {
+      return Fmt.token(localTreasuryBalance - pendingLocalSpends, ertDecimals);
+    }
+
+    // Asset treasury (Asset Hub)
+    if (selectedAction == ProposalActionIdentifier.spendAsset ||
+        selectedAction == ProposalActionIdentifier.issueSwapAssetOption) {
+      return Fmt.token(assetTreasuryLiquidity(selectedAsset), selectedAsset.decimals);
+    }
+
+    return null;
+  }
+
+  String symbolForTreasury() {
+    if (selectedAction == ProposalActionIdentifier.spendAsset ||
+        selectedAction == ProposalActionIdentifier.issueSwapAssetOption) {
+      return selectedAsset.symbol;
+    }
+
+    return 'KSM';
   }
 
   BigInt assetTreasuryLiquidity(AssetToSpend asset) {
@@ -1206,10 +1301,14 @@ class _InfoKV extends StatelessWidget {
   const _InfoKV({
     required this.label,
     required this.value,
+    this.secondaryValue,
   });
 
   final String label;
   final String value;
+  final String? secondaryValue;
+
+  bool get _hasSecondary => secondaryValue != null;
 
   @override
   Widget build(BuildContext context) {
@@ -1218,7 +1317,7 @@ class _InfoKV extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Left label (fixed width for perfect alignment)
+        // Label
         SizedBox(
           width: 130,
           child: Text(
@@ -1228,11 +1327,35 @@ class _InfoKV extends StatelessWidget {
             ),
           ),
         ),
-        // Right side (flexible)
+
+        // Values
         Expanded(
-          child: Text(
-            value,
-            style: theme.bodyMedium,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Primary value (fills space, wraps, right-aligned)
+              Expanded(
+                child: Text(
+                  value,
+                  textAlign: TextAlign.end,
+                  softWrap: true,
+                  style: theme.bodyMedium,
+                ),
+              ),
+
+              if (_hasSecondary) ...[
+                const SizedBox(width: 6),
+                SizedBox(
+                  width: 40,
+                  child: Text(
+                    secondaryValue!,
+                    style: theme.bodyMedium?.copyWith(
+                      color: theme.bodySmall?.color,
+                    ),
+                  ),
+                ),
+              ],
+            ],
           ),
         ),
       ],

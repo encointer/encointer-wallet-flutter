@@ -2363,20 +2363,38 @@ abstract class AppLocalizations {
   /// No description provided for @treasuryGlobalBalance.
   ///
   /// In en, this message translates to:
-  /// **'Free global treasury balance: {balance} KSM.'**
-  String treasuryGlobalBalance(String balance);
+  /// **'Global treasury balance'**
+  String get treasuryGlobalBalance;
 
   /// No description provided for @treasuryLocalBalance.
   ///
   /// In en, this message translates to:
-  /// **'Free community treasury balance: {balance} KSM.'**
-  String treasuryLocalBalance(String balance);
+  /// **'Community treasury balance'**
+  String get treasuryLocalBalance;
 
   /// No description provided for @treasuryLocalBalanceOnAHK.
   ///
   /// In en, this message translates to:
-  /// **'Free community treasury balance on Asset Hub: {balance} {asset}.'**
-  String treasuryLocalBalanceOnAHK(String balance, String asset);
+  /// **'Community treasury balance on Asset Hub'**
+  String get treasuryLocalBalanceOnAHK;
+
+  /// No description provided for @treasuryTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get treasuryTotal;
+
+  /// No description provided for @treasuryUnreserved.
+  ///
+  /// In en, this message translates to:
+  /// **'Unreserved'**
+  String get treasuryUnreserved;
+
+  /// No description provided for @treasuryLocalBalanceBeforeSwap.
+  ///
+  /// In en, this message translates to:
+  /// **'Free community treasury balance before swap: {balance} {asset}.'**
+  String treasuryLocalBalanceBeforeSwap(Object asset, Object balance);
 
   /// No description provided for @treasuryLocalBalanceOnAHKBeforeSwap.
   ///

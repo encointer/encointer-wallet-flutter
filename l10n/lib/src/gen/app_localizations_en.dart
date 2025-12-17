@@ -1275,18 +1275,24 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String treasuryGlobalBalance(String balance) {
-    return 'Free global treasury balance: $balance KSM.';
-  }
+  String get treasuryGlobalBalance => 'Global treasury balance';
 
   @override
-  String treasuryLocalBalance(String balance) {
-    return 'Free community treasury balance: $balance KSM.';
-  }
+  String get treasuryLocalBalance => 'Community treasury balance';
 
   @override
-  String treasuryLocalBalanceOnAHK(String balance, String asset) {
-    return 'Free community treasury balance on Asset Hub: $balance $asset.';
+  String get treasuryLocalBalanceOnAHK =>
+      'Community treasury balance on Asset Hub';
+
+  @override
+  String get treasuryTotal => 'Total';
+
+  @override
+  String get treasuryUnreserved => 'Unreserved';
+
+  @override
+  String treasuryLocalBalanceBeforeSwap(Object asset, Object balance) {
+    return 'Free community treasury balance before swap: $balance $asset.';
   }
 
   @override
