@@ -1299,7 +1299,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String treasuryLocalBalanceBeforeSwap(Object asset, Object balance) {
-    return 'Free community treasury balance before swap: $balance $asset.';
+    return 'Salio huru la hazina ya jamii kabla ya kubadilisha: $balance $asset.';
   }
 
   @override

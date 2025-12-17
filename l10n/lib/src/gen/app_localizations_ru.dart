@@ -1294,7 +1294,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String treasuryLocalBalanceBeforeSwap(Object asset, Object balance) {
-    return 'Free community treasury balance before swap: $balance $asset.';
+    return 'Свободный баланс казны сообщества перед обменом: $balance $asset.';
   }
 
   @override
