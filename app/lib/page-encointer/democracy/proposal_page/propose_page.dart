@@ -1177,6 +1177,7 @@ class _ProposePageState extends State<ProposePage> {
     final header = _treasuryBalanceHeader();
     final total = _totalTreasuryBalance(store);
     final unreserved = _unreservedTreasuryBalance(store);
+    final symbol = symbolForTreasury();
 
     if (header == null || total == null || unreserved == null) {
       return const SizedBox.shrink();
@@ -1204,10 +1205,14 @@ class _ProposePageState extends State<ProposePage> {
             _InfoKV(
               label: l10n.treasuryTotal,
               value: total,
+              secondaryValue: symbol,
+              valueWidth: 175,
             ),
             _InfoKV(
               label: l10n.treasuryUnreserved,
               value: unreserved,
+              secondaryValue: symbol,
+              valueWidth: 175,
             ),
           ],
         ),
@@ -1239,18 +1244,18 @@ class _ProposePageState extends State<ProposePage> {
   String? _totalTreasuryBalance(AppStore store) {
     // Native treasury
     if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isGlobal) {
-      return '${Fmt.token(globalTreasuryBalance, ertDecimals)} ${store.encointer.community!.symbol!}';
+      return Fmt.token(globalTreasuryBalance, ertDecimals);
     }
 
     if (selectedAction == ProposalActionIdentifier.spendNative ||
         selectedAction == ProposalActionIdentifier.issueSwapNativeOption) {
-      return '${Fmt.token(localTreasuryBalance, ertDecimals)}  ${store.encointer.community!.symbol!}';
+      return Fmt.token(localTreasuryBalance, ertDecimals);
     }
 
     // Asset treasury (Asset Hub)
     if (selectedAction == ProposalActionIdentifier.spendAsset ||
         selectedAction == ProposalActionIdentifier.issueSwapAssetOption) {
-      return '${Fmt.token(localTreasuryBalanceOnAHK, selectedAsset.decimals)} ${selectedAsset.symbol}';
+      return Fmt.token(localTreasuryBalanceOnAHK, selectedAsset.decimals);
     }
 
     return null;
@@ -1259,21 +1264,30 @@ class _ProposePageState extends State<ProposePage> {
   String? _unreservedTreasuryBalance(AppStore store) {
     // Native treasury
     if (selectedAction == ProposalActionIdentifier.spendNative && selectedScope.isGlobal) {
-      return '${Fmt.token(globalTreasuryBalance - pendingGlobalSpends, ertDecimals)} ${store.encointer.community!.symbol!}';
+      return Fmt.token(globalTreasuryBalance - pendingGlobalSpends, ertDecimals);
     }
 
     if (selectedAction == ProposalActionIdentifier.spendNative ||
         selectedAction == ProposalActionIdentifier.issueSwapNativeOption) {
-      return '${Fmt.token(localTreasuryBalance - pendingLocalSpends, ertDecimals)} ${store.encointer.community!.symbol!}';
+      return Fmt.token(localTreasuryBalance - pendingLocalSpends, ertDecimals);
     }
 
     // Asset treasury (Asset Hub)
     if (selectedAction == ProposalActionIdentifier.spendAsset ||
         selectedAction == ProposalActionIdentifier.issueSwapAssetOption) {
-      return '${Fmt.token(assetTreasuryLiquidity(selectedAsset), selectedAsset.decimals)} ${selectedAsset.symbol}';
+      return Fmt.token(assetTreasuryLiquidity(selectedAsset), selectedAsset.decimals);
     }
 
     return null;
+  }
+
+  String symbolForTreasury() {
+    if (selectedAction == ProposalActionIdentifier.spendAsset ||
+        selectedAction == ProposalActionIdentifier.issueSwapAssetOption) {
+      return selectedAsset.symbol;
+    }
+
+    return 'KSM';
   }
 
   BigInt assetTreasuryLiquidity(AssetToSpend asset) {
@@ -1288,10 +1302,19 @@ class _InfoKV extends StatelessWidget {
   const _InfoKV({
     required this.label,
     required this.value,
+    this.secondaryValue,
+    this.valueWidth,
   });
 
   final String label;
   final String value;
+  final String? secondaryValue;
+
+  /// Optional fixed width for the primary value
+  /// Useful for right-aligned numeric columns.
+  final double? valueWidth;
+
+  bool get _hasSecondary => secondaryValue != null;
 
   @override
   Widget build(BuildContext context) {
@@ -1300,7 +1323,7 @@ class _InfoKV extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Left label (fixed width for perfect alignment)
+        // Label
         SizedBox(
           width: 130,
           child: Text(
@@ -1310,11 +1333,33 @@ class _InfoKV extends StatelessWidget {
             ),
           ),
         ),
-        // Right side (flexible)
+
+        // Values
         Expanded(
-          child: Text(
-            value,
-            style: theme.bodyMedium,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Primary value
+              SizedBox(
+                width: valueWidth,
+                child: Text(
+                  value,
+                  textAlign:
+                  valueWidth != null ? TextAlign.end : TextAlign.start,
+                  style: theme.bodyMedium,
+                ),
+              ),
+
+              if (_hasSecondary) ...[
+                const SizedBox(width: 6),
+                Text(
+                  secondaryValue!,
+                  style: theme.bodyMedium?.copyWith(
+                    color: theme.bodySmall?.color,
+                  ),
+                ),
+              ],
+            ],
           ),
         ),
       ],
