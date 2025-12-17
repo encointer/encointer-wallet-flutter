@@ -4,8 +4,8 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i7;
 
-import '../../encointer_node_notee_runtime/proxy_type.dart' as _i4;
-import '../../encointer_node_notee_runtime/runtime_call.dart' as _i5;
+import '../../encointer_kusama_runtime/proxy_type.dart' as _i4;
+import '../../encointer_kusama_runtime/runtime_call.dart' as _i5;
 import '../../primitive_types/h256.dart' as _i6;
 import '../../sp_runtime/multiaddress/multi_address.dart' as _i3;
 
@@ -148,6 +148,10 @@ class $Call {
       call: call,
     );
   }
+
+  PokeDeposit pokeDeposit() {
+    return PokeDeposit();
+  }
 }
 
 class $CallCodec with _i1.Codec<Call> {
@@ -177,6 +181,8 @@ class $CallCodec with _i1.Codec<Call> {
         return RejectAnnouncement._decode(input);
       case 9:
         return ProxyAnnounced._decode(input);
+      case 10:
+        return const PokeDeposit();
       default:
         throw Exception('Call: Invalid variant index: "$index"');
     }
@@ -218,6 +224,9 @@ class $CallCodec with _i1.Codec<Call> {
       case ProxyAnnounced:
         (value as ProxyAnnounced).encodeTo(output);
         break;
+      case PokeDeposit:
+        (value as PokeDeposit).encodeTo(output);
+        break;
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -246,6 +255,8 @@ class $CallCodec with _i1.Codec<Call> {
         return (value as RejectAnnouncement)._sizeHint();
       case ProxyAnnounced:
         return (value as ProxyAnnounced)._sizeHint();
+      case PokeDeposit:
+        return 1;
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -509,7 +520,7 @@ class RemoveProxy extends Call {
 ///
 /// The dispatch origin for this call must be _Signed_.
 ///
-/// WARNING: This may be called on accounts created by `pure`, however if done, then
+/// WARNING: This may be called on accounts created by `create_pure`, however if done, then
 /// the unreserved fees will be inaccessible. **All access to this account will be lost.**
 class RemoveProxies extends Call {
   const RemoveProxies();
@@ -631,16 +642,16 @@ class CreatePure extends Call {
 /// inaccessible.
 ///
 /// Requires a `Signed` origin, and the sender account must have been created by a call to
-/// `pure` with corresponding parameters.
+/// `create_pure` with corresponding parameters.
 ///
-/// - `spawner`: The account that originally called `pure` to create this account.
-/// - `index`: The disambiguation index originally passed to `pure`. Probably `0`.
-/// - `proxy_type`: The proxy type originally passed to `pure`.
-/// - `height`: The height of the chain when the call to `pure` was processed.
-/// - `ext_index`: The extrinsic index in which the call to `pure` was processed.
+/// - `spawner`: The account that originally called `create_pure` to create this account.
+/// - `index`: The disambiguation index originally passed to `create_pure`. Probably `0`.
+/// - `proxy_type`: The proxy type originally passed to `create_pure`.
+/// - `height`: The height of the chain when the call to `create_pure` was processed.
+/// - `ext_index`: The extrinsic index in which the call to `create_pure` was processed.
 ///
 /// Fails with `NoPermission` in case the caller is not a previously created pure
-/// account whose `pure` call has corresponding parameters.
+/// account whose `create_pure` call has corresponding parameters.
 class KillPure extends Call {
   const KillPure({
     required this.spawner,
@@ -1089,4 +1100,32 @@ class ProxyAnnounced extends Call {
         forceProxyType,
         call,
       );
+}
+
+/// Poke / Adjust deposits made for proxies and announcements based on current values.
+/// This can be used by accounts to possibly lower their locked amount.
+///
+/// The dispatch origin for this call must be _Signed_.
+///
+/// The transaction fee is waived if the deposit amount has changed.
+///
+/// Emits `DepositPoked` if successful.
+class PokeDeposit extends Call {
+  const PokeDeposit();
+
+  @override
+  Map<String, dynamic> toJson() => {'poke_deposit': null};
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      10,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) => other is PokeDeposit;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }

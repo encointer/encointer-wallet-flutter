@@ -32,4 +32,5 @@ polkadart:
   output_dir: lib/generated
   chains:
     encointer_kusama: wss://kusama.api.encointer.org
+#    encointer_kusama: ws://localhost:9944
 #    asset_hub_kusama:  wss://sys.ibp.network/asset-hub-kusama

@@ -17,7 +17,6 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:flutter/material.dart';
 import 'package:ew_l10n/l10n.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 const logTarget = 'ExerciseSwapOptionPage';

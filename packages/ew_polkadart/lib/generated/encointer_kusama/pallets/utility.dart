@@ -1,6 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import '../types/encointer_node_notee_runtime/origin_caller.dart' as _i3;
-import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i1;
+import '../types/encointer_kusama_runtime/origin_caller.dart' as _i3;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i1;
 import '../types/pallet_utility/pallet/call.dart' as _i2;
 import '../types/sp_weights/weight_v2/weight.dart' as _i4;
 
@@ -115,6 +115,54 @@ class Txs {
     return _i1.Utility(_i2.WithWeight(
       call: call,
       weight: weight,
+    ));
+  }
+
+  /// Dispatch a fallback call in the event the main call fails to execute.
+  /// May be called from any origin except `None`.
+  ///
+  /// This function first attempts to dispatch the `main` call.
+  /// If the `main` call fails, the `fallback` is attemted.
+  /// if the fallback is successfully dispatched, the weights of both calls
+  /// are accumulated and an event containing the main call error is deposited.
+  ///
+  /// In the event of a fallback failure the whole call fails
+  /// with the weights returned.
+  ///
+  /// - `main`: The main call to be dispatched. This is the primary action to execute.
+  /// - `fallback`: The fallback call to be dispatched in case the `main` call fails.
+  ///
+  /// ## Dispatch Logic
+  /// - If the origin is `root`, both the main and fallback calls are executed without
+  ///  applying any origin filters.
+  /// - If the origin is not `root`, the origin filter is applied to both the `main` and
+  ///  `fallback` calls.
+  ///
+  /// ## Use Case
+  /// - Some use cases might involve submitting a `batch` type call in either main, fallback
+  ///  or both.
+  _i1.Utility ifElse({
+    required _i1.RuntimeCall main,
+    required _i1.RuntimeCall fallback,
+  }) {
+    return _i1.Utility(_i2.IfElse(
+      main: main,
+      fallback: fallback,
+    ));
+  }
+
+  /// Dispatches a function call with a provided origin.
+  ///
+  /// Almost the same as [`Pallet::dispatch_as`] but forwards any error of the inner call.
+  ///
+  /// The dispatch origin for this call must be _Root_.
+  _i1.Utility dispatchAsFallible({
+    required _i3.OriginCaller asOrigin,
+    required _i1.RuntimeCall call,
+  }) {
+    return _i1.Utility(_i2.DispatchAsFallible(
+      asOrigin: asOrigin,
+      call: call,
     ));
   }
 }

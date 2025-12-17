@@ -129,6 +129,10 @@ class $Event {
       id: id,
     );
   }
+
+  AgendaIncomplete agendaIncomplete({required int when}) {
+    return AgendaIncomplete(when: when);
+  }
 }
 
 class $EventCodec with _i1.Codec<Event> {
@@ -156,6 +160,8 @@ class $EventCodec with _i1.Codec<Event> {
         return RetryFailed._decode(input);
       case 8:
         return PermanentlyOverweight._decode(input);
+      case 9:
+        return AgendaIncomplete._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
     }
@@ -194,6 +200,9 @@ class $EventCodec with _i1.Codec<Event> {
       case PermanentlyOverweight:
         (value as PermanentlyOverweight).encodeTo(output);
         break;
+      case AgendaIncomplete:
+        (value as AgendaIncomplete).encodeTo(output);
+        break;
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -220,6 +229,8 @@ class $EventCodec with _i1.Codec<Event> {
         return (value as RetryFailed)._sizeHint();
       case PermanentlyOverweight:
         return (value as PermanentlyOverweight)._sizeHint();
+      case AgendaIncomplete:
+        return (value as AgendaIncomplete)._sizeHint();
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -947,4 +958,49 @@ class PermanentlyOverweight extends Event {
         task,
         id,
       );
+}
+
+/// Agenda is incomplete from `when`.
+class AgendaIncomplete extends Event {
+  const AgendaIncomplete({required this.when});
+
+  factory AgendaIncomplete._decode(_i1.Input input) {
+    return AgendaIncomplete(when: _i1.U32Codec.codec.decode(input));
+  }
+
+  /// BlockNumberFor<T>
+  final int when;
+
+  @override
+  Map<String, Map<String, int>> toJson() => {
+        'AgendaIncomplete': {'when': when}
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.U32Codec.codec.sizeHint(when);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      9,
+      output,
+    );
+    _i1.U32Codec.codec.encodeTo(
+      when,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AgendaIncomplete && other.when == when;
+
+  @override
+  int get hashCode => when.hashCode;
 }

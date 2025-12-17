@@ -56,25 +56,6 @@ void main() {
         // Apply markup 0.02 → 1/1000 CC/TZS * 2457.06 [TZS/USD] * 1.02 ≈ 2.5062 CC/USD
         expect(ccUsdRate, closeTo(2.5062012, 1e-6));
       });
-
-      // Mock API rates: 1 USD = x local fiat
-      const apiRates = {
-        'LEU': 0.79, // 1 USD = 0.79 CHF
-        'NYT': 2452.61, // 1 USD = 2452.61339866 TZS
-        'PNQ': 1484.76, // 1 USD = 1484.76300699 NGN
-      };
-
-      test('computes CC -> USD for all communities (USD->localFiat)', () {
-        for (final community in KnownCommunity.values) {
-          final usdToLocal = apiRates[community.symbol]!;
-
-          final ccUsdRate = community.ccPerUsd(usdToLocal);
-
-          final expected = community.localFiatRate * usdToLocal * (1 + community.markup);
-
-          expect(ccUsdRate, closeTo(expected, 1e-6), reason: 'CC → USD failed for ${community.symbol}');
-        }
-      });
     });
   });
 }

@@ -2,12 +2,13 @@
 import 'dart:typed_data' as _i2;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
-import 'package:quiver/collection.dart' as _i7;
+import 'package:quiver/collection.dart' as _i8;
 
-import '../../encointer_node_notee_runtime/proxy_type.dart' as _i5;
+import '../../encointer_kusama_runtime/proxy_type.dart' as _i5;
 import '../../primitive_types/h256.dart' as _i6;
 import '../../sp_core/crypto/account_id32.dart' as _i4;
 import '../../sp_runtime/dispatch_error.dart' as _i3;
+import '../deposit_kind.dart' as _i7;
 
 /// The `Event` enum of this pallet
 abstract class Event {
@@ -55,6 +56,20 @@ class $Event {
     );
   }
 
+  PureKilled pureKilled({
+    required _i4.AccountId32 pure,
+    required _i4.AccountId32 spawner,
+    required _i5.ProxyType proxyType,
+    required int disambiguationIndex,
+  }) {
+    return PureKilled(
+      pure: pure,
+      spawner: spawner,
+      proxyType: proxyType,
+      disambiguationIndex: disambiguationIndex,
+    );
+  }
+
   Announced announced({
     required _i4.AccountId32 real,
     required _i4.AccountId32 proxy,
@@ -94,6 +109,20 @@ class $Event {
       delay: delay,
     );
   }
+
+  DepositPoked depositPoked({
+    required _i4.AccountId32 who,
+    required _i7.DepositKind kind,
+    required BigInt oldDeposit,
+    required BigInt newDeposit,
+  }) {
+    return DepositPoked(
+      who: who,
+      kind: kind,
+      oldDeposit: oldDeposit,
+      newDeposit: newDeposit,
+    );
+  }
 }
 
 class $EventCodec with _i1.Codec<Event> {
@@ -108,11 +137,15 @@ class $EventCodec with _i1.Codec<Event> {
       case 1:
         return PureCreated._decode(input);
       case 2:
-        return Announced._decode(input);
+        return PureKilled._decode(input);
       case 3:
-        return ProxyAdded._decode(input);
+        return Announced._decode(input);
       case 4:
+        return ProxyAdded._decode(input);
+      case 5:
         return ProxyRemoved._decode(input);
+      case 6:
+        return DepositPoked._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
     }
@@ -130,6 +163,9 @@ class $EventCodec with _i1.Codec<Event> {
       case PureCreated:
         (value as PureCreated).encodeTo(output);
         break;
+      case PureKilled:
+        (value as PureKilled).encodeTo(output);
+        break;
       case Announced:
         (value as Announced).encodeTo(output);
         break;
@@ -138,6 +174,9 @@ class $EventCodec with _i1.Codec<Event> {
         break;
       case ProxyRemoved:
         (value as ProxyRemoved).encodeTo(output);
+        break;
+      case DepositPoked:
+        (value as DepositPoked).encodeTo(output);
         break;
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
@@ -151,12 +190,16 @@ class $EventCodec with _i1.Codec<Event> {
         return (value as ProxyExecuted)._sizeHint();
       case PureCreated:
         return (value as PureCreated)._sizeHint();
+      case PureKilled:
+        return (value as PureKilled)._sizeHint();
       case Announced:
         return (value as Announced)._sizeHint();
       case ProxyAdded:
         return (value as ProxyAdded)._sizeHint();
       case ProxyRemoved:
         return (value as ProxyRemoved)._sizeHint();
+      case DepositPoked:
+        return (value as DepositPoked)._sizeHint();
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -299,11 +342,11 @@ class PureCreated extends Event {
         other,
       ) ||
       other is PureCreated &&
-          _i7.listsEqual(
+          _i8.listsEqual(
             other.pure,
             pure,
           ) &&
-          _i7.listsEqual(
+          _i8.listsEqual(
             other.who,
             who,
           ) &&
@@ -314,6 +357,105 @@ class PureCreated extends Event {
   int get hashCode => Object.hash(
         pure,
         who,
+        proxyType,
+        disambiguationIndex,
+      );
+}
+
+/// A pure proxy was killed by its spawner.
+class PureKilled extends Event {
+  const PureKilled({
+    required this.pure,
+    required this.spawner,
+    required this.proxyType,
+    required this.disambiguationIndex,
+  });
+
+  factory PureKilled._decode(_i1.Input input) {
+    return PureKilled(
+      pure: const _i1.U8ArrayCodec(32).decode(input),
+      spawner: const _i1.U8ArrayCodec(32).decode(input),
+      proxyType: _i5.ProxyType.codec.decode(input),
+      disambiguationIndex: _i1.U16Codec.codec.decode(input),
+    );
+  }
+
+  /// T::AccountId
+  final _i4.AccountId32 pure;
+
+  /// T::AccountId
+  final _i4.AccountId32 spawner;
+
+  /// T::ProxyType
+  final _i5.ProxyType proxyType;
+
+  /// u16
+  final int disambiguationIndex;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'PureKilled': {
+          'pure': pure.toList(),
+          'spawner': spawner.toList(),
+          'proxyType': proxyType.toJson(),
+          'disambiguationIndex': disambiguationIndex,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + const _i4.AccountId32Codec().sizeHint(pure);
+    size = size + const _i4.AccountId32Codec().sizeHint(spawner);
+    size = size + _i5.ProxyType.codec.sizeHint(proxyType);
+    size = size + _i1.U16Codec.codec.sizeHint(disambiguationIndex);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      2,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      pure,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      spawner,
+      output,
+    );
+    _i5.ProxyType.codec.encodeTo(
+      proxyType,
+      output,
+    );
+    _i1.U16Codec.codec.encodeTo(
+      disambiguationIndex,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is PureKilled &&
+          _i8.listsEqual(
+            other.pure,
+            pure,
+          ) &&
+          _i8.listsEqual(
+            other.spawner,
+            spawner,
+          ) &&
+          other.proxyType == proxyType &&
+          other.disambiguationIndex == disambiguationIndex;
+
+  @override
+  int get hashCode => Object.hash(
+        pure,
+        spawner,
         proxyType,
         disambiguationIndex,
       );
@@ -363,7 +505,7 @@ class Announced extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      2,
+      3,
       output,
     );
     const _i1.U8ArrayCodec(32).encodeTo(
@@ -387,15 +529,15 @@ class Announced extends Event {
         other,
       ) ||
       other is Announced &&
-          _i7.listsEqual(
+          _i8.listsEqual(
             other.real,
             real,
           ) &&
-          _i7.listsEqual(
+          _i8.listsEqual(
             other.proxy,
             proxy,
           ) &&
-          _i7.listsEqual(
+          _i8.listsEqual(
             other.callHash,
             callHash,
           );
@@ -459,7 +601,7 @@ class ProxyAdded extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      3,
+      4,
       output,
     );
     const _i1.U8ArrayCodec(32).encodeTo(
@@ -487,11 +629,11 @@ class ProxyAdded extends Event {
         other,
       ) ||
       other is ProxyAdded &&
-          _i7.listsEqual(
+          _i8.listsEqual(
             other.delegator,
             delegator,
           ) &&
-          _i7.listsEqual(
+          _i8.listsEqual(
             other.delegatee,
             delegatee,
           ) &&
@@ -558,7 +700,7 @@ class ProxyRemoved extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      4,
+      5,
       output,
     );
     const _i1.U8ArrayCodec(32).encodeTo(
@@ -586,11 +728,11 @@ class ProxyRemoved extends Event {
         other,
       ) ||
       other is ProxyRemoved &&
-          _i7.listsEqual(
+          _i8.listsEqual(
             other.delegator,
             delegator,
           ) &&
-          _i7.listsEqual(
+          _i8.listsEqual(
             other.delegatee,
             delegatee,
           ) &&
@@ -603,5 +745,101 @@ class ProxyRemoved extends Event {
         delegatee,
         proxyType,
         delay,
+      );
+}
+
+/// A deposit stored for proxies or announcements was poked / updated.
+class DepositPoked extends Event {
+  const DepositPoked({
+    required this.who,
+    required this.kind,
+    required this.oldDeposit,
+    required this.newDeposit,
+  });
+
+  factory DepositPoked._decode(_i1.Input input) {
+    return DepositPoked(
+      who: const _i1.U8ArrayCodec(32).decode(input),
+      kind: _i7.DepositKind.codec.decode(input),
+      oldDeposit: _i1.U128Codec.codec.decode(input),
+      newDeposit: _i1.U128Codec.codec.decode(input),
+    );
+  }
+
+  /// T::AccountId
+  final _i4.AccountId32 who;
+
+  /// DepositKind
+  final _i7.DepositKind kind;
+
+  /// BalanceOf<T>
+  final BigInt oldDeposit;
+
+  /// BalanceOf<T>
+  final BigInt newDeposit;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'DepositPoked': {
+          'who': who.toList(),
+          'kind': kind.toJson(),
+          'oldDeposit': oldDeposit,
+          'newDeposit': newDeposit,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + const _i4.AccountId32Codec().sizeHint(who);
+    size = size + _i7.DepositKind.codec.sizeHint(kind);
+    size = size + _i1.U128Codec.codec.sizeHint(oldDeposit);
+    size = size + _i1.U128Codec.codec.sizeHint(newDeposit);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      6,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      who,
+      output,
+    );
+    _i7.DepositKind.codec.encodeTo(
+      kind,
+      output,
+    );
+    _i1.U128Codec.codec.encodeTo(
+      oldDeposit,
+      output,
+    );
+    _i1.U128Codec.codec.encodeTo(
+      newDeposit,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is DepositPoked &&
+          _i8.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.kind == kind &&
+          other.oldDeposit == oldDeposit &&
+          other.newDeposit == newDeposit;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        kind,
+        oldDeposit,
+        newDeposit,
       );
 }

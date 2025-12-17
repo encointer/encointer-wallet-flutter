@@ -44,6 +44,10 @@ class $RawOrigin {
   None none() {
     return None();
   }
+
+  Authorized authorized() {
+    return Authorized();
+  }
 }
 
 class $RawOriginCodec with _i1.Codec<RawOrigin> {
@@ -59,6 +63,8 @@ class $RawOriginCodec with _i1.Codec<RawOrigin> {
         return Signed._decode(input);
       case 2:
         return const None();
+      case 3:
+        return const Authorized();
       default:
         throw Exception('RawOrigin: Invalid variant index: "$index"');
     }
@@ -79,6 +85,9 @@ class $RawOriginCodec with _i1.Codec<RawOrigin> {
       case None:
         (value as None).encodeTo(output);
         break;
+      case Authorized:
+        (value as Authorized).encodeTo(output);
+        break;
       default:
         throw Exception('RawOrigin: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -92,6 +101,8 @@ class $RawOriginCodec with _i1.Codec<RawOrigin> {
       case Signed:
         return (value as Signed)._sizeHint();
       case None:
+        return 1;
+      case Authorized:
         return 1;
       default:
         throw Exception('RawOrigin: Unsupported "$value" of type "${value.runtimeType}"');
@@ -180,6 +191,26 @@ class None extends RawOrigin {
 
   @override
   bool operator ==(Object other) => other is None;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+}
+
+class Authorized extends RawOrigin {
+  const Authorized();
+
+  @override
+  Map<String, dynamic> toJson() => {'Authorized': null};
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      3,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) => other is Authorized;
 
   @override
   int get hashCode => runtimeType.hashCode;

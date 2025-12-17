@@ -2,10 +2,11 @@
 import 'dart:typed_data' as _i2;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
-import 'package:quiver/collection.dart' as _i5;
+import 'package:quiver/collection.dart' as _i6;
 
 import '../../frame_support/traits/tokens/misc/balance_status.dart' as _i4;
 import '../../sp_core/crypto/account_id32.dart' as _i3;
+import 'unexpected_kind.dart' as _i5;
 
 /// The `Event` enum of this pallet
 abstract class Event {
@@ -29,7 +30,7 @@ abstract class Event {
     return codec.sizeHint(this);
   }
 
-  Map<String, Map<String, dynamic>> toJson();
+  Map<String, dynamic> toJson();
 }
 
 class $Event {
@@ -242,6 +243,10 @@ class $Event {
       new_: new_,
     );
   }
+
+  Unexpected unexpected(_i5.UnexpectedKind value0) {
+    return Unexpected(value0);
+  }
 }
 
 class $EventCodec with _i1.Codec<Event> {
@@ -295,6 +300,8 @@ class $EventCodec with _i1.Codec<Event> {
         return Thawed._decode(input);
       case 21:
         return TotalIssuanceForced._decode(input);
+      case 22:
+        return Unexpected._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
     }
@@ -372,6 +379,9 @@ class $EventCodec with _i1.Codec<Event> {
       case TotalIssuanceForced:
         (value as TotalIssuanceForced).encodeTo(output);
         break;
+      case Unexpected:
+        (value as Unexpected).encodeTo(output);
+        break;
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -424,6 +434,8 @@ class $EventCodec with _i1.Codec<Event> {
         return (value as Thawed)._sizeHint();
       case TotalIssuanceForced:
         return (value as TotalIssuanceForced)._sizeHint();
+      case Unexpected:
+        return (value as Unexpected)._sizeHint();
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -487,7 +499,7 @@ class Endowed extends Event {
         other,
       ) ||
       other is Endowed &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.account,
             account,
           ) &&
@@ -558,7 +570,7 @@ class DustLost extends Event {
         other,
       ) ||
       other is DustLost &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.account,
             account,
           ) &&
@@ -639,11 +651,11 @@ class Transfer extends Event {
         other,
       ) ||
       other is Transfer &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.from,
             from,
           ) &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.to,
             to,
           ) &&
@@ -714,7 +726,7 @@ class BalanceSet extends Event {
         other,
       ) ||
       other is BalanceSet &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.who,
             who,
           ) &&
@@ -784,7 +796,7 @@ class Reserved extends Event {
         other,
       ) ||
       other is Reserved &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.who,
             who,
           ) &&
@@ -854,7 +866,7 @@ class Unreserved extends Event {
         other,
       ) ||
       other is Unreserved &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.who,
             who,
           ) &&
@@ -947,11 +959,11 @@ class ReserveRepatriated extends Event {
         other,
       ) ||
       other is ReserveRepatriated &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.from,
             from,
           ) &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.to,
             to,
           ) &&
@@ -1024,7 +1036,7 @@ class Deposit extends Event {
         other,
       ) ||
       other is Deposit &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.who,
             who,
           ) &&
@@ -1094,7 +1106,7 @@ class Withdraw extends Event {
         other,
       ) ||
       other is Withdraw &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.who,
             who,
           ) &&
@@ -1164,7 +1176,7 @@ class Slashed extends Event {
         other,
       ) ||
       other is Slashed &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.who,
             who,
           ) &&
@@ -1234,7 +1246,7 @@ class Minted extends Event {
         other,
       ) ||
       other is Minted &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.who,
             who,
           ) &&
@@ -1304,7 +1316,7 @@ class Burned extends Event {
         other,
       ) ||
       other is Burned &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.who,
             who,
           ) &&
@@ -1374,7 +1386,7 @@ class Suspended extends Event {
         other,
       ) ||
       other is Suspended &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.who,
             who,
           ) &&
@@ -1444,7 +1456,7 @@ class Restored extends Event {
         other,
       ) ||
       other is Restored &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.who,
             who,
           ) &&
@@ -1497,7 +1509,7 @@ class Upgraded extends Event {
         other,
       ) ||
       other is Upgraded &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.who,
             who,
           );
@@ -1653,7 +1665,7 @@ class Locked extends Event {
         other,
       ) ||
       other is Locked &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.who,
             who,
           ) &&
@@ -1723,7 +1735,7 @@ class Unlocked extends Event {
         other,
       ) ||
       other is Unlocked &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.who,
             who,
           ) &&
@@ -1793,7 +1805,7 @@ class Frozen extends Event {
         other,
       ) ||
       other is Frozen &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.who,
             who,
           ) &&
@@ -1863,7 +1875,7 @@ class Thawed extends Event {
         other,
       ) ||
       other is Thawed &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.who,
             who,
           ) &&
@@ -1939,4 +1951,47 @@ class TotalIssuanceForced extends Event {
         old,
         new_,
       );
+}
+
+/// An unexpected/defensive event was triggered.
+class Unexpected extends Event {
+  const Unexpected(this.value0);
+
+  factory Unexpected._decode(_i1.Input input) {
+    return Unexpected(_i5.UnexpectedKind.codec.decode(input));
+  }
+
+  /// UnexpectedKind
+  final _i5.UnexpectedKind value0;
+
+  @override
+  Map<String, String> toJson() => {'Unexpected': value0.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i5.UnexpectedKind.codec.sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      22,
+      output,
+    );
+    _i5.UnexpectedKind.codec.encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Unexpected && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }

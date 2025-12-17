@@ -98,6 +98,17 @@ If you have an AVD or real device attached, you can do
 ```shell
 ./.flutter\bin\flutter run --flavor dev
 ```
+
+####
+Env Vars. We have two environment variables that can be set to override the endpoints.
+
+* WS_ENDPOINT: Override Encointer WS endpoint (only in local setups (gesell-dev + zombienet).
+* WS_ENDPOINT_AH: Override Asset Hub WS endpoint (always).
+
+Below you can see how to configure Android Studio to set these environment variables.
+
+![android-studio-env-var-config.png](docs/android-studio-env-var-config.png)
+
 ### Build APK
 
 You may build the App with Flutter's [Deployment Documentation](https://flutter.dev/docs).
@@ -185,6 +196,14 @@ command must be run to update the `*.g` files.
 ```shell
 .\.flutter\bin\dart run melos run-build-runner
 ```
+
+Update polkadart generated files
+```shell
+.\.flutter\bin\dart run melos run-polkadart-generate
+# Fix analyzer issues
+.flutter\bin\dart fix . --apply
+.flutter\bin/dart run melos format-120
+````
 
 ## GitHub Actions Hints
 

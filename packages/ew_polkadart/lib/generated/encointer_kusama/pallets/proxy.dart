@@ -5,8 +5,8 @@ import 'dart:typed_data' as _i8;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i5;
 
-import '../types/encointer_node_notee_runtime/proxy_type.dart' as _i11;
-import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i9;
+import '../types/encointer_kusama_runtime/proxy_type.dart' as _i11;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i9;
 import '../types/pallet_proxy/announcement.dart' as _i6;
 import '../types/pallet_proxy/pallet/call.dart' as _i12;
 import '../types/pallet_proxy/proxy_definition.dart' as _i4;
@@ -217,7 +217,7 @@ class Txs {
   ///
   /// The dispatch origin for this call must be _Signed_.
   ///
-  /// WARNING: This may be called on accounts created by `pure`, however if done, then
+  /// WARNING: This may be called on accounts created by `create_pure`, however if done, then
   /// the unreserved fees will be inaccessible. **All access to this account will be lost.**
   _i9.Proxy removeProxies() {
     return _i9.Proxy(_i12.RemoveProxies());
@@ -259,16 +259,16 @@ class Txs {
   /// inaccessible.
   ///
   /// Requires a `Signed` origin, and the sender account must have been created by a call to
-  /// `pure` with corresponding parameters.
+  /// `create_pure` with corresponding parameters.
   ///
-  /// - `spawner`: The account that originally called `pure` to create this account.
-  /// - `index`: The disambiguation index originally passed to `pure`. Probably `0`.
-  /// - `proxy_type`: The proxy type originally passed to `pure`.
-  /// - `height`: The height of the chain when the call to `pure` was processed.
-  /// - `ext_index`: The extrinsic index in which the call to `pure` was processed.
+  /// - `spawner`: The account that originally called `create_pure` to create this account.
+  /// - `index`: The disambiguation index originally passed to `create_pure`. Probably `0`.
+  /// - `proxy_type`: The proxy type originally passed to `create_pure`.
+  /// - `height`: The height of the chain when the call to `create_pure` was processed.
+  /// - `ext_index`: The extrinsic index in which the call to `create_pure` was processed.
   ///
   /// Fails with `NoPermission` in case the caller is not a previously created pure
-  /// account whose `pure` call has corresponding parameters.
+  /// account whose `create_pure` call has corresponding parameters.
   _i9.Proxy killPure({
     required _i10.MultiAddress spawner,
     required _i11.ProxyType proxyType,
@@ -374,6 +374,18 @@ class Txs {
       call: call,
     ));
   }
+
+  /// Poke / Adjust deposits made for proxies and announcements based on current values.
+  /// This can be used by accounts to possibly lower their locked amount.
+  ///
+  /// The dispatch origin for this call must be _Signed_.
+  ///
+  /// The transaction fee is waived if the deposit amount has changed.
+  ///
+  /// Emits `DepositPoked` if successful.
+  _i9.Proxy pokeDeposit() {
+    return _i9.Proxy(_i12.PokeDeposit());
+  }
 }
 
 class Constants {
@@ -383,14 +395,14 @@ class Constants {
   ///
   /// This is held for an additional storage item whose value size is
   /// `sizeof(Balance)` bytes and whose key size is `sizeof(AccountId)` bytes.
-  final BigInt proxyDepositBase = BigInt.from(32);
+  final BigInt proxyDepositBase = BigInt.from(6679999980);
 
   /// The amount of currency needed per proxy added.
   ///
   /// This is held for adding 32 bytes plus an instance of `ProxyType` more into a
   /// pre-existing storage value. Thus, when configuring `ProxyDepositFactor` one should take
   /// into account `32 + proxy_type.encode().len()` bytes of data.
-  final BigInt proxyDepositFactor = BigInt.from(32);
+  final BigInt proxyDepositFactor = BigInt.from(10999989);
 
   /// The maximum amount of proxies allowed for a single account.
   final int maxProxies = 32;
@@ -402,11 +414,11 @@ class Constants {
   ///
   /// This is held when a new storage item holding a `Balance` is created (typically 16
   /// bytes).
-  final BigInt announcementDepositBase = BigInt.from(32);
+  final BigInt announcementDepositBase = BigInt.from(6682666644);
 
   /// The amount of currency needed per announcement made.
   ///
   /// This is held for adding an `AccountId`, `Hash` and `BlockNumber` (typically 68 bytes)
   /// into a pre-existing storage value.
-  final BigInt announcementDepositFactor = BigInt.from(32);
+  final BigInt announcementDepositFactor = BigInt.from(21999978);
 }
