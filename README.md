@@ -186,6 +186,14 @@ command must be run to update the `*.g` files.
 .\.flutter\bin\dart run melos run-build-runner
 ```
 
+Update polkadart generated files
+```shell
+.\.flutter\bin\dart run melos run-polkadart-generate
+# Fix analyzer issues
+.flutter\bin\dart fix . --apply
+.flutter\bin/dart run melos format-120
+````
+
 ## GitHub Actions Hints
 
 ### IOS
