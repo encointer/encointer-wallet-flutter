@@ -1206,13 +1206,11 @@ class _ProposePageState extends State<ProposePage> {
               label: l10n.treasuryTotal,
               value: total,
               secondaryValue: symbol,
-              valueWidth: 175,
             ),
             _InfoKV(
               label: l10n.treasuryUnreserved,
               value: unreserved,
               secondaryValue: symbol,
-              valueWidth: 175,
             ),
           ],
         ),
@@ -1303,16 +1301,15 @@ class _InfoKV extends StatelessWidget {
     required this.label,
     required this.value,
     this.secondaryValue,
-    this.valueWidth,
+    this.secondaryValueWidth = 40,
   });
 
   final String label;
   final String value;
   final String? secondaryValue;
 
-  /// Optional fixed width for the primary value
-  /// Useful for right-aligned numeric columns.
-  final double? valueWidth;
+  /// Fixed width for unit / secondary value
+  final double secondaryValueWidth;
 
   bool get _hasSecondary => secondaryValue != null;
 
@@ -1339,23 +1336,25 @@ class _InfoKV extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Primary value
-              SizedBox(
-                width: valueWidth,
+              // Primary value (fills space, wraps, right-aligned)
+              Expanded(
                 child: Text(
                   value,
-                  textAlign:
-                  valueWidth != null ? TextAlign.end : TextAlign.start,
+                  textAlign: TextAlign.end,
+                  softWrap: true,
                   style: theme.bodyMedium,
                 ),
               ),
 
               if (_hasSecondary) ...[
                 const SizedBox(width: 6),
-                Text(
-                  secondaryValue!,
-                  style: theme.bodyMedium?.copyWith(
-                    color: theme.bodySmall?.color,
+                SizedBox(
+                  width: secondaryValueWidth,
+                  child: Text(
+                    secondaryValue!,
+                    style: theme.bodyMedium?.copyWith(
+                      color: theme.bodySmall?.color,
+                    ),
                   ),
                 ),
               ],
