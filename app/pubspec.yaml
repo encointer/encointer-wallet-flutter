@@ -33,7 +33,7 @@ dependencies:
   intl: ^0.20.2
   json_annotation: 4.9.0
   # state management with mobx
-  mobx: ^2.5.0
+  mobx: ^2.6.0
   flutter_mobx: ^2.3.0
   shared_preferences: ^2.5.3
   shared_preferences_android: ^2.4.11
@@ -101,11 +101,7 @@ dev_dependencies:
       url: https://github.com/encointer/json_serializable_immutable_collections
       ref: a1b943af33f99f3e96674702a5f4247462a3a1b5
       path: builders/json_serializable_mobx
-  mobx_codegen: ^2.7.0
-  # Check unused dependencies. Note: Some packages are not imported by any dart files but are used
-  # for their executables. If that is the case, they can be white-listed by using the --ignore option.
-  # mobx_codegen, json_serializable belong to these.
-  dependency_validator: ^5.0.2
+  mobx_codegen: ^2.7.5
   flutter_test:
     sdk: flutter
   flutter_driver:
