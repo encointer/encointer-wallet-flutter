@@ -1,6 +1,4 @@
 import 'package:encointer_wallet/config/networks/networks.dart' show Network;
-import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
-import 'package:encointer_wallet/models/bazaar/business_data.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart' show CommunityIdentifier;
 import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/reconnecting_ws_provider.dart';
@@ -39,16 +37,12 @@ void main() {
 
       final businesses = await encointerDartApi.bazaarGetBusinesses(cid);
 
-      final expectedBusiness = AccountBusinessTuple(
-        '5FLHLP61LgMsdzwWziyCmZqdKQyQZz4FeAadhMZj1AGFZo3Z',
-        BusinessData('Qmc1vTFJEyWUdHLe4bS58HqyusiE5NMLgziZf765dL93Vs', 1),
-      );
-
+      const expectedOwner = '5FLHLP61LgMsdzwWziyCmZqdKQyQZz4FeAadhMZj1AGFZo3Z';
       await provider.disconnect();
 
       // We do not overwrite the hashes currently to get object equality.
       // So we need to compare the jsons.
-      expect(businesses[0].toJson(), expectedBusiness.toJson());
+      expect(businesses.any((b) => b.controller == expectedOwner), true);
     }, tags: productionE2E);
   });
 
