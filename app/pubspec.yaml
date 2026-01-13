@@ -22,7 +22,7 @@ resolution: workspace
 
 environment:
   sdk: ">=3.6.0 <4.0.0"
-  flutter: "3.35.0"
+  flutter: "3.40.0-0.2.pre"
 
 dependencies:
   collection: ^1.19.0
@@ -101,7 +101,7 @@ dev_dependencies:
       url: https://github.com/encointer/json_serializable_immutable_collections
       ref: a1b943af33f99f3e96674702a5f4247462a3a1b5
       path: builders/json_serializable_mobx
-  mobx_codegen: ^2.7.5
+  mobx_codegen: ^2.7.6
   flutter_test:
     sdk: flutter
   flutter_driver:
