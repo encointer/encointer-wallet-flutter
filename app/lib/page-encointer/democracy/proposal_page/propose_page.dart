@@ -641,8 +641,9 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget issueSwapNativeOptionInput() {
-    final unallocatedTreasuryFunds =
-        RepositoryProvider.of<AppSettings>(context).developerMode ? null : nativeTreasuryUnallocatedLiquidity();
+    final unallocatedTreasuryFunds = RepositoryProvider.of<AppSettings>(context).developerMode
+        ? null
+        : nativeTreasuryUnallocatedLiquidity(fractionalLimit: maxTreasuryPayoutFraction);
     return Column(children: issueSwapOptionInput('KSM', unallocatedTreasuryFunds, false));
   }
 
@@ -665,11 +666,18 @@ class _ProposePageState extends State<ProposePage> {
     return max(0, unallocated);
   }
 
-  double nativeTreasuryUnallocatedLiquidity() {
+  double nativeTreasuryUnallocatedLiquidity({double? fractionalLimit}) {
+    final limit = normalizeLimit(fractionalLimit);
+
     final unallocated = selectedScope.isLocal
-        ? maxTreasuryPayoutFraction * Fmt.bigIntToDouble(localTreasuryBalance - pendingLocalSpends, ertDecimals)
-        : maxTreasuryPayoutFraction * Fmt.bigIntToDouble(globalTreasuryBalance - pendingGlobalSpends, ertDecimals);
-    return max(0, unallocated);
+        ? Fmt.bigIntToDouble(localTreasuryBalance - pendingLocalSpends, ertDecimals)
+        : Fmt.bigIntToDouble(globalTreasuryBalance - pendingGlobalSpends, ertDecimals);
+    return max(0, limit * unallocated);
+  }
+
+  double normalizeLimit(double? limit) {
+    final l = limit ?? 1;
+    return (l >= 0 && l <= 1) ? l : 1;
   }
 
   double swapLimit() {
