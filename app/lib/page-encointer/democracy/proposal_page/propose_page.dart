@@ -667,12 +667,17 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   double nativeTreasuryUnallocatedLiquidity({double? fractionalLimit}) {
-    final limit = min(fractionalLimit ?? 0, 1);
+    final limit = normalizeLimit(fractionalLimit);
 
     final unallocated = selectedScope.isLocal
         ? Fmt.bigIntToDouble(localTreasuryBalance - pendingLocalSpends, ertDecimals)
         : Fmt.bigIntToDouble(globalTreasuryBalance - pendingGlobalSpends, ertDecimals);
     return max(0, limit * unallocated);
+  }
+
+  double normalizeLimit(double? limit) {
+    final l = limit ?? 1;
+    return (l >= 0 && l <= 1) ? l : 1;
   }
 
   double swapLimit() {
