@@ -1380,6 +1380,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get unregisterParticipantNotificationTitle => 'Inscription annulée';
 
   @override
+  String get swapNotificationBody =>
+      'Tu as échangé tes jetons communautaires avec succès !';
+
+  @override
+  String get swapNotificationTitle => 'Échange réussi';
+
+  @override
   String get updatingAppState => 'L\'état de l\'app est mis à jour...';
 
   @override

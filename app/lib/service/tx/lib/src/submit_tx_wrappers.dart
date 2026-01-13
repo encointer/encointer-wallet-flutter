@@ -579,7 +579,7 @@ Future<void> submitSwapAsset(
     store,
     api,
     OpaqueExtrinsic(xt),
-    TxNotification.democracySubmitProposal(context.l10n),
+    TxNotification.swapTokens(context.l10n),
     onFinish: onFinish,
     onError: onError,
   );
@@ -610,7 +610,7 @@ Future<void> submitSwapNative(
     store,
     api,
     OpaqueExtrinsic(xt),
-    TxNotification.democracySubmitProposal(context.l10n),
+    TxNotification.swapTokens(context.l10n),
     onFinish: onFinish,
     onError: onError,
   );

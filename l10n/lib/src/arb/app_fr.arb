@@ -463,6 +463,8 @@
     "unregisterDialogTitle": "Se désinscrire du prochain cycle?",
     "unregisterParticipantNotificationBody": "Tu t'es désinscrit du prochain cycle. Tu peux te réinscrire si tu changes d'avis.",
     "unregisterParticipantNotificationTitle": "Inscription annulée",
+    "swapNotificationBody": "Tu as échangé tes jetons communautaires avec succès !",
+    "swapNotificationTitle": "Échange réussi",
     "updatingAppState": "L'état de l'app est mis à jour...",
     "value": "Valeur",
     "votesNotDependableErrorBody": "Seule la moitié ou moins des participants attribués ont été confirmés, ou certains participants n'ont pas encore envoyé leurs confirmations. Cela empêche le paiement immédiat du revenu et tu dois attendre 48 heures.",

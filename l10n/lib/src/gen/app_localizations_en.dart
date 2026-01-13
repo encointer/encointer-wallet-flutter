@@ -1369,6 +1369,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unregisterParticipantNotificationTitle => 'Registration cancelled';
 
   @override
+  String get swapNotificationBody =>
+      'You have successfully swapped your community tokens!';
+
+  @override
+  String get swapNotificationTitle => 'Swapped Success';
+
+  @override
   String get updatingAppState => 'Updating the app state...';
 
   @override

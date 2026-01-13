@@ -2522,6 +2522,18 @@ abstract class AppLocalizations {
   /// **'Registration cancelled'**
   String get unregisterParticipantNotificationTitle;
 
+  /// No description provided for @swapNotificationBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You have successfully swapped your community tokens!'**
+  String get swapNotificationBody;
+
+  /// No description provided for @swapNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Swapped Success'**
+  String get swapNotificationTitle;
+
   /// No description provided for @updatingAppState.
   ///
   /// In en, this message translates to:

@@ -1373,6 +1373,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get unregisterParticipantNotificationTitle => 'Регистрация отменена';
 
   @override
+  String get swapNotificationBody =>
+      'Ты успешно обменял свои токены сообщества!';
+
+  @override
+  String get swapNotificationTitle => 'Обмен выполнен успешно';
+
+  @override
   String get updatingAppState => 'Обновление приложения';
 
   @override

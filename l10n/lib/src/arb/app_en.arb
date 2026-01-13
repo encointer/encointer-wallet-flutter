@@ -643,6 +643,8 @@
     "unregisterDialogTitle": "Unregister from the next cycle?",
     "unregisterParticipantNotificationBody": "Your registration for the next cycle has been cancelled. If you change your mind, you can register again.",
     "unregisterParticipantNotificationTitle": "Registration cancelled",
+    "swapNotificationBody": "You have successfully swapped your community tokens!",
+    "swapNotificationTitle": "Swapped Success",
     "updatingAppState": "Updating the app state...",
     "value": "Value",
     "votesNotDependableErrorBody": "Only half or less of the assigned participants were attested for this gathering. It could also be that some attendees haven't submitted their attestation yet. This prevents the early payout, and you need to wait for 48 hours.",

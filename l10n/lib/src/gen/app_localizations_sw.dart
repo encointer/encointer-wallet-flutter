@@ -1377,6 +1377,13 @@ class AppLocalizationsSw extends AppLocalizations {
   String get unregisterParticipantNotificationTitle => 'Usajili umefutwa';
 
   @override
+  String get swapNotificationBody =>
+      'Umebadilisha tokeni za jamii zako kwa mafanikio!';
+
+  @override
+  String get swapNotificationTitle => 'Kubadilisha kufanikiwa';
+
+  @override
   String get updatingAppState => 'Inaboresha hali ya programu...';
 
   @override
