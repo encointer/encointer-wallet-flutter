@@ -1383,6 +1383,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Registrierung storniert';
 
   @override
+  String get swapNotificationBody =>
+      'Du hast Gemeinschaftswährung erfolgreich getauscht!';
+
+  @override
+  String get swapNotificationTitle => 'Tausch erfolgreich';
+
+  @override
   String get updatingAppState => 'App-Zustand wird aktualisiert...';
 
   @override

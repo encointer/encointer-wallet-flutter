@@ -463,6 +463,8 @@
     "unregisterDialogTitle": "Vom nächsten Key-Signing Cycle abmelden?",
     "unregisterParticipantNotificationBody": "Du hast dich abgemeldet vom nächsten Cycle. Du kannst dich wieder anmelden, wenn du es dir anders überlegst.",
     "unregisterParticipantNotificationTitle": "Registrierung storniert",
+    "swapNotificationBody": "Du hast Gemeinschaftswährung erfolgreich getauscht!",
+    "swapNotificationTitle": "Tausch erfolgreich",
     "updatingAppState": "App-Zustand wird aktualisiert...",
     "value": "Wert",
     "votesNotDependableErrorBody": "Es wurde nur die Hälfte oder weniger der zugewiesenen Teilnehmer bestätigt, oder einige Teilnehmer haben ihre Bestätigungen noch nicht eingereicht. Das verhindert das sofortige Auszahlen des Einkommens und du musst 48 Stunden warten.",

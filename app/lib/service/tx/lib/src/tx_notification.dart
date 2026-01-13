@@ -62,6 +62,11 @@ class TxNotification {
         body: l10n.unregisterParticipantNotificationBody,
       );
 
+  factory TxNotification.swapTokens(AppLocalizations l10n) => TxNotification(
+        title: l10n.swapNotificationTitle,
+        body: l10n.swapNotificationBody,
+      );
+
   final String title;
   final String body;
 }

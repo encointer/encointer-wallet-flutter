@@ -406,6 +406,8 @@
     "unregisterDialogTitle": "Unataka kufuta usajili wako wa kikao kijacho?",
     "unregisterParticipantNotificationBody": "Usajili wako kwa mzunguko ujao umefutwa. Ikiwa utabadilisha maoni yako, unaweza kujisajili tena.",
     "unregisterParticipantNotificationTitle": "Usajili umefutwa",
+    "swapNotificationBody": "Umebadilisha tokeni za jamii zako kwa mafanikio!",
+    "swapNotificationTitle": "Kubadilisha kufanikiwa",
     "updatingAppState": "Inaboresha hali ya programu...",
     "value": "Thamani",
     "votesNotDependableErrorBody": "Nusu au chini ya washiriki walioteuliwa ndio walithibitishwa kwa mkusanyiko huu. Inaweza pia kuwa baadhi ya wahudhuriaji hawajaweka uthibitisho wao bado. Hii inazuia malipo ya mapema, na unahitaji kusubiri kwa masaa 48.",
