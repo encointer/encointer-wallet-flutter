@@ -1308,7 +1308,7 @@ class _InfoKV extends StatelessWidget {
   final String value;
   final String? secondaryValue;
 
-  bool get _hasSecondary => secondaryValue != null;
+  bool get _hasSecondary => secondaryValue != null && secondaryValue!.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -1328,34 +1328,27 @@ class _InfoKV extends StatelessWidget {
           ),
         ),
 
-        // Values
+        // Value (+ optional symbol)
         Expanded(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Primary value (fills space, wraps, right-aligned)
-              Expanded(
-                child: Text(
-                  value,
-                  textAlign: TextAlign.end,
-                  softWrap: true,
+          child: Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: value,
                   style: theme.bodyMedium,
                 ),
-              ),
-
-              if (_hasSecondary) ...[
-                const SizedBox(width: 6),
-                SizedBox(
-                  width: 40,
-                  child: Text(
-                    secondaryValue!,
+                if (_hasSecondary)
+                  TextSpan(
+                    text: ' $secondaryValue',
                     style: theme.bodyMedium?.copyWith(
                       color: theme.bodySmall?.color,
                     ),
                   ),
-                ),
               ],
-            ],
+            ),
+            textAlign: TextAlign.end,
+            softWrap: false,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],
