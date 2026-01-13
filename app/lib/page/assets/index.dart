@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:mobx/mobx.dart' show ReactionDisposer, reaction;
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:upgrader/upgrader.dart';
@@ -65,6 +66,7 @@ class _AssetsViewState extends State<AssetsView> {
   static const double panelHeight = 396;
   static const double fractionOfScreenHeight = .7;
   static const double avatarSize = 70;
+
   late PanelController _panelController;
   late AppSettings _appSettingsStore;
   late double _panelHeightOpen;
@@ -74,26 +76,41 @@ class _AssetsViewState extends State<AssetsView> {
   NativeSwap? nativeSwap;
   AssetSwap? assetSwap;
 
+  // MobX reaction disposer
+  late ReactionDisposer _swapReaction;
+
   @override
   void initState() {
-    _connectNodeAll();
-    _panelController = PanelController();
-    _postFrameCallbacks();
-
     super.initState();
+
+    _panelController = PanelController();
+    _connectNodeAll();
+
+    // Reaction: automatically fetch swap options when CID or account changes
+    _swapReaction = reaction(
+      (_) => [widget.store.encointer.chosenCid, widget.store.account.currentAddress],
+      (_) => getSwapOptions(),
+      fireImmediately: true, // optional: fetch immediately on init if values exist
+    );
   }
 
   @override
   void didChangeDependencies() {
+    super.didChangeDependencies();
+
     _appSettingsStore = context.read<AppSettings>();
     l10n = context.l10n;
-    // Should typically not be higher than panelHeight, but on really small devices
-    // it should not exceed fractionOfScreenHeight x the screen height.
+
     _panelHeightOpen = min(
       MediaQuery.of(context).size.height * fractionOfScreenHeight,
       panelHeight,
     );
-    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _swapReaction(); // dispose reaction
+    super.dispose();
   }
 
   Future<void> getSwapOptions() async {
@@ -103,43 +120,42 @@ class _AssetsViewState extends State<AssetsView> {
     });
 
     final cid = widget.store.encointer.chosenCid;
+    final accountId = widget.store.account.currentAddress;
 
-    if (cid == null) {
-      Log.d('[getSwapOptions]: No cid chosen returning...', _logTarget);
+    if (cid == null || accountId.isEmpty) {
+      Log.d('[getSwapOptions]: No CID or account chosen, returning...', _logTarget);
       return;
     }
 
-    final accountId = AddressUtils.addressToPubKey(widget.store.account.currentAddress).toList();
+    Log.d('Fetching swap options', _logTarget);
 
-    Log.d('Getting Swap Options', _logTarget);
+    final pubKey = AddressUtils.addressToPubKey(accountId).toList();
 
-    // Fetch swaps from API concurrently
-    final results = await Future.wait([
-      webApi.encointer.getSwapAssetOptionForAccount(cid, accountId),
-      webApi.encointer.getSwapNativeOptionForAccount(cid, accountId),
-    ]);
+    try {
+      final results = await Future.wait([
+        webApi.encointer.getSwapAssetOptionForAccount(cid, pubKey),
+        webApi.encointer.getSwapNativeOptionForAccount(cid, pubKey),
+      ]);
 
-    final fetchedAssetOption = results[0] as SwapAssetOption?;
-    final fetchedNativeOption = results[1] as SwapNativeOption?;
+      final fetchedAssetOption = results[0] as SwapAssetOption?;
+      final fetchedNativeOption = results[1] as SwapNativeOption?;
 
-    setState(() {
-      if (fetchedAssetOption != null) {
-        assetSwap = AssetSwap(fetchedAssetOption);
-      } else {
-        Log.d('No Swap Asset Options Found', _logTarget);
+      // Prevent stale results if user switches account/community quickly
+      if (!mounted) return;
+      if (cid != widget.store.encointer.chosenCid || accountId != widget.store.account.currentAddress) {
+        return;
       }
 
-      if (fetchedNativeOption != null) {
-        nativeSwap = NativeSwap(fetchedNativeOption);
-      } else {
-        Log.d('No Swap Native Options Found', _logTarget);
-      }
-    });
-  }
+      setState(() {
+        assetSwap = fetchedAssetOption != null ? AssetSwap(fetchedAssetOption) : null;
+        nativeSwap = fetchedNativeOption != null ? NativeSwap(fetchedNativeOption) : null;
+      });
 
-  @override
-  void dispose() {
-    super.dispose();
+      if (fetchedAssetOption == null) Log.d('No Swap Asset Options Found', _logTarget);
+      if (fetchedNativeOption == null) Log.d('No Swap Native Options Found', _logTarget);
+    } catch (e, st) {
+      Log.e('Failed to fetch swap options: $e', _logTarget, st);
+    }
   }
 
   @override
@@ -537,16 +553,6 @@ class _AssetsViewState extends State<AssetsView> {
     if (!widget.store.settings.loading) {
       webApi.init();
     }
-  }
-
-  void _postFrameCallbacks() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (context.read<AppStore>().encointer.community?.communityIcon == null) {
-        context.read<AppStore>().encointer.community?.getCommunityIcon();
-      }
-
-      getSwapOptions();
-    });
   }
 
   Future<void> _refreshEncointerState() async {
