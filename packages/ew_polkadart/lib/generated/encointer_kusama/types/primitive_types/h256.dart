@@ -1,5 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 typedef H256 = List<int>;
 
@@ -25,5 +25,10 @@ class H256Codec with _i1.Codec<H256> {
   @override
   int sizeHint(H256 value) {
     return const _i1.U8ArrayCodec(32).sizeHint(value);
+  }
+
+  @override
+  bool isSizeZero() {
+    return const _i1.U8ArrayCodec(32).isSizeZero();
   }
 }

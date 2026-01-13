@@ -1,5 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i2;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i2;
 
 import 'asset.dart' as _i1;
 
@@ -27,5 +27,10 @@ class AssetsCodec with _i2.Codec<Assets> {
   @override
   int sizeHint(Assets value) {
     return const _i2.SequenceCodec<_i1.Asset>(_i1.Asset.codec).sizeHint(value);
+  }
+
+  @override
+  bool isSizeZero() {
+    return const _i2.SequenceCodec<_i1.Asset>(_i1.Asset.codec).isSizeZero();
   }
 }

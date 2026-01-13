@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i2;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i9;
 
 import '../../tuples_1.dart' as _i4;
@@ -135,6 +135,9 @@ class $ResponseCodec with _i1.Codec<Response> {
         throw Exception('Response: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
+
+  @override
+  bool isSizeZero() => false;
 }
 
 class Null extends Response {
@@ -219,10 +222,12 @@ class ExecutionResult extends Response {
 
   @override
   Map<String, List<dynamic>?> toJson() => {
-        'ExecutionResult': [
-          value0?.value0,
-          value0?.value1.toJson(),
-        ]
+        'ExecutionResult': value0 != null
+            ? [
+                value0!.value0,
+                value0!.value1.toJson(),
+              ]
+            : null
       };
 
   int _sizeHint() {

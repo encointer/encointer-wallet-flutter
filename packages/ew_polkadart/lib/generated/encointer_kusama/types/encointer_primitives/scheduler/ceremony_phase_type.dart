@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i2;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 enum CeremonyPhaseType {
   registering('Registering', 0),
@@ -58,4 +58,7 @@ class $CeremonyPhaseTypeCodec with _i1.Codec<CeremonyPhaseType> {
       output,
     );
   }
+
+  @override
+  bool isSizeZero() => false;
 }

@@ -1,5 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 typedef Cow = String;
 
@@ -25,5 +25,10 @@ class CowCodec with _i1.Codec<Cow> {
   @override
   int sizeHint(Cow value) {
     return _i1.StrCodec.codec.sizeHint(value);
+  }
+
+  @override
+  bool isSizeZero() {
+    return _i1.StrCodec.codec.isSizeZero();
   }
 }

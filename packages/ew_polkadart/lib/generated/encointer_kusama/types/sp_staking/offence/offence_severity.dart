@@ -1,5 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i2;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i2;
 
 import '../../sp_arithmetic/per_things/perbill.dart' as _i1;
 
@@ -27,5 +27,10 @@ class OffenceSeverityCodec with _i2.Codec<OffenceSeverity> {
   @override
   int sizeHint(OffenceSeverity value) {
     return const _i1.PerbillCodec().sizeHint(value);
+  }
+
+  @override
+  bool isSizeZero() {
+    return const _i1.PerbillCodec().isSizeZero();
   }
 }

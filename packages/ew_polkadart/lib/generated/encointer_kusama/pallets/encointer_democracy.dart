@@ -1,75 +1,76 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i7;
-import 'dart:typed_data' as _i8;
+import 'dart:async' as _i8;
+import 'dart:typed_data' as _i9;
 
 import 'package:polkadart/polkadart.dart' as _i1;
-import 'package:polkadart/scale_codec.dart' as _i2;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i3;
+import 'package:substrate_metadata/substrate_metadata.dart' as _i2;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i9;
-import '../types/encointer_primitives/communities/community_identifier.dart' as _i13;
-import '../types/encointer_primitives/democracy/proposal.dart' as _i3;
-import '../types/encointer_primitives/democracy/proposal_action.dart' as _i10;
-import '../types/encointer_primitives/democracy/proposal_action_identifier.dart' as _i5;
-import '../types/encointer_primitives/democracy/tally.dart' as _i4;
-import '../types/encointer_primitives/democracy/vote.dart' as _i12;
-import '../types/pallet_encointer_democracy/pallet/call.dart' as _i11;
-import '../types/tuples.dart' as _i6;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i10;
+import '../types/encointer_primitives/communities/community_identifier.dart' as _i14;
+import '../types/encointer_primitives/democracy/proposal.dart' as _i4;
+import '../types/encointer_primitives/democracy/proposal_action.dart' as _i11;
+import '../types/encointer_primitives/democracy/proposal_action_identifier.dart' as _i6;
+import '../types/encointer_primitives/democracy/tally.dart' as _i5;
+import '../types/encointer_primitives/democracy/vote.dart' as _i13;
+import '../types/pallet_encointer_democracy/pallet/call.dart' as _i12;
+import '../types/tuples.dart' as _i7;
 
 class Queries {
   const Queries(this.__api);
 
   final _i1.StateApi __api;
 
-  final _i1.StorageMap<BigInt, BigInt> _purposeIds = const _i1.StorageMap<BigInt, BigInt>(
+  final _i2.StorageMap<BigInt, BigInt> _purposeIds = const _i2.StorageMap<BigInt, BigInt>(
     prefix: 'EncointerDemocracy',
     storage: 'PurposeIds',
-    valueCodec: _i2.U64Codec.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(_i2.U128Codec.codec),
+    valueCodec: _i3.U64Codec.codec,
+    hasher: _i2.StorageHasher.blake2b128Concat(_i3.U128Codec.codec),
   );
 
-  final _i1.StorageMap<BigInt, _i3.Proposal> _proposals = const _i1.StorageMap<BigInt, _i3.Proposal>(
+  final _i2.StorageMap<BigInt, _i4.Proposal> _proposals = const _i2.StorageMap<BigInt, _i4.Proposal>(
     prefix: 'EncointerDemocracy',
     storage: 'Proposals',
-    valueCodec: _i3.Proposal.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(_i2.U128Codec.codec),
+    valueCodec: _i4.Proposal.codec,
+    hasher: _i2.StorageHasher.blake2b128Concat(_i3.U128Codec.codec),
   );
 
-  final _i1.StorageValue<BigInt> _proposalCount = const _i1.StorageValue<BigInt>(
+  final _i2.StorageValue<BigInt> _proposalCount = const _i2.StorageValue<BigInt>(
     prefix: 'EncointerDemocracy',
     storage: 'ProposalCount',
-    valueCodec: _i2.U128Codec.codec,
+    valueCodec: _i3.U128Codec.codec,
   );
 
-  final _i1.StorageMap<BigInt, _i4.Tally> _tallies = const _i1.StorageMap<BigInt, _i4.Tally>(
+  final _i2.StorageMap<BigInt, _i5.Tally> _tallies = const _i2.StorageMap<BigInt, _i5.Tally>(
     prefix: 'EncointerDemocracy',
     storage: 'Tallies',
-    valueCodec: _i4.Tally.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(_i2.U128Codec.codec),
+    valueCodec: _i5.Tally.codec,
+    hasher: _i2.StorageHasher.blake2b128Concat(_i3.U128Codec.codec),
   );
 
-  final _i1.StorageMap<_i5.ProposalActionIdentifier, _i6.Tuple2<BigInt, BigInt>> _lastApprovedProposalForAction =
-      const _i1.StorageMap<_i5.ProposalActionIdentifier, _i6.Tuple2<BigInt, BigInt>>(
+  final _i2.StorageMap<_i6.ProposalActionIdentifier, _i7.Tuple2<BigInt, BigInt>> _lastApprovedProposalForAction =
+      const _i2.StorageMap<_i6.ProposalActionIdentifier, _i7.Tuple2<BigInt, BigInt>>(
     prefix: 'EncointerDemocracy',
     storage: 'LastApprovedProposalForAction',
-    valueCodec: _i6.Tuple2Codec<BigInt, BigInt>(
-      _i2.U64Codec.codec,
-      _i2.U128Codec.codec,
+    valueCodec: _i7.Tuple2Codec<BigInt, BigInt>(
+      _i3.U64Codec.codec,
+      _i3.U128Codec.codec,
     ),
-    hasher: _i1.StorageHasher.blake2b128Concat(_i5.ProposalActionIdentifier.codec),
+    hasher: _i2.StorageHasher.blake2b128Concat(_i6.ProposalActionIdentifier.codec),
   );
 
-  final _i1.StorageMap<_i5.ProposalActionIdentifier, BigInt> _enactmentQueue =
-      const _i1.StorageMap<_i5.ProposalActionIdentifier, BigInt>(
+  final _i2.StorageMap<_i6.ProposalActionIdentifier, BigInt> _enactmentQueue =
+      const _i2.StorageMap<_i6.ProposalActionIdentifier, BigInt>(
     prefix: 'EncointerDemocracy',
     storage: 'EnactmentQueue',
-    valueCodec: _i2.U128Codec.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(_i5.ProposalActionIdentifier.codec),
+    valueCodec: _i3.U128Codec.codec,
+    hasher: _i2.StorageHasher.blake2b128Concat(_i6.ProposalActionIdentifier.codec),
   );
 
   /// Unique `PurposeIds` of a `Proposal`.
   ///
   /// This is used to prevent reuse of a reputation for the same `PurposeId`.
-  _i7.Future<BigInt?> purposeIds(
+  _i8.Future<BigInt?> purposeIds(
     BigInt key1, {
     _i1.BlockHash? at,
   }) async {
@@ -85,7 +86,7 @@ class Queries {
   }
 
   /// All proposals that have ever been proposed including the past ones.
-  _i7.Future<_i3.Proposal?> proposals(
+  _i8.Future<_i4.Proposal?> proposals(
     BigInt key1, {
     _i1.BlockHash? at,
   }) async {
@@ -101,7 +102,7 @@ class Queries {
   }
 
   /// Proposal count of all proposals to date.
-  _i7.Future<BigInt> proposalCount({_i1.BlockHash? at}) async {
+  _i8.Future<BigInt> proposalCount({_i1.BlockHash? at}) async {
     final hashedKey = _proposalCount.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -114,7 +115,7 @@ class Queries {
   }
 
   /// Tallies for the proposal corresponding to `ProposalId`.
-  _i7.Future<_i4.Tally?> tallies(
+  _i8.Future<_i5.Tally?> tallies(
     BigInt key1, {
     _i1.BlockHash? at,
   }) async {
@@ -129,8 +130,8 @@ class Queries {
     return null; /* Nullable */
   }
 
-  _i7.Future<_i6.Tuple2<BigInt, BigInt>?> lastApprovedProposalForAction(
-    _i5.ProposalActionIdentifier key1, {
+  _i8.Future<_i7.Tuple2<BigInt, BigInt>?> lastApprovedProposalForAction(
+    _i6.ProposalActionIdentifier key1, {
     _i1.BlockHash? at,
   }) async {
     final hashedKey = _lastApprovedProposalForAction.hashedKeyFor(key1);
@@ -144,8 +145,8 @@ class Queries {
     return null; /* Nullable */
   }
 
-  _i7.Future<BigInt?> enactmentQueue(
-    _i5.ProposalActionIdentifier key1, {
+  _i8.Future<BigInt?> enactmentQueue(
+    _i6.ProposalActionIdentifier key1, {
     _i1.BlockHash? at,
   }) async {
     final hashedKey = _enactmentQueue.hashedKeyFor(key1);
@@ -162,7 +163,7 @@ class Queries {
   /// Unique `PurposeIds` of a `Proposal`.
   ///
   /// This is used to prevent reuse of a reputation for the same `PurposeId`.
-  _i7.Future<List<BigInt?>> multiPurposeIds(
+  _i8.Future<List<BigInt?>> multiPurposeIds(
     List<BigInt> keys, {
     _i1.BlockHash? at,
   }) async {
@@ -178,7 +179,7 @@ class Queries {
   }
 
   /// All proposals that have ever been proposed including the past ones.
-  _i7.Future<List<_i3.Proposal?>> multiProposals(
+  _i8.Future<List<_i4.Proposal?>> multiProposals(
     List<BigInt> keys, {
     _i1.BlockHash? at,
   }) async {
@@ -194,7 +195,7 @@ class Queries {
   }
 
   /// Tallies for the proposal corresponding to `ProposalId`.
-  _i7.Future<List<_i4.Tally?>> multiTallies(
+  _i8.Future<List<_i5.Tally?>> multiTallies(
     List<BigInt> keys, {
     _i1.BlockHash? at,
   }) async {
@@ -209,8 +210,8 @@ class Queries {
     return []; /* Nullable */
   }
 
-  _i7.Future<List<_i6.Tuple2<BigInt, BigInt>?>> multiLastApprovedProposalForAction(
-    List<_i5.ProposalActionIdentifier> keys, {
+  _i8.Future<List<_i7.Tuple2<BigInt, BigInt>?>> multiLastApprovedProposalForAction(
+    List<_i6.ProposalActionIdentifier> keys, {
     _i1.BlockHash? at,
   }) async {
     final hashedKeys = keys.map((key) => _lastApprovedProposalForAction.hashedKeyFor(key)).toList();
@@ -224,8 +225,8 @@ class Queries {
     return []; /* Nullable */
   }
 
-  _i7.Future<List<BigInt?>> multiEnactmentQueue(
-    List<_i5.ProposalActionIdentifier> keys, {
+  _i8.Future<List<BigInt?>> multiEnactmentQueue(
+    List<_i6.ProposalActionIdentifier> keys, {
     _i1.BlockHash? at,
   }) async {
     final hashedKeys = keys.map((key) => _enactmentQueue.hashedKeyFor(key)).toList();
@@ -240,67 +241,67 @@ class Queries {
   }
 
   /// Returns the storage key for `purposeIds`.
-  _i8.Uint8List purposeIdsKey(BigInt key1) {
+  _i9.Uint8List purposeIdsKey(BigInt key1) {
     final hashedKey = _purposeIds.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage key for `proposals`.
-  _i8.Uint8List proposalsKey(BigInt key1) {
+  _i9.Uint8List proposalsKey(BigInt key1) {
     final hashedKey = _proposals.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage key for `proposalCount`.
-  _i8.Uint8List proposalCountKey() {
+  _i9.Uint8List proposalCountKey() {
     final hashedKey = _proposalCount.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `tallies`.
-  _i8.Uint8List talliesKey(BigInt key1) {
+  _i9.Uint8List talliesKey(BigInt key1) {
     final hashedKey = _tallies.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage key for `lastApprovedProposalForAction`.
-  _i8.Uint8List lastApprovedProposalForActionKey(_i5.ProposalActionIdentifier key1) {
+  _i9.Uint8List lastApprovedProposalForActionKey(_i6.ProposalActionIdentifier key1) {
     final hashedKey = _lastApprovedProposalForAction.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage key for `enactmentQueue`.
-  _i8.Uint8List enactmentQueueKey(_i5.ProposalActionIdentifier key1) {
+  _i9.Uint8List enactmentQueueKey(_i6.ProposalActionIdentifier key1) {
     final hashedKey = _enactmentQueue.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `purposeIds`.
-  _i8.Uint8List purposeIdsMapPrefix() {
+  _i9.Uint8List purposeIdsMapPrefix() {
     final hashedKey = _purposeIds.mapPrefix();
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `proposals`.
-  _i8.Uint8List proposalsMapPrefix() {
+  _i9.Uint8List proposalsMapPrefix() {
     final hashedKey = _proposals.mapPrefix();
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `tallies`.
-  _i8.Uint8List talliesMapPrefix() {
+  _i9.Uint8List talliesMapPrefix() {
     final hashedKey = _tallies.mapPrefix();
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `lastApprovedProposalForAction`.
-  _i8.Uint8List lastApprovedProposalForActionMapPrefix() {
+  _i9.Uint8List lastApprovedProposalForActionMapPrefix() {
     final hashedKey = _lastApprovedProposalForAction.mapPrefix();
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `enactmentQueue`.
-  _i8.Uint8List enactmentQueueMapPrefix() {
+  _i9.Uint8List enactmentQueueMapPrefix() {
     final hashedKey = _enactmentQueue.mapPrefix();
     return hashedKey;
   }
@@ -309,24 +310,24 @@ class Queries {
 class Txs {
   const Txs();
 
-  _i9.EncointerDemocracy submitProposal({required _i10.ProposalAction proposalAction}) {
-    return _i9.EncointerDemocracy(_i11.SubmitProposal(proposalAction: proposalAction));
+  _i10.EncointerDemocracy submitProposal({required _i11.ProposalAction proposalAction}) {
+    return _i10.EncointerDemocracy(_i12.SubmitProposal(proposalAction: proposalAction));
   }
 
-  _i9.EncointerDemocracy vote({
+  _i10.EncointerDemocracy vote({
     required BigInt proposalId,
-    required _i12.Vote vote,
-    required List<_i6.Tuple2<_i13.CommunityIdentifier, int>> reputations,
+    required _i13.Vote vote,
+    required List<_i7.Tuple2<_i14.CommunityIdentifier, int>> reputations,
   }) {
-    return _i9.EncointerDemocracy(_i11.Vote(
+    return _i10.EncointerDemocracy(_i12.Vote(
       proposalId: proposalId,
       vote: vote,
       reputations: reputations,
     ));
   }
 
-  _i9.EncointerDemocracy updateProposalState({required BigInt proposalId}) {
-    return _i9.EncointerDemocracy(_i11.UpdateProposalState(proposalId: proposalId));
+  _i10.EncointerDemocracy updateProposalState({required BigInt proposalId}) {
+    return _i10.EncointerDemocracy(_i12.UpdateProposalState(proposalId: proposalId));
   }
 }
 

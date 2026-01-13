@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i2;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i7;
 
 import '../../encointer_primitives/ceremonies/proof_of_attendance.dart' as _i4;
@@ -261,6 +261,9 @@ class $CallCodec with _i1.Codec<Call> {
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
+
+  @override
+  bool isSizeZero() => false;
 }
 
 class RegisterParticipant extends Call {
@@ -418,10 +421,12 @@ class UnregisterParticipant extends Call {
   Map<String, Map<String, dynamic>> toJson() => {
         'unregister_participant': {
           'cid': cid.toJson(),
-          'maybeReputationCommunityCeremony': [
-            maybeReputationCommunityCeremony?.value0.toJson(),
-            maybeReputationCommunityCeremony?.value1,
-          ],
+          'maybeReputationCommunityCeremony': maybeReputationCommunityCeremony != null
+              ? [
+                  maybeReputationCommunityCeremony!.value0.toJson(),
+                  maybeReputationCommunityCeremony!.value1,
+                ]
+              : null,
         }
       };
 

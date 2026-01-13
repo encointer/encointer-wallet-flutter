@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i2;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i4;
 
 import '../../sp_core/crypto/account_id32.dart' as _i3;
@@ -108,6 +108,9 @@ class $RawOriginCodec with _i1.Codec<RawOrigin> {
         throw Exception('RawOrigin: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
+
+  @override
+  bool isSizeZero() => false;
 }
 
 class Root extends RawOrigin {

@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i3;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i4;
 
 import '../polkadot_parachain_primitives/primitives/id.dart' as _i2;
@@ -86,4 +86,7 @@ class $OutboundHrmpMessageCodec with _i1.Codec<OutboundHrmpMessage> {
     size = size + _i1.U8SequenceCodec.codec.sizeHint(obj.data);
     return size;
   }
+
+  @override
+  bool isSizeZero() => const _i2.IdCodec().isSizeZero() && _i1.U8SequenceCodec.codec.isSizeZero();
 }

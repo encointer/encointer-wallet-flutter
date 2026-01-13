@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i2;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 abstract class BodyPart {
   const BodyPart();
@@ -134,6 +134,9 @@ class $BodyPartCodec with _i1.Codec<BodyPart> {
         throw Exception('BodyPart: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
+
+  @override
+  bool isSizeZero() => false;
 }
 
 class Voice extends BodyPart {

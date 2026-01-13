@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i4;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i5;
 
 import '../../tuples.dart' as _i3;
@@ -128,4 +128,14 @@ class $RemoteLockedFungibleRecordCodec with _i1.Codec<RemoteLockedFungibleRecord
         )).sizeHint(obj.consumers);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      _i1.U128Codec.codec.isSizeZero() &&
+      _i2.VersionedLocation.codec.isSizeZero() &&
+      _i2.VersionedLocation.codec.isSizeZero() &&
+      const _i1.SequenceCodec<_i3.Tuple2<dynamic, BigInt>>(_i3.Tuple2Codec<dynamic, BigInt>(
+        _i1.NullCodec.codec,
+        _i1.U128Codec.codec,
+      )).isSizeZero();
 }

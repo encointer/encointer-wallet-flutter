@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i5;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../frame_support/dispatch/dispatch_class.dart' as _i3;
 import '../frame_support/dispatch/pays.dart' as _i4;
@@ -94,4 +94,8 @@ class $DispatchEventInfoCodec with _i1.Codec<DispatchEventInfo> {
     size = size + _i4.Pays.codec.sizeHint(obj.paysFee);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      _i2.Weight.codec.isSizeZero() && _i3.DispatchClass.codec.isSizeZero() && _i4.Pays.codec.isSizeZero();
 }

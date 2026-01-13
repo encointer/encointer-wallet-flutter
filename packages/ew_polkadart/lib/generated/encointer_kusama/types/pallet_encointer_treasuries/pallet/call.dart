@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i2;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
 
@@ -98,6 +98,9 @@ class $CallCodec with _i1.Codec<Call> {
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
+
+  @override
+  bool isSizeZero() => false;
 }
 
 /// swap native tokens for community currency subject to an existing swap option for the

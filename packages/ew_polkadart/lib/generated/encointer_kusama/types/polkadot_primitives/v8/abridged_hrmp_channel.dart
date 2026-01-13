@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i3;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../../primitive_types/h256.dart' as _i2;
 
@@ -134,4 +134,13 @@ class $AbridgedHrmpChannelCodec with _i1.Codec<AbridgedHrmpChannel> {
     size = size + const _i1.OptionCodec<_i2.H256>(_i2.H256Codec()).sizeHint(obj.mqcHead);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      _i1.U32Codec.codec.isSizeZero() &&
+      _i1.U32Codec.codec.isSizeZero() &&
+      _i1.U32Codec.codec.isSizeZero() &&
+      _i1.U32Codec.codec.isSizeZero() &&
+      _i1.U32Codec.codec.isSizeZero() &&
+      const _i1.OptionCodec<_i2.H256>(_i2.H256Codec()).isSizeZero();
 }

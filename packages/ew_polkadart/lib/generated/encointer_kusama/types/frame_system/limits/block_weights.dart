@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i4;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../../frame_support/dispatch/per_dispatch_class_2.dart' as _i3;
 import '../../sp_weights/weight_v2/weight.dart' as _i2;
@@ -93,4 +93,8 @@ class $BlockWeightsCodec with _i1.Codec<BlockWeights> {
     size = size + _i3.PerDispatchClass.codec.sizeHint(obj.perClass);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      _i2.Weight.codec.isSizeZero() && _i2.Weight.codec.isSizeZero() && _i3.PerDispatchClass.codec.isSizeZero();
 }

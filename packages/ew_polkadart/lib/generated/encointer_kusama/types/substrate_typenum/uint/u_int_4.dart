@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i4;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../bit/b0.dart' as _i3;
 import 'u_int_5.dart' as _i2;
@@ -81,4 +81,7 @@ class $UIntCodec with _i1.Codec<UInt> {
     size = size + const _i3.B0Codec().sizeHint(obj.lsb);
     return size;
   }
+
+  @override
+  bool isSizeZero() => _i2.UInt.codec.isSizeZero() && const _i3.B0Codec().isSizeZero();
 }

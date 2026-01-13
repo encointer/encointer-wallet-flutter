@@ -1,5 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 class Tuple3<T0, T1, T2> {
   const Tuple3(
@@ -55,4 +55,7 @@ class Tuple3Codec<T0, T1, T2> with _i1.Codec<Tuple3<T0, T1, T2>> {
     size += codec2.sizeHint(tuple.value2);
     return size;
   }
+
+  @override
+  bool isSizeZero() => codec0.isSizeZero() && codec1.isSizeZero() && codec2.isSizeZero();
 }

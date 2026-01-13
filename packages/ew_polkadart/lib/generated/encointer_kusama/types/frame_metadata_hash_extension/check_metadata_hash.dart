@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i3;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import 'mode.dart' as _i2;
 
@@ -60,4 +60,7 @@ class $CheckMetadataHashCodec with _i1.Codec<CheckMetadataHash> {
     size = size + _i2.Mode.codec.sizeHint(obj.mode);
     return size;
   }
+
+  @override
+  bool isSizeZero() => _i2.Mode.codec.isSizeZero();
 }

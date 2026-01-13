@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i3;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../pallet_balances/types/account_data.dart' as _i2;
 
@@ -121,4 +121,12 @@ class $AccountInfoCodec with _i1.Codec<AccountInfo> {
     size = size + _i2.AccountData.codec.sizeHint(obj.data);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      _i1.U32Codec.codec.isSizeZero() &&
+      _i1.U32Codec.codec.isSizeZero() &&
+      _i1.U32Codec.codec.isSizeZero() &&
+      _i1.U32Codec.codec.isSizeZero() &&
+      _i2.AccountData.codec.isSizeZero();
 }

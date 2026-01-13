@@ -1,32 +1,33 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
-import 'dart:typed_data' as _i4;
+import 'dart:async' as _i4;
+import 'dart:typed_data' as _i5;
 
 import 'package:polkadart/polkadart.dart' as _i1;
-import 'package:polkadart/scale_codec.dart' as _i2;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i3;
+import 'package:substrate_metadata/substrate_metadata.dart' as _i2;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i5;
-import '../types/pallet_timestamp/pallet/call.dart' as _i6;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i6;
+import '../types/pallet_timestamp/pallet/call.dart' as _i7;
 
 class Queries {
   const Queries(this.__api);
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<BigInt> _now = const _i1.StorageValue<BigInt>(
+  final _i2.StorageValue<BigInt> _now = const _i2.StorageValue<BigInt>(
     prefix: 'Timestamp',
     storage: 'Now',
-    valueCodec: _i2.U64Codec.codec,
+    valueCodec: _i3.U64Codec.codec,
   );
 
-  final _i1.StorageValue<bool> _didUpdate = const _i1.StorageValue<bool>(
+  final _i2.StorageValue<bool> _didUpdate = const _i2.StorageValue<bool>(
     prefix: 'Timestamp',
     storage: 'DidUpdate',
-    valueCodec: _i2.BoolCodec.codec,
+    valueCodec: _i3.BoolCodec.codec,
   );
 
   /// The current time for the current block.
-  _i3.Future<BigInt> now({_i1.BlockHash? at}) async {
+  _i4.Future<BigInt> now({_i1.BlockHash? at}) async {
     final hashedKey = _now.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -42,7 +43,7 @@ class Queries {
   ///
   /// This value is updated to `true` upon successful submission of a timestamp by a node.
   /// It is then checked at the end of each block execution in the `on_finalize` hook.
-  _i3.Future<bool> didUpdate({_i1.BlockHash? at}) async {
+  _i4.Future<bool> didUpdate({_i1.BlockHash? at}) async {
     final hashedKey = _didUpdate.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -55,13 +56,13 @@ class Queries {
   }
 
   /// Returns the storage key for `now`.
-  _i4.Uint8List nowKey() {
+  _i5.Uint8List nowKey() {
     final hashedKey = _now.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `didUpdate`.
-  _i4.Uint8List didUpdateKey() {
+  _i5.Uint8List didUpdateKey() {
     final hashedKey = _didUpdate.hashedKey();
     return hashedKey;
   }
@@ -89,8 +90,8 @@ class Txs {
   /// - 1 storage read and 1 storage mutation (codec `O(1)` because of `DidUpdate::take` in
   ///  `on_finalize`)
   /// - 1 event handler `on_timestamp_set`. Must be `O(1)`.
-  _i5.Timestamp set({required BigInt now}) {
-    return _i5.Timestamp(_i6.Set(now: now));
+  _i6.Timestamp set({required BigInt now}) {
+    return _i6.Timestamp(_i7.Set(now: now));
   }
 }
 

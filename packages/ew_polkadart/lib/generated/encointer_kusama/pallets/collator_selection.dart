@@ -1,54 +1,55 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
-import 'dart:typed_data' as _i6;
+import 'dart:async' as _i6;
+import 'dart:typed_data' as _i7;
 
 import 'package:polkadart/polkadart.dart' as _i1;
-import 'package:polkadart/scale_codec.dart' as _i3;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i4;
+import 'package:substrate_metadata/substrate_metadata.dart' as _i2;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i7;
-import '../types/frame_support/pallet_id.dart' as _i9;
-import '../types/pallet_collator_selection/pallet/call.dart' as _i8;
-import '../types/pallet_collator_selection/pallet/candidate_info.dart' as _i4;
-import '../types/sp_core/crypto/account_id32.dart' as _i2;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i8;
+import '../types/frame_support/pallet_id.dart' as _i10;
+import '../types/pallet_collator_selection/pallet/call.dart' as _i9;
+import '../types/pallet_collator_selection/pallet/candidate_info.dart' as _i5;
+import '../types/sp_core/crypto/account_id32.dart' as _i3;
 
 class Queries {
   const Queries(this.__api);
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<List<_i2.AccountId32>> _invulnerables = const _i1.StorageValue<List<_i2.AccountId32>>(
+  final _i2.StorageValue<List<_i3.AccountId32>> _invulnerables = const _i2.StorageValue<List<_i3.AccountId32>>(
     prefix: 'CollatorSelection',
     storage: 'Invulnerables',
-    valueCodec: _i3.SequenceCodec<_i2.AccountId32>(_i2.AccountId32Codec()),
+    valueCodec: _i4.SequenceCodec<_i3.AccountId32>(_i3.AccountId32Codec()),
   );
 
-  final _i1.StorageValue<List<_i4.CandidateInfo>> _candidateList = const _i1.StorageValue<List<_i4.CandidateInfo>>(
+  final _i2.StorageValue<List<_i5.CandidateInfo>> _candidateList = const _i2.StorageValue<List<_i5.CandidateInfo>>(
     prefix: 'CollatorSelection',
     storage: 'CandidateList',
-    valueCodec: _i3.SequenceCodec<_i4.CandidateInfo>(_i4.CandidateInfo.codec),
+    valueCodec: _i4.SequenceCodec<_i5.CandidateInfo>(_i5.CandidateInfo.codec),
   );
 
-  final _i1.StorageMap<_i2.AccountId32, int> _lastAuthoredBlock = const _i1.StorageMap<_i2.AccountId32, int>(
+  final _i2.StorageMap<_i3.AccountId32, int> _lastAuthoredBlock = const _i2.StorageMap<_i3.AccountId32, int>(
     prefix: 'CollatorSelection',
     storage: 'LastAuthoredBlock',
-    valueCodec: _i3.U32Codec.codec,
-    hasher: _i1.StorageHasher.twoxx64Concat(_i2.AccountId32Codec()),
+    valueCodec: _i4.U32Codec.codec,
+    hasher: _i2.StorageHasher.twoxx64Concat(_i3.AccountId32Codec()),
   );
 
-  final _i1.StorageValue<int> _desiredCandidates = const _i1.StorageValue<int>(
+  final _i2.StorageValue<int> _desiredCandidates = const _i2.StorageValue<int>(
     prefix: 'CollatorSelection',
     storage: 'DesiredCandidates',
-    valueCodec: _i3.U32Codec.codec,
+    valueCodec: _i4.U32Codec.codec,
   );
 
-  final _i1.StorageValue<BigInt> _candidacyBond = const _i1.StorageValue<BigInt>(
+  final _i2.StorageValue<BigInt> _candidacyBond = const _i2.StorageValue<BigInt>(
     prefix: 'CollatorSelection',
     storage: 'CandidacyBond',
-    valueCodec: _i3.U128Codec.codec,
+    valueCodec: _i4.U128Codec.codec,
   );
 
   /// The invulnerable, permissioned collators. This list must be sorted.
-  _i5.Future<List<_i2.AccountId32>> invulnerables({_i1.BlockHash? at}) async {
+  _i6.Future<List<_i3.AccountId32>> invulnerables({_i1.BlockHash? at}) async {
     final hashedKey = _invulnerables.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -65,7 +66,7 @@ class Queries {
   ///
   /// This list is sorted in ascending order by deposit and when the deposits are equal, the least
   /// recently updated is considered greater.
-  _i5.Future<List<_i4.CandidateInfo>> candidateList({_i1.BlockHash? at}) async {
+  _i6.Future<List<_i5.CandidateInfo>> candidateList({_i1.BlockHash? at}) async {
     final hashedKey = _candidateList.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -78,8 +79,8 @@ class Queries {
   }
 
   /// Last block authored by collator.
-  _i5.Future<int> lastAuthoredBlock(
-    _i2.AccountId32 key1, {
+  _i6.Future<int> lastAuthoredBlock(
+    _i3.AccountId32 key1, {
     _i1.BlockHash? at,
   }) async {
     final hashedKey = _lastAuthoredBlock.hashedKeyFor(key1);
@@ -96,7 +97,7 @@ class Queries {
   /// Desired number of candidates.
   ///
   /// This should ideally always be less than [`Config::MaxCandidates`] for weights to be correct.
-  _i5.Future<int> desiredCandidates({_i1.BlockHash? at}) async {
+  _i6.Future<int> desiredCandidates({_i1.BlockHash? at}) async {
     final hashedKey = _desiredCandidates.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -111,7 +112,7 @@ class Queries {
   /// Fixed amount to deposit to become a collator.
   ///
   /// When a collator calls `leave_intent` they immediately receive the deposit back.
-  _i5.Future<BigInt> candidacyBond({_i1.BlockHash? at}) async {
+  _i6.Future<BigInt> candidacyBond({_i1.BlockHash? at}) async {
     final hashedKey = _candidacyBond.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -124,8 +125,8 @@ class Queries {
   }
 
   /// Last block authored by collator.
-  _i5.Future<List<int>> multiLastAuthoredBlock(
-    List<_i2.AccountId32> keys, {
+  _i6.Future<List<int>> multiLastAuthoredBlock(
+    List<_i3.AccountId32> keys, {
     _i1.BlockHash? at,
   }) async {
     final hashedKeys = keys.map((key) => _lastAuthoredBlock.hashedKeyFor(key)).toList();
@@ -140,37 +141,37 @@ class Queries {
   }
 
   /// Returns the storage key for `invulnerables`.
-  _i6.Uint8List invulnerablesKey() {
+  _i7.Uint8List invulnerablesKey() {
     final hashedKey = _invulnerables.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `candidateList`.
-  _i6.Uint8List candidateListKey() {
+  _i7.Uint8List candidateListKey() {
     final hashedKey = _candidateList.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `lastAuthoredBlock`.
-  _i6.Uint8List lastAuthoredBlockKey(_i2.AccountId32 key1) {
+  _i7.Uint8List lastAuthoredBlockKey(_i3.AccountId32 key1) {
     final hashedKey = _lastAuthoredBlock.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage key for `desiredCandidates`.
-  _i6.Uint8List desiredCandidatesKey() {
+  _i7.Uint8List desiredCandidatesKey() {
     final hashedKey = _desiredCandidates.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `candidacyBond`.
-  _i6.Uint8List candidacyBondKey() {
+  _i7.Uint8List candidacyBondKey() {
     final hashedKey = _candidacyBond.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `lastAuthoredBlock`.
-  _i6.Uint8List lastAuthoredBlockMapPrefix() {
+  _i7.Uint8List lastAuthoredBlockMapPrefix() {
     final hashedKey = _lastAuthoredBlock.mapPrefix();
     return hashedKey;
   }
@@ -192,8 +193,8 @@ class Txs {
   /// `new`, they should be removed with `remove_invulnerable_candidate` after execution.
   ///
   /// Must be called by the `UpdateOrigin`.
-  _i7.CollatorSelection setInvulnerables({required List<_i2.AccountId32> new_}) {
-    return _i7.CollatorSelection(_i8.SetInvulnerables(new_: new_));
+  _i8.CollatorSelection setInvulnerables({required List<_i3.AccountId32> new_}) {
+    return _i8.CollatorSelection(_i9.SetInvulnerables(new_: new_));
   }
 
   /// Set the ideal number of non-invulnerable collators. If lowering this number, then the
@@ -201,8 +202,8 @@ class Txs {
   /// there should be no other way to have more candidates than the desired number.
   ///
   /// The origin for this call must be the `UpdateOrigin`.
-  _i7.CollatorSelection setDesiredCandidates({required int max}) {
-    return _i7.CollatorSelection(_i8.SetDesiredCandidates(max: max));
+  _i8.CollatorSelection setDesiredCandidates({required int max}) {
+    return _i8.CollatorSelection(_i9.SetDesiredCandidates(max: max));
   }
 
   /// Set the candidacy bond amount.
@@ -212,16 +213,16 @@ class Txs {
   /// back.
   ///
   /// The origin for this call must be the `UpdateOrigin`.
-  _i7.CollatorSelection setCandidacyBond({required BigInt bond}) {
-    return _i7.CollatorSelection(_i8.SetCandidacyBond(bond: bond));
+  _i8.CollatorSelection setCandidacyBond({required BigInt bond}) {
+    return _i8.CollatorSelection(_i9.SetCandidacyBond(bond: bond));
   }
 
   /// Register this account as a collator candidate. The account must (a) already have
   /// registered session keys and (b) be able to reserve the `CandidacyBond`.
   ///
   /// This call is not available to `Invulnerable` collators.
-  _i7.CollatorSelection registerAsCandidate() {
-    return _i7.CollatorSelection(_i8.RegisterAsCandidate());
+  _i8.CollatorSelection registerAsCandidate() {
+    return _i8.CollatorSelection(_i9.RegisterAsCandidate());
   }
 
   /// Deregister `origin` as a collator candidate. Note that the collator can only leave on
@@ -229,24 +230,24 @@ class Txs {
   ///
   /// This call will fail if the total number of candidates would drop below
   /// `MinEligibleCollators`.
-  _i7.CollatorSelection leaveIntent() {
-    return _i7.CollatorSelection(_i8.LeaveIntent());
+  _i8.CollatorSelection leaveIntent() {
+    return _i8.CollatorSelection(_i9.LeaveIntent());
   }
 
   /// Add a new account `who` to the list of `Invulnerables` collators. `who` must have
   /// registered session keys. If `who` is a candidate, they will be removed.
   ///
   /// The origin for this call must be the `UpdateOrigin`.
-  _i7.CollatorSelection addInvulnerable({required _i2.AccountId32 who}) {
-    return _i7.CollatorSelection(_i8.AddInvulnerable(who: who));
+  _i8.CollatorSelection addInvulnerable({required _i3.AccountId32 who}) {
+    return _i8.CollatorSelection(_i9.AddInvulnerable(who: who));
   }
 
   /// Remove an account `who` from the list of `Invulnerables` collators. `Invulnerables` must
   /// be sorted.
   ///
   /// The origin for this call must be the `UpdateOrigin`.
-  _i7.CollatorSelection removeInvulnerable({required _i2.AccountId32 who}) {
-    return _i7.CollatorSelection(_i8.RemoveInvulnerable(who: who));
+  _i8.CollatorSelection removeInvulnerable({required _i3.AccountId32 who}) {
+    return _i8.CollatorSelection(_i9.RemoveInvulnerable(who: who));
   }
 
   /// Update the candidacy bond of collator candidate `origin` to a new amount `new_deposit`.
@@ -256,8 +257,8 @@ class Txs {
   ///
   /// This call will fail if `origin` is not a collator candidate, the updated bond is lower
   /// than the minimum candidacy bond, and/or the amount cannot be reserved.
-  _i7.CollatorSelection updateBond({required BigInt newDeposit}) {
-    return _i7.CollatorSelection(_i8.UpdateBond(newDeposit: newDeposit));
+  _i8.CollatorSelection updateBond({required BigInt newDeposit}) {
+    return _i8.CollatorSelection(_i9.UpdateBond(newDeposit: newDeposit));
   }
 
   /// The caller `origin` replaces a candidate `target` in the collator candidate list by
@@ -267,11 +268,11 @@ class Txs {
   /// This call will fail if the caller is already a collator candidate or invulnerable, the
   /// caller does not have registered session keys, the target is not a collator candidate,
   /// and/or the `deposit` amount cannot be reserved.
-  _i7.CollatorSelection takeCandidateSlot({
+  _i8.CollatorSelection takeCandidateSlot({
     required BigInt deposit,
-    required _i2.AccountId32 target,
+    required _i3.AccountId32 target,
   }) {
-    return _i7.CollatorSelection(_i8.TakeCandidateSlot(
+    return _i8.CollatorSelection(_i9.TakeCandidateSlot(
       deposit: deposit,
       target: target,
     ));
@@ -282,7 +283,7 @@ class Constants {
   Constants();
 
   /// Account Identifier from which the internal Pot is generated.
-  final _i9.PalletId potId = const <int>[
+  final _i10.PalletId potId = const <int>[
     80,
     111,
     116,
@@ -309,7 +310,7 @@ class Constants {
   final int kickThreshold = 3600;
 
   /// Gets this pallet's derived pot account.
-  final _i2.AccountId32 potAccount = const <int>[
+  final _i3.AccountId32 potAccount = const <int>[
     109,
     111,
     100,

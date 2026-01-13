@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i7;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i8;
 
 import '../../polkadot_parachain_primitives/primitives/id.dart' as _i5;
@@ -158,4 +158,19 @@ class $MessagingStateSnapshotCodec with _i1.Codec<MessagingStateSnapshot> {
         )).sizeHint(obj.egressChannels);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      const _i2.H256Codec().isSizeZero() &&
+      _i3.RelayDispatchQueueRemainingCapacity.codec.isSizeZero() &&
+      const _i1.SequenceCodec<_i4.Tuple2<_i5.Id, _i6.AbridgedHrmpChannel>>(
+          _i4.Tuple2Codec<_i5.Id, _i6.AbridgedHrmpChannel>(
+        _i5.IdCodec(),
+        _i6.AbridgedHrmpChannel.codec,
+      )).isSizeZero() &&
+      const _i1.SequenceCodec<_i4.Tuple2<_i5.Id, _i6.AbridgedHrmpChannel>>(
+          _i4.Tuple2Codec<_i5.Id, _i6.AbridgedHrmpChannel>(
+        _i5.IdCodec(),
+        _i6.AbridgedHrmpChannel.codec,
+      )).isSizeZero();
 }

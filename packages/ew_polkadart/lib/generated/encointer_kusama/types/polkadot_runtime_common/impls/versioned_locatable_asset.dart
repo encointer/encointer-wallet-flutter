@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i2;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../../staging_xcm/v3/multilocation/multi_location.dart' as _i3;
 import '../../staging_xcm/v4/asset/asset_id.dart' as _i6;
@@ -119,6 +119,9 @@ class $VersionedLocatableAssetCodec with _i1.Codec<VersionedLocatableAsset> {
         throw Exception('VersionedLocatableAsset: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
+
+  @override
+  bool isSizeZero() => false;
 }
 
 class V3 extends VersionedLocatableAsset {

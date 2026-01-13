@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i5;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i6;
 
 import '../encointer_kusama_runtime/runtime_event.dart' as _i3;
@@ -101,4 +101,10 @@ class $EventRecordCodec with _i1.Codec<EventRecord> {
     size = size + const _i1.SequenceCodec<_i4.H256>(_i4.H256Codec()).sizeHint(obj.topics);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      _i2.Phase.codec.isSizeZero() &&
+      _i3.RuntimeEvent.codec.isSizeZero() &&
+      const _i1.SequenceCodec<_i4.H256>(_i4.H256Codec()).isSizeZero();
 }

@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i3;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../encointer_primitives/communities/community_identifier.dart' as _i2;
 
@@ -80,4 +80,9 @@ class $ChargeAssetTxPaymentCodec with _i1.Codec<ChargeAssetTxPayment> {
     size = size + const _i1.OptionCodec<_i2.CommunityIdentifier>(_i2.CommunityIdentifier.codec).sizeHint(obj.assetId);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      _i1.CompactBigIntCodec.codec.isSizeZero() &&
+      const _i1.OptionCodec<_i2.CommunityIdentifier>(_i2.CommunityIdentifier.codec).isSizeZero();
 }

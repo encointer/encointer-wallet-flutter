@@ -1,5 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i2;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i2;
 
 import '../../../sp_runtime/generic/era/era.dart' as _i1;
 
@@ -27,5 +27,10 @@ class CheckMortalityCodec with _i2.Codec<CheckMortality> {
   @override
   int sizeHint(CheckMortality value) {
     return _i1.Era.codec.sizeHint(value);
+  }
+
+  @override
+  bool isSizeZero() {
+    return _i1.Era.codec.isSizeZero();
   }
 }

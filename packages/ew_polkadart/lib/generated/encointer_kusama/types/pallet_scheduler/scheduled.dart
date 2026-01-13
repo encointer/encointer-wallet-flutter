@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i5;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../encointer_kusama_runtime/origin_caller.dart' as _i4;
 import '../frame_support/traits/preimages/bounded.dart' as _i2;
@@ -45,10 +45,12 @@ class Scheduled {
         'maybeId': maybeId?.toList(),
         'priority': priority,
         'call': call.toJson(),
-        'maybePeriodic': [
-          maybePeriodic?.value0,
-          maybePeriodic?.value1,
-        ],
+        'maybePeriodic': maybePeriodic != null
+            ? [
+                maybePeriodic!.value0,
+                maybePeriodic!.value1,
+              ]
+            : null,
         'origin': origin.toJson(),
       };
 
@@ -136,4 +138,15 @@ class $ScheduledCodec with _i1.Codec<Scheduled> {
     size = size + _i4.OriginCaller.codec.sizeHint(obj.origin);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).isSizeZero() &&
+      _i1.U8Codec.codec.isSizeZero() &&
+      _i2.Bounded.codec.isSizeZero() &&
+      const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
+        _i1.U32Codec.codec,
+        _i1.U32Codec.codec,
+      )).isSizeZero() &&
+      _i4.OriginCaller.codec.isSizeZero();
 }

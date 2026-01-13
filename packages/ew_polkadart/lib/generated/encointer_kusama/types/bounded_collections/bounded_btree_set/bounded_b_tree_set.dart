@@ -1,5 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i2;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i2;
 
 import '../../b_tree_set_2.dart' as _i1;
 import '../../polkadot_parachain_primitives/primitives/id.dart' as _i3;
@@ -28,5 +28,10 @@ class BoundedBTreeSetCodec with _i2.Codec<BoundedBTreeSet> {
   @override
   int sizeHint(BoundedBTreeSet value) {
     return const _i1.BTreeSetCodec().sizeHint(value);
+  }
+
+  @override
+  bool isSizeZero() {
+    return const _i1.BTreeSetCodec().isSizeZero();
   }
 }

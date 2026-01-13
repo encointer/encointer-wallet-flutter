@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i4;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i5;
 
 import 'announcement_signer.dart' as _i2;
@@ -159,4 +159,14 @@ class $CommunityMetadataCodec with _i1.Codec<CommunityMetadata> {
     size = size + _i3.CommunityRules.codec.sizeHint(obj.rules);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      _i1.U8SequenceCodec.codec.isSizeZero() &&
+      _i1.U8SequenceCodec.codec.isSizeZero() &&
+      _i1.U8SequenceCodec.codec.isSizeZero() &&
+      const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec).isSizeZero() &&
+      const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec).isSizeZero() &&
+      const _i1.OptionCodec<_i2.AnnouncementSigner>(_i2.AnnouncementSigner.codec).isSizeZero() &&
+      _i3.CommunityRules.codec.isSizeZero();
 }

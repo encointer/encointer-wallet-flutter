@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i4;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import 'proposal_action.dart' as _i2;
 import 'proposal_state.dart' as _i3;
@@ -122,4 +122,12 @@ class $ProposalCodec with _i1.Codec<Proposal> {
     size = size + _i1.U128Codec.codec.sizeHint(obj.electorateSize);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      _i1.U64Codec.codec.isSizeZero() &&
+      _i1.U32Codec.codec.isSizeZero() &&
+      _i2.ProposalAction.codec.isSizeZero() &&
+      _i3.ProposalState.codec.isSizeZero() &&
+      _i1.U128Codec.codec.isSizeZero();
 }

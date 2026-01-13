@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i2;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i3;
 
 class ModuleError {
@@ -84,4 +84,7 @@ class $ModuleErrorCodec with _i1.Codec<ModuleError> {
     size = size + const _i1.U8ArrayCodec(4).sizeHint(obj.error);
     return size;
   }
+
+  @override
+  bool isSizeZero() => _i1.U8Codec.codec.isSizeZero() && const _i1.U8ArrayCodec(4).isSizeZero();
 }

@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i4;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../location/location.dart' as _i5;
 import 'asset_id.dart' as _i2;
@@ -82,4 +82,7 @@ class $AssetCodec with _i1.Codec<Asset> {
     size = size + _i3.Fungibility.codec.sizeHint(obj.fun);
     return size;
   }
+
+  @override
+  bool isSizeZero() => const _i2.AssetIdCodec().isSizeZero() && _i3.Fungibility.codec.isSizeZero();
 }

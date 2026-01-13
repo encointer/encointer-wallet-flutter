@@ -1,5 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 typedef FixedU128 = BigInt;
 
@@ -25,5 +25,10 @@ class FixedU128Codec with _i1.Codec<FixedU128> {
   @override
   int sizeHint(FixedU128 value) {
     return _i1.U128Codec.codec.sizeHint(value);
+  }
+
+  @override
+  bool isSizeZero() {
+    return _i1.U128Codec.codec.isSizeZero();
   }
 }

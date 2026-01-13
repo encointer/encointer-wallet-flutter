@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i2;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i21;
 
 import '../../sp_weights/weight_v2/weight.dart' as _i5;
@@ -777,6 +777,9 @@ class $InstructionCodec with _i1.Codec<Instruction> {
         throw Exception('Instruction: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
+
+  @override
+  bool isSizeZero() => false;
 }
 
 class WithdrawAsset extends Instruction {
@@ -2550,10 +2553,12 @@ class ExpectError extends Instruction {
 
   @override
   Map<String, List<dynamic>?> toJson() => {
-        'ExpectError': [
-          value0?.value0,
-          value0?.value1.toJson(),
-        ]
+        'ExpectError': value0 != null
+            ? [
+                value0!.value0,
+                value0!.value1.toJson(),
+              ]
+            : null
       };
 
   int _sizeHint() {

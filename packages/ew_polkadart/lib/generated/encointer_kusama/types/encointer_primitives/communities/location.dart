@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i3;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../../substrate_fixed/fixed_i128.dart' as _i2;
 
@@ -80,4 +80,7 @@ class $LocationCodec with _i1.Codec<Location> {
     size = size + _i2.FixedI128.codec.sizeHint(obj.lon);
     return size;
   }
+
+  @override
+  bool isSizeZero() => _i2.FixedI128.codec.isSizeZero() && _i2.FixedI128.codec.isSizeZero();
 }

@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i6;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i7;
 
 import '../../cumulus_primitives_parachain_inherent/hashed_message.dart' as _i5;
@@ -125,4 +125,16 @@ class $AbridgedInboundMessagesCollectionCodec with _i1.Codec<AbridgedInboundMess
         )).sizeHint(obj.hashedMessages);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      const _i1.SequenceCodec<_i2.Tuple2<_i3.Id, _i4.InboundHrmpMessage>>(
+          _i2.Tuple2Codec<_i3.Id, _i4.InboundHrmpMessage>(
+        _i3.IdCodec(),
+        _i4.InboundHrmpMessage.codec,
+      )).isSizeZero() &&
+      const _i1.SequenceCodec<_i2.Tuple2<_i3.Id, _i5.HashedMessage>>(_i2.Tuple2Codec<_i3.Id, _i5.HashedMessage>(
+        _i3.IdCodec(),
+        _i5.HashedMessage.codec,
+      )).isSizeZero();
 }

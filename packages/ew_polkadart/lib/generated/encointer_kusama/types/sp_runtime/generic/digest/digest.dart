@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i3;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i4;
 
 import 'digest_item.dart' as _i2;
@@ -65,4 +65,7 @@ class $DigestCodec with _i1.Codec<Digest> {
     size = size + const _i1.SequenceCodec<_i2.DigestItem>(_i2.DigestItem.codec).sizeHint(obj.logs);
     return size;
   }
+
+  @override
+  bool isSizeZero() => const _i1.SequenceCodec<_i2.DigestItem>(_i2.DigestItem.codec).isSizeZero();
 }

@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i4;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../../substrate_fixed/fixed_u128.dart' as _i3;
 import '../communities/community_identifier.dart' as _i2;
@@ -135,4 +135,13 @@ class $SwapNativeOptionCodec with _i1.Codec<SwapNativeOption> {
     size = size + const _i1.OptionCodec<BigInt>(_i1.U64Codec.codec).sizeHint(obj.validUntil);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      _i2.CommunityIdentifier.codec.isSizeZero() &&
+      _i1.U128Codec.codec.isSizeZero() &&
+      const _i1.OptionCodec<_i3.FixedU128>(_i3.FixedU128.codec).isSizeZero() &&
+      _i1.BoolCodec.codec.isSizeZero() &&
+      const _i1.OptionCodec<BigInt>(_i1.U64Codec.codec).isSizeZero() &&
+      const _i1.OptionCodec<BigInt>(_i1.U64Codec.codec).isSizeZero();
 }

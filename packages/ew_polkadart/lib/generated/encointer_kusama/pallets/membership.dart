@@ -1,34 +1,35 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
-import 'dart:typed_data' as _i5;
+import 'dart:async' as _i5;
+import 'dart:typed_data' as _i6;
 
 import 'package:polkadart/polkadart.dart' as _i1;
-import 'package:polkadart/scale_codec.dart' as _i3;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i4;
+import 'package:substrate_metadata/substrate_metadata.dart' as _i2;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i6;
-import '../types/pallet_membership/pallet/call.dart' as _i8;
-import '../types/sp_core/crypto/account_id32.dart' as _i2;
-import '../types/sp_runtime/multiaddress/multi_address.dart' as _i7;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i7;
+import '../types/pallet_membership/pallet/call.dart' as _i9;
+import '../types/sp_core/crypto/account_id32.dart' as _i3;
+import '../types/sp_runtime/multiaddress/multi_address.dart' as _i8;
 
 class Queries {
   const Queries(this.__api);
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<List<_i2.AccountId32>> _members = const _i1.StorageValue<List<_i2.AccountId32>>(
+  final _i2.StorageValue<List<_i3.AccountId32>> _members = const _i2.StorageValue<List<_i3.AccountId32>>(
     prefix: 'Membership',
     storage: 'Members',
-    valueCodec: _i3.SequenceCodec<_i2.AccountId32>(_i2.AccountId32Codec()),
+    valueCodec: _i4.SequenceCodec<_i3.AccountId32>(_i3.AccountId32Codec()),
   );
 
-  final _i1.StorageValue<_i2.AccountId32> _prime = const _i1.StorageValue<_i2.AccountId32>(
+  final _i2.StorageValue<_i3.AccountId32> _prime = const _i2.StorageValue<_i3.AccountId32>(
     prefix: 'Membership',
     storage: 'Prime',
-    valueCodec: _i2.AccountId32Codec(),
+    valueCodec: _i3.AccountId32Codec(),
   );
 
   /// The current membership, stored as an ordered Vec.
-  _i4.Future<List<_i2.AccountId32>> members({_i1.BlockHash? at}) async {
+  _i5.Future<List<_i3.AccountId32>> members({_i1.BlockHash? at}) async {
     final hashedKey = _members.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -41,7 +42,7 @@ class Queries {
   }
 
   /// The current prime member, if one exists.
-  _i4.Future<_i2.AccountId32?> prime({_i1.BlockHash? at}) async {
+  _i5.Future<_i3.AccountId32?> prime({_i1.BlockHash? at}) async {
     final hashedKey = _prime.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -54,13 +55,13 @@ class Queries {
   }
 
   /// Returns the storage key for `members`.
-  _i5.Uint8List membersKey() {
+  _i6.Uint8List membersKey() {
     final hashedKey = _members.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `prime`.
-  _i5.Uint8List primeKey() {
+  _i6.Uint8List primeKey() {
     final hashedKey = _prime.hashedKey();
     return hashedKey;
   }
@@ -72,15 +73,15 @@ class Txs {
   /// Add a member `who` to the set.
   ///
   /// May only be called from `T::AddOrigin`.
-  _i6.Membership addMember({required _i7.MultiAddress who}) {
-    return _i6.Membership(_i8.AddMember(who: who));
+  _i7.Membership addMember({required _i8.MultiAddress who}) {
+    return _i7.Membership(_i9.AddMember(who: who));
   }
 
   /// Remove a member `who` from the set.
   ///
   /// May only be called from `T::RemoveOrigin`.
-  _i6.Membership removeMember({required _i7.MultiAddress who}) {
-    return _i6.Membership(_i8.RemoveMember(who: who));
+  _i7.Membership removeMember({required _i8.MultiAddress who}) {
+    return _i7.Membership(_i9.RemoveMember(who: who));
   }
 
   /// Swap out one member `remove` for another `add`.
@@ -88,11 +89,11 @@ class Txs {
   /// May only be called from `T::SwapOrigin`.
   ///
   /// Prime membership is *not* passed from `remove` to `add`, if extant.
-  _i6.Membership swapMember({
-    required _i7.MultiAddress remove,
-    required _i7.MultiAddress add,
+  _i7.Membership swapMember({
+    required _i8.MultiAddress remove,
+    required _i8.MultiAddress add,
   }) {
-    return _i6.Membership(_i8.SwapMember(
+    return _i7.Membership(_i9.SwapMember(
       remove: remove,
       add: add,
     ));
@@ -102,8 +103,8 @@ class Txs {
   /// pass `members` pre-sorted.
   ///
   /// May only be called from `T::ResetOrigin`.
-  _i6.Membership resetMembers({required List<_i2.AccountId32> members}) {
-    return _i6.Membership(_i8.ResetMembers(members: members));
+  _i7.Membership resetMembers({required List<_i3.AccountId32> members}) {
+    return _i7.Membership(_i9.ResetMembers(members: members));
   }
 
   /// Swap out the sending member for some other key `new`.
@@ -111,21 +112,21 @@ class Txs {
   /// May only be called from `Signed` origin of a current member.
   ///
   /// Prime membership is passed from the origin account to `new`, if extant.
-  _i6.Membership changeKey({required _i7.MultiAddress new_}) {
-    return _i6.Membership(_i8.ChangeKey(new_: new_));
+  _i7.Membership changeKey({required _i8.MultiAddress new_}) {
+    return _i7.Membership(_i9.ChangeKey(new_: new_));
   }
 
   /// Set the prime member. Must be a current member.
   ///
   /// May only be called from `T::PrimeOrigin`.
-  _i6.Membership setPrime({required _i7.MultiAddress who}) {
-    return _i6.Membership(_i8.SetPrime(who: who));
+  _i7.Membership setPrime({required _i8.MultiAddress who}) {
+    return _i7.Membership(_i9.SetPrime(who: who));
   }
 
   /// Remove the prime member if it exists.
   ///
   /// May only be called from `T::PrimeOrigin`.
-  _i6.Membership clearPrime() {
-    return _i6.Membership(_i8.ClearPrime());
+  _i7.Membership clearPrime() {
+    return _i7.Membership(_i9.ClearPrime());
   }
 }

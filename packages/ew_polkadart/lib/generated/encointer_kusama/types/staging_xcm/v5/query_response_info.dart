@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i4;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../../sp_weights/weight_v2/weight.dart' as _i3;
 import 'location/location.dart' as _i2;
@@ -96,4 +96,8 @@ class $QueryResponseInfoCodec with _i1.Codec<QueryResponseInfo> {
     size = size + _i3.Weight.codec.sizeHint(obj.maxWeight);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      _i2.Location.codec.isSizeZero() && _i1.CompactBigIntCodec.codec.isSizeZero() && _i3.Weight.codec.isSizeZero();
 }

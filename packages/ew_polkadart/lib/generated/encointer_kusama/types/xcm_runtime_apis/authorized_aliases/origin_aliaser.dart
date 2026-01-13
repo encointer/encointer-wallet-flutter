@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i3;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../../xcm/versioned_location.dart' as _i2;
 
@@ -80,4 +80,8 @@ class $OriginAliaserCodec with _i1.Codec<OriginAliaser> {
     size = size + const _i1.OptionCodec<BigInt>(_i1.U64Codec.codec).sizeHint(obj.expiry);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      _i2.VersionedLocation.codec.isSizeZero() && const _i1.OptionCodec<BigInt>(_i1.U64Codec.codec).isSizeZero();
 }

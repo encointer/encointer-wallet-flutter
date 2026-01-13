@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i3;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../../substrate_fixed/fixed_u128.dart' as _i2;
 
@@ -80,4 +80,7 @@ class $BalanceEntryCodec with _i1.Codec<BalanceEntry> {
     size = size + _i1.U32Codec.codec.sizeHint(obj.lastUpdate);
     return size;
   }
+
+  @override
+  bool isSizeZero() => _i2.FixedU128.codec.isSizeZero() && _i1.U32Codec.codec.isSizeZero();
 }

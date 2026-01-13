@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i3;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../../../xcm/v5/traits/error.dart' as _i2;
 
@@ -80,4 +80,7 @@ class $InstructionErrorCodec with _i1.Codec<InstructionError> {
     size = size + _i2.Error.codec.sizeHint(obj.error);
     return size;
   }
+
+  @override
+  bool isSizeZero() => _i1.U8Codec.codec.isSizeZero() && _i2.Error.codec.isSizeZero();
 }

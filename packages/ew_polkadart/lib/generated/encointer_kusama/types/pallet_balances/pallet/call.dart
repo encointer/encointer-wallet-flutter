@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i2;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i6;
 
 import '../../sp_core/crypto/account_id32.dart' as _i4;
@@ -216,6 +216,9 @@ class $CallCodec with _i1.Codec<Call> {
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
+
+  @override
+  bool isSizeZero() => false;
 }
 
 /// Transfer some liquid free balance to another account.

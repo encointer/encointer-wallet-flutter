@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i4;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i5;
 
 import '../../polkadot_parachain_primitives/primitives/head_data.dart' as _i2;
@@ -116,4 +116,11 @@ class $PersistedValidationDataCodec with _i1.Codec<PersistedValidationData> {
     size = size + _i1.U32Codec.codec.sizeHint(obj.maxPovSize);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      const _i2.HeadDataCodec().isSizeZero() &&
+      _i1.U32Codec.codec.isSizeZero() &&
+      const _i3.H256Codec().isSizeZero() &&
+      _i1.U32Codec.codec.isSizeZero();
 }

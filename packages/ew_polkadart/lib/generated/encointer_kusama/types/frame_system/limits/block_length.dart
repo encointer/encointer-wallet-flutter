@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i3;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../../frame_support/dispatch/per_dispatch_class_3.dart' as _i2;
 
@@ -60,4 +60,7 @@ class $BlockLengthCodec with _i1.Codec<BlockLength> {
     size = size + _i2.PerDispatchClass.codec.sizeHint(obj.max);
     return size;
   }
+
+  @override
+  bool isSizeZero() => _i2.PerDispatchClass.codec.isSizeZero();
 }

@@ -1,52 +1,53 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i7;
-import 'dart:typed_data' as _i8;
+import 'dart:async' as _i8;
+import 'dart:typed_data' as _i9;
 
 import 'package:polkadart/polkadart.dart' as _i1;
-import 'package:polkadart/scale_codec.dart' as _i2;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i3;
+import 'package:substrate_metadata/substrate_metadata.dart' as _i2;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i9;
-import '../types/encointer_primitives/communities/community_identifier.dart' as _i4;
-import '../types/pallet_encointer_reputation_commitments/pallet/call.dart' as _i10;
-import '../types/primitive_types/h256.dart' as _i6;
-import '../types/sp_core/crypto/account_id32.dart' as _i5;
-import '../types/tuples.dart' as _i3;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i10;
+import '../types/encointer_primitives/communities/community_identifier.dart' as _i5;
+import '../types/pallet_encointer_reputation_commitments/pallet/call.dart' as _i11;
+import '../types/primitive_types/h256.dart' as _i7;
+import '../types/sp_core/crypto/account_id32.dart' as _i6;
+import '../types/tuples.dart' as _i4;
 
 class Queries {
   const Queries(this.__api);
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<BigInt> _currentPurposeId = const _i1.StorageValue<BigInt>(
+  final _i2.StorageValue<BigInt> _currentPurposeId = const _i2.StorageValue<BigInt>(
     prefix: 'EncointerReputationCommitments',
     storage: 'CurrentPurposeId',
-    valueCodec: _i2.U64Codec.codec,
+    valueCodec: _i3.U64Codec.codec,
   );
 
-  final _i1.StorageMap<BigInt, List<int>> _purposes = const _i1.StorageMap<BigInt, List<int>>(
+  final _i2.StorageMap<BigInt, List<int>> _purposes = const _i2.StorageMap<BigInt, List<int>>(
     prefix: 'EncointerReputationCommitments',
     storage: 'Purposes',
-    valueCodec: _i2.U8SequenceCodec.codec,
-    hasher: _i1.StorageHasher.identity(_i2.U64Codec.codec),
+    valueCodec: _i3.U8SequenceCodec.codec,
+    hasher: _i2.StorageHasher.identity(_i3.U64Codec.codec),
   );
 
-  final _i1.StorageDoubleMap<_i3.Tuple2<_i4.CommunityIdentifier, int>, _i3.Tuple2<BigInt, _i5.AccountId32>, _i6.H256?>
-      _commitments = const _i1
-          .StorageDoubleMap<_i3.Tuple2<_i4.CommunityIdentifier, int>, _i3.Tuple2<BigInt, _i5.AccountId32>, _i6.H256?>(
+  final _i2.StorageDoubleMap<_i4.Tuple2<_i5.CommunityIdentifier, int>, _i4.Tuple2<BigInt, _i6.AccountId32>, _i7.H256?>
+      _commitments = const _i2
+          .StorageDoubleMap<_i4.Tuple2<_i5.CommunityIdentifier, int>, _i4.Tuple2<BigInt, _i6.AccountId32>, _i7.H256?>(
     prefix: 'EncointerReputationCommitments',
     storage: 'Commitments',
-    valueCodec: _i2.OptionCodec<_i6.H256>(_i6.H256Codec()),
-    hasher1: _i1.StorageHasher.blake2b128Concat(_i3.Tuple2Codec<_i4.CommunityIdentifier, int>(
-      _i4.CommunityIdentifier.codec,
-      _i2.U32Codec.codec,
+    valueCodec: _i3.OptionCodec<_i7.H256>(_i7.H256Codec()),
+    hasher1: _i2.StorageHasher.blake2b128Concat(_i4.Tuple2Codec<_i5.CommunityIdentifier, int>(
+      _i5.CommunityIdentifier.codec,
+      _i3.U32Codec.codec,
     )),
-    hasher2: _i1.StorageHasher.identity(_i3.Tuple2Codec<BigInt, _i5.AccountId32>(
-      _i2.U64Codec.codec,
-      _i5.AccountId32Codec(),
+    hasher2: _i2.StorageHasher.identity(_i4.Tuple2Codec<BigInt, _i6.AccountId32>(
+      _i3.U64Codec.codec,
+      _i6.AccountId32Codec(),
     )),
   );
 
-  _i7.Future<BigInt> currentPurposeId({_i1.BlockHash? at}) async {
+  _i8.Future<BigInt> currentPurposeId({_i1.BlockHash? at}) async {
     final hashedKey = _currentPurposeId.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -58,7 +59,7 @@ class Queries {
     return BigInt.zero; /* Default */
   }
 
-  _i7.Future<List<int>> purposes(
+  _i8.Future<List<int>> purposes(
     BigInt key1, {
     _i1.BlockHash? at,
   }) async {
@@ -77,9 +78,9 @@ class Queries {
     ); /* Default */
   }
 
-  _i7.Future<_i6.H256?> commitments(
-    _i3.Tuple2<_i4.CommunityIdentifier, int> key1,
-    _i3.Tuple2<BigInt, _i5.AccountId32> key2, {
+  _i8.Future<_i7.H256?> commitments(
+    _i4.Tuple2<_i5.CommunityIdentifier, int> key1,
+    _i4.Tuple2<BigInt, _i6.AccountId32> key2, {
     _i1.BlockHash? at,
   }) async {
     final hashedKey = _commitments.hashedKeyFor(
@@ -96,7 +97,7 @@ class Queries {
     return null; /* Default */
   }
 
-  _i7.Future<List<List<int>>> multiPurposes(
+  _i8.Future<List<List<int>>> multiPurposes(
     List<BigInt> keys, {
     _i1.BlockHash? at,
   }) async {
@@ -118,21 +119,21 @@ class Queries {
   }
 
   /// Returns the storage key for `currentPurposeId`.
-  _i8.Uint8List currentPurposeIdKey() {
+  _i9.Uint8List currentPurposeIdKey() {
     final hashedKey = _currentPurposeId.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `purposes`.
-  _i8.Uint8List purposesKey(BigInt key1) {
+  _i9.Uint8List purposesKey(BigInt key1) {
     final hashedKey = _purposes.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage key for `commitments`.
-  _i8.Uint8List commitmentsKey(
-    _i3.Tuple2<_i4.CommunityIdentifier, int> key1,
-    _i3.Tuple2<BigInt, _i5.AccountId32> key2,
+  _i9.Uint8List commitmentsKey(
+    _i4.Tuple2<_i5.CommunityIdentifier, int> key1,
+    _i4.Tuple2<BigInt, _i6.AccountId32> key2,
   ) {
     final hashedKey = _commitments.hashedKeyFor(
       key1,
@@ -142,13 +143,13 @@ class Queries {
   }
 
   /// Returns the storage map key prefix for `purposes`.
-  _i8.Uint8List purposesMapPrefix() {
+  _i9.Uint8List purposesMapPrefix() {
     final hashedKey = _purposes.mapPrefix();
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `commitments`.
-  _i8.Uint8List commitmentsMapPrefix(_i3.Tuple2<_i4.CommunityIdentifier, int> key1) {
+  _i9.Uint8List commitmentsMapPrefix(_i4.Tuple2<_i5.CommunityIdentifier, int> key1) {
     final hashedKey = _commitments.mapPrefix(key1);
     return hashedKey;
   }
@@ -157,17 +158,17 @@ class Queries {
 class Txs {
   const Txs();
 
-  _i9.EncointerReputationCommitments registerPurpose({required List<int> descriptor}) {
-    return _i9.EncointerReputationCommitments(_i10.RegisterPurpose(descriptor: descriptor));
+  _i10.EncointerReputationCommitments registerPurpose({required List<int> descriptor}) {
+    return _i10.EncointerReputationCommitments(_i11.RegisterPurpose(descriptor: descriptor));
   }
 
-  _i9.EncointerReputationCommitments commitReputation({
-    required _i4.CommunityIdentifier cid,
+  _i10.EncointerReputationCommitments commitReputation({
+    required _i5.CommunityIdentifier cid,
     required int cindex,
     required BigInt purpose,
-    _i6.H256? commitmentHash,
+    _i7.H256? commitmentHash,
   }) {
-    return _i9.EncointerReputationCommitments(_i10.CommitReputation(
+    return _i10.EncointerReputationCommitments(_i11.CommitReputation(
       cid: cid,
       cindex: cindex,
       purpose: purpose,

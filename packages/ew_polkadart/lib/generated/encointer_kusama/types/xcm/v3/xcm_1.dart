@@ -1,5 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i2;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i2;
 
 import 'instruction_1.dart' as _i1;
 
@@ -27,5 +27,10 @@ class XcmCodec with _i2.Codec<Xcm> {
   @override
   int sizeHint(Xcm value) {
     return const _i2.SequenceCodec<_i1.Instruction>(_i1.Instruction.codec).sizeHint(value);
+  }
+
+  @override
+  bool isSizeZero() {
+    return const _i2.SequenceCodec<_i1.Instruction>(_i1.Instruction.codec).isSizeZero();
   }
 }

@@ -1,24 +1,25 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
-import 'dart:typed_data' as _i4;
+import 'dart:async' as _i4;
+import 'dart:typed_data' as _i5;
 
 import 'package:polkadart/polkadart.dart' as _i1;
+import 'package:substrate_metadata/substrate_metadata.dart' as _i2;
 
-import '../types/sp_core/crypto/account_id32.dart' as _i2;
+import '../types/sp_core/crypto/account_id32.dart' as _i3;
 
 class Queries {
   const Queries(this.__api);
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<_i2.AccountId32> _author = const _i1.StorageValue<_i2.AccountId32>(
+  final _i2.StorageValue<_i3.AccountId32> _author = const _i2.StorageValue<_i3.AccountId32>(
     prefix: 'Authorship',
     storage: 'Author',
-    valueCodec: _i2.AccountId32Codec(),
+    valueCodec: _i3.AccountId32Codec(),
   );
 
   /// Author of current block.
-  _i3.Future<_i2.AccountId32?> author({_i1.BlockHash? at}) async {
+  _i4.Future<_i3.AccountId32?> author({_i1.BlockHash? at}) async {
     final hashedKey = _author.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -31,7 +32,7 @@ class Queries {
   }
 
   /// Returns the storage key for `author`.
-  _i4.Uint8List authorKey() {
+  _i5.Uint8List authorKey() {
     final hashedKey = _author.hashedKey();
     return hashedKey;
   }

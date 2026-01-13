@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i5;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i6;
 
 import '../../polkadot_primitives/v8/persisted_validation_data.dart' as _i2;
@@ -114,4 +114,11 @@ class $BasicParachainInherentDataCodec with _i1.Codec<BasicParachainInherentData
     size = size + const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec).sizeHint(obj.collatorPeerId);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      _i2.PersistedValidationData.codec.isSizeZero() &&
+      _i3.StorageProof.codec.isSizeZero() &&
+      const _i1.SequenceCodec<_i4.Header>(_i4.Header.codec).isSizeZero() &&
+      const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec).isSizeZero();
 }

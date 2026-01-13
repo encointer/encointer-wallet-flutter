@@ -1,69 +1,70 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i8;
-import 'dart:typed_data' as _i9;
+import 'dart:async' as _i9;
+import 'dart:typed_data' as _i10;
 
 import 'package:polkadart/polkadart.dart' as _i1;
-import 'package:polkadart/scale_codec.dart' as _i4;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i5;
+import 'package:substrate_metadata/substrate_metadata.dart' as _i2;
 
-import '../types/bounded_collections/bounded_btree_set/bounded_b_tree_set.dart' as _i2;
-import '../types/cumulus_pallet_xcmp_queue/outbound_channel_details.dart' as _i3;
-import '../types/cumulus_pallet_xcmp_queue/pallet/call.dart' as _i11;
-import '../types/cumulus_pallet_xcmp_queue/queue_config_data.dart' as _i6;
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i10;
-import '../types/polkadot_parachain_primitives/primitives/id.dart' as _i5;
-import '../types/sp_arithmetic/fixed_point/fixed_u128.dart' as _i7;
+import '../types/bounded_collections/bounded_btree_set/bounded_b_tree_set.dart' as _i3;
+import '../types/cumulus_pallet_xcmp_queue/outbound_channel_details.dart' as _i4;
+import '../types/cumulus_pallet_xcmp_queue/pallet/call.dart' as _i12;
+import '../types/cumulus_pallet_xcmp_queue/queue_config_data.dart' as _i7;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i11;
+import '../types/polkadot_parachain_primitives/primitives/id.dart' as _i6;
+import '../types/sp_arithmetic/fixed_point/fixed_u128.dart' as _i8;
 
 class Queries {
   const Queries(this.__api);
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<_i2.BoundedBTreeSet> _inboundXcmpSuspended = const _i1.StorageValue<_i2.BoundedBTreeSet>(
+  final _i2.StorageValue<_i3.BoundedBTreeSet> _inboundXcmpSuspended = const _i2.StorageValue<_i3.BoundedBTreeSet>(
     prefix: 'XcmpQueue',
     storage: 'InboundXcmpSuspended',
-    valueCodec: _i2.BoundedBTreeSetCodec(),
+    valueCodec: _i3.BoundedBTreeSetCodec(),
   );
 
-  final _i1.StorageValue<List<_i3.OutboundChannelDetails>> _outboundXcmpStatus =
-      const _i1.StorageValue<List<_i3.OutboundChannelDetails>>(
+  final _i2.StorageValue<List<_i4.OutboundChannelDetails>> _outboundXcmpStatus =
+      const _i2.StorageValue<List<_i4.OutboundChannelDetails>>(
     prefix: 'XcmpQueue',
     storage: 'OutboundXcmpStatus',
-    valueCodec: _i4.SequenceCodec<_i3.OutboundChannelDetails>(_i3.OutboundChannelDetails.codec),
+    valueCodec: _i5.SequenceCodec<_i4.OutboundChannelDetails>(_i4.OutboundChannelDetails.codec),
   );
 
-  final _i1.StorageDoubleMap<_i5.Id, int, List<int>> _outboundXcmpMessages =
-      const _i1.StorageDoubleMap<_i5.Id, int, List<int>>(
+  final _i2.StorageDoubleMap<_i6.Id, int, List<int>> _outboundXcmpMessages =
+      const _i2.StorageDoubleMap<_i6.Id, int, List<int>>(
     prefix: 'XcmpQueue',
     storage: 'OutboundXcmpMessages',
-    valueCodec: _i4.U8SequenceCodec.codec,
-    hasher1: _i1.StorageHasher.blake2b128Concat(_i5.IdCodec()),
-    hasher2: _i1.StorageHasher.twoxx64Concat(_i4.U16Codec.codec),
+    valueCodec: _i5.U8SequenceCodec.codec,
+    hasher1: _i2.StorageHasher.blake2b128Concat(_i6.IdCodec()),
+    hasher2: _i2.StorageHasher.twoxx64Concat(_i5.U16Codec.codec),
   );
 
-  final _i1.StorageMap<_i5.Id, List<int>> _signalMessages = const _i1.StorageMap<_i5.Id, List<int>>(
+  final _i2.StorageMap<_i6.Id, List<int>> _signalMessages = const _i2.StorageMap<_i6.Id, List<int>>(
     prefix: 'XcmpQueue',
     storage: 'SignalMessages',
-    valueCodec: _i4.U8SequenceCodec.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(_i5.IdCodec()),
+    valueCodec: _i5.U8SequenceCodec.codec,
+    hasher: _i2.StorageHasher.blake2b128Concat(_i6.IdCodec()),
   );
 
-  final _i1.StorageValue<_i6.QueueConfigData> _queueConfig = const _i1.StorageValue<_i6.QueueConfigData>(
+  final _i2.StorageValue<_i7.QueueConfigData> _queueConfig = const _i2.StorageValue<_i7.QueueConfigData>(
     prefix: 'XcmpQueue',
     storage: 'QueueConfig',
-    valueCodec: _i6.QueueConfigData.codec,
+    valueCodec: _i7.QueueConfigData.codec,
   );
 
-  final _i1.StorageValue<bool> _queueSuspended = const _i1.StorageValue<bool>(
+  final _i2.StorageValue<bool> _queueSuspended = const _i2.StorageValue<bool>(
     prefix: 'XcmpQueue',
     storage: 'QueueSuspended',
-    valueCodec: _i4.BoolCodec.codec,
+    valueCodec: _i5.BoolCodec.codec,
   );
 
-  final _i1.StorageMap<_i5.Id, _i7.FixedU128> _deliveryFeeFactor = const _i1.StorageMap<_i5.Id, _i7.FixedU128>(
+  final _i2.StorageMap<_i6.Id, _i8.FixedU128> _deliveryFeeFactor = const _i2.StorageMap<_i6.Id, _i8.FixedU128>(
     prefix: 'XcmpQueue',
     storage: 'DeliveryFeeFactor',
-    valueCodec: _i7.FixedU128Codec(),
-    hasher: _i1.StorageHasher.twoxx64Concat(_i5.IdCodec()),
+    valueCodec: _i8.FixedU128Codec(),
+    hasher: _i2.StorageHasher.twoxx64Concat(_i6.IdCodec()),
   );
 
   /// The suspended inbound XCMP channels. All others are not suspended.
@@ -74,7 +75,7 @@ class Queries {
   ///
   /// NOTE: The PoV benchmarking cannot know this and will over-estimate, but the actual proof
   /// will be smaller.
-  _i8.Future<_i2.BoundedBTreeSet> inboundXcmpSuspended({_i1.BlockHash? at}) async {
+  _i9.Future<_i3.BoundedBTreeSet> inboundXcmpSuspended({_i1.BlockHash? at}) async {
     final hashedKey = _inboundXcmpSuspended.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -92,7 +93,7 @@ class Queries {
   /// than 65535 items. Queue indices for normal messages begin at one; zero is reserved in
   /// case of the need to send a high-priority signal message this block.
   /// The bool is true if there is a signal message waiting to be sent.
-  _i8.Future<List<_i3.OutboundChannelDetails>> outboundXcmpStatus({_i1.BlockHash? at}) async {
+  _i9.Future<List<_i4.OutboundChannelDetails>> outboundXcmpStatus({_i1.BlockHash? at}) async {
     final hashedKey = _outboundXcmpStatus.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -105,8 +106,8 @@ class Queries {
   }
 
   /// The messages outbound in a given XCMP channel.
-  _i8.Future<List<int>> outboundXcmpMessages(
-    _i5.Id key1,
+  _i9.Future<List<int>> outboundXcmpMessages(
+    _i6.Id key1,
     int key2, {
     _i1.BlockHash? at,
   }) async {
@@ -129,8 +130,8 @@ class Queries {
   }
 
   /// Any signal messages waiting to be sent.
-  _i8.Future<List<int>> signalMessages(
-    _i5.Id key1, {
+  _i9.Future<List<int>> signalMessages(
+    _i6.Id key1, {
     _i1.BlockHash? at,
   }) async {
     final hashedKey = _signalMessages.hashedKeyFor(key1);
@@ -149,7 +150,7 @@ class Queries {
   }
 
   /// The configuration which controls the dynamics of the outbound queue.
-  _i8.Future<_i6.QueueConfigData> queueConfig({_i1.BlockHash? at}) async {
+  _i9.Future<_i7.QueueConfigData> queueConfig({_i1.BlockHash? at}) async {
     final hashedKey = _queueConfig.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -158,7 +159,7 @@ class Queries {
     if (bytes != null) {
       return _queueConfig.decodeValue(bytes);
     }
-    return _i6.QueueConfigData(
+    return _i7.QueueConfigData(
       suspendThreshold: 32,
       dropThreshold: 48,
       resumeThreshold: 8,
@@ -166,7 +167,7 @@ class Queries {
   }
 
   /// Whether or not the XCMP queue is suspended from executing incoming XCMs or not.
-  _i8.Future<bool> queueSuspended({_i1.BlockHash? at}) async {
+  _i9.Future<bool> queueSuspended({_i1.BlockHash? at}) async {
     final hashedKey = _queueSuspended.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -179,8 +180,8 @@ class Queries {
   }
 
   /// The factor to multiply the base delivery fee by.
-  _i8.Future<_i7.FixedU128> deliveryFeeFactor(
-    _i5.Id key1, {
+  _i9.Future<_i8.FixedU128> deliveryFeeFactor(
+    _i6.Id key1, {
     _i1.BlockHash? at,
   }) async {
     final hashedKey = _deliveryFeeFactor.hashedKeyFor(key1);
@@ -198,8 +199,8 @@ class Queries {
   }
 
   /// Any signal messages waiting to be sent.
-  _i8.Future<List<List<int>>> multiSignalMessages(
-    List<_i5.Id> keys, {
+  _i9.Future<List<List<int>>> multiSignalMessages(
+    List<_i6.Id> keys, {
     _i1.BlockHash? at,
   }) async {
     final hashedKeys = keys.map((key) => _signalMessages.hashedKeyFor(key)).toList();
@@ -220,8 +221,8 @@ class Queries {
   }
 
   /// The factor to multiply the base delivery fee by.
-  _i8.Future<List<_i7.FixedU128>> multiDeliveryFeeFactor(
-    List<_i5.Id> keys, {
+  _i9.Future<List<_i8.FixedU128>> multiDeliveryFeeFactor(
+    List<_i6.Id> keys, {
     _i1.BlockHash? at,
   }) async {
     final hashedKeys = keys.map((key) => _deliveryFeeFactor.hashedKeyFor(key)).toList();
@@ -241,20 +242,20 @@ class Queries {
   }
 
   /// Returns the storage key for `inboundXcmpSuspended`.
-  _i9.Uint8List inboundXcmpSuspendedKey() {
+  _i10.Uint8List inboundXcmpSuspendedKey() {
     final hashedKey = _inboundXcmpSuspended.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `outboundXcmpStatus`.
-  _i9.Uint8List outboundXcmpStatusKey() {
+  _i10.Uint8List outboundXcmpStatusKey() {
     final hashedKey = _outboundXcmpStatus.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `outboundXcmpMessages`.
-  _i9.Uint8List outboundXcmpMessagesKey(
-    _i5.Id key1,
+  _i10.Uint8List outboundXcmpMessagesKey(
+    _i6.Id key1,
     int key2,
   ) {
     final hashedKey = _outboundXcmpMessages.hashedKeyFor(
@@ -265,43 +266,43 @@ class Queries {
   }
 
   /// Returns the storage key for `signalMessages`.
-  _i9.Uint8List signalMessagesKey(_i5.Id key1) {
+  _i10.Uint8List signalMessagesKey(_i6.Id key1) {
     final hashedKey = _signalMessages.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage key for `queueConfig`.
-  _i9.Uint8List queueConfigKey() {
+  _i10.Uint8List queueConfigKey() {
     final hashedKey = _queueConfig.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `queueSuspended`.
-  _i9.Uint8List queueSuspendedKey() {
+  _i10.Uint8List queueSuspendedKey() {
     final hashedKey = _queueSuspended.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `deliveryFeeFactor`.
-  _i9.Uint8List deliveryFeeFactorKey(_i5.Id key1) {
+  _i10.Uint8List deliveryFeeFactorKey(_i6.Id key1) {
     final hashedKey = _deliveryFeeFactor.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `outboundXcmpMessages`.
-  _i9.Uint8List outboundXcmpMessagesMapPrefix(_i5.Id key1) {
+  _i10.Uint8List outboundXcmpMessagesMapPrefix(_i6.Id key1) {
     final hashedKey = _outboundXcmpMessages.mapPrefix(key1);
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `signalMessages`.
-  _i9.Uint8List signalMessagesMapPrefix() {
+  _i10.Uint8List signalMessagesMapPrefix() {
     final hashedKey = _signalMessages.mapPrefix();
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `deliveryFeeFactor`.
-  _i9.Uint8List deliveryFeeFactorMapPrefix() {
+  _i10.Uint8List deliveryFeeFactorMapPrefix() {
     final hashedKey = _deliveryFeeFactor.mapPrefix();
     return hashedKey;
   }
@@ -313,8 +314,8 @@ class Txs {
   /// Suspends all XCM executions for the XCMP queue, regardless of the sender's origin.
   ///
   /// - `origin`: Must pass `ControllerOrigin`.
-  _i10.XcmpQueue suspendXcmExecution() {
-    return _i10.XcmpQueue(_i11.SuspendXcmExecution());
+  _i11.XcmpQueue suspendXcmExecution() {
+    return _i11.XcmpQueue(_i12.SuspendXcmExecution());
   }
 
   /// Resumes all XCM executions for the XCMP queue.
@@ -322,8 +323,8 @@ class Txs {
   /// Note that this function doesn't change the status of the in/out bound channels.
   ///
   /// - `origin`: Must pass `ControllerOrigin`.
-  _i10.XcmpQueue resumeXcmExecution() {
-    return _i10.XcmpQueue(_i11.ResumeXcmExecution());
+  _i11.XcmpQueue resumeXcmExecution() {
+    return _i11.XcmpQueue(_i12.ResumeXcmExecution());
   }
 
   /// Overwrites the number of pages which must be in the queue for the other side to be
@@ -331,8 +332,8 @@ class Txs {
   ///
   /// - `origin`: Must pass `Root`.
   /// - `new`: Desired value for `QueueConfigData.suspend_value`
-  _i10.XcmpQueue updateSuspendThreshold({required int new_}) {
-    return _i10.XcmpQueue(_i11.UpdateSuspendThreshold(new_: new_));
+  _i11.XcmpQueue updateSuspendThreshold({required int new_}) {
+    return _i11.XcmpQueue(_i12.UpdateSuspendThreshold(new_: new_));
   }
 
   /// Overwrites the number of pages which must be in the queue after which we drop any
@@ -340,8 +341,8 @@ class Txs {
   ///
   /// - `origin`: Must pass `Root`.
   /// - `new`: Desired value for `QueueConfigData.drop_threshold`
-  _i10.XcmpQueue updateDropThreshold({required int new_}) {
-    return _i10.XcmpQueue(_i11.UpdateDropThreshold(new_: new_));
+  _i11.XcmpQueue updateDropThreshold({required int new_}) {
+    return _i11.XcmpQueue(_i12.UpdateDropThreshold(new_: new_));
   }
 
   /// Overwrites the number of pages which the queue must be reduced to before it signals
@@ -349,8 +350,8 @@ class Txs {
   ///
   /// - `origin`: Must pass `Root`.
   /// - `new`: Desired value for `QueueConfigData.resume_threshold`
-  _i10.XcmpQueue updateResumeThreshold({required int new_}) {
-    return _i10.XcmpQueue(_i11.UpdateResumeThreshold(new_: new_));
+  _i11.XcmpQueue updateResumeThreshold({required int new_}) {
+    return _i11.XcmpQueue(_i12.UpdateResumeThreshold(new_: new_));
   }
 }
 

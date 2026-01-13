@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i4;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import 'abridged_inbound_messages_collection_1.dart' as _i2;
 import 'abridged_inbound_messages_collection_2.dart' as _i3;
@@ -83,4 +83,9 @@ class $InboundMessagesDataCodec with _i1.Codec<InboundMessagesData> {
     size = size + _i3.AbridgedInboundMessagesCollection.codec.sizeHint(obj.horizontalMessages);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      _i2.AbridgedInboundMessagesCollection.codec.isSizeZero() &&
+      _i3.AbridgedInboundMessagesCollection.codec.isSizeZero();
 }

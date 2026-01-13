@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i4;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../frame_support/dispatch/post_dispatch_info.dart' as _i2;
 import 'dispatch_error.dart' as _i3;
@@ -81,4 +81,7 @@ class $DispatchErrorWithPostInfoCodec with _i1.Codec<DispatchErrorWithPostInfo> 
     size = size + _i3.DispatchError.codec.sizeHint(obj.error);
     return size;
   }
+
+  @override
+  bool isSizeZero() => _i2.PostDispatchInfo.codec.isSizeZero() && _i3.DispatchError.codec.isSizeZero();
 }

@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i4;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../polkadot_parachain_primitives/primitives/id.dart' as _i2;
 import 'outbound_state.dart' as _i3;
@@ -122,4 +122,12 @@ class $OutboundChannelDetailsCodec with _i1.Codec<OutboundChannelDetails> {
     size = size + _i1.U16Codec.codec.sizeHint(obj.lastIndex);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      const _i2.IdCodec().isSizeZero() &&
+      _i3.OutboundState.codec.isSizeZero() &&
+      _i1.BoolCodec.codec.isSizeZero() &&
+      _i1.U16Codec.codec.isSizeZero() &&
+      _i1.U16Codec.codec.isSizeZero();
 }

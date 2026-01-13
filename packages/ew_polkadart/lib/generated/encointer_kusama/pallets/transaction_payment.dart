@@ -1,30 +1,31 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
-import 'dart:typed_data' as _i5;
+import 'dart:async' as _i5;
+import 'dart:typed_data' as _i6;
 
 import 'package:polkadart/polkadart.dart' as _i1;
+import 'package:substrate_metadata/substrate_metadata.dart' as _i2;
 
-import '../types/pallet_transaction_payment/releases.dart' as _i3;
-import '../types/sp_arithmetic/fixed_point/fixed_u128.dart' as _i2;
+import '../types/pallet_transaction_payment/releases.dart' as _i4;
+import '../types/sp_arithmetic/fixed_point/fixed_u128.dart' as _i3;
 
 class Queries {
   const Queries(this.__api);
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<_i2.FixedU128> _nextFeeMultiplier = const _i1.StorageValue<_i2.FixedU128>(
+  final _i2.StorageValue<_i3.FixedU128> _nextFeeMultiplier = const _i2.StorageValue<_i3.FixedU128>(
     prefix: 'TransactionPayment',
     storage: 'NextFeeMultiplier',
-    valueCodec: _i2.FixedU128Codec(),
+    valueCodec: _i3.FixedU128Codec(),
   );
 
-  final _i1.StorageValue<_i3.Releases> _storageVersion = const _i1.StorageValue<_i3.Releases>(
+  final _i2.StorageValue<_i4.Releases> _storageVersion = const _i2.StorageValue<_i4.Releases>(
     prefix: 'TransactionPayment',
     storage: 'StorageVersion',
-    valueCodec: _i3.Releases.codec,
+    valueCodec: _i4.Releases.codec,
   );
 
-  _i4.Future<_i2.FixedU128> nextFeeMultiplier({_i1.BlockHash? at}) async {
+  _i5.Future<_i3.FixedU128> nextFeeMultiplier({_i1.BlockHash? at}) async {
     final hashedKey = _nextFeeMultiplier.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -39,7 +40,7 @@ class Queries {
     ); /* Default */
   }
 
-  _i4.Future<_i3.Releases> storageVersion({_i1.BlockHash? at}) async {
+  _i5.Future<_i4.Releases> storageVersion({_i1.BlockHash? at}) async {
     final hashedKey = _storageVersion.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -48,17 +49,17 @@ class Queries {
     if (bytes != null) {
       return _storageVersion.decodeValue(bytes);
     }
-    return _i3.Releases.v1Ancient; /* Default */
+    return _i4.Releases.v1Ancient; /* Default */
   }
 
   /// Returns the storage key for `nextFeeMultiplier`.
-  _i5.Uint8List nextFeeMultiplierKey() {
+  _i6.Uint8List nextFeeMultiplierKey() {
     final hashedKey = _nextFeeMultiplier.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `storageVersion`.
-  _i5.Uint8List storageVersionKey() {
+  _i6.Uint8List storageVersionKey() {
     final hashedKey = _storageVersion.hashedKey();
     return hashedKey;
   }

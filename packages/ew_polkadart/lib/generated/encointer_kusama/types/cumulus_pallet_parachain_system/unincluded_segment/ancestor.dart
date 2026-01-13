@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:typed_data' as _i5;
 
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 import '../../polkadot_primitives/v8/upgrade_go_ahead.dart' as _i4;
 import '../../primitive_types/h256.dart' as _i3;
@@ -98,4 +98,10 @@ class $AncestorCodec with _i1.Codec<Ancestor> {
         size + const _i1.OptionCodec<_i4.UpgradeGoAhead>(_i4.UpgradeGoAhead.codec).sizeHint(obj.consumedGoAheadSignal);
     return size;
   }
+
+  @override
+  bool isSizeZero() =>
+      _i2.UsedBandwidth.codec.isSizeZero() &&
+      const _i1.OptionCodec<_i3.H256>(_i3.H256Codec()).isSizeZero() &&
+      const _i1.OptionCodec<_i4.UpgradeGoAhead>(_i4.UpgradeGoAhead.codec).isSizeZero();
 }

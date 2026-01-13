@@ -1,5 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:polkadart_scale_codec/polkadart_scale_codec.dart' as _i1;
 
 typedef BTreeSet = List<List<int>>;
 
@@ -25,5 +25,10 @@ class BTreeSetCodec with _i1.Codec<BTreeSet> {
   @override
   int sizeHint(BTreeSet value) {
     return const _i1.SequenceCodec<List<int>>(_i1.U8SequenceCodec.codec).sizeHint(value);
+  }
+
+  @override
+  bool isSizeZero() {
+    return const _i1.SequenceCodec<List<int>>(_i1.U8SequenceCodec.codec).isSizeZero();
   }
 }
