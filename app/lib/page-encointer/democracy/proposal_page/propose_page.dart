@@ -641,15 +641,12 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget issueSwapNativeOptionInput() {
-    final unallocatedTreasuryFunds = RepositoryProvider.of<AppSettings>(context).developerMode
-        ? null
-        : nativeTreasuryUnallocatedLiquidity(fractionalLimit: maxTreasuryPayoutFraction);
+    final unallocatedTreasuryFunds = nativeTreasuryUnallocatedLiquidity(fractionalLimit: maxTreasuryPayoutFraction);
     return Column(children: issueSwapOptionInput('KSM', unallocatedTreasuryFunds, false));
   }
 
   Widget issueSwapAssetOptionInput() {
-    final unallocatedTreasuryFunds =
-        RepositoryProvider.of<AppSettings>(context).developerMode ? null : assetTreasuryUnallocatedLiquidity();
+    final unallocatedTreasuryFunds = assetTreasuryUnallocatedLiquidity();
 
     final store = context.read<AppStore>();
     final l10n = context.l10n;
@@ -809,15 +806,13 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget spendNativeInput(BuildContext context) {
-    final maxSpend =
-        RepositoryProvider.of<AppSettings>(context).developerMode ? null : nativeTreasuryUnallocatedLiquidity();
+    final maxSpend = nativeTreasuryUnallocatedLiquidity();
     return Column(children: spendInputWidgets('KSM', maxSpend));
   }
 
   Widget spendAssetInput(BuildContext context) {
     final l10n = context.l10n;
-    final maxSpend =
-        RepositoryProvider.of<AppSettings>(context).developerMode ? null : assetTreasuryUnallocatedLiquidity();
+    final maxSpend = assetTreasuryUnallocatedLiquidity();
 
     return Column(children: [
       selectAssetDropDown(l10n.proposalFieldAssetToSpend),
