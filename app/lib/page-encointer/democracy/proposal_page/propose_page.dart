@@ -198,17 +198,20 @@ class _ProposePageState extends State<ProposePage> {
 
     // Also check if account might be a delegate who has rights over the business.
     final controllers = accountBusiness.map((business) =>  AddressUtils.addressToPubKey(business.controller).toList()).toList();
-    final multiProxies = await webApi.encointer.getMultiProxyAccounts(controllers);
-
+    final multiProxies = await Future.wait(controllers.map((controller) => webApi.encointer.getProxyAccounts(controller)).toList());
+    final currentAccountPubkey = AddressUtils.addressToPubKey(currentAddress);
 
     for (final (i, proxies) in multiProxies.indexed) {
       final delegates = proxies.map((p) => p.delegate).toList();
-      if (delegates.contains(currentAddress)) {
-        Log.d('[checkBusinessOwners] Current account is a valid business delegate of ${AddressUtils.pubKeyToAddress(controllers[i])}');
+      if (delegates.any((delegate) => AddressUtils.isSamePubKey(currentAddress, delegate))) {
+        Log.d('[checkBusinessOwners] Current account is a valid business delegate of ${AddressUtils.pubKeyToAddress(controllers[i], prefix: store.settings.currentNetwork.ss58())}');
         setState(() {
           isBusinessOwner = true;
         });
         return;
+      } else {
+        Log.d('[checkBusinessOwners] currentAccount = ${AddressUtils.pubKeyToAddress(currentAccountPubkey, prefix: store.settings.currentNetwork.ss58())}');
+        Log.d('[checkBusinessOwners] delegates = ${delegates.map((d) => AddressUtils.pubKeyToAddress(d, prefix: store.settings.currentNetwork.ss58())).toList()}');
       }
     }
 
