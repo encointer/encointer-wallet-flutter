@@ -945,17 +945,22 @@ class EncointerApi {
   }
 
   Future<List<et.ProxyDefinition>> getProxyAccounts(AccountId32 accountId, {BlockHash? at}) async {
-    final key = encointerKusama.query.proxy.proxiesMapPrefix();
-    final keyFull = encointerKusama.query.proxy.proxiesKey(accountId);
-
-    Log.d('[getProxyAccounts] key: ${hex.encode(key)}');
-    Log.d('[getProxyAccounts] keyFull: ${hex.encode(keyFull)}');
-
     final proxies = await encointerKusama.query.proxy.proxies(accountId, at: at ?? store.chain.latestHash);
 
     Log.d('[getProxyAccounts] Proxies: ${proxies.value0.length}');
-
     return proxies.value0;
+  }
+
+  Future<List<List<et.ProxyDefinition>>> getMultiProxyAccounts(List<AccountId32> accountIds, {BlockHash? at}) async {
+    final multiProxies = await encointerKusama.query.proxy.multiProxies(accountIds, at: at ?? store.chain.latestHash);
+
+    final delegates = multiProxies
+        .map((proxies) => proxies.value0.toList())
+        .toList();
+
+
+    Log.d('[getProxyAccounts] Got MultiProxies: ${jsonEncode(delegates)}');
+    return delegates;
   }
 
   DemocracyParams democracyParams() {

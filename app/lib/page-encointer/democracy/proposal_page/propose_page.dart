@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:convert/convert.dart';
@@ -178,32 +177,42 @@ class _ProposePageState extends State<ProposePage> {
     final accountBusiness = await webApi.encointer.bazaarGetBusinesses(store.encointer.chosenCid!);
 
     // final currentAddress = store.account.currentAddress;
-    const currentAddress = 'DT7tDTVg3grR8LdVii6Lqc3Pf432YLrq3baCqTr7eFkfvDK';
+    const currentAddress = 'EyXct79ZDWdQfcSgJTG5texKM9wJj3quyh1ugPDVSkSt3Xm';
 
-    final accountId = AddressUtils.addressToPubKey(currentAddress).toList();
-    final proxies = await webApi.encointer.getProxyAccounts(accountId);
-    Log.d('[checkBusinessOwners] Got AccountId ${AddressUtils.addressToPubKeyHex(currentAddress)}');
-    Log.d('[checkBusinessOwners] Got Proxies ${proxies.length}');
-    Log.d('[checkBusinessOwners] Got Proxies ${jsonEncode(proxies)}');
-
+    // first the quick check: is the current account and owner?
     final isOwner = accountBusiness.any((business) {
       if (AddressUtils.areEqual(business.controller, currentAddress)) {
-        // Account is direct owner
+        Log.d('[checkBusinessOwners] Current account is direct business owner');
         return true;
+      } else {
+        return false;
       }
-
-      final controllerAccount = AddressUtils.addressToPubKey(business.controller).toList();
-      if (proxies.map((p) => p.delegate).contains(controllerAccount)) {
-        // One of our proxies is the controller
-        return true;
-      }
-
-      return false;
     });
 
-    setState(() {
-      isBusinessOwner = isOwner;
-    });
+    if (isOwner) {
+      setState(() {
+        isBusinessOwner = isOwner;
+      });
+      return;
+    }
+
+    // Also check if account might be a delegate who has rights over the business.
+    final controllers = accountBusiness.map((business) =>  AddressUtils.addressToPubKey(business.controller).toList()).toList();
+    final multiProxies = await webApi.encointer.getMultiProxyAccounts(controllers);
+
+
+    for (final (i, proxies) in multiProxies.indexed) {
+      final delegates = proxies.map((p) => p.delegate).toList();
+      if (delegates.contains(currentAddress)) {
+        Log.d('[checkBusinessOwners] Current account is a valid business delegate of ${AddressUtils.pubKeyToAddress(controllers[i])}');
+        setState(() {
+          isBusinessOwner = true;
+        });
+        return;
+      }
+    }
+
+    Log.d('[checkBusinessOwners] Current account is not a business owner or a valid proxy delegate thereof');
   }
 
   Future<void> _updateExchangeRate() async {
