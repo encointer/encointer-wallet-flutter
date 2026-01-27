@@ -178,10 +178,11 @@ class _ProposePageState extends State<ProposePage> {
     final accountBusiness = await webApi.encointer.bazaarGetBusinesses(store.encointer.chosenCid!);
 
     // final currentAddress = store.account.currentAddress;
-    const currentAddress = 'GwytKmGdtqtqEJLAqMSg1yAbNN1bSdY3nKvN2ob3QqCZcY9';
+    const currentAddress = 'DT7tDTVg3grR8LdVii6Lqc3Pf432YLrq3baCqTr7eFkfvDK';
 
     final accountId = AddressUtils.addressToPubKey(currentAddress).toList();
     final proxies = await webApi.encointer.getProxyAccounts(accountId);
+    Log.d('[checkBusinessOwners] Got AccountId ${AddressUtils.addressToPubKeyHex(currentAddress)}');
     Log.d('[checkBusinessOwners] Got Proxies ${proxies.length}');
     Log.d('[checkBusinessOwners] Got Proxies ${jsonEncode(proxies)}');
 
