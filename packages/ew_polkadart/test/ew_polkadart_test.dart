@@ -24,7 +24,8 @@ void main() {
       // Expected output (from Polkadot.js)
       final module = '1809d78346727a0ef58c0fa03bafa323';
       final method = '1d885dcfb277f185f2d8e62a5f290c85';
-      final twox64ConcatAccountId32 = '427611b5147e9bca26be5a2c3b0c85d4f4783e2950a293b0c9f6026e5c5a897bbb9d0746a52de907';
+      final twox64ConcatAccountId32 =
+          '427611b5147e9bca26be5a2c3b0c85d4f4783e2950a293b0c9f6026e5c5a897bbb9d0746a52de907';
       final expectedHash = decodeHex(module + method + twox64ConcatAccountId32);
 
       final key = storageMap.hashedKeyFor(accountId);
@@ -45,7 +46,8 @@ void main() {
       // Expected output (from Polkadot.js)
       final module = '1809d78346727a0ef58c0fa03bafa323';
       final method = '1d885dcfb277f185f2d8e62a5f290c85';
-      final twox64ConcatAccountId32 = '427611b5147e9bca26be5a2c3b0c85d4f4783e2950a293b0c9f6026e5c5a897bbb9d0746a52de907';
+      final twox64ConcatAccountId32 =
+          '427611b5147e9bca26be5a2c3b0c85d4f4783e2950a293b0c9f6026e5c5a897bbb9d0746a52de907';
       final expectedHash = decodeHex(module + method + twox64ConcatAccountId32);
 
       final key = EncointerKusama.url(Uri.parse("ws://localhost:9944")).query.proxy.proxiesKey(accountId.toList());
