@@ -100,10 +100,8 @@ jobs:
 
       - name: "Create Simulator if iPad Pro 2nd gen"
         if: ${{ env.DEVICE == 'iPad Pro (12.9-inch) (2nd generation)' }}
-        # Unfortunately it is not deterministic if the 16.2 or the 16.4 runtime is available
         run: |
-          xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-17-2" || \
-          xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-17-0"
+          xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-26-2"
 
       - name: Get dependencies (i.e., melos)
         run: .flutter/bin/dart pub get
