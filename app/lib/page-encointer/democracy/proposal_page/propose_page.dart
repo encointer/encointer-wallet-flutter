@@ -174,10 +174,10 @@ class _ProposePageState extends State<ProposePage> {
   Future<void> _checkBusinessOwners() async {
     final store = context.read<AppStore>();
 
-    // final currentAddress = store.account.currentAddress;
+    final currentAddress = store.account.currentAddress;
 
     // Some test account that is a delegate in the LEU community
-    const currentAddress = 'EyXct79ZDWdQfcSgJTG5texKM9wJj3quyh1ugPDVSkSt3Xm';
+    // const currentAddress = 'EyXct79ZDWdQfcSgJTG5texKM9wJj3quyh1ugPDVSkSt3Xm';
 
     final isOwner = await webApi.encointer.isBusinessOwnerOrDelegate(store.encointer.chosenCid!, currentAddress);
 
