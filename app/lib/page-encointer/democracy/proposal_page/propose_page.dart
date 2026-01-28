@@ -25,7 +25,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/theme/custom/typography/typography_theme.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
-import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:flutter/material.dart';
 import 'package:ew_l10n/l10n.dart';
@@ -174,16 +173,23 @@ class _ProposePageState extends State<ProposePage> {
 
   Future<void> _checkBusinessOwners() async {
     final store = context.read<AppStore>();
-    final accountBusiness = await webApi.encointer.bazaarGetBusinesses(store.encointer.chosenCid!);
 
     final currentAddress = store.account.currentAddress;
-    // const currentAddress = '5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK';
 
-    final isOwner = accountBusiness.any((business) => AddressUtils.areEqual(business.controller, currentAddress));
+    // Some test account that is a delegate in the LEU community
+    // const currentAddress = 'EyXct79ZDWdQfcSgJTG5texKM9wJj3quyh1ugPDVSkSt3Xm';
 
-    setState(() {
-      isBusinessOwner = isOwner;
-    });
+    final isOwner = await webApi.encointer.isBusinessOwnerOrDelegate(store.encointer.chosenCid!, currentAddress);
+
+    if (isOwner) {
+      Log.d('[checkBusinessOwners] Have business owner rights!');
+    } else {
+      Log.d('[checkBusinessOwners] Current account is not a business owner or a valid proxy delegate thereof');
+    }
+
+    if (mounted) {
+      setState(() => isBusinessOwner = isOwner);
+    }
   }
 
   Future<void> _updateExchangeRate() async {
