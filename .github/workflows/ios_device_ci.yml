@@ -98,10 +98,11 @@ jobs:
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
 
-      - name: "Create Simulator if iPad Pro 2nd gen"
-        if: ${{ env.DEVICE == 'iPad Pro (12.9-inch) (2nd generation)' }}
-        run: |
-          xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-26-2"
+        # Currently not needed. Used for potential future reference.
+#      - name: "Create Simulator if iPad Pro 2nd gen"
+#        if: ${{ env.DEVICE == 'iPad Pro (12.9-inch) (2nd generation)' }}
+#        run: |
+#          xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-26-2"
 
       - name: Get dependencies (i.e., melos)
         run: .flutter/bin/dart pub get

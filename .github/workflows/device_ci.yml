@@ -14,33 +14,25 @@ concurrency:
 
 jobs:
   # IOS Devices
-  iphone_15_pro_max:
+  iphone_pro_max:
+    # used for all iPhone models' store screenshots.
     uses: ./.github/workflows/device_ci_proxy.yml
     with:
       workflow_file: ios_device_ci.yml
       # Ignored for IOS, but the field is required
       api_level: 33
-      device: "iPhone 15 Pro Max"
+      device: "iPhone 17 Pro Max"
       record_video: true
       docker_tag: "1.16.2"
 
   ipad_pro_6:
+    # used for all iPad models' store screenshots.
     uses: ./.github/workflows/device_ci_proxy.yml
     with:
       workflow_file: ios_device_ci.yml
       # Ignored for IOS, but the field is required
       api_level: 33
-      device: "iPad Pro (12.9-inch) (6th generation)"
-      record_video: true
-      docker_tag: "1.16.2"
-
-  ipad_pro_2:
-    uses: ./.github/workflows/device_ci_proxy.yml
-    with:
-      workflow_file: ios_device_ci.yml
-      # Ignored for IOS, but the field is required
-      api_level: 33
-      device: "iPad Pro (12.9-inch) (2nd generation)"
+      device: "iPad Pro 13-inch (M5)"
       record_video: true
       docker_tag: "1.16.2"
 
