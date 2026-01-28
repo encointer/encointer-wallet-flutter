@@ -44,4 +44,8 @@ abstract class AddressUtils {
   static bool areEqual(String address1, String address2) {
     return Address.decode(address1).toPubHex() == Address.decode(address2).toPubHex();
   }
+
+  static bool isSamePubKey(String address, List<int> pubKey) {
+    return Address.decode(address).toPubHex() == Address(pubkey: Uint8List.fromList(pubKey), prefix: 42).toPubHex();
+  }
 }
