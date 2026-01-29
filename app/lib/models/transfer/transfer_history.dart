@@ -88,14 +88,17 @@ class Transaction {
   bool get isFromTreasury => treasuryName != null;
 
   bool get isSwap => type != null && type == SpendOrSwap.swap;
+  bool get isSpend => type != null && type == SpendOrSwap.spend;
 
   String counterPartyDisplay(BuildContext context) {
     final l10n = context.l10n;
 
     if (isIssuance) {
       return l10n.incomeIssuance;
-    } else if (isFromTreasury && type != null) {
-      return 'Treasury ${type!.name}';
+    } else if (isSwap) {
+      return l10n.treasurySwap;
+    }  else if (isSpend) {
+      return l10n.treasurySpend;
     } else {
       return Fmt.address(counterParty)!;
     }

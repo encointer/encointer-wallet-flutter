@@ -830,6 +830,18 @@ abstract class AppLocalizations {
   /// **'Event ID'**
   String get event;
 
+  /// No description provided for @treasurySpend.
+  ///
+  /// In en, this message translates to:
+  /// **'Treasury Spend'**
+  String get treasurySpend;
+
+  /// No description provided for @treasurySwap.
+  ///
+  /// In en, this message translates to:
+  /// **'Treasury Swap'**
+  String get treasurySwap;
+
   /// No description provided for @swapOption.
   ///
   /// In en, this message translates to:

@@ -121,6 +121,8 @@
     "errorOccurred": "Es ist ein Fehler aufgetreten:",
     "errorUserNameIsRequired": "Benutzername darf nicht leer sein",
     "event": "Event ID",
+    "treasurySpend": "Treasury-Ausgabe",
+    "treasurySwap": "Treasury-Swap",
     "swapOption": "Swap-Option",
     "swapOptionRate": "Kurs {amount} {cc}/{asset}",
     "@swapOptionRate": {

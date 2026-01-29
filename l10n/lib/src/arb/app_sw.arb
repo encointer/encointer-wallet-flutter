@@ -122,6 +122,8 @@
     "errorOccurred": "Kuna hitilafu imetokea:",
     "errorUserNameIsRequired": "Jina la mtumiaji haliwezi kuwa baki",
     "event": "ID ya tukio",
+    "treasurySpend": "Matumizi ya hazina",
+    "treasurySwap": "Ubadilishanaji wa hazina",
     "swapOption": "Chaguo la kubadilisha",
     "swapOptionRate": "Kiwango {amount} {cc}/{asset}",
     "swapOptionCcLimit": "Kikomo cha {cc}: {amount} {cc}",

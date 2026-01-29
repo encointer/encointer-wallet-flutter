@@ -405,6 +405,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get event => 'Event ID';
 
   @override
+  String get treasurySpend => 'Treasury-Ausgabe';
+
+  @override
+  String get treasurySwap => 'Treasury-Swap';
+
+  @override
   String get swapOption => 'Swap-Option';
 
   @override
