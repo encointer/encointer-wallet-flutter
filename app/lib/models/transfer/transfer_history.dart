@@ -97,7 +97,7 @@ class Transaction {
       return l10n.incomeIssuance;
     } else if (isSwap) {
       return l10n.treasurySwap;
-    }  else if (isSpend) {
+    } else if (isSpend) {
       return l10n.treasurySpend;
     } else {
       return Fmt.address(counterParty)!;

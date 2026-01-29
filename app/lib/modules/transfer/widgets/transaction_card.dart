@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -74,7 +75,7 @@ class TransactionCard extends StatelessWidget {
                       tappableAddress(context, transaction),
                       const Spacer(),
                       if (transaction.isSwap)
-                        foreignAssetAmount(context, transaction, transactionType: TransactionType.incoming),
+                        ...foreignAssets(context, transaction),
                       if (!transaction.isSwap)
                         transferAmount(context, appStore.encointer.community!.symbol!, transaction),
                     ],
@@ -87,6 +88,17 @@ class TransactionCard extends StatelessWidget {
       ),
     );
   }
+}
+
+List<Widget> foreignAssets(BuildContext context, Transaction transaction) {
+    return [
+      Assets.assethubKusama.svg(
+        width: 20,
+        height: 20,
+      ),
+      const SizedBox(width: 5),
+      foreignAssetAmount(context, transaction, transactionType: TransactionType.incoming)
+    ];
 }
 
 Widget tappableAddress(BuildContext context, Transaction transaction) {
