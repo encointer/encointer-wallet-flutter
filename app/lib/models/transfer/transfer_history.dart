@@ -54,7 +54,11 @@ class Transaction {
 
   /// Determines the type of this [Transaction] based on its amount.
   /// Returns [TransactionType.outgoing] for negative amounts, and [TransactionType.incoming] for positive amounts.
-  TransactionType get transactionType => amount < 0 ? TransactionType.outgoing : TransactionType.incoming;
+  TransactionType get transactionType {
+    if (treasuryName != null) return TransactionType.incoming;
+
+    return amount < 0 ? TransactionType.outgoing : TransactionType.incoming;
+  }
 
   /// Returns the date and time of the transaction as a [DateTime] object.
   DateTime get dateTime => DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp));
@@ -81,13 +85,15 @@ class Transaction {
   /// `{CommunityName} Community` and the [address] as `income issuance`.
   bool get isIssuance => counterParty == 'ISSUANCE';
 
+  bool get isFromTreasury => treasuryName != null;
+
   String counterPartyDisplay(BuildContext context) {
     final l10n = context.l10n;
 
     if (isIssuance) {
       return l10n.incomeIssuance;
-    } else if (treasuryName != null) {
-      return treasuryName!;
+    } else if (isFromTreasury && type != null) {
+      return 'Treasury $type';
     } else {
       return Fmt.address(counterParty)!;
     }

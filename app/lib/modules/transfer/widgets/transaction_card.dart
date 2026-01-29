@@ -55,7 +55,7 @@ class TransactionCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    transaction.isIssuance
+                    transaction.isIssuance || transaction.isFromTreasury
                         ? l10n.communityWithName(appStore.encointer.community!.name!)
                         : transaction.getNameFromContacts(contacts) ?? l10n.unknown,
                     style: context.titleMedium.copyWith(fontWeight: FontWeight.bold),
