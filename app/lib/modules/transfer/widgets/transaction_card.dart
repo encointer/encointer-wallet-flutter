@@ -35,7 +35,7 @@ class TransactionCard extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.fromLTRB(10, 15, 15, 10),
         isThreeLine: true,
-        leading: AddressIcon(transaction.counterParty, tryGetPubKey(transaction), size: 55),
+        leading: AddressIcon(transaction.counterParty, pubKeyOrInvalidAddressString(transaction), size: 55),
         title: Row(
           children: [
             if (transaction.transactionType == TransactionType.incoming) incomingIcon(context) else outgoingIcon(),
@@ -74,8 +74,7 @@ class TransactionCard extends StatelessWidget {
                     children: [
                       tappableAddress(context, transaction),
                       const Spacer(),
-                      if (transaction.isSwap)
-                        ...foreignAssets(context, transaction),
+                      if (transaction.isSwap) ...foreignAssets(context, transaction),
                       if (!transaction.isSwap)
                         transferAmount(context, appStore.encointer.community!.symbol!, transaction),
                     ],
@@ -91,14 +90,14 @@ class TransactionCard extends StatelessWidget {
 }
 
 List<Widget> foreignAssets(BuildContext context, Transaction transaction) {
-    return [
-      Assets.assethubKusama.svg(
-        width: 20,
-        height: 20,
-      ),
-      const SizedBox(width: 5),
-      foreignAssetAmount(context, transaction, transactionType: TransactionType.incoming)
-    ];
+  return [
+    Assets.assethubKusama.svg(
+      width: 20,
+      height: 20,
+    ),
+    const SizedBox(width: 5),
+    foreignAssetAmount(context, transaction, transactionType: TransactionType.incoming)
+  ];
 }
 
 Widget tappableAddress(BuildContext context, Transaction transaction) {
@@ -182,14 +181,12 @@ Widget outgoingIcon() {
   );
 }
 
-String tryGetPubKey(Transaction transaction) {
+String pubKeyOrInvalidAddressString(Transaction transaction) {
   String counterPartyPubKey;
 
   try {
     counterPartyPubKey = AddressUtils.addressToPubKeyHex(transaction.counterParty);
   } catch (e) {
-    Log.e('Could not decode address. Error: $e');
-
     // this is only used in the identicon, so we don't need to localize it.
     counterPartyPubKey = 'invalid address';
   }
