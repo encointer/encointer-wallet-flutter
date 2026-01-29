@@ -25,6 +25,17 @@ jobs:
       record_video: true
       docker_tag: "1.16.2"
 
+  iphone_16_pro_max:
+    # used for all iPhone models' store screenshots.
+    uses: ./.github/workflows/device_ci_proxy.yml
+    with:
+      workflow_file: ios_device_ci.yml
+      # Ignored for IOS, but the field is required
+      api_level: 33
+      device: "iPhone 16 Pro Max"
+      record_video: true
+      docker_tag: "1.16.2"
+
   ipad_pro_6:
     # used for all iPad models' store screenshots.
     uses: ./.github/workflows/device_ci_proxy.yml
