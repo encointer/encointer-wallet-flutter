@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
-import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:ew_l10n/l10n.dart';
@@ -72,7 +71,7 @@ class TransactionCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      tappableAddress(context, transaction),
+                      counterParty(context, transaction),
                       const Spacer(),
                       if (transaction.isSwap) ...foreignAssets(context, transaction),
                       if (!transaction.isSwap)
@@ -100,20 +99,32 @@ List<Widget> foreignAssets(BuildContext context, Transaction transaction) {
   ];
 }
 
-Widget tappableAddress(BuildContext context, Transaction transaction) {
-  return GestureDetector(
-    child: Row(
-      children: [
-        Text(
-          transaction.counterPartyDisplay(context),
-          style: context.bodySmall,
-        ),
-        const SizedBox(width: 3),
-        const Icon(Iconsax.copy, size: 14),
-      ],
-    ),
-    onTap: () => UI.copyAndNotify(context, transaction.counterParty),
+Widget counterParty(BuildContext context, Transaction transaction) {
+
+  final counterPartyWidget = Text(
+    transaction.counterPartyDisplay(context),
+    style: context.bodySmall,
   );
+
+  if (transaction.isRegularTransfer) {
+    // Regular transfer, the counterparty is an address we might want to copy.
+    return GestureDetector(
+      child: Row(
+        children: [
+          Text(
+            transaction.counterPartyDisplay(context),
+            style: context.bodySmall,
+          ),
+          const SizedBox(width: 3),
+          const Icon(Iconsax.copy, size: 14),
+        ],
+      ),
+      onTap: () => UI.copyAndNotify(context, transaction.counterParty),
+    );
+  } else {
+    // E.g. Swap, spends, issuance. The counterparty is just freeform text
+    return counterPartyWidget;
+  }
 }
 
 Widget transferAmount(BuildContext context, String symbol, Transaction transaction,

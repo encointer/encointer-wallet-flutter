@@ -90,6 +90,8 @@ class Transaction {
   bool get isSwap => type != null && type == SpendOrSwap.swap;
   bool get isSpend => type != null && type == SpendOrSwap.spend;
 
+  bool get isRegularTransfer => !isIssuance && !isSwap && !isSpend;
+
   String counterPartyDisplay(BuildContext context) {
     final l10n = context.l10n;
 
