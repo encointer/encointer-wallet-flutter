@@ -48,7 +48,7 @@ class Transaction {
   @ShortenedDouble()
   final double? foreignAssetAmount;
 
-  final String? type;
+  final SpendOrSwap? type;
 
   final String? treasuryName;
 
@@ -87,13 +87,15 @@ class Transaction {
 
   bool get isFromTreasury => treasuryName != null;
 
+  bool get isSwap => type != null && type == SpendOrSwap.swap;
+
   String counterPartyDisplay(BuildContext context) {
     final l10n = context.l10n;
 
     if (isIssuance) {
       return l10n.incomeIssuance;
     } else if (isFromTreasury && type != null) {
-      return 'Treasury $type';
+      return 'Treasury ${type!.name}';
     } else {
       return Fmt.address(counterParty)!;
     }
@@ -128,4 +130,13 @@ class ShortenedDouble implements JsonConverter<double, num> {
 
   @override
   num toJson(num val) => val;
+}
+
+@JsonEnum()
+enum SpendOrSwap {
+  @JsonValue('Spend')
+  spend,
+
+  @JsonValue('Swap')
+  swap,
 }

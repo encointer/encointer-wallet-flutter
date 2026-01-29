@@ -14,7 +14,7 @@ Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
       foreignAssetName: json['foreignAssetName'] as String?,
       foreignAssetAmount:
           _$JsonConverterFromJson<num, double>(json['foreignAssetAmount'], const ShortenedDouble().fromJson),
-      type: json['type'] as String?,
+      type: $enumDecodeNullable(_$SpendOrSwapEnumMap, json['type']),
       treasuryName: json['treasuryName'] as String?,
     );
 
@@ -26,7 +26,7 @@ Map<String, dynamic> _$TransactionToJson(Transaction instance) => <String, dynam
       'foreignAssetName': instance.foreignAssetName,
       'foreignAssetAmount':
           _$JsonConverterToJson<num, double>(instance.foreignAssetAmount, const ShortenedDouble().toJson),
-      'type': instance.type,
+      'type': _$SpendOrSwapEnumMap[instance.type],
       'treasuryName': instance.treasuryName,
     };
 
@@ -35,6 +35,11 @@ Value? _$JsonConverterFromJson<Json, Value>(
   Value? Function(Json json) fromJson,
 ) =>
     json == null ? null : fromJson(json as Json);
+
+const _$SpendOrSwapEnumMap = {
+  SpendOrSwap.spend: 'Spend',
+  SpendOrSwap.swap: 'Swap',
+};
 
 Json? _$JsonConverterToJson<Json, Value>(
   Value? value,

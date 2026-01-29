@@ -54,18 +54,29 @@ class TransactionCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    transaction.isIssuance || transaction.isFromTreasury
-                        ? l10n.communityWithName(appStore.encointer.community!.name!)
-                        : transaction.getNameFromContacts(contacts) ?? l10n.unknown,
-                    style: context.titleMedium.copyWith(fontWeight: FontWeight.bold),
-                    overflow: TextOverflow.ellipsis,
+                  Row(
+                    children: [
+                      Text(
+                        transaction.isIssuance || transaction.isFromTreasury
+                            ? l10n.communityWithName(appStore.encointer.community!.name!)
+                            : transaction.getNameFromContacts(contacts) ?? l10n.unknown,
+                        style: context.titleMedium.copyWith(fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const Spacer(),
+                      if (transaction.isSwap)
+                        transferAmount(context, appStore.encointer.community!.symbol!, transaction,
+                            transactionType: TransactionType.outgoing),
+                    ],
                   ),
                   Row(
                     children: [
                       tappableAddress(context, transaction),
                       const Spacer(),
-                      transferAmount(context, appStore.encointer.community!.symbol!, transaction),
+                      if (transaction.isSwap)
+                        foreignAssetAmount(context, transaction, transactionType: TransactionType.incoming),
+                      if (!transaction.isSwap)
+                        transferAmount(context, appStore.encointer.community!.symbol!, transaction),
                     ],
                   ),
                 ],
@@ -94,26 +105,48 @@ Widget tappableAddress(BuildContext context, Transaction transaction) {
   );
 }
 
-Widget transferAmount(BuildContext context, String symbol, Transaction transaction) {
+Widget transferAmount(BuildContext context, String symbol, Transaction transaction,
+    {TransactionType? transactionType}) {
+  final type = transactionType ?? transaction.transactionType;
+  final color = type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89);
+
   return Text.rich(
     TextSpan(
       children: [
         TextSpan(
           text: symbol,
-          style: context.titleMedium.copyWith(
-            color: transaction.transactionType == TransactionType.incoming
-                ? context.colorScheme.primary
-                : const Color(0xffD76D89),
-          ),
+          style: context.titleMedium.copyWith(color: color),
         ),
         const WidgetSpan(child: SizedBox(width: 5)),
         TextSpan(
-          text: '${transaction.amount}',
+          text: transaction.amount.toString(),
           style: context.titleMedium.copyWith(
             fontWeight: FontWeight.bold,
-            color: transaction.transactionType == TransactionType.incoming
-                ? context.colorScheme.primary
-                : const Color(0xffD76D89),
+            color: color,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget foreignAssetAmount(BuildContext context, Transaction transaction, {TransactionType? transactionType}) {
+  final type = transactionType ?? transaction.transactionType;
+  final color = type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89);
+
+  return Text.rich(
+    TextSpan(
+      children: [
+        TextSpan(
+          text: transaction.foreignAssetName,
+          style: context.titleMedium.copyWith(color: color),
+        ),
+        const WidgetSpan(child: SizedBox(width: 5)),
+        TextSpan(
+          text: transaction.foreignAssetAmount.toString(),
+          style: context.titleMedium.copyWith(
+            fontWeight: FontWeight.bold,
+            color: color,
           ),
         ),
       ],
