@@ -100,7 +100,6 @@ List<Widget> foreignAssets(BuildContext context, Transaction transaction) {
 }
 
 Widget counterParty(BuildContext context, Transaction transaction) {
-
   final counterPartyWidget = Text(
     transaction.counterPartyDisplay(context),
     style: context.bodySmall,
