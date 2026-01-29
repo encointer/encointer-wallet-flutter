@@ -37,10 +37,10 @@ class TransactionCard extends StatelessWidget {
         leading: AddressIcon(transaction.counterParty, tryGetPubKey(transaction), size: 55),
         title: Row(
           children: [
-            if (transaction.type == TransactionType.incoming) incomingIcon(context) else outgoingIcon(),
+            if (transaction.transactionType == TransactionType.incoming) incomingIcon(context) else outgoingIcon(),
             const SizedBox(width: 5),
             Text(
-              transaction.type.getText(context),
+              transaction.transactionType.getText(context),
               style: context.bodySmall,
             ),
             const Spacer(),
@@ -79,12 +79,11 @@ class TransactionCard extends StatelessWidget {
 }
 
 Widget tappableAddress(BuildContext context, Transaction transaction) {
-  final l10n = context.l10n;
   return GestureDetector(
     child: Row(
       children: [
         Text(
-          transaction.isIssuance ? l10n.incomeIssuance : Fmt.address(transaction.counterParty) ?? '',
+          transaction.counterPartyDisplay(context),
           style: context.bodySmall,
         ),
         const SizedBox(width: 3),
@@ -102,7 +101,9 @@ Widget transferAmount(BuildContext context, String symbol, Transaction transacti
         TextSpan(
           text: symbol,
           style: context.titleMedium.copyWith(
-            color: transaction.type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89),
+            color: transaction.transactionType == TransactionType.incoming
+                ? context.colorScheme.primary
+                : const Color(0xffD76D89),
           ),
         ),
         const WidgetSpan(child: SizedBox(width: 5)),
@@ -110,7 +111,9 @@ Widget transferAmount(BuildContext context, String symbol, Transaction transacti
           text: '${transaction.amount}',
           style: context.titleMedium.copyWith(
             fontWeight: FontWeight.bold,
-            color: transaction.type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89),
+            color: transaction.transactionType == TransactionType.incoming
+                ? context.colorScheme.primary
+                : const Color(0xffD76D89),
           ),
         ),
       ],
