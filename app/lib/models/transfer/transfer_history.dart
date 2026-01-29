@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -19,9 +20,14 @@ class Transaction {
     required this.timestamp,
     required this.counterParty,
     required this.amount,
+    this.foreignAssetName,
+    this.foreignAssetAmount,
+    this.type,
+    this.treasuryName,
   });
 
   factory Transaction.fromJson(Map<String, dynamic> json) => _$TransactionFromJson(json);
+
   Map<String, dynamic> toJson() => _$TransactionToJson(this);
 
   /// The block number in which the transaction was made.
@@ -37,9 +43,22 @@ class Transaction {
   @ShortenedDouble()
   final double amount;
 
+  final String? foreignAssetName;
+
+  @ShortenedDouble()
+  final double? foreignAssetAmount;
+
+  final SpendOrSwap? type;
+
+  final String? treasuryName;
+
   /// Determines the type of this [Transaction] based on its amount.
   /// Returns [TransactionType.outgoing] for negative amounts, and [TransactionType.incoming] for positive amounts.
-  TransactionType get type => amount < 0 ? TransactionType.outgoing : TransactionType.incoming;
+  TransactionType get transactionType {
+    if (treasuryName != null) return TransactionType.incoming;
+
+    return amount < 0 ? TransactionType.outgoing : TransactionType.incoming;
+  }
 
   /// Returns the date and time of the transaction as a [DateTime] object.
   DateTime get dateTime => DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp));
@@ -65,6 +84,27 @@ class Transaction {
   /// If the income is provided by the community, the [name] should be displayed as
   /// `{CommunityName} Community` and the [address] as `income issuance`.
   bool get isIssuance => counterParty == 'ISSUANCE';
+
+  bool get isFromTreasury => treasuryName != null;
+
+  bool get isSwap => type != null && type == SpendOrSwap.swap;
+  bool get isSpend => type != null && type == SpendOrSwap.spend;
+
+  bool get isRegularTransfer => !isIssuance && !isSwap && !isSpend;
+
+  String counterPartyDisplay(BuildContext context) {
+    final l10n = context.l10n;
+
+    if (isIssuance) {
+      return l10n.incomeIssuance;
+    } else if (isSwap) {
+      return l10n.treasurySwap;
+    } else if (isSpend) {
+      return l10n.treasurySpend;
+    } else {
+      return Fmt.address(counterParty)!;
+    }
+  }
 }
 
 /// An enumeration of the transaction types.
@@ -95,4 +135,13 @@ class ShortenedDouble implements JsonConverter<double, num> {
 
   @override
   num toJson(num val) => val;
+}
+
+@JsonEnum()
+enum SpendOrSwap {
+  @JsonValue('Spend')
+  spend,
+
+  @JsonValue('Swap')
+  swap,
 }

@@ -311,14 +311,16 @@ class $AssetsImagesPublicGen {
 class Assets {
   const Assets._();
 
+  static const SvgGenImage assethubKusama = SvgGenImage('assets/assethub_kusama.svg');
   static const $AssetsAvatarsGen avatars = $AssetsAvatarsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const SvgGenImage kusama = SvgGenImage('assets/kusama.svg');
   static const SvgGenImage nctrLogo = SvgGenImage('assets/nctr_logo.svg');
   static const SvgGenImage nctrLogoFacesOnlyThick = SvgGenImage('assets/nctr_logo_faces_only_thick.svg');
+  static const AssetGenImage splash = AssetGenImage('assets/splash.png');
 
   /// List of all assets
-  static List<SvgGenImage> get values => [kusama, nctrLogo, nctrLogoFacesOnlyThick];
+  static List<dynamic> get values => [assethubKusama, kusama, nctrLogo, nctrLogoFacesOnlyThick, splash];
 }
 
 class AssetGenImage {

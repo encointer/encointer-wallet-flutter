@@ -399,6 +399,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get event => 'Event ID';
 
   @override
+  String get treasurySpend => 'Treasury Spend';
+
+  @override
+  String get treasurySwap => 'Treasury Swap';
+
+  @override
   String get swapOption => 'Swap Option';
 
   @override

@@ -401,6 +401,12 @@ class AppLocalizationsSw extends AppLocalizations {
   String get event => 'ID ya tukio';
 
   @override
+  String get treasurySpend => 'Matumizi ya hazina';
+
+  @override
+  String get treasurySwap => 'Ubadilishanaji wa hazina';
+
+  @override
   String get swapOption => 'Chaguo la kubadilisha';
 
   @override

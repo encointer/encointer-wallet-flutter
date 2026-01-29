@@ -1,8 +1,8 @@
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
-import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:ew_l10n/l10n.dart';
@@ -34,13 +34,13 @@ class TransactionCard extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.fromLTRB(10, 15, 15, 10),
         isThreeLine: true,
-        leading: AddressIcon(transaction.counterParty, tryGetPubKey(transaction), size: 55),
+        leading: AddressIcon(transaction.counterParty, pubKeyOrInvalidAddressString(transaction), size: 55),
         title: Row(
           children: [
-            if (transaction.type == TransactionType.incoming) incomingIcon(context) else outgoingIcon(),
+            if (transaction.transactionType == TransactionType.incoming) incomingIcon(context) else outgoingIcon(),
             const SizedBox(width: 5),
             Text(
-              transaction.type.getText(context),
+              transaction.transactionType.getText(context),
               style: context.bodySmall,
             ),
             const Spacer(),
@@ -54,18 +54,28 @@ class TransactionCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    transaction.isIssuance
-                        ? l10n.communityWithName(appStore.encointer.community!.name!)
-                        : transaction.getNameFromContacts(contacts) ?? l10n.unknown,
-                    style: context.titleMedium.copyWith(fontWeight: FontWeight.bold),
-                    overflow: TextOverflow.ellipsis,
+                  Row(
+                    children: [
+                      Text(
+                        transaction.isIssuance || transaction.isFromTreasury
+                            ? l10n.communityWithName(appStore.encointer.community!.name!)
+                            : transaction.getNameFromContacts(contacts) ?? l10n.unknown,
+                        style: context.titleMedium.copyWith(fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const Spacer(),
+                      if (transaction.isSwap)
+                        transferAmount(context, appStore.encointer.community!.symbol!, transaction,
+                            transactionType: TransactionType.outgoing),
+                    ],
                   ),
                   Row(
                     children: [
-                      tappableAddress(context, transaction),
+                      counterParty(context, transaction),
                       const Spacer(),
-                      transferAmount(context, appStore.encointer.community!.symbol!, transaction),
+                      if (transaction.isSwap) ...foreignAssets(context, transaction),
+                      if (!transaction.isSwap)
+                        transferAmount(context, appStore.encointer.community!.symbol!, transaction),
                     ],
                   ),
                 ],
@@ -78,39 +88,86 @@ class TransactionCard extends StatelessWidget {
   }
 }
 
-Widget tappableAddress(BuildContext context, Transaction transaction) {
-  final l10n = context.l10n;
-  return GestureDetector(
-    child: Row(
-      children: [
-        Text(
-          transaction.isIssuance ? l10n.incomeIssuance : Fmt.address(transaction.counterParty) ?? '',
-          style: context.bodySmall,
-        ),
-        const SizedBox(width: 3),
-        const Icon(Iconsax.copy, size: 14),
-      ],
+List<Widget> foreignAssets(BuildContext context, Transaction transaction) {
+  return [
+    Assets.assethubKusama.svg(
+      width: 20,
+      height: 20,
     ),
-    onTap: () => UI.copyAndNotify(context, transaction.counterParty),
-  );
+    const SizedBox(width: 5),
+    foreignAssetAmount(context, transaction, transactionType: TransactionType.incoming)
+  ];
 }
 
-Widget transferAmount(BuildContext context, String symbol, Transaction transaction) {
+Widget counterParty(BuildContext context, Transaction transaction) {
+  final counterPartyWidget = Text(
+    transaction.counterPartyDisplay(context),
+    style: context.bodySmall,
+  );
+
+  if (transaction.isRegularTransfer) {
+    // Regular transfer; the counterparty is an address we might want to copy.
+    return GestureDetector(
+      child: Row(
+        children: [
+          Text(
+            transaction.counterPartyDisplay(context),
+            style: context.bodySmall,
+          ),
+          const SizedBox(width: 3),
+          const Icon(Iconsax.copy, size: 14),
+        ],
+      ),
+      onTap: () => UI.copyAndNotify(context, transaction.counterParty),
+    );
+  } else {
+    // E.g. Swap, spends, issuance; the counterparty is just freeform text.
+    return counterPartyWidget;
+  }
+}
+
+Widget transferAmount(BuildContext context, String symbol, Transaction transaction,
+    {TransactionType? transactionType}) {
+  final type = transactionType ?? transaction.transactionType;
+  final color = type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89);
+
   return Text.rich(
     TextSpan(
       children: [
         TextSpan(
           text: symbol,
-          style: context.titleMedium.copyWith(
-            color: transaction.type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89),
-          ),
+          style: context.titleMedium.copyWith(color: color),
         ),
         const WidgetSpan(child: SizedBox(width: 5)),
         TextSpan(
-          text: '${transaction.amount}',
+          text: transaction.amount.toString(),
           style: context.titleMedium.copyWith(
             fontWeight: FontWeight.bold,
-            color: transaction.type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89),
+            color: color,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget foreignAssetAmount(BuildContext context, Transaction transaction, {TransactionType? transactionType}) {
+  final type = transactionType ?? transaction.transactionType;
+  final color = type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89);
+
+  return Text.rich(
+    TextSpan(
+      children: [
+        TextSpan(
+          text: transaction.foreignAssetName,
+          style: context.titleMedium.copyWith(color: color),
+        ),
+        const WidgetSpan(child: SizedBox(width: 5)),
+        TextSpan(
+          text: transaction.foreignAssetAmount.toString(),
+          style: context.titleMedium.copyWith(
+            fontWeight: FontWeight.bold,
+            color: color,
           ),
         ),
       ],
@@ -134,14 +191,12 @@ Widget outgoingIcon() {
   );
 }
 
-String tryGetPubKey(Transaction transaction) {
+String pubKeyOrInvalidAddressString(Transaction transaction) {
   String counterPartyPubKey;
 
   try {
     counterPartyPubKey = AddressUtils.addressToPubKeyHex(transaction.counterParty);
   } catch (e) {
-    Log.e('Could not decode address. Error: $e');
-
     // this is only used in the identicon, so we don't need to localize it.
     counterPartyPubKey = 'invalid address';
   }

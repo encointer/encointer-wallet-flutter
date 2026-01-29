@@ -121,6 +121,8 @@
     "errorOccurred": "An error occurred:",
     "errorUserNameIsRequired": "User name cannot be blank",
     "event": "Event ID",
+    "treasurySpend": "Treasury Spend",
+    "treasurySwap": "Treasury Swap",
     "swapOption": "Swap Option",
     "swapOptionRate": "Rate {amount} {cc}/{asset}",
     "@swapOptionRate": {

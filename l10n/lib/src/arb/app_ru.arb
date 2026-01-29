@@ -121,6 +121,8 @@
     "errorOccurred": "Возникла ошибка:",
     "errorUserNameIsRequired": "Имя пользователя не может быть пустым",
     "event": "ID события",
+    "treasurySpend": "Расход казны",
+    "treasurySwap": "Обмен казны",
     "swapOption": "Опция обмена",
     "swapOptionRate": "Курс {amount} {cc}/{asset}",
     "swapOptionCcLimit": "Лимит {cc}: {amount} {cc}",
