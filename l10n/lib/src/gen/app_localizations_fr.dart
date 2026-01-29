@@ -404,6 +404,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get event => 'ID d\'événement';
 
   @override
+  String get treasurySpend => 'Dépense du trésor';
+
+  @override
+  String get treasurySwap => 'Échange du trésor';
+
+  @override
   String get swapOption => 'Option d’échange';
 
   @override

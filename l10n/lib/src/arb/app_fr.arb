@@ -121,6 +121,8 @@
     "errorOccurred": "Une erreur est apparue:",
     "errorUserNameIsRequired": "Le nom d'utilisateur ne doit pas être vide",
     "event": "ID d'événement",
+    "treasurySpend": "Dépense du trésor",
+    "treasurySwap": "Échange du trésor",
     "swapOption": "Option d’échange",
     "swapOptionRate": "Taux {amount} {cc}/{asset}",
     "@swapOptionRate": {

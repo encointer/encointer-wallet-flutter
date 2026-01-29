@@ -52,6 +52,9 @@ abstract class _TransferHistoryViewStoreBase with Store {
         prefix: appStore.settings.currentNetwork.ss58(),
       );
 
+      // address with SwapEvent in LEU
+      // const address = 'DGeoBv3E9xniabhyWsSjd25Te8ZmjQ7zndc2VVbmU8zmZQB';
+
       final response = await ewHttp.getTypeList<Transaction>(
         getTransactionHistoryUrl(cid.toFmtString(), address),
         fromJson: Transaction.fromJson,

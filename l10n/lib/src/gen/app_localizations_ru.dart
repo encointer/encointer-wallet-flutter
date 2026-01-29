@@ -399,6 +399,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get event => 'ID события';
 
   @override
+  String get treasurySpend => 'Расход казны';
+
+  @override
+  String get treasurySwap => 'Обмен казны';
+
+  @override
   String get swapOption => 'Опция обмена';
 
   @override
