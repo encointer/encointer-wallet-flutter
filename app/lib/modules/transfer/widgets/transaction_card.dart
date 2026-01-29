@@ -107,7 +107,7 @@ Widget counterParty(BuildContext context, Transaction transaction) {
   );
 
   if (transaction.isRegularTransfer) {
-    // Regular transfer, the counterparty is an address we might want to copy.
+    // Regular transfer; the counterparty is an address we might want to copy.
     return GestureDetector(
       child: Row(
         children: [
@@ -122,7 +122,7 @@ Widget counterParty(BuildContext context, Transaction transaction) {
       onTap: () => UI.copyAndNotify(context, transaction.counterParty),
     );
   } else {
-    // E.g. Swap, spends, issuance. The counterparty is just freeform text
+    // E.g. Swap, spends, issuance; the counterparty is just freeform text.
     return counterPartyWidget;
   }
 }
