@@ -14,7 +14,7 @@ description: EncointerWallet made with Flutter.
 
 # bump version already while working on new release, bumping build number at the same time
 # bump build number even more, if needed to clarify what's deployed
-version: 1.18.7+911
+version: 1.18.10+914
 
 publish_to: none
 
@@ -78,7 +78,7 @@ dependencies:
   local_auth: ^2.1.7
   printing: ^5.13.4
   pdf: ^3.11.1
-  pointycastle: ^3.9.1
+  pointycastle: ^4.0.0
   connectivity_plus: ^7.0.0
   timezone: ^0.10.0
   ew_endpoint_manager: 0.1.0
@@ -154,9 +154,7 @@ flutter:
     - assets/images/assets/
     - assets/images/public/
     - assets/avatars/
-    - assets/kusama.svg
-    - assets/nctr_logo.svg
-    - assets/nctr_logo_faces_only_thick.svg
+    - assets/
 
   # fonts:
   #   - family: Schyler

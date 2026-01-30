@@ -404,6 +404,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get event => 'ID d\'événement';
 
   @override
+  String get treasurySpend => 'Dépense du trésor';
+
+  @override
+  String get treasurySwap => 'Échange du trésor';
+
+  @override
   String get swapOption => 'Option d’échange';
 
   @override
@@ -454,7 +460,21 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get export => 'Activer le Bazaar';
+  String get exerciseSwapSuccess => 'Échange réussi';
+
+  @override
+  String get exerciseSwapAssetSuccessMessage =>
+      'Tu verras bientôt la transaction sur Subscan.';
+
+  @override
+  String get exerciseSwapNativeSuccessMessage =>
+      'Tu verras bientôt la transaction dans ton historique de transactions.';
+
+  @override
+  String get exerciseSwapOpenSubscan => 'Ouvrir Subscan';
+
+  @override
+  String get export => 'Exporter compte';
 
   @override
   String get exportAccount => 'exporter';
@@ -1286,18 +1306,24 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String treasuryGlobalBalance(String balance) {
-    return 'Solde libre du trésor global : $balance KSM.';
-  }
+  String get treasuryGlobalBalance => 'Solde global du trésor';
 
   @override
-  String treasuryLocalBalance(String balance) {
-    return 'Solde libre du trésor communautaire : $balance KSM.';
-  }
+  String get treasuryLocalBalance => 'Solde du trésor communautaire';
 
   @override
-  String treasuryLocalBalanceOnAHK(String balance, String asset) {
-    return 'Solde libre du trésor communautaire sur Asset Hub: $balance $asset.';
+  String get treasuryLocalBalanceOnAHK =>
+      'Solde du trésor communautaire sur l’Asset Hub';
+
+  @override
+  String get treasuryTotal => 'Total';
+
+  @override
+  String get treasuryUnreserved => 'Non réservé';
+
+  @override
+  String treasuryLocalBalanceBeforeSwap(Object asset, Object balance) {
+    return 'Solde libre du trésor communautaire avant l’échange : $balance $asset.';
   }
 
   @override
@@ -1358,6 +1384,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get unregisterParticipantNotificationTitle => 'Inscription annulée';
+
+  @override
+  String get swapNotificationBody =>
+      'Tu as échangé tes jetons communautaires avec succès !';
+
+  @override
+  String get swapNotificationTitle => 'Échange réussi';
 
   @override
   String get updatingAppState => 'L\'état de l\'app est mis à jour...';

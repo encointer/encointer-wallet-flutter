@@ -6,5 +6,4 @@ Future<void> changeDevNetwork(FlutterDriver driver, String account) async {
   await driver.tap(find.byValueKey(EWTestKeys.nctrGslDev));
   await driver.tap(find.text(account));
   await driver.waitFor(find.byValueKey(EWTestKeys.profileListView));
-  await driver.tap(find.byValueKey(EWTestKeys.devMode));
 }

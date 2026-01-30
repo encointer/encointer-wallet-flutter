@@ -4,10 +4,10 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i7;
 
-import '../../frame_support/dispatch/dispatch_info.dart' as _i3;
 import '../../primitive_types/h256.dart' as _i6;
 import '../../sp_core/crypto/account_id32.dart' as _i5;
 import '../../sp_runtime/dispatch_error.dart' as _i4;
+import '../dispatch_event_info.dart' as _i3;
 
 /// Event for the System pallet.
 abstract class Event {
@@ -37,13 +37,13 @@ abstract class Event {
 class $Event {
   const $Event();
 
-  ExtrinsicSuccess extrinsicSuccess({required _i3.DispatchInfo dispatchInfo}) {
+  ExtrinsicSuccess extrinsicSuccess({required _i3.DispatchEventInfo dispatchInfo}) {
     return ExtrinsicSuccess(dispatchInfo: dispatchInfo);
   }
 
   ExtrinsicFailed extrinsicFailed({
     required _i4.DispatchError dispatchError,
-    required _i3.DispatchInfo dispatchInfo,
+    required _i3.DispatchEventInfo dispatchInfo,
   }) {
     return ExtrinsicFailed(
       dispatchError: dispatchError,
@@ -82,6 +82,16 @@ class $Event {
       checkVersion: checkVersion,
     );
   }
+
+  RejectedInvalidAuthorizedUpgrade rejectedInvalidAuthorizedUpgrade({
+    required _i6.H256 codeHash,
+    required _i4.DispatchError error,
+  }) {
+    return RejectedInvalidAuthorizedUpgrade(
+      codeHash: codeHash,
+      error: error,
+    );
+  }
 }
 
 class $EventCodec with _i1.Codec<Event> {
@@ -105,6 +115,8 @@ class $EventCodec with _i1.Codec<Event> {
         return Remarked._decode(input);
       case 6:
         return UpgradeAuthorized._decode(input);
+      case 7:
+        return RejectedInvalidAuthorizedUpgrade._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
     }
@@ -137,6 +149,9 @@ class $EventCodec with _i1.Codec<Event> {
       case UpgradeAuthorized:
         (value as UpgradeAuthorized).encodeTo(output);
         break;
+      case RejectedInvalidAuthorizedUpgrade:
+        (value as RejectedInvalidAuthorizedUpgrade).encodeTo(output);
+        break;
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -159,6 +174,8 @@ class $EventCodec with _i1.Codec<Event> {
         return (value as Remarked)._sizeHint();
       case UpgradeAuthorized:
         return (value as UpgradeAuthorized)._sizeHint();
+      case RejectedInvalidAuthorizedUpgrade:
+        return (value as RejectedInvalidAuthorizedUpgrade)._sizeHint();
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -170,11 +187,11 @@ class ExtrinsicSuccess extends Event {
   const ExtrinsicSuccess({required this.dispatchInfo});
 
   factory ExtrinsicSuccess._decode(_i1.Input input) {
-    return ExtrinsicSuccess(dispatchInfo: _i3.DispatchInfo.codec.decode(input));
+    return ExtrinsicSuccess(dispatchInfo: _i3.DispatchEventInfo.codec.decode(input));
   }
 
-  /// DispatchInfo
-  final _i3.DispatchInfo dispatchInfo;
+  /// DispatchEventInfo
+  final _i3.DispatchEventInfo dispatchInfo;
 
   @override
   Map<String, Map<String, Map<String, dynamic>>> toJson() => {
@@ -183,7 +200,7 @@ class ExtrinsicSuccess extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i3.DispatchInfo.codec.sizeHint(dispatchInfo);
+    size = size + _i3.DispatchEventInfo.codec.sizeHint(dispatchInfo);
     return size;
   }
 
@@ -192,7 +209,7 @@ class ExtrinsicSuccess extends Event {
       0,
       output,
     );
-    _i3.DispatchInfo.codec.encodeTo(
+    _i3.DispatchEventInfo.codec.encodeTo(
       dispatchInfo,
       output,
     );
@@ -220,15 +237,15 @@ class ExtrinsicFailed extends Event {
   factory ExtrinsicFailed._decode(_i1.Input input) {
     return ExtrinsicFailed(
       dispatchError: _i4.DispatchError.codec.decode(input),
-      dispatchInfo: _i3.DispatchInfo.codec.decode(input),
+      dispatchInfo: _i3.DispatchEventInfo.codec.decode(input),
     );
   }
 
   /// DispatchError
   final _i4.DispatchError dispatchError;
 
-  /// DispatchInfo
-  final _i3.DispatchInfo dispatchInfo;
+  /// DispatchEventInfo
+  final _i3.DispatchEventInfo dispatchInfo;
 
   @override
   Map<String, Map<String, Map<String, dynamic>>> toJson() => {
@@ -241,7 +258,7 @@ class ExtrinsicFailed extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + _i4.DispatchError.codec.sizeHint(dispatchError);
-    size = size + _i3.DispatchInfo.codec.sizeHint(dispatchInfo);
+    size = size + _i3.DispatchEventInfo.codec.sizeHint(dispatchInfo);
     return size;
   }
 
@@ -254,7 +271,7 @@ class ExtrinsicFailed extends Event {
       dispatchError,
       output,
     );
-    _i3.DispatchInfo.codec.encodeTo(
+    _i3.DispatchEventInfo.codec.encodeTo(
       dispatchInfo,
       output,
     );
@@ -534,5 +551,75 @@ class UpgradeAuthorized extends Event {
   int get hashCode => Object.hash(
         codeHash,
         checkVersion,
+      );
+}
+
+/// An invalid authorized upgrade was rejected while trying to apply it.
+class RejectedInvalidAuthorizedUpgrade extends Event {
+  const RejectedInvalidAuthorizedUpgrade({
+    required this.codeHash,
+    required this.error,
+  });
+
+  factory RejectedInvalidAuthorizedUpgrade._decode(_i1.Input input) {
+    return RejectedInvalidAuthorizedUpgrade(
+      codeHash: const _i1.U8ArrayCodec(32).decode(input),
+      error: _i4.DispatchError.codec.decode(input),
+    );
+  }
+
+  /// T::Hash
+  final _i6.H256 codeHash;
+
+  /// DispatchError
+  final _i4.DispatchError error;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'RejectedInvalidAuthorizedUpgrade': {
+          'codeHash': codeHash.toList(),
+          'error': error.toJson(),
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + const _i6.H256Codec().sizeHint(codeHash);
+    size = size + _i4.DispatchError.codec.sizeHint(error);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      7,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      codeHash,
+      output,
+    );
+    _i4.DispatchError.codec.encodeTo(
+      error,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RejectedInvalidAuthorizedUpgrade &&
+          _i7.listsEqual(
+            other.codeHash,
+            codeHash,
+          ) &&
+          other.error == error;
+
+  @override
+  int get hashCode => Object.hash(
+        codeHash,
+        error,
       );
 }

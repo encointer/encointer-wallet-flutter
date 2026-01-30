@@ -62,6 +62,14 @@ class $Event {
   DispatchedAs dispatchedAs({required _i1.Result<dynamic, _i3.DispatchError> result}) {
     return DispatchedAs(result: result);
   }
+
+  IfElseMainSuccess ifElseMainSuccess() {
+    return IfElseMainSuccess();
+  }
+
+  IfElseFallbackCalled ifElseFallbackCalled({required _i3.DispatchError mainError}) {
+    return IfElseFallbackCalled(mainError: mainError);
+  }
 }
 
 class $EventCodec with _i1.Codec<Event> {
@@ -83,6 +91,10 @@ class $EventCodec with _i1.Codec<Event> {
         return ItemFailed._decode(input);
       case 5:
         return DispatchedAs._decode(input);
+      case 6:
+        return const IfElseMainSuccess();
+      case 7:
+        return IfElseFallbackCalled._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
     }
@@ -112,6 +124,12 @@ class $EventCodec with _i1.Codec<Event> {
       case DispatchedAs:
         (value as DispatchedAs).encodeTo(output);
         break;
+      case IfElseMainSuccess:
+        (value as IfElseMainSuccess).encodeTo(output);
+        break;
+      case IfElseFallbackCalled:
+        (value as IfElseFallbackCalled).encodeTo(output);
+        break;
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -132,6 +150,10 @@ class $EventCodec with _i1.Codec<Event> {
         return (value as ItemFailed)._sizeHint();
       case DispatchedAs:
         return (value as DispatchedAs)._sizeHint();
+      case IfElseMainSuccess:
+        return 1;
+      case IfElseFallbackCalled:
+        return (value as IfElseFallbackCalled)._sizeHint();
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -366,4 +388,70 @@ class DispatchedAs extends Event {
 
   @override
   int get hashCode => result.hashCode;
+}
+
+/// Main call was dispatched.
+class IfElseMainSuccess extends Event {
+  const IfElseMainSuccess();
+
+  @override
+  Map<String, dynamic> toJson() => {'IfElseMainSuccess': null};
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      6,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) => other is IfElseMainSuccess;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+}
+
+/// The fallback call was dispatched.
+class IfElseFallbackCalled extends Event {
+  const IfElseFallbackCalled({required this.mainError});
+
+  factory IfElseFallbackCalled._decode(_i1.Input input) {
+    return IfElseFallbackCalled(mainError: _i3.DispatchError.codec.decode(input));
+  }
+
+  /// DispatchError
+  final _i3.DispatchError mainError;
+
+  @override
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {
+        'IfElseFallbackCalled': {'mainError': mainError.toJson()}
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i3.DispatchError.codec.sizeHint(mainError);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      7,
+      output,
+    );
+    _i3.DispatchError.codec.encodeTo(
+      mainError,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is IfElseFallbackCalled && other.mainError == mainError;
+
+  @override
+  int get hashCode => mainError.hashCode;
 }

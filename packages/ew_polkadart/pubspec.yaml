@@ -12,8 +12,8 @@ dependencies:
   convert: ^3.1.1
   # Generated files depend on quiver
   quiver: ^3.2.1
-  polkadart: ^0.7.1
-  polkadart_scale_codec: ^1.3.0
+  polkadart: ^0.7.3
+  polkadart_scale_codec: ^1.6.0
 
 dev_dependencies:
   # The generated files do not satisfy the `very_good_analysis` lints.
@@ -32,4 +32,5 @@ polkadart:
   output_dir: lib/generated
   chains:
     encointer_kusama: wss://kusama.api.encointer.org
+#    encointer_kusama: ws://localhost:9944
 #    asset_hub_kusama:  wss://sys.ibp.network/asset-hub-kusama

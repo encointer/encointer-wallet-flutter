@@ -1,0 +1,152 @@
+name: Android CI
+run-name: Android CI (${{ github.event.inputs.device }}, API ${{ github.event.inputs.api_level }})
+
+on:
+  workflow_dispatch:
+    inputs:
+      device:
+        description:  "Device"
+        required: true
+        type: string
+      api_level:
+        description: "API Level"
+        required: true
+        type: number
+      record_video:
+        description: "Record Video"
+        required: true
+        type: boolean
+      ws_endpoint:
+        description: "WebSocket Endpoint"
+        required: true
+        type: string
+      git_ref:
+        description: "For concurrency management"
+        required: true
+        type: string
+
+env:
+  ARTIFACT_PATH: ./screenshots
+
+concurrency:
+  group: device-ci-${{ github.event.inputs.git_ref }}-${{ github.event.inputs.device }}-${{ github.event.inputs.api_level }}-${{ github.event.inputs.record_video }}
+  cancel-in-progress: true
+
+jobs:
+  android_device_tests:
+    name: Android Device Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set unified input variables
+        run: |
+          echo "DEVICE=${{ github.event.inputs.device }}" >> $GITHUB_ENV
+          echo "API_LEVEL=${{ github.event.inputs.api_level }}" >> $GITHUB_ENV
+          echo "RECORD_VIDEO=${{ github.event.inputs.record_video }}" >> $GITHUB_ENV
+          echo "WS_ENDPOINT=${{ github.event.inputs.ws_endpoint }}" >> $GITHUB_ENV
+
+      - name: Debug WS endpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          
+          echo "WS_ENDPOINT=$WS_ENDPOINT"
+          [[ -n "$WS_ENDPOINT" ]] || (echo "❌ WS_ENDPOINT is empty" && exit 1)
+          
+          # Convert WS → HTTP for health check
+          HTTP_URL="${WS_ENDPOINT/wss:/https:}"
+          
+          echo "🌍 HTTP endpoint: $HTTP_URL"
+          echo "🔎 Performing JSON-RPC health check..."
+          
+          JSON_PAYLOAD='{"jsonrpc":"2.0","id":1,"method":"system_health","params":[]}'
+          
+          RESPONSE=$(curl -sS \
+            -H "Content-Type: application/json" \
+            -d "$JSON_PAYLOAD" \
+            "$HTTP_URL" || true)
+          
+          echo "↩️ Raw response:"
+          echo "$RESPONSE"
+          
+          # Validate JSON-RPC success
+          echo "$RESPONSE" | jq -e '.result' >/dev/null
+          
+          echo "✅ JSON-RPC health check passed"
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Install flutter wrapper
+        run: ./scripts/install_flutter_wrapper.sh
+
+      - name: Setup Android SDK and accept licences
+        uses: android-actions/setup-android@v3
+
+      - name: List android images
+        run: sdkmanager --list | grep system-images
+
+      - name: Get dependencies (i.e., melos)
+        run: .flutter/bin/dart pub get
+
+      - name: Melos Bootstrap
+        run: .flutter/bin/dart run melos bootstrap
+
+      - name: Gradle cache
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ env.API_LEVEL }}-${{ env.DEVICE }}
+
+      - name: "Create AVD and generate a clean snapshot for caching"
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ env.API_LEVEL }}
+          profile: ${{ env.DEVICE }}
+          force-avd-creation: false
+          arch: x86_64
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+
+      - name: "Android Integration Tests"
+        timeout-minutes: 45
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          ANDROID_DEBUG: "true"
+          RECORD: ${{ env.RECORD_VIDEO }}
+          TEMP_DIR: ${{ env.ARTIFACT_PATH }}
+        with:
+          api-level: ${{ env.API_LEVEL }}
+          profile: ${{ env.DEVICE }}
+          force-avd-creation: false
+          arch: x86_64
+          # as we use the cleanly cached emulator, we need to define `-no-snapshot-save` here.
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: ./scripts/android_integration_test.sh
+
+      - name: "Upload screenshots"
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.DEVICE }}-api${{ env.API_LEVEL }}-screenshots
+          path: ${{ env.ARTIFACT_PATH }}

@@ -30,7 +30,6 @@ import 'generated/encointer_kusama/types/pallet_encointer_treasuries/pallet/erro
 import 'generated/encointer_kusama/types/pallet_grandpa/pallet/error.dart' as _i8;
 import 'generated/encointer_kusama/types/pallet_proxy/pallet/error.dart' as _i10;
 import 'generated/encointer_kusama/types/pallet_scheduler/pallet/error.dart' as _i11;
-import 'generated/encointer_kusama/types/pallet_sudo/pallet/error.dart' as _i4;
 // import 'generated/encointer_kusama/types/pallet_transaction_payment/pallet/error.dart' as _i6;
 import 'generated/encointer_kusama/types/pallet_treasury/pallet/error.dart' as _i12;
 import 'generated/encointer_kusama/types/pallet_utility/pallet/error.dart' as _i9;
@@ -73,8 +72,6 @@ RuntimeError decodeWithIndex(int index, _i1.Input input) {
   switch (index) {
     case 0:
       return System._decode(input);
-    case 5:
-      return Sudo._decode(input);
     case 10:
       return Balances._decode(input);
     // case 11:
@@ -119,10 +116,6 @@ class $RuntimeError {
 
   System system(_i3.Error value0) {
     return System(value0);
-  }
-
-  Sudo sudo(_i4.Error value0) {
-    return Sudo(value0);
   }
 
   Balances balances(_i5.Error value0) {
@@ -212,9 +205,6 @@ class $RuntimeErrorCodec with _i1.Codec<RuntimeError> {
       case System:
         (value as System).encodeTo(output);
         break;
-      case Sudo:
-        (value as Sudo).encodeTo(output);
-        break;
       case Balances:
         (value as Balances).encodeTo(output);
         break;
@@ -276,8 +266,6 @@ class $RuntimeErrorCodec with _i1.Codec<RuntimeError> {
     switch (value.runtimeType) {
       case System:
         return (value as System)._sizeHint();
-      case Sudo:
-        return (value as Sudo)._sizeHint();
       case Balances:
         return (value as Balances)._sizeHint();
       // case TransactionPayment:
@@ -355,48 +343,6 @@ class System extends RuntimeError {
         other,
       ) ||
       other is System && other.value0 == value0;
-
-  @override
-  int get hashCode => value0.hashCode;
-}
-
-class Sudo extends RuntimeError {
-  const Sudo(this.value0);
-
-  factory Sudo._decode(_i1.Input input) {
-    return Sudo(_i4.Error.codec.decode(input));
-  }
-
-  /// pallet_sudo::Event<Runtime>
-  final _i4.Error value0;
-
-  @override
-  Map<String, String> toJson() => {'Sudo': value0.toJson()};
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i4.Error.codec.sizeHint(value0);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      5,
-      output,
-    );
-    _i4.Error.codec.encodeTo(
-      value0,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is Sudo && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;

@@ -401,6 +401,12 @@ class AppLocalizationsSw extends AppLocalizations {
   String get event => 'ID ya tukio';
 
   @override
+  String get treasurySpend => 'Matumizi ya hazina';
+
+  @override
+  String get treasurySwap => 'Ubadilishanaji wa hazina';
+
+  @override
   String get swapOption => 'Chaguo la kubadilisha';
 
   @override
@@ -449,6 +455,20 @@ class AppLocalizationsSw extends AppLocalizations {
   String exerciseSwapOptionAmount(String cc) {
     return 'Kiasi cha kubadilisha ($cc)';
   }
+
+  @override
+  String get exerciseSwapSuccess => 'Kubadilisha kufanikiwa';
+
+  @override
+  String get exerciseSwapAssetSuccessMessage =>
+      'Hivi karibuni utaona muamala kwenye Subscan.';
+
+  @override
+  String get exerciseSwapNativeSuccessMessage =>
+      'Hivi karibuni utaona muamala kwenye historia yako ya miamala.';
+
+  @override
+  String get exerciseSwapOpenSubscan => 'Fungua Subscan';
 
   @override
   String get export =>
@@ -1282,18 +1302,24 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String treasuryGlobalBalance(String balance) {
-    return 'Salio huru la hazina ya kimataifa: $balance KSM.';
-  }
+  String get treasuryGlobalBalance => 'Salio la hazina ya jumla';
 
   @override
-  String treasuryLocalBalance(String balance) {
-    return 'Salio huru la hazina ya jamii: $balance KSM.';
-  }
+  String get treasuryLocalBalance => 'Salio la hazina ya jamii';
 
   @override
-  String treasuryLocalBalanceOnAHK(String balance, String asset) {
-    return 'Salio huru la hazina ya jamii kwenye AHK: $balance KSM.';
+  String get treasuryLocalBalanceOnAHK =>
+      'Salio la hazina ya jamii kwenye Asset Hub';
+
+  @override
+  String get treasuryTotal => 'Jumla';
+
+  @override
+  String get treasuryUnreserved => 'Isiyohifadhiwa';
+
+  @override
+  String treasuryLocalBalanceBeforeSwap(Object asset, Object balance) {
+    return 'Salio huru la hazina ya jamii kabla ya kubadilisha: $balance $asset.';
   }
 
   @override
@@ -1355,6 +1381,13 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get unregisterParticipantNotificationTitle => 'Usajili umefutwa';
+
+  @override
+  String get swapNotificationBody =>
+      'Umebadilisha tokeni za jamii zako kwa mafanikio!';
+
+  @override
+  String get swapNotificationTitle => 'Kubadilisha kufanikiwa';
 
   @override
   String get updatingAppState => 'Inaboresha hali ya programu...';

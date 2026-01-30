@@ -57,12 +57,12 @@ void main() {
     test('fromJson() should return correct transaction type', () {
       for (final element in outgoingTxs) {
         final tx = Transaction.fromJson(element);
-        expect(tx.type, equals(TransactionType.outgoing));
+        expect(tx.transactionType, equals(TransactionType.outgoing));
       }
 
       for (final element in incomingTxs) {
         final tx = Transaction.fromJson(element);
-        expect(tx.type, equals(TransactionType.incoming));
+        expect(tx.transactionType, equals(TransactionType.incoming));
       }
     });
 

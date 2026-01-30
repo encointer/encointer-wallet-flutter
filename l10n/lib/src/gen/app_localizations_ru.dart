@@ -399,6 +399,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get event => 'ID события';
 
   @override
+  String get treasurySpend => 'Расход казны';
+
+  @override
+  String get treasurySwap => 'Обмен казны';
+
+  @override
   String get swapOption => 'Опция обмена';
 
   @override
@@ -446,6 +452,20 @@ class AppLocalizationsRu extends AppLocalizations {
   String exerciseSwapOptionAmount(String cc) {
     return 'Сумма для обмена ($cc)';
   }
+
+  @override
+  String get exerciseSwapSuccess => 'Обмен выполнен успешно';
+
+  @override
+  String get exerciseSwapAssetSuccessMessage =>
+      'Скоро ты увидишь транзакцию на Subscan.';
+
+  @override
+  String get exerciseSwapNativeSuccessMessage =>
+      'Скоро ты увидишь транзакцию в своей истории транзакций.';
+
+  @override
+  String get exerciseSwapOpenSubscan => 'Открыть Subscan';
 
   @override
   String get export => 'Экпорт аккаунта';
@@ -1277,18 +1297,24 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String treasuryGlobalBalance(String balance) {
-    return 'Свободный баланс глобального казначейства: $balance KSM.';
-  }
+  String get treasuryGlobalBalance => 'Глобальный баланс казны';
 
   @override
-  String treasuryLocalBalance(String balance) {
-    return 'Свободный баланс казначейства сообщества: $balance KSM.';
-  }
+  String get treasuryLocalBalance => 'Баланс казны сообщества';
 
   @override
-  String treasuryLocalBalanceOnAHK(String balance, String asset) {
-    return 'Свободный баланс казначейства сообщества на Asset Hub: $balance KSM.';
+  String get treasuryLocalBalanceOnAHK =>
+      'Баланс казны сообщества на Asset Hub';
+
+  @override
+  String get treasuryTotal => 'Итого';
+
+  @override
+  String get treasuryUnreserved => 'Незарезервированный';
+
+  @override
+  String treasuryLocalBalanceBeforeSwap(Object asset, Object balance) {
+    return 'Свободный баланс казны сообщества перед обменом: $balance $asset.';
   }
 
   @override
@@ -1351,6 +1377,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get unregisterParticipantNotificationTitle => 'Регистрация отменена';
+
+  @override
+  String get swapNotificationBody =>
+      'Ты успешно обменял свои токены сообщества!';
+
+  @override
+  String get swapNotificationTitle => 'Обмен выполнен успешно';
 
   @override
   String get updatingAppState => 'Обновление приложения';

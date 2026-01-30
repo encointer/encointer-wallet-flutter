@@ -134,8 +134,11 @@ List<NetworkEndpoint> kusamaEndpoints() {
   ];
 }
 
+// Dev Endpoints
+const wsAhFromEnv = String.fromEnvironment('WS_ENDPOINT_AH');
+
 List<NetworkEndpoint> assetHubKusamaEndpoints() {
-  return [
+  final wsAhRemote = [
     NetworkEndpoint(name: 'Dwellir', address: 'wss://asset-hub-kusama-rpc.n.dwellir.com'),
     NetworkEndpoint(name: 'Dwellir Tunisia', address: 'wss://statemine-rpc-tn.dwellir.com'),
     NetworkEndpoint(name: 'IBP1', address: 'wss://sys.ibp.network/asset-hub-kusama'),
@@ -144,18 +147,22 @@ List<NetworkEndpoint> assetHubKusamaEndpoints() {
     NetworkEndpoint(name: 'OnFinality', address: 'wss://assethub-kusama.api.onfinality.io/public-ws'),
     NetworkEndpoint(name: 'RadiumBlock', address: 'wss://statemine.public.curie.radiumblock.co/ws'),
   ];
+  return wsAhFromEnv.isNotEmpty ? [NetworkEndpoint(name: 'Local AhDevNet', address: wsAhFromEnv)] : wsAhRemote;
 }
 
 // Dev Endpoints
+const wsFromEnv = String.fromEnvironment('WS_ENDPOINT');
 
 List<NetworkEndpoint> zombienetLocalEndpoints() {
-  return [
-    NetworkEndpoint(name: 'Local DevNet', address: 'ws://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:9944')
-  ];
+  final wsEndpoint =
+      wsFromEnv.isNotEmpty ? wsFromEnv : 'ws://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:9944';
+
+  return [NetworkEndpoint(name: 'Local DevNet', address: wsEndpoint)];
 }
 
 List<NetworkEndpoint> gesellDevEndpoints() {
-  return [
-    NetworkEndpoint(name: 'Local DevNet', address: 'ws://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:9944')
-  ];
+  final wsEndpoint =
+      wsFromEnv.isNotEmpty ? wsFromEnv : 'ws://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:9944';
+
+  return [NetworkEndpoint(name: 'Local DevNet', address: wsEndpoint)];
 }

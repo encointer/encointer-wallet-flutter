@@ -39,6 +39,7 @@ class Screenshots {
   static const accountPasswordDialog = '065-account-password-dialog';
   static const exportAccountView = '066-export-account-view';
   static const accountShareView = '067-account-share-view';
+  static const profileDevOptions = '068-profile-dev-options';
 
   /// 81-100 contacts
   static const contactsOverviewEmpty = '081-contacts-overview-empty';

@@ -142,6 +142,10 @@ extension PropsalActionExt on ProposalActionIdentifier {
     return this == ProposalActionIdentifier.issueSwapNativeOption ||
         this == ProposalActionIdentifier.issueSwapAssetOption;
   }
+
+  bool isAssetSwapAction() {
+    return this == ProposalActionIdentifier.issueSwapAssetOption;
+  }
 }
 
 bool hasSameProposalForSameScope(

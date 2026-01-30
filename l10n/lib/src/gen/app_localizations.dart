@@ -830,6 +830,18 @@ abstract class AppLocalizations {
   /// **'Event ID'**
   String get event;
 
+  /// No description provided for @treasurySpend.
+  ///
+  /// In en, this message translates to:
+  /// **'Treasury Spend'**
+  String get treasurySpend;
+
+  /// No description provided for @treasurySwap.
+  ///
+  /// In en, this message translates to:
+  /// **'Treasury Swap'**
+  String get treasurySwap;
+
   /// No description provided for @swapOption.
   ///
   /// In en, this message translates to:
@@ -895,6 +907,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Amount to Swap ({cc})'**
   String exerciseSwapOptionAmount(String cc);
+
+  /// No description provided for @exerciseSwapSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Swap successful'**
+  String get exerciseSwapSuccess;
+
+  /// No description provided for @exerciseSwapAssetSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You will soon see the transaction on Subscan.'**
+  String get exerciseSwapAssetSuccessMessage;
+
+  /// No description provided for @exerciseSwapNativeSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You will soon see the transaction in your transaction history.'**
+  String get exerciseSwapNativeSuccessMessage;
+
+  /// No description provided for @exerciseSwapOpenSubscan.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Subscan'**
+  String get exerciseSwapOpenSubscan;
 
   /// No description provided for @export.
   ///
@@ -2363,20 +2399,38 @@ abstract class AppLocalizations {
   /// No description provided for @treasuryGlobalBalance.
   ///
   /// In en, this message translates to:
-  /// **'Free global treasury balance: {balance} KSM.'**
-  String treasuryGlobalBalance(String balance);
+  /// **'Global treasury balance'**
+  String get treasuryGlobalBalance;
 
   /// No description provided for @treasuryLocalBalance.
   ///
   /// In en, this message translates to:
-  /// **'Free community treasury balance: {balance} KSM.'**
-  String treasuryLocalBalance(String balance);
+  /// **'Community treasury balance'**
+  String get treasuryLocalBalance;
 
   /// No description provided for @treasuryLocalBalanceOnAHK.
   ///
   /// In en, this message translates to:
-  /// **'Free community treasury balance on Asset Hub: {balance} {asset}.'**
-  String treasuryLocalBalanceOnAHK(String balance, String asset);
+  /// **'Community treasury balance on Asset Hub'**
+  String get treasuryLocalBalanceOnAHK;
+
+  /// No description provided for @treasuryTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get treasuryTotal;
+
+  /// No description provided for @treasuryUnreserved.
+  ///
+  /// In en, this message translates to:
+  /// **'Unreserved'**
+  String get treasuryUnreserved;
+
+  /// No description provided for @treasuryLocalBalanceBeforeSwap.
+  ///
+  /// In en, this message translates to:
+  /// **'Free community treasury balance before swap: {balance} {asset}.'**
+  String treasuryLocalBalanceBeforeSwap(Object asset, Object balance);
 
   /// No description provided for @treasuryLocalBalanceOnAHKBeforeSwap.
   ///
@@ -2479,6 +2533,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Registration cancelled'**
   String get unregisterParticipantNotificationTitle;
+
+  /// No description provided for @swapNotificationBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You have successfully swapped your community tokens!'**
+  String get swapNotificationBody;
+
+  /// No description provided for @swapNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Swapped Success'**
+  String get swapNotificationTitle;
 
   /// No description provided for @updatingAppState.
   ///

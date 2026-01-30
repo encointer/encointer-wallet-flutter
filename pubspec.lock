@@ -141,10 +141,10 @@ packages:
     dependency: transitive
     description:
       name: bip39_mnemonic
-      sha256: e280b785d40dda3f70186d5a51126c5d3ae2c3b9a1bafdbd20a94b50c8253fb3
+      sha256: dd6bdfc2547d986b2c00f99bba209c69c0b6fa5c1a185e1f728998282f1249d5
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.10"
+    version: "4.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -772,10 +772,10 @@ packages:
     dependency: transitive
     description:
       name: hashlib_codecs
-      sha256: "8cea9ccafcfeaa7324d2ae52c61c69f7ff71f4237507a018caab31b9e416e3b1"
+      sha256: "0e1a17c47792fd131a9bf49b811c394b22516287746ee14cd0b0c22a34136699"
       url: "https://pub.dev"
     source: hosted
-    version: "2.6.0"
+    version: "3.0.1"
   html:
     dependency: transitive
     description:
@@ -1343,18 +1343,18 @@ packages:
     dependency: transitive
     description:
       name: pointycastle
-      sha256: "4be0097fcf3fd3e8449e53730c631200ebc7b88016acecab2b0da2f0149222fe"
+      sha256: "92aa3841d083cc4b0f4709b5c74fd6409a3e6ba833ffc7dc6a8fee096366acf5"
       url: "https://pub.dev"
     source: hosted
-    version: "3.9.1"
+    version: "4.0.0"
   polkadart:
     dependency: transitive
     description:
       name: polkadart
-      sha256: b2369eeb33ee155dcdf2a7af18de8961037b9cc28640e200f1475cea497bc3ab
+      sha256: c91901620ba4b0de1f80fe406d509a404f3ed3fde059e7483a1a597ee4ab96da
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.1"
+    version: "0.7.3"
   polkadart_cli:
     dependency: transitive
     description:
@@ -1367,18 +1367,18 @@ packages:
     dependency: transitive
     description:
       name: polkadart_keyring
-      sha256: e99a93c845466dfb53e23bf650bd6ccd772d7cefe7c7ff2c93c6e86d387e5215
+      sha256: cb1b9733bfbd603d73410ca68e808b0921e24291cdc02ade18907980c5c6872c
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.0"
+    version: "0.7.1"
   polkadart_scale_codec:
     dependency: transitive
     description:
       name: polkadart_scale_codec
-      sha256: "50138c2f0c8f99779c1bf35c1fc44483ccf4a23d7bf625d925e3a9a790d02630"
+      sha256: "07044bf15d5c02ee79984b2696dcf25c598563eca12e70bc9ff45dd7948d93d5"
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.1"
+    version: "1.6.0"
   pool:
     dependency: transitive
     description:
@@ -1583,10 +1583,10 @@ packages:
     dependency: transitive
     description:
       name: secp256k1_ecdsa
-      sha256: "50bca61d6ad872829f6bd05c17a96441c1bcfe456ed5bf8cba710ceac86db5f1"
+      sha256: "137c36cee217c322d8e87ad8dea76e0e976230f26573528bae7bfa301c2f3264"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.1"
+    version: "0.6.3"
   share_plus:
     dependency: transitive
     description:
@@ -1756,10 +1756,10 @@ packages:
     dependency: transitive
     description:
       name: sr25519
-      sha256: "122c930a933da6af018ec4a2ccdb853a7d0eb1a0891bfb03467e366b56f86f12"
+      sha256: "38c840abe245d4e777f1b7593d8f72ae463801c8ef9012a00d2d244f3a944fe3"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.0"
+    version: "0.7.1"
   ss58:
     dependency: transitive
     description:
@@ -1812,18 +1812,18 @@ packages:
     dependency: transitive
     description:
       name: substrate_bip39
-      sha256: ba880015808079804f40a0fde8c5bff0315ec6792fe3a4281a704e408f1c6bdb
+      sha256: "8103aafb10df3b489feaadfc8874dbe2d8474f3deab0383657b4fa5af22fcb39"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.0"
+    version: "0.7.1"
   substrate_metadata:
     dependency: transitive
     description:
       name: substrate_metadata
-      sha256: "6f9e9e3e1078c0c143dd63824043370b9df582d34c431a759253ce2f9cbb7f13"
+      sha256: "252a4a00a23b7da4982d7d2ac5154b6164fd71b3eb0a113faa0ce7983b4e0035"
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.0"
+    version: "1.6.0"
   sync_http:
     dependency: transitive
     description:

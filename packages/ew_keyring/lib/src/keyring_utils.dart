@@ -11,7 +11,7 @@ abstract class KeyringUtils {
     return List<KeyringAccountData>.of(list.map((a) => KeyringAccountData.fromJson(a as Map<String, dynamic>)));
   }
 
-  static Mnemonic generateMnemonic({int entropyLength = 128}) {
-    return Mnemonic.generate(Language.english, entropyLength: entropyLength);
+  static Mnemonic generateMnemonic() {
+    return Mnemonic.generate(Language.english);
   }
 }

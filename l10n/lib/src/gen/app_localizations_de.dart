@@ -405,6 +405,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get event => 'Event ID';
 
   @override
+  String get treasurySpend => 'Treasury-Ausgabe';
+
+  @override
+  String get treasurySwap => 'Treasury-Swap';
+
+  @override
   String get swapOption => 'Swap-Option';
 
   @override
@@ -452,6 +458,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String exerciseSwapOptionAmount(String cc) {
     return 'Zu tauschender Betrag ($cc)';
   }
+
+  @override
+  String get exerciseSwapSuccess => 'Tausch erfolgreich';
+
+  @override
+  String get exerciseSwapAssetSuccessMessage =>
+      'Du wirst die Transaktion bald auf Subscan sehen.';
+
+  @override
+  String get exerciseSwapNativeSuccessMessage =>
+      'Du wirst die Transaktion bald in deinem Transaktionsverlauf sehen.';
+
+  @override
+  String get exerciseSwapOpenSubscan => 'Subscan öffnen';
 
   @override
   String get export => 'Konto exportieren';
@@ -1287,18 +1307,24 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String treasuryGlobalBalance(String balance) {
-    return 'Freies globales Schatzkammerguthaben: $balance KSM.';
-  }
+  String get treasuryGlobalBalance => 'Globales Schatzguthaben';
 
   @override
-  String treasuryLocalBalance(String balance) {
-    return 'Freies Gemeinschaftsschatzkammerguthaben: $balance KSM.';
-  }
+  String get treasuryLocalBalance => 'Gemeinschaftsschatzguthaben';
 
   @override
-  String treasuryLocalBalanceOnAHK(String balance, String asset) {
-    return 'Freies Gemeinschaftsschatzkammerguthaben auf Asset Hub: $balance $asset.';
+  String get treasuryLocalBalanceOnAHK =>
+      'Gemeinschaftsschatzguthaben auf dem Asset Hub';
+
+  @override
+  String get treasuryTotal => 'Gesamt';
+
+  @override
+  String get treasuryUnreserved => 'Ungebunden';
+
+  @override
+  String treasuryLocalBalanceBeforeSwap(Object asset, Object balance) {
+    return 'Freies Gemeinschaftsschatzguthaben vor dem Tausch: $balance $asset.';
   }
 
   @override
@@ -1361,6 +1387,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get unregisterParticipantNotificationTitle =>
       'Registrierung storniert';
+
+  @override
+  String get swapNotificationBody =>
+      'Du hast Gemeinschaftswährung erfolgreich getauscht!';
+
+  @override
+  String get swapNotificationTitle => 'Tausch erfolgreich';
 
   @override
   String get updatingAppState => 'App-Zustand wird aktualisiert...';

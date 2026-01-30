@@ -399,6 +399,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get event => 'Event ID';
 
   @override
+  String get treasurySpend => 'Treasury Spend';
+
+  @override
+  String get treasurySwap => 'Treasury Swap';
+
+  @override
   String get swapOption => 'Swap Option';
 
   @override
@@ -446,6 +452,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String exerciseSwapOptionAmount(String cc) {
     return 'Amount to Swap ($cc)';
   }
+
+  @override
+  String get exerciseSwapSuccess => 'Swap successful';
+
+  @override
+  String get exerciseSwapAssetSuccessMessage =>
+      'You will soon see the transaction on Subscan.';
+
+  @override
+  String get exerciseSwapNativeSuccessMessage =>
+      'You will soon see the transaction in your transaction history.';
+
+  @override
+  String get exerciseSwapOpenSubscan => 'Open Subscan';
 
   @override
   String get export => 'Export Account';
@@ -1275,18 +1295,24 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String treasuryGlobalBalance(String balance) {
-    return 'Free global treasury balance: $balance KSM.';
-  }
+  String get treasuryGlobalBalance => 'Global treasury balance';
 
   @override
-  String treasuryLocalBalance(String balance) {
-    return 'Free community treasury balance: $balance KSM.';
-  }
+  String get treasuryLocalBalance => 'Community treasury balance';
 
   @override
-  String treasuryLocalBalanceOnAHK(String balance, String asset) {
-    return 'Free community treasury balance on Asset Hub: $balance $asset.';
+  String get treasuryLocalBalanceOnAHK =>
+      'Community treasury balance on Asset Hub';
+
+  @override
+  String get treasuryTotal => 'Total';
+
+  @override
+  String get treasuryUnreserved => 'Unreserved';
+
+  @override
+  String treasuryLocalBalanceBeforeSwap(Object asset, Object balance) {
+    return 'Free community treasury balance before swap: $balance $asset.';
   }
 
   @override
@@ -1347,6 +1373,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get unregisterParticipantNotificationTitle => 'Registration cancelled';
+
+  @override
+  String get swapNotificationBody =>
+      'You have successfully swapped your community tokens!';
+
+  @override
+  String get swapNotificationTitle => 'Swapped Success';
 
   @override
   String get updatingAppState => 'Updating the app state...';

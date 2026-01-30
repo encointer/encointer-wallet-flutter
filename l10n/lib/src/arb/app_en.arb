@@ -121,6 +121,8 @@
     "errorOccurred": "An error occurred:",
     "errorUserNameIsRequired": "User name cannot be blank",
     "event": "Event ID",
+    "treasurySpend": "Treasury Spend",
+    "treasurySwap": "Treasury Swap",
     "swapOption": "Swap Option",
     "swapOptionRate": "Rate {amount} {cc}/{asset}",
     "@swapOptionRate": {
@@ -224,6 +226,10 @@
             }
         }
     },
+    "exerciseSwapSuccess": "Swap successful",
+    "exerciseSwapAssetSuccessMessage": "You will soon see the transaction on Subscan.",
+    "exerciseSwapNativeSuccessMessage": "You will soon see the transaction in your transaction history.",
+    "exerciseSwapOpenSubscan": "Open Subscan",
     "export": "Export Account",
     "exportAccount": "export",
     "exportMnemonicOk": "Mnemonic was copied to clipboard.",
@@ -596,37 +602,12 @@
             }
         }
     },
-    "treasuryGlobalBalance": "Free global treasury balance: {balance} KSM.",
-    "@treasuryGlobalBalance": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
-    "treasuryLocalBalance": "Free community treasury balance: {balance} KSM.",
-    "@treasuryLocalBalance": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            }
-        }
-    },
-    "treasuryLocalBalanceOnAHK": "Free community treasury balance on Asset Hub: {balance} {asset}.",
-    "@treasuryLocalBalanceOnAHK": {
-        "placeholders": {
-            "balance": {
-                "type": "String",
-                "example": "10"
-            },
-            "asset": {
-                "type": "String",
-                "example": "{Leu}"
-            }
-        }
-    },
+    "treasuryGlobalBalance": "Global treasury balance",
+    "treasuryLocalBalance": "Community treasury balance",
+    "treasuryLocalBalanceOnAHK": "Community treasury balance on Asset Hub",
+    "treasuryTotal": "Total",
+    "treasuryUnreserved": "Unreserved",
+    "treasuryLocalBalanceBeforeSwap": "Free community treasury balance before swap: {balance} {asset}.",
     "treasuryLocalBalanceOnAHKBeforeSwap": "Free community treasury balance on Asset Hub before swap: {balance} {asset}.",
     "@treasuryLocalBalanceOnAHKBeforeSwap": {
         "placeholders": {
@@ -664,6 +645,8 @@
     "unregisterDialogTitle": "Unregister from the next cycle?",
     "unregisterParticipantNotificationBody": "Your registration for the next cycle has been cancelled. If you change your mind, you can register again.",
     "unregisterParticipantNotificationTitle": "Registration cancelled",
+    "swapNotificationBody": "You have successfully swapped your community tokens!",
+    "swapNotificationTitle": "Swapped Success",
     "updatingAppState": "Updating the app state...",
     "value": "Value",
     "votesNotDependableErrorBody": "Only half or less of the assigned participants were attested for this gathering. It could also be that some attendees haven't submitted their attestation yet. This prevents the early payout, and you need to wait for 48 hours.",

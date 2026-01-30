@@ -5,9 +5,7 @@ import 'package:convert/convert.dart' show hex;
 
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/config/networks/networks.dart';
-import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
-import 'package:encointer_wallet/models/bazaar/business_identifier.dart';
 import 'package:encointer_wallet/models/bazaar/offering_data.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
@@ -944,6 +942,15 @@ class EncointerApi {
     return proposalIds;
   }
 
+  Future<List<et.ProxyDefinition>> getProxyAccounts(AccountId32 accountId, {BlockHash? at}) async {
+    final proxies = await encointerKusama.query.proxy.proxies(accountId, at: at ?? store.chain.latestHash);
+
+    final address = AddressUtils.pubKeyToAddress(accountId, prefix: store.settings.currentNetwork.ss58());
+    Log.d('[getProxyAccounts] Account $address has ${proxies.value0.length} proxies');
+
+    return proxies.value0;
+  }
+
   DemocracyParams democracyParams() {
     return switch (store.settings.currentNetwork) {
       Network.encointerKusama => encointerKusamaParams(),
@@ -1031,21 +1038,32 @@ class EncointerApi {
     return businesses;
   }
 
-  /// Get all the registered offerings for the current `chosenCid`
-  Future<List<OfferingData>> getOfferings({BlockHash? at}) async {
-    // Todo: @armin you'd probably extend the encointer store and also set the store here.
-    return allMockOfferings;
-  }
-
-  /// Get all the registered offerings for the business with [bid]
-  Future<List<OfferingData>> getOfferingsForBusiness(BusinessIdentifier bid, {BlockHash? at}) async {
-    // Todo: @armin you'd probably extend the encointer store and also set the store here.
-    return business1MockOfferings;
-  }
-
   Future<List<OfferingData>> bazaarGetOfferingsForBusiness(CommunityIdentifier cid, String? controller,
       {BlockHash? at}) async {
     return _dartApi.bazaarGetOfferingsForBusiness(cid, controller, at: at ?? store.chain.latestHash);
+  }
+
+  Future<bool> isBusinessOwnerOrDelegate(
+    CommunityIdentifier cid,
+    String address,
+  ) async {
+    final accountBusiness = await bazaarGetBusinesses(cid);
+
+    // 1. Direct ownership check
+    final isOwner = accountBusiness.any((b) => AddressUtils.areEqual(b.controller, address));
+    if (isOwner) return true;
+
+    // 2. Delegate/Proxy check
+    final controllers = accountBusiness.map((bus) => AddressUtils.addressToPubKey(bus.controller).toList()).toList();
+    final multiProxies = await Future.wait(controllers.map(getProxyAccounts));
+
+    for (final proxies in multiProxies) {
+      if (proxies.any((p) => AddressUtils.isSamePubKey(address, p.delegate))) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }
 
