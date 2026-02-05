@@ -12,6 +12,10 @@ const communityIconName = 'community_icon.svg';
 const String ipfsGatewayEncointer = 'https://ipfs2.encointer.org';
 final String ipfsGatewayLocal = 'http://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:8080';
 
+// IPFS Auth Gateway (for uploads)
+const String ipfsAuthGatewayEncointer = 'https://ipfs-auth.encointer.org';
+final String ipfsAuthGatewayLocal = 'http://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:5050';
+
 const encointerFeed = 'https://encointer.github.io/feed';
 const communityMessagesPath = 'community_messages/$localePlaceHolder/cm.json';
 const encointerFeedOverridesPath = 'overrides.json';
