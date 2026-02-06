@@ -11,6 +11,8 @@ import 'mock_assets_api.dart';
 import 'mock_chain_api.dart';
 import 'mock_encointer_api.dart';
 import 'mock_encointer_kusama_api.dart';
+import 'mock_ipfs_auth_service.dart';
+import 'mock_ipfs_upload_service.dart';
 import 'mock_polkadart_provider.dart';
 import 'mock_substrate_dart_api.dart';
 
@@ -21,14 +23,15 @@ MockApi getMockApi(AppStore store) {
 class MockApi extends Api {
   MockApi(AppStore store, EwHttp ewHttp)
       : super(
-          store,
-          MockPolkadartProvider(),
-          MockAccountApi(store, MockPolkadartProvider()),
-          MockAssetsApi(store, MockEncointerKusamaApi()),
-          MockChainApi(store, MockPolkadartProvider()),
-          MockEncointerApi(store, MockSubstrateDartApi(MockPolkadartProvider()), ewHttp, MockEncointerKusamaApi()),
-          MockIpfsApi(ewHttp),
-        );
+            store,
+            MockPolkadartProvider(),
+            MockAccountApi(store, MockPolkadartProvider()),
+            MockAssetsApi(store, MockEncointerKusamaApi()),
+            MockChainApi(store, MockPolkadartProvider()),
+            MockEncointerApi(store, MockSubstrateDartApi(MockPolkadartProvider()), ewHttp, MockEncointerKusamaApi()),
+            MockIpfsApi(ewHttp),
+            MockIpfsAuthService(ewHttp, gatewayUrl: ''),
+            MockIpfsUploadService(MockIpfsAuthService(ewHttp, gatewayUrl: ''), gatewayUrl: ''));
 
   @override
   Future<void> init() async {
