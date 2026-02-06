@@ -84,6 +84,18 @@ enum Network {
     };
   }
 
+  /// IPFS Auth Gateway URL for authenticated uploads.
+  String ipfsAuthGateway() {
+    return switch (this) {
+      encointerKusama => ipfsAuthGatewayEncointer,
+      encointerRococo => ipfsAuthGatewayEncointer,
+      gesell => ipfsAuthGatewayEncointer,
+      // only dev network refers to the local one
+      gesellDev => ipfsAuthGatewayLocal,
+      zombienetLocal => ipfsAuthGatewayLocal,
+    };
+  }
+
   String defaultEndpoint() {
     return switch (this) {
       encointerKusama => networkEndpoints().first.address(),
