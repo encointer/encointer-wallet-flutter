@@ -117,7 +117,7 @@ class IpfsUploadService {
       }
 
       if (response.statusCode == HttpStatus.forbidden) {
-        throw IpfsUploadException('Not a CC holder for this community', statusCode: response.statusCode);
+        throw IpfsUploadException('Account does not exist on chain', statusCode: response.statusCode);
       }
 
       if (response.statusCode == 429) {
