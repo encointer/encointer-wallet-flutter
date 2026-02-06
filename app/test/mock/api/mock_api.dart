@@ -23,15 +23,16 @@ MockApi getMockApi(AppStore store) {
 class MockApi extends Api {
   MockApi(AppStore store, EwHttp ewHttp)
       : super(
-            store,
-            MockPolkadartProvider(),
-            MockAccountApi(store, MockPolkadartProvider()),
-            MockAssetsApi(store, MockEncointerKusamaApi()),
-            MockChainApi(store, MockPolkadartProvider()),
-            MockEncointerApi(store, MockSubstrateDartApi(MockPolkadartProvider()), ewHttp, MockEncointerKusamaApi()),
-            MockIpfsApi(ewHttp),
-            MockIpfsAuthService(ewHttp, gatewayUrl: ''),
-            MockIpfsUploadService(MockIpfsAuthService(ewHttp, gatewayUrl: ''), gatewayUrl: ''));
+          store,
+          MockPolkadartProvider(),
+          MockAccountApi(store, MockPolkadartProvider()),
+          MockAssetsApi(store, MockEncointerKusamaApi()),
+          MockChainApi(store, MockPolkadartProvider()),
+          MockEncointerApi(store, MockSubstrateDartApi(MockPolkadartProvider()), ewHttp, MockEncointerKusamaApi()),
+          MockIpfsApi(ewHttp),
+          MockIpfsAuthService(ewHttp, gatewayUrl: ''),
+          MockIpfsUploadService(MockIpfsAuthService(ewHttp, gatewayUrl: ''), gatewayUrl: ''),
+        );
 
   @override
   Future<void> init() async {
