@@ -68,6 +68,7 @@ dependencies:
   pausable_timer: ^3.1.0+3
   focus_detector: ^2.0.1 # Todo: #1273: replace with alternative package
   jdenticon_dart: ^2.0.0 # Todo: #1274: replace with alternative package
+  image_picker: ^1.1.2
   photo_view: ^0.15.0
   upgrader: ^11.3.1
   app_links: ^6.3.3
