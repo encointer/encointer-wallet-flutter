@@ -45,7 +45,7 @@ class EncointerMap extends StatelessWidget {
         TileLayer(
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
           tileProvider: NetworkTileProvider(
-            headers: const {'User-Agent': 'EncointerWallet/1.0 org.encointer.wallet'},
+            headers: {'User-Agent': 'EncointerWallet/1.0 org.encointer.wallet'},
           ),
         ),
         PopupMarkerLayer(
