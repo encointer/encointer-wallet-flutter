@@ -117,8 +117,8 @@ dev_dependencies:
   rxdart: ^0.28.0
 
 dependency_overrides:
-  # image_picker_android 0.8.13+13 pulls androidx.activity 1.12.2 which requires AGP 8.9.1+
-  image_picker_android: 0.8.13+12
+  # image_picker_android >=0.8.13 pulls androidx deps requiring AGP 8.9.1+
+  image_picker_android: 0.8.12+17
   json_serializable_mobx_typehelpers:
     git:
       url: https://github.com/encointer/json_serializable_immutable_collections
