@@ -152,6 +152,10 @@ class $Event {
     );
   }
 
+  MintedCredit mintedCredit({required BigInt amount}) {
+    return MintedCredit(amount: amount);
+  }
+
   Burned burned({
     required _i3.AccountId32 who,
     required BigInt amount,
@@ -160,6 +164,10 @@ class $Event {
       who: who,
       amount: amount,
     );
+  }
+
+  BurnedDebt burnedDebt({required BigInt amount}) {
+    return BurnedDebt(amount: amount);
   }
 
   Suspended suspended({
@@ -244,6 +252,70 @@ class $Event {
     );
   }
 
+  Held held({
+    required dynamic reason,
+    required _i3.AccountId32 who,
+    required BigInt amount,
+  }) {
+    return Held(
+      reason: reason,
+      who: who,
+      amount: amount,
+    );
+  }
+
+  BurnedHeld burnedHeld({
+    required dynamic reason,
+    required _i3.AccountId32 who,
+    required BigInt amount,
+  }) {
+    return BurnedHeld(
+      reason: reason,
+      who: who,
+      amount: amount,
+    );
+  }
+
+  TransferOnHold transferOnHold({
+    required dynamic reason,
+    required _i3.AccountId32 source,
+    required _i3.AccountId32 dest,
+    required BigInt amount,
+  }) {
+    return TransferOnHold(
+      reason: reason,
+      source: source,
+      dest: dest,
+      amount: amount,
+    );
+  }
+
+  TransferAndHold transferAndHold({
+    required dynamic reason,
+    required _i3.AccountId32 source,
+    required _i3.AccountId32 dest,
+    required BigInt transferred,
+  }) {
+    return TransferAndHold(
+      reason: reason,
+      source: source,
+      dest: dest,
+      transferred: transferred,
+    );
+  }
+
+  Released released({
+    required dynamic reason,
+    required _i3.AccountId32 who,
+    required BigInt amount,
+  }) {
+    return Released(
+      reason: reason,
+      who: who,
+      amount: amount,
+    );
+  }
+
   Unexpected unexpected(_i5.UnexpectedKind value0) {
     return Unexpected(value0);
   }
@@ -279,28 +351,42 @@ class $EventCodec with _i1.Codec<Event> {
       case 10:
         return Minted._decode(input);
       case 11:
-        return Burned._decode(input);
+        return MintedCredit._decode(input);
       case 12:
-        return Suspended._decode(input);
+        return Burned._decode(input);
       case 13:
-        return Restored._decode(input);
+        return BurnedDebt._decode(input);
       case 14:
-        return Upgraded._decode(input);
+        return Suspended._decode(input);
       case 15:
-        return Issued._decode(input);
+        return Restored._decode(input);
       case 16:
-        return Rescinded._decode(input);
+        return Upgraded._decode(input);
       case 17:
-        return Locked._decode(input);
+        return Issued._decode(input);
       case 18:
-        return Unlocked._decode(input);
+        return Rescinded._decode(input);
       case 19:
-        return Frozen._decode(input);
+        return Locked._decode(input);
       case 20:
-        return Thawed._decode(input);
+        return Unlocked._decode(input);
       case 21:
-        return TotalIssuanceForced._decode(input);
+        return Frozen._decode(input);
       case 22:
+        return Thawed._decode(input);
+      case 23:
+        return TotalIssuanceForced._decode(input);
+      case 24:
+        return Held._decode(input);
+      case 25:
+        return BurnedHeld._decode(input);
+      case 26:
+        return TransferOnHold._decode(input);
+      case 27:
+        return TransferAndHold._decode(input);
+      case 28:
+        return Released._decode(input);
+      case 29:
         return Unexpected._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
@@ -346,8 +432,14 @@ class $EventCodec with _i1.Codec<Event> {
       case Minted:
         (value as Minted).encodeTo(output);
         break;
+      case MintedCredit:
+        (value as MintedCredit).encodeTo(output);
+        break;
       case Burned:
         (value as Burned).encodeTo(output);
+        break;
+      case BurnedDebt:
+        (value as BurnedDebt).encodeTo(output);
         break;
       case Suspended:
         (value as Suspended).encodeTo(output);
@@ -378,6 +470,21 @@ class $EventCodec with _i1.Codec<Event> {
         break;
       case TotalIssuanceForced:
         (value as TotalIssuanceForced).encodeTo(output);
+        break;
+      case Held:
+        (value as Held).encodeTo(output);
+        break;
+      case BurnedHeld:
+        (value as BurnedHeld).encodeTo(output);
+        break;
+      case TransferOnHold:
+        (value as TransferOnHold).encodeTo(output);
+        break;
+      case TransferAndHold:
+        (value as TransferAndHold).encodeTo(output);
+        break;
+      case Released:
+        (value as Released).encodeTo(output);
         break;
       case Unexpected:
         (value as Unexpected).encodeTo(output);
@@ -412,8 +519,12 @@ class $EventCodec with _i1.Codec<Event> {
         return (value as Slashed)._sizeHint();
       case Minted:
         return (value as Minted)._sizeHint();
+      case MintedCredit:
+        return (value as MintedCredit)._sizeHint();
       case Burned:
         return (value as Burned)._sizeHint();
+      case BurnedDebt:
+        return (value as BurnedDebt)._sizeHint();
       case Suspended:
         return (value as Suspended)._sizeHint();
       case Restored:
@@ -434,6 +545,16 @@ class $EventCodec with _i1.Codec<Event> {
         return (value as Thawed)._sizeHint();
       case TotalIssuanceForced:
         return (value as TotalIssuanceForced)._sizeHint();
+      case Held:
+        return (value as Held)._sizeHint();
+      case BurnedHeld:
+        return (value as BurnedHeld)._sizeHint();
+      case TransferOnHold:
+        return (value as TransferOnHold)._sizeHint();
+      case TransferAndHold:
+        return (value as TransferAndHold)._sizeHint();
+      case Released:
+        return (value as Released)._sizeHint();
       case Unexpected:
         return (value as Unexpected)._sizeHint();
       default:
@@ -1259,6 +1380,51 @@ class Minted extends Event {
       );
 }
 
+/// Some credit was balanced and added to the TotalIssuance.
+class MintedCredit extends Event {
+  const MintedCredit({required this.amount});
+
+  factory MintedCredit._decode(_i1.Input input) {
+    return MintedCredit(amount: _i1.U128Codec.codec.decode(input));
+  }
+
+  /// T::Balance
+  final BigInt amount;
+
+  @override
+  Map<String, Map<String, BigInt>> toJson() => {
+        'MintedCredit': {'amount': amount}
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.U128Codec.codec.sizeHint(amount);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      11,
+      output,
+    );
+    _i1.U128Codec.codec.encodeTo(
+      amount,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is MintedCredit && other.amount == amount;
+
+  @override
+  int get hashCode => amount.hashCode;
+}
+
 /// Some amount was burned from an account.
 class Burned extends Event {
   const Burned({
@@ -1296,7 +1462,7 @@ class Burned extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      11,
+      12,
       output,
     );
     const _i1.U8ArrayCodec(32).encodeTo(
@@ -1327,6 +1493,51 @@ class Burned extends Event {
         who,
         amount,
       );
+}
+
+/// Some debt has been dropped from the Total Issuance.
+class BurnedDebt extends Event {
+  const BurnedDebt({required this.amount});
+
+  factory BurnedDebt._decode(_i1.Input input) {
+    return BurnedDebt(amount: _i1.U128Codec.codec.decode(input));
+  }
+
+  /// T::Balance
+  final BigInt amount;
+
+  @override
+  Map<String, Map<String, BigInt>> toJson() => {
+        'BurnedDebt': {'amount': amount}
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.U128Codec.codec.sizeHint(amount);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      13,
+      output,
+    );
+    _i1.U128Codec.codec.encodeTo(
+      amount,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is BurnedDebt && other.amount == amount;
+
+  @override
+  int get hashCode => amount.hashCode;
 }
 
 /// Some amount was suspended from an account (it can be restored later).
@@ -1366,7 +1577,7 @@ class Suspended extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      12,
+      14,
       output,
     );
     const _i1.U8ArrayCodec(32).encodeTo(
@@ -1436,7 +1647,7 @@ class Restored extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      13,
+      15,
       output,
     );
     const _i1.U8ArrayCodec(32).encodeTo(
@@ -1493,7 +1704,7 @@ class Upgraded extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      14,
+      16,
       output,
     );
     const _i1.U8ArrayCodec(32).encodeTo(
@@ -1542,7 +1753,7 @@ class Issued extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      15,
+      17,
       output,
     );
     _i1.U128Codec.codec.encodeTo(
@@ -1587,7 +1798,7 @@ class Rescinded extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      16,
+      18,
       output,
     );
     _i1.U128Codec.codec.encodeTo(
@@ -1645,7 +1856,7 @@ class Locked extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      17,
+      19,
       output,
     );
     const _i1.U8ArrayCodec(32).encodeTo(
@@ -1715,7 +1926,7 @@ class Unlocked extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      18,
+      20,
       output,
     );
     const _i1.U8ArrayCodec(32).encodeTo(
@@ -1785,7 +1996,7 @@ class Frozen extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      19,
+      21,
       output,
     );
     const _i1.U8ArrayCodec(32).encodeTo(
@@ -1855,7 +2066,7 @@ class Thawed extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      20,
+      22,
       output,
     );
     const _i1.U8ArrayCodec(32).encodeTo(
@@ -1925,7 +2136,7 @@ class TotalIssuanceForced extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      21,
+      23,
       output,
     );
     _i1.U128Codec.codec.encodeTo(
@@ -1953,6 +2164,453 @@ class TotalIssuanceForced extends Event {
       );
 }
 
+/// Some balance was placed on hold.
+class Held extends Event {
+  const Held({
+    required this.reason,
+    required this.who,
+    required this.amount,
+  });
+
+  factory Held._decode(_i1.Input input) {
+    return Held(
+      reason: _i1.NullCodec.codec.decode(input),
+      who: const _i1.U8ArrayCodec(32).decode(input),
+      amount: _i1.U128Codec.codec.decode(input),
+    );
+  }
+
+  /// T::RuntimeHoldReason
+  final dynamic reason;
+
+  /// T::AccountId
+  final _i3.AccountId32 who;
+
+  /// T::Balance
+  final BigInt amount;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'Held': {
+          'reason': null,
+          'who': who.toList(),
+          'amount': amount,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.NullCodec.codec.sizeHint(reason);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
+    size = size + _i1.U128Codec.codec.sizeHint(amount);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      24,
+      output,
+    );
+    _i1.NullCodec.codec.encodeTo(
+      reason,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      who,
+      output,
+    );
+    _i1.U128Codec.codec.encodeTo(
+      amount,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Held &&
+          other.reason == reason &&
+          _i6.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        reason,
+        who,
+        amount,
+      );
+}
+
+/// Held balance was burned from an account.
+class BurnedHeld extends Event {
+  const BurnedHeld({
+    required this.reason,
+    required this.who,
+    required this.amount,
+  });
+
+  factory BurnedHeld._decode(_i1.Input input) {
+    return BurnedHeld(
+      reason: _i1.NullCodec.codec.decode(input),
+      who: const _i1.U8ArrayCodec(32).decode(input),
+      amount: _i1.U128Codec.codec.decode(input),
+    );
+  }
+
+  /// T::RuntimeHoldReason
+  final dynamic reason;
+
+  /// T::AccountId
+  final _i3.AccountId32 who;
+
+  /// T::Balance
+  final BigInt amount;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'BurnedHeld': {
+          'reason': null,
+          'who': who.toList(),
+          'amount': amount,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.NullCodec.codec.sizeHint(reason);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
+    size = size + _i1.U128Codec.codec.sizeHint(amount);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      25,
+      output,
+    );
+    _i1.NullCodec.codec.encodeTo(
+      reason,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      who,
+      output,
+    );
+    _i1.U128Codec.codec.encodeTo(
+      amount,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is BurnedHeld &&
+          other.reason == reason &&
+          _i6.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        reason,
+        who,
+        amount,
+      );
+}
+
+/// A transfer of `amount` on hold from `source` to `dest` was initiated.
+class TransferOnHold extends Event {
+  const TransferOnHold({
+    required this.reason,
+    required this.source,
+    required this.dest,
+    required this.amount,
+  });
+
+  factory TransferOnHold._decode(_i1.Input input) {
+    return TransferOnHold(
+      reason: _i1.NullCodec.codec.decode(input),
+      source: const _i1.U8ArrayCodec(32).decode(input),
+      dest: const _i1.U8ArrayCodec(32).decode(input),
+      amount: _i1.U128Codec.codec.decode(input),
+    );
+  }
+
+  /// T::RuntimeHoldReason
+  final dynamic reason;
+
+  /// T::AccountId
+  final _i3.AccountId32 source;
+
+  /// T::AccountId
+  final _i3.AccountId32 dest;
+
+  /// T::Balance
+  final BigInt amount;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'TransferOnHold': {
+          'reason': null,
+          'source': source.toList(),
+          'dest': dest.toList(),
+          'amount': amount,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.NullCodec.codec.sizeHint(reason);
+    size = size + const _i3.AccountId32Codec().sizeHint(source);
+    size = size + const _i3.AccountId32Codec().sizeHint(dest);
+    size = size + _i1.U128Codec.codec.sizeHint(amount);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      26,
+      output,
+    );
+    _i1.NullCodec.codec.encodeTo(
+      reason,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      source,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      dest,
+      output,
+    );
+    _i1.U128Codec.codec.encodeTo(
+      amount,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is TransferOnHold &&
+          other.reason == reason &&
+          _i6.listsEqual(
+            other.source,
+            source,
+          ) &&
+          _i6.listsEqual(
+            other.dest,
+            dest,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        reason,
+        source,
+        dest,
+        amount,
+      );
+}
+
+/// The `transferred` balance is placed on hold at the `dest` account.
+class TransferAndHold extends Event {
+  const TransferAndHold({
+    required this.reason,
+    required this.source,
+    required this.dest,
+    required this.transferred,
+  });
+
+  factory TransferAndHold._decode(_i1.Input input) {
+    return TransferAndHold(
+      reason: _i1.NullCodec.codec.decode(input),
+      source: const _i1.U8ArrayCodec(32).decode(input),
+      dest: const _i1.U8ArrayCodec(32).decode(input),
+      transferred: _i1.U128Codec.codec.decode(input),
+    );
+  }
+
+  /// T::RuntimeHoldReason
+  final dynamic reason;
+
+  /// T::AccountId
+  final _i3.AccountId32 source;
+
+  /// T::AccountId
+  final _i3.AccountId32 dest;
+
+  /// T::Balance
+  final BigInt transferred;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'TransferAndHold': {
+          'reason': null,
+          'source': source.toList(),
+          'dest': dest.toList(),
+          'transferred': transferred,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.NullCodec.codec.sizeHint(reason);
+    size = size + const _i3.AccountId32Codec().sizeHint(source);
+    size = size + const _i3.AccountId32Codec().sizeHint(dest);
+    size = size + _i1.U128Codec.codec.sizeHint(transferred);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      27,
+      output,
+    );
+    _i1.NullCodec.codec.encodeTo(
+      reason,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      source,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      dest,
+      output,
+    );
+    _i1.U128Codec.codec.encodeTo(
+      transferred,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is TransferAndHold &&
+          other.reason == reason &&
+          _i6.listsEqual(
+            other.source,
+            source,
+          ) &&
+          _i6.listsEqual(
+            other.dest,
+            dest,
+          ) &&
+          other.transferred == transferred;
+
+  @override
+  int get hashCode => Object.hash(
+        reason,
+        source,
+        dest,
+        transferred,
+      );
+}
+
+/// Some balance was released from hold.
+class Released extends Event {
+  const Released({
+    required this.reason,
+    required this.who,
+    required this.amount,
+  });
+
+  factory Released._decode(_i1.Input input) {
+    return Released(
+      reason: _i1.NullCodec.codec.decode(input),
+      who: const _i1.U8ArrayCodec(32).decode(input),
+      amount: _i1.U128Codec.codec.decode(input),
+    );
+  }
+
+  /// T::RuntimeHoldReason
+  final dynamic reason;
+
+  /// T::AccountId
+  final _i3.AccountId32 who;
+
+  /// T::Balance
+  final BigInt amount;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'Released': {
+          'reason': null,
+          'who': who.toList(),
+          'amount': amount,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.NullCodec.codec.sizeHint(reason);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
+    size = size + _i1.U128Codec.codec.sizeHint(amount);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      28,
+      output,
+    );
+    _i1.NullCodec.codec.encodeTo(
+      reason,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      who,
+      output,
+    );
+    _i1.U128Codec.codec.encodeTo(
+      amount,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Released &&
+          other.reason == reason &&
+          _i6.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        reason,
+        who,
+        amount,
+      );
+}
+
 /// An unexpected/defensive event was triggered.
 class Unexpected extends Event {
   const Unexpected(this.value0);
@@ -1975,7 +2633,7 @@ class Unexpected extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      22,
+      29,
       output,
     );
     _i5.UnexpectedKind.codec.encodeTo(

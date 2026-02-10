@@ -244,6 +244,16 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     ListTile(
+                      title: Text('Enable Offline Payments', style: h3Grey),
+                      subtitle: const Text('Register ZK identity for offline e-cash'),
+                      trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                      onTap: () {
+                        // TODO: Navigate to offline identity registration flow
+                        // once OfflineIdentityService.register() is implemented.
+                        RootSnackBar.showMsg('Offline payments: waiting for ZK prover implementation');
+                      },
+                    ),
+                    ListTile(
                       title: Text('Connected Endpoint: ${webApi.provider.url}', style: h3Grey),
                     ),
                     ListTile(

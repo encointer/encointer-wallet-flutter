@@ -88,6 +88,7 @@ dependencies:
   ew_primitives: 0.1.0
   ew_substrate_fixed: 0.1.0
   ew_test_keys: 0.1.0
+  ew_zk_prover: 0.1.0
   decimal: ^3.2.4
 
 dev_dependencies:

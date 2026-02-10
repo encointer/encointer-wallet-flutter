@@ -43,6 +43,7 @@ import 'package:encointer_wallet/page/assets/account_or_community/account_or_com
 import 'package:encointer_wallet/page/assets/account_or_community/switch_account_or_community.dart';
 import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
+import 'package:encointer_wallet/page/offline_payment/offline_payment_list_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
@@ -315,6 +316,13 @@ class _AssetsViewState extends State<AssetsView> {
                   ],
                 );
               }),
+              if (_appSettingsStore.developerMode)
+                ListTile(
+                  leading: const Icon(Iconsax.wallet_minus),
+                  title: const Text('Offline Payments'),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                  onTap: () => Navigator.pushNamed(context, OfflinePaymentListPage.route),
+                ),
               if (assetSwap != null)
                 ElevatedButton(
                   child: Row(

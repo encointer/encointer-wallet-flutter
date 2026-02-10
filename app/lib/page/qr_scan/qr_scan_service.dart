@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
+import 'package:encointer_wallet/page/offline_payment/receive_offline_payment_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
+import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_keyring/ew_keyring.dart';
@@ -40,6 +43,8 @@ class QrScanService {
         return InvoiceQrCode.fromQrFields(data);
       case QrCodeContext.voucher:
         return VoucherQrCode.fromQrFields(data);
+      case QrCodeContext.offlinepay:
+        return OfflinePaymentQrCode.fromQrFields(data);
     }
   }
 
@@ -48,6 +53,7 @@ class QrScanService {
       QrCodeContext.contact => handleContactQrCodeScan(context, scanContext, qrCode as ContactQrCode),
       QrCodeContext.invoice => handleInvoiceQrCodeScan(context, scanContext, qrCode as InvoiceQrCode),
       QrCodeContext.voucher => handleVoucherQrCodeScan(context, scanContext, qrCode as VoucherQrCode),
+      QrCodeContext.offlinepay => handleOfflinePaymentQrCodeScan(context, scanContext, qrCode as OfflinePaymentQrCode),
     };
   }
 }
@@ -130,4 +136,23 @@ Future<void> handleVoucherQrCodeScan(BuildContext context, QrScannerContext? sca
         voucher: qrCode.data,
         showFundVoucher: showFundVoucher,
       ));
+}
+
+/// Handles the `OfflinePaymentQrCode` scan. Dev-mode gated.
+Future<void> handleOfflinePaymentQrCodeScan(
+  BuildContext context,
+  QrScannerContext scanContext,
+  OfflinePaymentQrCode qrCode,
+) async {
+  final appSettings = context.read<AppSettings>();
+  if (!appSettings.developerMode) {
+    RootSnackBar.showMsg('Unsupported QR code');
+    Navigator.of(context).pop();
+    return;
+  }
+
+  await Navigator.of(context).popAndPushNamed(
+    ReceiveOfflinePaymentPage.route,
+    arguments: qrCode.data,
+  );
 }

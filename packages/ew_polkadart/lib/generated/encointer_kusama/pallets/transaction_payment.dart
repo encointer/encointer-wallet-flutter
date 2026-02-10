@@ -1,9 +1,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
-import 'dart:typed_data' as _i5;
+import 'dart:async' as _i5;
+import 'dart:typed_data' as _i6;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 
+import '../types/frame_support/traits/storage/no_drop.dart' as _i4;
 import '../types/pallet_transaction_payment/releases.dart' as _i3;
 import '../types/sp_arithmetic/fixed_point/fixed_u128.dart' as _i2;
 
@@ -24,7 +25,13 @@ class Queries {
     valueCodec: _i3.Releases.codec,
   );
 
-  _i4.Future<_i2.FixedU128> nextFeeMultiplier({_i1.BlockHash? at}) async {
+  final _i1.StorageValue<_i4.NoDrop> _txPaymentCredit = const _i1.StorageValue<_i4.NoDrop>(
+    prefix: 'TransactionPayment',
+    storage: 'TxPaymentCredit',
+    valueCodec: _i4.NoDropCodec(),
+  );
+
+  _i5.Future<_i2.FixedU128> nextFeeMultiplier({_i1.BlockHash? at}) async {
     final hashedKey = _nextFeeMultiplier.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -39,7 +46,7 @@ class Queries {
     ); /* Default */
   }
 
-  _i4.Future<_i3.Releases> storageVersion({_i1.BlockHash? at}) async {
+  _i5.Future<_i3.Releases> storageVersion({_i1.BlockHash? at}) async {
     final hashedKey = _storageVersion.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -51,15 +58,36 @@ class Queries {
     return _i3.Releases.v1Ancient; /* Default */
   }
 
+  /// The `OnChargeTransaction` stores the withdrawn tx fee here.
+  ///
+  /// Use `withdraw_txfee` and `remaining_txfee` to access from outside the crate.
+  _i5.Future<_i4.NoDrop?> txPaymentCredit({_i1.BlockHash? at}) async {
+    final hashedKey = _txPaymentCredit.hashedKey();
+    final bytes = await __api.getStorage(
+      hashedKey,
+      at: at,
+    );
+    if (bytes != null) {
+      return _txPaymentCredit.decodeValue(bytes);
+    }
+    return null; /* Nullable */
+  }
+
   /// Returns the storage key for `nextFeeMultiplier`.
-  _i5.Uint8List nextFeeMultiplierKey() {
+  _i6.Uint8List nextFeeMultiplierKey() {
     final hashedKey = _nextFeeMultiplier.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `storageVersion`.
-  _i5.Uint8List storageVersionKey() {
+  _i6.Uint8List storageVersionKey() {
     final hashedKey = _storageVersion.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `txPaymentCredit`.
+  _i6.Uint8List txPaymentCreditKey() {
+    final hashedKey = _txPaymentCredit.hashedKey();
     return hashedKey;
   }
 }
