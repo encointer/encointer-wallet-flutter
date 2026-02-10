@@ -15,6 +15,7 @@ Encointer wallet and client for mobile phones
 </p>
 
 [![Build](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/android_build_and_deploy.yml/badge.svg)](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/android_build_and_deploy.yml)
+[![Build](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/ios_build_and_deploy.yml/badge.svg)](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/ios_build_and_deploy.yml)
 [![Tests](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/unit_tests.yml)
 
 ## Overview
