@@ -40,14 +40,13 @@ android {
     }
 }
 
-// Uncomment to enable automatic Rust cross-compilation during Android builds:
-// task buildRust(type: Exec) {
-//     workingDir "${project.projectDir}/../rust"
-//     commandLine 'cargo', 'ndk',
-//         '-t', 'aarch64-linux-android',
-//         '-t', 'armv7-linux-androideabi',
-//         '-t', 'x86_64-linux-android',
-//         '-o', "${project.projectDir}/src/main/jniLibs",
-//         'build', '--release'
-// }
-// preBuild.dependsOn buildRust
+task buildRust(type: Exec) {
+    workingDir "${project.projectDir}/../rust"
+    commandLine 'cargo', 'ndk',
+        '-t', 'aarch64-linux-android',
+        '-t', 'armv7-linux-androideabi',
+        '-t', 'x86_64-linux-android',
+        '-o', "${project.projectDir}/src/main/jniLibs",
+        'build', '--release'
+}
+preBuild.dependsOn buildRust
