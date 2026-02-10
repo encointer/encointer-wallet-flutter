@@ -1,0 +1,29 @@
+[package]
+name = "encointer-offline-payment-ffi"
+version = "0.1.0"
+edition = "2021"
+description = "FFI wrapper for Encointer offline payment ZK prover (mobile targets)"
+license = "GPL-3.0-or-later"
+
+[lib]
+name = "ew_zk_prover"
+crate-type = ["cdylib", "staticlib", "lib"]
+
+# Standalone workspace — not part of the pallets workspace
+[workspace]
+
+[features]
+default = ["std"]
+std = ["encointer-offline-payment-core/std"]
+
+[dependencies]
+encointer-offline-payment-core = { git = "https://github.com/encointer/pallets", branch = "claude/offline-tx-ffi" }
+ark-bn254 = { version = "0.4.0", features = ["curve"] }
+ark-groth16 = "0.4.0"
+ark-snark = "0.4.0"
+blake2 = "0.10"
+
+[profile.release]
+lto = true
+opt-level = "z"
+strip = true
