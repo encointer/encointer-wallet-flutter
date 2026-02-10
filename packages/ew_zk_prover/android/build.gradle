@@ -32,9 +32,15 @@ android {
     defaultConfig {
         minSdk 21
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs']
+        }
+    }
 }
 
-// TODO: Add Rust cross-compilation task:
+// Uncomment to enable automatic Rust cross-compilation during Android builds:
 // task buildRust(type: Exec) {
 //     workingDir "${project.projectDir}/../rust"
 //     commandLine 'cargo', 'ndk',
