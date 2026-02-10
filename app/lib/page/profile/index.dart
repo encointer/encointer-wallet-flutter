@@ -17,9 +17,11 @@ import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
 import 'package:encointer_wallet/page/profile/account/change_password_page.dart';
+import 'package:encointer_wallet/service/offline/offline_identity_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:ew_storage/ew_storage.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:ew_l10n/l10n.dart';
@@ -247,10 +249,13 @@ class _ProfileState extends State<Profile> {
                       title: Text('Enable Offline Payments', style: h3Grey),
                       subtitle: const Text('Register ZK identity for offline e-cash'),
                       trailing: const Icon(Icons.arrow_forward_ios, size: 18),
-                      onTap: () {
-                        // TODO: Navigate to offline identity registration flow
-                        // once OfflineIdentityService.register() is implemented.
-                        RootSnackBar.showMsg('Offline payments: waiting for ZK prover implementation');
+                      onTap: () async {
+                        try {
+                          await OfflineIdentityService(const SecureStorage()).register(context);
+                          RootSnackBar.showMsg('Offline identity registered successfully');
+                        } on Exception catch (e) {
+                          RootSnackBar.showMsg('Registration failed: $e');
+                        }
                       },
                     ),
                     ListTile(
