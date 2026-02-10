@@ -5,7 +5,7 @@ import 'dart:typed_data' as _i11;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i4;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i12;
+import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i12;
 import '../types/encointer_primitives/communities/community_identifier.dart' as _i3;
 import '../types/encointer_primitives/communities/community_metadata.dart' as _i7;
 import '../types/encointer_primitives/communities/community_rules.dart' as _i10;
@@ -317,7 +317,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _communityMetadata.decodeValue(v.key)).toList();
     }
-    return keys
+    return (keys
         .map((key) => _i7.CommunityMetadata(
               name: <int>[
                 68,
@@ -397,7 +397,7 @@ class Queries {
               announcementSigner: null,
               rules: _i10.CommunityRules.loCo,
             ))
-        .toList(); /* Default */
+        .toList() as List<_i7.CommunityMetadata>); /* Default */
   }
 
   /// Amount of UBI to be paid for every attended ceremony.
@@ -413,7 +413,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _nominalIncome.decodeValue(v.key)).toList();
     }
-    return keys.map((key) => _i8.FixedU128(bits: BigInt.zero)).toList(); /* Default */
+    return (keys.map((key) => _i8.FixedU128(bits: BigInt.zero)).toList() as List<_i8.FixedU128>); /* Default */
   }
 
   /// Returns the storage key for `communityIdentifiersByGeohash`.

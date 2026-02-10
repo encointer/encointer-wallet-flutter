@@ -11,7 +11,8 @@ BalanceEntry _$BalanceEntryFromJson(Map<String, dynamic> json) => BalanceEntry(
       (json['lastUpdate'] as num).toInt(),
     );
 
-Map<String, dynamic> _$BalanceEntryToJson(BalanceEntry instance) => <String, dynamic>{
+Map<String, dynamic> _$BalanceEntryToJson(BalanceEntry instance) =>
+    <String, dynamic>{
       'principal': BalanceEntry._principalToString(instance.principal),
       'lastUpdate': instance.lastUpdate,
     };

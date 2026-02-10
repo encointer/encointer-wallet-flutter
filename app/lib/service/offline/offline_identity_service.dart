@@ -1,0 +1,80 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
+import 'package:encointer_wallet/service/tx/lib/src/tx_builder.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:ew_log/ew_log.dart';
+import 'package:ew_storage/ew_storage.dart';
+import 'package:ew_zk_prover/ew_zk_prover.dart';
+
+const _logTarget = 'OfflineIdentityService';
+
+/// Manages offline identity registration for ZK e-cash payments.
+///
+/// On first enable:
+/// 1. Derives zk_secret from account seed (Blake2)
+/// 2. Computes Poseidon commitment
+/// 3. Submits `registerOfflineIdentity(commitment)` extrinsic
+/// 4. Stores zk_secret in secure storage
+class OfflineIdentityService {
+  OfflineIdentityService(this._secureStorage);
+
+  final SecureStorageInterface _secureStorage;
+
+  static String _zkSecretKey(String pubKey) => 'offline_zk_secret_$pubKey';
+
+  /// Whether the given account has a stored zk_secret (i.e., has registered offline identity).
+  Future<bool> isRegistered(String pubKey) async {
+    final secret = await _secureStorage.read(key: _zkSecretKey(pubKey));
+    return secret != null;
+  }
+
+  /// Load the stored zk_secret for the given account.
+  Future<Uint8List?> loadZkSecret(String pubKey) async {
+    final encoded = await _secureStorage.read(key: _zkSecretKey(pubKey));
+    if (encoded == null) return null;
+    return Uint8List.fromList(List<int>.from(jsonDecode(encoded) as List));
+  }
+
+  /// Register an offline identity for the current account.
+  Future<void> register(BuildContext context) async {
+    final store = context.read<AppStore>();
+    final pubKey = store.account.currentAccountPubKey;
+    if (pubKey == null) {
+      Log.e('No current account', _logTarget);
+      return;
+    }
+
+    final keyringAccount = store.account.getKeyringAccount(pubKey);
+
+    // 1. Derive zkSecret from the account's mnemonic/seed
+    final seed = Uint8List.fromList(utf8.encode(keyringAccount.uri));
+    final zkSecret = ZkProver.deriveZkSecret(seed);
+
+    // 2. Compute Poseidon commitment
+    final commitment = ZkProver.computeCommitment(zkSecret);
+
+    // 3. Build and submit registerOfflineIdentity extrinsic
+    final api = webApi;
+    final call = api.encointer.encointerKusama.tx.encointerOfflinePayment
+        .registerOfflineIdentity(commitment: commitment.toList());
+
+    final xt = await TxBuilder(api.provider).createSignedExtrinsicWithEncodedCall(keyringAccount.pair, call.encode());
+
+    final report = await EWAuthorApi(api.provider).submitAndWatchExtrinsicWithReport(OpaqueExtrinsic(xt));
+
+    if (report.isExtrinsicFailed) {
+      Log.e('register: extrinsic failed', _logTarget);
+      throw StateError('Offline identity registration failed on-chain');
+    }
+
+    // 4. Store zkSecret in SecureStorage
+    await _secureStorage.write(key: _zkSecretKey(pubKey), value: jsonEncode(zkSecret.toList()));
+    Log.d('register: offline identity registered for $pubKey', _logTarget);
+  }
+}

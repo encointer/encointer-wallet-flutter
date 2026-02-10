@@ -4,7 +4,7 @@ import 'dart:typed_data' as _i7;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i8;
+import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i8;
 import '../types/encointer_primitives/communities/community_identifier.dart' as _i2;
 import '../types/encointer_primitives/treasuries/swap_asset_option.dart' as _i5;
 import '../types/encointer_primitives/treasuries/swap_native_option.dart' as _i4;

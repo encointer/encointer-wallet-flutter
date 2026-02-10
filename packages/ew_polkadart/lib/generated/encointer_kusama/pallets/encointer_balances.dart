@@ -5,7 +5,7 @@ import 'dart:typed_data' as _i9;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i6;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i10;
+import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i10;
 import '../types/encointer_primitives/balances/balance_entry.dart' as _i3;
 import '../types/encointer_primitives/communities/community_identifier.dart' as _i2;
 import '../types/pallet_encointer_balances/pallet/call.dart' as _i11;
@@ -128,12 +128,12 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _totalIssuance.decodeValue(v.key)).toList();
     }
-    return keys
+    return (keys
         .map((key) => _i3.BalanceEntry(
               principal: _i8.FixedU128(bits: BigInt.zero),
               lastUpdate: 0,
             ))
-        .toList(); /* Default */
+        .toList() as List<_i3.BalanceEntry>); /* Default */
   }
 
   _i7.Future<List<_i5.FixedI128>> multiDemurragePerBlock(
@@ -148,7 +148,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _demurragePerBlock.decodeValue(v.key)).toList();
     }
-    return keys.map((key) => _i5.FixedI128(bits: BigInt.zero)).toList(); /* Default */
+    return (keys.map((key) => _i5.FixedI128(bits: BigInt.zero)).toList() as List<_i5.FixedI128>); /* Default */
   }
 
   /// Returns the storage key for `totalIssuance`.

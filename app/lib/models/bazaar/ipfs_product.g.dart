@@ -15,7 +15,8 @@ IpfsProduct _$IpfsProductFromJson(Map<String, dynamic> json) => IpfsProduct(
       json['price'] as String?,
     );
 
-Map<String, dynamic> _$IpfsProductToJson(IpfsProduct instance) => <String, dynamic>{
+Map<String, dynamic> _$IpfsProductToJson(IpfsProduct instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'category': instance.category,

@@ -13,10 +13,12 @@ mixin _$ConnectivityStore on _ConnectivityStoreBase, Store {
 
   @override
   bool get isConnectedToNetwork => (_$isConnectedToNetworkComputed ??=
-          Computed<bool>(() => super.isConnectedToNetwork, name: '_ConnectivityStoreBase.isConnectedToNetwork'))
+          Computed<bool>(() => super.isConnectedToNetwork,
+              name: '_ConnectivityStoreBase.isConnectedToNetwork'))
       .value;
 
-  late final _$connectionStateAtom = Atom(name: '_ConnectivityStoreBase.connectionState', context: context);
+  late final _$connectionStateAtom =
+      Atom(name: '_ConnectivityStoreBase.connectionState', context: context);
 
   @override
   List<ConnectivityResult> get connectionState {
@@ -36,7 +38,8 @@ mixin _$ConnectivityStore on _ConnectivityStoreBase, Store {
 
   @override
   void listen() {
-    final _$actionInfo = _$_ConnectivityStoreBaseActionController.startAction(name: '_ConnectivityStoreBase.listen');
+    final _$actionInfo = _$_ConnectivityStoreBaseActionController.startAction(
+        name: '_ConnectivityStoreBase.listen');
     try {
       return super.listen();
     } finally {

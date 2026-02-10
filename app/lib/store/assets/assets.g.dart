@@ -13,15 +13,19 @@ mixin _$AssetsStore on _AssetsStore, Store {
 
   @override
   BigInt get totalBalance =>
-      (_$totalBalanceComputed ??= Computed<BigInt>(() => super.totalBalance, name: '_AssetsStore.totalBalance')).value;
+      (_$totalBalanceComputed ??= Computed<BigInt>(() => super.totalBalance,
+              name: '_AssetsStore.totalBalance'))
+          .value;
   Computed<ObservableList<TransferData>>? _$txsViewComputed;
 
   @override
-  ObservableList<TransferData> get txsView =>
-      (_$txsViewComputed ??= Computed<ObservableList<TransferData>>(() => super.txsView, name: '_AssetsStore.txsView'))
-          .value;
+  ObservableList<TransferData> get txsView => (_$txsViewComputed ??=
+          Computed<ObservableList<TransferData>>(() => super.txsView,
+              name: '_AssetsStore.txsView'))
+      .value;
 
-  late final _$cacheTxsTimestampAtom = Atom(name: '_AssetsStore.cacheTxsTimestamp', context: context);
+  late final _$cacheTxsTimestampAtom =
+      Atom(name: '_AssetsStore.cacheTxsTimestamp', context: context);
 
   @override
   int? get cacheTxsTimestamp {
@@ -36,7 +40,8 @@ mixin _$AssetsStore on _AssetsStore, Store {
     });
   }
 
-  late final _$isTxsLoadingAtom = Atom(name: '_AssetsStore.isTxsLoading', context: context);
+  late final _$isTxsLoadingAtom =
+      Atom(name: '_AssetsStore.isTxsLoading', context: context);
 
   @override
   bool get isTxsLoading {
@@ -51,7 +56,8 @@ mixin _$AssetsStore on _AssetsStore, Store {
     });
   }
 
-  late final _$submittingAtom = Atom(name: '_AssetsStore.submitting', context: context);
+  late final _$submittingAtom =
+      Atom(name: '_AssetsStore.submitting', context: context);
 
   @override
   bool get submitting {
@@ -66,7 +72,8 @@ mixin _$AssetsStore on _AssetsStore, Store {
     });
   }
 
-  late final _$accountDataAtom = Atom(name: '_AssetsStore.accountData', context: context);
+  late final _$accountDataAtom =
+      Atom(name: '_AssetsStore.accountData', context: context);
 
   @override
   AccountData get accountData {
@@ -81,7 +88,8 @@ mixin _$AssetsStore on _AssetsStore, Store {
     });
   }
 
-  late final _$tokenBalancesAtom = Atom(name: '_AssetsStore.tokenBalances', context: context);
+  late final _$tokenBalancesAtom =
+      Atom(name: '_AssetsStore.tokenBalances', context: context);
 
   @override
   Map<String, String> get tokenBalances {
@@ -96,7 +104,8 @@ mixin _$AssetsStore on _AssetsStore, Store {
     });
   }
 
-  late final _$txsCountAtom = Atom(name: '_AssetsStore.txsCount', context: context);
+  late final _$txsCountAtom =
+      Atom(name: '_AssetsStore.txsCount', context: context);
 
   @override
   int? get txsCount {
@@ -126,7 +135,8 @@ mixin _$AssetsStore on _AssetsStore, Store {
     });
   }
 
-  late final _$txsFilterAtom = Atom(name: '_AssetsStore.txsFilter', context: context);
+  late final _$txsFilterAtom =
+      Atom(name: '_AssetsStore.txsFilter', context: context);
 
   @override
   int get txsFilter {
@@ -141,7 +151,8 @@ mixin _$AssetsStore on _AssetsStore, Store {
     });
   }
 
-  late final _$blockMapAtom = Atom(name: '_AssetsStore.blockMap', context: context);
+  late final _$blockMapAtom =
+      Atom(name: '_AssetsStore.blockMap', context: context);
 
   @override
   ObservableMap<int?, BlockData> get blockMap {
@@ -156,7 +167,8 @@ mixin _$AssetsStore on _AssetsStore, Store {
     });
   }
 
-  late final _$announcementsAtom = Atom(name: '_AssetsStore.announcements', context: context);
+  late final _$announcementsAtom =
+      Atom(name: '_AssetsStore.announcements', context: context);
 
   @override
   List<dynamic>? get announcements {
@@ -171,7 +183,8 @@ mixin _$AssetsStore on _AssetsStore, Store {
     });
   }
 
-  late final _$marketPricesAtom = Atom(name: '_AssetsStore.marketPrices', context: context);
+  late final _$marketPricesAtom =
+      Atom(name: '_AssetsStore.marketPrices', context: context);
 
   @override
   ObservableMap<String, double> get marketPrices {
@@ -186,48 +199,57 @@ mixin _$AssetsStore on _AssetsStore, Store {
     });
   }
 
-  late final _$setAccountDataAsyncAction = AsyncAction('_AssetsStore.setAccountData', context: context);
+  late final _$setAccountDataAsyncAction =
+      AsyncAction('_AssetsStore.setAccountData', context: context);
 
   @override
   Future<void> setAccountData(String pubKey, AccountData data) {
-    return _$setAccountDataAsyncAction.run(() => super.setAccountData(pubKey, data));
+    return _$setAccountDataAsyncAction
+        .run(() => super.setAccountData(pubKey, data));
   }
 
   late final _$setAccountTokenBalancesAsyncAction =
       AsyncAction('_AssetsStore.setAccountTokenBalances', context: context);
 
   @override
-  Future<void> setAccountTokenBalances(String pubKey, Map<dynamic, dynamic>? amt, {bool needCache = true}) {
-    return _$setAccountTokenBalancesAsyncAction
-        .run(() => super.setAccountTokenBalances(pubKey, amt, needCache: needCache));
+  Future<void> setAccountTokenBalances(
+      String pubKey, Map<dynamic, dynamic>? amt,
+      {bool needCache = true}) {
+    return _$setAccountTokenBalancesAsyncAction.run(
+        () => super.setAccountTokenBalances(pubKey, amt, needCache: needCache));
   }
 
-  late final _$clearTxsAsyncAction = AsyncAction('_AssetsStore.clearTxs', context: context);
+  late final _$clearTxsAsyncAction =
+      AsyncAction('_AssetsStore.clearTxs', context: context);
 
   @override
   Future<void> clearTxs() {
     return _$clearTxsAsyncAction.run(() => super.clearTxs());
   }
 
-  late final _$loadAccountCacheAsyncAction = AsyncAction('_AssetsStore.loadAccountCache', context: context);
+  late final _$loadAccountCacheAsyncAction =
+      AsyncAction('_AssetsStore.loadAccountCache', context: context);
 
   @override
   Future<void> loadAccountCache() {
     return _$loadAccountCacheAsyncAction.run(() => super.loadAccountCache());
   }
 
-  late final _$loadCacheAsyncAction = AsyncAction('_AssetsStore.loadCache', context: context);
+  late final _$loadCacheAsyncAction =
+      AsyncAction('_AssetsStore.loadCache', context: context);
 
   @override
   Future<void> loadCache() {
     return _$loadCacheAsyncAction.run(() => super.loadCache());
   }
 
-  late final _$_AssetsStoreActionController = ActionController(name: '_AssetsStore', context: context);
+  late final _$_AssetsStoreActionController =
+      ActionController(name: '_AssetsStore', context: context);
 
   @override
   void setTxsLoading(bool isLoading) {
-    final _$actionInfo = _$_AssetsStoreActionController.startAction(name: '_AssetsStore.setTxsLoading');
+    final _$actionInfo = _$_AssetsStoreActionController.startAction(
+        name: '_AssetsStore.setTxsLoading');
     try {
       return super.setTxsLoading(isLoading);
     } finally {
@@ -237,7 +259,8 @@ mixin _$AssetsStore on _AssetsStore, Store {
 
   @override
   void setTxsFilter(int filter) {
-    final _$actionInfo = _$_AssetsStoreActionController.startAction(name: '_AssetsStore.setTxsFilter');
+    final _$actionInfo = _$_AssetsStoreActionController.startAction(
+        name: '_AssetsStore.setTxsFilter');
     try {
       return super.setTxsFilter(filter);
     } finally {
@@ -247,7 +270,8 @@ mixin _$AssetsStore on _AssetsStore, Store {
 
   @override
   void setSubmitting(bool isSubmitting) {
-    final _$actionInfo = _$_AssetsStoreActionController.startAction(name: '_AssetsStore.setSubmitting');
+    final _$actionInfo = _$_AssetsStoreActionController.startAction(
+        name: '_AssetsStore.setSubmitting');
     try {
       return super.setSubmitting(isSubmitting);
     } finally {
@@ -257,7 +281,8 @@ mixin _$AssetsStore on _AssetsStore, Store {
 
   @override
   void setAnnouncements(List<dynamic> data) {
-    final _$actionInfo = _$_AssetsStoreActionController.startAction(name: '_AssetsStore.setAnnouncements');
+    final _$actionInfo = _$_AssetsStoreActionController.startAction(
+        name: '_AssetsStore.setAnnouncements');
     try {
       return super.setAnnouncements(data);
     } finally {
@@ -267,7 +292,8 @@ mixin _$AssetsStore on _AssetsStore, Store {
 
   @override
   void setMarketPrices(String token, String price) {
-    final _$actionInfo = _$_AssetsStoreActionController.startAction(name: '_AssetsStore.setMarketPrices');
+    final _$actionInfo = _$_AssetsStoreActionController.startAction(
+        name: '_AssetsStore.setMarketPrices');
     try {
       return super.setMarketPrices(token, price);
     } finally {

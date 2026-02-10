@@ -5,8 +5,8 @@ import 'dart:typed_data' as _i8;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i5;
 
-import '../types/encointer_kusama_runtime/proxy_type.dart' as _i11;
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i9;
+import '../types/encointer_node_notee_runtime/proxy_type.dart' as _i11;
+import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i9;
 import '../types/pallet_proxy/announcement.dart' as _i6;
 import '../types/pallet_proxy/pallet/call.dart' as _i12;
 import '../types/pallet_proxy/proxy_definition.dart' as _i4;
@@ -95,12 +95,12 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _proxies.decodeValue(v.key)).toList();
     }
-    return keys
+    return (keys
         .map((key) => _i3.Tuple2<List<_i4.ProxyDefinition>, BigInt>(
               [],
               BigInt.zero,
             ))
-        .toList(); /* Default */
+        .toList() as List<_i3.Tuple2<List<_i4.ProxyDefinition>, BigInt>>); /* Default */
   }
 
   /// The announcements made by the proxy (key).
@@ -116,12 +116,12 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _announcements.decodeValue(v.key)).toList();
     }
-    return keys
+    return (keys
         .map((key) => _i3.Tuple2<List<_i6.Announcement>, BigInt>(
               [],
               BigInt.zero,
             ))
-        .toList(); /* Default */
+        .toList() as List<_i3.Tuple2<List<_i6.Announcement>, BigInt>>); /* Default */
   }
 
   /// Returns the storage key for `proxies`.
@@ -395,14 +395,14 @@ class Constants {
   ///
   /// This is held for an additional storage item whose value size is
   /// `sizeof(Balance)` bytes and whose key size is `sizeof(AccountId)` bytes.
-  final BigInt proxyDepositBase = BigInt.from(6679999980);
+  final BigInt proxyDepositBase = BigInt.from(32);
 
   /// The amount of currency needed per proxy added.
   ///
   /// This is held for adding 32 bytes plus an instance of `ProxyType` more into a
   /// pre-existing storage value. Thus, when configuring `ProxyDepositFactor` one should take
   /// into account `32 + proxy_type.encode().len()` bytes of data.
-  final BigInt proxyDepositFactor = BigInt.from(10999989);
+  final BigInt proxyDepositFactor = BigInt.from(32);
 
   /// The maximum amount of proxies allowed for a single account.
   final int maxProxies = 32;
@@ -414,11 +414,11 @@ class Constants {
   ///
   /// This is held when a new storage item holding a `Balance` is created (typically 16
   /// bytes).
-  final BigInt announcementDepositBase = BigInt.from(6682666644);
+  final BigInt announcementDepositBase = BigInt.from(32);
 
   /// The amount of currency needed per announcement made.
   ///
   /// This is held for adding an `AccountId`, `Hash` and `BlockNumber` (typically 68 bytes)
   /// into a pre-existing storage value.
-  final BigInt announcementDepositFactor = BigInt.from(21999978);
+  final BigInt announcementDepositFactor = BigInt.from(32);
 }

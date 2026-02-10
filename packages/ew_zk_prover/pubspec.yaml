@@ -1,0 +1,18 @@
+name: ew_zk_prover
+description: ZK proof generation for Encointer offline payments via arkworks FFI.
+version: 0.1.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: '>=3.6.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^10.0.0
