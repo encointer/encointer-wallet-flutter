@@ -35,7 +35,7 @@ Encointer wallet and client for mobile phones
 
 ## Setup
 
-### Ubuntu 22.04
+### Ubuntu
 Install Android Studio from snap and set it up as follows:
 1. Tools > SDK manager > Install SDK Android 8.0 Oreo (not sure if version matters much)
 2. ... Tools > Install SDK commandline tools
@@ -43,7 +43,7 @@ Install Android Studio from snap and set it up as follows:
 
 then:
 
-```
+```shell
 sudo apt install cmake ninja-build libgtk-3-dev npm build-essential
 ./scripts/install_flutter_wrapper.sh
 # install project deps (i.e., melos)
@@ -66,7 +66,7 @@ commands work from a windows terminal, so the rest of the installation steps are
 
 This project uses [flutter_wrapper](https://github.com/passsy/flutter_wrapper). Flutter wrapper is a tool that enables
 having the same flutter version across multiple developers. It installs automatically the flutter version form the
-pubspec.yml into the `.flutter` submodule.
+pubspec.yaml into the `.flutter` submodule.
 
 Vscode automatically uses the `.flutter` as we have checked in the `.vscode` folder. For setting up the Android Studio,
 please refer to the [documentation](https://github.com/passsy/flutter_wrapper#ide-setup).
@@ -130,7 +130,7 @@ The following file contains the supported flutter version:
 
 ### Run tests
 
-* run all tests from the command line:`./flutterw test`
+* run all tests from the command line: `.flutter/bin/dart run melos unit-test-app-exclude-e2e`
 * exclude e2e-tests that need a running encointer node:
 ```shell
 .flutter/bin/dart run melos unit-test-app-exclude-e2e
@@ -152,7 +152,7 @@ Integration test app.dart for iOS system
 ```
 
 ## Run Against Local Zombienet
-Make sure that the parachain is compile with a runtime from this branch: https://github.com/encointer/runtimes/tree/cl/fast-encointer-runtime
+Make sure that the runtime is built with the `fast-runtime` feature flag from the main branch: https://github.com/encointer/runtimes
 
 Then choose the Zombienet in the network selection. The rest should work as usual.
 
@@ -160,12 +160,12 @@ Then choose the Zombienet in the network selection. The rest should work as usua
 * Github actions is used to create automated screenshots for the specified devices there. However, running the integration tests locally will create screenshots for the currently running device.
 
 #### Android Studio
-To run the in Android Studio a build flavor must be specified. Go to Run/Debug configurations and add the build flavor `dev` in the appropriate field. Other available values are in the in the android/app/src/build.gradle file.
+To run the in Android Studio a build flavor must be specified. Go to Run/Debug configurations and add the build flavor `dev` in the appropriate field. Other available values are in the in the app/android/app/build.gradle file.
 
 ## Developer Remarks
 
 ### Fmt
-`dartfmt` lacks config file support, which implies that customizations need to be done by users individually. The default
+`dart format` lacks config file support, which implies that customizations need to be done by users individually. The default
 limit of 80 characters line length conflicts with the deeply nested structure of flutter's declarative code for designing
 widgets. This causes many unwanted linebreaks that reduce the readability of flutter code. Hence, we increase the line
 length of the code to 120.
@@ -220,10 +220,10 @@ released after testing.
 * VersionName should follow the semver policy.
 * VersionCode should monotonically increase by 1 for every tagged build
 
-##### AppCenter (Google Play Store & Apple AppStore)
-The AppCenter automatically builds and deploys the HEAD of `beta`.
+##### GitHub Actions (Google Play Store & Apple AppStore)
+GitHub Actions automatically builds and deploys on push to `beta` or when a version tag is pushed.
 
-```shell 
+```shell
   git checkout master
   git pull
   git tag v0.9.0
