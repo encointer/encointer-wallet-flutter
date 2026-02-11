@@ -13,13 +13,11 @@ mixin _$LoginStore on _LoginStoreBase, Store {
 
   @override
   BiometricAuthState? get getBiometricAuthState =>
-      (_$getBiometricAuthStateComputed ??= Computed<BiometricAuthState?>(
-              () => super.getBiometricAuthState,
+      (_$getBiometricAuthStateComputed ??= Computed<BiometricAuthState?>(() => super.getBiometricAuthState,
               name: '_LoginStoreBase.getBiometricAuthState'))
           .value;
 
-  late final _$biometricAuthStateAtom =
-      Atom(name: '_LoginStoreBase.biometricAuthState', context: context);
+  late final _$biometricAuthStateAtom = Atom(name: '_LoginStoreBase.biometricAuthState', context: context);
 
   @override
   BiometricAuthState? get biometricAuthState {
@@ -34,8 +32,7 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  late final _$loadingAtom =
-      Atom(name: '_LoginStoreBase.loading', context: context);
+  late final _$loadingAtom = Atom(name: '_LoginStoreBase.loading', context: context);
 
   @override
   bool get loading {
@@ -55,8 +52,7 @@ mixin _$LoginStore on _LoginStoreBase, Store {
 
   @override
   Future<void> setBiometricAuthState(BiometricAuthState value) {
-    return _$setBiometricAuthStateAsyncAction
-        .run(() => super.setBiometricAuthState(value));
+    return _$setBiometricAuthStateAsyncAction.run(() => super.setBiometricAuthState(value));
   }
 
   @override

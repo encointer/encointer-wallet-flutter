@@ -8,57 +8,44 @@ part of 'app.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$AppStore<S extends SecureStorageInterface,
-    L extends LegacyStorageInterface> on _AppStore<S, L>, Store {
+mixin _$AppStore<S extends SecureStorageInterface, L extends LegacyStorageInterface> on _AppStore<S, L>, Store {
   Computed<DataUpdateStore>? _$dataUpdateComputed;
 
   @override
-  DataUpdateStore get dataUpdate => (_$dataUpdateComputed ??=
-          Computed<DataUpdateStore>(() => super.dataUpdate,
-              name: '_AppStore.dataUpdate'))
-      .value;
+  DataUpdateStore get dataUpdate =>
+      (_$dataUpdateComputed ??= Computed<DataUpdateStore>(() => super.dataUpdate, name: '_AppStore.dataUpdate')).value;
   Computed<AccountStore>? _$accountComputed;
 
   @override
   AccountStore get account =>
-      (_$accountComputed ??= Computed<AccountStore>(() => super.account,
-              name: '_AppStore.account'))
-          .value;
+      (_$accountComputed ??= Computed<AccountStore>(() => super.account, name: '_AppStore.account')).value;
   Computed<AssetsStore>? _$assetsComputed;
 
   @override
-  AssetsStore get assets => (_$assetsComputed ??=
-          Computed<AssetsStore>(() => super.assets, name: '_AppStore.assets'))
-      .value;
+  AssetsStore get assets =>
+      (_$assetsComputed ??= Computed<AssetsStore>(() => super.assets, name: '_AppStore.assets')).value;
   Computed<ChainStore>? _$chainComputed;
 
   @override
-  ChainStore get chain => (_$chainComputed ??=
-          Computed<ChainStore>(() => super.chain, name: '_AppStore.chain'))
-      .value;
+  ChainStore get chain => (_$chainComputed ??= Computed<ChainStore>(() => super.chain, name: '_AppStore.chain')).value;
   Computed<EncointerStore>? _$encointerComputed;
 
   @override
   EncointerStore get encointer =>
-      (_$encointerComputed ??= Computed<EncointerStore>(() => super.encointer,
-              name: '_AppStore.encointer'))
-          .value;
+      (_$encointerComputed ??= Computed<EncointerStore>(() => super.encointer, name: '_AppStore.encointer')).value;
   Computed<OfflinePaymentStore>? _$offlinePaymentComputed;
 
   @override
   OfflinePaymentStore get offlinePayment => (_$offlinePaymentComputed ??=
-          Computed<OfflinePaymentStore>(() => super.offlinePayment,
-              name: '_AppStore.offlinePayment'))
+          Computed<OfflinePaymentStore>(() => super.offlinePayment, name: '_AppStore.offlinePayment'))
       .value;
   Computed<bool>? _$appIsReadyComputed;
 
   @override
-  bool get appIsReady => (_$appIsReadyComputed ??=
-          Computed<bool>(() => super.appIsReady, name: '_AppStore.appIsReady'))
-      .value;
+  bool get appIsReady =>
+      (_$appIsReadyComputed ??= Computed<bool>(() => super.appIsReady, name: '_AppStore.appIsReady')).value;
 
-  late final _$_settingsAtom =
-      Atom(name: '_AppStore._settings', context: context);
+  late final _$_settingsAtom = Atom(name: '_AppStore._settings', context: context);
 
   @override
   SettingsStore? get _settings {
@@ -73,8 +60,7 @@ mixin _$AppStore<S extends SecureStorageInterface,
     });
   }
 
-  late final _$_dataUpdateAtom =
-      Atom(name: '_AppStore._dataUpdate', context: context);
+  late final _$_dataUpdateAtom = Atom(name: '_AppStore._dataUpdate', context: context);
 
   @override
   DataUpdateStore? get _dataUpdate {
@@ -89,8 +75,7 @@ mixin _$AppStore<S extends SecureStorageInterface,
     });
   }
 
-  late final _$_accountAtom =
-      Atom(name: '_AppStore._account', context: context);
+  late final _$_accountAtom = Atom(name: '_AppStore._account', context: context);
 
   @override
   AccountStore? get _account {
@@ -135,8 +120,7 @@ mixin _$AppStore<S extends SecureStorageInterface,
     });
   }
 
-  late final _$_encointerAtom =
-      Atom(name: '_AppStore._encointer', context: context);
+  late final _$_encointerAtom = Atom(name: '_AppStore._encointer', context: context);
 
   @override
   EncointerStore? get _encointer {
@@ -151,8 +135,7 @@ mixin _$AppStore<S extends SecureStorageInterface,
     });
   }
 
-  late final _$_offlinePaymentAtom =
-      Atom(name: '_AppStore._offlinePayment', context: context);
+  late final _$_offlinePaymentAtom = Atom(name: '_AppStore._offlinePayment', context: context);
 
   @override
   OfflinePaymentStore? get _offlinePayment {
@@ -167,8 +150,7 @@ mixin _$AppStore<S extends SecureStorageInterface,
     });
   }
 
-  late final _$storeIsReadyAtom =
-      Atom(name: '_AppStore.storeIsReady', context: context);
+  late final _$storeIsReadyAtom = Atom(name: '_AppStore.storeIsReady', context: context);
 
   @override
   bool get storeIsReady {
@@ -183,8 +165,7 @@ mixin _$AppStore<S extends SecureStorageInterface,
     });
   }
 
-  late final _$webApiIsReadyAtom =
-      Atom(name: '_AppStore.webApiIsReady', context: context);
+  late final _$webApiIsReadyAtom = Atom(name: '_AppStore.webApiIsReady', context: context);
 
   @override
   bool get webApiIsReady {
@@ -199,21 +180,18 @@ mixin _$AppStore<S extends SecureStorageInterface,
     });
   }
 
-  late final _$initAsyncAction =
-      AsyncAction('_AppStore.init', context: context);
+  late final _$initAsyncAction = AsyncAction('_AppStore.init', context: context);
 
   @override
   Future<void> init(String sysLocaleCode) {
     return _$initAsyncAction.run(() => super.init(sysLocaleCode));
   }
 
-  late final _$_AppStoreActionController =
-      ActionController(name: '_AppStore', context: context);
+  late final _$_AppStoreActionController = ActionController(name: '_AppStore', context: context);
 
   @override
   void setApiReady(bool value) {
-    final _$actionInfo =
-        _$_AppStoreActionController.startAction(name: '_AppStore.setApiReady');
+    final _$actionInfo = _$_AppStoreActionController.startAction(name: '_AppStore.setApiReady');
     try {
       return super.setApiReady(value);
     } finally {
