@@ -5,7 +5,6 @@ import 'dart:typed_data' as _i5;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i3;
 
-import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i6;
 import '../types/encointer_primitives/communities/community_identifier.dart' as _i10;
 import '../types/pallet_encointer_offline_payment/groth16_proof_bytes.dart' as _i8;
 import '../types/pallet_encointer_offline_payment/pallet/call.dart' as _i7;
@@ -149,39 +148,35 @@ class Queries {
   }
 }
 
+/// Wraps a pallet Call with pallet index 69 for SCALE encoding.
+///
+/// The offline payment pallet is not yet deployed on Kusama, so we encode
+/// the call manually rather than depending on the Kusama RuntimeCall type.
+/// Callers use `.encode()` with `createSignedExtrinsicWithEncodedCall`.
+class EncointerOfflinePaymentCall {
+  const EncointerOfflinePaymentCall(this._call);
+
+  static const int _palletIndex = 69;
+
+  final _i7.Call _call;
+
+  _i5.Uint8List encode() {
+    final callBytes = _call.encode();
+    final output = _i5.Uint8List(1 + callBytes.length);
+    output[0] = _palletIndex;
+    output.setRange(1, output.length, callBytes);
+    return output;
+  }
+}
+
 class Txs {
   const Txs();
 
-  /// Register an offline identity (commitment) for the caller's account.
-  ///
-  /// This is a one-time setup that links a ZK commitment to the account.
-  /// The commitment should be Poseidon(zk_secret) where zk_secret is
-  /// derived deterministically from the account's seed.
-  ///
-  /// # Arguments
-  /// * `commitment` - The Poseidon hash commitment of the zk_secret
-  _i6.EncointerOfflinePayment registerOfflineIdentity({required List<int> commitment}) {
-    return _i6.EncointerOfflinePayment(_i7.RegisterOfflineIdentity(commitment: commitment));
+  EncointerOfflinePaymentCall registerOfflineIdentity({required List<int> commitment}) {
+    return EncointerOfflinePaymentCall(_i7.RegisterOfflineIdentity(commitment: commitment));
   }
 
-  /// Submit an offline payment ZK proof for settlement.
-  ///
-  /// Anyone can submit a proof - the submitter doesn't need to be the sender.
-  /// This allows either party (buyer or seller) to settle when they come online.
-  ///
-  /// The proof verifies:
-  /// - Prover knows zk_secret such that commitment = Poseidon(zk_secret)
-  /// - nullifier = Poseidon(zk_secret, nonce) for some nonce
-  /// - All public inputs match the claimed values
-  ///
-  /// # Arguments
-  /// * `proof` - The Groth16 proof bytes
-  /// * `sender` - The account sending funds (must have registered commitment)
-  /// * `recipient` - The account receiving funds
-  /// * `amount` - The amount to transfer
-  /// * `cid` - The community identifier
-  /// * `nullifier` - The unique nullifier for this payment
-  _i6.EncointerOfflinePayment submitOfflinePayment({
+  EncointerOfflinePaymentCall submitOfflinePayment({
     required _i8.Groth16ProofBytes proof,
     required _i2.AccountId32 sender,
     required _i2.AccountId32 recipient,
@@ -189,7 +184,7 @@ class Txs {
     required _i10.CommunityIdentifier cid,
     required List<int> nullifier,
   }) {
-    return _i6.EncointerOfflinePayment(_i7.SubmitOfflinePayment(
+    return EncointerOfflinePaymentCall(_i7.SubmitOfflinePayment(
       proof: proof,
       sender: sender,
       recipient: recipient,
@@ -199,15 +194,8 @@ class Txs {
     ));
   }
 
-  /// Set the Groth16 verification key (governance/sudo only).
-  ///
-  /// The verification key must be generated from the trusted setup
-  /// ceremony for the offline payment circuit.
-  ///
-  /// # Arguments
-  /// * `vk` - Serialized verification key bytes
-  _i6.EncointerOfflinePayment setVerificationKey({required List<int> vk}) {
-    return _i6.EncointerOfflinePayment(_i7.SetVerificationKey(vk: vk));
+  EncointerOfflinePaymentCall setVerificationKey({required List<int> vk}) {
+    return EncointerOfflinePaymentCall(_i7.SetVerificationKey(vk: vk));
   }
 }
 

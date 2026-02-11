@@ -5,7 +5,7 @@ import 'dart:typed_data' as _i16;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i4;
 
-import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i17;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i17;
 import '../types/frame_support/dispatch/per_dispatch_class_1.dart' as _i5;
 import '../types/frame_support/dispatch/per_dispatch_class_2.dart' as _i20;
 import '../types/frame_support/dispatch/per_dispatch_class_3.dart' as _i23;
@@ -493,7 +493,7 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _account.decodeValue(v.key)).toList();
     }
-    return (keys
+    return keys
         .map((key) => _i3.AccountInfo(
               nonce: 0,
               consumers: 0,
@@ -509,7 +509,7 @@ class Queries {
                 ),
               ),
             ))
-        .toList() as List<_i3.AccountInfo>); /* Default */
+        .toList(); /* Default */
   }
 
   /// Map of block numbers to block hashes.
@@ -525,13 +525,13 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _blockHash.decodeValue(v.key)).toList();
     }
-    return (keys
+    return keys
         .map((key) => List<int>.filled(
               32,
               0,
               growable: false,
             ))
-        .toList() as List<_i6.H256>); /* Default */
+        .toList(); /* Default */
   }
 
   /// Extrinsics data for the current block (maps an extrinsic's index to its data).
@@ -547,13 +547,13 @@ class Queries {
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _extrinsicData.decodeValue(v.key)).toList();
     }
-    return (keys
+    return keys
         .map((key) => List<int>.filled(
               0,
               0,
               growable: true,
             ))
-        .toList() as List<List<int>>); /* Default */
+        .toList(); /* Default */
   }
 
   /// Mapping between a topic (represented by T::Hash) and a vector of indexes
@@ -817,35 +817,26 @@ class Constants {
   /// Block & extrinsics weights: base values and limits.
   final _i19.BlockWeights blockWeights = _i19.BlockWeights(
     baseBlock: _i13.Weight(
-      refTime: BigInt.from(431614000),
+      refTime: BigInt.from(5000000000),
       proofSize: BigInt.zero,
     ),
     maxBlock: _i13.Weight(
       refTime: BigInt.from(2000000000000),
-      proofSize: BigInt.parse(
-        '18446744073709551615',
-        radix: 10,
-      ),
+      proofSize: BigInt.from(10485760),
     ),
     perClass: _i20.PerDispatchClass(
       normal: _i21.WeightsPerClass(
         baseExtrinsic: _i13.Weight(
-          refTime: BigInt.from(108157000),
+          refTime: BigInt.from(125000000),
           proofSize: BigInt.zero,
         ),
         maxExtrinsic: _i13.Weight(
-          refTime: BigInt.from(1299891843000),
-          proofSize: BigInt.parse(
-            '11990383647911208550',
-            radix: 10,
-          ),
+          refTime: BigInt.from(1399875000000),
+          proofSize: BigInt.from(7340032),
         ),
         maxTotal: _i13.Weight(
           refTime: BigInt.from(1500000000000),
-          proofSize: BigInt.parse(
-            '13835058055282163711',
-            radix: 10,
-          ),
+          proofSize: BigInt.from(7864320),
         ),
         reserved: _i13.Weight(
           refTime: BigInt.zero,
@@ -854,34 +845,25 @@ class Constants {
       ),
       operational: _i21.WeightsPerClass(
         baseExtrinsic: _i13.Weight(
-          refTime: BigInt.from(108157000),
+          refTime: BigInt.from(125000000),
           proofSize: BigInt.zero,
         ),
         maxExtrinsic: _i13.Weight(
-          refTime: BigInt.from(1799891843000),
-          proofSize: BigInt.parse(
-            '16602069666338596454',
-            radix: 10,
-          ),
+          refTime: BigInt.from(1899875000000),
+          proofSize: BigInt.from(9961472),
         ),
         maxTotal: _i13.Weight(
           refTime: BigInt.from(2000000000000),
-          proofSize: BigInt.parse(
-            '18446744073709551615',
-            radix: 10,
-          ),
+          proofSize: BigInt.from(10485760),
         ),
         reserved: _i13.Weight(
           refTime: BigInt.from(500000000000),
-          proofSize: BigInt.parse(
-            '4611686018427387904',
-            radix: 10,
-          ),
+          proofSize: BigInt.from(2621440),
         ),
       ),
       mandatory: _i21.WeightsPerClass(
         baseExtrinsic: _i13.Weight(
-          refTime: BigInt.from(108157000),
+          refTime: BigInt.from(125000000),
           proofSize: BigInt.zero,
         ),
         maxExtrinsic: null,
@@ -900,7 +882,7 @@ class Constants {
   ));
 
   /// Maximum number of block number to block hash mappings to keep (oldest pruned first).
-  final int blockHashCount = 2400;
+  final int blockHashCount = 4096;
 
   /// The weight of runtime database operations the runtime can invoke.
   final _i24.RuntimeDbWeight dbWeight = _i24.RuntimeDbWeight(
@@ -910,12 +892,51 @@ class Constants {
 
   /// Get the chain's in-code version.
   final _i25.RuntimeVersion version = const _i25.RuntimeVersion(
-    specName: 'encointer-node-notee',
-    implName: 'encointer-node-notee',
-    authoringVersion: 0,
-    specVersion: 370,
-    implVersion: 0,
+    specName: 'encointer-parachain',
+    implName: 'encointer-parachain',
+    authoringVersion: 1,
+    specVersion: 2000000,
+    implVersion: 1,
     apis: [
+      _i9.Tuple2<List<int>, int>(
+        <int>[
+          221,
+          113,
+          141,
+          92,
+          197,
+          50,
+          98,
+          212,
+        ],
+        1,
+      ),
+      _i9.Tuple2<List<int>, int>(
+        <int>[
+          4,
+          231,
+          5,
+          33,
+          160,
+          211,
+          210,
+          248,
+        ],
+        1,
+      ),
+      _i9.Tuple2<List<int>, int>(
+        <int>[
+          215,
+          189,
+          216,
+          162,
+          114,
+          202,
+          13,
+          101,
+        ],
+        2,
+      ),
       _i9.Tuple2<List<int>, int>(
         <int>[
           223,
@@ -983,32 +1004,6 @@ class Constants {
       ),
       _i9.Tuple2<List<int>, int>(
         <int>[
-          221,
-          113,
-          141,
-          92,
-          197,
-          50,
-          98,
-          212,
-        ],
-        1,
-      ),
-      _i9.Tuple2<List<int>, int>(
-        <int>[
-          251,
-          197,
-          119,
-          185,
-          215,
-          71,
-          239,
-          214,
-        ],
-        1,
-      ),
-      _i9.Tuple2<List<int>, int>(
-        <int>[
           171,
           60,
           5,
@@ -1022,16 +1017,16 @@ class Constants {
       ),
       _i9.Tuple2<List<int>, int>(
         <int>[
-          237,
+          204,
+          217,
+          222,
+          99,
+          150,
+          200,
           153,
-          197,
-          172,
-          178,
-          94,
-          237,
-          245,
+          202,
         ],
-        3,
+        1,
       ),
       _i9.Tuple2<List<int>, int>(
         <int>[
@@ -1061,14 +1056,79 @@ class Constants {
       ),
       _i9.Tuple2<List<int>, int>(
         <int>[
-          243,
-          255,
-          20,
-          213,
-          171,
-          82,
-          112,
-          89,
+          111,
+          245,
+          46,
+          232,
+          88,
+          230,
+          197,
+          189,
+        ],
+        1,
+      ),
+      _i9.Tuple2<List<int>, int>(
+        <int>[
+          145,
+          177,
+          200,
+          177,
+          99,
+          40,
+          235,
+          146,
+        ],
+        2,
+      ),
+      _i9.Tuple2<List<int>, int>(
+        <int>[
+          159,
+          251,
+          80,
+          90,
+          167,
+          56,
+          214,
+          156,
+        ],
+        1,
+      ),
+      _i9.Tuple2<List<int>, int>(
+        <int>[
+          38,
+          9,
+          190,
+          131,
+          172,
+          68,
+          104,
+          220,
+        ],
+        1,
+      ),
+      _i9.Tuple2<List<int>, int>(
+        <int>[
+          18,
+          200,
+          227,
+          212,
+          215,
+          224,
+          109,
+          224,
+        ],
+        1,
+      ),
+      _i9.Tuple2<List<int>, int>(
+        <int>[
+          234,
+          147,
+          227,
+          241,
+          111,
+          61,
+          105,
+          98,
         ],
         3,
       ),
@@ -1137,8 +1197,34 @@ class Constants {
         ],
         1,
       ),
+      _i9.Tuple2<List<int>, int>(
+        <int>[
+          251,
+          197,
+          119,
+          185,
+          215,
+          71,
+          239,
+          214,
+        ],
+        1,
+      ),
+      _i9.Tuple2<List<int>, int>(
+        <int>[
+          162,
+          221,
+          182,
+          165,
+          132,
+          119,
+          191,
+          99,
+        ],
+        1,
+      ),
     ],
-    transactionVersion: 5,
+    transactionVersion: 4,
     systemVersion: 0,
   );
 
@@ -1147,5 +1233,5 @@ class Constants {
   /// This replaces the "ss58Format" property declared in the chain spec. Reason is
   /// that the runtime should know about the prefix in order to make use of it as
   /// an identifier of the chain.
-  final int sS58Prefix = 42;
+  final int sS58Prefix = 2;
 }

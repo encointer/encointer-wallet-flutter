@@ -4,7 +4,7 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i8;
 
-import '../../encointer_node_notee_runtime/proxy_type.dart' as _i5;
+import '../../encointer_kusama_runtime/proxy_type.dart' as _i5;
 import '../../primitive_types/h256.dart' as _i6;
 import '../../sp_core/crypto/account_id32.dart' as _i4;
 import '../../sp_runtime/dispatch_error.dart' as _i3;
@@ -47,16 +47,12 @@ class $Event {
     required _i4.AccountId32 who,
     required _i5.ProxyType proxyType,
     required int disambiguationIndex,
-    required int at,
-    required int extrinsicIndex,
   }) {
     return PureCreated(
       pure: pure,
       who: who,
       proxyType: proxyType,
       disambiguationIndex: disambiguationIndex,
-      at: at,
-      extrinsicIndex: extrinsicIndex,
     );
   }
 
@@ -274,8 +270,6 @@ class PureCreated extends Event {
     required this.who,
     required this.proxyType,
     required this.disambiguationIndex,
-    required this.at,
-    required this.extrinsicIndex,
   });
 
   factory PureCreated._decode(_i1.Input input) {
@@ -284,8 +278,6 @@ class PureCreated extends Event {
       who: const _i1.U8ArrayCodec(32).decode(input),
       proxyType: _i5.ProxyType.codec.decode(input),
       disambiguationIndex: _i1.U16Codec.codec.decode(input),
-      at: _i1.U32Codec.codec.decode(input),
-      extrinsicIndex: _i1.U32Codec.codec.decode(input),
     );
   }
 
@@ -301,12 +293,6 @@ class PureCreated extends Event {
   /// u16
   final int disambiguationIndex;
 
-  /// BlockNumberFor<T>
-  final int at;
-
-  /// u32
-  final int extrinsicIndex;
-
   @override
   Map<String, Map<String, dynamic>> toJson() => {
         'PureCreated': {
@@ -314,8 +300,6 @@ class PureCreated extends Event {
           'who': who.toList(),
           'proxyType': proxyType.toJson(),
           'disambiguationIndex': disambiguationIndex,
-          'at': at,
-          'extrinsicIndex': extrinsicIndex,
         }
       };
 
@@ -325,8 +309,6 @@ class PureCreated extends Event {
     size = size + const _i4.AccountId32Codec().sizeHint(who);
     size = size + _i5.ProxyType.codec.sizeHint(proxyType);
     size = size + _i1.U16Codec.codec.sizeHint(disambiguationIndex);
-    size = size + _i1.U32Codec.codec.sizeHint(at);
-    size = size + _i1.U32Codec.codec.sizeHint(extrinsicIndex);
     return size;
   }
 
@@ -351,14 +333,6 @@ class PureCreated extends Event {
       disambiguationIndex,
       output,
     );
-    _i1.U32Codec.codec.encodeTo(
-      at,
-      output,
-    );
-    _i1.U32Codec.codec.encodeTo(
-      extrinsicIndex,
-      output,
-    );
   }
 
   @override
@@ -377,9 +351,7 @@ class PureCreated extends Event {
             who,
           ) &&
           other.proxyType == proxyType &&
-          other.disambiguationIndex == disambiguationIndex &&
-          other.at == at &&
-          other.extrinsicIndex == extrinsicIndex;
+          other.disambiguationIndex == disambiguationIndex;
 
   @override
   int get hashCode => Object.hash(
@@ -387,8 +359,6 @@ class PureCreated extends Event {
         who,
         proxyType,
         disambiguationIndex,
-        at,
-        extrinsicIndex,
       );
 }
 

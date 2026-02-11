@@ -348,7 +348,7 @@ class Spend extends Call {
   /// Box<BeneficiaryLookupOf<T, I>>
   final _i4.AccountId32 beneficiary;
 
-  /// Option<BlockNumberFor<T, I>>
+  /// Option<BlockNumberFor<T>>
   final int? validFrom;
 
   @override
