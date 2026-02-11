@@ -5,7 +5,7 @@ import 'dart:typed_data' as _i8;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
-import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i9;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i9;
 import '../types/encointer_primitives/communities/community_identifier.dart' as _i13;
 import '../types/encointer_primitives/democracy/proposal.dart' as _i3;
 import '../types/encointer_primitives/democracy/proposal_action.dart' as _i10;
@@ -337,7 +337,7 @@ class Constants {
   final int maxReputationCount = 64;
 
   /// The Period in which the proposal has to be in passing state before it is approved.
-  final BigInt confirmationPeriod = BigInt.from(300000);
+  final BigInt confirmationPeriod = BigInt.from(172800000);
 
   /// The total lifetime of a proposal.
   ///
@@ -345,9 +345,9 @@ class Constants {
   ///
   /// Note: In cycles this must be smaller than `ReputationLifetime`, otherwise the eligible
   /// electorate will be 0.
-  final BigInt proposalLifetime = BigInt.from(1200000);
+  final BigInt proposalLifetime = BigInt.from(777600000);
 
   /// Minimum turnout in perthousand for a proposal to be considered as passing and entering
   /// the `Confirming` state.
-  final BigInt minTurnout = BigInt.one;
+  final BigInt minTurnout = BigInt.from(50);
 }

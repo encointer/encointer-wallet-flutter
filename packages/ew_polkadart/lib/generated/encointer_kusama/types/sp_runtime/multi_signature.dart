@@ -42,10 +42,6 @@ class $MultiSignature {
   Ecdsa ecdsa(List<int> value0) {
     return Ecdsa(value0);
   }
-
-  Eth eth(List<int> value0) {
-    return Eth(value0);
-  }
 }
 
 class $MultiSignatureCodec with _i1.Codec<MultiSignature> {
@@ -61,8 +57,6 @@ class $MultiSignatureCodec with _i1.Codec<MultiSignature> {
         return Sr25519._decode(input);
       case 2:
         return Ecdsa._decode(input);
-      case 3:
-        return Eth._decode(input);
       default:
         throw Exception('MultiSignature: Invalid variant index: "$index"');
     }
@@ -83,9 +77,6 @@ class $MultiSignatureCodec with _i1.Codec<MultiSignature> {
       case Ecdsa:
         (value as Ecdsa).encodeTo(output);
         break;
-      case Eth:
-        (value as Eth).encodeTo(output);
-        break;
       default:
         throw Exception('MultiSignature: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -100,8 +91,6 @@ class $MultiSignatureCodec with _i1.Codec<MultiSignature> {
         return (value as Sr25519)._sizeHint();
       case Ecdsa:
         return (value as Ecdsa)._sizeHint();
-      case Eth:
-        return (value as Eth)._sizeHint();
       default:
         throw Exception('MultiSignature: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -237,52 +226,6 @@ class Ecdsa extends MultiSignature {
         other,
       ) ||
       other is Ecdsa &&
-          _i3.listsEqual(
-            other.value0,
-            value0,
-          );
-
-  @override
-  int get hashCode => value0.hashCode;
-}
-
-class Eth extends MultiSignature {
-  const Eth(this.value0);
-
-  factory Eth._decode(_i1.Input input) {
-    return Eth(const _i1.U8ArrayCodec(65).decode(input));
-  }
-
-  /// ecdsa::KeccakSignature
-  final List<int> value0;
-
-  @override
-  Map<String, List<int>> toJson() => {'Eth': value0.toList()};
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + const _i1.U8ArrayCodec(65).sizeHint(value0);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      3,
-      output,
-    );
-    const _i1.U8ArrayCodec(65).encodeTo(
-      value0,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is Eth &&
           _i3.listsEqual(
             other.value0,
             value0,
