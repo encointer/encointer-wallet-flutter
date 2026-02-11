@@ -12,34 +12,27 @@ mixin _$SettingsStore on _SettingsStore, Store {
   Computed<bool>? _$endpointIsNoTeeComputed;
 
   @override
-  bool get endpointIsNoTee =>
-      (_$endpointIsNoTeeComputed ??= Computed<bool>(() => super.endpointIsNoTee,
-              name: '_SettingsStore.endpointIsNoTee'))
-          .value;
+  bool get endpointIsNoTee => (_$endpointIsNoTeeComputed ??=
+          Computed<bool>(() => super.endpointIsNoTee, name: '_SettingsStore.endpointIsNoTee'))
+      .value;
   Computed<String>? _$ipfsGatewayComputed;
 
   @override
   String get ipfsGateway =>
-      (_$ipfsGatewayComputed ??= Computed<String>(() => super.ipfsGateway,
-              name: '_SettingsStore.ipfsGateway'))
-          .value;
+      (_$ipfsGatewayComputed ??= Computed<String>(() => super.ipfsGateway, name: '_SettingsStore.ipfsGateway')).value;
   Computed<List<AccountData>>? _$knownAccountsComputed;
 
   @override
   List<AccountData> get knownAccounts => (_$knownAccountsComputed ??=
-          Computed<List<AccountData>>(() => super.knownAccounts,
-              name: '_SettingsStore.knownAccounts'))
+          Computed<List<AccountData>>(() => super.knownAccounts, name: '_SettingsStore.knownAccounts'))
       .value;
   Computed<bool>? _$isConnectedComputed;
 
   @override
   bool get isConnected =>
-      (_$isConnectedComputed ??= Computed<bool>(() => super.isConnected,
-              name: '_SettingsStore.isConnected'))
-          .value;
+      (_$isConnectedComputed ??= Computed<bool>(() => super.isConnected, name: '_SettingsStore.isConnected')).value;
 
-  late final _$loadingAtom =
-      Atom(name: '_SettingsStore.loading', context: context);
+  late final _$loadingAtom = Atom(name: '_SettingsStore.loading', context: context);
 
   @override
   bool get loading {
@@ -54,8 +47,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$localeCodeAtom =
-      Atom(name: '_SettingsStore.localeCode', context: context);
+  late final _$localeCodeAtom = Atom(name: '_SettingsStore.localeCode', context: context);
 
   @override
   String get localeCode {
@@ -70,8 +62,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$currentNetworkAtom =
-      Atom(name: '_SettingsStore.currentNetwork', context: context);
+  late final _$currentNetworkAtom = Atom(name: '_SettingsStore.currentNetwork', context: context);
 
   @override
   Network get currentNetwork {
@@ -86,8 +77,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$ksmMockSwapEnabledAtom =
-      Atom(name: '_SettingsStore.ksmMockSwapEnabled', context: context);
+  late final _$ksmMockSwapEnabledAtom = Atom(name: '_SettingsStore.ksmMockSwapEnabled', context: context);
 
   @override
   bool get ksmMockSwapEnabled {
@@ -102,8 +92,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$usdcMockSwapEnabledAtom =
-      Atom(name: '_SettingsStore.usdcMockSwapEnabled', context: context);
+  late final _$usdcMockSwapEnabledAtom = Atom(name: '_SettingsStore.usdcMockSwapEnabled', context: context);
 
   @override
   bool get usdcMockSwapEnabled {
@@ -118,8 +107,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$contactListAtom =
-      Atom(name: '_SettingsStore.contactList', context: context);
+  late final _$contactListAtom = Atom(name: '_SettingsStore.contactList', context: context);
 
   @override
   ObservableList<AccountData> get contactList {
@@ -134,78 +122,67 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$initAsyncAction =
-      AsyncAction('_SettingsStore.init', context: context);
+  late final _$initAsyncAction = AsyncAction('_SettingsStore.init', context: context);
 
   @override
   Future<void> init(String sysLocaleCode) {
     return _$initAsyncAction.run(() => super.init(sysLocaleCode));
   }
 
-  late final _$setLocalCodeAsyncAction =
-      AsyncAction('_SettingsStore.setLocalCode', context: context);
+  late final _$setLocalCodeAsyncAction = AsyncAction('_SettingsStore.setLocalCode', context: context);
 
   @override
   Future<void> setLocalCode(String code) {
     return _$setLocalCodeAsyncAction.run(() => super.setLocalCode(code));
   }
 
-  late final _$loadLocalCodeAsyncAction =
-      AsyncAction('_SettingsStore.loadLocalCode', context: context);
+  late final _$loadLocalCodeAsyncAction = AsyncAction('_SettingsStore.loadLocalCode', context: context);
 
   @override
   Future<void> loadLocalCode() {
     return _$loadLocalCodeAsyncAction.run(() => super.loadLocalCode());
   }
 
-  late final _$loadContactsAsyncAction =
-      AsyncAction('_SettingsStore.loadContacts', context: context);
+  late final _$loadContactsAsyncAction = AsyncAction('_SettingsStore.loadContacts', context: context);
 
   @override
   Future<void> loadContacts() {
     return _$loadContactsAsyncAction.run(() => super.loadContacts());
   }
 
-  late final _$addContactAsyncAction =
-      AsyncAction('_SettingsStore.addContact', context: context);
+  late final _$addContactAsyncAction = AsyncAction('_SettingsStore.addContact', context: context);
 
   @override
   Future<void> addContact(Map<String, dynamic> con) {
     return _$addContactAsyncAction.run(() => super.addContact(con));
   }
 
-  late final _$removeContactAsyncAction =
-      AsyncAction('_SettingsStore.removeContact', context: context);
+  late final _$removeContactAsyncAction = AsyncAction('_SettingsStore.removeContact', context: context);
 
   @override
   Future<void> removeContact(AccountData con) {
     return _$removeContactAsyncAction.run(() => super.removeContact(con));
   }
 
-  late final _$updateContactAsyncAction =
-      AsyncAction('_SettingsStore.updateContact', context: context);
+  late final _$updateContactAsyncAction = AsyncAction('_SettingsStore.updateContact', context: context);
 
   @override
   Future<void> updateContact(Map<String, dynamic> con) {
     return _$updateContactAsyncAction.run(() => super.updateContact(con));
   }
 
-  late final _$loadEndpointAsyncAction =
-      AsyncAction('_SettingsStore.loadEndpoint', context: context);
+  late final _$loadEndpointAsyncAction = AsyncAction('_SettingsStore.loadEndpoint', context: context);
 
   @override
   Future<void> loadEndpoint(String sysLocaleCode) {
-    return _$loadEndpointAsyncAction
-        .run(() => super.loadEndpoint(sysLocaleCode));
+    return _$loadEndpointAsyncAction.run(() => super.loadEndpoint(sysLocaleCode));
   }
 
-  late final _$_SettingsStoreActionController =
-      ActionController(name: '_SettingsStore', context: context);
+  late final _$_SettingsStoreActionController = ActionController(name: '_SettingsStore', context: context);
 
   @override
   void toggleKsmMockSwapEnabled() {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(
-        name: '_SettingsStore.toggleKsmMockSwapEnabled');
+    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.toggleKsmMockSwapEnabled');
     try {
       return super.toggleKsmMockSwapEnabled();
     } finally {
@@ -215,8 +192,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
 
   @override
   void toggleUsdcMockSwapEnabled() {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(
-        name: '_SettingsStore.toggleUsdcMockSwapEnabled');
+    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.toggleUsdcMockSwapEnabled');
     try {
       return super.toggleUsdcMockSwapEnabled();
     } finally {
@@ -226,8 +202,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
 
   @override
   void setNetworkLoading(bool isLoading) {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(
-        name: '_SettingsStore.setNetworkLoading');
+    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setNetworkLoading');
     try {
       return super.setNetworkLoading(isLoading);
     } finally {
@@ -237,8 +212,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
 
   @override
   void setNetwork(Network network) {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(
-        name: '_SettingsStore.setNetwork');
+    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setNetwork');
     try {
       return super.setNetwork(network);
     } finally {

@@ -13,12 +13,9 @@ mixin _$PreviewPdfAndPrintStore on _PreviewPdfAndPrintStoreBase, Store {
 
   @override
   pw.Document? get doc =>
-      (_$docComputed ??= Computed<pw.Document?>(() => super.doc,
-              name: '_PreviewPdfAndPrintStoreBase.doc'))
-          .value;
+      (_$docComputed ??= Computed<pw.Document?>(() => super.doc, name: '_PreviewPdfAndPrintStoreBase.doc')).value;
 
-  late final _$renderObjectKeyAtom = Atom(
-      name: '_PreviewPdfAndPrintStoreBase.renderObjectKey', context: context);
+  late final _$renderObjectKeyAtom = Atom(name: '_PreviewPdfAndPrintStoreBase.renderObjectKey', context: context);
 
   @override
   GlobalKey<State<StatefulWidget>>? get renderObjectKey {
@@ -33,8 +30,7 @@ mixin _$PreviewPdfAndPrintStore on _PreviewPdfAndPrintStoreBase, Store {
     });
   }
 
-  late final _$_docAtom =
-      Atom(name: '_PreviewPdfAndPrintStoreBase._doc', context: context);
+  late final _$_docAtom = Atom(name: '_PreviewPdfAndPrintStoreBase._doc', context: context);
 
   @override
   pw.Document? get _doc {
@@ -49,8 +45,7 @@ mixin _$PreviewPdfAndPrintStore on _PreviewPdfAndPrintStoreBase, Store {
     });
   }
 
-  late final _$timeAtom =
-      Atom(name: '_PreviewPdfAndPrintStoreBase.time', context: context);
+  late final _$timeAtom = Atom(name: '_PreviewPdfAndPrintStoreBase.time', context: context);
 
   @override
   DateTime get time {
@@ -65,28 +60,22 @@ mixin _$PreviewPdfAndPrintStore on _PreviewPdfAndPrintStoreBase, Store {
     });
   }
 
-  late final _$createPdfAsyncAction =
-      AsyncAction('_PreviewPdfAndPrintStoreBase.createPdf', context: context);
+  late final _$createPdfAsyncAction = AsyncAction('_PreviewPdfAndPrintStoreBase.createPdf', context: context);
 
   @override
-  Future<void> createPdf(
-      {required GlobalKey<State<StatefulWidget>> key,
-      required BuildContext context}) {
-    return _$createPdfAsyncAction
-        .run(() => super.createPdf(key: key, context: context));
+  Future<void> createPdf({required GlobalKey<State<StatefulWidget>> key, required BuildContext context}) {
+    return _$createPdfAsyncAction.run(() => super.createPdf(key: key, context: context));
   }
 
-  late final _$_getQrCodeImageAsyncAction = AsyncAction(
-      '_PreviewPdfAndPrintStoreBase._getQrCodeImage',
-      context: context);
+  late final _$_getQrCodeImageAsyncAction =
+      AsyncAction('_PreviewPdfAndPrintStoreBase._getQrCodeImage', context: context);
 
   @override
   Future<Uint8List?> _getQrCodeImage() {
     return _$_getQrCodeImageAsyncAction.run(() => super._getQrCodeImage());
   }
 
-  late final _$_getBgImageAsyncAction =
-      AsyncAction('_PreviewPdfAndPrintStoreBase._getBgImage', context: context);
+  late final _$_getBgImageAsyncAction = AsyncAction('_PreviewPdfAndPrintStoreBase._getBgImage', context: context);
 
   @override
   Future<Uint8List?> _getBgImage() {

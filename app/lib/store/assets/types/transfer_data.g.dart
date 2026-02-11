@@ -19,8 +19,7 @@ TransferData _$TransferDataFromJson(Map<String, dynamic> json) => TransferData()
   ..module = json['module'] as String?
   ..success = json['success'] as bool?;
 
-Map<String, dynamic> _$TransferDataToJson(TransferData instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$TransferDataToJson(TransferData instance) => <String, dynamic>{
       'block_num': instance.blockNum,
       'block_timestamp': instance.blockTimestamp,
       'extrinsic_index': instance.extrinsicIndex,

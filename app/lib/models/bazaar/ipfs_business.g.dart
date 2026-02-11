@@ -26,8 +26,7 @@ IpfsBusiness _$IpfsBusinessFromJson(Map<String, dynamic> json) => IpfsBusiness(
       controller: json['controller'] as String?,
     );
 
-Map<String, dynamic> _$IpfsBusinessToJson(IpfsBusiness instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$IpfsBusinessToJson(IpfsBusiness instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'photo': instance.photo,
