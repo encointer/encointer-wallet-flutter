@@ -163,7 +163,8 @@ class EwHttp {
       401 => EwHttpException(FailureType.noAuthorization, statusCode: response.statusCode, moreErrorData: body),
       403 => EwHttpException(FailureType.forbidden, statusCode: response.statusCode, moreErrorData: body),
       500 => EwHttpException(FailureType.internalServer, statusCode: response.statusCode, moreErrorData: body),
-      _ => EwHttpException(FailureType.unknown, error: response.statusCode, statusCode: response.statusCode, moreErrorData: body),
+      _ => EwHttpException(FailureType.unknown,
+          error: response.statusCode, statusCode: response.statusCode, moreErrorData: body),
     };
   }
 }
