@@ -1,3 +1,5 @@
 tags:
   encointer-node-e2e:
     timeout: 2x
+  ipfs-upload-e2e:
+    timeout: 2x
