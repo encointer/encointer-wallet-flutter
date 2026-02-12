@@ -236,6 +236,7 @@ abstract class _AppStore<S extends SecureStorageInterface, L extends LegacyStora
     }
 
     if (!settings.loading) {
+      webApi.ipfsAuthService.clearAllTokens();
       dataUpdate.setInvalidated();
       await webApi.assets.subscribeBalance();
     }
