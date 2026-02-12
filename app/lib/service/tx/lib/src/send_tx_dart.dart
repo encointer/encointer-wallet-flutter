@@ -89,6 +89,10 @@ extension SystemExtension on RuntimeEvent {
   }
 }
 
+/// Timeout for waiting on extrinsic inclusion in a block.
+/// Kusama parachain block time is ~12s; 90s allows several blocks.
+const extrinsicSubmissionTimeout = Duration(seconds: 90);
+
 /// Substrate state API
 class EWAuthorApi<P extends Provider> {
   const EWAuthorApi(this._provider);
@@ -121,7 +125,10 @@ class EWAuthorApi<P extends Provider> {
     return AuthorApi(_provider).submitAndWatchExtrinsic(extrinsic._encoded, onData);
   }
 
-  Future<ExtrinsicReport> submitAndWatchExtrinsicWithReport(OpaqueExtrinsic extrinsic) async {
+  Future<ExtrinsicReport> submitAndWatchExtrinsicWithReport(
+    OpaqueExtrinsic extrinsic, {
+    Duration timeout = extrinsicSubmissionTimeout,
+  }) async {
     final completer = Completer<void>();
     String? blockHashHex;
 
@@ -132,12 +139,36 @@ class EWAuthorApi<P extends Provider> {
         Log.p('Xt is ready');
       } else if (xtUpdate.type == 'inBlock' || xtUpdate.type == 'finalized') {
         blockHashHex = xtUpdate.value.toString();
-        completer.complete();
+        if (!completer.isCompleted) completer.complete();
       }
     });
 
-    await completer.future;
-    await sub.cancel();
+    sub
+      ..onError((Object error) {
+        Log.e('Extrinsic subscription error: $error');
+        if (!completer.isCompleted) {
+          completer.completeError(Exception('Extrinsic subscription error: $error'));
+        }
+      })
+      ..onDone(() {
+        if (!completer.isCompleted) {
+          Log.e('Extrinsic subscription closed before finalization');
+          completer.completeError(
+            Exception('Extrinsic subscription closed before finalization'),
+          );
+        }
+      });
+
+    try {
+      await completer.future.timeout(timeout);
+    } on TimeoutException {
+      throw Exception(
+        'Extrinsic submission timed out after ${timeout.inSeconds}s',
+      );
+    } finally {
+      await sub.cancel();
+    }
+
     return getExtrinsicReportData(extrinsic, blockHashHex!);
   }
 
