@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -6,8 +7,31 @@ import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/service/ipfs/ipfs_api.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../utils/test_tags.dart';
+
+class _MockEwHttp extends Mock implements EwHttp {
+  final _responses = <Future<Either<IpfsBusiness, EwHttpException>> Function()>[];
+
+  void enqueue(Future<Either<IpfsBusiness, EwHttpException>> Function() fn) => _responses.add(fn);
+
+  @override
+  Future<Either<T, EwHttpException>> getType<T>(String url, {required FromJson<T> fromJson}) async {
+    final result = await _responses.removeAt(0)();
+    return result as Either<T, EwHttpException>;
+  }
+}
+
+final _testBusiness = IpfsBusiness(
+  name: 'Test Business',
+  description: 'A test business',
+  categoryRaw: 'other',
+  address: '123 Test St',
+  longitude: '0.0',
+  latitude: '0.0',
+  openingHours: 'Mon-Fri 9-5',
+);
 
 void main() {
   const assetFolderCid = 'QmUxPhjtx7NxByaD6UwFzz46oeubShmL9mNMqAuM72mQTq';
@@ -177,6 +201,78 @@ void main() {
 
       final cacheFolder = Directory('${tmpDir.path}/ipfs_cache');
       expect(cacheFolder.existsSync(), isFalse);
+    });
+  });
+
+  // ---------------------------------------------------------------------------
+  // RETRY & BUSINESS CACHING (unit tests with mocked HTTP)
+  // ---------------------------------------------------------------------------
+  group('getIpfsBusiness retry & cache', () {
+    late Directory mockTmpDir;
+
+    setUp(() {
+      mockTmpDir = Directory.systemTemp.createTempSync('ipfs_retry_test');
+    });
+
+    tearDown(() {
+      if (mockTmpDir.existsSync()) mockTmpDir.deleteSync(recursive: true);
+    });
+
+    test('succeeds after transient failures', () async {
+      final mockHttp = _MockEwHttp();
+      final api = IpfsApi(mockHttp, cacheDir: mockTmpDir, requestTimeout: const Duration(seconds: 2));
+
+      mockHttp
+        ..enqueue(() async => const Left(EwHttpException(FailureType.unknown)))
+        ..enqueue(() async => const Left(EwHttpException(FailureType.unknown)))
+        ..enqueue(() async => Right(_testBusiness));
+
+      final result = await api.getIpfsBusiness('QmRetryTest');
+      expect(result.toJson(), _testBusiness.toJson());
+    });
+
+    test('throws after all retries exhausted', () async {
+      final mockHttp = _MockEwHttp();
+      final api = IpfsApi(mockHttp, cacheDir: mockTmpDir, requestTimeout: const Duration(seconds: 2));
+
+      for (var i = 0; i < 3; i++) {
+        mockHttp.enqueue(() async => const Left(EwHttpException(FailureType.unknown)));
+      }
+
+      expect(() => api.getIpfsBusiness('QmFailTest'), throwsA(isA<Exception>()));
+    });
+
+    test('throws TimeoutException when request hangs', () async {
+      final mockHttp = _MockEwHttp();
+      final api = IpfsApi(mockHttp, cacheDir: mockTmpDir, requestTimeout: const Duration(milliseconds: 100));
+
+      for (var i = 0; i < 3; i++) {
+        mockHttp.enqueue(() => Completer<Either<IpfsBusiness, EwHttpException>>().future);
+      }
+
+      expect(() => api.getIpfsBusiness('QmTimeoutTest'), throwsA(isA<TimeoutException>()));
+    });
+
+    test('returns cached data without network call', () async {
+      final mockHttp = _MockEwHttp();
+      final api = IpfsApi(mockHttp, cacheDir: mockTmpDir, requestTimeout: const Duration(seconds: 2));
+
+      // First call: network succeeds and populates cache
+      mockHttp.enqueue(() async => Right(_testBusiness));
+      await api.getIpfsBusiness('QmCacheTest');
+
+      // Second call: no responses enqueued — would throw if network were hit
+      final cached = await api.getIpfsBusiness('QmCacheTest');
+      expect(cached.toJson(), _testBusiness.toJson());
+    });
+
+    test('fetches from network on cache miss', () async {
+      final mockHttp = _MockEwHttp();
+      final api = IpfsApi(mockHttp, cacheDir: mockTmpDir, requestTimeout: const Duration(seconds: 2));
+
+      mockHttp.enqueue(() async => Right(_testBusiness));
+      final result = await api.getIpfsBusiness('QmFreshFetch');
+      expect(result.toJson(), _testBusiness.toJson());
     });
   });
 }

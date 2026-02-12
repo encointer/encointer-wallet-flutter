@@ -12,11 +12,17 @@ import 'package:html/parser.dart' as html;
 const logTarget = 'Ipfs';
 
 class IpfsApi {
-  const IpfsApi(this.ewHttp, {this.gateway = ipfsGatewayEncointer, Directory? cacheDir}) : _cacheDir = cacheDir;
+  const IpfsApi(
+    this.ewHttp, {
+    this.gateway = ipfsGatewayEncointer,
+    Directory? cacheDir,
+    this.requestTimeout = const Duration(seconds: 15),
+  }) : _cacheDir = cacheDir;
 
   final EwHttp ewHttp;
   final String gateway;
   final Directory? _cacheDir;
+  final Duration requestTimeout;
 
   static const String lsRequest = '/api/v0/ls';
   static const String catRequest = '/api/v0/cat';
@@ -30,11 +36,25 @@ class IpfsApi {
   }
 
   Future<IpfsBusiness> getIpfsBusiness(String businessIpfsCid) async {
-    final response = await ewHttp.getType(_buildIpfsUrl(businessIpfsCid), fromJson: IpfsBusiness.fromJson);
-    return response.fold((l) {
-      Log.e('[getIpfsBusiness] error: $l', logTarget);
-      throw Exception('[getIpfsBusiness] error getting business data: $l');
-    }, (r) => r);
+    final cacheFile = await _getCachedFile(businessIpfsCid);
+    if (cacheFile.existsSync()) {
+      try {
+        final cached = jsonDecode(await cacheFile.readAsString()) as Map<String, dynamic>;
+        return IpfsBusiness.fromJson(cached);
+      } catch (_) {
+        // Corrupted cache, fall through to network fetch
+      }
+    }
+
+    return _retry(() async {
+      final response = await ewHttp.getType(_buildIpfsUrl(businessIpfsCid), fromJson: IpfsBusiness.fromJson);
+      final business = response.fold((l) {
+        throw Exception('[getIpfsBusiness] error: $l');
+      }, (r) => r);
+      await cacheFile.create(recursive: true);
+      await cacheFile.writeAsString(jsonEncode(business.toJson()));
+      return business;
+    });
   }
 
   // ---------------------------------------------------------------------------
@@ -252,6 +272,19 @@ class IpfsApi {
   // ---------------------------------------------------------------------------
   // Helpers
   // ---------------------------------------------------------------------------
+
+  Future<T> _retry<T>(Future<T> Function() fn, {int maxAttempts = 3}) async {
+    for (var attempt = 1; attempt <= maxAttempts; attempt++) {
+      try {
+        return await fn().timeout(requestTimeout);
+      } catch (e) {
+        if (attempt == maxAttempts) rethrow;
+        Log.d('[IPFS] attempt $attempt failed, retrying: $e', logTarget);
+        await Future<void>.delayed(Duration(seconds: 1 << (attempt - 1)));
+      }
+    }
+    throw StateError('unreachable');
+  }
 
   String _buildIpfsUrl(String cidOrFolder, [String? filename]) {
     // if filename is provided: assume folder CID
