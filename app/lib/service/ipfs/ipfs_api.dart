@@ -12,7 +12,8 @@ import 'package:html/parser.dart' as html;
 const logTarget = 'Ipfs';
 
 class IpfsApi {
-  const IpfsApi(this.ewHttp, {
+  const IpfsApi(
+    this.ewHttp, {
     this.gateway = ipfsGatewayEncointer,
     Directory? cacheDir,
     this.requestTimeout = const Duration(seconds: 15),
