@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
+import 'package:encointer_wallet/service/ipfs/ipfs_upload_exception.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_log/ew_log.dart';
@@ -46,7 +47,9 @@ class IpfsAuthService {
   final Map<String, AuthToken> _tokenCache = {};
 
   /// Gets a valid JWT token for the given community, authenticating if needed.
-  Future<String?> getToken({
+  ///
+  /// Throws [IpfsUploadException] if authentication fails.
+  Future<String> getToken({
     required String address,
     required String communityId,
     required Sr25519KeyPair keyPair,
@@ -58,13 +61,10 @@ class IpfsAuthService {
       return cached.token;
     }
 
-    // Authenticate
+    // Authenticate (throws on failure)
     final token = await _authenticate(address: address, communityId: communityId, keyPair: keyPair);
-    if (token != null) {
-      _tokenCache[communityId] = token;
-      return token.token;
-    }
-    return null;
+    _tokenCache[communityId] = token;
+    return token.token;
   }
 
   /// Clears cached token for a community (e.g., on logout or error).
@@ -77,7 +77,7 @@ class IpfsAuthService {
     _tokenCache.clear();
   }
 
-  Future<AuthToken?> _authenticate({
+  Future<AuthToken> _authenticate({
     required String address,
     required String communityId,
     required Sr25519KeyPair keyPair,
@@ -86,10 +86,6 @@ class IpfsAuthService {
 
     // Step 1: Request challenge
     final challenge = await _requestChallenge(address, communityId);
-    if (challenge == null) {
-      Log.e('[IpfsAuth] Failed to get challenge', _logTarget);
-      return null;
-    }
 
     // Step 2: Sign the message
     final messageBytes = utf8.encode(challenge.message);
@@ -108,7 +104,7 @@ class IpfsAuthService {
     );
   }
 
-  Future<AuthChallenge?> _requestChallenge(String address, String communityId) async {
+  Future<AuthChallenge> _requestChallenge(String address, String communityId) async {
     final url = '$gatewayUrl/auth/challenge';
     final response = await _ewHttp.post<Map<String, dynamic>>(
       url,
@@ -118,13 +114,16 @@ class IpfsAuthService {
     return response.fold(
       (error) {
         Log.e('[IpfsAuth] Challenge request failed: $error', _logTarget);
-        return null;
+        throw IpfsUploadException(
+          'Challenge request failed: ${error.moreErrorData ?? error.failureType}',
+          statusCode: error.statusCode,
+        );
       },
       AuthChallenge.fromJson,
     );
   }
 
-  Future<AuthToken?> _verifySignature({
+  Future<AuthToken> _verifySignature({
     required String address,
     required String communityId,
     required String signature,
@@ -146,7 +145,10 @@ class IpfsAuthService {
     return response.fold(
       (error) {
         Log.e('[IpfsAuth] Verify failed: $error', _logTarget);
-        return null;
+        throw IpfsUploadException(
+          'Authentication failed: ${error.moreErrorData ?? error.failureType}',
+          statusCode: error.statusCode,
+        );
       },
       (json) {
         Log.d('[IpfsAuth] Authentication successful', _logTarget);

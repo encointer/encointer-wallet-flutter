@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:encointer_wallet/service/ipfs/ipfs_auth_service.dart';
+import 'package:encointer_wallet/service/ipfs/ipfs_upload_exception.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_log/ew_log.dart';
 import 'package:http/http.dart' as http;
@@ -28,16 +29,6 @@ class IpfsUploadResult {
   final String name;
   final String size;
   final int? remainingUploads;
-}
-
-class IpfsUploadException implements Exception {
-  IpfsUploadException(this.message, {this.statusCode});
-
-  final String message;
-  final int? statusCode;
-
-  @override
-  String toString() => 'IpfsUploadException: $message (status: $statusCode)';
 }
 
 class IpfsUploadService {
@@ -75,16 +66,12 @@ class IpfsUploadService {
     required Sr25519KeyPair keyPair,
     String? mimeType,
   }) async {
-    // Get JWT token
+    // Get JWT token (throws IpfsUploadException on failure)
     final token = await _authService.getToken(
       address: address,
       communityId: communityId,
       keyPair: keyPair,
     );
-
-    if (token == null) {
-      throw IpfsUploadException('Authentication failed');
-    }
 
     Log.d('[IpfsUpload] Uploading $filename (${bytes.length} bytes)', _logTarget);
 
