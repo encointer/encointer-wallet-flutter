@@ -4,6 +4,8 @@ import 'package:encointer_wallet/config/networks/networks.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/mocks/ipfs_api.dart';
 import 'package:encointer_wallet/service/ipfs/ipfs_api.dart';
+import 'package:encointer_wallet/service/ipfs/ipfs_auth_service.dart';
+import 'package:encointer_wallet/service/ipfs/ipfs_upload_service.dart';
 import 'package:encointer_wallet/service/substrate_api/account_api.dart';
 import 'package:encointer_wallet/service/substrate_api/assets_api.dart';
 import 'package:encointer_wallet/service/substrate_api/chain_api.dart';
@@ -53,6 +55,8 @@ class Api {
     this.chain,
     this.encointer,
     this.ipfsApi,
+    this.ipfsAuthService,
+    this.ipfsUploadService,
   );
 
   factory Api.create(
@@ -63,6 +67,11 @@ class Api {
     // Initialize with default endpoint, will check for healthiness later.
     final provider =
         ReconnectingWsProvider(Uri.parse(store.settings.currentNetwork.defaultEndpoint()), autoConnect: false);
+
+    final ipfsAuthGateway = store.settings.currentNetwork.ipfsAuthGateway();
+    final ipfsAuthService = IpfsAuthService(ewHttp, gatewayUrl: ipfsAuthGateway);
+    final ipfsUploadService = IpfsUploadService(ipfsAuthService, gatewayUrl: ipfsAuthGateway);
+
     return Api(
       store,
       provider,
@@ -71,6 +80,8 @@ class Api {
       ChainApi(store, provider),
       EncointerApi(store, SubstrateDartApi(provider), ewHttp, EncointerKusama(provider)),
       isIntegrationTest ? MockIpfsApi(ewHttp) : IpfsApi(ewHttp, gateway: store.settings.ipfsGateway),
+      ipfsAuthService,
+      ipfsUploadService,
     );
   }
 
@@ -82,6 +93,8 @@ class Api {
   final ChainApi chain;
   final EncointerApi encointer;
   final IpfsApi ipfsApi;
+  final IpfsAuthService ipfsAuthService;
+  final IpfsUploadService ipfsUploadService;
 
   Future<void>? _connecting;
 
