@@ -36,3 +36,23 @@ jobs:
 
       - name: "Run Dart E2E Tests"
         run: .flutter/bin/dart run melos ${{ matrix.test }}
+
+  ipfs-upload-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install flutter wrapper
+        run: ./scripts/install_flutter_wrapper.sh
+
+      - name: Get dependencies (i.e., melos)
+        run: .flutter/bin/dart pub get
+
+      - name: Melos Bootstrap
+        run: .flutter/bin/dart run melos bootstrap
+
+      - name: "Run IPFS Upload E2E Tests"
+        env:
+          IPFS_E2E_MNEMONIC: ${{ secrets.IPFS_E2E_MNEMONIC }}
+        run: .flutter/bin/dart run melos unit-test-app-with-ipfs-upload-e2e

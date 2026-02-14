@@ -43,48 +43,52 @@ Future<void> submitTxInner(
 
   final onTxFinishFn = onFinish ?? (_, __) => null;
 
-  if (await api.isConnected()) {
-    try {
-      final report = await api.account.sendTxAndShowNotification(
-        extrinsic,
-        notification,
-        cid: store.encointer.community?.cid.toFmtString(),
-      );
+  try {
+    if (await api.isConnected()) {
+      try {
+        final report = await api.account.sendTxAndShowNotification(
+          extrinsic,
+          notification,
+          cid: store.encointer.community?.cid.toFmtString(),
+        );
 
-      if (report.isExtrinsicFailed) {
-        Log.e('[TX] Extrinsic Failed: ${report.dispatchError!.toJson()}');
+        if (report.isExtrinsicFailed) {
+          Log.e('[TX] Extrinsic Failed: ${report.dispatchError!.toJson()}');
+          _onTxError(store);
+          onError?.call(report.dispatchError!);
+        } else {
+          _onTxFinish(context, store, report, onTxFinishFn);
+        }
+      } catch (e) {
+        Log.e('Caught RPC error while sending extrinsics: $e');
         _onTxError(store);
-        onError?.call(report.dispatchError!);
-      } else {
-        _onTxFinish(context, store, report, onTxFinishFn);
+        var msg = ErrorNotificationMsg(title: l10n.transactionError, body: e.toString());
+        if (e.toString().contains(lowPriorityTx)) {
+          msg = ErrorNotificationMsg(title: l10n.txTooLowPriorityErrorTitle, body: l10n.txTooLowPriorityErrorBody);
+          showTxErrorDialog(context, msg, false);
+        } else if (e.toString().contains(insufficientFundsError)) {
+          msg = ErrorNotificationMsg(title: l10n.insufficientFundsErrorTitle, body: l10n.insufficientFundsErrorBody);
+          showTxErrorDialog(context, msg, false);
+        } else if (e.toString().contains(invalidTransactionFormat)) {
+          msg = ErrorNotificationMsg(
+              title: l10n.invalidTransactionFormatErrorTitle, body: l10n.invalidTransactionFormatErrorBody);
+          showTxErrorDialog(context, msg, true);
+        } else {
+          showTxErrorDialog(context, msg, false);
+        }
       }
-    } catch (e) {
-      Log.e('Caught RPC error while sending extrinsics: $e');
-      _onTxError(store);
-      var msg = ErrorNotificationMsg(title: l10n.transactionError, body: e.toString());
-      if (e.toString().contains(lowPriorityTx)) {
-        msg = ErrorNotificationMsg(title: l10n.txTooLowPriorityErrorTitle, body: l10n.txTooLowPriorityErrorBody);
-        showTxErrorDialog(context, msg, false);
-      } else if (e.toString().contains(insufficientFundsError)) {
-        msg = ErrorNotificationMsg(title: l10n.insufficientFundsErrorTitle, body: l10n.insufficientFundsErrorBody);
-        showTxErrorDialog(context, msg, false);
-      } else if (e.toString().contains(invalidTransactionFormat)) {
-        msg = ErrorNotificationMsg(
-            title: l10n.invalidTransactionFormatErrorTitle, body: l10n.invalidTransactionFormatErrorBody);
-        showTxErrorDialog(context, msg, true);
-      } else {
-        showTxErrorDialog(context, msg, false);
-      }
-    }
-  } else {
-    _showTxStatusSnackBar(l10n.txQueuedOffline, null);
-    // This was unused
-    // txInfo['notificationTitle'] = l10n.notifySubmittedQueued;
-    // txInfo['txError'] = l10n.txError;
+    } else {
+      _showTxStatusSnackBar(l10n.txQueuedOffline, null);
+      // This was unused
+      // txInfo['notificationTitle'] = l10n.notifySubmittedQueued;
+      // txInfo['txError'] = l10n.txError;
 
-    // Todo: check when rest of the implementation is finished,
-    //  or maybe remove as it might not be working anyhow.
-    // store.account.queueTx(txParams);
+      // Todo: check when rest of the implementation is finished,
+      //  or maybe remove as it might not be working anyhow.
+      // store.account.queueTx(txParams);
+    }
+  } finally {
+    store.assets.setSubmitting(false);
   }
 }
 
