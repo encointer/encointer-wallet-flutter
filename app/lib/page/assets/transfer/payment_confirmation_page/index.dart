@@ -247,8 +247,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
         nonce[i] = random.nextInt(256);
       }
 
-      // 3. Recipient bytes (raw 32-byte pubkey)
-      final recipientBytes = AddressUtils.pubKeyHexToPubKey(recipientAccount.pubKey);
+      // 3. Recipient hash = blake2_256(pubkey) — matches pallet's hash_recipient(&recipient.encode())
+      final recipientHash = ZkProver.blake2_256(AddressUtils.pubKeyHexToPubKey(recipientAccount.pubKey));
 
       // 4. Amount as 32-byte LE (FixedU128 u128 bits in first 16 bytes)
       final amountBytes = _balanceToBytes32(amount);
@@ -270,7 +270,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
         provingKey: provingKey,
         zkSecret: zkSecret,
         nonce: nonce,
-        recipientHash: recipientBytes,
+        recipientHash: recipientHash,
         amount: amountBytes,
         assetHash: chainAssetHash,
       ));
