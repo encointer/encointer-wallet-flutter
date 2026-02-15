@@ -75,41 +75,35 @@ class OfflineIdentityService {
     final commitment = ZkProver.computeCommitment(zkSecret);
     Log.d('register: computed commitment (${commitment.length} bytes)', _logTarget);
 
-    // 3. Store zkSecret and genesis hash first (deterministic, always correct for this account)
+    // 3. Submit registerOfflineIdentity extrinsic
     final api = webApi;
+    final call = api.encointer.encointerKusama.tx.encointerOfflinePayment
+        .registerOfflineIdentity(commitment: commitment.toList());
+
+    // Pay fee with community currency when possible
+    final txPaymentAsset = store.encointer.community?.demurrage != null && store.chain.latestHeaderNumber != null
+        ? store.encointer.getTxPaymentAsset(store.encointer.chosenCid)
+        : null;
+    Log.d('register: txPaymentAsset=$txPaymentAsset', _logTarget);
+
+    final xt = await TxBuilder(api.provider).createSignedExtrinsicWithEncodedCall(
+      keyringAccount.pair,
+      call.encode(),
+      paymentAsset: txPaymentAsset?.toPolkadart(),
+    );
+    final report = await EWAuthorApi(api.provider).submitAndWatchExtrinsicWithReport(OpaqueExtrinsic(xt));
+    Log.d('register: extrinsic in block ${report.blockHash}, events: ${report.events.length}', _logTarget);
+    if (report.isExtrinsicFailed) {
+      Log.e('register: extrinsic failed: ${report.dispatchError}', _logTarget);
+      throw Exception('Registration extrinsic failed: ${report.dispatchError}');
+    }
+
+    // 4. Store zkSecret and genesis hash only after successful on-chain registration
     await _secureStorage.write(key: _zkSecretKey(pubKey), value: jsonEncode(zkSecret.toList()));
     final genesisHex = (await api.provider.send('chain_getBlockHash', [0])).result as String;
     final genesisBytes = _hexToBytes(genesisHex.replaceFirst('0x', ''));
     await _secureStorage.write(key: _genesisHashKey(pubKey), value: jsonEncode(genesisBytes.toList()));
     Log.d('register: stored zkSecret and genesis hash', _logTarget);
-
-    // 4. Submit registerOfflineIdentity extrinsic (may fail if already registered — that's OK)
-    try {
-      final call = api.encointer.encointerKusama.tx.encointerOfflinePayment
-          .registerOfflineIdentity(commitment: commitment.toList());
-
-      // Pay fee with community currency when possible
-      final txPaymentAsset = store.encointer.community?.demurrage != null && store.chain.latestHeaderNumber != null
-          ? store.encointer.getTxPaymentAsset(store.encointer.chosenCid)
-          : null;
-      Log.d('register: txPaymentAsset=$txPaymentAsset', _logTarget);
-
-      final xt = await TxBuilder(api.provider).createSignedExtrinsicWithEncodedCall(
-        keyringAccount.pair,
-        call.encode(),
-        paymentAsset: txPaymentAsset?.toPolkadart(),
-      );
-      final report = await EWAuthorApi(api.provider).submitAndWatchExtrinsicWithReport(OpaqueExtrinsic(xt));
-      Log.d('register: extrinsic in block ${report.blockHash}, events: ${report.events.length}', _logTarget);
-      if (report.isExtrinsicFailed) {
-        Log.e('register: extrinsic failed: ${report.dispatchError}', _logTarget);
-        throw Exception('Registration extrinsic failed: ${report.dispatchError}');
-      }
-    } on Exception catch (e) {
-      if (e.toString().contains('Registration extrinsic failed')) rethrow;
-      // Tolerate failures — commitment may already be registered on-chain
-      Log.d('register: extrinsic submission failed (may be duplicate): $e', _logTarget);
-    }
 
     // 5. Eagerly cache the proving key while we're still online
     try {

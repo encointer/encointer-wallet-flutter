@@ -112,7 +112,7 @@ class _AssetsViewState extends State<AssetsView> {
     final prefs = await SharedPreferences.getInstance();
 
     if (prefs.getBool(prefsKey) ?? false) {
-      // Already prompted — run consistency check silently if registered and online
+      // User previously declined — run consistency check silently if registered and online
       if (await service.isRegistered(pubKey)) {
         final connectivity = context.read<ConnectivityStore>();
         if (connectivity.isConnectedToNetwork && mounted) {
@@ -127,13 +127,16 @@ class _AssetsViewState extends State<AssetsView> {
     }
 
     if (await service.isRegistered(pubKey)) {
-      await prefs.setBool(prefsKey, true);
       return;
     }
 
     if (!mounted) return;
     final connectivity = context.read<ConnectivityStore>();
     if (!connectivity.isConnectedToNetwork) return;
+
+    // Only offer registration if the account has some balance to pay fees
+    final balance = widget.store.encointer.communityBalanceOrCached;
+    if (balance == null || balance <= 0) return;
 
     await AppAlert.showConfirmDialog<void>(
       context: context,
@@ -161,10 +164,12 @@ class _AssetsViewState extends State<AssetsView> {
           AppAlert.showErrorDialog(context, errorText: 'Registration failed: $e', buttontext: 'OK');
         }
       },
-      onCancel: () => Navigator.of(context).pop(),
+      onCancel: () async {
+        Navigator.of(context).pop();
+        // Only remember the choice when user explicitly declines
+        await prefs.setBool(prefsKey, true);
+      },
     );
-
-    await prefs.setBool(prefsKey, true);
   }
 
   @override
