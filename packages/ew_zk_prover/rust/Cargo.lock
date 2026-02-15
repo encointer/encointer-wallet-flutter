@@ -318,7 +318,7 @@ checksum = "48c757948c5ede0e46177b7add2e67155f70e33c07fea8284df6576da70b3719"
 [[package]]
 name = "encointer-offline-payment-core"
 version = "0.1.0"
-source = "git+https://github.com/encointer/pallets?branch=claude%2Foffline-tx-ffi#b0ccc8b93ed9c318544fa631e2e1badda4cdb38b"
+source = "git+https://github.com/encointer/pallets?branch=master#13a9c7415a3db35c87a046176d3b7098cbf16a94"
 dependencies = [
  "ark-bn254",
  "ark-crypto-primitives",
