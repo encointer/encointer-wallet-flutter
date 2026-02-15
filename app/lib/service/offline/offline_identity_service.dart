@@ -37,7 +37,10 @@ class OfflineIdentityService {
 
   /// Load the stored zk_secret for the given account.
   Future<Uint8List?> loadZkSecret(String pubKey) async {
-    final encoded = await _secureStorage.read(key: _zkSecretKey(pubKey));
+    final key = _zkSecretKey(pubKey);
+    Log.d('loadZkSecret: key=$key', _logTarget);
+    final encoded = await _secureStorage.read(key: key);
+    Log.d('loadZkSecret: found=${encoded != null}', _logTarget);
     if (encoded == null) return null;
     return Uint8List.fromList(List<int>.from(jsonDecode(encoded) as List));
   }
@@ -57,15 +60,18 @@ class OfflineIdentityService {
       Log.e('No current account', _logTarget);
       return;
     }
+    Log.d('register: pubKey=$pubKey', _logTarget);
 
     final keyringAccount = store.account.getKeyringAccount(pubKey);
 
     // 1. Derive zkSecret from the account's mnemonic/seed
     final seed = Uint8List.fromList(utf8.encode(keyringAccount.uri));
     final zkSecret = ZkProver.deriveZkSecret(seed);
+    Log.d('register: derived zkSecret (${zkSecret.length} bytes)', _logTarget);
 
     // 2. Compute Poseidon commitment
     final commitment = ZkProver.computeCommitment(zkSecret);
+    Log.d('register: computed commitment (${commitment.length} bytes)', _logTarget);
 
     // 3. Build and submit registerOfflineIdentity extrinsic
     final api = webApi;
@@ -75,19 +81,26 @@ class OfflineIdentityService {
     final xt = await TxBuilder(api.provider).createSignedExtrinsicWithEncodedCall(keyringAccount.pair, call.encode());
 
     final report = await EWAuthorApi(api.provider).submitAndWatchExtrinsicWithReport(OpaqueExtrinsic(xt));
+    Log.d('register: extrinsic in block ${report.blockHash}, events: ${report.events.length}', _logTarget);
 
     if (report.isExtrinsicFailed) {
-      Log.e('register: extrinsic failed', _logTarget);
+      Log.e('register: extrinsic failed: ${report.dispatchError}', _logTarget);
       throw StateError('Offline identity registration failed on-chain');
     }
 
     // 4. Store zkSecret in SecureStorage
-    await _secureStorage.write(key: _zkSecretKey(pubKey), value: jsonEncode(zkSecret.toList()));
+    final secretKey = _zkSecretKey(pubKey);
+    Log.d('register: storing zkSecret with key=$secretKey', _logTarget);
+    await _secureStorage.write(key: secretKey, value: jsonEncode(zkSecret.toList()));
 
     // 5. Fetch and store genesis hash for cross-chain replay protection
     final genesisHex = (await api.provider.send('chain_getBlockHash', [0])).result as String;
     final genesisBytes = _hexToBytes(genesisHex.replaceFirst('0x', ''));
     await _secureStorage.write(key: _genesisHashKey(pubKey), value: jsonEncode(genesisBytes.toList()));
+
+    // Verify storage
+    final stored = await _secureStorage.read(key: secretKey);
+    Log.d('register: verify stored=${stored != null}, key=$secretKey', _logTarget);
 
     Log.d('register: offline identity registered for $pubKey', _logTarget);
   }
