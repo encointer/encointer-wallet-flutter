@@ -326,12 +326,12 @@ class _AssetsViewState extends State<AssetsView> {
                                     '${l10n.balance}, ${widget.store.encointer.community?.symbol}',
                                     style: context.bodyLarge.copyWith(color: AppColors.encointerGrey),
                                   ),
-                                  if (_appSettingsStore.developerMode && pendingDelta != 0)
+                                  if (pendingDelta != 0)
                                     Text(
                                       '(incl. pending offline)',
                                       style: context.bodySmall.copyWith(color: AppColors.encointerGrey),
                                     ),
-                                  if (_appSettingsStore.developerMode && widget.store.encointer.isBalanceCached)
+                                  if (widget.store.encointer.isBalanceCached)
                                     Text(
                                       '(offline, approximate)',
                                       style: context.bodySmall.copyWith(color: AppColors.encointerGrey),
@@ -371,7 +371,7 @@ class _AssetsViewState extends State<AssetsView> {
                         ),
                         const SizedBox(width: 3),
                         Observer(
-                            builder: (_) => widget.store.encointer.communityBalance != null
+                            builder: (_) => widget.store.encointer.communityBalanceOrCached != null
                                 ? ActionButton(
                                     key: const Key(EWTestKeys.goTransferHistory),
                                     icon: Assets.images.assets.receiveSquare2.svg(
@@ -389,7 +389,7 @@ class _AssetsViewState extends State<AssetsView> {
                                   )),
                         const SizedBox(width: 3),
                         Observer(
-                          builder: (_) => widget.store.encointer.communityBalance != null
+                          builder: (_) => widget.store.encointer.communityBalanceOrCached != null
                               ? ActionButton(
                                   key: const Key(EWTestKeys.transfer),
                                   icon: const Icon(Iconsax.send_sqaure_2),
