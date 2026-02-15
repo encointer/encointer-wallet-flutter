@@ -66,7 +66,8 @@ abstract class _OfflinePaymentStore with Store {
   @computed
   List<OfflinePaymentRecord> get currentAccountPayments {
     final address = rootStore.account.currentAddress;
-    return payments.where((p) => p.senderAddress == address || p.recipientAddress == address).toList();
+    return payments.where((p) => p.senderAddress == address || p.recipientAddress == address).toList()
+      ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
   }
 
   @computed
