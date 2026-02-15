@@ -19,6 +19,8 @@ import 'package:ew_substrate_fixed/substrate_fixed.dart';
 
 const _logTarget = 'SettlementService';
 
+late SettlementService settlementService;
+
 /// Submits pending offline payments when connectivity is restored.
 ///
 /// Activates only when `developerMode == true` AND `isConnectedToNetwork == true`.
@@ -44,7 +46,7 @@ class SettlementService {
       (record) {
         final (isConnected, isDevMode) = record;
         if (isConnected && isDevMode) {
-          _settlePendingPayments();
+          settlePendingPayments();
         }
       },
       fireImmediately: true,
@@ -59,7 +61,7 @@ class SettlementService {
     Log.d('Settlement listener disposed', _logTarget);
   }
 
-  Future<void> _settlePendingPayments() async {
+  Future<void> settlePendingPayments() async {
     if (_settling) return;
     _settling = true;
 

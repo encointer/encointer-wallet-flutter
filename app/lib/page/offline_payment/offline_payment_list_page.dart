@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/service/offline/settlement_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/offline_payment/offline_payment_store.dart';
 import 'package:encointer_wallet/theme/theme.dart';
@@ -32,7 +33,16 @@ class OfflinePaymentListPage extends StatelessWidget {
             separatorBuilder: (_, __) => const Divider(height: 1),
             itemBuilder: (context, index) {
               final record = payments[index];
-              return _PaymentTile(record: record, currentAddress: currentAddress);
+              return _PaymentTile(
+                record: record,
+                currentAddress: currentAddress,
+                onRetry: record.status == OfflinePaymentStatus.failed
+                    ? () async {
+                        await store.offlinePayment.updateStatus(record.nullifierHex, OfflinePaymentStatus.pending);
+                        await settlementService.settlePendingPayments();
+                      }
+                    : null,
+              );
             },
           );
         },
@@ -42,10 +52,11 @@ class OfflinePaymentListPage extends StatelessWidget {
 }
 
 class _PaymentTile extends StatelessWidget {
-  const _PaymentTile({required this.record, required this.currentAddress});
+  const _PaymentTile({required this.record, required this.currentAddress, this.onRetry});
 
   final OfflinePaymentRecord record;
   final String currentAddress;
+  final VoidCallback? onRetry;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +75,14 @@ class _PaymentTile extends StatelessWidget {
         _truncateAddress(counterparty),
         style: context.bodySmall,
       ),
-      trailing: _StatusBadge(status: record.status),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (onRetry != null)
+            IconButton(icon: const Icon(Icons.refresh, color: Colors.orange), onPressed: onRetry),
+          _StatusBadge(status: record.status),
+        ],
+      ),
     );
   }
 

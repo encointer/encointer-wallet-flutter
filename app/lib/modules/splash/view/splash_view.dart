@@ -45,11 +45,11 @@ class SplashView extends StatelessWidget {
       await store.encointer.updateState();
     });
 
-    SettlementService(
+    settlementService = SettlementService(
       appStore: store,
       connectivityStore: context.read<ConnectivityStore>(),
       appSettings: context.read<AppSettings>(),
-    ).start();
+    )..start();
 
     store.setApiReady(true);
 
