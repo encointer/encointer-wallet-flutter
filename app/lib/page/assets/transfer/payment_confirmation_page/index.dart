@@ -265,11 +265,9 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
       );
 
       // 6. Generate ZK proof
-      // TODO(production): Load proving key from bundled asset or download.
-      // For dev/testing, generate from deterministic test seed.
-      final setup = ZkProver.generateTestSetup(0xDEADBEEFCAFEBABE);
+      final provingKey = await offlineIdService.loadProvingKey();
       final result = await ZkProver.generateProof(ProofInput(
-        provingKey: setup.provingKey,
+        provingKey: provingKey,
         zkSecret: zkSecret,
         nonce: nonce,
         recipientHash: recipientBytes,

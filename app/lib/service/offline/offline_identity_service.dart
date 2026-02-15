@@ -28,6 +28,7 @@ class OfflineIdentityService {
 
   static String _zkSecretKey(String pubKey) => 'offline_zk_secret_$pubKey';
   static String _genesisHashKey(String pubKey) => 'offline_genesis_hash_$pubKey';
+  static const _provingKeyStorageKey = 'offline_proving_key';
 
   /// Whether the given account has a stored zk_secret (i.e., has registered offline identity).
   Future<bool> isRegistered(String pubKey) async {
@@ -97,7 +98,61 @@ class OfflineIdentityService {
       Log.d('register: extrinsic submission failed (may be duplicate): $e', _logTarget);
     }
 
+    // 5. Eagerly cache the proving key while we're still online
+    try {
+      await loadProvingKey();
+    } on Exception catch (e) {
+      Log.d('register: could not cache proving key (VK may not be set yet): $e', _logTarget);
+    }
+
     Log.d('register: offline identity registered for $pubKey', _logTarget);
+  }
+
+  /// Load the proving key: static cache → secure storage → network fetch + validate.
+  ///
+  /// The network fetch only happens when online (e.g., during registration).
+  /// Once cached in storage, the PK is available offline.
+  Future<Uint8List> loadProvingKey() async {
+    // 1. Static (in-memory) cache
+    if (_cachedProvingKey != null) return _cachedProvingKey!;
+
+    // 2. Secure storage cache
+    final stored = await _secureStorage.read(key: _provingKeyStorageKey);
+    if (stored != null) {
+      _cachedProvingKey = Uint8List.fromList(List<int>.from(jsonDecode(stored) as List));
+      Log.d('loadProvingKey: loaded from storage (${_cachedProvingKey!.length} bytes)', _logTarget);
+      return _cachedProvingKey!;
+    }
+
+    // 3. Fetch VK from chain, generate PK, validate, persist
+    final api = webApi;
+    final vkBytes = await api.encointer.encointerKusama.query.encointerOfflinePayment.verificationKey();
+    if (vkBytes == null) {
+      throw StateError('No verification key set on-chain. Set one via set_verification_key first.');
+    }
+    final onChainVk = Uint8List.fromList(vkBytes);
+    Log.d('loadProvingKey: fetched on-chain VK (${onChainVk.length} bytes)', _logTarget);
+
+    // TODO(production): load PK from bundled asset instead of generating.
+    final setup = ZkProver.generateTestSetup(0xDEADBEEFCAFEBABE);
+    if (!_bytesEqual(setup.verifyingKey, onChainVk)) {
+      throw StateError('Generated VK does not match on-chain VK. Wrong trusted setup seed.');
+    }
+
+    _cachedProvingKey = setup.provingKey;
+    await _secureStorage.write(key: _provingKeyStorageKey, value: jsonEncode(_cachedProvingKey!.toList()));
+    Log.d('loadProvingKey: VK validated, PK cached+stored (${_cachedProvingKey!.length} bytes)', _logTarget);
+    return _cachedProvingKey!;
+  }
+
+  static Uint8List? _cachedProvingKey;
+
+  static bool _bytesEqual(Uint8List a, Uint8List b) {
+    if (a.length != b.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) return false;
+    }
+    return true;
   }
 
   static Uint8List _hexToBytes(String hex) {
