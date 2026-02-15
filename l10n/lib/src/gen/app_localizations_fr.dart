@@ -33,13 +33,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get accountNameChoose => 'Choisis un nom de compte.';
 
   @override
-  String get accountNameChooseHint => 'Tu pourras le changer plus tard dans les paramètres du profil.';
+  String get accountNameChooseHint =>
+      'Tu pourras le changer plus tard dans les paramètres du profil.';
 
   @override
   String get accounts => 'Comptes';
 
   @override
-  String get accountsDelete => 'Es-tu certain de vouloir supprimer tous les comptes?';
+  String get accountsDelete =>
+      'Es-tu certain de vouloir supprimer tous les comptes?';
 
   @override
   String get accountsDeleteAll => 'Supprimer tous les comptes';
@@ -57,7 +59,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get addContact => 'ajouter un contact';
 
   @override
-  String get addInvoiceQrToAddress => 'Ajouter le code QR de la facture à l\'adresse';
+  String get addInvoiceQrToAddress =>
+      'Ajouter le code QR de la facture à l\'adresse';
 
   @override
   String get address => 'Adresse';
@@ -69,7 +72,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get addToContactFromQrContact => 'Add Contact-Qr';
 
   @override
-  String get alreadyEndorsedErrorBody => 'Ce compte a déjà été endossé pour ce cycle';
+  String get alreadyEndorsedErrorBody =>
+      'Ce compte a déjà été endossé pour ce cycle';
 
   @override
   String get alreadyEndorsedErrorTitle => 'Déjà endossé';
@@ -107,7 +111,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get balanceTooLowTitle => 'Solde trop bas';
 
   @override
-  String get balanceTransferNotificationBody => 'Le destinataire a reçu les tokens.';
+  String get balanceTransferNotificationBody =>
+      'Le destinataire a reçu les tokens.';
 
   @override
   String get balanceTransferNotificationTitle => 'Transaction complète';
@@ -134,10 +139,12 @@ class AppLocalizationsFr extends AppLocalizations {
       'S\'il te reste des tickets d\'endossement, n\'oublie pas de confirmer Novice comme digne de confiance.';
 
   @override
-  String get bootstrapperTitle => 'Enregistré comme Bootstrapper - ta place est garantie.';
+  String get bootstrapperTitle =>
+      'Enregistré comme Bootstrapper - ta place est garantie.';
 
   @override
-  String get calendarEntryDescription => 'Participe à la rencontre pour recevoir ton paiement.';
+  String get calendarEntryDescription =>
+      'Participe à la rencontre pour recevoir ton paiement.';
 
   @override
   String get cameraPermissionError =>
@@ -151,7 +158,8 @@ class AppLocalizationsFr extends AppLocalizations {
       'Que pendant la phase d\'inscription tu peux marquer quelqu\'un comme crédible';
 
   @override
-  String get cantEndorseBootstrapper => 'Les Bootstrappers sont déjà marqués comme fiables';
+  String get cantEndorseBootstrapper =>
+      'Les Bootstrappers sont déjà marqués comme fiables';
 
   @override
   String get categories => 'Catégories';
@@ -201,13 +209,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get claim => 'Réclamer';
 
   @override
-  String get claimRewardsNotificationBody => 'Tu as déjà reçu ton revenu communautaire.';
+  String get claimRewardsNotificationBody =>
+      'Tu as déjà reçu ton revenu communautaire.';
 
   @override
   String get claimRewardsNotificationTitle => 'Revenu communautaire demandé';
 
   @override
-  String get claimsScannedAlready => 'La demande déjà scannée a été mise à jour';
+  String get claimsScannedAlready =>
+      'La demande déjà scannée a été mise à jour';
 
   @override
   String get claimsScannedDecodeFailed =>
@@ -232,7 +242,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get communityDoChoose => 'Choisir communauté';
 
   @override
-  String get communityNotSelected => 'Aucune communauté sélectionnée, clique sur l\'icône';
+  String get communityNotSelected =>
+      'Aucune communauté sélectionnée, clique sur l\'icône';
 
   @override
   String get confirmPin => 'Veuillez confirmer le code NIP';
@@ -253,7 +264,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get contactDelete => 'Supprimer';
 
   @override
-  String get contactDeleteWarn => 'Es-tu certain de vouloir supprimer cette adresse?';
+  String get contactDeleteWarn =>
+      'Es-tu certain de vouloir supprimer cette adresse?';
 
   @override
   String get contactEndorse => 'Confirmer comme crédible';
@@ -286,7 +298,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get create => 'Créer un compte';
 
   @override
-  String get createError => 'Une erreur s\'est produite lors de la création de ton compte';
+  String get createError =>
+      'Une erreur s\'est produite lors de la création de ton compte';
 
   @override
   String get createHint => '(Exemple Alice)';
@@ -317,16 +330,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get democracyDiscussion => 'Discute de suggestions dans le forum!';
 
   @override
-  String get democracyVotedNotificationBody => 'Tu as voté pour cette proposition.';
+  String get democracyVotedNotificationBody =>
+      'Tu as voté pour cette proposition.';
 
   @override
   String get democracyVotedNotificationTitle => 'Voté';
 
   @override
-  String get democracyUpdatedProposalStateNotificationBody => 'Vous avez mis à jour cette proposition';
+  String get democracyUpdatedProposalStateNotificationBody =>
+      'Vous avez mis à jour cette proposition';
 
   @override
-  String get democracyUpdatedProposalStateNotificationTitle => 'Proposition mise à jour';
+  String get democracyUpdatedProposalStateNotificationTitle =>
+      'Proposition mise à jour';
 
   @override
   String get democracySubmitProposalNotificationBody =>
@@ -358,10 +374,12 @@ class AppLocalizationsFr extends AppLocalizations {
       'Tu as été confirmé comme membre de confiance par un Bootstrapper. Ta place est donc garantie.';
 
   @override
-  String get endorseeTitle => 'Enregistré comme Endosser - Ta place est garantie.';
+  String get endorseeTitle =>
+      'Enregistré comme Endosser - Ta place est garantie.';
 
   @override
-  String get endorseNewcomerNotificationBody => 'Merci d\'avoir endossé le Novice!';
+  String get endorseNewcomerNotificationBody =>
+      'Merci d\'avoir endossé le Novice!';
 
   @override
   String get endorseNewcomerNotificationTitle => 'Novice endossé';
@@ -379,7 +397,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get errorOccurred => 'Une erreur est apparue:';
 
   @override
-  String get errorUserNameIsRequired => 'Le nom d\'utilisateur ne doit pas être vide';
+  String get errorUserNameIsRequired =>
+      'Le nom d\'utilisateur ne doit pas être vide';
 
   @override
   String get event => 'ID d\'événement';
@@ -424,7 +443,8 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get exerciseSwapNativeOptionAvailable => 'Option d’échange KSM disponible';
+  String get exerciseSwapNativeOptionAvailable =>
+      'Option d’échange KSM disponible';
 
   @override
   String get exerciseSwapOption => 'Exercer l’option d’échange';
@@ -443,7 +463,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get exerciseSwapSuccess => 'Échange réussi';
 
   @override
-  String get exerciseSwapAssetSuccessMessage => 'Tu verras bientôt la transaction sur Subscan.';
+  String get exerciseSwapAssetSuccessMessage =>
+      'Tu verras bientôt la transaction sur Subscan.';
 
   @override
   String get exerciseSwapNativeSuccessMessage =>
@@ -490,16 +511,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get hash => 'Hachage de la transaction';
 
   @override
-  String get hintEnterCurrentPin => 'Entre ton code PIN actuel pour le modifier.';
+  String get hintEnterCurrentPin =>
+      'Entre ton code PIN actuel pour le modifier.';
 
   @override
-  String get hintThenEnterANewPin => 'Tu peux ensuite saisir ton nouveau code NIP.';
+  String get hintThenEnterANewPin =>
+      'Tu peux ensuite saisir ton nouveau code NIP.';
 
   @override
   String get home => 'Écran de démarrage';
 
   @override
-  String get howManyParticipantsShowedUp => 'Combien de participants y a-t-il, toi y compris ';
+  String get howManyParticipantsShowedUp =>
+      'Combien de participants y a-t-il, toi y compris ';
 
   @override
   String get import => 'Importer';
@@ -521,7 +545,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get importMustNotBeEmpty => 'L\'entrée ne peut pas être vide';
 
   @override
-  String get importPrivateKeyUnsupported => 'Le compte d\'importation avec clé privée n\'est pas encore pris en charge';
+  String get importPrivateKeyUnsupported =>
+      'Le compte d\'importation avec clé privée n\'est pas encore pris en charge';
 
   @override
   String get incomeIssuance => 'Revenu communautaire';
@@ -543,7 +568,8 @@ class AppLocalizationsFr extends AppLocalizations {
       'La transaction avait un format invalide, ce qui pourrait être un bug dans l\'application. Si tu penses que c\'est un bug, clique sur le champ correspondant ci-dessous.';
 
   @override
-  String get invalidTransactionFormatErrorTitle => 'Format de transaction invalide';
+  String get invalidTransactionFormatErrorTitle =>
+      'Format de transaction invalide';
 
   @override
   String get invalidCommunity => 'Communauté non valide.';
@@ -605,13 +631,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'Utilise le numéro de réunion pour trouver ton lieu de réunion réel. Dans ta communauté, c\'est le responsable de la communauté qui est chargé de spécifier les lieux de réunion. Le lieu réel peut être légèrement différent de celui affiché ici.';
 
   @override
-  String get meetupNotificationOneDayBeforeContent => 'Réunion commence dans 24h';
+  String get meetupNotificationOneDayBeforeContent =>
+      'Réunion commence dans 24h';
 
   @override
   String get meetupNotificationOneDayBeforeTitle => '24 heures restantes';
 
   @override
-  String get meetupNotificationOneHourBeforeContent => 'Réunion commence dans une heure';
+  String get meetupNotificationOneHourBeforeContent =>
+      'Réunion commence dans une heure';
 
   @override
   String get meetupNotificationOneHourBeforeTitle => 'Encore 1 heure';
@@ -652,7 +680,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get notNow => 'Pas maintenant';
 
   @override
-  String get notifySubmittedQueued => 'La transaction dans la file d\'attente a été soumise';
+  String get notifySubmittedQueued =>
+      'La transaction dans la file d\'attente a été soumise';
 
   @override
   String get noTransactions => 'Aucune transaction';
@@ -693,7 +722,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get openMapApplication => 'Ouvrer l\'application de carte';
 
   @override
-  String get openTheEncointerApp => '1. Ouvre l\'application \"Encointer Wallet\"';
+  String get openTheEncointerApp =>
+      '1. Ouvre l\'application \"Encointer Wallet\"';
 
   @override
   String get passOld => 'NIP actuel';
@@ -726,7 +756,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get personalKey => 'Clé personnelle';
 
   @override
-  String get personalKeyEnter => 'Entre ta clé personnelle (12 mots) pour importer ton compte.';
+  String get personalKeyEnter =>
+      'Entre ta clé personnelle (12 mots) pour importer ton compte.';
 
   @override
   String get pinHint =>
@@ -802,7 +833,8 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get proposalExplainerSwapOptionComputation => 'Calcul avec tes données';
+  String get proposalExplainerSwapOptionComputation =>
+      'Calcul avec tes données';
 
   @override
   String get proposalExplainerRate => 'Taux';
@@ -835,10 +867,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get proposalTypeUpdateDemurrage => 'Mettre à jour la démurrage';
 
   @override
-  String get proposalTypeUpdateNominalIncome => 'Mettre à jour le revenu nominal';
+  String get proposalTypeUpdateNominalIncome =>
+      'Mettre à jour le revenu nominal';
 
   @override
-  String get proposalTypeSetInactivityTimeout => 'Définir le délai d\'inactivité';
+  String get proposalTypeSetInactivityTimeout =>
+      'Définir le délai d\'inactivité';
 
   @override
   String get proposalTypePetition => 'Pétition';
@@ -885,7 +919,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get proposalFieldNominalIncome => 'Revenu nominal';
 
   @override
-  String get proposalFieldInactivityTimeoutCycles => 'Délai d\'inactivité (cycles de rencontre)';
+  String get proposalFieldInactivityTimeoutCycles =>
+      'Délai d\'inactivité (cycles de rencontre)';
 
   @override
   String get proposalFieldPetitionText => 'Texte de la pétition';
@@ -923,34 +958,41 @@ class AppLocalizationsFr extends AppLocalizations {
   String get proposalFieldValidity => 'Validité';
 
   @override
-  String get proposalFieldErrorEnterPetitionText => 'Entrez le texte de la pétition';
+  String get proposalFieldErrorEnterPetitionText =>
+      'Entrez le texte de la pétition';
 
   @override
-  String get proposalFieldErrorPetitionTextTooLong => 'Le texte de la pétition est trop long';
+  String get proposalFieldErrorPetitionTextTooLong =>
+      'Le texte de la pétition est trop long';
 
   @override
   String get proposalFieldErrorEnterLatitude => 'Entrez la latitude';
 
   @override
-  String get proposalFieldErrorLatitudeRange => 'La latitude doit être comprise entre -90 et 90';
+  String get proposalFieldErrorLatitudeRange =>
+      'La latitude doit être comprise entre -90 et 90';
 
   @override
   String get proposalFieldErrorEnterLongitude => 'Entrez la longitude';
 
   @override
-  String get proposalFieldErrorLongitudeRange => 'La longitude doit être comprise entre -180 et 180';
+  String get proposalFieldErrorLongitudeRange =>
+      'La longitude doit être comprise entre -180 et 180';
 
   @override
   String get proposalFieldErrorEnterDemurrage => 'Entrez la démurrage';
 
   @override
-  String get proposalFieldErrorDemurrageRange => 'La démurrage doit être comprise entre 0 et 100';
+  String get proposalFieldErrorDemurrageRange =>
+      'La démurrage doit être comprise entre 0 et 100';
 
   @override
-  String get proposalFieldErrorEnterPositiveNumber => 'Entrez un nombre positif';
+  String get proposalFieldErrorEnterPositiveNumber =>
+      'Entrez un nombre positif';
 
   @override
-  String get proposalFieldErrorPositiveNumberRange => 'Doit être un nombre positif';
+  String get proposalFieldErrorPositiveNumberRange =>
+      'Doit être un nombre positif';
 
   @override
   String proposalFieldErrorPositiveNumberTooBig(String amount) {
@@ -958,10 +1000,12 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get proposalFieldErrorEnterInactivityTimeout => 'Entrez le délai d\'inactivité';
+  String get proposalFieldErrorEnterInactivityTimeout =>
+      'Entrez le délai d\'inactivité';
 
   @override
-  String get proposalFieldErrorPositiveIntegerRange => 'Doit être un entier positif';
+  String get proposalFieldErrorPositiveIntegerRange =>
+      'Doit être un entier positif';
 
   @override
   String get proposalOnlyBootstrappersOrReputablesCanSubmit =>
@@ -1031,16 +1075,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get proposalPendingEnactmentAt => 'Sera exécutée le';
 
   @override
-  String get proposalFailedAndNeedsBump => 'La proposition a échoué et peut être fermée.';
+  String get proposalFailedAndNeedsBump =>
+      'La proposition a échoué et peut être fermée.';
 
   @override
-  String get proposalPassedAndNeedsBump => 'La proposition a été adoptée et peut être fermée.';
+  String get proposalPassedAndNeedsBump =>
+      'La proposition a été adoptée et peut être fermée.';
 
   @override
   String get qrScan => 'Scannez le code QR';
 
   @override
-  String get qrScanHintAccount => 'Demande au destinataire de scanner le code QR dans l\'application Encointer.';
+  String get qrScanHintAccount =>
+      'Demande au destinataire de scanner le code QR dans l\'application Encointer.';
 
   @override
   String get rawSeed => 'Raw Seed';
@@ -1055,7 +1102,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get receiverAccount => 'Compte de réception :';
 
   @override
-  String get redeemFailure => 'Une erreur s\'est produite lors de l\'utilisation du bon d\'achat. Cause de l\'erreur :';
+  String get redeemFailure =>
+      'Une erreur s\'est produite lors de l\'utilisation du bon d\'achat. Cause de l\'erreur :';
 
   @override
   String get redeemSuccess => 'Bon validé avec succès';
@@ -1064,25 +1112,30 @@ class AppLocalizationsFr extends AppLocalizations {
   String get redeemVoucher => 'Valider un bon d\'achat';
 
   @override
-  String get registeringPhaseReminderContent => 'L\'inscription pour la prochaine réunion a commencé.';
+  String get registeringPhaseReminderContent =>
+      'L\'inscription pour la prochaine réunion a commencé.';
 
   @override
   String get registeringPhaseReminderTitle => 'Inscris-tois maintenant!';
 
   @override
-  String get registerParticipantNotificationBody => 'Tu recevras un rappel un jour avant.';
+  String get registerParticipantNotificationBody =>
+      'Tu recevras un rappel un jour avant.';
 
   @override
-  String get registerParticipantNotificationTitle => 'Inscrit pour le prochain cycle!';
+  String get registerParticipantNotificationTitle =>
+      'Inscrit pour le prochain cycle!';
 
   @override
   String get registerUntil => 'Inscrive-toi avant le';
 
   @override
-  String get remainingNewbieTicketsAsBootStrapper => 'Novice-Tickets restants en tant que bootstrapper';
+  String get remainingNewbieTicketsAsBootStrapper =>
+      'Novice-Tickets restants en tant que bootstrapper';
 
   @override
-  String get remainingNewbieTicketsAsReputable => 'Comme Reputable les billets pour Novice restants:';
+  String get remainingNewbieTicketsAsReputable =>
+      'Comme Reputable les billets pour Novice restants:';
 
   @override
   String get remarkNotificationBody => 'Vous avez soumis une note.';
@@ -1111,7 +1164,8 @@ class AppLocalizationsFr extends AppLocalizations {
       '\"Tu as utilisé ta réputation pour obtenir une place garantie. Attention : si tu t\'enregistres, mais que tu ne te présentes pas à la réunion, tu redeviens un Novice\".';
 
   @override
-  String get reputableTitle => 'Enregistré en tant que Reputable. Ta place est garantie';
+  String get reputableTitle =>
+      'Enregistré en tant que Reputable. Ta place est garantie';
 
   @override
   String get reputationAlreadyCommittedTitle => 'Réputation déjà utilisée';
@@ -1198,7 +1252,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get submittedFaucetDripTitle => 'Bénéfices';
 
   @override
-  String get submittedFaucetDripBody => 'Ta as réclamé avec succès tes récompenses de robinet.';
+  String get submittedFaucetDripBody =>
+      'Ta as réclamé avec succès tes récompenses de robinet.';
 
   @override
   String get success => 'Réussite';
@@ -1238,10 +1293,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get transferHistory => 'Transferts';
 
   @override
-  String get transferHistoryEnd => 'Le chargement des transactions plus anciennes n\'est pas encore pris en charge';
+  String get transferHistoryEnd =>
+      'Le chargement des transactions plus anciennes n\'est pas encore pris en charge';
 
   @override
-  String get transferHistoryTop => 'Le transfert peut prendre jusqu\'à 30 secondes avant d\'apparaître ici';
+  String get transferHistoryTop =>
+      'Le transfert peut prendre jusqu\'à 30 secondes avant d\'apparaître ici';
 
   @override
   String treasuryBalanceTooLow(String balance, String cc) {
@@ -1255,7 +1312,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get treasuryLocalBalance => 'Solde du trésor communautaire';
 
   @override
-  String get treasuryLocalBalanceOnAHK => 'Solde du trésor communautaire sur l’Asset Hub';
+  String get treasuryLocalBalanceOnAHK =>
+      'Solde du trésor communautaire sur l’Asset Hub';
 
   @override
   String get treasuryTotal => 'Total';
@@ -1291,7 +1349,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get txQueued => 'La transaction est dans la file d\'attente.';
 
   @override
-  String get txQueuedOffline => 'Tu es hors ligne. La transaction sera envoyée lorsque tu seras en ligne.';
+  String get txQueuedOffline =>
+      'Tu es hors ligne. La transaction sera envoyée lorsque tu seras en ligne.';
 
   @override
   String get txReady => 'La transaction est prête.';
@@ -1310,7 +1369,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get unknownAccount => 'Compte inconnu';
 
   @override
-  String get unknownError => 'Une erreur est survenue. Vérifie ta connexion Internet et réessaye.';
+  String get unknownError =>
+      'Une erreur est survenue. Vérifie ta connexion Internet et réessaye.';
 
   @override
   String get unregister => 'Se désinscrire';
@@ -1326,7 +1386,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get unregisterParticipantNotificationTitle => 'Inscription annulée';
 
   @override
-  String get swapNotificationBody => 'Tu as échangé tes jetons communautaires avec succès !';
+  String get swapNotificationBody =>
+      'Tu as échangé tes jetons communautaires avec succès !';
 
   @override
   String get swapNotificationTitle => 'Échange réussi';
@@ -1351,16 +1412,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get voucherBalance => 'Valeur du bon';
 
   @override
-  String get voucherBalanceTooLow => 'Le bon a trop peu d\'argent pour être utilisé.';
+  String get voucherBalanceTooLow =>
+      'Le bon a trop peu d\'argent pour être utilisé.';
 
   @override
-  String get weHopeToSeeYouAtTheNextGathering => 'Nous espérons te revoir à la prochaine rencontre';
+  String get weHopeToSeeYouAtTheNextGathering =>
+      'Nous espérons te revoir à la prochaine rencontre';
 
   @override
   String get wrongPin => 'Code NIP erroné';
 
   @override
-  String get wrongPinHint => 'Le compte n\'a pas pu être débloqué. Veuillez vérifier le code NIP saisi.';
+  String get wrongPinHint =>
+      'Le compte n\'a pas pu être débloqué. Veuillez vérifier le code NIP saisi.';
 
   @override
   String get youAreNotRegisteredPleaseRegisterNextTime =>
@@ -1528,22 +1592,26 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String proposalSpendAsset(String asset, String cid, String amount, String beneficiary) {
+  String proposalSpendAsset(
+      String asset, String cid, String amount, String beneficiary) {
     return '$cid trèsor enverra $amount $asset à $beneficiary';
   }
 
   @override
-  String proposalIssueSwapNativeOption(String cid, String beneficiary, String allowance, String rate) {
+  String proposalIssueSwapNativeOption(
+      String cid, String beneficiary, String allowance, String rate) {
     return '$cid : Permet à $beneficiary d\'échanger jusqu\'à $allowance KSM à un taux de $rate $cid/KSM.';
   }
 
   @override
-  String proposalIssueSwapOptionCCLimit(String asset, String cc, String allowance) {
+  String proposalIssueSwapOptionCCLimit(
+      String asset, String cc, String allowance) {
     return 'Tu peux échanger jusqu’à $allowance $cc pour atteindre ta limite de $asset définie.';
   }
 
   @override
-  String proposalIssueSwapAssetOption(String asset, String cid, String beneficiary, String allowance, String rate) {
+  String proposalIssueSwapAssetOption(String asset, String cid,
+      String beneficiary, String allowance, String rate) {
     return '$cid : Permet à $beneficiary d\'échanger jusqu\'à $allowance $asset à un taux de $rate $cid/$asset.';
   }
 

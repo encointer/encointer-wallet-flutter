@@ -33,7 +33,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get accountNameChoose => 'Выберите имя Аккаунта';
 
   @override
-  String get accountNameChooseHint => 'Вы можете изменить его позже в настройках профиля';
+  String get accountNameChooseHint =>
+      'Вы можете изменить его позже в настройках профиля';
 
   @override
   String get accounts => 'Учетные записи';
@@ -69,7 +70,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get addToContactFromQrContact => 'Add Contact-Qr';
 
   @override
-  String get alreadyEndorsedErrorBody => 'Этот аккаунт уже был подтвержден в этом цикле.';
+  String get alreadyEndorsedErrorBody =>
+      'Этот аккаунт уже был подтвержден в этом цикле.';
 
   @override
   String get alreadyEndorsedErrorTitle => 'Уже подтверждено';
@@ -107,7 +109,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get balanceTooLowTitle => 'Недостаточно средств на счете';
 
   @override
-  String get balanceTransferNotificationBody => 'Токены успешно переведены на счет получателя!';
+  String get balanceTransferNotificationBody =>
+      'Токены успешно переведены на счет получателя!';
 
   @override
   String get balanceTransferNotificationTitle => 'Транзакция завершена';
@@ -134,10 +137,12 @@ class AppLocalizationsRu extends AppLocalizations {
       'Рассмотрите возможность одобрения новичков, если у вас есть билеты на одобрение,это поможет сообществу расти.';
 
   @override
-  String get bootstrapperTitle => 'Зарегистрирован в качестве Бутсреппера - место гарантировано.';
+  String get bootstrapperTitle =>
+      'Зарегистрирован в качестве Бутсреппера - место гарантировано.';
 
   @override
-  String get calendarEntryDescription => 'Принять участие в собрании для получения дохода общины';
+  String get calendarEntryDescription =>
+      'Принять участие в собрании для получения дохода общины';
 
   @override
   String get cameraPermissionError =>
@@ -147,7 +152,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get cancel => 'Отмена';
 
   @override
-  String get canEndorseInRegisteringPhaseOnly => 'Может быть одобрен только на этапе регистрации';
+  String get canEndorseInRegisteringPhaseOnly =>
+      'Может быть одобрен только на этапе регистрации';
 
   @override
   String get cantEndorseBootstrapper => 'Бутсрепперы уже помечены как надежные';
@@ -207,10 +213,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get claimRewardsNotificationTitle => 'Доход сообщества запрошен';
 
   @override
-  String get claimsScannedAlready => 'Ранее отсканированные заявления обновлены';
+  String get claimsScannedAlready =>
+      'Ранее отсканированные заявления обновлены';
 
   @override
-  String get claimsScannedDecodeFailed => 'Отсканированные заявления не удалось расшифровать.';
+  String get claimsScannedDecodeFailed =>
+      'Отсканированные заявления не удалось расшифровать.';
 
   @override
   String get claimsScannedNew => 'Отсканировать новое заявление';
@@ -231,7 +239,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get communityDoChoose => 'Выберите сообщество:';
 
   @override
-  String get communityNotSelected => 'Если община не выбрана, нажмите на иконку для выбора одной из них';
+  String get communityNotSelected =>
+      'Если община не выбрана, нажмите на иконку для выбора одной из них';
 
   @override
   String get confirmPin => 'Для подтверждения введите свой PIN-код';
@@ -300,7 +309,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get createPassword2Error => 'PIN-коды не совпадают';
 
   @override
-  String get createPasswordError => 'PIN должен содержать не менее 4 цифр и никаких других знаков';
+  String get createPasswordError =>
+      'PIN должен содержать не менее 4 цифр и никаких других знаков';
 
   @override
   String get deleteAccount => 'Удалить';
@@ -315,23 +325,27 @@ class AppLocalizationsRu extends AppLocalizations {
   String get democracyDiscussion => 'Обсудите предложения на форуме!';
 
   @override
-  String get democracyVotedNotificationBody => 'Вы проголосовали за это предложение.';
+  String get democracyVotedNotificationBody =>
+      'Вы проголосовали за это предложение.';
 
   @override
   String get democracyVotedNotificationTitle => 'проголосовали';
 
   @override
-  String get democracyUpdatedProposalStateNotificationBody => 'Вы обновили это предложение';
+  String get democracyUpdatedProposalStateNotificationBody =>
+      'Вы обновили это предложение';
 
   @override
-  String get democracyUpdatedProposalStateNotificationTitle => 'Предложение обновлено';
+  String get democracyUpdatedProposalStateNotificationTitle =>
+      'Предложение обновлено';
 
   @override
   String get democracySubmitProposalNotificationBody =>
       'Вы внесли предложение, за которое люди могут проголосовать прямо сейчас.';
 
   @override
-  String get democracySubmitProposalNotificationTitle => 'Предложение отправлено';
+  String get democracySubmitProposalNotificationTitle =>
+      'Предложение отправлено';
 
   @override
   String get detail => 'Детали';
@@ -356,10 +370,12 @@ class AppLocalizationsRu extends AppLocalizations {
       'Вы былы одобрены, как заслуживающий доверия член общины. Следовательно, Вы гарантированно будете назначены на этот цикл.';
 
   @override
-  String get endorseeTitle => 'Зарегистрирован в качестве Индоссанта - ваше место гарантировано';
+  String get endorseeTitle =>
+      'Зарегистрирован в качестве Индоссанта - ваше место гарантировано';
 
   @override
-  String get endorseNewcomerNotificationBody => 'Благодарим за одобрение новичка в нашем сообществе!';
+  String get endorseNewcomerNotificationBody =>
+      'Благодарим за одобрение новичка в нашем сообществе!';
 
   @override
   String get endorseNewcomerNotificationTitle => 'Новичок одобрен';
@@ -441,10 +457,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get exerciseSwapSuccess => 'Обмен выполнен успешно';
 
   @override
-  String get exerciseSwapAssetSuccessMessage => 'Скоро ты увидишь транзакцию на Subscan.';
+  String get exerciseSwapAssetSuccessMessage =>
+      'Скоро ты увидишь транзакцию на Subscan.';
 
   @override
-  String get exerciseSwapNativeSuccessMessage => 'Скоро ты увидишь транзакцию в своей истории транзакций.';
+  String get exerciseSwapNativeSuccessMessage =>
+      'Скоро ты увидишь транзакцию в своей истории транзакций.';
 
   @override
   String get exerciseSwapOpenSubscan => 'Открыть Subscan';
@@ -487,7 +505,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get hash => 'Хэш транзакции';
 
   @override
-  String get hintEnterCurrentPin => 'Чтобы изменить PIN-код пожалуйста введите текущий';
+  String get hintEnterCurrentPin =>
+      'Чтобы изменить PIN-код пожалуйста введите текущий';
 
   @override
   String get hintThenEnterANewPin => 'Вы можете выбрать новый, и все готово';
@@ -496,13 +515,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get home => 'Домой';
 
   @override
-  String get howManyParticipantsShowedUp => 'Сколько участников присутствует, включая вас?';
+  String get howManyParticipantsShowedUp =>
+      'Сколько участников присутствует, включая вас?';
 
   @override
   String get import => 'Импортировать';
 
   @override
-  String get importDuplicate => 'Учетная запись существует, вы хотите аннулировать существующий аккаунт?';
+  String get importDuplicate =>
+      'Учетная запись существует, вы хотите аннулировать существующий аккаунт?';
 
   @override
   String get importedWithRawSeedHenceNoMnemonic =>
@@ -518,7 +539,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get importMustNotBeEmpty => 'Входные данные не должны быть пустыми';
 
   @override
-  String get importPrivateKeyUnsupported => 'Импорт аккаунта с помощью секретного ключа пока не поддерживается';
+  String get importPrivateKeyUnsupported =>
+      'Импорт аккаунта с помощью секретного ключа пока не поддерживается';
 
   @override
   String get incomeIssuance => 'Доход сообщества';
@@ -555,7 +577,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get issuanceClaimed => 'Ожидаемого поступления общины нет';
 
   @override
-  String get issuancePending => 'Требовать рассмотрения ожидаемого дохода общины';
+  String get issuancePending =>
+      'Требовать рассмотрения ожидаемого дохода общины';
 
   @override
   String get keySigningCycle => 'Цикл подписания ключей';
@@ -582,10 +605,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get meetingPoint => 'Место встречи';
 
   @override
-  String get meetupClaimantEqualToSelf => 'Ошибка, адреса расчетного счета. Запрос не был сохранен.';
+  String get meetupClaimantEqualToSelf =>
+      'Ошибка, адреса расчетного счета. Запрос не был сохранен.';
 
   @override
-  String get meetupClaimantInvalid => 'Этот заявитель не является участником встречи. Заявление не сохраняется.';
+  String get meetupClaimantInvalid =>
+      'Этот заявитель не является участником встречи. Заявление не сохраняется.';
 
   @override
   String get meetupLocation => 'Локация встречи';
@@ -600,13 +625,15 @@ class AppLocalizationsRu extends AppLocalizations {
       'Используйте номер собрания, чтобы найти реальное место сбора. Ответственность за определение места сбора в вашей общине несет руководитель общины. Реальное место встречи может несколько отличаться от представленного здесь.';
 
   @override
-  String get meetupNotificationOneDayBeforeContent => 'Встреча начнется через 24 часа';
+  String get meetupNotificationOneDayBeforeContent =>
+      'Встреча начнется через 24 часа';
 
   @override
   String get meetupNotificationOneDayBeforeTitle => 'Осталось 24 часа';
 
   @override
-  String get meetupNotificationOneHourBeforeContent => 'Встреча начнется через час';
+  String get meetupNotificationOneHourBeforeContent =>
+      'Встреча начнется через час';
 
   @override
   String get meetupNotificationOneHourBeforeTitle => 'Остался 1 час';
@@ -670,7 +697,8 @@ class AppLocalizationsRu extends AppLocalizations {
       'Отметьте это адрес как подлежащий мониторингу, позже вы сможете выбрать этот адрес на странице выбора аккаунта, для просмотра его активов и действий';
 
   @override
-  String get observedPendingExtrinsic => 'Наблюдается незавершенная транзакция. Пожалуйста, дождитесь подтверждения!';
+  String get observedPendingExtrinsic =>
+      'Наблюдается незавершенная транзакция. Пожалуйста, дождитесь подтверждения!';
 
   @override
   String get offlineMessage =>
@@ -687,7 +715,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get openMapApplication => 'Открыть приложение Карты';
 
   @override
-  String get openTheEncointerApp => '1. Откройте приложение \n«Encointer Wallet»';
+  String get openTheEncointerApp =>
+      '1. Откройте приложение \n«Encointer Wallet»';
 
   @override
   String get passOld => 'Текущий PIN-код';
@@ -720,10 +749,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get personalKey => 'Секретный ключ';
 
   @override
-  String get personalKeyEnter => 'Пожалуйста, введите секретный ключ (из 12 слов), чтобы импортировать аккаунт';
+  String get personalKeyEnter =>
+      'Пожалуйста, введите секретный ключ (из 12 слов), чтобы импортировать аккаунт';
 
   @override
-  String get pinHint => 'Этот PIN-код понадобится вам для транзакций и добавления новой учетной записи';
+  String get pinHint =>
+      'Этот PIN-код понадобится вам для транзакций и добавления новой учетной записи';
 
   @override
   String get pinInfo =>
@@ -812,7 +843,8 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get proposalExplainerCannotVoteYet => 'Ты сможешь начать голосовать с репутацией со следующего цикла!';
+  String get proposalExplainerCannotVoteYet =>
+      'Ты сможешь начать голосовать с репутацией со следующего цикла!';
 
   @override
   String get proposalType => 'Тип предложения';
@@ -830,7 +862,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get proposalTypeUpdateNominalIncome => 'Обновить номинальный доход';
 
   @override
-  String get proposalTypeSetInactivityTimeout => 'Установить тайм-аут неактивности';
+  String get proposalTypeSetInactivityTimeout =>
+      'Установить тайм-аут неактивности';
 
   @override
   String get proposalTypePetition => 'Петиция';
@@ -877,7 +910,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get proposalFieldNominalIncome => 'Номинальный доход';
 
   @override
-  String get proposalFieldInactivityTimeoutCycles => 'Тайм-аут неактивности (циклы встреч)';
+  String get proposalFieldInactivityTimeoutCycles =>
+      'Тайм-аут неактивности (циклы встреч)';
 
   @override
   String get proposalFieldPetitionText => 'Текст петиции';
@@ -918,31 +952,37 @@ class AppLocalizationsRu extends AppLocalizations {
   String get proposalFieldErrorEnterPetitionText => 'Введите текст петиции';
 
   @override
-  String get proposalFieldErrorPetitionTextTooLong => 'Текст петиции слишком длинный';
+  String get proposalFieldErrorPetitionTextTooLong =>
+      'Текст петиции слишком длинный';
 
   @override
   String get proposalFieldErrorEnterLatitude => 'Введите широту';
 
   @override
-  String get proposalFieldErrorLatitudeRange => 'Широта должна быть от -90 до 90';
+  String get proposalFieldErrorLatitudeRange =>
+      'Широта должна быть от -90 до 90';
 
   @override
   String get proposalFieldErrorEnterLongitude => 'Введите долготу';
 
   @override
-  String get proposalFieldErrorLongitudeRange => 'Долгота должна быть от -180 до 180';
+  String get proposalFieldErrorLongitudeRange =>
+      'Долгота должна быть от -180 до 180';
 
   @override
   String get proposalFieldErrorEnterDemurrage => 'Введите демерредж';
 
   @override
-  String get proposalFieldErrorDemurrageRange => 'Демерредж должен быть от 0 до 100';
+  String get proposalFieldErrorDemurrageRange =>
+      'Демерредж должен быть от 0 до 100';
 
   @override
-  String get proposalFieldErrorEnterPositiveNumber => 'Введите положительное число';
+  String get proposalFieldErrorEnterPositiveNumber =>
+      'Введите положительное число';
 
   @override
-  String get proposalFieldErrorPositiveNumberRange => 'Должно быть положительное число';
+  String get proposalFieldErrorPositiveNumberRange =>
+      'Должно быть положительное число';
 
   @override
   String proposalFieldErrorPositiveNumberTooBig(String amount) {
@@ -950,17 +990,20 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get proposalFieldErrorEnterInactivityTimeout => 'Введите тайм-аут неактивности';
+  String get proposalFieldErrorEnterInactivityTimeout =>
+      'Введите тайм-аут неактивности';
 
   @override
-  String get proposalFieldErrorPositiveIntegerRange => 'Должно быть положительное целое число';
+  String get proposalFieldErrorPositiveIntegerRange =>
+      'Должно быть положительное целое число';
 
   @override
   String get proposalOnlyBootstrappersOrReputablesCanSubmit =>
       'Только бутстраперы или уважаемые участники могут подать предложение.';
 
   @override
-  String get proposalOnlyBusinessOwnersCanSubmit => 'Только владельцы бизнеса могут подать это предложение.';
+  String get proposalOnlyBusinessOwnersCanSubmit =>
+      'Только владельцы бизнеса могут подать это предложение.';
 
   @override
   String get proposalCannotSubmitProposalTypePendingEnactment =>
@@ -1022,16 +1065,19 @@ class AppLocalizationsRu extends AppLocalizations {
   String get proposalPendingEnactmentAt => 'Выполнено на';
 
   @override
-  String get proposalFailedAndNeedsBump => 'Предложение не прошло и может быть закрыто.';
+  String get proposalFailedAndNeedsBump =>
+      'Предложение не прошло и может быть закрыто.';
 
   @override
-  String get proposalPassedAndNeedsBump => 'Предложение принято и может быть закрыто.';
+  String get proposalPassedAndNeedsBump =>
+      'Предложение принято и может быть закрыто.';
 
   @override
   String get qrScan => 'Сканируйте QR-код';
 
   @override
-  String get qrScanHintAccount => 'Попросите получателя отсканировать QR-код в приложении Еncointer';
+  String get qrScanHintAccount =>
+      'Попросите получателя отсканировать QR-код в приложении Еncointer';
 
   @override
   String get rawSeed => 'Raw Seed';
@@ -1046,7 +1092,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get receiverAccount => 'Аккаунт получателя';
 
   @override
-  String get redeemFailure => 'Возникла ошибка при использовании ваучера. Причина:';
+  String get redeemFailure =>
+      'Возникла ошибка при использовании ваучера. Причина:';
 
   @override
   String get redeemSuccess => 'Ваучер успешно погашен.';
@@ -1055,26 +1102,31 @@ class AppLocalizationsRu extends AppLocalizations {
   String get redeemVoucher => 'Использовать ваучер';
 
   @override
-  String get registeringPhaseReminderContent => 'Регистрация на встречу началась.';
+  String get registeringPhaseReminderContent =>
+      'Регистрация на встречу началась.';
 
   @override
-  String get registeringPhaseReminderTitle => 'Зарегистрируйтесь сейчас, не упустите шанс!';
+  String get registeringPhaseReminderTitle =>
+      'Зарегистрируйтесь сейчас, не упустите шанс!';
 
   @override
   String get registerParticipantNotificationBody =>
       'Спасибо за регистрацию. Вам будет отправлено напоминание за день до встречи.';
 
   @override
-  String get registerParticipantNotificationTitle => 'Вы успешно зарегистрировались на следующую встречу!';
+  String get registerParticipantNotificationTitle =>
+      'Вы успешно зарегистрировались на следующую встречу!';
 
   @override
   String get registerUntil => 'Зарегистрируйтесь до';
 
   @override
-  String get remainingNewbieTicketsAsBootStrapper => 'Оставшиеся билеты для новичков Бутстреппера:';
+  String get remainingNewbieTicketsAsBootStrapper =>
+      'Оставшиеся билеты для новичков Бутстреппера:';
 
   @override
-  String get remainingNewbieTicketsAsReputable => 'Оставшиеся билеты для новичков Уважаемого:';
+  String get remainingNewbieTicketsAsReputable =>
+      'Оставшиеся билеты для новичков Уважаемого:';
 
   @override
   String get remarkNotificationBody => 'Вы отправили заметку.';
@@ -1103,13 +1155,15 @@ class AppLocalizationsRu extends AppLocalizations {
       'Вы воспользовались своей репутаций для получения гарантированного места. Внимание: Если вы зарегистрируетесь, но не явитесь на цикл, вы снова станете новичком.';
 
   @override
-  String get reputableTitle => 'Зарегистрирован в качестве Уважаемого - ваше место гарантировано.';
+  String get reputableTitle =>
+      'Зарегистрирован в качестве Уважаемого - ваше место гарантировано.';
 
   @override
   String get reputationAlreadyCommittedTitle => 'Репутация уже использована';
 
   @override
-  String get reputationAlreadyCommittedContent => 'Вы уже использовали свою репутацию, чтобы капать из крана.';
+  String get reputationAlreadyCommittedContent =>
+      'Вы уже использовали свою репутацию, чтобы капать из крана.';
 
   @override
   String get reputationOverall => 'Общая репутация';
@@ -1131,7 +1185,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get scan => 'Сканировать';
 
   @override
-  String get scanDescriptionForMeetup => 'Каждый участник должен сканировать и быть отсканированным всеми остальными.';
+  String get scanDescriptionForMeetup =>
+      'Каждый участник должен сканировать и быть отсканированным всеми остальными.';
 
   @override
   String get scanOthers => 'Сканировать других';
@@ -1188,7 +1243,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get submittedFaucetDripTitle => 'Faucet Выгоды';
 
   @override
-  String get submittedFaucetDripBody => 'Вы успешно получили вознаграждение от Faucet.';
+  String get submittedFaucetDripBody =>
+      'Вы успешно получили вознаграждение от Faucet.';
 
   @override
   String get success => 'Успешно';
@@ -1228,10 +1284,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get transferHistory => 'Транзакции';
 
   @override
-  String get transferHistoryEnd => 'Загрузка более старых транзакций пока не поддерживается';
+  String get transferHistoryEnd =>
+      'Загрузка более старых транзакций пока не поддерживается';
 
   @override
-  String get transferHistoryTop => 'Появление перевода может занять до 30 секунд';
+  String get transferHistoryTop =>
+      'Появление перевода может занять до 30 секунд';
 
   @override
   String treasuryBalanceTooLow(String balance, String cc) {
@@ -1245,7 +1303,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get treasuryLocalBalance => 'Баланс казны сообщества';
 
   @override
-  String get treasuryLocalBalanceOnAHK => 'Баланс казны сообщества на Asset Hub';
+  String get treasuryLocalBalanceOnAHK =>
+      'Баланс казны сообщества на Asset Hub';
 
   @override
   String get treasuryTotal => 'Итого';
@@ -1292,7 +1351,8 @@ class AppLocalizationsRu extends AppLocalizations {
       'Техническая ошибка приоритета транзакции. Это может произойти, если вы быстро дважды нажмете на кнопку отправки. Пожалуйста, подождите несколько секунд.';
 
   @override
-  String get txTooLowPriorityErrorTitle => 'Техническая ошибка приоритета транзакции';
+  String get txTooLowPriorityErrorTitle =>
+      'Техническая ошибка приоритета транзакции';
 
   @override
   String get unknown => 'Неизвестный';
@@ -1308,7 +1368,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get unregister => 'Отменить регистрацию';
 
   @override
-  String get unregisterDialogTitle => 'Отказаться от участия в следующем цикле?';
+  String get unregisterDialogTitle =>
+      'Отказаться от участия в следующем цикле?';
 
   @override
   String get unregisterParticipantNotificationBody =>
@@ -1318,7 +1379,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get unregisterParticipantNotificationTitle => 'Регистрация отменена';
 
   @override
-  String get swapNotificationBody => 'Ты успешно обменял свои токены сообщества!';
+  String get swapNotificationBody =>
+      'Ты успешно обменял свои токены сообщества!';
 
   @override
   String get swapNotificationTitle => 'Обмен выполнен успешно';
@@ -1343,16 +1405,19 @@ class AppLocalizationsRu extends AppLocalizations {
   String get voucherBalance => 'Баланс ваучера';
 
   @override
-  String get voucherBalanceTooLow => 'На ваучере слишком мало денег, чтобы его можно было выкупить.';
+  String get voucherBalanceTooLow =>
+      'На ваучере слишком мало денег, чтобы его можно было выкупить.';
 
   @override
-  String get weHopeToSeeYouAtTheNextGathering => 'Мы надеемся увидеть Вас на следующей встрече.';
+  String get weHopeToSeeYouAtTheNextGathering =>
+      'Мы надеемся увидеть Вас на следующей встрече.';
 
   @override
   String get wrongPin => 'Неправильный PIN-код';
 
   @override
-  String get wrongPinHint => 'Не удалось разблокировать аккаунт, пожалуйста, проверьте PIN-код';
+  String get wrongPinHint =>
+      'Не удалось разблокировать аккаунт, пожалуйста, проверьте PIN-код';
 
   @override
   String get youAreNotRegisteredPleaseRegisterNextTime =>
@@ -1520,22 +1585,26 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String proposalSpendAsset(String asset, String cid, String amount, String beneficiary) {
+  String proposalSpendAsset(
+      String asset, String cid, String amount, String beneficiary) {
     return '$cid Казначейство отправит $amount $asset $beneficiary';
   }
 
   @override
-  String proposalIssueSwapNativeOption(String cid, String beneficiary, String allowance, String rate) {
+  String proposalIssueSwapNativeOption(
+      String cid, String beneficiary, String allowance, String rate) {
     return '$cid: Разрешить $beneficiary обменять до $allowance KSM по курсу $rate $cid/KSM.';
   }
 
   @override
-  String proposalIssueSwapOptionCCLimit(String asset, String cc, String allowance) {
+  String proposalIssueSwapOptionCCLimit(
+      String asset, String cc, String allowance) {
     return 'Ты можешь обменять до $allowance $cc, чтобы достичь установленного лимита $asset.';
   }
 
   @override
-  String proposalIssueSwapAssetOption(String asset, String cid, String beneficiary, String allowance, String rate) {
+  String proposalIssueSwapAssetOption(String asset, String cid,
+      String beneficiary, String allowance, String rate) {
     return '$cid: Разрешить $beneficiary обменять до $allowance $asset по курсу $rate $cid/$asset.';
   }
 
