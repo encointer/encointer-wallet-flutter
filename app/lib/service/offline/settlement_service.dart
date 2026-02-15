@@ -109,11 +109,23 @@ class SettlementService {
 
       final signer = appStore.account.getKeyringAccount(pubKey);
       final xt = await TxBuilder(api.provider).createSignedExtrinsicWithEncodedCall(signer.pair, call.encode());
+      final opaqueXt = OpaqueExtrinsic(xt);
 
-      // Wait for block inclusion only — skip event decoding which fails
-      // on dev nodes due to Kusama-vs-notee runtime type mismatch.
-      final blockHash = await _submitAndWaitForBlock(OpaqueExtrinsic(xt));
-      Log.d('Settlement in block $blockHash for nullifier ${record.nullifierHex}', _logTarget);
+      // 1. Wait for block inclusion
+      final blockHash = await _submitAndWaitForBlock(opaqueXt);
+      Log.d('Settlement xt in block $blockHash for ${record.nullifierHex}', _logTarget);
+
+      // 2. Try to decode events to detect dispatch errors
+      try {
+        final report = await EWAuthorApi(api.provider).getExtrinsicReportData(opaqueXt, blockHash);
+        if (report.isExtrinsicFailed) {
+          Log.e('Settlement dispatch error for ${record.nullifierHex}: ${report.dispatchError}', _logTarget);
+          await appStore.offlinePayment.updateStatus(record.nullifierHex, OfflinePaymentStatus.failed);
+          return;
+        }
+      } on Exception catch (e) {
+        Log.d('Could not decode events (dev node): $e — assuming success', _logTarget);
+      }
       await appStore.offlinePayment.updateStatus(record.nullifierHex, OfflinePaymentStatus.confirmed);
     } catch (e, s) {
       Log.e('Settlement error for nullifier ${record.nullifierHex}: $e', _logTarget, s);
