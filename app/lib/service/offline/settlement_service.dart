@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:mobx/mobx.dart';
 
@@ -11,6 +10,8 @@ import 'package:encointer_wallet/service/tx/lib/src/tx_builder.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/connectivity/connectivity_store.dart';
 import 'package:encointer_wallet/store/offline_payment/offline_payment_store.dart';
+import 'package:encointer_wallet/utils/format.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_log/ew_log.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_offline_payment/groth16_proof_bytes.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/substrate_fixed/fixed_u128.dart';
@@ -21,7 +22,7 @@ const _logTarget = 'SettlementService';
 /// Submits pending offline payments when connectivity is restored.
 ///
 /// Activates only when `developerMode == true` AND `isConnectedToNetwork == true`.
-/// Uses MobX `reaction()` on both stores.
+/// Settles in chronological order (oldest first).
 class SettlementService {
   SettlementService({
     required this.appStore,
@@ -34,6 +35,7 @@ class SettlementService {
   final AppSettings appSettings;
 
   ReactionDisposer? _disposer;
+  bool _settling = false;
 
   /// Start listening for connectivity changes.
   void start() {
@@ -45,6 +47,7 @@ class SettlementService {
           _settlePendingPayments();
         }
       },
+      fireImmediately: true,
     );
     Log.d('Settlement listener started', _logTarget);
   }
@@ -57,16 +60,24 @@ class SettlementService {
   }
 
   Future<void> _settlePendingPayments() async {
-    final pending = appStore.offlinePayment.pendingPayments;
-    if (pending.isEmpty) {
-      Log.d('No pending offline payments to settle', _logTarget);
-      return;
-    }
+    if (_settling) return;
+    _settling = true;
 
-    Log.d('Settling ${pending.length} pending offline payments', _logTarget);
+    try {
+      final pending = appStore.offlinePayment.pendingPayments
+        ..sort((a, b) => a.createdAt.compareTo(b.createdAt));
+      if (pending.isEmpty) {
+        Log.d('No pending offline payments to settle', _logTarget);
+        return;
+      }
 
-    for (final record in pending) {
-      await _settleOne(record);
+      Log.d('Settling ${pending.length} pending offline payments', _logTarget);
+
+      for (final record in pending) {
+        await _settleOne(record);
+      }
+    } finally {
+      _settling = false;
     }
   }
 
@@ -81,29 +92,24 @@ class SettlementService {
     try {
       await appStore.offlinePayment.updateStatus(record.nullifierHex, OfflinePaymentStatus.submitted);
 
-      // Decode proof from base64
       final proofBytes = base64Decode(record.proofBase64);
-
-      // Parse CID
       final cid = CommunityIdentifier.fromFmtString(record.cidFmt);
 
-      // Build the submitOfflinePayment call
       final call = api.encointer.encointerKusama.tx.encointerOfflinePayment.submitOfflinePayment(
         proof: Groth16ProofBytes(proofBytes: proofBytes.toList()),
-        sender: _hexToBytes(record.senderAddress),
-        recipient: _hexToBytes(record.recipientAddress),
+        sender: AddressUtils.addressToPubKey(record.senderAddress).toList(),
+        recipient: AddressUtils.addressToPubKey(record.recipientAddress).toList(),
         amount: FixedU128(bits: i64F64Util.toFixed(record.amount)),
         cid: cid.toPolkadart(),
-        nullifier: _hexToBytes32(record.nullifierHex),
+        nullifier: Fmt.hexToBytes(record.nullifierHex).toList(),
       );
 
-      // Sign and submit
       final signer = appStore.account.getKeyringAccount(pubKey);
       final xt = await TxBuilder(api.provider).createSignedExtrinsicWithEncodedCall(signer.pair, call.encode());
       final report = await EWAuthorApi(api.provider).submitAndWatchExtrinsicWithReport(OpaqueExtrinsic(xt));
 
       if (report.isExtrinsicFailed) {
-        Log.e('Settlement failed for nullifier ${record.nullifierHex}', _logTarget);
+        Log.e('Settlement failed for nullifier ${record.nullifierHex}: ${report.dispatchError}', _logTarget);
         await appStore.offlinePayment.updateStatus(record.nullifierHex, OfflinePaymentStatus.failed);
       } else {
         Log.d('Settlement confirmed for nullifier ${record.nullifierHex}', _logTarget);
@@ -113,32 +119,5 @@ class SettlementService {
       Log.e('Settlement error for nullifier ${record.nullifierHex}: $e', _logTarget, s);
       await appStore.offlinePayment.updateStatus(record.nullifierHex, OfflinePaymentStatus.failed);
     }
-  }
-
-  /// Convert an SS58 address to AccountId32 (32 pubkey bytes).
-  static List<int> _hexToBytes(String address) {
-    // The OfflinePaymentRecord stores SS58-encoded addresses.
-    // Decode to raw pubkey bytes for the extrinsic.
-    return Uint8List.fromList(
-      List<int>.generate(32, (i) {
-        final offset = i * 2;
-        if (offset + 2 <= address.length) {
-          return int.parse(address.substring(offset, offset + 2), radix: 16);
-        }
-        return 0;
-      }),
-    );
-  }
-
-  /// Convert a hex string to a 32-byte list.
-  static List<int> _hexToBytes32(String hex) {
-    final cleanHex = hex.startsWith('0x') ? hex.substring(2) : hex;
-    return List<int>.generate(32, (i) {
-      final offset = i * 2;
-      if (offset + 2 <= cleanHex.length) {
-        return int.parse(cleanHex.substring(offset, offset + 2), radix: 16);
-      }
-      return 0;
-    });
   }
 }

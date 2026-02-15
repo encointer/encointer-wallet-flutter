@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/service/init_web_api/init_web_api.dart';
+import 'package:encointer_wallet/service/offline/settlement_service.dart';
 import 'package:encointer_wallet/config/biometric_auth_state.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/presentation/home/views/home_page.dart';
 import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
 import 'package:encointer_wallet/store/account/services/account_migration_service.dart';
+import 'package:encointer_wallet/store/connectivity/connectivity_store.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -42,6 +44,12 @@ class SplashView extends StatelessWidget {
     store.dataUpdate.setupUpdateReaction(() async {
       await store.encointer.updateState();
     });
+
+    SettlementService(
+      appStore: store,
+      connectivityStore: context.read<ConnectivityStore>(),
+      appSettings: context.read<AppSettings>(),
+    ).start();
 
     store.setApiReady(true);
 
