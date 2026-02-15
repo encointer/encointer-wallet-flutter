@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/store/offline_payment/offline_payment_store.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
 import 'package:ew_log/ew_log.dart';
 import 'package:ew_http/ew_http.dart';
@@ -25,6 +26,9 @@ abstract class _TransferHistoryViewStoreBase with Store {
   final AppStore appStore;
 
   List<Transaction> transactions = [];
+
+  @computed
+  List<OfflinePaymentRecord> get offlinePayments => appStore.offlinePayment.currentAccountPayments;
 
   @observable
   FetchStatus fetchStatus = FetchStatus.loading;

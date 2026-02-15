@@ -6,9 +6,7 @@ part of 'offline_payment_store.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-OfflinePaymentRecord _$OfflinePaymentRecordFromJson(
-        Map<String, dynamic> json) =>
-    OfflinePaymentRecord(
+OfflinePaymentRecord _$OfflinePaymentRecordFromJson(Map<String, dynamic> json) => OfflinePaymentRecord(
       proofBase64: json['proofBase64'] as String,
       senderAddress: json['senderAddress'] as String,
       recipientAddress: json['recipientAddress'] as String,
@@ -18,14 +16,10 @@ OfflinePaymentRecord _$OfflinePaymentRecordFromJson(
       commitmentHex: json['commitmentHex'] as String,
       role: $enumDecode(_$OfflinePaymentRoleEnumMap, json['role']),
       createdAt: DateTime.parse(json['createdAt'] as String),
-      status:
-          $enumDecodeNullable(_$OfflinePaymentStatusEnumMap, json['status']) ??
-              OfflinePaymentStatus.pending,
+      status: $enumDecodeNullable(_$OfflinePaymentStatusEnumMap, json['status']) ?? OfflinePaymentStatus.pending,
     );
 
-Map<String, dynamic> _$OfflinePaymentRecordToJson(
-        OfflinePaymentRecord instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$OfflinePaymentRecordToJson(OfflinePaymentRecord instance) => <String, dynamic>{
       'proofBase64': instance.proofBase64,
       'senderAddress': instance.senderAddress,
       'recipientAddress': instance.recipientAddress,
@@ -61,21 +55,45 @@ mixin _$OfflinePaymentStore on _OfflinePaymentStore, Store {
 
   @override
   List<OfflinePaymentRecord> get pendingPayments =>
-      (_$pendingPaymentsComputed ??= Computed<List<OfflinePaymentRecord>>(
-              () => super.pendingPayments,
+      (_$pendingPaymentsComputed ??= Computed<List<OfflinePaymentRecord>>(() => super.pendingPayments,
               name: '_OfflinePaymentStore.pendingPayments'))
           .value;
   Computed<List<OfflinePaymentRecord>>? _$unsettledPaymentsComputed;
 
   @override
   List<OfflinePaymentRecord> get unsettledPayments =>
-      (_$unsettledPaymentsComputed ??= Computed<List<OfflinePaymentRecord>>(
-              () => super.unsettledPayments,
+      (_$unsettledPaymentsComputed ??= Computed<List<OfflinePaymentRecord>>(() => super.unsettledPayments,
               name: '_OfflinePaymentStore.unsettledPayments'))
           .value;
+  Computed<List<OfflinePaymentRecord>>? _$currentAccountPaymentsComputed;
 
-  late final _$paymentsAtom =
-      Atom(name: '_OfflinePaymentStore.payments', context: context);
+  @override
+  List<OfflinePaymentRecord> get currentAccountPayments =>
+      (_$currentAccountPaymentsComputed ??= Computed<List<OfflinePaymentRecord>>(() => super.currentAccountPayments,
+              name: '_OfflinePaymentStore.currentAccountPayments'))
+          .value;
+  Computed<List<OfflinePaymentRecord>>? _$currentCommunityPendingPaymentsComputed;
+
+  @override
+  List<OfflinePaymentRecord> get currentCommunityPendingPayments => (_$currentCommunityPendingPaymentsComputed ??=
+          Computed<List<OfflinePaymentRecord>>(() => super.currentCommunityPendingPayments,
+              name: '_OfflinePaymentStore.currentCommunityPendingPayments'))
+      .value;
+  Computed<double>? _$pendingBalanceDeltaComputed;
+
+  @override
+  double get pendingBalanceDelta => (_$pendingBalanceDeltaComputed ??=
+          Computed<double>(() => super.pendingBalanceDelta, name: '_OfflinePaymentStore.pendingBalanceDelta'))
+      .value;
+  Computed<bool>? _$otherAccountsHavePendingPaymentsComputed;
+
+  @override
+  bool get otherAccountsHavePendingPayments =>
+      (_$otherAccountsHavePendingPaymentsComputed ??= Computed<bool>(() => super.otherAccountsHavePendingPayments,
+              name: '_OfflinePaymentStore.otherAccountsHavePendingPayments'))
+          .value;
+
+  late final _$paymentsAtom = Atom(name: '_OfflinePaymentStore.payments', context: context);
 
   @override
   ObservableList<OfflinePaymentRecord> get payments {
@@ -90,25 +108,21 @@ mixin _$OfflinePaymentStore on _OfflinePaymentStore, Store {
     });
   }
 
-  late final _$addPaymentAsyncAction =
-      AsyncAction('_OfflinePaymentStore.addPayment', context: context);
+  late final _$addPaymentAsyncAction = AsyncAction('_OfflinePaymentStore.addPayment', context: context);
 
   @override
   Future<void> addPayment(OfflinePaymentRecord record) {
     return _$addPaymentAsyncAction.run(() => super.addPayment(record));
   }
 
-  late final _$updateStatusAsyncAction =
-      AsyncAction('_OfflinePaymentStore.updateStatus', context: context);
+  late final _$updateStatusAsyncAction = AsyncAction('_OfflinePaymentStore.updateStatus', context: context);
 
   @override
   Future<void> updateStatus(String nullifierHex, OfflinePaymentStatus status) {
-    return _$updateStatusAsyncAction
-        .run(() => super.updateStatus(nullifierHex, status));
+    return _$updateStatusAsyncAction.run(() => super.updateStatus(nullifierHex, status));
   }
 
-  late final _$loadCacheAsyncAction =
-      AsyncAction('_OfflinePaymentStore.loadCache', context: context);
+  late final _$loadCacheAsyncAction = AsyncAction('_OfflinePaymentStore.loadCache', context: context);
 
   @override
   Future<void> loadCache() {
@@ -120,7 +134,11 @@ mixin _$OfflinePaymentStore on _OfflinePaymentStore, Store {
     return '''
 payments: ${payments},
 pendingPayments: ${pendingPayments},
-unsettledPayments: ${unsettledPayments}
+unsettledPayments: ${unsettledPayments},
+currentAccountPayments: ${currentAccountPayments},
+currentCommunityPendingPayments: ${currentCommunityPendingPayments},
+pendingBalanceDelta: ${pendingBalanceDelta},
+otherAccountsHavePendingPayments: ${otherAccountsHavePendingPayments}
     ''';
   }
 }

@@ -178,6 +178,18 @@ abstract class _EncointerStore with Store {
     return applyDemurrage(communityBalanceEntry);
   }
 
+  /// Falls back to cached principal (no demurrage) when offline.
+  @computed
+  double? get communityBalanceOrCached {
+    return communityBalance ?? communityBalanceEntry?.principal;
+  }
+
+  /// Whether the balance is an offline approximation (no demurrage applied).
+  @computed
+  bool get isBalanceCached {
+    return communityBalance == null && communityBalanceEntry?.principal != null;
+  }
+
   @computed
   SvgPicture get communityIconOrDefault {
     if (community != null) {

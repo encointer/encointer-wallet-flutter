@@ -78,8 +78,7 @@ class _PaymentTile extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (onRetry != null)
-            IconButton(icon: const Icon(Icons.refresh, color: Colors.orange), onPressed: onRetry),
+          if (onRetry != null) IconButton(icon: const Icon(Icons.refresh, color: Colors.orange), onPressed: onRetry),
           _StatusBadge(status: record.status),
         ],
       ),

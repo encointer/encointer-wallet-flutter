@@ -27,7 +27,10 @@ class TransferHistoryView extends StatelessWidget {
         child: Observer(builder: (_) {
           return switch (transferHistoryStore.fetchStatus) {
             FetchStatus.loading => const CenteredActivityIndicator(),
-            FetchStatus.success => TransactionsList(transactions: transferHistoryStore.transactions),
+            FetchStatus.success => TransactionsList(
+                transactions: transferHistoryStore.transactions,
+                offlinePayments: transferHistoryStore.offlinePayments,
+              ),
             FetchStatus.error => ErrorView(
                 onRetryPressed: () {
                   context.read<TransferHistoryViewStore>().getTransfers();

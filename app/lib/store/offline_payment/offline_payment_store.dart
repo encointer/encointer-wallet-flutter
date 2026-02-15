@@ -63,6 +63,48 @@ abstract class _OfflinePaymentStore with Store {
       .where((p) => p.status == OfflinePaymentStatus.pending || p.status == OfflinePaymentStatus.failed)
       .toList();
 
+  @computed
+  List<OfflinePaymentRecord> get currentAccountPayments {
+    final address = rootStore.account.currentAddress;
+    return payments.where((p) => p.senderAddress == address || p.recipientAddress == address).toList();
+  }
+
+  @computed
+  List<OfflinePaymentRecord> get currentCommunityPendingPayments {
+    final address = rootStore.account.currentAddress;
+    final cidFmt = rootStore.encointer.chosenCid?.toFmtString();
+    if (cidFmt == null) return [];
+    return payments
+        .where((p) =>
+            p.cidFmt == cidFmt &&
+            (p.senderAddress == address || p.recipientAddress == address) &&
+            (p.status == OfflinePaymentStatus.pending || p.status == OfflinePaymentStatus.submitted))
+        .toList();
+  }
+
+  @computed
+  double get pendingBalanceDelta {
+    final address = rootStore.account.currentAddress;
+    var delta = 0.0;
+    for (final p in currentCommunityPendingPayments) {
+      if (p.senderAddress == address) {
+        delta -= p.amount;
+      } else {
+        delta += p.amount;
+      }
+    }
+    return delta;
+  }
+
+  @computed
+  bool get otherAccountsHavePendingPayments {
+    final address = rootStore.account.currentAddress;
+    return payments.any((p) =>
+        (p.status == OfflinePaymentStatus.pending || p.status == OfflinePaymentStatus.submitted) &&
+        p.senderAddress != address &&
+        p.recipientAddress != address);
+  }
+
   @action
   Future<void> addPayment(OfflinePaymentRecord record) async {
     payments.add(record);

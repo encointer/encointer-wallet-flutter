@@ -21,6 +21,7 @@ import 'package:encointer_wallet/service/offline/offline_identity_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:ew_storage/ew_storage.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
@@ -250,11 +251,50 @@ class _ProfileState extends State<Profile> {
                       subtitle: const Text('Register ZK identity for offline e-cash'),
                       trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                       onTap: () async {
+                        final service = OfflineIdentityService(const SecureStorage());
+                        final pubKey = store.account.currentAccountPubKey;
+                        if (pubKey == null) return;
+
+                        if (await service.isRegistered(pubKey)) {
+                          if (!context.mounted) return;
+                          await AppAlert.showDialog<void>(
+                            context,
+                            title: const Text('Already Registered'),
+                            content: const Text('Your offline identity is already registered.'),
+                            actions: [
+                              CupertinoDialogAction(
+                                isDefaultAction: true,
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                          return;
+                        }
+
                         try {
-                          await OfflineIdentityService(const SecureStorage()).register(context);
-                          RootSnackBar.showMsg('Offline identity registered successfully');
+                          if (!context.mounted) return;
+                          await service.register(context);
+                          if (!context.mounted) return;
+                          await AppAlert.showDialog<void>(
+                            context,
+                            title: const Text('Registration Successful'),
+                            content: const Text('You can now pay while offline.'),
+                            actions: [
+                              CupertinoDialogAction(
+                                isDefaultAction: true,
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
                         } on Exception catch (e) {
-                          RootSnackBar.showMsg('Registration failed: $e');
+                          if (!context.mounted) return;
+                          AppAlert.showErrorDialog(
+                            context,
+                            errorText: 'Registration failed: $e',
+                            buttontext: 'OK',
+                          );
                         }
                       },
                     ),

@@ -9,6 +9,7 @@ import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 import 'package:encointer_wallet/service/tx/lib/src/tx_builder.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_log/ew_log.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_storage/ew_storage.dart';
 import 'package:ew_zk_prover/ew_zk_prover.dart';
 
@@ -86,14 +87,26 @@ class OfflineIdentityService {
     try {
       final call = api.encointer.encointerKusama.tx.encointerOfflinePayment
           .registerOfflineIdentity(commitment: commitment.toList());
-      final xt =
-          await TxBuilder(api.provider).createSignedExtrinsicWithEncodedCall(keyringAccount.pair, call.encode());
+
+      // Pay fee with community currency when possible
+      final txPaymentAsset = store.encointer.community?.demurrage != null && store.chain.latestHeaderNumber != null
+          ? store.encointer.getTxPaymentAsset(store.encointer.chosenCid)
+          : null;
+      Log.d('register: txPaymentAsset=$txPaymentAsset', _logTarget);
+
+      final xt = await TxBuilder(api.provider).createSignedExtrinsicWithEncodedCall(
+        keyringAccount.pair,
+        call.encode(),
+        paymentAsset: txPaymentAsset?.toPolkadart(),
+      );
       final report = await EWAuthorApi(api.provider).submitAndWatchExtrinsicWithReport(OpaqueExtrinsic(xt));
       Log.d('register: extrinsic in block ${report.blockHash}, events: ${report.events.length}', _logTarget);
       if (report.isExtrinsicFailed) {
         Log.e('register: extrinsic failed: ${report.dispatchError}', _logTarget);
+        throw Exception('Registration extrinsic failed: ${report.dispatchError}');
       }
     } on Exception catch (e) {
+      if (e.toString().contains('Registration extrinsic failed')) rethrow;
       // Tolerate failures — commitment may already be registered on-chain
       Log.d('register: extrinsic submission failed (may be duplicate): $e', _logTarget);
     }
@@ -153,6 +166,52 @@ class OfflineIdentityService {
       if (a[i] != b[i]) return false;
     }
     return true;
+  }
+
+  /// Ensure local and on-chain offline identity are consistent.
+  ///
+  /// - Local exists but chain doesn't → re-register
+  /// - Chain exists but local doesn't → log warning (can't recover secret)
+  /// - Both exist but differ → re-register with local secret
+  /// - Neither exists → nothing to do
+  Future<void> ensureConsistency(BuildContext context) async {
+    final store = context.read<AppStore>();
+    final pubKey = store.account.currentAccountPubKey;
+    if (pubKey == null) return;
+
+    Log.d('ensureConsistency: checking pubKey=$pubKey', _logTarget);
+
+    final localSecret = await loadZkSecret(pubKey);
+    if (localSecret == null) {
+      Log.d('ensureConsistency: no local zkSecret, nothing to do', _logTarget);
+      return;
+    }
+
+    final localCommitment = ZkProver.computeCommitment(localSecret);
+
+    // Query on-chain commitment
+    try {
+      final api = webApi;
+      final accountId = AddressUtils.addressToPubKey(store.account.currentAddress).toList();
+      final onChainCommitment =
+          await api.encointer.encointerKusama.query.encointerOfflinePayment.offlineIdentities(accountId);
+
+      if (onChainCommitment == null || onChainCommitment.every((b) => b == 0)) {
+        Log.d('ensureConsistency: local exists but no on-chain commitment, re-registering', _logTarget);
+        await register(context);
+        return;
+      }
+
+      final onChainBytes = Uint8List.fromList(onChainCommitment);
+      if (!_bytesEqual(localCommitment, onChainBytes)) {
+        Log.d('ensureConsistency: commitment mismatch, re-registering with local secret', _logTarget);
+        await register(context);
+      } else {
+        Log.d('ensureConsistency: local and on-chain match', _logTarget);
+      }
+    } on Exception catch (e) {
+      Log.d('ensureConsistency: could not query on-chain state: $e', _logTarget);
+    }
   }
 
   static Uint8List _hexToBytes(String hex) {

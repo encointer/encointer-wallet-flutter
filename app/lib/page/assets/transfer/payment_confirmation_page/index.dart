@@ -88,23 +88,25 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
         child: Column(
           children: [
-            PaymentOverview(
-              context.watch<AppStore>(),
-              params.communitySymbol,
-              params.recipientAccount,
-              params.amount,
-            ),
-            const SizedBox(height: 10),
-            Flexible(
-              fit: FlexFit.tight,
-              child: TextGradient(
-                text: '${Fmt.doubleFormat(amount)} ⵐ',
-                style: const TextStyle(fontSize: 60),
+            if (_transferState != TransferState.offlineQrReady) ...[
+              PaymentOverview(
+                context.watch<AppStore>(),
+                params.communitySymbol,
+                params.recipientAccount,
+                params.amount,
               ),
-            ),
+              const SizedBox(height: 10),
+              Flexible(
+                fit: FlexFit.tight,
+                child: TextGradient(
+                  text: '${Fmt.doubleFormat(amount)} ⵐ',
+                  style: const TextStyle(fontSize: 60),
+                ),
+              ),
+            ],
             Flexible(
               fit: FlexFit.tight,
-              flex: 2,
+              flex: _transferState == TransferState.offlineQrReady ? 5 : 2,
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 500),
                 transitionBuilder: (Widget child, Animation<double> animation) {
@@ -115,7 +117,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
             ),
             Flexible(
               fit: FlexFit.tight,
-              flex: 2,
+              flex: _transferState == TransferState.offlineQrReady ? 1 : 2,
               child: _txStateTextInfo(_transferState),
             ),
             if (!_transferState.isFinishedOrFailed()) ...[
@@ -349,9 +351,10 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
           ),
         );
       case TransferState.offlineQrReady:
+        final qrSize = MediaQuery.of(context).size.width * 0.9;
         return SizedBox(
-          width: 200,
-          height: 200,
+          width: qrSize,
+          height: qrSize,
           child: PrettyQrView.data(data: _offlineQrPayload!),
         );
     }

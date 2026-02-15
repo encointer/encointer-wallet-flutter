@@ -67,10 +67,13 @@ class SettlementService {
     _settling = true;
 
     try {
+      final currentAddress = appStore.account.currentAddress;
       final unsettled = appStore.offlinePayment.unsettledPayments
+          .where((p) => p.senderAddress == currentAddress || p.recipientAddress == currentAddress)
+          .toList()
         ..sort((a, b) => a.createdAt.compareTo(b.createdAt));
       if (unsettled.isEmpty) {
-        Log.d('No unsettled offline payments', _logTarget);
+        Log.d('No unsettled offline payments for current account', _logTarget);
         return;
       }
 
