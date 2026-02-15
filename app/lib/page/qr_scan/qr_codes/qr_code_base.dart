@@ -33,8 +33,10 @@ enum QrCodeContext {
   invoice,
 
   /// `encointer-voucher` context
-  voucher
-  // claim, currently unsupported and might not be merged into this. Let's see.
+  voucher,
+
+  /// `encointer-offlinepay` context
+  offlinepay,
 }
 
 enum QrCodeVersion { v1_0, v2_0 }

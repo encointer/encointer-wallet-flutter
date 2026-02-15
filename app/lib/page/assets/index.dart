@@ -43,11 +43,15 @@ import 'package:encointer_wallet/page/assets/account_or_community/account_or_com
 import 'package:encointer_wallet/page/assets/account_or_community/switch_account_or_community.dart';
 import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
+import 'package:encointer_wallet/service/offline/offline_identity_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/connectivity/connectivity_store.dart';
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:ew_storage/ew_storage.dart';
 
 const _logTarget = 'AssetsHomepageStore';
 
@@ -91,6 +95,80 @@ class _AssetsViewState extends State<AssetsView> {
       (_) => [widget.store.encointer.chosenCid, widget.store.account.currentAddress],
       (_) => getSwapOptions(),
       fireImmediately: true, // optional: fetch immediately on init if values exist
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => _checkOfflineRegistration());
+  }
+
+  Future<void> _checkOfflineRegistration() async {
+    final appSettings = context.read<AppSettings>();
+    if (!appSettings.developerMode) return;
+
+    final pubKey = widget.store.account.currentAccountPubKey;
+    if (pubKey == null) return;
+
+    final service = OfflineIdentityService(const SecureStorage());
+    final prefsKey = 'offline_registration_prompted_$pubKey';
+    final prefs = await SharedPreferences.getInstance();
+
+    if (prefs.getBool(prefsKey) ?? false) {
+      // User previously declined — run consistency check silently if registered and online
+      if (await service.isRegistered(pubKey)) {
+        final connectivity = context.read<ConnectivityStore>();
+        if (connectivity.isConnectedToNetwork && mounted) {
+          try {
+            await service.ensureConsistency(context);
+          } on Exception catch (e) {
+            Log.d('Offline consistency check failed: $e', _logTarget);
+          }
+        }
+      }
+      return;
+    }
+
+    if (await service.isRegistered(pubKey)) {
+      return;
+    }
+
+    if (!mounted) return;
+    final connectivity = context.read<ConnectivityStore>();
+    if (!connectivity.isConnectedToNetwork) return;
+
+    // Only offer registration if the account has some balance to pay fees
+    final balance = widget.store.encointer.communityBalanceOrCached;
+    if (balance == null || balance <= 0) return;
+
+    await AppAlert.showConfirmDialog<void>(
+      context: context,
+      title: const Text('Enable Offline Payments?'),
+      content: const Text('Register your identity to send and receive payments without internet.'),
+      onOK: () async {
+        Navigator.of(context).pop();
+        try {
+          await service.register(context);
+          if (!mounted) return;
+          await AppAlert.showDialog<void>(
+            context,
+            title: const Text('Registration Successful'),
+            content: const Text('You can now pay while offline.'),
+            actions: [
+              CupertinoDialogAction(
+                isDefaultAction: true,
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        } on Exception catch (e) {
+          if (!mounted) return;
+          AppAlert.showErrorDialog(context, errorText: 'Registration failed: $e', buttontext: 'OK');
+        }
+      },
+      onCancel: () async {
+        Navigator.of(context).pop();
+        // Only remember the choice when user explicitly declines
+        await prefs.setBool(prefsKey, true);
+      },
     );
   }
 
@@ -231,18 +309,33 @@ class _AssetsViewState extends State<AssetsView> {
                     ),
                     Observer(
                       builder: (_) {
+                        final displayBalance = widget.store.encointer.communityBalanceOrCached;
+                        final pendingDelta = widget.store.offlinePayment.pendingBalanceDelta;
+                        final effectiveBalance = displayBalance != null ? displayBalance + pendingDelta : null;
+
                         return (widget.store.encointer.community?.name != null) &
-                                (widget.store.encointer.chosenCid != null)
+                                (widget.store.encointer.chosenCid != null) &
+                                (effectiveBalance != null)
                             ? Column(
                                 children: [
                                   TextGradient(
-                                    text: '${Fmt.doubleFormat(widget.store.encointer.communityBalance)} ⵐ',
+                                    text: '${Fmt.doubleFormat(effectiveBalance)} ⵐ',
                                     style: const TextStyle(fontSize: 50),
                                   ),
                                   Text(
                                     '${l10n.balance}, ${widget.store.encointer.community?.symbol}',
                                     style: context.bodyLarge.copyWith(color: AppColors.encointerGrey),
                                   ),
+                                  if (pendingDelta != 0)
+                                    Text(
+                                      '(incl. pending offline)',
+                                      style: context.bodySmall.copyWith(color: AppColors.encointerGrey),
+                                    ),
+                                  if (widget.store.encointer.isBalanceCached)
+                                    Text(
+                                      '(offline, approximate)',
+                                      style: context.bodySmall.copyWith(color: AppColors.encointerGrey),
+                                    ),
                                 ],
                               )
                             : Container(
@@ -278,7 +371,7 @@ class _AssetsViewState extends State<AssetsView> {
                         ),
                         const SizedBox(width: 3),
                         Observer(
-                            builder: (_) => widget.store.encointer.communityBalance != null
+                            builder: (_) => widget.store.encointer.communityBalanceOrCached != null
                                 ? ActionButton(
                                     key: const Key(EWTestKeys.goTransferHistory),
                                     icon: Assets.images.assets.receiveSquare2.svg(
@@ -296,7 +389,7 @@ class _AssetsViewState extends State<AssetsView> {
                                   )),
                         const SizedBox(width: 3),
                         Observer(
-                          builder: (_) => widget.store.encointer.communityBalance != null
+                          builder: (_) => widget.store.encointer.communityBalanceOrCached != null
                               ? ActionButton(
                                   key: const Key(EWTestKeys.transfer),
                                   icon: const Icon(Iconsax.send_sqaure_2),
@@ -312,6 +405,14 @@ class _AssetsViewState extends State<AssetsView> {
                         ),
                       ],
                     ),
+                    if (widget.store.offlinePayment.otherAccountsHavePendingPayments)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Text(
+                          'Other accounts have pending offline payments',
+                          style: context.bodySmall.copyWith(color: AppColors.encointerGrey),
+                        ),
+                      ),
                   ],
                 );
               }),

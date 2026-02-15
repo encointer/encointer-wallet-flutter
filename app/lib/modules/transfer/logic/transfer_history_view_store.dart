@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/store/offline_payment/offline_payment_store.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
 import 'package:ew_log/ew_log.dart';
 import 'package:ew_http/ew_http.dart';
@@ -26,12 +27,19 @@ abstract class _TransferHistoryViewStoreBase with Store {
 
   List<Transaction> transactions = [];
 
+  @computed
+  List<OfflinePaymentRecord> get offlinePayments => appStore.offlinePayment.currentAccountPayments;
+
   @observable
   FetchStatus fetchStatus = FetchStatus.loading;
+
+  @observable
+  bool fetchFailed = false;
 
   @action
   Future<void> getTransfers() async {
     fetchStatus = FetchStatus.loading;
+    fetchFailed = false;
 
     final pubKey = appStore.account.currentAccountPubKey;
     final cid = appStore.encointer.community?.cid;
@@ -72,7 +80,9 @@ abstract class _TransferHistoryViewStoreBase with Store {
       );
     } catch (e) {
       Log.e('Error getting transfers: $e');
-      fetchStatus = FetchStatus.error;
+      fetchFailed = true;
+      // Show offline payments even when network fetch fails
+      fetchStatus = offlinePayments.isNotEmpty ? FetchStatus.success : FetchStatus.error;
     }
   }
 }
