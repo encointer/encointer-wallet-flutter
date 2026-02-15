@@ -30,6 +30,7 @@ class TransferHistoryView extends StatelessWidget {
             FetchStatus.success => TransactionsList(
                 transactions: transferHistoryStore.transactions,
                 offlinePayments: transferHistoryStore.offlinePayments,
+                isOffline: transferHistoryStore.fetchFailed,
               ),
             FetchStatus.error => ErrorView(
                 onRetryPressed: () {

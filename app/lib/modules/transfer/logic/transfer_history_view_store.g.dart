@@ -32,6 +32,21 @@ mixin _$TransferHistoryViewStore on _TransferHistoryViewStoreBase, Store {
     });
   }
 
+  late final _$fetchFailedAtom = Atom(name: '_TransferHistoryViewStoreBase.fetchFailed', context: context);
+
+  @override
+  bool get fetchFailed {
+    _$fetchFailedAtom.reportRead();
+    return super.fetchFailed;
+  }
+
+  @override
+  set fetchFailed(bool value) {
+    _$fetchFailedAtom.reportWrite(value, super.fetchFailed, () {
+      super.fetchFailed = value;
+    });
+  }
+
   late final _$getTransfersAsyncAction = AsyncAction('_TransferHistoryViewStoreBase.getTransfers', context: context);
 
   @override
@@ -43,6 +58,7 @@ mixin _$TransferHistoryViewStore on _TransferHistoryViewStoreBase, Store {
   String toString() {
     return '''
 fetchStatus: ${fetchStatus},
+fetchFailed: ${fetchFailed},
 offlinePayments: ${offlinePayments}
     ''';
   }

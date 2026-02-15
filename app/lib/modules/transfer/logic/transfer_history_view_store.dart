@@ -33,9 +33,13 @@ abstract class _TransferHistoryViewStoreBase with Store {
   @observable
   FetchStatus fetchStatus = FetchStatus.loading;
 
+  @observable
+  bool fetchFailed = false;
+
   @action
   Future<void> getTransfers() async {
     fetchStatus = FetchStatus.loading;
+    fetchFailed = false;
 
     final pubKey = appStore.account.currentAccountPubKey;
     final cid = appStore.encointer.community?.cid;
@@ -76,6 +80,7 @@ abstract class _TransferHistoryViewStoreBase with Store {
       );
     } catch (e) {
       Log.e('Error getting transfers: $e');
+      fetchFailed = true;
       // Show offline payments even when network fetch fails
       fetchStatus = offlinePayments.isNotEmpty ? FetchStatus.success : FetchStatus.error;
     }
