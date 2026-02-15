@@ -175,6 +175,12 @@ class OfflineIdentityService {
 
     Log.d('ensureConsistency: checking pubKey=$pubKey', _logTarget);
 
+    // Don't re-register if there are pending payments — would invalidate their proofs
+    if (store.offlinePayment.unsettledPayments.isNotEmpty) {
+      Log.d('ensureConsistency: skipping — unsettled payments exist', _logTarget);
+      return;
+    }
+
     final localSecret = await loadZkSecret(pubKey);
     if (localSecret == null) {
       Log.d('ensureConsistency: no local zkSecret, nothing to do', _logTarget);

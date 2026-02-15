@@ -405,7 +405,7 @@ class _AssetsViewState extends State<AssetsView> {
                         ),
                       ],
                     ),
-                    if (_appSettingsStore.developerMode && widget.store.offlinePayment.otherAccountsHavePendingPayments)
+                    if (widget.store.offlinePayment.otherAccountsHavePendingPayments)
                       Padding(
                         padding: const EdgeInsets.only(top: 8),
                         child: Text(

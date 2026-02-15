@@ -59,8 +59,9 @@ abstract class _OfflinePaymentStore with Store {
       payments.where((p) => p.status == OfflinePaymentStatus.pending).toList();
 
   @computed
-  List<OfflinePaymentRecord> get unsettledPayments =>
-      payments.where((p) => p.status == OfflinePaymentStatus.pending).toList();
+  List<OfflinePaymentRecord> get unsettledPayments => payments
+      .where((p) => p.status == OfflinePaymentStatus.pending || p.status == OfflinePaymentStatus.submitted)
+      .toList();
 
   @computed
   List<OfflinePaymentRecord> get currentAccountPayments {

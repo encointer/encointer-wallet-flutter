@@ -18,6 +18,7 @@ import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
 import 'package:encointer_wallet/page/profile/account/change_password_page.dart';
 import 'package:encointer_wallet/service/offline/offline_identity_service.dart';
+import 'package:encointer_wallet/store/connectivity/connectivity_store.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -268,6 +269,16 @@ class _ProfileState extends State<Profile> {
                                 child: const Text('OK'),
                               ),
                             ],
+                          );
+                          return;
+                        }
+
+                        if (!context.mounted) return;
+                        if (!context.read<ConnectivityStore>().isConnectedToNetwork) {
+                          AppAlert.showErrorDialog(
+                            context,
+                            errorText: 'You must be online to register your offline identity.',
+                            buttontext: 'OK',
                           );
                           return;
                         }

@@ -125,9 +125,11 @@ class SettlementService {
           final error = report.dispatchError.toString();
           Log.e('Settlement dispatch error for ${record.nullifierHex}: $error', _logTarget);
           // Only mark as permanently failed for proof-related errors (not retryable).
-          // Everything else (nonce, balance, etc.) stays pending for retry.
+          // Everything else (nonce, balance, etc.) reverts to pending for retry.
           if (error.contains('InvalidProof') || error.contains('ProofDeserializationFailed')) {
             await appStore.offlinePayment.updateStatus(record.nullifierHex, OfflinePaymentStatus.failed);
+          } else {
+            await appStore.offlinePayment.updateStatus(record.nullifierHex, OfflinePaymentStatus.pending);
           }
           return;
         }
@@ -136,8 +138,9 @@ class SettlementService {
       }
       await appStore.offlinePayment.updateStatus(record.nullifierHex, OfflinePaymentStatus.confirmed);
     } catch (e, s) {
-      // Transient errors (network, timeout) — keep as pending for retry
+      // Transient errors (network, timeout) — revert to pending for retry
       Log.e('Settlement error for nullifier ${record.nullifierHex}: $e', _logTarget, s);
+      await appStore.offlinePayment.updateStatus(record.nullifierHex, OfflinePaymentStatus.pending);
     }
   }
 
