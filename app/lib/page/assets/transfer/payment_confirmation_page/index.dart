@@ -265,10 +265,11 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
       );
 
       // 6. Generate ZK proof
-      // TODO: Load proving key from bundled asset or download.
-      // For now this will throw UnimplementedError until native lib is compiled.
+      // TODO(production): Load proving key from bundled asset or download.
+      // For dev/testing, generate from deterministic test seed.
+      final setup = ZkProver.generateTestSetup(0xDEADBEEFCAFEBABE);
       final result = await ZkProver.generateProof(ProofInput(
-        provingKey: Uint8List(0),
+        provingKey: setup.provingKey,
         zkSecret: zkSecret,
         nonce: nonce,
         recipientHash: recipientBytes,
