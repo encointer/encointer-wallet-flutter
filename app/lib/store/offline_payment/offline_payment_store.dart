@@ -58,6 +58,11 @@ abstract class _OfflinePaymentStore with Store {
   List<OfflinePaymentRecord> get pendingPayments =>
       payments.where((p) => p.status == OfflinePaymentStatus.pending).toList();
 
+  @computed
+  List<OfflinePaymentRecord> get unsettledPayments => payments
+      .where((p) => p.status == OfflinePaymentStatus.pending || p.status == OfflinePaymentStatus.failed)
+      .toList();
+
   @action
   Future<void> addPayment(OfflinePaymentRecord record) async {
     payments.add(record);

@@ -66,16 +66,16 @@ class SettlementService {
     _settling = true;
 
     try {
-      final pending = appStore.offlinePayment.pendingPayments
+      final unsettled = appStore.offlinePayment.unsettledPayments
         ..sort((a, b) => a.createdAt.compareTo(b.createdAt));
-      if (pending.isEmpty) {
-        Log.d('No pending offline payments to settle', _logTarget);
+      if (unsettled.isEmpty) {
+        Log.d('No unsettled offline payments', _logTarget);
         return;
       }
 
-      Log.d('Settling ${pending.length} pending offline payments', _logTarget);
+      Log.d('Settling ${unsettled.length} offline payments', _logTarget);
 
-      for (final record in pending) {
+      for (final record in unsettled) {
         await _settleOne(record);
       }
     } finally {
