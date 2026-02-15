@@ -197,6 +197,22 @@ class Txs {
   EncointerOfflinePaymentCall setVerificationKey({required List<int> vk}) {
     return EncointerOfflinePaymentCall(_i7.SetVerificationKey(vk: vk));
   }
+
+  EncointerOfflinePaymentCall submitNativeOfflinePayment({
+    required _i8.Groth16ProofBytes proof,
+    required _i2.AccountId32 sender,
+    required _i2.AccountId32 recipient,
+    required BigInt amount,
+    required List<int> nullifier,
+  }) {
+    return EncointerOfflinePaymentCall(_i7.SubmitNativeOfflinePayment(
+      proof: proof,
+      sender: sender,
+      recipient: recipient,
+      amount: amount,
+      nullifier: nullifier,
+    ));
+  }
 }
 
 class Constants {

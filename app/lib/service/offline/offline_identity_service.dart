@@ -27,6 +27,7 @@ class OfflineIdentityService {
   final SecureStorageInterface _secureStorage;
 
   static String _zkSecretKey(String pubKey) => 'offline_zk_secret_$pubKey';
+  static String _genesisHashKey(String pubKey) => 'offline_genesis_hash_$pubKey';
 
   /// Whether the given account has a stored zk_secret (i.e., has registered offline identity).
   Future<bool> isRegistered(String pubKey) async {
@@ -37,6 +38,13 @@ class OfflineIdentityService {
   /// Load the stored zk_secret for the given account.
   Future<Uint8List?> loadZkSecret(String pubKey) async {
     final encoded = await _secureStorage.read(key: _zkSecretKey(pubKey));
+    if (encoded == null) return null;
+    return Uint8List.fromList(List<int>.from(jsonDecode(encoded) as List));
+  }
+
+  /// Load the stored genesis hash for the given account's chain.
+  Future<Uint8List?> loadGenesisHash(String pubKey) async {
+    final encoded = await _secureStorage.read(key: _genesisHashKey(pubKey));
     if (encoded == null) return null;
     return Uint8List.fromList(List<int>.from(jsonDecode(encoded) as List));
   }
@@ -75,6 +83,18 @@ class OfflineIdentityService {
 
     // 4. Store zkSecret in SecureStorage
     await _secureStorage.write(key: _zkSecretKey(pubKey), value: jsonEncode(zkSecret.toList()));
+
+    // 5. Fetch and store genesis hash for cross-chain replay protection
+    final genesisHex = (await api.provider.send('chain_getBlockHash', [0])).result as String;
+    final genesisBytes = _hexToBytes(genesisHex.replaceFirst('0x', ''));
+    await _secureStorage.write(key: _genesisHashKey(pubKey), value: jsonEncode(genesisBytes.toList()));
+
     Log.d('register: offline identity registered for $pubKey', _logTarget);
+  }
+
+  static Uint8List _hexToBytes(String hex) {
+    return Uint8List.fromList(List<int>.generate(hex.length ~/ 2, (i) {
+      return int.parse(hex.substring(i * 2, i * 2 + 2), radix: 16);
+    }));
   }
 }

@@ -253,9 +253,16 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
       // 4. Amount as 32-byte LE (FixedU128 u128 bits in first 16 bytes)
       final amountBytes = _balanceToBytes32(amount);
 
-      // 5. CID hash = blake2_256(SCALE-encoded CID)
-      final cidEncoded = cid.toPolkadart().encode();
-      final cidHash = ZkProver.blake2_256(Uint8List.fromList(cidEncoded));
+      // 5. Compute chain_asset_hash = blake2_256(asset_hash ++ genesis_hash)
+      //    for cross-chain replay protection (pallets PR #444)
+      final assetHash = ZkProver.blake2_256(Uint8List.fromList(cid.toPolkadart().encode()));
+      final genesisHash = await offlineIdService.loadGenesisHash(pubKey);
+      if (genesisHash == null) {
+        throw StateError('Genesis hash not stored. Re-register offline identity.');
+      }
+      final chainAssetHash = ZkProver.blake2_256(
+        Uint8List.fromList([...assetHash, ...genesisHash]),
+      );
 
       // 6. Generate ZK proof
       // TODO: Load proving key from bundled asset or download.
@@ -266,7 +273,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
         nonce: nonce,
         recipientHash: recipientBytes,
         amount: amountBytes,
-        cidHash: cidHash,
+        assetHash: chainAssetHash,
       ));
 
       // 7. Build QR code

@@ -79,7 +79,7 @@ void main() {
         final zkSecret = ZkProver.deriveZkSecret(Uint8List.fromList('alice-seed'.codeUnits));
         final nonce = ZkProver.blake2_256(Uint8List.fromList('nonce-1'.codeUnits));
         final recipientHash = ZkProver.blake2_256(Uint8List.fromList('bob-address'.codeUnits));
-        final cidHash = ZkProver.blake2_256(Uint8List.fromList('community-id'.codeUnits));
+        final assetHash = ZkProver.blake2_256(Uint8List.fromList('community-id'.codeUnits));
 
         final amount = Uint8List(32);
         final amountView = ByteData.sublistView(amount);
@@ -91,7 +91,7 @@ void main() {
           nonce: nonce,
           recipientHash: recipientHash,
           amount: amount,
-          cidHash: cidHash,
+          assetHash: assetHash,
         ));
 
         expect(result.proofBytes, isNotEmpty);
@@ -104,7 +104,7 @@ void main() {
           commitment: result.commitment,
           recipientHash: recipientHash,
           amount: amount,
-          cidHash: cidHash,
+          assetHash: assetHash,
           nullifier: result.nullifier,
         );
         expect(valid, isTrue);
@@ -116,7 +116,7 @@ void main() {
         final zkSecret = ZkProver.deriveZkSecret(Uint8List.fromList('alice-seed'.codeUnits));
         final nonce = ZkProver.blake2_256(Uint8List.fromList('nonce-1'.codeUnits));
         final recipientHash = ZkProver.blake2_256(Uint8List.fromList('bob-address'.codeUnits));
-        final cidHash = ZkProver.blake2_256(Uint8List.fromList('community-id'.codeUnits));
+        final assetHash = ZkProver.blake2_256(Uint8List.fromList('community-id'.codeUnits));
 
         final amount = Uint8List(32);
         final amountView = ByteData.sublistView(amount);
@@ -128,7 +128,7 @@ void main() {
           nonce: nonce,
           recipientHash: recipientHash,
           amount: amount,
-          cidHash: cidHash,
+          assetHash: assetHash,
         ));
 
         final wrongCommitment = Uint8List(32)..fillRange(0, 32, 0xAB);
@@ -139,7 +139,7 @@ void main() {
           commitment: wrongCommitment,
           recipientHash: recipientHash,
           amount: amount,
-          cidHash: cidHash,
+          assetHash: assetHash,
           nullifier: result.nullifier,
         );
         expect(valid, isFalse);

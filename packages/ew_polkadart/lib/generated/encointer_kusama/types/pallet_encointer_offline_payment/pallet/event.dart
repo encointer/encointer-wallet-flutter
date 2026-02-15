@@ -65,6 +65,20 @@ class $Event {
   VerificationKeySet verificationKeySet() {
     return VerificationKeySet();
   }
+
+  NativeOfflinePaymentSettled nativeOfflinePaymentSettled({
+    required _i3.AccountId32 sender,
+    required _i3.AccountId32 recipient,
+    required BigInt amount,
+    required List<int> nullifier,
+  }) {
+    return NativeOfflinePaymentSettled(
+      sender: sender,
+      recipient: recipient,
+      amount: amount,
+      nullifier: nullifier,
+    );
+  }
 }
 
 class $EventCodec with _i1.Codec<Event> {
@@ -80,6 +94,8 @@ class $EventCodec with _i1.Codec<Event> {
         return OfflinePaymentSettled._decode(input);
       case 2:
         return const VerificationKeySet();
+      case 3:
+        return NativeOfflinePaymentSettled._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
     }
@@ -100,6 +116,9 @@ class $EventCodec with _i1.Codec<Event> {
       case VerificationKeySet:
         (value as VerificationKeySet).encodeTo(output);
         break;
+      case NativeOfflinePaymentSettled:
+        (value as NativeOfflinePaymentSettled).encodeTo(output);
+        break;
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -114,6 +133,8 @@ class $EventCodec with _i1.Codec<Event> {
         return (value as OfflinePaymentSettled)._sizeHint();
       case VerificationKeySet:
         return 1;
+      case NativeOfflinePaymentSettled:
+        return (value as NativeOfflinePaymentSettled)._sizeHint();
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -327,4 +348,106 @@ class VerificationKeySet extends Event {
 
   @override
   int get hashCode => runtimeType.hashCode;
+}
+
+/// Native token offline payment settled successfully
+class NativeOfflinePaymentSettled extends Event {
+  const NativeOfflinePaymentSettled({
+    required this.sender,
+    required this.recipient,
+    required this.amount,
+    required this.nullifier,
+  });
+
+  factory NativeOfflinePaymentSettled._decode(_i1.Input input) {
+    return NativeOfflinePaymentSettled(
+      sender: const _i1.U8ArrayCodec(32).decode(input),
+      recipient: const _i1.U8ArrayCodec(32).decode(input),
+      amount: _i1.U128Codec.codec.decode(input),
+      nullifier: const _i1.U8ArrayCodec(32).decode(input),
+    );
+  }
+
+  /// T::AccountId
+  final _i3.AccountId32 sender;
+
+  /// T::AccountId
+  final _i3.AccountId32 recipient;
+
+  /// BalanceOf<T> (u128)
+  final BigInt amount;
+
+  /// [u8; 32]
+  final List<int> nullifier;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'NativeOfflinePaymentSettled': {
+          'sender': sender.toList(),
+          'recipient': recipient.toList(),
+          'amount': amount.toString(),
+          'nullifier': nullifier.toList(),
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + const _i3.AccountId32Codec().sizeHint(sender);
+    size = size + const _i3.AccountId32Codec().sizeHint(recipient);
+    size = size + _i1.U128Codec.codec.sizeHint(amount);
+    size = size + const _i1.U8ArrayCodec(32).sizeHint(nullifier);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      3,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      sender,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      recipient,
+      output,
+    );
+    _i1.U128Codec.codec.encodeTo(
+      amount,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      nullifier,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is NativeOfflinePaymentSettled &&
+          _i6.listsEqual(
+            other.sender,
+            sender,
+          ) &&
+          _i6.listsEqual(
+            other.recipient,
+            recipient,
+          ) &&
+          other.amount == amount &&
+          _i6.listsEqual(
+            other.nullifier,
+            nullifier,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        sender,
+        recipient,
+        amount,
+        nullifier,
+      );
 }

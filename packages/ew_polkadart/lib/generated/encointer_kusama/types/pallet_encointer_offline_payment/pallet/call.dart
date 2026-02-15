@@ -62,6 +62,22 @@ class $Call {
   SetVerificationKey setVerificationKey({required List<int> vk}) {
     return SetVerificationKey(vk: vk);
   }
+
+  SubmitNativeOfflinePayment submitNativeOfflinePayment({
+    required _i3.Groth16ProofBytes proof,
+    required _i4.AccountId32 sender,
+    required _i4.AccountId32 recipient,
+    required BigInt amount,
+    required List<int> nullifier,
+  }) {
+    return SubmitNativeOfflinePayment(
+      proof: proof,
+      sender: sender,
+      recipient: recipient,
+      amount: amount,
+      nullifier: nullifier,
+    );
+  }
 }
 
 class $CallCodec with _i1.Codec<Call> {
@@ -77,6 +93,8 @@ class $CallCodec with _i1.Codec<Call> {
         return SubmitOfflinePayment._decode(input);
       case 2:
         return SetVerificationKey._decode(input);
+      case 3:
+        return SubmitNativeOfflinePayment._decode(input);
       default:
         throw Exception('Call: Invalid variant index: "$index"');
     }
@@ -97,6 +115,9 @@ class $CallCodec with _i1.Codec<Call> {
       case SetVerificationKey:
         (value as SetVerificationKey).encodeTo(output);
         break;
+      case SubmitNativeOfflinePayment:
+        (value as SubmitNativeOfflinePayment).encodeTo(output);
+        break;
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -111,6 +132,8 @@ class $CallCodec with _i1.Codec<Call> {
         return (value as SubmitOfflinePayment)._sizeHint();
       case SetVerificationKey:
         return (value as SetVerificationKey)._sizeHint();
+      case SubmitNativeOfflinePayment:
+        return (value as SubmitNativeOfflinePayment)._sizeHint();
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -370,4 +393,129 @@ class SetVerificationKey extends Call {
 
   @override
   int get hashCode => vk.hashCode;
+}
+
+/// Submit a native token offline payment ZK proof for settlement.
+///
+/// Like `submit_offline_payment` but transfers native balance (u128)
+/// instead of community currency.
+///
+/// # Arguments
+/// * `proof` - The Groth16 proof bytes
+/// * `sender` - The account sending funds (must have registered commitment)
+/// * `recipient` - The account receiving funds
+/// * `amount` - The native balance amount (u128)
+/// * `nullifier` - The unique nullifier for this payment
+class SubmitNativeOfflinePayment extends Call {
+  const SubmitNativeOfflinePayment({
+    required this.proof,
+    required this.sender,
+    required this.recipient,
+    required this.amount,
+    required this.nullifier,
+  });
+
+  factory SubmitNativeOfflinePayment._decode(_i1.Input input) {
+    return SubmitNativeOfflinePayment(
+      proof: _i3.Groth16ProofBytes.codec.decode(input),
+      sender: const _i1.U8ArrayCodec(32).decode(input),
+      recipient: const _i1.U8ArrayCodec(32).decode(input),
+      amount: _i1.U128Codec.codec.decode(input),
+      nullifier: const _i1.U8ArrayCodec(32).decode(input),
+    );
+  }
+
+  /// Groth16ProofBytes<T::MaxProofSize>
+  final _i3.Groth16ProofBytes proof;
+
+  /// T::AccountId
+  final _i4.AccountId32 sender;
+
+  /// T::AccountId
+  final _i4.AccountId32 recipient;
+
+  /// BalanceOf<T> (u128)
+  final BigInt amount;
+
+  /// [u8; 32]
+  final List<int> nullifier;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'submit_native_offline_payment': {
+          'proof': proof.toJson(),
+          'sender': sender.toList(),
+          'recipient': recipient.toList(),
+          'amount': amount.toString(),
+          'nullifier': nullifier.toList(),
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i3.Groth16ProofBytes.codec.sizeHint(proof);
+    size = size + const _i4.AccountId32Codec().sizeHint(sender);
+    size = size + const _i4.AccountId32Codec().sizeHint(recipient);
+    size = size + _i1.U128Codec.codec.sizeHint(amount);
+    size = size + const _i1.U8ArrayCodec(32).sizeHint(nullifier);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      3,
+      output,
+    );
+    _i3.Groth16ProofBytes.codec.encodeTo(
+      proof,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      sender,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      recipient,
+      output,
+    );
+    _i1.U128Codec.codec.encodeTo(
+      amount,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      nullifier,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SubmitNativeOfflinePayment &&
+          other.proof == proof &&
+          _i7.listsEqual(
+            other.sender,
+            sender,
+          ) &&
+          _i7.listsEqual(
+            other.recipient,
+            recipient,
+          ) &&
+          other.amount == amount &&
+          _i7.listsEqual(
+            other.nullifier,
+            nullifier,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        proof,
+        sender,
+        recipient,
+        amount,
+        nullifier,
+      );
 }

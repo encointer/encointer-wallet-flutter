@@ -30,7 +30,10 @@ enum Error {
   amountMustBePositive('AmountMustBePositive', 7),
 
   /// Sender cannot be the same as recipient
-  senderEqualsRecipient('SenderEqualsRecipient', 8);
+  senderEqualsRecipient('SenderEqualsRecipient', 8),
+
+  /// Insufficient native balance for transfer
+  insufficientBalance('InsufficientBalance', 9);
 
   const Error(
     this.variantName,
@@ -79,6 +82,8 @@ class $ErrorCodec with _i1.Codec<Error> {
         return Error.amountMustBePositive;
       case 8:
         return Error.senderEqualsRecipient;
+      case 9:
+        return Error.insufficientBalance;
       default:
         throw Exception('Error: Invalid variant index: "$index"');
     }

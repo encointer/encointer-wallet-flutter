@@ -65,8 +65,7 @@ import 'app_localizations_sw.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -74,8 +73,7 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -87,8 +85,7 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -2802,29 +2799,25 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{cid} treasury shall spend {amount} {asset} to {beneficiary}'**
-  String proposalSpendAsset(
-      String asset, String cid, String amount, String beneficiary);
+  String proposalSpendAsset(String asset, String cid, String amount, String beneficiary);
 
   /// No description provided for @proposalIssueSwapNativeOption.
   ///
   /// In en, this message translates to:
   /// **'{cid}: Let {beneficiary} exchange up to {allowance} KSM at a rate of {rate} {cid}/KSM'**
-  String proposalIssueSwapNativeOption(
-      String cid, String beneficiary, String allowance, String rate);
+  String proposalIssueSwapNativeOption(String cid, String beneficiary, String allowance, String rate);
 
   /// No description provided for @proposalIssueSwapOptionCCLimit.
   ///
   /// In en, this message translates to:
   /// **'You can exchange up to {allowance} {cc} to reach your defined {asset} limit.'**
-  String proposalIssueSwapOptionCCLimit(
-      String asset, String cc, String allowance);
+  String proposalIssueSwapOptionCCLimit(String asset, String cc, String allowance);
 
   /// No description provided for @proposalIssueSwapAssetOption.
   ///
   /// In en, this message translates to:
   /// **'{cid}: Let {beneficiary} exchange up to {allowance} {asset} at a rate of {rate} {cid}/{asset}'**
-  String proposalIssueSwapAssetOption(String asset, String cid,
-      String beneficiary, String allowance, String rate);
+  String proposalIssueSwapAssetOption(String asset, String cid, String beneficiary, String allowance, String rate);
 
   /// No description provided for @proposalSupersededBy.
   ///
@@ -2833,8 +2826,7 @@ abstract class AppLocalizations {
   String proposalSupersededBy(String id);
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -2843,8 +2835,7 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['de', 'en', 'fr', 'ru', 'sw'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['de', 'en', 'fr', 'ru', 'sw'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -2865,8 +2856,7 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsSw();
   }
 
-  throw FlutterError(
-      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+  throw FlutterError('AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
       'an issue with the localizations generation tool. Please file an issue '
       'on GitHub with a reproducible sample app and the gen-l10n configuration '
       'that was used.');

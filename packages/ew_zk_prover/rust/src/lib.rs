@@ -60,7 +60,7 @@ pub fn generate_proof_ffi(
     nonce: &[u8; 32],
     recipient_hash: &[u8; 32],
     amount: &[u8; 32],
-    cid_hash: &[u8; 32],
+    asset_hash: &[u8; 32],
 ) -> Result<ProofOutput, String> {
     let pk = prover::TrustedSetup::proving_key_from_bytes(pk_bytes)
         .ok_or("Failed to deserialize proving key")?;
@@ -71,7 +71,7 @@ pub fn generate_proof_ffi(
         prover::bytes32_to_field(nonce),
         prover::bytes32_to_field(recipient_hash),
         prover::bytes32_to_field(amount),
-        prover::bytes32_to_field(cid_hash),
+        prover::bytes32_to_field(asset_hash),
     )
     .ok_or("Proof generation failed")?;
 
@@ -89,7 +89,7 @@ pub fn verify_proof_ffi(
     commitment: &[u8; 32],
     recipient_hash: &[u8; 32],
     amount: &[u8; 32],
-    cid_hash: &[u8; 32],
+    asset_hash: &[u8; 32],
     nullifier: &[u8; 32],
 ) -> bool {
     use ark_groth16::{Groth16, PreparedVerifyingKey};
@@ -108,7 +108,7 @@ pub fn verify_proof_ffi(
         prover::bytes32_to_field(commitment),
         prover::bytes32_to_field(recipient_hash),
         prover::bytes32_to_field(amount),
-        prover::bytes32_to_field(cid_hash),
+        prover::bytes32_to_field(asset_hash),
         prover::bytes32_to_field(nullifier),
     ];
 
@@ -202,16 +202,16 @@ pub unsafe extern "C" fn ffi_generate_proof(
     nonce32: *const u8,
     recipient32: *const u8,
     amount32: *const u8,
-    cid32: *const u8,
+    asset32: *const u8,
 ) -> *mut FfiProofOutput {
     let pk_bytes = unsafe { std::slice::from_raw_parts(pk, pk_len) };
     let zk_secret = unsafe { &*(secret32 as *const [u8; 32]) };
     let nonce = unsafe { &*(nonce32 as *const [u8; 32]) };
     let recipient = unsafe { &*(recipient32 as *const [u8; 32]) };
     let amount = unsafe { &*(amount32 as *const [u8; 32]) };
-    let cid = unsafe { &*(cid32 as *const [u8; 32]) };
+    let asset = unsafe { &*(asset32 as *const [u8; 32]) };
 
-    match generate_proof_ffi(pk_bytes, zk_secret, nonce, recipient, amount, cid) {
+    match generate_proof_ffi(pk_bytes, zk_secret, nonce, recipient, amount, asset) {
         Ok(output) => {
             let mut proof_bytes = output.proof_bytes.into_boxed_slice();
             let proof_ptr = proof_bytes.as_mut_ptr();
@@ -258,7 +258,7 @@ pub unsafe extern "C" fn ffi_verify_proof(
     commitment32: *const u8,
     recipient32: *const u8,
     amount32: *const u8,
-    cid32: *const u8,
+    asset32: *const u8,
     nullifier32: *const u8,
 ) -> i32 {
     let vk_bytes = unsafe { std::slice::from_raw_parts(vk, vk_len) };
@@ -266,10 +266,10 @@ pub unsafe extern "C" fn ffi_verify_proof(
     let commitment = unsafe { &*(commitment32 as *const [u8; 32]) };
     let recipient = unsafe { &*(recipient32 as *const [u8; 32]) };
     let amount = unsafe { &*(amount32 as *const [u8; 32]) };
-    let cid = unsafe { &*(cid32 as *const [u8; 32]) };
+    let asset = unsafe { &*(asset32 as *const [u8; 32]) };
     let nullifier = unsafe { &*(nullifier32 as *const [u8; 32]) };
 
-    if verify_proof_ffi(vk_bytes, proof_bytes, commitment, recipient, amount, cid, nullifier) {
+    if verify_proof_ffi(vk_bytes, proof_bytes, commitment, recipient, amount, asset, nullifier) {
         1
     } else {
         0
@@ -370,7 +370,7 @@ mod tests {
         let recipient_hash = blake2_256(b"bob-address");
         let mut amount = [0u8; 32];
         amount[..8].copy_from_slice(&1000u64.to_le_bytes());
-        let cid_hash = blake2_256(b"community-id");
+        let asset_hash = blake2_256(b"community-id");
 
         let output = generate_proof_ffi(
             &pk_bytes,
@@ -378,7 +378,7 @@ mod tests {
             &nonce,
             &recipient_hash,
             &amount,
-            &cid_hash,
+            &asset_hash,
         )
         .expect("proof generation should succeed");
 
@@ -388,7 +388,7 @@ mod tests {
             &output.commitment,
             &recipient_hash,
             &amount,
-            &cid_hash,
+            &asset_hash,
             &output.nullifier,
         ));
     }
@@ -402,7 +402,7 @@ mod tests {
         let recipient_hash = blake2_256(b"bob-address");
         let mut amount = [0u8; 32];
         amount[..8].copy_from_slice(&1000u64.to_le_bytes());
-        let cid_hash = blake2_256(b"community-id");
+        let asset_hash = blake2_256(b"community-id");
 
         let output = generate_proof_ffi(
             &pk_bytes,
@@ -410,7 +410,7 @@ mod tests {
             &nonce,
             &recipient_hash,
             &amount,
-            &cid_hash,
+            &asset_hash,
         )
         .expect("proof generation should succeed");
 
@@ -421,7 +421,7 @@ mod tests {
             &wrong_commitment,
             &recipient_hash,
             &amount,
-            &cid_hash,
+            &asset_hash,
             &output.nullifier,
         ));
     }

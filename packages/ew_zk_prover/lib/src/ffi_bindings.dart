@@ -237,14 +237,14 @@ FfiProofResult callGenerateProof(
   required Uint8List nonce,
   required Uint8List recipientHash,
   required Uint8List amount,
-  required Uint8List cidHash,
+  required Uint8List assetHash,
 }) {
   final pkPtr = _allocCopy(provingKey);
   final secretPtr = _allocCopy(zkSecret);
   final noncePtr = _allocCopy(nonce);
   final recipientPtr = _allocCopy(recipientHash);
   final amountPtr = _allocCopy(amount);
-  final cidPtr = _allocCopy(cidHash);
+  final assetPtr = _allocCopy(assetHash);
 
   try {
     final resultPtr = b.generateProof(
@@ -254,7 +254,7 @@ FfiProofResult callGenerateProof(
       noncePtr,
       recipientPtr,
       amountPtr,
-      cidPtr,
+      assetPtr,
     );
 
     if (resultPtr == nullptr) {
@@ -278,7 +278,7 @@ FfiProofResult callGenerateProof(
     malloc.free(noncePtr);
     malloc.free(recipientPtr);
     malloc.free(amountPtr);
-    malloc.free(cidPtr);
+    malloc.free(assetPtr);
   }
 }
 
@@ -289,7 +289,7 @@ bool callVerifyProof(
   required Uint8List commitment,
   required Uint8List recipientHash,
   required Uint8List amount,
-  required Uint8List cidHash,
+  required Uint8List assetHash,
   required Uint8List nullifier,
 }) {
   final vkPtr = _allocCopy(verifyingKey);
@@ -297,7 +297,7 @@ bool callVerifyProof(
   final commitPtr = _allocCopy(commitment);
   final recipientPtr = _allocCopy(recipientHash);
   final amountPtr = _allocCopy(amount);
-  final cidPtr = _allocCopy(cidHash);
+  final assetPtr = _allocCopy(assetHash);
   final nullPtr = _allocCopy(nullifier);
 
   try {
@@ -309,7 +309,7 @@ bool callVerifyProof(
           commitPtr,
           recipientPtr,
           amountPtr,
-          cidPtr,
+          assetPtr,
           nullPtr,
         ) ==
         1;
@@ -319,7 +319,7 @@ bool callVerifyProof(
     malloc.free(commitPtr);
     malloc.free(recipientPtr);
     malloc.free(amountPtr);
-    malloc.free(cidPtr);
+    malloc.free(assetPtr);
     malloc.free(nullPtr);
   }
 }

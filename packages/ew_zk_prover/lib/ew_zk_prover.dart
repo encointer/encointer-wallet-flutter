@@ -29,7 +29,7 @@ class ProofInput {
     required this.nonce,
     required this.recipientHash,
     required this.amount,
-    required this.cidHash,
+    required this.assetHash,
   });
 
   final Uint8List provingKey;
@@ -37,7 +37,7 @@ class ProofInput {
   final Uint8List nonce;
   final Uint8List recipientHash;
   final Uint8List amount;
-  final Uint8List cidHash;
+  final Uint8List assetHash;
 }
 
 /// ZK prover for Encointer offline payments.
@@ -70,7 +70,7 @@ class ZkProver {
         nonce: input.nonce,
         recipientHash: input.recipientHash,
         amount: input.amount,
-        cidHash: input.cidHash,
+        assetHash: input.assetHash,
       );
     });
     return ProofResult(
@@ -89,7 +89,7 @@ class ZkProver {
     required Uint8List commitment,
     required Uint8List recipientHash,
     required Uint8List amount,
-    required Uint8List cidHash,
+    required Uint8List assetHash,
     required Uint8List nullifier,
   }) async {
     final libPath = nativeLibraryOverride;
@@ -102,7 +102,7 @@ class ZkProver {
         commitment: commitment,
         recipientHash: recipientHash,
         amount: amount,
-        cidHash: cidHash,
+        assetHash: assetHash,
         nullifier: nullifier,
       );
     });
