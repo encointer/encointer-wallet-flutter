@@ -52,6 +52,32 @@ sudo apt install cmake ninja-build libgtk-3-dev npm build-essential
 .flutter/bin/dart run melos bootstrap
 ```
 
+#### Rust toolchain (for ZK prover native library)
+
+The `ew_zk_prover` package includes a Rust FFI crate that is cross-compiled during Android builds via `cargo-ndk`. Install the Rust toolchain and Android cross-compilation targets:
+
+```shell
+# Install Rust (if not already installed)
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Install cargo-ndk for Android cross-compilation
+cargo install cargo-ndk
+
+# Add Android targets
+rustup target add aarch64-linux-android armv7-linux-androideabi x86_64-linux-android
+
+# For running Dart FFI tests on the Linux host
+rustup target add x86_64-unknown-linux-gnu
+```
+
+To build the host native library for running tests locally:
+```shell
+cd packages/ew_zk_prover/rust
+cargo build --release
+mkdir -p ../native/linux
+cp target/release/libew_zk_prover.so ../native/linux/
+```
+
 In studio: under run configurations, add build flavor `dev`
 
 Now: run!

@@ -3,11 +3,12 @@ enum TransferState {
   submitting,
   finished,
   failed,
+  offlineQrReady,
 }
 
 extension TransferStateExtension on TransferState {
   bool isFinishedOrFailed() {
-    return this == TransferState.finished || this == TransferState.failed;
+    return this == TransferState.finished || this == TransferState.failed || this == TransferState.offlineQrReady;
   }
 
   bool notStarted() {

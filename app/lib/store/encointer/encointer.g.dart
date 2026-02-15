@@ -119,6 +119,18 @@ mixin _$EncointerStore on _EncointerStore, Store {
   double? get communityBalance => (_$communityBalanceComputed ??=
           Computed<double?>(() => super.communityBalance, name: '_EncointerStore.communityBalance'))
       .value;
+  Computed<double?>? _$communityBalanceOrCachedComputed;
+
+  @override
+  double? get communityBalanceOrCached => (_$communityBalanceOrCachedComputed ??=
+          Computed<double?>(() => super.communityBalanceOrCached, name: '_EncointerStore.communityBalanceOrCached'))
+      .value;
+  Computed<bool>? _$isBalanceCachedComputed;
+
+  @override
+  bool get isBalanceCached => (_$isBalanceCachedComputed ??=
+          Computed<bool>(() => super.isBalanceCached, name: '_EncointerStore.isBalanceCached'))
+      .value;
   Computed<SvgPicture>? _$communityIconOrDefaultComputed;
 
   @override
@@ -460,6 +472,8 @@ communityAccount: ${communityAccount},
 account: ${account},
 communityBalanceEntry: ${communityBalanceEntry},
 communityBalance: ${communityBalance},
+communityBalanceOrCached: ${communityBalanceOrCached},
+isBalanceCached: ${isBalanceCached},
 communityIconOrDefault: ${communityIconOrDefault},
 proposalEnactmentDate: ${proposalEnactmentDate},
 assigningPhaseStart: ${assigningPhaseStart},

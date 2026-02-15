@@ -13,6 +13,7 @@ workspace:
   - packages/ew_storage
   - packages/ew_substrate_fixed
   - packages/ew_test_keys
+  - packages/ew_zk_prover
   - packages/log
   - l10n
 

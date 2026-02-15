@@ -33,6 +33,12 @@ mixin _$AppStore<S extends SecureStorageInterface, L extends LegacyStorageInterf
   @override
   EncointerStore get encointer =>
       (_$encointerComputed ??= Computed<EncointerStore>(() => super.encointer, name: '_AppStore.encointer')).value;
+  Computed<OfflinePaymentStore>? _$offlinePaymentComputed;
+
+  @override
+  OfflinePaymentStore get offlinePayment => (_$offlinePaymentComputed ??=
+          Computed<OfflinePaymentStore>(() => super.offlinePayment, name: '_AppStore.offlinePayment'))
+      .value;
   Computed<bool>? _$appIsReadyComputed;
 
   @override
@@ -129,6 +135,21 @@ mixin _$AppStore<S extends SecureStorageInterface, L extends LegacyStorageInterf
     });
   }
 
+  late final _$_offlinePaymentAtom = Atom(name: '_AppStore._offlinePayment', context: context);
+
+  @override
+  OfflinePaymentStore? get _offlinePayment {
+    _$_offlinePaymentAtom.reportRead();
+    return super._offlinePayment;
+  }
+
+  @override
+  set _offlinePayment(OfflinePaymentStore? value) {
+    _$_offlinePaymentAtom.reportWrite(value, super._offlinePayment, () {
+      super._offlinePayment = value;
+    });
+  }
+
   late final _$storeIsReadyAtom = Atom(name: '_AppStore.storeIsReady', context: context);
 
   @override
@@ -188,6 +209,7 @@ account: ${account},
 assets: ${assets},
 chain: ${chain},
 encointer: ${encointer},
+offlinePayment: ${offlinePayment},
 appIsReady: ${appIsReady}
     ''';
   }

@@ -3,6 +3,8 @@ import 'package:encointer_wallet/page-encointer/democracy/exercise_swap/exercise
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart' show ProposalActionIdentifier;
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/propose_page.dart';
 import 'package:encointer_wallet/page-encointer/democracy/utils/swap_options.dart';
+import 'package:encointer_wallet/page/offline_payment/offline_payment_list_page.dart';
+import 'package:encointer_wallet/page/offline_payment/receive_offline_payment_page.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -191,6 +193,17 @@ class AppRoute {
         final option = settings.arguments! as SwapOption;
         return CupertinoPageRoute(
           builder: (_) => ExerciseSwapPage(option: option),
+          settings: settings,
+        );
+      case ReceiveOfflinePaymentPage.route:
+        return CupertinoPageRoute(
+          builder: (_) => const ReceiveOfflinePaymentPage(),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case OfflinePaymentListPage.route:
+        return CupertinoPageRoute(
+          builder: (_) => const OfflinePaymentListPage(),
           settings: settings,
         );
       default:

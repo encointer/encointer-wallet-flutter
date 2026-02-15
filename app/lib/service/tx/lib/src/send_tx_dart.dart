@@ -53,14 +53,23 @@ class ExtrinsicReport {
   }
 
   bool get isExtrinsicSuccess {
+    if (events.isEmpty) {
+      Log.e('ExtrinsicReport: no events found for xt $extrinsicHash in block $blockHash');
+      return false;
+    }
     return events.last.event.isExtrinsicSuccess;
   }
 
   bool get isExtrinsicFailed {
+    if (events.isEmpty) {
+      Log.e('ExtrinsicReport: no events found for xt $extrinsicHash in block $blockHash');
+      return false;
+    }
     return events.last.event.isExtrinsicFailed;
   }
 
   DispatchError? get dispatchError {
+    if (events.isEmpty) return null;
     return events.last.event.dispatchError;
   }
 }
