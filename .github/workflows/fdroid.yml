@@ -19,6 +19,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android,armv7-linux-androideabi,x86_64-linux-android
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin/cargo-ndk
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+          key: ${{ runner.os }}-cargo-ndk-${{ hashFiles('packages/ew_zk_prover/rust/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-ndk-
+
+      - name: Install cargo-ndk
+        run: command -v cargo-ndk || cargo install cargo-ndk
+
       # The following steps are executed with those scripts, as this is how we build
       # the app in the f-droid pipeline too.
       - name: Check fdroid setup

@@ -15,6 +15,7 @@ import 'pallets/encointer_ceremonies.dart' as _i22;
 import 'pallets/encointer_communities.dart' as _i23;
 import 'pallets/encointer_democracy.dart' as _i28;
 import 'pallets/encointer_faucet.dart' as _i27;
+import 'pallets/encointer_offline_payment.dart' as _i32;
 import 'pallets/encointer_reputation_commitments.dart' as _i26;
 import 'pallets/encointer_scheduler.dart' as _i21;
 import 'pallets/encointer_treasuries.dart' as _i29;
@@ -62,7 +63,8 @@ class Queries {
         encointerReputationCommitments = _i26.Queries(api),
         encointerFaucet = _i27.Queries(api),
         encointerDemocracy = _i28.Queries(api),
-        encointerTreasuries = _i29.Queries(api);
+        encointerTreasuries = _i29.Queries(api),
+        encointerOfflinePayment = _i32.Queries(api);
 
   final _i2.Queries system;
 
@@ -119,6 +121,8 @@ class Queries {
   final _i28.Queries encointerDemocracy;
 
   final _i29.Queries encointerTreasuries;
+
+  final _i32.Queries encointerOfflinePayment;
 }
 
 class Extrinsics {
@@ -169,6 +173,8 @@ class Extrinsics {
   final _i28.Txs encointerDemocracy = _i28.Txs();
 
   final _i29.Txs encointerTreasuries = _i29.Txs();
+
+  final _i32.Txs encointerOfflinePayment = const _i32.Txs();
 }
 
 class Constants {
@@ -217,6 +223,8 @@ class Constants {
   final _i28.Constants encointerDemocracy = _i28.Constants();
 
   final _i29.Constants encointerTreasuries = _i29.Constants();
+
+  final _i32.Constants encointerOfflinePayment = _i32.Constants();
 }
 
 class Rpc {

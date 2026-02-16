@@ -17,9 +17,13 @@ import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
 import 'package:encointer_wallet/page/profile/account/change_password_page.dart';
+import 'package:encointer_wallet/service/offline/offline_identity_service.dart';
+import 'package:encointer_wallet/store/connectivity/connectivity_store.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
+import 'package:ew_storage/ew_storage.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:ew_l10n/l10n.dart';
@@ -242,6 +246,68 @@ class _ProfileState extends State<Profile> {
                         value: store.settings.usdcMockSwapEnabled,
                         onChanged: (_) => store.settings.toggleUsdcMockSwapEnabled(),
                       ),
+                    ),
+                    ListTile(
+                      title: Text('Enable Offline Payments', style: h3Grey),
+                      subtitle: const Text('Register ZK identity for offline e-cash'),
+                      trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                      onTap: () async {
+                        final service = OfflineIdentityService(const SecureStorage());
+                        final pubKey = store.account.currentAccountPubKey;
+                        if (pubKey == null) return;
+
+                        if (await service.isRegistered(pubKey)) {
+                          if (!context.mounted) return;
+                          await AppAlert.showDialog<void>(
+                            context,
+                            title: const Text('Already Registered'),
+                            content: const Text('Your offline identity is already registered.'),
+                            actions: [
+                              CupertinoDialogAction(
+                                isDefaultAction: true,
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                          return;
+                        }
+
+                        if (!context.mounted) return;
+                        if (!context.read<ConnectivityStore>().isConnectedToNetwork) {
+                          AppAlert.showErrorDialog(
+                            context,
+                            errorText: 'You must be online to register your offline identity.',
+                            buttontext: 'OK',
+                          );
+                          return;
+                        }
+
+                        try {
+                          if (!context.mounted) return;
+                          await service.register(context);
+                          if (!context.mounted) return;
+                          await AppAlert.showDialog<void>(
+                            context,
+                            title: const Text('Registration Successful'),
+                            content: const Text('You can now pay while offline.'),
+                            actions: [
+                              CupertinoDialogAction(
+                                isDefaultAction: true,
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        } on Exception catch (e) {
+                          if (!context.mounted) return;
+                          AppAlert.showErrorDialog(
+                            context,
+                            errorText: 'Registration failed: $e',
+                            buttontext: 'OK',
+                          );
+                        }
+                      },
                     ),
                     ListTile(
                       title: Text('Connected Endpoint: ${webApi.provider.url}', style: h3Grey),

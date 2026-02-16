@@ -1,0 +1,52 @@
+// Android build configuration for ew_zk_prover.
+//
+// Cross-compiles Rust via cargo-ndk for Android targets.
+// Requires: cargo-ndk installed (`cargo install cargo-ndk`)
+// and Android NDK configured in local.properties.
+
+group 'com.encointer.ew_zk_prover'
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.0'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    namespace 'com.encointer.ew_zk_prover'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 21
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs']
+        }
+    }
+}
+
+task buildRust(type: Exec) {
+    workingDir "${project.projectDir}/../rust"
+    commandLine 'cargo', 'ndk',
+        '-t', 'aarch64-linux-android',
+        '-t', 'armv7-linux-androideabi',
+        '-t', 'x86_64-linux-android',
+        '-o', "${project.projectDir}/src/main/jniLibs",
+        'build', '--release'
+}
+preBuild.dependsOn buildRust

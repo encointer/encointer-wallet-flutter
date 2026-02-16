@@ -9,6 +9,7 @@ import 'package:encointer_wallet/store/assets/assets.dart';
 import 'package:encointer_wallet/store/chain/chain.dart';
 import 'package:encointer_wallet/store/data_update/data_update.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
+import 'package:encointer_wallet/store/offline_payment/offline_payment_store.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/local_storage.dart';
 import 'package:ew_keyring/ew_keyring.dart';
@@ -81,6 +82,12 @@ abstract class _AppStore<S extends SecureStorageInterface, L extends LegacyStora
   EncointerStore get encointer => _encointer!;
 
   @observable
+  OfflinePaymentStore? _offlinePayment;
+
+  @computed
+  OfflinePaymentStore get offlinePayment => _offlinePayment!;
+
+  @observable
   bool storeIsReady = false;
 
   @observable
@@ -111,6 +118,9 @@ abstract class _AppStore<S extends SecureStorageInterface, L extends LegacyStora
 
     _chain = ChainStore(this as AppStore);
     await chain.loadCache();
+
+    _offlinePayment = OfflinePaymentStore(this as AppStore);
+    await offlinePayment.loadCache();
 
     // need to call this after settings was initialized
     final networkInfo = settings.currentNetwork.id();
