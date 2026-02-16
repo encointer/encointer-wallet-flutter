@@ -239,6 +239,13 @@ FfiProofResult callGenerateProof(
   required Uint8List amount,
   required Uint8List assetHash,
 }) {
+  ArgumentError.checkNotNull(provingKey, 'provingKey');
+  if (zkSecret.length != 32) throw ArgumentError.value(zkSecret.length, 'zkSecret', 'must be 32 bytes');
+  if (nonce.length != 32) throw ArgumentError.value(nonce.length, 'nonce', 'must be 32 bytes');
+  if (recipientHash.length != 32) throw ArgumentError.value(recipientHash.length, 'recipientHash', 'must be 32 bytes');
+  if (amount.length != 32) throw ArgumentError.value(amount.length, 'amount', 'must be 32 bytes');
+  if (assetHash.length != 32) throw ArgumentError.value(assetHash.length, 'assetHash', 'must be 32 bytes');
+
   final pkPtr = _allocCopy(provingKey);
   final secretPtr = _allocCopy(zkSecret);
   final noncePtr = _allocCopy(nonce);
@@ -292,6 +299,12 @@ bool callVerifyProof(
   required Uint8List assetHash,
   required Uint8List nullifier,
 }) {
+  if (commitment.length != 32) throw ArgumentError.value(commitment.length, 'commitment', 'must be 32 bytes');
+  if (recipientHash.length != 32) throw ArgumentError.value(recipientHash.length, 'recipientHash', 'must be 32 bytes');
+  if (amount.length != 32) throw ArgumentError.value(amount.length, 'amount', 'must be 32 bytes');
+  if (assetHash.length != 32) throw ArgumentError.value(assetHash.length, 'assetHash', 'must be 32 bytes');
+  if (nullifier.length != 32) throw ArgumentError.value(nullifier.length, 'nullifier', 'must be 32 bytes');
+
   final vkPtr = _allocCopy(verifyingKey);
   final proofPtr = _allocCopy(proofBytes);
   final commitPtr = _allocCopy(commitment);

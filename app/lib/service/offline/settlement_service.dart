@@ -133,10 +133,15 @@ class SettlementService {
           }
           return;
         }
+        // No dispatch error found — mark as confirmed.
+        await appStore.offlinePayment.updateStatus(record.nullifierHex, OfflinePaymentStatus.confirmed);
+        return;
       } on Exception catch (e) {
-        Log.d('Could not decode events (dev node): $e — assuming success', _logTarget);
+        // Could not decode events (e.g., dev node or transient RPC issue).
+        // Leave as submitted so it can be re-checked later.
+        Log.d('Could not decode events: $e — leaving as submitted for retry', _logTarget);
+        return;
       }
-      await appStore.offlinePayment.updateStatus(record.nullifierHex, OfflinePaymentStatus.confirmed);
     } catch (e, s) {
       // Transient errors (network, timeout) — revert to pending for retry
       Log.e('Settlement error for nullifier ${record.nullifierHex}: $e', _logTarget, s);

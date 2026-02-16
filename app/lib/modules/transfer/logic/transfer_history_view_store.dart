@@ -81,6 +81,7 @@ abstract class _TransferHistoryViewStoreBase with Store {
     } catch (e) {
       Log.e('Error getting transfers: $e');
       fetchFailed = true;
+      transactions = [];
       // Show offline payments even when network fetch fails
       fetchStatus = offlinePayments.isNotEmpty ? FetchStatus.success : FetchStatus.error;
     }

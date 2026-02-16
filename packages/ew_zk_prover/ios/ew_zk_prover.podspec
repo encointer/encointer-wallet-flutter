@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.version          = '0.1.0'
   s.summary          = 'ZK proof generation for Encointer offline payments.'
   s.homepage         = 'https://github.com/encointer/encointer-wallet-flutter'
-  s.license          = { :type => 'MIT' }
+  s.license          = { :type => 'GPL-3.0-or-later' }
   s.author           = { 'Encointer' => 'info@encointer.org' }
   s.source           = { :path => '.' }
   s.platform         = :ios, '13.0'

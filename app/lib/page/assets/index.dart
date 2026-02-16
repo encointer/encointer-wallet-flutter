@@ -313,8 +313,8 @@ class _AssetsViewState extends State<AssetsView> {
                         final pendingDelta = widget.store.offlinePayment.pendingBalanceDelta;
                         final effectiveBalance = displayBalance != null ? displayBalance + pendingDelta : null;
 
-                        return (widget.store.encointer.community?.name != null) &
-                                (widget.store.encointer.chosenCid != null) &
+                        return (widget.store.encointer.community?.name != null) &&
+                                (widget.store.encointer.chosenCid != null) &&
                                 (effectiveBalance != null)
                             ? Column(
                                 children: [

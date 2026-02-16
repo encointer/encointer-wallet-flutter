@@ -17,7 +17,7 @@ default = ["std"]
 std = ["encointer-offline-payment-core/std"]
 
 [dependencies]
-encointer-offline-payment-core = { git = "https://github.com/encointer/pallets", branch = "master" }
+encointer-offline-payment-core = { git = "https://github.com/encointer/pallets", rev = "13a9c7415a3db35c87a046176d3b7098cbf16a94" }
 ark-bn254 = { version = "0.4.0", features = ["curve"] }
 ark-groth16 = "0.4.0"
 ark-snark = "0.4.0"
