@@ -65,6 +65,27 @@ class ReceiveOfflinePaymentPage extends StatelessWidget {
 
   Future<void> _acceptPayment(BuildContext context, OfflinePaymentData data) async {
     final store = context.read<AppStore>();
+
+    // Validate recipient matches current account
+    if (data.recipient != store.account.currentAddress) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('This payment is not addressed to your current account.')),
+        );
+      }
+      return;
+    }
+
+    // Reject duplicate nullifiers
+    if (store.offlinePayment.payments.any((p) => p.nullifierHex == data.nullifierHex)) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('This payment has already been received.')),
+        );
+      }
+      return;
+    }
+
     final record = OfflinePaymentRecord(
       proofBase64: data.proofBase64,
       senderAddress: data.sender,

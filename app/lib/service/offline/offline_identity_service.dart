@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:flutter/widgets.dart';
@@ -141,7 +142,12 @@ class OfflineIdentityService {
     Log.d('loadProvingKey: fetched on-chain VK (${onChainVk.length} bytes)', _logTarget);
 
     // TODO(production): load PK from bundled asset instead of generating.
-    final setup = ZkProver.generateTestSetup(0xDEADBEEFCAFEBABE);
+    // Run in isolate to avoid blocking the UI thread.
+    final libOverride = nativeLibraryOverride;
+    final setup = await Isolate.run(() {
+      nativeLibraryOverride = libOverride;
+      return ZkProver.generateTestSetup(0xDEADBEEFCAFEBABE);
+    });
     if (!_bytesEqual(setup.verifyingKey, onChainVk)) {
       throw StateError('Generated VK does not match on-chain VK. Wrong trusted setup seed.');
     }

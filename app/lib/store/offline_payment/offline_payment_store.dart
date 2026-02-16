@@ -108,6 +108,10 @@ abstract class _OfflinePaymentStore with Store {
 
   @action
   Future<void> addPayment(OfflinePaymentRecord record) async {
+    if (payments.any((p) => p.nullifierHex == record.nullifierHex)) {
+      Log.d('Skipping duplicate payment: ${record.nullifierHex}', 'OfflinePaymentStore');
+      return;
+    }
     payments.add(record);
     await _writeCache();
   }

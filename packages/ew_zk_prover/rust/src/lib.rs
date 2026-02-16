@@ -179,6 +179,7 @@ pub unsafe extern "C" fn ffi_blake2_256(ptr: *const u8, len: usize, out32: *mut 
 /// Compute Poseidon commitment from 32-byte zk_secret. Writes 32 bytes to `out32`.
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn ffi_compute_commitment(in32: *const u8, out32: *mut u8) {
+    assert!(!in32.is_null() && !out32.is_null(), "ffi_compute_commitment: null pointer");
     let zk_secret: [u8; 32] = unsafe { *(in32 as *const [u8; 32]) };
     let result = compute_commitment(&zk_secret);
     unsafe { std::ptr::copy_nonoverlapping(result.as_ptr(), out32, 32); }
@@ -204,6 +205,13 @@ pub unsafe extern "C" fn ffi_generate_proof(
     amount32: *const u8,
     asset32: *const u8,
 ) -> *mut FfiProofOutput {
+    if pk.is_null() || secret32.is_null() || nonce32.is_null()
+        || recipient32.is_null() || amount32.is_null() || asset32.is_null()
+    {
+        set_last_error("ffi_generate_proof: null pointer argument");
+        return std::ptr::null_mut();
+    }
+
     let pk_bytes = unsafe { std::slice::from_raw_parts(pk, pk_len) };
     let zk_secret = unsafe { &*(secret32 as *const [u8; 32]) };
     let nonce = unsafe { &*(nonce32 as *const [u8; 32]) };
@@ -248,7 +256,10 @@ pub unsafe extern "C" fn ffi_free_proof_output(ptr: *mut FfiProofOutput) {
     }
 }
 
-/// Verify a Groth16 proof. Returns 1 for valid, 0 for invalid, -1 for error.
+/// Verify a Groth16 proof. Returns 1 for valid, 0 for invalid/error.
+///
+/// Returns 0 (not a separate error code) when deserialization of the VK or
+/// proof fails — check `ffi_last_error` for details.
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn ffi_verify_proof(
     vk: *const u8,
@@ -261,6 +272,13 @@ pub unsafe extern "C" fn ffi_verify_proof(
     asset32: *const u8,
     nullifier32: *const u8,
 ) -> i32 {
+    if vk.is_null() || proof.is_null() || commitment32.is_null() || recipient32.is_null()
+        || amount32.is_null() || asset32.is_null() || nullifier32.is_null()
+    {
+        set_last_error("ffi_verify_proof: null pointer argument");
+        return 0;
+    }
+
     let vk_bytes = unsafe { std::slice::from_raw_parts(vk, vk_len) };
     let proof_bytes = unsafe { std::slice::from_raw_parts(proof, proof_len) };
     let commitment = unsafe { &*(commitment32 as *const [u8; 32]) };
