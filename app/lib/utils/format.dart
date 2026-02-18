@@ -18,7 +18,7 @@ class Fmt {
   }
 
   static String dateTime(DateTime time) {
-    return DateFormat('yyyy-MM-dd hh:mm').format(time);
+    return DateFormat('yyyy-MM-dd HH:mm').format(time);
   }
 
   static String hhmmss(int seconds) {
