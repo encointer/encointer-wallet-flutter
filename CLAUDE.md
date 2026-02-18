@@ -43,7 +43,8 @@ app/                  Main Flutter app (package: encointer_wallet)
     theme/            Theme config
     gen/              Generated assets (flutter_gen)
   test/               Unit tests (~310 files)
-  test_driver/        Integration tests (flutter_driver)
+  integration_test/   Integration tests (integration_test framework)
+  test_driver/        Legacy flutter_driver tests (kept during transition) + integration_test drivers
 packages/
   endpoint_manager/   Endpoint selection & management
   ew_encointer_utils/ Encointer utility functions
@@ -91,10 +92,19 @@ Test tags: `encointer-node-e2e`, `production-e2e`, `endpoint-health-e2e`. Defaul
 
 ### Integration tests (device/emulator)
 
+Uses `integration_test` framework (replaces deprecated `flutter_driver`). Tests live in `app/integration_test/`, drivers in `app/test_driver/`.
+
 ```bash
 .flutter/bin/dart run melos integration-app-test-android   # Android (--flavor dev)
 .flutter/bin/dart run melos integration-app-test-ios        # iOS
+.flutter/bin/dart run melos integration-qr-payment-story    # Multi-device QR payment story
 ```
+
+Structure: `app/integration_test/app/` mirrors `test_driver/app/` (1:1 port). Single `testWidgets` in `app_test.dart` runs all ~65 tests sequentially (app state accumulates). User story tests in `integration_test/stories/`.
+
+Key differences from flutter_driver: `WidgetTester` instead of `FlutterDriver`, `find.byKey(Key(...))` instead of `find.byValueKey(...)`, direct `AppSettings` manipulation instead of `driver.requestData()`, `find.byTooltip('Back')` instead of `find.pageBack()`.
+
+`app/build.yaml` excludes `integration_test/**` from build_runner sources to avoid json_serializable builder conflicts.
 
 Mock framework: **mocktail**. Tests mirror source structure under `app/test/`.
 
