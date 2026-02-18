@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:ew_test_keys/ew_test_keys.dart';
@@ -172,6 +173,12 @@ class ScanPage extends StatelessWidget {
             '\nnctr-gsl-dev\nAubrey',
           ),
         ),
+        if (const String.fromEnvironment('QR_PAYLOAD').isNotEmpty)
+          ElevatedButton(
+            key: const Key(EWTestKeys.customQrScan),
+            child: const Text('Custom QR'),
+            onPressed: () => onScan(utf8.decode(base64Decode(const String.fromEnvironment('QR_PAYLOAD')))),
+          ),
         const Padding(
           padding: EdgeInsets.all(16),
           child: Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),

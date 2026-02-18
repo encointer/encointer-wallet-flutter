@@ -38,7 +38,8 @@ cd app
 # Regular Integration test
 ../.flutter/bin/flutter drive \
   --no-enable-impeller \
-  --target=test_driver/app.dart \
+  --driver=test_driver/integration_test.dart \
+  --target=integration_test/app_test.dart \
   --flavor dev \
   --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
   --dart-define=locales=en
