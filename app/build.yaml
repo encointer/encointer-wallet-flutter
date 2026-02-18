@@ -1,5 +1,8 @@
 targets:
   $default:
+    sources:
+      exclude:
+        - integration_test/**
     builders:
       json_serializable_mobx:
         # configure your options here, same as json_serializable
