@@ -102,6 +102,7 @@ class _AssetsViewState extends State<AssetsView> {
 
   Future<void> _checkOfflineRegistration() async {
     final appSettings = context.read<AppSettings>();
+    if (appSettings.isIntegrationTest) return;
     if (!appSettings.developerMode) return;
 
     final pubKey = widget.store.account.currentAccountPubKey;
