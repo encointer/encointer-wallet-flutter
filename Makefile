@@ -38,7 +38,7 @@ RPC_PORT   ?= 9944
 NODE_NAME_BOOT := bootstrap-node
 NODE_NAME_STORY := node_$(STORY)
 
-.PHONY: help bootstrap bootstrap-check story story-check stop-story stop-bootstrap rm-story rm-bootstrap volumes prune-anon
+.PHONY: help bootstrap bootstrap-check story story-check stop-story stop-bootstrap rm-story rm-bootstrap volumes prune-anon restart-story
 
 help:
 	@cat <<'EOF'
@@ -123,6 +123,30 @@ stop-bootstrap:
 rm-story:
 	docker volume rm "$(STORYVOL)" >/dev/null
 	@echo "✅ Removed volume: $(STORYVOL)"
+
+restart-story:
+	@echo "==> Restarting story $(STORY): reset to bootstrap + start node"
+	@echo "==> Stopping/removing container $(NODE_NAME_STORY) (if any)"
+	docker rm -f "$(NODE_NAME_STORY)" >/dev/null 2>&1 || true
+
+	@echo "==> Recreating story volume $(STORYVOL)"
+	docker volume rm "$(STORYVOL)" >/dev/null 2>&1 || true
+	docker volume create "$(STORYVOL)" >/dev/null
+
+	@echo "==> Cloning $(BOOTVOL) -> $(STORYVOL)"
+	docker run --rm \
+	  -v "$(BOOTVOL):/from:ro" \
+	  -v "$(STORYVOL):/to" \
+	  alpine sh -lc 'cp -a /from/. /to/'
+
+	@echo "==> Starting node $(NODE_NAME_STORY) on port $(RPC_PORT)"
+	docker run -d --name "$(NODE_NAME_STORY)" -p $(RPC_PORT):9944 \
+	  -v "$(STORYVOL):/data" \
+	  "$(NODE_IMG)" \
+	  --dev --base-path /data --enable-offchain-indexing true \
+	  --rpc-methods unsafe --rpc-external
+
+	@echo "✅ Restarted story from bootstrap: $(NODE_NAME_STORY)"
 
 rm-bootstrap:
 	docker volume rm "$(BOOTVOL)" >/dev/null
