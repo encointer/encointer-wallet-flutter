@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Polls [tester.pump] until [finder] matches at least one widget,
@@ -31,9 +32,12 @@ Future<void> scrollUntilVisible(
   int maxScrolls = 50,
 }) async {
   // If the item is not yet in the widget tree (lazy list), drag until it appears.
+  // Use the first Scrollable descendant of [scrollable] so the gesture is
+  // dispatched to a widget that actually processes scroll events.
+  final dragTarget = find.descendant(of: scrollable, matching: find.byType(Scrollable)).first;
   var attempts = 0;
   while (item.evaluate().isEmpty && attempts < maxScrolls) {
-    await tester.drag(scrollable, Offset(0, dyScroll));
+    await tester.drag(dragTarget, Offset(0, dyScroll));
     await tester.pumpAndSettle();
     attempts++;
   }
