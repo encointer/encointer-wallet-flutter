@@ -34,7 +34,12 @@ Future<void> scrollUntilVisible(
   // If the item is not yet in the widget tree (lazy list), drag until it appears.
   // Use the first Scrollable descendant of [scrollable] so the gesture is
   // dispatched to a widget that actually processes scroll events.
-  final dragTarget = find.descendant(of: scrollable, matching: find.byType(Scrollable)).first;
+  final dragFinder = find.descendant(of: scrollable, matching: find.byType(Scrollable));
+  final deadline = DateTime.now().add(const Duration(seconds: 10));
+  while (dragFinder.evaluate().isEmpty && DateTime.now().isBefore(deadline)) {
+    await tester.pump(const Duration(milliseconds: 100));
+  }
+  final dragTarget = dragFinder.first;
   var attempts = 0;
   while (item.evaluate().isEmpty && attempts < maxScrolls) {
     await tester.drag(dragTarget, Offset(0, dyScroll));
