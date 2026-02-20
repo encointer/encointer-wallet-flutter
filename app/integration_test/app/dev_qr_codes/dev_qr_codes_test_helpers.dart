@@ -27,7 +27,7 @@ Future<void> sendFromQrWithoutAmount(WidgetTester tester) async {
   await tester.tap(find.byKey(const Key(EWTestKeys.invoiceWithNoAmountToScan)));
   await tester.pumpAndSettle();
 
-  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.transferListview)));
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.transferAmountInput)));
   await tester.tap(find.byKey(const Key(EWTestKeys.transferAmountInput)));
   await tester.pumpAndSettle();
   await tester.enterText(find.byKey(const Key(EWTestKeys.transferAmountInput)), '0.01');

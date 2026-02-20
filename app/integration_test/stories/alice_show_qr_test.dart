@@ -51,6 +51,7 @@ void main() {
 
     // Extract QR data from the QrCodeImage widget
     final qrFinder = find.byType(QrCodeImage);
+    await waitForWidget(tester, qrFinder);
     expect(qrFinder, findsOneWidget);
     final qrWidget = tester.widget<QrCodeImage>(qrFinder);
     final qrData = qrWidget.qrCode;

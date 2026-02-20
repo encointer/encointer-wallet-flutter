@@ -274,7 +274,7 @@ class EncointerApi {
     final locationIndex = store.encointer.communityAccount?.meetup?.locationIndex;
     final mLocation = locationIndex != null && store.encointer.community?.meetupLocations != null
         ? store.encointer.community?.meetupLocations![locationIndex]
-        : store.encointer.community?.meetupLocations?.first;
+        : store.encointer.community?.meetupLocations?.firstOrNull;
 
     final attestingStart = store.encointer.attestingPhaseStart;
 

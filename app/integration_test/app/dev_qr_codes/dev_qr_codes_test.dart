@@ -24,9 +24,10 @@ Future<void> qrFromHomeTestAndSendWithoutAmount(WidgetTester tester) async {
 
 Future<void> qrFromSendPageTestAndSendWithAmount(WidgetTester tester) async {
   await scrollToPanelController(tester);
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.transfer)));
   await tester.tap(find.byKey(const Key(EWTestKeys.transfer)));
   await tester.pumpAndSettle();
-  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.transferListview)));
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.openQrScannerOnSendPage)));
   await tester.tap(find.byKey(const Key(EWTestKeys.openQrScannerOnSendPage)));
   await tester.pumpAndSettle();
   await sendFromQrWithAmount(tester);
@@ -34,17 +35,20 @@ Future<void> qrFromSendPageTestAndSendWithAmount(WidgetTester tester) async {
 
 Future<void> qrFromSendPageTestAndSendWithoutAmount(WidgetTester tester) async {
   await scrollToPanelController(tester);
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.transfer)));
   await tester.tap(find.byKey(const Key(EWTestKeys.transfer)));
   await tester.pumpAndSettle();
-  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.transferListview)));
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.openQrScannerOnSendPage)));
   await tester.tap(find.byKey(const Key(EWTestKeys.openQrScannerOnSendPage)));
   await tester.pumpAndSettle();
   await sendFromQrWithoutAmount(tester);
 }
 
 Future<void> qrFromContactAddContactFromQrContact(WidgetTester tester) async {
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.addContact)));
   await tester.tap(find.byKey(const Key(EWTestKeys.addContact)));
   await tester.pumpAndSettle();
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.scanBarcode)));
   await tester.tap(find.byKey(const Key(EWTestKeys.scanBarcode)));
   await tester.pumpAndSettle();
   await saveContactFromQrContact(tester, true);
