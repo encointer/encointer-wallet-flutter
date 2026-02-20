@@ -23,8 +23,8 @@ class ReconnectingWsProvider extends Provider {
   Future<void> connectToNewEndpoint(Uri url) async {
     await disconnect();
     this.url = url;
-    provider = WsProvider(url);
-    await provider.isReady();
+    provider = WsProvider(url, autoConnect: false);
+    await provider.connect();
   }
 
   @override
