@@ -70,6 +70,9 @@ cp -r "$TEMP_DIR/test"/* "$TEMP_DIR" || echo "no screenshots found..."
 rm -r "$TEMP_DIR/test" || true
 
 # --- QR payment story test ---
+echo "Clearing app data before QR payment story"
+adb shell pm clear org.encointer.wallet || echo "Could not clear app data"
+
 start_recording "recording_qr_story"
 
 echo "Running QR payment story test"
