@@ -35,10 +35,7 @@ Future<void> scrollUntilVisible(
   // Use the first Scrollable descendant of [scrollable] so the gesture is
   // dispatched to a widget that actually processes scroll events.
   final dragFinder = find.descendant(of: scrollable, matching: find.byType(Scrollable));
-  final deadline = DateTime.now().add(const Duration(seconds: 10));
-  while (dragFinder.evaluate().isEmpty && DateTime.now().isBefore(deadline)) {
-    await tester.pump(const Duration(milliseconds: 100));
-  }
+  await waitForWidget(tester, dragFinder);
   final dragTarget = dragFinder.first;
   var attempts = 0;
   while (item.evaluate().isEmpty && attempts < maxScrolls) {
