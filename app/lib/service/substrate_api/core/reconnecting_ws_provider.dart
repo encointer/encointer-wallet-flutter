@@ -56,18 +56,21 @@ class ReconnectingWsProvider extends Provider {
     return provider.isConnected();
   }
 
-  /// Sends an RPC request, recovering from a stale connection.
+  /// Sends an RPC request, recovering from a dead connection.
   ///
-  /// [WsProvider.isReady] throws [StateError] when the underlying
-  /// WebSocket auto-closed after exhausting its reconnect timeout,
-  /// but [WsProvider.socket] is still non-null. We catch this and
-  /// create a fresh connection before retrying.
+  /// Two failure modes exist:
+  /// 1. Socket is null → [WsProvider.send] throws [Exception].
+  /// 2. Socket is non-null but the connection stream is closed →
+  ///    [WsProvider.isReady] throws [StateError].
+  /// Both are recoverable by creating a fresh [WsProvider].
   @override
   Future<RpcResponse> send(String method, List<dynamic> params) async {
+    if (!provider.isOpen) {
+      Log.d('Socket null, reconnecting before send', 'ReconnectingWsProvider');
+      await _reconnect();
+    }
     try {
       return await provider.send(method, params);
-      // StateError from WsProvider.isReady() is recoverable:
-      // the WebSocket timed out, we can create a new one.
       // ignore: avoid_catching_errors
     } on StateError {
       Log.d('Connection dead, reconnecting', 'ReconnectingWsProvider');
@@ -81,6 +84,10 @@ class ReconnectingWsProvider extends Provider {
     List<dynamic> params, {
     FutureOr<void> Function(String subscription)? onCancel,
   }) async {
+    if (!provider.isOpen) {
+      Log.d('Socket null, reconnecting before subscribe', 'ReconnectingWsProvider');
+      await _reconnect();
+    }
     try {
       return await provider.subscribe(method, params, onCancel: onCancel);
       // ignore: avoid_catching_errors
