@@ -3,8 +3,13 @@ import 'dart:async';
 import 'package:ew_log/ew_log.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
 
-// Todo: Upstream does no also reconnect automatically, so we can simplify.
-// https://github.com/encointer/encointer-wallet-flutter/issues/1819
+/// Thin wrapper around [WsProvider] that adds endpoint switching.
+///
+/// Upstream [WsProvider] (via `web_socket_client`) already handles
+/// auto-reconnect with exponential backoff and re-sends pending queries
+/// on reconnection, so this wrapper only adds [connectToNewEndpoint]
+/// and guards against [StateError] from [WsProvider.isReady] when the
+/// underlying WebSocket has permanently closed.
 class ReconnectingWsProvider extends Provider {
   ReconnectingWsProvider(this.url, {bool autoConnect = true})
       : provider = WsProvider(
@@ -24,31 +29,20 @@ class ReconnectingWsProvider extends Provider {
 
   @override
   Future connect() {
-    if (isConnected()) {
-      return Future.value();
-    } else {
-      // We want to use a new channel even if the channel exists but it was closed.
-      provider.socket = null;
-      provider = WsProvider(url, autoConnect: false);
-      return provider.connect();
-    }
+    return provider.connect();
   }
 
   @override
   Future disconnect() async {
-    // We only care if the channel is not equal to null.
-    // Because we still want the internal cleanup if
-    // the connection was closed from the other end.
     if (provider.socket == null) {
       return Future.value();
     } else {
       try {
-        // Disconnect runs into a timeout if our endpoint doesn't exist for some reason.
         await provider.disconnect().timeout(const Duration(seconds: 3),
             onTimeout: () => Log.e('Timeout in disconnecting', 'ReconnectingWsProvider'));
       } catch (e) {
         Log.e('Error disconnecting websocket: $e', 'ReconnectingWsProvider');
-        return Future.value();
+        provider.socket = null;
       }
     }
   }
@@ -59,16 +53,26 @@ class ReconnectingWsProvider extends Provider {
 
   @override
   bool isConnected() {
-    // the `provider.isConnected()` check is wrong upstream.
-    // Hence, we implement it ourselves.
-    return provider.isOpen;
+    return provider.isConnected();
   }
 
+  /// Sends an RPC request, recovering from a stale connection.
+  ///
+  /// [WsProvider.isReady] throws [StateError] when the underlying
+  /// WebSocket auto-closed after exhausting its reconnect timeout,
+  /// but [WsProvider.socket] is still non-null. We catch this and
+  /// create a fresh connection before retrying.
   @override
   Future<RpcResponse> send(String method, List<dynamic> params) async {
-    // Connect if disconnected
-    await connect();
-    return provider.send(method, params);
+    try {
+      return await provider.send(method, params);
+      // StateError from WsProvider.isReady() is recoverable:
+      // the WebSocket timed out, we can create a new one.
+      // ignore: avoid_catching_errors
+    } on StateError {
+      Log.d('Connection dead, reconnecting', 'ReconnectingWsProvider');
+      return _reconnectAndSend(method, params);
+    }
   }
 
   @override
@@ -77,8 +81,24 @@ class ReconnectingWsProvider extends Provider {
     List<dynamic> params, {
     FutureOr<void> Function(String subscription)? onCancel,
   }) async {
-    // Connect if disconnected
-    await connect();
-    return provider.subscribe(method, params, onCancel: onCancel);
+    try {
+      return await provider.subscribe(method, params, onCancel: onCancel);
+      // ignore: avoid_catching_errors
+    } on StateError {
+      Log.d('Connection dead, reconnecting', 'ReconnectingWsProvider');
+      await _reconnect();
+      return provider.subscribe(method, params, onCancel: onCancel);
+    }
+  }
+
+  Future<RpcResponse> _reconnectAndSend(String method, List<dynamic> params) async {
+    await _reconnect();
+    return provider.send(method, params);
+  }
+
+  Future<void> _reconnect() async {
+    provider.socket = null;
+    provider = WsProvider(url, autoConnect: false);
+    await provider.connect();
   }
 }
