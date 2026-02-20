@@ -19,6 +19,7 @@ Future<void> senMoneyToAccount(
 ) async {
   await takeScreenshot(binding, appSettings, Screenshots.sendView, locales: locales);
   await enterTransferAmount(tester, amount);
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.transferSelectAccount)));
   await tester.tap(find.byKey(const Key(EWTestKeys.transferSelectAccount)));
   await tester.pumpAndSettle();
   await waitForWidget(tester, find.byKey(Key(recieveName)));

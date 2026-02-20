@@ -5,40 +5,48 @@ import 'package:flutter_test/flutter_test.dart';
 import '../helpers/wait_helpers.dart';
 
 Future<void> goToCreateAccountViewFromAcoountEntryView(WidgetTester tester) async {
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.createAccount)));
   await tester.tap(find.byKey(const Key(EWTestKeys.createAccount)));
   await tester.pumpAndSettle();
   await waitForWidget(tester, find.byKey(const Key(EWTestKeys.createAccountName)));
 }
 
 Future<void> goToReceiveViewFromHomeView(WidgetTester tester) async {
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.qrReceive)));
   await tester.tap(find.byKey(const Key(EWTestKeys.qrReceive)));
   await tester.pumpAndSettle();
 }
 
 Future<void> goToProfileViewFromNavBar(WidgetTester tester) async {
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.profile)));
   await tester.tap(find.byKey(const Key(EWTestKeys.profile)));
   await tester.pumpAndSettle();
 }
 
 Future<void> goToHomeViewFromNavBar(WidgetTester tester) async {
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.wallet)));
   await tester.tap(find.byKey(const Key(EWTestKeys.wallet)));
   await tester.pumpAndSettle();
 }
 
 Future<void> goToAddAcoountViewFromPanel(WidgetTester tester) async {
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.panelController)));
   await tester.tap(find.byKey(const Key(EWTestKeys.panelController)));
   await tester.pumpAndSettle();
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.addAccountPanel)));
   await tester.tap(find.byKey(const Key(EWTestKeys.addAccountPanel)));
   await tester.pumpAndSettle();
 }
 
 Future<void> goToTransferViewFromHomeView(WidgetTester tester) async {
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.transfer)));
   await tester.tap(find.byKey(const Key(EWTestKeys.transfer)));
   await tester.pumpAndSettle();
   await waitForWidget(tester, find.byKey(const Key(EWTestKeys.transferListview)));
 }
 
 Future<void> goToContactViewFromNavBar(WidgetTester tester) async {
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.contacts)));
   await tester.tap(find.byKey(const Key(EWTestKeys.contacts)));
   await tester.pumpAndSettle();
 }
