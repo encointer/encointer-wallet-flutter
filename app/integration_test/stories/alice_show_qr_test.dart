@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:encointer_wallet/common/components/qr_code_view/qr_code_image_view.dart';
+import 'package:encointer_wallet/page/assets/qr_code_printing/pages/qr_code_share_or_print_view.dart';
 
 import '../app/app.dart';
 import '../helpers/test_app_launcher.dart';
@@ -49,11 +49,11 @@ void main() {
     await goToReceiveViewFromHomeView(tester);
     await waitForWidget(tester, find.byKey(const Key(EWTestKeys.closeReceivePage)));
 
-    // Extract QR data from the QrCodeImage widget
-    final qrFinder = find.byType(QrCodeImage);
+    // Extract QR data from the QrCodeShareOrPrintView widget
+    final qrFinder = find.byType(QrCodeShareOrPrintView);
     await waitForWidget(tester, qrFinder);
     expect(qrFinder, findsOneWidget);
-    final qrWidget = tester.widget<QrCodeImage>(qrFinder);
+    final qrWidget = tester.widget<QrCodeShareOrPrintView>(qrFinder);
     final qrData = qrWidget.qrCode;
 
     // Report QR payload via binding so the driver can write it to a file
