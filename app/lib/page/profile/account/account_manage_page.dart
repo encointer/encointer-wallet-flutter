@@ -165,7 +165,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     final addressSS58 =
         AddressUtils.pubKeyHexToAddress(accountToBeEditedPubKey!, prefix: store.settings.currentNetwork.ss58());
 
-    _nameCtrl = TextEditingController(text: accountToBeEdited.name);
+    _nameCtrl ??= TextEditingController(text: accountToBeEdited.name);
     _nameCtrl!.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl!.text.length));
 
     Widget benefits() {

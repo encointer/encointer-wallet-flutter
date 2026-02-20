@@ -53,6 +53,7 @@ Future<void> changeContactName(
   await waitForWidget(tester, find.byKey(const Key(EWTestKeys.contactNameEdit)));
   await takeScreenshot(binding, appSettings, Screenshots.contactView, locales: locales);
   await enterChangeContactName(tester, newName);
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.contactNameEditCheck)));
   await tester.tap(find.byKey(const Key(EWTestKeys.contactNameEditCheck)));
   await tester.pumpAndSettle();
   await waitForWidget(tester, find.text(newName));

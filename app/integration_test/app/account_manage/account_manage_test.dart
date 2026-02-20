@@ -67,6 +67,7 @@ Future<void> accountChangeName(
   await waitForWidget(tester, find.byKey(const Key(EWTestKeys.accountNameField)));
   await takeScreenshot(binding, appSettings, Screenshots.changeAccountName, locales: locales);
   await enterNewAccountName(tester, newName);
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.accountNameEditCheck)));
   await tester.tap(find.byKey(const Key(EWTestKeys.accountNameEditCheck)));
   await tester.pumpAndSettle();
   await waitForWidget(tester, find.text(newName));
