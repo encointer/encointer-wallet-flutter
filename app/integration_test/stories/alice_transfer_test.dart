@@ -36,6 +36,9 @@ void main() {
     // Switch to dev network
     await goToNetworkView(tester);
     await changeDevNetwork(tester, 'Throwaway');
+    // Turn dev mode off to avoid "Pay Offline" button on PaymentConfirmationPage
+    await scrollToDevMode(tester);
+    await tapDevMode(tester);
 
     // Import Alice
     await goToHomeViewFromNavBar(tester);

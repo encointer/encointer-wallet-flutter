@@ -37,6 +37,10 @@ void main() {
     await tapDevMode(tester);
     await goToNetworkView(tester);
     await changeDevNetwork(tester, 'Throwaway');
+    // Turn dev mode off to avoid "Pay Offline" button on PaymentConfirmationPage
+    // (mock QR buttons use isIntegrationTest, not developerMode)
+    await scrollToDevMode(tester);
+    await tapDevMode(tester);
 
     // Import Bob
     await goToHomeViewFromNavBar(tester);
