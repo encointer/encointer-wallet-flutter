@@ -97,6 +97,7 @@ class EWTestKeys {
   static const closeEncointerCeremonyStep1 = 'close-encointer-ceremony-step1';
   static const invoiceAmountInput = 'invoice-amount-input';
   static const splashview = 'splashview';
+  static const customQrScan = 'custom-qr-scan';
 
   static String cidMarkerIcon(int index) => 'cid-$index-marker-icon';
   static String cidMarkerDescription(int index) => 'cid-$index-marker-description';

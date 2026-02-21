@@ -14,8 +14,8 @@ class AssetHubNetworkEndpointChecker with EndpointChecker<NetworkEndpoint> {
   Future<bool> checkHealth(NetworkEndpoint endpoint) async {
     Log.d('[NetworkEndpointChecker] Checking health of: ${endpoint.address()}', logTarget);
 
-    final provider = WsProvider(Uri.parse(endpoint.address()));
-    await provider.isReady();
+    final provider = WsProvider(Uri.parse(endpoint.address()), autoConnect: false);
+    await provider.connect();
 
     Log.d('[NetworkEndpointChecker] Endpoint ${endpoint.address()} is ready', logTarget);
 
@@ -59,23 +59,24 @@ class AssetHubWebApi {
   }
 
   Future<void> _connect() async {
-    Log.p('Looking for a healthy endpoint...', logTarget);
-    final manager = EndpointManager.withEndpoints(AssetHubNetworkEndpointChecker(), endpoints);
-    final endpoint = await manager.pollHealthyEndpoint(randomize: true);
-    Log.p('Connecting to healthy endpoint: ${endpoint.address()}', logTarget);
+    try {
+      Log.p('Looking for a healthy endpoint...', logTarget);
+      final manager = EndpointManager.withEndpoints(AssetHubNetworkEndpointChecker(), endpoints);
+      final endpoint = await manager.pollHealthyEndpoint(randomize: true);
+      Log.p('Connecting to healthy endpoint: ${endpoint.address()}', logTarget);
 
-    return provider.connectToNewEndpoint(Uri.parse(endpoint.address())).then((_) async {
+      await provider.connectToNewEndpoint(Uri.parse(endpoint.address()));
       if (provider.isConnected()) {
         Log.p('Channel is ready...', logTarget);
         await _onConnected();
       } else {
         Log.p('Connection failed, will try again...', logTarget);
       }
-    }).catchError((dynamic error) {
+    } catch (error) {
       Log.e('error during connection: $error', logTarget);
-    }).whenComplete(() {
+    } finally {
       _connecting = null;
-    });
+    }
   }
 
   Future<void> _onConnected() async {

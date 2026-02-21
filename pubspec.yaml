@@ -170,29 +170,33 @@ melos:
 
     # Integration test Encointer Wallet
     integration-app-test-android:
-      run: cd app && flutter drive --target=test_driver/app.dart --flavor dev
+      run: cd app && flutter drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart --flavor dev
       description: "Run integration test on Android"
 
     integration-app-test-android-screenshot:
       # screenshots are not possible with the impeller engine
-      run: cd app && flutter drive --no-enable-impeller --target=test_driver/app.dart --flavor dev --dart-define=locales=en
+      run: cd app && flutter drive --no-enable-impeller --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart --flavor dev --dart-define=locales=en
       description: "Run integration test on Android with screenshot capturing enabled."
 
     integration-app-test-ios:
-      run: cd app && flutter drive --target=test_driver/app.dart
+      run: cd app && flutter drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart
       description: "Run integration test on iOS"
 
     integration-app-test-ios-screenshot:
-      run: cd app && flutter drive --target=test_driver/app.dart --dart-define=locales=en
+      run: cd app && flutter drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart --dart-define=locales=en
       description: "Run integration test on IOS with screenshot capturing enabled."
 
     integration-app-test-ios-screenshot-multi-language:
-      run: cd app && flutter drive --target=test_driver/app.dart --dart-define=locales=de,fr,ru,en
+      run: cd app && flutter drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart --dart-define=locales=de,fr,ru,en
       description: "Run integration test on IOS with screenshot multi language capturing enabled."
 
     integration-app-test-android-screenshot-multi-language:
-      run: cd app && flutter drive --target=test_driver/app.dart --flavor dev --dart-define=locales=de,fr,ru,en
+      run: cd app && flutter drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart --flavor dev --dart-define=locales=de,fr,ru,en
       description: "Run integration test on Android with screenshot multi language capturing enabled. "
+
+    integration-qr-payment-story:
+      run: WS_ENDPOINT=$WS_ENDPOINT ../scripts/run_qr_payment_story.sh
+      description: "Run multi-device QR payment story test"
 
     integration-scan-test-android:
       # screenshots are not possible with the impeller engine

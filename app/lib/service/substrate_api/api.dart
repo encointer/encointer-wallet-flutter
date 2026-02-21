@@ -28,8 +28,8 @@ class NetworkEndpointChecker with EndpointChecker<NetworkEndpoint> {
   Future<bool> checkHealth(NetworkEndpoint endpoint) async {
     Log.d('[NetworkEndpointChecker] Checking health of: ${endpoint.address()}', 'Api');
 
-    final provider = WsProvider(Uri.parse(endpoint.address()));
-    await provider.isReady();
+    final provider = WsProvider(Uri.parse(endpoint.address()), autoConnect: false);
+    await provider.connect();
 
     Log.d('[NetworkEndpointChecker] Endpoint ${endpoint.address()} is ready', 'Api');
 
@@ -121,25 +121,27 @@ class Api {
   }
 
   Future<void> _connect() async {
-    Log.p('[webApi] Looking for a healthy endpoint...', 'Api');
-    final manager =
-        EndpointManager.withEndpoints(NetworkEndpointChecker(), store.settings.currentNetwork.networkEndpoints());
-    final endpoint = await manager.pollHealthyEndpoint(randomize: true);
-    Log.p('[webApi] Connecting to healthy endpoint: ${endpoint.address()}', 'Api');
+    try {
+      Log.p('[webApi] Looking for a healthy endpoint...', 'Api');
+      final manager =
+          EndpointManager.withEndpoints(NetworkEndpointChecker(), store.settings.currentNetwork.networkEndpoints());
+      final endpoint = await manager.pollHealthyEndpoint(randomize: true);
+      Log.p('[webApi] Connecting to healthy endpoint: ${endpoint.address()}', 'Api');
 
-    store.settings.setNetworkLoading(true);
+      store.settings.setNetworkLoading(true);
 
-    return provider.connectToNewEndpoint(Uri.parse(endpoint.address())).then((voidValue) async {
+      await provider.connectToNewEndpoint(Uri.parse(endpoint.address()));
       Log.p('[webApi] channel is ready...');
       if (await isConnected()) {
-        return _onConnected();
+        await _onConnected();
       } else {
         Log.p('[webApi] connection failed will try again...');
       }
-    }).catchError((dynamic error) {
-      // mostly timeouts if the endpoint is not available
+    } catch (error) {
       Log.e('[webApi] error during connection: $error}');
-    }).whenComplete(() => _connecting == null);
+    } finally {
+      _connecting = null;
+    }
   }
 
   Future<void> _onConnected() async {
