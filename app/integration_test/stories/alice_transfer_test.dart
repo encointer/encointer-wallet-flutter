@@ -62,6 +62,9 @@ void main() {
     await goToTransferViewFromHomeView(tester);
     await senMoneyToAccount(tester, b, s, l, 'Bob', '0.1');
 
+    // Allow backend time to index the on-chain transaction
+    await tester.pump(const Duration(seconds: 5));
+
     // Verify transfer in history
     await navigateToTransferHistoryPage(tester);
     await waitForWidget(tester, find.byKey(const Key(EWTestKeys.transactionsList)));

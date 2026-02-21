@@ -19,7 +19,13 @@ Future<void> enterChangeContactName(WidgetTester tester, String newName) async {
   await waitForWidget(tester, find.byKey(const Key(EWTestKeys.contactNameEdit)));
   await tester.tap(find.byKey(const Key(EWTestKeys.contactNameEdit)));
   await tester.pumpAndSettle();
-  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.contactNameField)));
-  await tester.enterText(find.byKey(const Key(EWTestKeys.contactNameField)), newName);
+  final nameFieldFinder = find.byKey(const Key(EWTestKeys.contactNameField));
+  await waitForWidget(tester, nameFieldFinder);
+  // Set controller text directly — tester.enterText is unreliable when MobX
+  // rebuilds (via context.watch<AppStore>()) disrupt the text input channel.
+  final editableText = tester.widget<EditableText>(
+    find.descendant(of: nameFieldFinder, matching: find.byType(EditableText)),
+  );
+  editableText.controller.text = newName;
   await tester.pumpAndSettle();
 }
