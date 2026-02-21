@@ -70,7 +70,7 @@ class ReconnectingWsProvider extends Provider {
       await _reconnect();
     }
     try {
-      return await provider.send(method, params);
+      return await provider.send(method, params).timeout(const Duration(seconds: 10));
       // ignore: avoid_catching_errors
     } on StateError {
       Log.d('Connection dead, reconnecting', 'ReconnectingWsProvider');
@@ -89,12 +89,12 @@ class ReconnectingWsProvider extends Provider {
       await _reconnect();
     }
     try {
-      return await provider.subscribe(method, params, onCancel: onCancel);
+      return await provider.subscribe(method, params, onCancel: onCancel).timeout(const Duration(seconds: 10));
       // ignore: avoid_catching_errors
     } on StateError {
       Log.d('Connection dead, reconnecting', 'ReconnectingWsProvider');
       await _reconnect();
-      return provider.subscribe(method, params, onCancel: onCancel);
+      return provider.subscribe(method, params, onCancel: onCancel).timeout(const Duration(seconds: 10));
     }
   }
 
@@ -106,6 +106,6 @@ class ReconnectingWsProvider extends Provider {
   Future<void> _reconnect() async {
     provider.socket = null;
     provider = WsProvider(url, autoConnect: false);
-    await provider.connect();
+    await provider.connect().timeout(const Duration(seconds: 5));
   }
 }
