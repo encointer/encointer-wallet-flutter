@@ -20,8 +20,6 @@ Future<void> enterChangeContactName(WidgetTester tester, String newName) async {
   await tester.tap(find.byKey(const Key(EWTestKeys.contactNameEdit)));
   await tester.pumpAndSettle();
   await waitForWidget(tester, find.byKey(const Key(EWTestKeys.contactNameField)));
-  await tester.tap(find.byKey(const Key(EWTestKeys.contactNameField)));
-  await tester.pumpAndSettle();
   await tester.enterText(find.byKey(const Key(EWTestKeys.contactNameField)), newName);
   await tester.pumpAndSettle();
 }

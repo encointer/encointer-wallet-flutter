@@ -56,7 +56,10 @@ void main() {
     await tester.tap(find.byKey(const Key(EWTestKeys.customQrScan)));
     await tester.pumpAndSettle();
 
-    // Complete payment flow
+    // Complete payment flow — QR invoice has no amount, so enter one
+    await waitForWidget(tester, find.byKey(const Key(EWTestKeys.transferAmountInput)));
+    await tester.enterText(find.byKey(const Key(EWTestKeys.transferAmountInput)), '0.01');
+    await tester.pumpAndSettle();
     await waitForWidget(tester, find.byKey(const Key(EWTestKeys.makeTransfer)));
     await tester.tap(find.byKey(const Key(EWTestKeys.makeTransfer)));
     await tester.pumpAndSettle();
