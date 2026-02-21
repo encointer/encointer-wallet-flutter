@@ -494,25 +494,34 @@ class EncointerApi {
   ///
   /// This is needed because because the latestHash slightly lags behind, as it involves a
   /// network request based on the `bestHead` subscription.
+  ///
+  /// Gives up after [maxRetries] attempts to avoid blocking the main thread indefinitely.
   Future<AggregatedAccountData> pollAggregatedAccountDataUntilNextPhase(
     CeremonyPhase nextPhase,
     CommunityIdentifier cid,
-    String pubKey,
-  ) async {
-    while (true) {
-      final data = await getAggregatedAccountData(cid, pubKey, at: store.chain.latestHash);
+    String pubKey, {
+    int maxRetries = 5,
+  }) async {
+    late AggregatedAccountData data;
+    for (var i = 0; i < maxRetries; i++) {
+      data = await getAggregatedAccountData(cid, pubKey, at: store.chain.latestHash);
       final phase = data.global.ceremonyPhase;
 
       if (nextPhase == phase) {
         Log.d('[EncointerApi] received account data valid for the new ceremony phase', 'EncointerApi');
         return data;
-      } else {
+      }
+
+      if (i < maxRetries - 1) {
         await Future.delayed(
           const Duration(seconds: 3),
           () => Log.d('[EncointerApi] polling account data until next phase is reached...', 'EncointerApi'),
         );
       }
     }
+
+    Log.p('[EncointerApi] max retries ($maxRetries) reached polling for next phase, returning last data');
+    return data;
   }
 
   // Make sure that we initially load the communities once before we

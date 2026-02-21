@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ew_log/ew_log.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ew_http/ew_http.dart';
@@ -33,13 +35,17 @@ class HomePageService with WidgetsBindingObserver {
     final encointer = buildContext.read<AppStore>().encointer;
     final cid = encointer.community?.cid.toFmtString();
     await initialDeepLinks(buildContext);
-    await NotificationHandler.fetchMessagesAndScheduleNotifications(
-      tz.local,
-      NotificationPlugin.scheduleNotification,
-      langCode: Localizations.localeOf(buildContext).languageCode,
-      cid: cid,
-      ewHttp: RepositoryProvider.of<EwHttp>(buildContext),
-      devMode: buildContext.read<AppSettings>().developerMode,
+    unawaited(
+      NotificationHandler.fetchMessagesAndScheduleNotifications(
+        tz.local,
+        NotificationPlugin.scheduleNotification,
+        langCode: Localizations.localeOf(buildContext).languageCode,
+        cid: cid,
+        ewHttp: RepositoryProvider.of<EwHttp>(buildContext),
+        devMode: buildContext.read<AppSettings>().developerMode,
+      ).timeout(const Duration(seconds: 5)).catchError((Object e) {
+        Log.e('Error fetching notification messages: $e', _logTarget);
+      }),
     );
 
     // Should never be null, we either come from the splash screen, and hence we had
