@@ -29,7 +29,7 @@ class NetworkEndpointChecker with EndpointChecker<NetworkEndpoint> {
     Log.d('[NetworkEndpointChecker] Checking health of: ${endpoint.address()}', 'Api');
 
     final provider = WsProvider(Uri.parse(endpoint.address()), autoConnect: false);
-    await provider.connect().timeout(const Duration(seconds: 2));
+    await provider.connect();
 
     Log.d('[NetworkEndpointChecker] Endpoint ${endpoint.address()} is ready', 'Api');
 
