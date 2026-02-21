@@ -45,6 +45,9 @@ class SplashView extends StatelessWidget {
       await store.encointer.updateState();
     });
 
+    // _onConnected already fetched community data; suppress redundant immediate updateState.
+    store.dataUpdate.setLastUpdate(DateTime.now());
+
     settlementService = SettlementService(
       appStore: store,
       connectivityStore: context.read<ConnectivityStore>(),

@@ -18,15 +18,13 @@ void main() {
         return Future.delayed(const Duration(seconds: 1));
       });
 
-      // lastUpdate starts at DateTime.now(), so first refresh fires after refreshPeriod (~5s).
       await Future<void>.delayed(const Duration(seconds: 2));
-      expect(count, 0);
-
-      await Future<void>.delayed(const Duration(seconds: 5));
       expect(count, 1);
 
-      // After first update completes (~T+7s), next refresh fires ~5s later (~T+12s).
-      await Future<void>.delayed(const Duration(seconds: 6));
+      await Future<void>.delayed(const Duration(seconds: 4));
+      expect(count, 1);
+
+      await Future<void>.delayed(const Duration(seconds: 2));
       expect(count, 2);
     });
   });

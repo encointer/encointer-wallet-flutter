@@ -28,7 +28,7 @@ abstract class _DataUpdateStore with Store {
   final Duration refreshPeriod;
 
   @observable
-  DateTime lastUpdate = DateTime.now();
+  DateTime lastUpdate = DateTime.fromMicrosecondsSinceEpoch(0);
 
   /// Time that is updated every second.
   @observable
