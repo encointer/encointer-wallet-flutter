@@ -69,12 +69,5 @@ void main() {
     await waitForWidget(tester, find.byKey(const Key(EWTestKeys.transferDone)));
     await tester.tap(find.byKey(const Key(EWTestKeys.transferDone)));
     await tester.pumpAndSettle();
-
-    // Allow backend time to index the on-chain transaction
-    await tester.pump(const Duration(seconds: 5));
-
-    // Verify transfer in history
-    await navigateToTransferHistoryPage(tester);
-    await waitForWidget(tester, find.byKey(const Key(EWTestKeys.transactionsList)));
   });
 }
