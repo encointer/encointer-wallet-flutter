@@ -57,6 +57,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get addBusiness => 'Geschäft hinzufügen';
 
   @override
+  String get businessDelegate => 'Delegierter';
+
+  @override
+  String get businessOwner => 'Inhaber';
+
+  @override
   String get addContact => 'Kontakt hinzufügen';
 
   @override

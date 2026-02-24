@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/models/bazaar/category.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
@@ -29,6 +30,10 @@ abstract class _BusinessesStoreBase with Store {
   @observable
   String? error;
 
+  /// Controllers for which the current account is a proxy delegate.
+  @observable
+  Set<String> delegateOfControllers = {};
+
   Future<List<AccountBusinessTuple>> _bazaarGetBusinesses(CommunityIdentifier cid) {
     Log.d('_bazaarGetBusinesses: cid = $cid', _targetLogger);
     return webApi.encointer.bazaarGetBusinesses(cid);
@@ -40,7 +45,7 @@ abstract class _BusinessesStoreBase with Store {
   }
 
   @action
-  Future<void> getBusinesses(CommunityIdentifier cid) async {
+  Future<void> getBusinesses(CommunityIdentifier cid, String currentAddress) async {
     fetchStatus = FetchStatus.loading;
     Log.d('getBusinesses: before update businesses = $businesses', _targetLogger);
 
@@ -49,6 +54,8 @@ abstract class _BusinessesStoreBase with Store {
     await _updateBusinesses(accountBusinessTuples);
 
     Log.d('getBusinesses: after update businesses = $businesses', _targetLogger);
+
+    await _checkDelegateStatus(currentAddress);
 
     _update();
   }
@@ -97,6 +104,37 @@ abstract class _BusinessesStoreBase with Store {
     }
 
     sortedBusinesses.addAll(businesses);
+  }
+
+  Future<void> _checkDelegateStatus(String currentAddress) async {
+    if (currentAddress.isEmpty || businesses.isEmpty) {
+      delegateOfControllers = {};
+      return;
+    }
+
+    final controllers = businesses.map((b) => b.controller!).toSet();
+    final result = <String>{};
+
+    final nonOwned = controllers.where((c) => !AddressUtils.areEqual(c, currentAddress)).toList();
+    if (nonOwned.isEmpty) {
+      delegateOfControllers = result;
+      return;
+    }
+
+    try {
+      final pubKeys = nonOwned.map((c) => AddressUtils.addressToPubKey(c).toList()).toList();
+      final multiProxies = await Future.wait(pubKeys.map(webApi.encointer.getProxyAccounts));
+
+      for (var i = 0; i < nonOwned.length; i++) {
+        if (multiProxies[i].any((p) => AddressUtils.isSamePubKey(currentAddress, p.delegate))) {
+          result.add(nonOwned[i]);
+        }
+      }
+    } catch (e) {
+      Log.e('Error checking delegate status: $e', _targetLogger);
+    }
+
+    delegateOfControllers = result;
   }
 
   @action

@@ -25,7 +25,7 @@ void main() {
       expect(businessesStore.fetchStatus, FetchStatus.loading);
       expect(businessesStore.sortedBusinesses, isEmpty);
 
-      await businessesStore.getBusinesses(cid);
+      await businessesStore.getBusinesses(cid, '');
 
       expect(businessesStore.fetchStatus, FetchStatus.success);
       expect(businessesStore.sortedBusinesses, isNotEmpty);
@@ -34,7 +34,7 @@ void main() {
     });
 
     test('`getBusinesses()` should filter businesses by category', () async {
-      await businessesStore.getBusinesses(cid);
+      await businessesStore.getBusinesses(cid, '');
 
       expect(businessesStore.sortedBusinesses, isNotNull);
       expect(businessesStore.sortedBusinesses.every((business) => business.category == Category.food), isTrue);

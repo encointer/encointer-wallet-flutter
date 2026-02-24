@@ -55,6 +55,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get addBusiness => 'Добавить бизнес';
 
   @override
+  String get businessDelegate => 'Делегат';
+
+  @override
+  String get businessOwner => 'Владелец';
+
+  @override
   String get addContact => 'Добавить контакт';
 
   @override

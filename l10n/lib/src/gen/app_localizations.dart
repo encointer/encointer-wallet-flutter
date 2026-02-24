@@ -194,6 +194,18 @@ abstract class AppLocalizations {
   /// **'Add business'**
   String get addBusiness;
 
+  /// No description provided for @businessDelegate.
+  ///
+  /// In en, this message translates to:
+  /// **'Delegate'**
+  String get businessDelegate;
+
+  /// No description provided for @businessOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get businessOwner;
+
   /// No description provided for @addContact.
   ///
   /// In en, this message translates to:

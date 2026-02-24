@@ -32,9 +32,10 @@ class _BazaarPageState extends State<BazaarPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final cid = context.read<AppStore>().encointer.community?.cid;
+      final store = context.read<AppStore>();
+      final cid = store.encointer.community?.cid;
       if (cid != null) {
-        await context.read<BusinessesStore>().getBusinesses(cid);
+        await context.read<BusinessesStore>().getBusinesses(cid, store.account.currentAddress);
       } else {
         AppAlert.showErrorDialog(
           context,

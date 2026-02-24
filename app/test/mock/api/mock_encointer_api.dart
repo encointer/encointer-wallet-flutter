@@ -8,6 +8,8 @@ import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dar
 import 'package:ew_log/ew_log.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:ew_polkadart/ew_polkadart.dart' show BlockHash;
+import 'package:ew_polkadart/encointer_types.dart' as et;
+import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
 
 import '../data/mock_encointer_data.dart';
 import 'mock_substrate_dart_api.dart';
@@ -137,6 +139,11 @@ class MockEncointerApi extends EncointerApi {
   @override
   Future<int> getNumberOfNewbieTicketsForReputable({BlockHash? at}) {
     return Future.value(0);
+  }
+
+  @override
+  Future<List<et.ProxyDefinition>> getProxyAccounts(AccountId32 accountId, {BlockHash? at}) async {
+    return [];
   }
 
   @override

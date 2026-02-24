@@ -55,6 +55,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addBusiness => 'Add business';
 
   @override
+  String get businessDelegate => 'Delegate';
+
+  @override
+  String get businessOwner => 'Owner';
+
+  @override
   String get addContact => 'Add contact';
 
   @override
