@@ -15,6 +15,8 @@
     "accountShare": "Share Account",
     "addAccount": "Add account",
     "addBusiness": "Add business",
+    "businessDelegate": "Delegate",
+    "businessOwner": "Owner",
     "addContact": "Add contact",
     "addInvoiceQrToAddress": "Add QR-invoice to Address",
     "address": "Address",

@@ -55,6 +55,12 @@ class AppLocalizationsSw extends AppLocalizations {
   String get addBusiness => 'Ongeza biashara';
 
   @override
+  String get businessDelegate => 'Mjumbe';
+
+  @override
+  String get businessOwner => 'Mmiliki';
+
+  @override
   String get addContact => 'Ongeza mawasiliano';
 
   @override

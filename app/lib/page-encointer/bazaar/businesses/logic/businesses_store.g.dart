@@ -69,11 +69,26 @@ mixin _$BusinessesStore on _BusinessesStoreBase, Store {
     });
   }
 
+  late final _$delegateOfControllersAtom = Atom(name: '_BusinessesStoreBase.delegateOfControllers', context: context);
+
+  @override
+  Set<String> get delegateOfControllers {
+    _$delegateOfControllersAtom.reportRead();
+    return super.delegateOfControllers;
+  }
+
+  @override
+  set delegateOfControllers(Set<String> value) {
+    _$delegateOfControllersAtom.reportWrite(value, super.delegateOfControllers, () {
+      super.delegateOfControllers = value;
+    });
+  }
+
   late final _$getBusinessesAsyncAction = AsyncAction('_BusinessesStoreBase.getBusinesses', context: context);
 
   @override
-  Future<void> getBusinesses(CommunityIdentifier cid) {
-    return _$getBusinessesAsyncAction.run(() => super.getBusinesses(cid));
+  Future<void> getBusinesses(CommunityIdentifier cid, String currentAddress) {
+    return _$getBusinessesAsyncAction.run(() => super.getBusinesses(cid, currentAddress));
   }
 
   late final _$_BusinessesStoreBaseActionController = ActionController(name: '_BusinessesStoreBase', context: context);
@@ -95,7 +110,8 @@ mixin _$BusinessesStore on _BusinessesStoreBase, Store {
 businesses: ${businesses},
 sortedBusinesses: ${sortedBusinesses},
 fetchStatus: ${fetchStatus},
-error: ${error}
+error: ${error},
+delegateOfControllers: ${delegateOfControllers}
     ''';
   }
 }

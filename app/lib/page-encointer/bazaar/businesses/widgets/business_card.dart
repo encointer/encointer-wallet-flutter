@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/logic/businesses_store.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/propose_page.dart';
 import 'package:encointer_wallet/service/service.dart';
@@ -22,7 +23,11 @@ class BusinessCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = context.read<AppStore>();
     final currentAddress = store.account.currentAddress;
+    final businessesStore = context.read<BusinessesStore>();
     // const currentAddress = '5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK';
+
+    final isOwner = AddressUtils.areEqual(business.controller!, currentAddress);
+    final isDelegate = !isOwner && businessesStore.delegateOfControllers.contains(business.controller);
 
     return InkWell(
       borderRadius: BorderRadius.circular(16),
@@ -66,7 +71,7 @@ class BusinessCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Category + Status
+                    // Category + Status + Role
                     Row(
                       children: [
                         Expanded(
@@ -76,6 +81,13 @@ class BusinessCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
+                        if (isOwner || isDelegate)
+                          Padding(
+                            padding: const EdgeInsets.only(right: 6),
+                            child: _RoleChip(
+                              label: isOwner ? context.l10n.businessOwner : context.l10n.businessDelegate,
+                            ),
+                          ),
                         Text(
                           business.status?.name ?? '',
                           style: context.bodySmall.copyWith(
@@ -106,7 +118,7 @@ class BusinessCard extends StatelessWidget {
                     ),
 
                     // Button (compact)
-                    if (AddressUtils.areEqual(business.controller!, currentAddress))
+                    if (isOwner || isDelegate)
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Align(
@@ -133,6 +145,30 @@ class BusinessCard extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _RoleChip extends StatelessWidget {
+  const _RoleChip({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(
+        color: context.colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Text(
+        label,
+        style: context.bodySmall.copyWith(
+          color: context.colorScheme.onPrimaryContainer,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );
