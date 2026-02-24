@@ -22,7 +22,7 @@
 
 ## Architecture
 
-**Monorepo** managed by Melos. Flutter 3.35.0, Dart >=3.6.0. Flutter SDK lives in `.flutter/` git submodule.
+**Monorepo** managed by Melos. Flutter 3.38.5, Dart >=3.6.0. Flutter SDK lives in `.flutter/` git submodule.
 
 ### Workspace layout
 
