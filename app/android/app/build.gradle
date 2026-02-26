@@ -107,7 +107,7 @@ flutter {
 }
 
 dependencies {
-    implementation 'com.jakewharton.threetenabp:threetenabp:1.4.6'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.4.9'
     // Fixes bug for newer ( > API 26) android versions
     // Bug: Failed to transform window-java-1.0.0-beta04.jar (androidx.window:window-java:1.0.0-beta04)
     implementation 'androidx.window:window:1.5.1'
