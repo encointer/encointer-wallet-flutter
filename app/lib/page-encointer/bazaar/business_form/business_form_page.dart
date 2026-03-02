@@ -204,6 +204,13 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
 
   Future<void> _onSave() async {
     if (!_formKey.currentState!.validate()) return;
+
+    final l10n = context.l10n;
+    if (_selectedCategory == null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.businessCategoryRequired)));
+      return;
+    }
+
     if (_saving) return;
 
     setState(() => _saving = true);
@@ -220,7 +227,12 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
         AppAlert.showErrorDialog(context, errorText: e.toString(), buttontext: context.l10n.ok);
       }
     } finally {
-      if (mounted) setState(() => _saving = false);
+      if (mounted) {
+        setState(() {
+          _saving = false;
+          _progressMessage = null;
+        });
+      }
     }
   }
 
