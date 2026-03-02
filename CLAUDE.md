@@ -120,6 +120,8 @@ Generated files: `*.g.dart` (MobX, JSON), `app/lib/gen/` (flutter_gen), `package
 
 CI verifies generated files are committed: runs build_runner + format, then `git diff --exit-code`.
 
+When adding new l10n keys, always add translations for all 5 languages (en, de, fr, ru, sw) in the corresponding ARB files. Run `flutter gen-l10n` after.
+
 ## Linting
 
 - Base: `very_good_analysis` (strict)

@@ -380,6 +380,24 @@ abstract class AppLocalizations {
   /// **'Change Image'**
   String get businessChangeImage;
 
+  /// No description provided for @businessAddPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Add photo'**
+  String get businessAddPhoto;
+
+  /// No description provided for @businessRemoveImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get businessRemoveImage;
+
+  /// No description provided for @businessLoadingPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading photos...'**
+  String get businessLoadingPhotos;
+
   /// No description provided for @addContact.
   ///
   /// In en, this message translates to:

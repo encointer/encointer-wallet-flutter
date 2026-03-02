@@ -151,6 +151,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get businessChangeImage => 'Changer l\'image';
 
   @override
+  String get businessAddPhoto => 'Ajouter une photo';
+
+  @override
+  String get businessRemoveImage => 'Supprimer';
+
+  @override
+  String get businessLoadingPhotos => 'Chargement des photos...';
+
+  @override
   String get addContact => 'ajouter un contact';
 
   @override

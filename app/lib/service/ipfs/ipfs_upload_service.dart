@@ -119,6 +119,69 @@ class IpfsUploadService {
     }
   }
 
+  /// Uploads multiple files as an IPFS directory.
+  /// Returns the CID of the wrapping folder.
+  Future<IpfsUploadResult> uploadFolder({
+    required Map<String, Uint8List> files,
+    required String address,
+    required String communityId,
+    required Sr25519KeyPair keyPair,
+  }) async {
+    final token = await _authService.getToken(
+      address: address,
+      communityId: communityId,
+      keyPair: keyPair,
+    );
+
+    Log.d('[IpfsUpload] Uploading folder with ${files.length} files', _logTarget);
+
+    final uri = Uri.parse('$gatewayUrl/ipfs/add?wrap-with-directory=true');
+    final request = http.MultipartRequest('POST', uri)..headers['Authorization'] = 'Bearer $token';
+    for (final entry in files.entries) {
+      request.files.add(http.MultipartFile.fromBytes('file', entry.value, filename: entry.key));
+    }
+
+    try {
+      final streamed = await _client.send(request);
+      final response = await http.Response.fromStream(streamed);
+
+      if (response.statusCode == HttpStatus.ok) {
+        // Response is newline-delimited JSON; the entry with empty Name is the directory.
+        final lines = const LineSplitter().convert(response.body).where((l) => l.trim().isNotEmpty);
+        IpfsUploadResult? dirResult;
+        for (final line in lines) {
+          final json = jsonDecode(line) as Map<String, dynamic>;
+          final result = IpfsUploadResult.fromJson(json);
+          if (result.name.isEmpty) dirResult = result;
+        }
+        if (dirResult == null) {
+          throw IpfsUploadException('No directory entry in response');
+        }
+        Log.d('[IpfsUpload] Folder success: ${dirResult.hash}', _logTarget);
+        return dirResult;
+      }
+
+      if (response.statusCode == HttpStatus.unauthorized) {
+        _authService.clearToken(communityId);
+        throw IpfsUploadException('Unauthorized - please try again', statusCode: response.statusCode);
+      }
+
+      if (response.statusCode == HttpStatus.forbidden) {
+        throw IpfsUploadException('Account does not exist on chain', statusCode: response.statusCode);
+      }
+
+      if (response.statusCode == 429) {
+        throw IpfsUploadException('Rate limit exceeded - try again later', statusCode: response.statusCode);
+      }
+
+      throw IpfsUploadException('Upload failed: ${response.body}', statusCode: response.statusCode);
+    } catch (e) {
+      if (e is IpfsUploadException) rethrow;
+      Log.e('[IpfsUpload] Error: $e', _logTarget);
+      throw IpfsUploadException('Network error: $e');
+    }
+  }
+
   /// Uploads JSON data to IPFS.
   Future<IpfsUploadResult> uploadJson({
     required Map<String, dynamic> data,

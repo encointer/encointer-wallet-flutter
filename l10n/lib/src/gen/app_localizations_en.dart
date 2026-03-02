@@ -150,6 +150,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get businessChangeImage => 'Change Image';
 
   @override
+  String get businessAddPhoto => 'Add photo';
+
+  @override
+  String get businessRemoveImage => 'Remove';
+
+  @override
+  String get businessLoadingPhotos => 'Loading photos...';
+
+  @override
   String get addContact => 'Add contact';
 
   @override

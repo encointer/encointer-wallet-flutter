@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/models/bazaar/category.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
@@ -63,7 +64,11 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
 
   Category? _selectedCategory;
   XFile? _pickedLogo;
-  XFile? _pickedPhoto;
+  bool _clearLogo = false;
+  final List<XFile> _pickedPhotos = [];
+  List<_ExistingPhoto> _existingPhotos = [];
+  final Set<String> _removedPhotoNames = {};
+  bool _loadingExistingPhotos = false;
   bool _saving = false;
   String? _progressMessage;
 
@@ -86,6 +91,9 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     _latitudeCtrl = TextEditingController(text: _existing?.latitude ?? '');
     _selectedCategory = _existing?.category;
     if (_selectedCategory == Category.all) _selectedCategory = null;
+    if (_isEdit && _existing?.photos != null) {
+      _loadExistingPhotos();
+    }
   }
 
   @override
@@ -129,6 +137,22 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     return ImagePicker().pickImage(source: source);
   }
 
+  Future<void> _loadExistingPhotos() async {
+    setState(() => _loadingExistingPhotos = true);
+    try {
+      final entries = await webApi.ipfsApi.getImagesFromFolder(_existing!.photos!);
+      if (mounted) {
+        setState(() {
+          _existingPhotos = entries.entries.map((e) => _ExistingPhoto(name: e.key, bytes: e.value)).toList();
+          _loadingExistingPhotos = false;
+        });
+      }
+    } catch (e) {
+      Log.e('Failed to load existing photos: $e', _logTarget);
+      if (mounted) setState(() => _loadingExistingPhotos = false);
+    }
+  }
+
   /// Uploads bytes to IPFS, returns CID hash string.
   Future<String> _uploadBytes(Uint8List bytes, String filename) async {
     final store = context.read<AppStore>();
@@ -165,19 +189,50 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     return result.hash;
   }
 
+  /// Uploads multiple files as an IPFS folder, returns folder CID.
+  Future<String> _uploadFolder(Map<String, Uint8List> files) async {
+    final store = context.read<AppStore>();
+    final pubKey = store.account.currentAccountPubKey!;
+    final keyPair = store.account.getKeyringAccount(pubKey).pair;
+    final address = store.account.currentAddress;
+    final communityId = store.encointer.chosenCid!.toFmtString();
+
+    final result = await webApi.ipfsUploadService.uploadFolder(
+      files: files,
+      address: address,
+      communityId: communityId,
+      keyPair: keyPair,
+    );
+    return result.hash;
+  }
+
   /// Builds IpfsBusiness from form values, uploading new images if picked.
   Future<IpfsBusiness> _buildBusiness() async {
-    var logoCid = _existing?.logo;
-    var photosCid = _existing?.photos;
-
-    if (_pickedLogo != null) {
+    // Logo
+    String? logoCid;
+    if (_clearLogo) {
+      logoCid = null;
+    } else if (_pickedLogo != null) {
       final bytes = Uint8List.fromList(await _pickedLogo!.readAsBytes());
       logoCid = await _uploadBytes(bytes, _pickedLogo!.name);
+    } else {
+      logoCid = _existing?.logo;
     }
 
-    if (_pickedPhoto != null) {
-      final bytes = Uint8List.fromList(await _pickedPhoto!.readAsBytes());
-      photosCid = await _uploadBytes(bytes, _pickedPhoto!.name);
+    // Photos — collect kept existing + newly picked into a single folder
+    final photoFiles = <String, Uint8List>{};
+    for (final photo in _existingPhotos) {
+      if (!_removedPhotoNames.contains(photo.name)) {
+        photoFiles[photo.name] = photo.bytes;
+      }
+    }
+    for (final file in _pickedPhotos) {
+      photoFiles[file.name] = Uint8List.fromList(await file.readAsBytes());
+    }
+
+    String? photosCid;
+    if (photoFiles.isNotEmpty) {
+      photosCid = await _uploadFolder(photoFiles);
     }
 
     return IpfsBusiness(
@@ -524,29 +579,108 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
                       ),
                       const SizedBox(height: 20),
 
-                      // Logo picker
-                      _ImagePickerTile(
-                        label: l10n.businessLogoLabel,
-                        pickedFile: _pickedLogo,
-                        existingCid: _existing?.logo,
-                        onPick: () async {
-                          final file = await _pickImage();
-                          if (file != null) setState(() => _pickedLogo = file);
-                        },
-                        pickLabel: _existing?.logo != null ? l10n.businessChangeImage : l10n.businessPickImage,
-                      ),
-                      const SizedBox(height: 12),
+                      // Logo
+                      Text(l10n.businessLogoLabel,
+                          style: context.bodyLarge.copyWith(color: context.colorScheme.primary)),
+                      const SizedBox(height: 4),
+                      if (_pickedLogo != null)
+                        Row(children: [
+                          const Icon(Icons.check_circle, color: Colors.green, size: 20),
+                          const SizedBox(width: 8),
+                          Expanded(child: Text(_pickedLogo!.name, overflow: TextOverflow.ellipsis)),
+                          IconButton(
+                            icon: const Icon(Icons.close, size: 18),
+                            tooltip: l10n.businessRemoveImage,
+                            onPressed: () => setState(() {
+                              _pickedLogo = null;
+                              _clearLogo = true;
+                            }),
+                          ),
+                        ])
+                      else if (!_clearLogo && _existing?.logo != null)
+                        Row(children: [
+                          IpfsImage(
+                            ipfs: webApi.ipfsApi,
+                            cidOrFolder: _existing!.logo!,
+                            width: 48,
+                            height: 48,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          const SizedBox(width: 8),
+                          TextButton.icon(
+                            icon: const Icon(Iconsax.camera, size: 18),
+                            label: Text(l10n.businessChangeImage),
+                            onPressed: () async {
+                              final file = await _pickImage();
+                              if (file != null) setState(() => _pickedLogo = file);
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.close, size: 18),
+                            tooltip: l10n.businessRemoveImage,
+                            onPressed: () => setState(() => _clearLogo = true),
+                          ),
+                        ])
+                      else
+                        TextButton.icon(
+                          icon: const Icon(Iconsax.camera, size: 18),
+                          label: Text(l10n.businessPickImage),
+                          onPressed: () async {
+                            final file = await _pickImage();
+                            if (file != null) {
+                              setState(() {
+                                _pickedLogo = file;
+                                _clearLogo = false;
+                              });
+                            }
+                          },
+                        ),
+                      const SizedBox(height: 16),
 
-                      // Photos picker
-                      _ImagePickerTile(
-                        label: l10n.businessPhotosLabel,
-                        pickedFile: _pickedPhoto,
-                        existingCid: _existing?.photos,
-                        onPick: () async {
+                      // Photos
+                      Text(l10n.businessPhotosLabel,
+                          style: context.bodyLarge.copyWith(color: context.colorScheme.primary)),
+                      const SizedBox(height: 4),
+                      if (_loadingExistingPhotos)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Row(children: [
+                            const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
+                            const SizedBox(width: 8),
+                            Text(l10n.businessLoadingPhotos),
+                          ]),
+                        ),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        children: [
+                          for (final photo in _existingPhotos)
+                            if (!_removedPhotoNames.contains(photo.name))
+                              Chip(
+                                avatar: Image.memory(photo.bytes, width: 24, height: 24, fit: BoxFit.cover),
+                                label: Text(photo.name, overflow: TextOverflow.ellipsis),
+                                onDeleted: () => setState(() => _removedPhotoNames.add(photo.name)),
+                                deleteButtonTooltipMessage: l10n.businessRemoveImage,
+                              ),
+                          for (var i = 0; i < _pickedPhotos.length; i++)
+                            Chip(
+                              avatar: const Icon(Icons.check_circle, color: Colors.green, size: 18),
+                              label: Text(_pickedPhotos[i].name, overflow: TextOverflow.ellipsis),
+                              onDeleted: () {
+                                final idx = i;
+                                setState(() => _pickedPhotos.removeAt(idx));
+                              },
+                              deleteButtonTooltipMessage: l10n.businessRemoveImage,
+                            ),
+                        ],
+                      ),
+                      TextButton.icon(
+                        icon: const Icon(Iconsax.camera, size: 18),
+                        label: Text(l10n.businessAddPhoto),
+                        onPressed: () async {
                           final file = await _pickImage();
-                          if (file != null) setState(() => _pickedPhoto = file);
+                          if (file != null) setState(() => _pickedPhotos.add(file));
                         },
-                        pickLabel: _existing?.photos != null ? l10n.businessChangeImage : l10n.businessPickImage,
                       ),
                       const SizedBox(height: 24),
                     ],
@@ -596,38 +730,8 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
   }
 }
 
-class _ImagePickerTile extends StatelessWidget {
-  const _ImagePickerTile({
-    required this.label,
-    required this.pickedFile,
-    required this.existingCid,
-    required this.onPick,
-    required this.pickLabel,
-  });
-
-  final String label;
-  final XFile? pickedFile;
-  final String? existingCid;
-  final VoidCallback onPick;
-  final String pickLabel;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(label, style: context.bodyLarge.copyWith(color: context.colorScheme.primary)),
-        const Spacer(),
-        if (pickedFile != null)
-          const Icon(Icons.check_circle, color: Colors.green, size: 20)
-        else if (existingCid != null)
-          const Icon(Icons.image, size: 20),
-        const SizedBox(width: 8),
-        TextButton.icon(
-          onPressed: onPick,
-          icon: const Icon(Iconsax.camera, size: 18),
-          label: Text(pickLabel),
-        ),
-      ],
-    );
-  }
+class _ExistingPhoto {
+  _ExistingPhoto({required this.name, required this.bytes});
+  final String name;
+  final Uint8List bytes;
 }

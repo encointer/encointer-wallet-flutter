@@ -150,6 +150,15 @@ class AppLocalizationsSw extends AppLocalizations {
   String get businessChangeImage => 'Badilisha Picha';
 
   @override
+  String get businessAddPhoto => 'Ongeza picha';
+
+  @override
+  String get businessRemoveImage => 'Ondoa';
+
+  @override
+  String get businessLoadingPhotos => 'Inapakia picha...';
+
+  @override
   String get addContact => 'Ongeza mawasiliano';
 
   @override

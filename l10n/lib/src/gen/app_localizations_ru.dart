@@ -150,6 +150,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get businessChangeImage => 'Изменить изображение';
 
   @override
+  String get businessAddPhoto => 'Добавить фото';
+
+  @override
+  String get businessRemoveImage => 'Удалить';
+
+  @override
+  String get businessLoadingPhotos => 'Загрузка фото...';
+
+  @override
   String get addContact => 'Добавить контакт';
 
   @override
