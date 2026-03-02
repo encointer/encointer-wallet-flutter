@@ -43,6 +43,7 @@ trap cleanup EXIT
 
 MAIN_EXIT=0
 QR_EXIT=0
+BAZAAR_EXIT=0
 
 # --- Main integration test ---
 start_recording "recording_main"
@@ -81,10 +82,26 @@ echo "Running QR payment story test"
 
 stop_recording
 
+# --- Bazaar business story test ---
+if [ -n "${IPFS_GATEWAY:-}" ] && [ -n "${IPFS_AUTH_GATEWAY:-}" ]; then
+  echo "Clearing app data before bazaar business story"
+  adb shell pm clear org.encointer.wallet || echo "Could not clear app data"
+
+  start_recording "recording_bazaar_story"
+
+  echo "Running bazaar business story test"
+  ./scripts/run_bazaar_business_story.sh || BAZAAR_EXIT=$?
+
+  stop_recording
+else
+  echo "Skipping bazaar story (IPFS_GATEWAY not set)"
+fi
+
 # --- Report results ---
 echo "Main test exit code: $MAIN_EXIT"
 echo "QR story exit code: $QR_EXIT"
+echo "Bazaar story exit code: $BAZAAR_EXIT"
 
-if [ "$MAIN_EXIT" -ne 0 ] || [ "$QR_EXIT" -ne 0 ]; then
+if [ "$MAIN_EXIT" -ne 0 ] || [ "$QR_EXIT" -ne 0 ] || [ "$BAZAAR_EXIT" -ne 0 ]; then
   exit 1
 fi

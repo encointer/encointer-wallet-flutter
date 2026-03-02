@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 
+import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/models/bazaar/category.dart';
@@ -17,6 +19,7 @@ import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_l10n/l10n.dart';
 import 'package:ew_log/ew_log.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:ew_polkadart/encointer_types.dart' as pd;
 import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_kusama_runtime/proxy_type.dart' show ProxyType;
 import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_proxy/pallet/event.dart' as proxy_event;
@@ -114,6 +117,9 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
   }
 
   Future<XFile?> _pickImage() async {
+    if (context.read<AppSettings>().isIntegrationTest) {
+      return _mockPickImage();
+    }
     final source = await showModalBottomSheet<ImageSource>(
       context: context,
       builder: (ctx) => SafeArea(
@@ -136,6 +142,17 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     );
     if (source == null) return null;
     return ImagePicker().pickImage(source: source);
+  }
+
+  Future<XFile> _mockPickImage() async {
+    final recorder = ui.PictureRecorder();
+    Canvas(recorder).drawRect(const Rect.fromLTWH(0, 0, 100, 100), Paint()..color = Colors.blue);
+    final picture = recorder.endRecording();
+    final image = await picture.toImage(100, 100);
+    final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final file = File('${Directory.systemTemp.path}/test_img_${DateTime.now().millisecondsSinceEpoch}.png');
+    await file.writeAsBytes(byteData!.buffer.asUint8List());
+    return XFile(file.path);
   }
 
   Future<void> _loadExistingPhotos() async {
@@ -464,6 +481,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
                     children: [
                       // Name
                       EncointerTextFormField(
+                        key: const Key(EWTestKeys.businessName),
                         labelText: l10n.businessNameLabel,
                         controller: _nameCtrl,
                         validator: (v) => (v == null || v.trim().isEmpty) ? l10n.businessNameRequired : null,
@@ -472,6 +490,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
 
                       // Category
                       DropdownButtonFormField<Category>(
+                        key: const Key(EWTestKeys.businessCategory),
                         initialValue: _selectedCategory,
                         decoration: InputDecoration(
                           labelText: l10n.businessCategoryLabel,
@@ -492,6 +511,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
 
                       // Description
                       TextFormField(
+                        key: const Key(EWTestKeys.businessDescription),
                         controller: _descriptionCtrl,
                         decoration: InputDecoration(
                           labelText: l10n.businessDescriptionLabel,
@@ -504,11 +524,19 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
                       const SizedBox(height: 12),
 
                       // Address
-                      EncointerTextFormField(labelText: l10n.businessAddressLabel, controller: _addressCtrl),
+                      EncointerTextFormField(
+                        key: const Key(EWTestKeys.businessAddress),
+                        labelText: l10n.businessAddressLabel,
+                        controller: _addressCtrl,
+                      ),
                       const SizedBox(height: 12),
 
                       // Zipcode
-                      EncointerTextFormField(labelText: l10n.businessZipcodeLabel, controller: _zipcodeCtrl),
+                      EncointerTextFormField(
+                        key: const Key(EWTestKeys.businessZipcode),
+                        labelText: l10n.businessZipcodeLabel,
+                        controller: _zipcodeCtrl,
+                      ),
                       const SizedBox(height: 12),
 
                       // Address Description
@@ -518,6 +546,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
 
                       // Telephone
                       EncointerTextFormField(
+                        key: const Key(EWTestKeys.businessTelephone),
                         labelText: l10n.businessTelephoneLabel,
                         controller: _telephoneCtrl,
                         keyboardType: TextInputType.phone,
@@ -526,6 +555,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
 
                       // Email
                       EncointerTextFormField(
+                        key: const Key(EWTestKeys.businessEmail),
                         labelText: l10n.businessEmailLabel,
                         controller: _emailCtrl,
                         keyboardType: TextInputType.emailAddress,
@@ -534,6 +564,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
 
                       // Opening Hours
                       TextFormField(
+                        key: const Key(EWTestKeys.businessOpeningHours),
                         controller: _openingHoursCtrl,
                         decoration: InputDecoration(
                           labelText: l10n.businessOpeningHoursLabel,
@@ -563,6 +594,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
                         children: [
                           Expanded(
                             child: EncointerTextFormField(
+                              key: const Key(EWTestKeys.businessLongitude),
                               labelText: l10n.businessLongitudeLabel,
                               controller: _longitudeCtrl,
                               keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
@@ -571,6 +603,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
                           const SizedBox(width: 12),
                           Expanded(
                             child: EncointerTextFormField(
+                              key: const Key(EWTestKeys.businessLatitude),
                               labelText: l10n.businessLatitudeLabel,
                               controller: _latitudeCtrl,
                               keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
@@ -627,6 +660,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
                         ])
                       else
                         TextButton.icon(
+                          key: const Key(EWTestKeys.businessPickLogo),
                           icon: const Icon(Iconsax.camera, size: 18),
                           label: Text(l10n.businessPickImage),
                           onPressed: () async {
@@ -682,6 +716,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
                         ],
                       ),
                       TextButton.icon(
+                        key: const Key(EWTestKeys.businessAddPhoto),
                         icon: const Icon(Iconsax.camera, size: 18),
                         label: Text(l10n.businessAddPhoto),
                         onPressed: () async {
@@ -700,6 +735,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
                   child: SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
+                      key: const Key(EWTestKeys.businessSave),
                       onPressed: _saving ? null : _onSave,
                       child: _saving
                           ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2))

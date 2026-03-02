@@ -6,6 +6,7 @@ import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_l10n/l10n.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,6 +31,7 @@ class BusinessCard extends StatelessWidget {
     final isDelegate = !isOwner && businessesStore.delegateOfControllers.contains(business.controller);
 
     return InkWell(
+      key: Key('${EWTestKeys.businessCard}-${business.name}'),
       borderRadius: BorderRadius.circular(16),
       onTap: () {
         Navigator.push(

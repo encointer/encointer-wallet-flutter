@@ -28,6 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       ws_endpoint: ${{ steps.export_tunnel.outputs.ws }}
+      ipfs_gateway: ${{ steps.export_ipfs_tunnels.outputs.ipfs_gateway }}
+      ipfs_auth_gateway: ${{ steps.export_ipfs_tunnels.outputs.ipfs_auth_gateway }}
 
     steps:
       - uses: actions/checkout@v6
@@ -40,6 +42,28 @@ jobs:
         run: |
           ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh \
             --docker-tag=${{ inputs.docker_tag }}
+
+      - name: Run IPFS node (kubo)
+        run: |
+          docker run -d --name kubo --network=host \
+            -e IPFS_PROFILE=server \
+            ipfs/kubo:latest
+          for i in $(seq 1 30); do
+            curl -s http://localhost:5001/api/v0/id && break
+            sleep 1
+          done
+
+      - name: Run IPFS auth gateway
+        run: |
+          docker run -d --name ipfs-gateway --network=host \
+            -e PORT=5050 \
+            -e JWT_SECRET=ci-test-secret \
+            -e IPFS_API_URL=http://localhost:5001 \
+            -e CHAIN_RPC_URL=ws://localhost:9944 \
+            -e MIN_BALANCE_CC=0.001 \
+            encointer/ipfs-gateway
+          sleep 3
+          curl -s http://localhost:5050/health || echo "Gateway health check (may not have /health)"
 
       - name: Start Cloudflare tunnel
         run: |
@@ -71,14 +95,30 @@ jobs:
         run: |
           HTTP_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log | head -n1)
           WS_URL="${HTTP_URL/https:/wss:}"
-          
+
           echo "🔌 Exporting WS endpoint: $WS_URL"
           echo "ws=$WS_URL" >> "$GITHUB_OUTPUT"
-          
+
+      - name: Start IPFS tunnels
+        run: |
+          ./cloudflared tunnel --url http://localhost:8080 > ipfs_tunnel.log 2>&1 &
+          ./cloudflared tunnel --url http://localhost:5050 > ipfs_auth_tunnel.log 2>&1 &
+          sleep 8
+
+      - id: export_ipfs_tunnels
+        name: Export IPFS endpoints
+        run: |
+          IPFS_GW=$(grep -o 'https://[^ ]*trycloudflare.com' ipfs_tunnel.log | head -n1)
+          IPFS_AUTH=$(grep -o 'https://[^ ]*trycloudflare.com' ipfs_auth_tunnel.log | head -n1)
+          echo "ipfs_gateway=$IPFS_GW" >> "$GITHUB_OUTPUT"
+          echo "ipfs_auth_gateway=$IPFS_AUTH" >> "$GITHUB_OUTPUT"
+
       - name: Trigger Device CI
         id: trigger_device
         env:
           WS_ENDPOINT: ${{ steps.export_tunnel.outputs.ws }}
+          IPFS_GATEWAY: ${{ steps.export_ipfs_tunnels.outputs.ipfs_gateway }}
+          IPFS_AUTH_GATEWAY: ${{ steps.export_ipfs_tunnels.outputs.ipfs_auth_gateway }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ./scripts/trigger_device_ci.sh \

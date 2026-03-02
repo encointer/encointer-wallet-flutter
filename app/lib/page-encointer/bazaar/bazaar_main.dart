@@ -8,6 +8,7 @@ import 'package:iconsax/iconsax.dart';
 
 import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/business_form/business_form_page.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/logic/businesses_store.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/businesses_view.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/widgets/dropdown_widget.dart';
@@ -160,6 +161,7 @@ class _BazaarPageState extends State<BazaarPage> {
                       tooltip: 'Upload to IPFS',
                     ),
                   IconButton(
+                    key: const Key(EWTestKeys.addBusiness),
                     onPressed: _onAddBusiness,
                     icon: const Icon(Iconsax.add_square),
                     color: context.colorScheme.secondary,

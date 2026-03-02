@@ -24,6 +24,14 @@ on:
         description: "For concurrency management"
         required: true
         type: string
+      ipfs_gateway:
+        description: "IPFS Gateway URL"
+        required: false
+        type: string
+      ipfs_auth_gateway:
+        description: "IPFS Auth Gateway URL"
+        required: false
+        type: string
 
 env:
   ARTIFACT_PATH: ./screenshots
@@ -47,6 +55,8 @@ jobs:
           echo "API_LEVEL=${{ github.event.inputs.api_level }}" >> $GITHUB_ENV
           echo "RECORD_VIDEO=${{ github.event.inputs.record_video }}" >> $GITHUB_ENV
           echo "WS_ENDPOINT=${{ github.event.inputs.ws_endpoint }}" >> $GITHUB_ENV
+          echo "IPFS_GATEWAY=${{ github.event.inputs.ipfs_gateway }}" >> $GITHUB_ENV
+          echo "IPFS_AUTH_GATEWAY=${{ github.event.inputs.ipfs_auth_gateway }}" >> $GITHUB_ENV
 
       - name: Debug WS endpoint
         shell: bash

@@ -7,6 +7,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/business_form/business_fo
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/propose_page.dart';
 import 'package:ew_log/ew_log.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +95,7 @@ class SingleBusinessDetail extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 8),
                           child: IconButton(
+                            key: const Key(EWTestKeys.businessEditButton),
                             onPressed: () {
                               Navigator.of(context).pushNamed(
                                 BusinessFormPage.route,
