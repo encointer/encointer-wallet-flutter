@@ -320,7 +320,9 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     }
 
     if (createPureReport.isExtrinsicFailed) {
-      throw Exception(l10n.businessCreateError);
+      final error = createPureReport.dispatchError;
+      Log.e('createPure dispatch error: ${error?.toJson()}', _logTarget);
+      throw Exception('${l10n.businessCreateError}: $error');
     }
 
     // Parse PureCreated event to get the pure proxy account ID
@@ -356,7 +358,9 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     }
 
     if (createBizReport.isExtrinsicFailed) {
-      throw Exception(l10n.businessCreateError);
+      final error = createBizReport.dispatchError;
+      Log.e('createBusiness dispatch error: ${error?.toJson()}', _logTarget);
+      throw Exception('${l10n.businessCreateError}: $error');
     }
 
     setState(() => _progressMessage = null);
