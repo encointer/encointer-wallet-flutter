@@ -73,13 +73,10 @@ void main() {
     await tester.enterText(find.byKey(const Key(EWTestKeys.businessName)), 'Alice Test Shop');
     await tester.pumpAndSettle();
 
-    // Select category (first item in dropdown)
+    // Select category — tap the dropdown, then pick "Art & Music" from the overlay
     await tester.tap(find.byKey(const Key(EWTestKeys.businessCategory)));
     await tester.pumpAndSettle();
-    // Tap the first dropdown item that appears in the overlay
-    final dropdownItems = find.byType(DropdownMenuItem<dynamic>);
-    await waitForWidget(tester, dropdownItems);
-    await tester.tap(dropdownItems.first);
+    await tester.tap(find.text('Art & Music').last);
     await tester.pumpAndSettle();
 
     // Fill description

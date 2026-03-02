@@ -24,6 +24,14 @@ on:
         description: "For concurrency management"
         required: true
         type: string
+      ipfs_gateway:
+        description: "IPFS Gateway URL"
+        required: false
+        type: string
+      ipfs_auth_gateway:
+        description: "IPFS Auth Gateway URL"
+        required: false
+        type: string
 
 env:
   ARTIFACT_PATH: ./screenshots
