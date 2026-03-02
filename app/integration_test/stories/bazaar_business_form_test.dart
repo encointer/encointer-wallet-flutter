@@ -69,6 +69,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Fill name
+    final formListView = find.byType(ListView);
     await waitForWidget(tester, find.byKey(const Key(EWTestKeys.businessName)));
     await tester.enterText(find.byKey(const Key(EWTestKeys.businessName)), 'Alice Test Shop');
     await tester.pumpAndSettle();
@@ -80,49 +81,47 @@ void main() {
     await tester.pumpAndSettle();
 
     // Fill description
+    await scrollUntilVisible(tester,
+        scrollable: formListView, item: find.byKey(const Key(EWTestKeys.businessDescription)));
     await tester.enterText(find.byKey(const Key(EWTestKeys.businessDescription)), 'A test business for E2E');
     await tester.pumpAndSettle();
 
     // Fill address
+    await scrollUntilVisible(tester, scrollable: formListView, item: find.byKey(const Key(EWTestKeys.businessAddress)));
     await tester.enterText(find.byKey(const Key(EWTestKeys.businessAddress)), '123 Test St');
     await tester.pumpAndSettle();
 
     // Fill zipcode
+    await scrollUntilVisible(tester, scrollable: formListView, item: find.byKey(const Key(EWTestKeys.businessZipcode)));
     await tester.enterText(find.byKey(const Key(EWTestKeys.businessZipcode)), '12345');
     await tester.pumpAndSettle();
 
     // Fill telephone
+    await scrollUntilVisible(tester,
+        scrollable: formListView, item: find.byKey(const Key(EWTestKeys.businessTelephone)));
     await tester.enterText(find.byKey(const Key(EWTestKeys.businessTelephone)), '+41123456789');
     await tester.pumpAndSettle();
 
     // Fill email
+    await scrollUntilVisible(tester, scrollable: formListView, item: find.byKey(const Key(EWTestKeys.businessEmail)));
     await tester.enterText(find.byKey(const Key(EWTestKeys.businessEmail)), 'alice@test.com');
     await tester.pumpAndSettle();
 
-    // Scroll down to opening hours
-    final formListView = find.byType(ListView);
-    await scrollUntilVisible(
-      tester,
-      scrollable: formListView,
-      item: find.byKey(const Key(EWTestKeys.businessOpeningHours)),
-    );
-
     // Fill opening hours
+    await scrollUntilVisible(tester,
+        scrollable: formListView, item: find.byKey(const Key(EWTestKeys.businessOpeningHours)));
     await tester.enterText(find.byKey(const Key(EWTestKeys.businessOpeningHours)), 'Mon-Fri 9-17');
     await tester.pumpAndSettle();
 
-    // Scroll to longitude/latitude
-    await scrollUntilVisible(
-      tester,
-      scrollable: formListView,
-      item: find.byKey(const Key(EWTestKeys.businessLongitude)),
-    );
-
     // Fill longitude
+    await scrollUntilVisible(tester,
+        scrollable: formListView, item: find.byKey(const Key(EWTestKeys.businessLongitude)));
     await tester.enterText(find.byKey(const Key(EWTestKeys.businessLongitude)), '8.5417');
     await tester.pumpAndSettle();
 
     // Fill latitude
+    await scrollUntilVisible(tester,
+        scrollable: formListView, item: find.byKey(const Key(EWTestKeys.businessLatitude)));
     await tester.enterText(find.byKey(const Key(EWTestKeys.businessLatitude)), '47.3769');
     await tester.pumpAndSettle();
 
