@@ -49,6 +49,7 @@
     "businessAddPhoto": "Add photo",
     "businessRemoveImage": "Remove",
     "businessLoadingPhotos": "Loading photos...",
+    "businessPhoto": "Photo",
     "addContact": "Add contact",
     "addInvoiceQrToAddress": "Add QR-invoice to Address",
     "address": "Address",

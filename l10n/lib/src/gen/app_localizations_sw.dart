@@ -159,6 +159,9 @@ class AppLocalizationsSw extends AppLocalizations {
   String get businessLoadingPhotos => 'Inapakia picha...';
 
   @override
+  String get businessPhoto => 'Picha';
+
+  @override
   String get addContact => 'Ongeza mawasiliano';
 
   @override

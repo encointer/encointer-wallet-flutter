@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -9,6 +10,7 @@ import 'package:ew_log/ew_log.dart';
 import 'package:http/http.dart' as http;
 
 const _logTarget = 'IpfsUpload';
+const _uploadTimeout = Duration(seconds: 30);
 
 class IpfsUploadResult {
   IpfsUploadResult({
@@ -86,7 +88,7 @@ class IpfsUploadService {
       ));
 
     try {
-      final streamed = await _client.send(request);
+      final streamed = await _client.send(request).timeout(_uploadTimeout);
       final response = await http.Response.fromStream(streamed);
 
       if (response.statusCode == HttpStatus.ok) {
@@ -112,6 +114,8 @@ class IpfsUploadService {
       }
 
       throw IpfsUploadException('Upload failed: ${response.body}', statusCode: response.statusCode);
+    } on TimeoutException {
+      throw IpfsUploadException('Upload timed out');
     } catch (e) {
       if (e is IpfsUploadException) rethrow;
       Log.e('[IpfsUpload] Error: $e', _logTarget);
@@ -142,7 +146,7 @@ class IpfsUploadService {
     }
 
     try {
-      final streamed = await _client.send(request);
+      final streamed = await _client.send(request).timeout(_uploadTimeout);
       final response = await http.Response.fromStream(streamed);
 
       if (response.statusCode == HttpStatus.ok) {
@@ -175,6 +179,8 @@ class IpfsUploadService {
       }
 
       throw IpfsUploadException('Upload failed: ${response.body}', statusCode: response.statusCode);
+    } on TimeoutException {
+      throw IpfsUploadException('Upload timed out');
     } catch (e) {
       if (e is IpfsUploadException) rethrow;
       Log.e('[IpfsUpload] Error: $e', _logTarget);

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -8,6 +9,7 @@ import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_log/ew_log.dart';
 
 const _logTarget = 'IpfsAuth';
+const _authTimeout = Duration(seconds: 15);
 
 class AuthChallenge {
   AuthChallenge({required this.nonce, required this.timestamp, required this.message});
@@ -106,21 +108,23 @@ class IpfsAuthService {
 
   Future<AuthChallenge> _requestChallenge(String address, String communityId) async {
     final url = '$gatewayUrl/auth/challenge';
-    final response = await _ewHttp.post<Map<String, dynamic>>(
-      url,
-      body: {'address': address, 'communityId': communityId},
-    );
+    try {
+      final response = await _ewHttp.post<Map<String, dynamic>>(url,
+          body: {'address': address, 'communityId': communityId}).timeout(_authTimeout);
 
-    return response.fold(
-      (error) {
-        Log.e('[IpfsAuth] Challenge request failed: $error', _logTarget);
-        throw IpfsUploadException(
-          'Challenge request failed: ${error.moreErrorData ?? error.failureType}',
-          statusCode: error.statusCode,
-        );
-      },
-      AuthChallenge.fromJson,
-    );
+      return response.fold(
+        (error) {
+          Log.e('[IpfsAuth] Challenge request failed: $error', _logTarget);
+          throw IpfsUploadException(
+            'Challenge request failed: ${error.moreErrorData ?? error.failureType}',
+            statusCode: error.statusCode,
+          );
+        },
+        AuthChallenge.fromJson,
+      );
+    } on TimeoutException {
+      throw IpfsUploadException('Authentication timed out');
+    }
   }
 
   Future<AuthToken> _verifySignature({
@@ -131,29 +135,30 @@ class IpfsAuthService {
     required int timestamp,
   }) async {
     final url = '$gatewayUrl/auth/verify';
-    final response = await _ewHttp.post<Map<String, dynamic>>(
-      url,
-      body: {
+    try {
+      final response = await _ewHttp.post<Map<String, dynamic>>(url, body: {
         'address': address,
         'communityId': communityId,
         'signature': signature,
         'nonce': nonce,
         'timestamp': timestamp,
-      },
-    );
+      }).timeout(_authTimeout);
 
-    return response.fold(
-      (error) {
-        Log.e('[IpfsAuth] Verify failed: $error', _logTarget);
-        throw IpfsUploadException(
-          'Authentication failed: ${error.moreErrorData ?? error.failureType}',
-          statusCode: error.statusCode,
-        );
-      },
-      (json) {
-        Log.d('[IpfsAuth] Authentication successful', _logTarget);
-        return AuthToken.fromJson(json);
-      },
-    );
+      return response.fold(
+        (error) {
+          Log.e('[IpfsAuth] Verify failed: $error', _logTarget);
+          throw IpfsUploadException(
+            'Authentication failed: ${error.moreErrorData ?? error.failureType}',
+            statusCode: error.statusCode,
+          );
+        },
+        (json) {
+          Log.d('[IpfsAuth] Authentication successful', _logTarget);
+          return AuthToken.fromJson(json);
+        },
+      );
+    } on TimeoutException {
+      throw IpfsUploadException('Authentication timed out');
+    }
   }
 }

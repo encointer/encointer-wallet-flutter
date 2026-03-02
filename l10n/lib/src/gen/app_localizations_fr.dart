@@ -160,6 +160,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get businessLoadingPhotos => 'Chargement des photos...';
 
   @override
+  String get businessPhoto => 'Photo';
+
+  @override
   String get addContact => 'ajouter un contact';
 
   @override

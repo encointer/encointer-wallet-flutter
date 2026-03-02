@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
@@ -585,9 +586,12 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
                       const SizedBox(height: 4),
                       if (_pickedLogo != null)
                         Row(children: [
-                          const Icon(Icons.check_circle, color: Colors.green, size: 20),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            child: Image.file(File(_pickedLogo!.path), width: 48, height: 48, fit: BoxFit.cover),
+                          ),
                           const SizedBox(width: 8),
-                          Expanded(child: Text(_pickedLogo!.name, overflow: TextOverflow.ellipsis)),
+                          Expanded(child: Text(l10n.businessLogoLabel, overflow: TextOverflow.ellipsis)),
                           IconButton(
                             icon: const Icon(Icons.close, size: 18),
                             tooltip: l10n.businessRemoveImage,
@@ -664,8 +668,11 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
                               ),
                           for (var i = 0; i < _pickedPhotos.length; i++)
                             Chip(
-                              avatar: const Icon(Icons.check_circle, color: Colors.green, size: 18),
-                              label: Text(_pickedPhotos[i].name, overflow: TextOverflow.ellipsis),
+                              avatar: CircleAvatar(
+                                backgroundImage: FileImage(File(_pickedPhotos[i].path)),
+                                radius: 12,
+                              ),
+                              label: Text('${l10n.businessPhoto} ${i + 1}', overflow: TextOverflow.ellipsis),
                               onDeleted: () {
                                 final idx = i;
                                 setState(() => _pickedPhotos.removeAt(idx));

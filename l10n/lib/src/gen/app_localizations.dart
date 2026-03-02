@@ -398,6 +398,12 @@ abstract class AppLocalizations {
   /// **'Loading photos...'**
   String get businessLoadingPhotos;
 
+  /// No description provided for @businessPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo'**
+  String get businessPhoto;
+
   /// No description provided for @addContact.
   ///
   /// In en, this message translates to:

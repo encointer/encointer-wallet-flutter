@@ -159,6 +159,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get businessLoadingPhotos => 'Loading photos...';
 
   @override
+  String get businessPhoto => 'Photo';
+
+  @override
   String get addContact => 'Add contact';
 
   @override

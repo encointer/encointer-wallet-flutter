@@ -159,6 +159,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get businessLoadingPhotos => 'Загрузка фото...';
 
   @override
+  String get businessPhoto => 'Фото';
+
+  @override
   String get addContact => 'Добавить контакт';
 
   @override
