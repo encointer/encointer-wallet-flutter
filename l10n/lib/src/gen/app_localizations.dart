@@ -482,6 +482,54 @@ abstract class AppLocalizations {
   /// **'Balance too low'**
   String get balanceTooLowTitle;
 
+  /// No description provided for @bazaarExistingBusinessBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A business is already registered for this community with this account.'**
+  String get bazaarExistingBusinessBody;
+
+  /// No description provided for @bazaarExistingBusinessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Business already exists'**
+  String get bazaarExistingBusinessTitle;
+
+  /// No description provided for @bazaarNonexistentBusinessBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The business you are trying to update does not exist.'**
+  String get bazaarNonexistentBusinessBody;
+
+  /// No description provided for @bazaarNonexistentBusinessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Business not found'**
+  String get bazaarNonexistentBusinessTitle;
+
+  /// No description provided for @bazaarNonexistentCommunityBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The community you are trying to register a business for does not exist.'**
+  String get bazaarNonexistentCommunityBody;
+
+  /// No description provided for @bazaarNonexistentCommunityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Community not found'**
+  String get bazaarNonexistentCommunityTitle;
+
+  /// No description provided for @bazaarNonexistentOfferingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The offering you are trying to access does not exist.'**
+  String get bazaarNonexistentOfferingBody;
+
+  /// No description provided for @bazaarNonexistentOfferingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Offering not found'**
+  String get bazaarNonexistentOfferingTitle;
+
   /// No description provided for @balanceTransferNotificationBody.
   ///
   /// In en, this message translates to:
@@ -1675,6 +1723,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Print'**
   String get print;
+
+  /// No description provided for @proxyDuplicateBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This account is already registered as a proxy.'**
+  String get proxyDuplicateBody;
+
+  /// No description provided for @proxyDuplicateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate proxy'**
+  String get proxyDuplicateTitle;
+
+  /// No description provided for @proxyNoPermissionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This call may not be made by a proxy because it could escalate privileges.'**
+  String get proxyNoPermissionBody;
+
+  /// No description provided for @proxyNoPermissionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No permission'**
+  String get proxyNoPermissionTitle;
+
+  /// No description provided for @proxyNoSelfProxyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You cannot add yourself as a proxy.'**
+  String get proxyNoSelfProxyBody;
+
+  /// No description provided for @proxyNoSelfProxyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot proxy self'**
+  String get proxyNoSelfProxyTitle;
+
+  /// No description provided for @proxyNotFoundBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The proxy registration was not found.'**
+  String get proxyNotFoundBody;
+
+  /// No description provided for @proxyNotFoundTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Proxy not found'**
+  String get proxyNotFoundTitle;
+
+  /// No description provided for @proxyNotProxyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The sender is not a proxy of the account to be proxied.'**
+  String get proxyNotProxyBody;
+
+  /// No description provided for @proxyNotProxyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Not a proxy'**
+  String get proxyNotProxyTitle;
+
+  /// No description provided for @proxyTooManyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'There are too many proxies registered or too many announcements pending.'**
+  String get proxyTooManyBody;
+
+  /// No description provided for @proxyTooManyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many proxies'**
+  String get proxyTooManyTitle;
+
+  /// No description provided for @proxyUnannouncedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The announcement, if made at all, was made too recently.'**
+  String get proxyUnannouncedBody;
+
+  /// No description provided for @proxyUnannouncedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unannounced'**
+  String get proxyUnannouncedTitle;
+
+  /// No description provided for @proxyUnproxyableBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This call is incompatible with the proxy type and cannot be executed.'**
+  String get proxyUnproxyableBody;
+
+  /// No description provided for @proxyUnproxyableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unproxyable call'**
+  String get proxyUnproxyableTitle;
 
   /// No description provided for @proposal.
   ///

@@ -204,6 +204,33 @@ class AppLocalizationsSw extends AppLocalizations {
   String get balanceTooLowTitle => 'Kiasi kipo chini sana';
 
   @override
+  String get bazaarExistingBusinessBody =>
+      'Biashara tayari imesajiliwa kwa jumuiya hii na akaunti hii.';
+
+  @override
+  String get bazaarExistingBusinessTitle => 'Biashara tayari ipo';
+
+  @override
+  String get bazaarNonexistentBusinessBody =>
+      'Biashara unayojaribu kubadilisha haipo.';
+
+  @override
+  String get bazaarNonexistentBusinessTitle => 'Biashara haipatikani';
+
+  @override
+  String get bazaarNonexistentCommunityBody =>
+      'Jumuiya unayojaribu kusajili biashara haipo.';
+
+  @override
+  String get bazaarNonexistentCommunityTitle => 'Jumuiya haipatikani';
+
+  @override
+  String get bazaarNonexistentOfferingBody => 'Ofa unayojaribu kufikia haipo.';
+
+  @override
+  String get bazaarNonexistentOfferingTitle => 'Ofa haipatikani';
+
+  @override
   String get balanceTransferNotificationBody => 'Mpokeaji amepokea tokeni';
 
   @override
@@ -874,6 +901,61 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get print => 'Chapisha';
+
+  @override
+  String get proxyDuplicateBody =>
+      'Akaunti hii tayari imesajiliwa kama wakala.';
+
+  @override
+  String get proxyDuplicateTitle => 'Wakala mara mbili';
+
+  @override
+  String get proxyNoPermissionBody =>
+      'Simu hii haiwezi kufanywa na wakala kwa sababu inaweza kupandisha mamlaka.';
+
+  @override
+  String get proxyNoPermissionTitle => 'Hakuna ruhusa';
+
+  @override
+  String get proxyNoSelfProxyBody =>
+      'Huwezi kujiongeza kama wakala wako mwenyewe.';
+
+  @override
+  String get proxyNoSelfProxyTitle => 'Huwezi kuwa wakala wako';
+
+  @override
+  String get proxyNotFoundBody => 'Usajili wa wakala haukupatikana.';
+
+  @override
+  String get proxyNotFoundTitle => 'Wakala hapatikani';
+
+  @override
+  String get proxyNotProxyBody =>
+      'Mtumaji si wakala wa akaunti inayowakilishwa.';
+
+  @override
+  String get proxyNotProxyTitle => 'Si wakala';
+
+  @override
+  String get proxyTooManyBody =>
+      'Kuna wakala wengi sana waliosajiliwa au matangazo mengi yanasubiri.';
+
+  @override
+  String get proxyTooManyTitle => 'Wakala wengi sana';
+
+  @override
+  String get proxyUnannouncedBody =>
+      'Tangazo, kama lilifanywa, lilifanywa hivi karibuni sana.';
+
+  @override
+  String get proxyUnannouncedTitle => 'Haijatangazwa';
+
+  @override
+  String get proxyUnproxyableBody =>
+      'Simu hii haiendani na aina ya wakala na haiwezi kutekelezwa.';
+
+  @override
+  String get proxyUnproxyableTitle => 'Haiwezi kuwakilishwa';
 
   @override
   String get proposal => 'Pendekezo';

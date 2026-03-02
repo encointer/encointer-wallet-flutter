@@ -6,12 +6,15 @@ import 'package:ew_polkadart/runtime_error.dart';
 import 'package:ew_log/ew_log.dart';
 
 // named imports to disambiguate error types
+import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_bazaar/pallet/error.dart'
+    as bazaar_error;
 import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_ceremonies/pallet/error.dart'
     as ceremonies_error;
 import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_balances/pallet/error.dart'
     as balances_error;
 import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_reputation_commitments/pallet/error.dart'
     as reputation_commitments_error;
+import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_proxy/pallet/error.dart' as proxy_error;
 
 /// Message content of the notifications shown when a tx error occurs.
 class ErrorNotificationMsg {
@@ -68,14 +71,16 @@ ErrorNotificationMsg getLocalizedModuleErrorMsg(AppLocalizations l10n, RuntimeEr
     case Utility:
     case Treasury:
     case Proxy:
+      return (error as Proxy).value0.errorMsg(l10n);
+    case EncointerBazaar:
+      return (error as EncointerBazaar).value0.errorMsg(l10n);
+    case EncointerReputationCommitments:
+      return (error as EncointerReputationCommitments).value0.errorMsg(l10n);
     case Scheduler:
     // case Collective:
     // case Membership:
     case EncointerScheduler:
     case EncointerCommunities:
-    case EncointerBazaar:
-    case EncointerReputationCommitments:
-      return (error as EncointerReputationCommitments).value0.errorMsg(l10n);
     case EncointerFaucet:
       Log.d('unhandled dispatch error: $error');
       return ErrorNotificationMsg(title: l10n.transactionError, body: '${error.toJson()}');
@@ -129,6 +134,68 @@ extension LocalizedReputationCommitmentsError on reputation_commitments_error.Er
           body: l10n.reputationAlreadyCommittedContent,
         ),
       _ => ErrorNotificationMsg(title: l10n.transactionError, body: toJson())
+    };
+  }
+}
+
+extension LocalizedBazaarError on bazaar_error.Error {
+  ErrorNotificationMsg errorMsg(AppLocalizations l10n) {
+    return switch (this) {
+      bazaar_error.Error.nonexistentCommunity => ErrorNotificationMsg(
+          title: l10n.bazaarNonexistentCommunityTitle,
+          body: l10n.bazaarNonexistentCommunityBody,
+        ),
+      bazaar_error.Error.existingBusiness => ErrorNotificationMsg(
+          title: l10n.bazaarExistingBusinessTitle,
+          body: l10n.bazaarExistingBusinessBody,
+        ),
+      bazaar_error.Error.nonexistentBusiness => ErrorNotificationMsg(
+          title: l10n.bazaarNonexistentBusinessTitle,
+          body: l10n.bazaarNonexistentBusinessBody,
+        ),
+      bazaar_error.Error.nonexistentOffering => ErrorNotificationMsg(
+          title: l10n.bazaarNonexistentOfferingTitle,
+          body: l10n.bazaarNonexistentOfferingBody,
+        ),
+    };
+  }
+}
+
+extension LocalizedProxyError on proxy_error.Error {
+  ErrorNotificationMsg errorMsg(AppLocalizations l10n) {
+    return switch (this) {
+      proxy_error.Error.tooMany => ErrorNotificationMsg(
+          title: l10n.proxyTooManyTitle,
+          body: l10n.proxyTooManyBody,
+        ),
+      proxy_error.Error.notFound => ErrorNotificationMsg(
+          title: l10n.proxyNotFoundTitle,
+          body: l10n.proxyNotFoundBody,
+        ),
+      proxy_error.Error.notProxy => ErrorNotificationMsg(
+          title: l10n.proxyNotProxyTitle,
+          body: l10n.proxyNotProxyBody,
+        ),
+      proxy_error.Error.unproxyable => ErrorNotificationMsg(
+          title: l10n.proxyUnproxyableTitle,
+          body: l10n.proxyUnproxyableBody,
+        ),
+      proxy_error.Error.duplicate => ErrorNotificationMsg(
+          title: l10n.proxyDuplicateTitle,
+          body: l10n.proxyDuplicateBody,
+        ),
+      proxy_error.Error.noPermission => ErrorNotificationMsg(
+          title: l10n.proxyNoPermissionTitle,
+          body: l10n.proxyNoPermissionBody,
+        ),
+      proxy_error.Error.unannounced => ErrorNotificationMsg(
+          title: l10n.proxyUnannouncedTitle,
+          body: l10n.proxyUnannouncedBody,
+        ),
+      proxy_error.Error.noSelfProxy => ErrorNotificationMsg(
+          title: l10n.proxyNoSelfProxyTitle,
+          body: l10n.proxyNoSelfProxyBody,
+        ),
     };
   }
 }

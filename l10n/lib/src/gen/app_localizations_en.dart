@@ -204,6 +204,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get balanceTooLowTitle => 'Balance too low';
 
   @override
+  String get bazaarExistingBusinessBody =>
+      'A business is already registered for this community with this account.';
+
+  @override
+  String get bazaarExistingBusinessTitle => 'Business already exists';
+
+  @override
+  String get bazaarNonexistentBusinessBody =>
+      'The business you are trying to update does not exist.';
+
+  @override
+  String get bazaarNonexistentBusinessTitle => 'Business not found';
+
+  @override
+  String get bazaarNonexistentCommunityBody =>
+      'The community you are trying to register a business for does not exist.';
+
+  @override
+  String get bazaarNonexistentCommunityTitle => 'Community not found';
+
+  @override
+  String get bazaarNonexistentOfferingBody =>
+      'The offering you are trying to access does not exist.';
+
+  @override
+  String get bazaarNonexistentOfferingTitle => 'Offering not found';
+
+  @override
   String get balanceTransferNotificationBody =>
       'The recipient has received the tokens.';
 
@@ -869,6 +897,60 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get print => 'Print';
+
+  @override
+  String get proxyDuplicateBody =>
+      'This account is already registered as a proxy.';
+
+  @override
+  String get proxyDuplicateTitle => 'Duplicate proxy';
+
+  @override
+  String get proxyNoPermissionBody =>
+      'This call may not be made by a proxy because it could escalate privileges.';
+
+  @override
+  String get proxyNoPermissionTitle => 'No permission';
+
+  @override
+  String get proxyNoSelfProxyBody => 'You cannot add yourself as a proxy.';
+
+  @override
+  String get proxyNoSelfProxyTitle => 'Cannot proxy self';
+
+  @override
+  String get proxyNotFoundBody => 'The proxy registration was not found.';
+
+  @override
+  String get proxyNotFoundTitle => 'Proxy not found';
+
+  @override
+  String get proxyNotProxyBody =>
+      'The sender is not a proxy of the account to be proxied.';
+
+  @override
+  String get proxyNotProxyTitle => 'Not a proxy';
+
+  @override
+  String get proxyTooManyBody =>
+      'There are too many proxies registered or too many announcements pending.';
+
+  @override
+  String get proxyTooManyTitle => 'Too many proxies';
+
+  @override
+  String get proxyUnannouncedBody =>
+      'The announcement, if made at all, was made too recently.';
+
+  @override
+  String get proxyUnannouncedTitle => 'Unannounced';
+
+  @override
+  String get proxyUnproxyableBody =>
+      'This call is incompatible with the proxy type and cannot be executed.';
+
+  @override
+  String get proxyUnproxyableTitle => 'Unproxyable call';
 
   @override
   String get proposal => 'Proposal';

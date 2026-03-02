@@ -5,6 +5,7 @@ import 'package:encointer_wallet/models/bazaar/category.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/modules/login/logic/login_store.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
 import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_tx_wrappers.dart';
 import 'package:encointer_wallet/service/tx/lib/src/tx_builder.dart';
@@ -322,7 +323,8 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     if (createPureReport.isExtrinsicFailed) {
       final error = createPureReport.dispatchError;
       Log.e('createPure dispatch error: ${error?.toJson()}', _logTarget);
-      throw Exception('${l10n.businessCreateError}: $error');
+      final msg = error != null ? getLocalizedTxErrorMessage(l10n, error) : null;
+      throw Exception('${msg?.title ?? l10n.businessCreateError}: ${msg?.body ?? error}');
     }
 
     // Parse PureCreated event to get the pure proxy account ID
@@ -360,7 +362,8 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     if (createBizReport.isExtrinsicFailed) {
       final error = createBizReport.dispatchError;
       Log.e('createBusiness dispatch error: ${error?.toJson()}', _logTarget);
-      throw Exception('${l10n.businessCreateError}: $error');
+      final msg = error != null ? getLocalizedTxErrorMessage(l10n, error) : null;
+      throw Exception('${msg?.title ?? l10n.businessCreateError}: ${msg?.body ?? error}');
     }
 
     setState(() => _progressMessage = null);

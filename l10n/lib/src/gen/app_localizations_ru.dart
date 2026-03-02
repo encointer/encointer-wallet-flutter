@@ -204,6 +204,34 @@ class AppLocalizationsRu extends AppLocalizations {
   String get balanceTooLowTitle => 'Недостаточно средств на счете';
 
   @override
+  String get bazaarExistingBusinessBody =>
+      'Бизнес уже зарегистрирован для этого сообщества с этой учётной записью.';
+
+  @override
+  String get bazaarExistingBusinessTitle => 'Бизнес уже существует';
+
+  @override
+  String get bazaarNonexistentBusinessBody =>
+      'Бизнес, который вы пытаетесь обновить, не существует.';
+
+  @override
+  String get bazaarNonexistentBusinessTitle => 'Бизнес не найден';
+
+  @override
+  String get bazaarNonexistentCommunityBody =>
+      'Сообщество, для которого вы пытаетесь зарегистрировать бизнес, не существует.';
+
+  @override
+  String get bazaarNonexistentCommunityTitle => 'Сообщество не найдено';
+
+  @override
+  String get bazaarNonexistentOfferingBody =>
+      'Предложение, к которому вы пытаетесь получить доступ, не существует.';
+
+  @override
+  String get bazaarNonexistentOfferingTitle => 'Предложение не найдено';
+
+  @override
   String get balanceTransferNotificationBody =>
       'Токены успешно переведены на счет получателя!';
 
@@ -869,6 +897,61 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get print => 'Распечатать';
+
+  @override
+  String get proxyDuplicateBody =>
+      'Эта учётная запись уже зарегистрирована как прокси.';
+
+  @override
+  String get proxyDuplicateTitle => 'Прокси уже существует';
+
+  @override
+  String get proxyNoPermissionBody =>
+      'Этот вызов не может быть выполнен прокси, так как он может повысить привилегии.';
+
+  @override
+  String get proxyNoPermissionTitle => 'Нет разрешения';
+
+  @override
+  String get proxyNoSelfProxyBody =>
+      'Вы не можете добавить себя в качестве прокси.';
+
+  @override
+  String get proxyNoSelfProxyTitle => 'Нельзя быть своим прокси';
+
+  @override
+  String get proxyNotFoundBody => 'Регистрация прокси не найдена.';
+
+  @override
+  String get proxyNotFoundTitle => 'Прокси не найден';
+
+  @override
+  String get proxyNotProxyBody =>
+      'Отправитель не является прокси представляемой учётной записи.';
+
+  @override
+  String get proxyNotProxyTitle => 'Не является прокси';
+
+  @override
+  String get proxyTooManyBody =>
+      'Зарегистрировано слишком много прокси или слишком много ожидающих объявлений.';
+
+  @override
+  String get proxyTooManyTitle => 'Слишком много прокси';
+
+  @override
+  String get proxyUnannouncedBody =>
+      'Объявление, если оно было сделано, было сделано слишком недавно.';
+
+  @override
+  String get proxyUnannouncedTitle => 'Не объявлено';
+
+  @override
+  String get proxyUnproxyableBody =>
+      'Этот вызов несовместим с типом прокси и не может быть выполнен.';
+
+  @override
+  String get proxyUnproxyableTitle => 'Невозможно через прокси';
 
   @override
   String get proposal => 'Предложение';
