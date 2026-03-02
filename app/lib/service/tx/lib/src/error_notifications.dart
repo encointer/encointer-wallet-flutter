@@ -61,24 +61,18 @@ ErrorNotificationMsg getLocalizedModuleErrorMsg(AppLocalizations l10n, RuntimeEr
       return (error as EncointerCeremonies).value0.errorMsg(l10n);
     case EncointerBalances:
       return (error as EncointerBalances).value0.errorMsg(l10n);
-    // List the pallets we have available for an overview
-    case System:
-    // case ParachainSystem:
-    case Balances:
-    // case XcmpQueue:
-    // case PolkadotXcm:
-    // case DmpQueue:
-    case Utility:
-    case Treasury:
     case Proxy:
       return (error as Proxy).value0.errorMsg(l10n);
     case EncointerBazaar:
       return (error as EncointerBazaar).value0.errorMsg(l10n);
     case EncointerReputationCommitments:
       return (error as EncointerReputationCommitments).value0.errorMsg(l10n);
+    // Unhandled pallets — log and show raw JSON
+    case System:
+    case Balances:
+    case Utility:
+    case Treasury:
     case Scheduler:
-    // case Collective:
-    // case Membership:
     case EncointerScheduler:
     case EncointerCommunities:
     case EncointerFaucet:
