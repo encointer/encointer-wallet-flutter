@@ -62,6 +62,95 @@ class AppLocalizationsFr extends AppLocalizations {
   String get businessOwner => 'Propriétaire';
 
   @override
+  String get businessFormTitleCreate => 'Nouvelle entreprise';
+
+  @override
+  String get businessFormTitleEdit => 'Modifier l\'entreprise';
+
+  @override
+  String get businessNameLabel => 'Nom';
+
+  @override
+  String get businessCategoryLabel => 'Catégorie';
+
+  @override
+  String get businessDescriptionLabel => 'Description';
+
+  @override
+  String get businessAddressLabel => 'Adresse';
+
+  @override
+  String get businessZipcodeLabel => 'Code postal';
+
+  @override
+  String get businessAddressDescriptionLabel => 'Description de l\'adresse';
+
+  @override
+  String get businessTelephoneLabel => 'Téléphone';
+
+  @override
+  String get businessEmailLabel => 'E-mail';
+
+  @override
+  String get businessOpeningHoursLabel => 'Horaires d\'ouverture';
+
+  @override
+  String get businessMoreInfoLabel => 'Plus d\'informations';
+
+  @override
+  String get businessLongitudeLabel => 'Longitude';
+
+  @override
+  String get businessLatitudeLabel => 'Latitude';
+
+  @override
+  String get businessLogoLabel => 'Logo';
+
+  @override
+  String get businessPhotosLabel => 'Photos';
+
+  @override
+  String get businessSaveButton => 'Enregistrer';
+
+  @override
+  String get businessNameRequired => 'Le nom est requis';
+
+  @override
+  String get businessCategoryRequired => 'La catégorie est requise';
+
+  @override
+  String get createBusinessNotificationTitle => 'Entreprise créée';
+
+  @override
+  String get createBusinessNotificationBody =>
+      'Votre entreprise a été enregistrée on-chain.';
+
+  @override
+  String get updateBusinessNotificationTitle => 'Entreprise mise à jour';
+
+  @override
+  String get updateBusinessNotificationBody =>
+      'Votre entreprise a été mise à jour on-chain.';
+
+  @override
+  String get businessCreatingAccount => 'Création du compte entreprise...';
+
+  @override
+  String get businessRegistering => 'Enregistrement de l\'entreprise...';
+
+  @override
+  String get businessUploadingData => 'Téléchargement des données...';
+
+  @override
+  String get businessCreateError => 'Échec de la création de l\'entreprise';
+
+  @override
+  String get businessPickImage => 'Sélectionner une image';
+
+  @override
+  String get businessChangeImage => 'Changer l\'image';
+
+  @override
   String get addContact => 'ajouter un contact';
 
   @override

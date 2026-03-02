@@ -30,6 +30,7 @@ import 'package:ew_substrate_fixed/substrate_fixed.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart' show ProposalAction, Vote;
 import 'package:ew_polkadart/encointer_types.dart' as pd;
+import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_kusama_runtime/proxy_type.dart' show ProxyType;
 
 /// Helpers to submit transactions.
 
@@ -385,6 +386,76 @@ Future<void> submitEncointerTransfer(
       store.encointer.getEncointerBalance();
       return report;
     },
+    onError: onError,
+  );
+}
+
+Future<void> submitUpdateBusiness(
+  BuildContext context,
+  AppStore store,
+  Api api,
+  KeyringAccount signer,
+  CommunityIdentifier chosenCid,
+  String ipfsCid, {
+  required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
+}) async {
+  final call = api.encointer.encointerKusama.tx.encointerBazaar.updateBusiness(
+    cid: chosenCid.toPolkadart(),
+    url: ipfsCid.codeUnits,
+  );
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
+  );
+
+  return submitTx(
+    context,
+    store,
+    api,
+    OpaqueExtrinsic(xt),
+    TxNotification.updateBusiness(context.l10n),
+    onFinish: onFinish,
+    onError: onError,
+  );
+}
+
+Future<void> submitUpdateBusinessViaProxy(
+  BuildContext context,
+  AppStore store,
+  Api api,
+  KeyringAccount signer,
+  CommunityIdentifier chosenCid,
+  String ipfsCid,
+  List<int> controllerPubKey, {
+  required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
+}) async {
+  final innerCall = api.encointer.encointerKusama.tx.encointerBazaar.updateBusiness(
+    cid: chosenCid.toPolkadart(),
+    url: ipfsCid.codeUnits,
+  );
+  final call = api.encointer.encointerKusama.tx.proxy.proxy(
+    real: pd.MultiAddress.values.id(controllerPubKey),
+    forceProxyType: ProxyType.bazaarEdit,
+    call: innerCall,
+  );
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
+  );
+
+  return submitTx(
+    context,
+    store,
+    api,
+    OpaqueExtrinsic(xt),
+    TxNotification.updateBusiness(context.l10n),
+    onFinish: onFinish,
     onError: onError,
   );
 }

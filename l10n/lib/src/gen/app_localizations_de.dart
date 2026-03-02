@@ -63,6 +63,95 @@ class AppLocalizationsDe extends AppLocalizations {
   String get businessOwner => 'Inhaber';
 
   @override
+  String get businessFormTitleCreate => 'Neues Geschäft';
+
+  @override
+  String get businessFormTitleEdit => 'Geschäft bearbeiten';
+
+  @override
+  String get businessNameLabel => 'Name';
+
+  @override
+  String get businessCategoryLabel => 'Kategorie';
+
+  @override
+  String get businessDescriptionLabel => 'Beschreibung';
+
+  @override
+  String get businessAddressLabel => 'Straße';
+
+  @override
+  String get businessZipcodeLabel => 'Postleitzahl';
+
+  @override
+  String get businessAddressDescriptionLabel => 'Adressbeschreibung';
+
+  @override
+  String get businessTelephoneLabel => 'Telefon';
+
+  @override
+  String get businessEmailLabel => 'E-Mail';
+
+  @override
+  String get businessOpeningHoursLabel => 'Öffnungszeiten';
+
+  @override
+  String get businessMoreInfoLabel => 'Weitere Informationen';
+
+  @override
+  String get businessLongitudeLabel => 'Längengrad';
+
+  @override
+  String get businessLatitudeLabel => 'Breitengrad';
+
+  @override
+  String get businessLogoLabel => 'Logo';
+
+  @override
+  String get businessPhotosLabel => 'Fotos';
+
+  @override
+  String get businessSaveButton => 'Speichern';
+
+  @override
+  String get businessNameRequired => 'Name ist erforderlich';
+
+  @override
+  String get businessCategoryRequired => 'Kategorie ist erforderlich';
+
+  @override
+  String get createBusinessNotificationTitle => 'Geschäft erstellt';
+
+  @override
+  String get createBusinessNotificationBody =>
+      'Ihr Geschäft wurde on-chain registriert.';
+
+  @override
+  String get updateBusinessNotificationTitle => 'Geschäft aktualisiert';
+
+  @override
+  String get updateBusinessNotificationBody =>
+      'Ihr Geschäft wurde on-chain aktualisiert.';
+
+  @override
+  String get businessCreatingAccount => 'Geschäftskonto wird erstellt...';
+
+  @override
+  String get businessRegistering => 'Geschäft wird registriert...';
+
+  @override
+  String get businessUploadingData => 'Geschäftsdaten werden hochgeladen...';
+
+  @override
+  String get businessCreateError => 'Geschäft konnte nicht erstellt werden';
+
+  @override
+  String get businessPickImage => 'Bild auswählen';
+
+  @override
+  String get businessChangeImage => 'Bild ändern';
+
+  @override
   String get addContact => 'Kontakt hinzufügen';
 
   @override

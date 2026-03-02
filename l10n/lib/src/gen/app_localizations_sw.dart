@@ -61,6 +61,95 @@ class AppLocalizationsSw extends AppLocalizations {
   String get businessOwner => 'Mmiliki';
 
   @override
+  String get businessFormTitleCreate => 'Biashara Mpya';
+
+  @override
+  String get businessFormTitleEdit => 'Hariri Biashara';
+
+  @override
+  String get businessNameLabel => 'Jina';
+
+  @override
+  String get businessCategoryLabel => 'Aina';
+
+  @override
+  String get businessDescriptionLabel => 'Maelezo';
+
+  @override
+  String get businessAddressLabel => 'Anwani';
+
+  @override
+  String get businessZipcodeLabel => 'Msimbo wa Posta';
+
+  @override
+  String get businessAddressDescriptionLabel => 'Maelezo ya Anwani';
+
+  @override
+  String get businessTelephoneLabel => 'Simu';
+
+  @override
+  String get businessEmailLabel => 'Barua pepe';
+
+  @override
+  String get businessOpeningHoursLabel => 'Saa za Kufungua';
+
+  @override
+  String get businessMoreInfoLabel => 'Maelezo Zaidi';
+
+  @override
+  String get businessLongitudeLabel => 'Longitudo';
+
+  @override
+  String get businessLatitudeLabel => 'Latitudo';
+
+  @override
+  String get businessLogoLabel => 'Nembo';
+
+  @override
+  String get businessPhotosLabel => 'Picha';
+
+  @override
+  String get businessSaveButton => 'Hifadhi';
+
+  @override
+  String get businessNameRequired => 'Jina linahitajika';
+
+  @override
+  String get businessCategoryRequired => 'Aina inahitajika';
+
+  @override
+  String get createBusinessNotificationTitle => 'Biashara imeundwa';
+
+  @override
+  String get createBusinessNotificationBody =>
+      'Biashara yako imesajiliwa kwenye blockchain.';
+
+  @override
+  String get updateBusinessNotificationTitle => 'Biashara imesasishwa';
+
+  @override
+  String get updateBusinessNotificationBody =>
+      'Biashara yako imesasishwa kwenye blockchain.';
+
+  @override
+  String get businessCreatingAccount => 'Kuunda akaunti ya biashara...';
+
+  @override
+  String get businessRegistering => 'Kusajili biashara...';
+
+  @override
+  String get businessUploadingData => 'Kupakia data ya biashara...';
+
+  @override
+  String get businessCreateError => 'Imeshindwa kuunda biashara';
+
+  @override
+  String get businessPickImage => 'Chagua Picha';
+
+  @override
+  String get businessChangeImage => 'Badilisha Picha';
+
+  @override
   String get addContact => 'Ongeza mawasiliano';
 
   @override

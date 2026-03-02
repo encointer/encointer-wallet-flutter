@@ -36,7 +36,7 @@ class BusinessCard extends StatelessWidget {
           context,
           MaterialPageRoute<Widget>(
             builder: (_) => Provider(
-              create: (_) => SingleBusinessStore(business),
+              create: (_) => SingleBusinessStore(business, isOwner: isOwner, isDelegate: isDelegate),
               child: const SingleBusinessView(),
             ),
           ),

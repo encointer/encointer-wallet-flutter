@@ -206,6 +206,180 @@ abstract class AppLocalizations {
   /// **'Owner'**
   String get businessOwner;
 
+  /// No description provided for @businessFormTitleCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'New Business'**
+  String get businessFormTitleCreate;
+
+  /// No description provided for @businessFormTitleEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Business'**
+  String get businessFormTitleEdit;
+
+  /// No description provided for @businessNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get businessNameLabel;
+
+  /// No description provided for @businessCategoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get businessCategoryLabel;
+
+  /// No description provided for @businessDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get businessDescriptionLabel;
+
+  /// No description provided for @businessAddressLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Street Address'**
+  String get businessAddressLabel;
+
+  /// No description provided for @businessZipcodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'ZIP Code'**
+  String get businessZipcodeLabel;
+
+  /// No description provided for @businessAddressDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Address Description'**
+  String get businessAddressDescriptionLabel;
+
+  /// No description provided for @businessTelephoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Telephone'**
+  String get businessTelephoneLabel;
+
+  /// No description provided for @businessEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get businessEmailLabel;
+
+  /// No description provided for @businessOpeningHoursLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening Hours'**
+  String get businessOpeningHoursLabel;
+
+  /// No description provided for @businessMoreInfoLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'More Information'**
+  String get businessMoreInfoLabel;
+
+  /// No description provided for @businessLongitudeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Longitude'**
+  String get businessLongitudeLabel;
+
+  /// No description provided for @businessLatitudeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude'**
+  String get businessLatitudeLabel;
+
+  /// No description provided for @businessLogoLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Logo'**
+  String get businessLogoLabel;
+
+  /// No description provided for @businessPhotosLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get businessPhotosLabel;
+
+  /// No description provided for @businessSaveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get businessSaveButton;
+
+  /// No description provided for @businessNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required'**
+  String get businessNameRequired;
+
+  /// No description provided for @businessCategoryRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Category is required'**
+  String get businessCategoryRequired;
+
+  /// No description provided for @createBusinessNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Business created'**
+  String get createBusinessNotificationTitle;
+
+  /// No description provided for @createBusinessNotificationBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your business has been registered on-chain.'**
+  String get createBusinessNotificationBody;
+
+  /// No description provided for @updateBusinessNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Business updated'**
+  String get updateBusinessNotificationTitle;
+
+  /// No description provided for @updateBusinessNotificationBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your business has been updated on-chain.'**
+  String get updateBusinessNotificationBody;
+
+  /// No description provided for @businessCreatingAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating business account...'**
+  String get businessCreatingAccount;
+
+  /// No description provided for @businessRegistering.
+  ///
+  /// In en, this message translates to:
+  /// **'Registering business...'**
+  String get businessRegistering;
+
+  /// No description provided for @businessUploadingData.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading business data...'**
+  String get businessUploadingData;
+
+  /// No description provided for @businessCreateError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to create business'**
+  String get businessCreateError;
+
+  /// No description provided for @businessPickImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Image'**
+  String get businessPickImage;
+
+  /// No description provided for @businessChangeImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Image'**
+  String get businessChangeImage;
+
   /// No description provided for @addContact.
   ///
   /// In en, this message translates to:

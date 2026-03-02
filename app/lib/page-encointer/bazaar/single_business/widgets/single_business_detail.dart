@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_gallery.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/business_form/business_form_page.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/propose_page.dart';
 import 'package:ew_log/ew_log.dart';
@@ -88,6 +89,23 @@ class SingleBusinessDetail extends StatelessWidget {
                           ),
                           icon: const Icon(Icons.add, size: 16),
                           label: Text(context.l10n.swapOption),
+                        ),
+                      if (businessStore.isOwner || businessStore.isDelegate)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(
+                                BusinessFormPage.route,
+                                arguments: BusinessFormParams(
+                                  existingBusiness: business,
+                                  businessController: business.controller,
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.edit, size: 20),
+                            tooltip: l10n.businessFormTitleEdit,
+                          ),
                         ),
                     ],
                   ),

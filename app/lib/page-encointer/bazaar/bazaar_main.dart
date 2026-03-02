@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/business_form/business_form_page.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/logic/businesses_store.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/businesses_view.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/widgets/dropdown_widget.dart';
@@ -121,51 +121,11 @@ class _BazaarPageState extends State<BazaarPage> {
     }
   }
 
-  Future<void> _onAddBusiness() async {
-    final community = context.read<AppStore>().encointer.community!.name;
-    final address = context.read<AppStore>().account.currentAddress;
-    final subject = Uri.encodeComponent('Request for registering a new business');
-    final body = Uri.encodeComponent('''
-Dear Encointer Team,
-
-I would like to register a business for my community.
-
-My relevant onchain data is:
-
-Account: $address
-community: $community
-
-I am looking forward to your response.
-''');
-
-    final mailUri = Uri(
-      scheme: 'mailto',
-      path: 'bazaar@encointer.org',
-      query: 'subject=$subject&body=$body',
+  void _onAddBusiness() {
+    Navigator.of(context).pushNamed(
+      BusinessFormPage.route,
+      arguments: const BusinessFormParams(),
     );
-
-    try {
-      final launched = await launchUrl(
-        mailUri,
-        mode: LaunchMode.externalApplication, // ensures OS mail app is used
-      );
-
-      if (!launched && context.mounted) {
-        AppAlert.showErrorDialog(
-          context,
-          errorText: context.l10n.emailFailedToOpen,
-          buttontext: context.l10n.ok,
-        );
-      }
-    } catch (e) {
-      if (context.mounted) {
-        AppAlert.showErrorDialog(
-          context,
-          errorText: context.l10n.emailFailedToOpen,
-          buttontext: context.l10n.ok,
-        );
-      }
-    }
   }
 
   @override

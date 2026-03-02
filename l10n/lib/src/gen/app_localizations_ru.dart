@@ -61,6 +61,95 @@ class AppLocalizationsRu extends AppLocalizations {
   String get businessOwner => 'Владелец';
 
   @override
+  String get businessFormTitleCreate => 'Новый бизнес';
+
+  @override
+  String get businessFormTitleEdit => 'Редактировать бизнес';
+
+  @override
+  String get businessNameLabel => 'Название';
+
+  @override
+  String get businessCategoryLabel => 'Категория';
+
+  @override
+  String get businessDescriptionLabel => 'Описание';
+
+  @override
+  String get businessAddressLabel => 'Улица';
+
+  @override
+  String get businessZipcodeLabel => 'Почтовый индекс';
+
+  @override
+  String get businessAddressDescriptionLabel => 'Описание адреса';
+
+  @override
+  String get businessTelephoneLabel => 'Телефон';
+
+  @override
+  String get businessEmailLabel => 'Эл. почта';
+
+  @override
+  String get businessOpeningHoursLabel => 'Часы работы';
+
+  @override
+  String get businessMoreInfoLabel => 'Дополнительная информация';
+
+  @override
+  String get businessLongitudeLabel => 'Долгота';
+
+  @override
+  String get businessLatitudeLabel => 'Широта';
+
+  @override
+  String get businessLogoLabel => 'Логотип';
+
+  @override
+  String get businessPhotosLabel => 'Фотографии';
+
+  @override
+  String get businessSaveButton => 'Сохранить';
+
+  @override
+  String get businessNameRequired => 'Название обязательно';
+
+  @override
+  String get businessCategoryRequired => 'Категория обязательна';
+
+  @override
+  String get createBusinessNotificationTitle => 'Бизнес создан';
+
+  @override
+  String get createBusinessNotificationBody =>
+      'Ваш бизнес зарегистрирован в блокчейне.';
+
+  @override
+  String get updateBusinessNotificationTitle => 'Бизнес обновлён';
+
+  @override
+  String get updateBusinessNotificationBody =>
+      'Ваш бизнес обновлён в блокчейне.';
+
+  @override
+  String get businessCreatingAccount => 'Создание аккаунта бизнеса...';
+
+  @override
+  String get businessRegistering => 'Регистрация бизнеса...';
+
+  @override
+  String get businessUploadingData => 'Загрузка данных бизнеса...';
+
+  @override
+  String get businessCreateError => 'Не удалось создать бизнес';
+
+  @override
+  String get businessPickImage => 'Выбрать изображение';
+
+  @override
+  String get businessChangeImage => 'Изменить изображение';
+
+  @override
   String get addContact => 'Добавить контакт';
 
   @override

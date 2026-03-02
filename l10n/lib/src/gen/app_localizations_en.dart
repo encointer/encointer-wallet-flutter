@@ -61,6 +61,95 @@ class AppLocalizationsEn extends AppLocalizations {
   String get businessOwner => 'Owner';
 
   @override
+  String get businessFormTitleCreate => 'New Business';
+
+  @override
+  String get businessFormTitleEdit => 'Edit Business';
+
+  @override
+  String get businessNameLabel => 'Name';
+
+  @override
+  String get businessCategoryLabel => 'Category';
+
+  @override
+  String get businessDescriptionLabel => 'Description';
+
+  @override
+  String get businessAddressLabel => 'Street Address';
+
+  @override
+  String get businessZipcodeLabel => 'ZIP Code';
+
+  @override
+  String get businessAddressDescriptionLabel => 'Address Description';
+
+  @override
+  String get businessTelephoneLabel => 'Telephone';
+
+  @override
+  String get businessEmailLabel => 'Email';
+
+  @override
+  String get businessOpeningHoursLabel => 'Opening Hours';
+
+  @override
+  String get businessMoreInfoLabel => 'More Information';
+
+  @override
+  String get businessLongitudeLabel => 'Longitude';
+
+  @override
+  String get businessLatitudeLabel => 'Latitude';
+
+  @override
+  String get businessLogoLabel => 'Logo';
+
+  @override
+  String get businessPhotosLabel => 'Photos';
+
+  @override
+  String get businessSaveButton => 'Save';
+
+  @override
+  String get businessNameRequired => 'Name is required';
+
+  @override
+  String get businessCategoryRequired => 'Category is required';
+
+  @override
+  String get createBusinessNotificationTitle => 'Business created';
+
+  @override
+  String get createBusinessNotificationBody =>
+      'Your business has been registered on-chain.';
+
+  @override
+  String get updateBusinessNotificationTitle => 'Business updated';
+
+  @override
+  String get updateBusinessNotificationBody =>
+      'Your business has been updated on-chain.';
+
+  @override
+  String get businessCreatingAccount => 'Creating business account...';
+
+  @override
+  String get businessRegistering => 'Registering business...';
+
+  @override
+  String get businessUploadingData => 'Uploading business data...';
+
+  @override
+  String get businessCreateError => 'Failed to create business';
+
+  @override
+  String get businessPickImage => 'Select Image';
+
+  @override
+  String get businessChangeImage => 'Change Image';
+
+  @override
   String get addContact => 'Add contact';
 
   @override
