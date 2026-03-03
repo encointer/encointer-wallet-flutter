@@ -159,6 +159,7 @@ class IpfsUploadService {
           if (result.name.isEmpty) dirResult = result;
         }
         if (dirResult == null) {
+          Log.e('[IpfsUpload] uploadFolder: no directory entry in response. Raw body: ${response.body}', _logTarget);
           throw IpfsUploadException('No directory entry in response');
         }
         Log.d('[IpfsUpload] Folder success: ${dirResult.hash}', _logTarget);

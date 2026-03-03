@@ -11,13 +11,12 @@ make bootstrap
 # 2. Start a story node from the snapshot
 make story STORY=dev
 
-# 3. Start IPFS + auth gateway
-docker run -d --name kubo -p 5001:5001 -p 8080:8080 -e IPFS_PROFILE=server ipfs/kubo:latest
-docker run -d --name ipfs-gateway -p 5050:5050 \
-  --add-host=host.docker.internal:host-gateway \
+# 3. Start IPFS + auth gateway (--network=host required, see note below)
+docker run -d --name kubo --network=host -e IPFS_PROFILE=server ipfs/kubo:latest
+docker run -d --name ipfs-gateway --network=host \
   -e PORT=5050 -e JWT_SECRET=dev-secret \
-  -e IPFS_API_URL=http://host.docker.internal:5001 \
-  -e CHAIN_RPC_URL=ws://host.docker.internal:9944 \
+  -e IPFS_API_URL=http://localhost:5001 \
+  -e CHAIN_RPC_URL=ws://localhost:9944 \
   -e MIN_BALANCE_CC=0.001 \
   encointer/ipfs-gateway
 
@@ -78,10 +77,12 @@ docker run --rm --add-host=host.docker.internal:host-gateway \
 The bazaar feature stores business metadata and images on IPFS. Run a local kubo node:
 
 ```shell
-docker run -d --name kubo -p 5001:5001 -p 8080:8080 \
+docker run -d --name kubo --network=host \
   -e IPFS_PROFILE=server \
   ipfs/kubo:latest
 ```
+
+> **Note:** `--network=host` is required for the auth gateway to properly proxy directory uploads (`wrap-with-directory`) to kubo. This mode only works on Linux (incl. WSL2). macOS/Windows Docker Desktop users need `-p 5001:5001 -p 8080:8080` port mapping instead, but may encounter issues with directory uploads through the auth gateway.
 
 Verify it's running:
 
@@ -98,17 +99,16 @@ Ports:
 The auth gateway (`encointer/ipfs-gateway`) sits between the app and kubo. It authenticates uploads by verifying the user has a minimum community currency balance on-chain, then signs a JWT for the upload session.
 
 ```shell
-docker run -d --name ipfs-gateway -p 5050:5050 \
-  --add-host=host.docker.internal:host-gateway \
+docker run -d --name ipfs-gateway --network=host \
   -e PORT=5050 \
   -e JWT_SECRET=dev-secret \
-  -e IPFS_API_URL=http://host.docker.internal:5001 \
-  -e CHAIN_RPC_URL=ws://host.docker.internal:9944 \
+  -e IPFS_API_URL=http://localhost:5001 \
+  -e CHAIN_RPC_URL=ws://localhost:9944 \
   -e MIN_BALANCE_CC=0.001 \
   encointer/ipfs-gateway
 ```
 
-The auth gateway needs to reach kubo and the Encointer node running on the host. `host.docker.internal` resolves to the host machine from inside the container. On macOS/Windows Docker Desktop this works out of the box; on Linux the `--add-host` flag is needed.
+With `--network=host`, all containers share the host network stack and reach each other via `localhost`. This matches the CI setup and is required for directory uploads to work correctly through the auth gateway.
 
 Verify it's running:
 

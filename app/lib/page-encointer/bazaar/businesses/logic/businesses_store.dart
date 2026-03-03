@@ -50,6 +50,7 @@ abstract class _BusinessesStoreBase with Store {
     Log.d('getBusinesses: before update businesses = $businesses', _targetLogger);
 
     final accountBusinessTuples = await _bazaarGetBusinesses(cid);
+    Log.d('getBusinesses: RPC returned ${accountBusinessTuples.length} entries for cid=$cid', _targetLogger);
 
     await _updateBusinesses(accountBusinessTuples);
 
