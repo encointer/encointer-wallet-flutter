@@ -27,7 +27,7 @@ class BusinessCard extends StatelessWidget {
     final businessesStore = context.read<BusinessesStore>();
     // const currentAddress = '5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK';
 
-    final isOwner = AddressUtils.areEqual(business.controller!, currentAddress);
+    final isOwner = business.controller != null && AddressUtils.areEqual(business.controller!, currentAddress);
     final isDelegate = !isOwner && businessesStore.delegateOfControllers.contains(business.controller);
 
     return InkWell(
@@ -54,16 +54,19 @@ class BusinessCard extends StatelessWidget {
         child: Row(
           children: [
             // --- Left image ---
-            IpfsImage(
-              ipfs: webApi.ipfsApi,
-              cidOrFolder: business.logo!,
-              width: 110,
-              height: 120,
-              fit: BoxFit.contain,
-              loadingBuilder: (_) => const SizedBox(height: 120, child: Center(child: CircularProgressIndicator())),
-              errorBuilder: (_, __) =>
-                  const SizedBox(height: 120, child: Center(child: Icon(Icons.broken_image, size: 40))),
-            ),
+            if (business.logo != null)
+              IpfsImage(
+                ipfs: webApi.ipfsApi,
+                cidOrFolder: business.logo!,
+                width: 110,
+                height: 120,
+                fit: BoxFit.contain,
+                loadingBuilder: (_) => const SizedBox(height: 120, child: Center(child: CircularProgressIndicator())),
+                errorBuilder: (_, __) =>
+                    const SizedBox(height: 120, child: Center(child: Icon(Icons.broken_image, size: 40))),
+              )
+            else
+              const SizedBox(width: 110, height: 120, child: Center(child: Icon(Icons.store, size: 40))),
 
             // --- Right side ---
             Expanded(
