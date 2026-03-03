@@ -33,16 +33,22 @@ class BusinessCard extends StatelessWidget {
     return InkWell(
       key: Key('${EWTestKeys.businessCard}-${business.name}'),
       borderRadius: BorderRadius.circular(16),
-      onTap: () {
-        Navigator.push(
+      onTap: () async {
+        final edited = await Navigator.push<bool>(
           context,
-          MaterialPageRoute<Widget>(
+          MaterialPageRoute<bool>(
             builder: (_) => Provider(
               create: (_) => SingleBusinessStore(business, isOwner: isOwner, isDelegate: isDelegate),
               child: const SingleBusinessView(),
             ),
           ),
         );
+        if (edited ?? false) {
+          final cid = store.encointer.community?.cid;
+          if (cid != null && context.mounted) {
+            await businessesStore.getBusinesses(cid, store.account.currentAddress);
+          }
+        }
       },
       child: Card(
         margin: const EdgeInsets.symmetric(vertical: 6),

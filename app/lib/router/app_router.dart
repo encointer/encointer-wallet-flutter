@@ -9,6 +9,7 @@ import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/business_form/business_form_page.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/logic/businesses_store.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -148,7 +149,7 @@ class AppRoute {
           settings: settings,
         );
       case BusinessFormPage.route:
-        return CupertinoPageRoute<bool>(
+        return CupertinoPageRoute<IpfsBusiness?>(
           builder: (_) => BusinessFormPage(params: arguments as BusinessFormParams? ?? const BusinessFormParams()),
           settings: settings,
           fullscreenDialog: true,

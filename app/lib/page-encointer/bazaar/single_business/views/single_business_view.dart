@@ -10,8 +10,15 @@ class SingleBusinessView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = context.watch<SingleBusinessStore>();
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) Navigator.of(context).pop(store.wasEdited);
+      },
+      child: Scaffold(
         appBar: AppBar(title: Text(store.business.name.toUpperCase())),
-        body: SingleBusinessDetail(business: store.business));
+        body: SingleBusinessDetail(business: store.business),
+      ),
+    );
   }
 }

@@ -23,7 +23,11 @@ abstract class _SingleBusinessStoreBase with Store {
         isLikedPersonally = isLikedPersonally1,
         countLikes = countLikes1;
 
-  late final IpfsBusiness business;
+  @observable
+  IpfsBusiness business;
+
+  @observable
+  bool wasEdited = false;
 
   final bool isOwner;
   final bool isDelegate;
@@ -42,6 +46,12 @@ abstract class _SingleBusinessStoreBase with Store {
 
   @observable
   String? error;
+
+  @action
+  void updateBusiness(IpfsBusiness b) {
+    business = b;
+    wasEdited = true;
+  }
 
   @action
   void toggleLikes() {

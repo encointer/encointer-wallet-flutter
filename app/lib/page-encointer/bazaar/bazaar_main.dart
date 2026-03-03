@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:iconsax/iconsax.dart';
 
+import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/business_form/business_form_page.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
@@ -123,11 +124,11 @@ class _BazaarPageState extends State<BazaarPage> {
   }
 
   Future<void> _onAddBusiness() async {
-    final created = await Navigator.of(context).pushNamed<bool>(
+    final created = await Navigator.of(context).pushNamed<IpfsBusiness?>(
       BusinessFormPage.route,
       arguments: const BusinessFormParams(),
     );
-    if ((created ?? false) && mounted) {
+    if (created != null && mounted) {
       final store = context.read<AppStore>();
       final cid = store.encointer.community?.cid;
       if (cid != null) {

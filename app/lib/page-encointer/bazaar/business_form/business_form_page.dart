@@ -321,6 +321,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     setState(() => _progressMessage = l10n.businessUploadingData);
     final business = await _buildBusiness();
     final metadataCid = await _uploadJson(business.toJson());
+    business.controller = widget.params.businessController;
     setState(() => _progressMessage = null);
 
     final isOwner = AddressUtils.areEqual(widget.params.businessController!, currentAddress);
@@ -335,7 +336,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
         metadataCid,
         txPaymentAsset: cid,
         onFinish: (_, __) {
-          if (mounted) Navigator.of(context).pop(true);
+          if (mounted) Navigator.of(context).pop(business);
         },
       );
     } else {
@@ -359,7 +360,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
         txPaymentAsset: cid,
         proxyType: proxyDef.proxyType,
         onFinish: (_, __) {
-          if (mounted) Navigator.of(context).pop(true);
+          if (mounted) Navigator.of(context).pop(business);
         },
       );
     }
@@ -458,7 +459,8 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
 
     setState(() => _progressMessage = null);
 
-    if (mounted) Navigator.of(context).pop(true);
+    business.controller = AddressUtils.pubKeyToAddress(pureAccountId);
+    if (mounted) Navigator.of(context).pop(business);
   }
 
   /// Extracts the pure account ID (32 bytes) from the PureCreated event in the report.

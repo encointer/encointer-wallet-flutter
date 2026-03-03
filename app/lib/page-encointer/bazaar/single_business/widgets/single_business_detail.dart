@@ -97,14 +97,17 @@ class SingleBusinessDetail extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 8),
                           child: IconButton(
                             key: const Key(EWTestKeys.businessEditButton),
-                            onPressed: () {
-                              Navigator.of(context).pushNamed(
+                            onPressed: () async {
+                              final updated = await Navigator.of(context).pushNamed<IpfsBusiness?>(
                                 BusinessFormPage.route,
                                 arguments: BusinessFormParams(
                                   existingBusiness: business,
                                   businessController: business.controller,
                                 ),
                               );
+                              if (updated != null && context.mounted) {
+                                context.read<SingleBusinessStore>().updateBusiness(updated);
+                              }
                             },
                             icon: const Icon(Icons.edit, size: 20),
                             tooltip: l10n.businessFormTitleEdit,
