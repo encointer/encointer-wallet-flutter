@@ -166,6 +166,9 @@ void main() {
     // Tap save
     await tester.tap(find.byKey(const Key(EWTestKeys.businessSave)));
 
+    // Handle PIN dialog triggered by ensureAuthenticated
+    await verifyInputPin(tester);
+
     // Wait for save to complete (IPFS upload + chain tx — may take a while)
     await waitForWidget(
       tester,
@@ -235,6 +238,9 @@ void main() {
       item: find.byKey(const Key(EWTestKeys.businessSave)),
     );
     await tester.tap(find.byKey(const Key(EWTestKeys.businessSave)));
+
+    // Handle PIN dialog triggered by ensureAuthenticated
+    await verifyInputPin(tester);
 
     // --- Verify detail page shows updated data ---
     await waitForWidget(
