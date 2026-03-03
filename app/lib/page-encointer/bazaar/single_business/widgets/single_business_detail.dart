@@ -48,15 +48,16 @@ class SingleBusinessDetail extends StatelessWidget {
       child: Card(
         child: Column(
           children: [
-            IpfsImage(
-              ipfs: webApi.ipfsApi,
-              cidOrFolder: business.logo!,
-              width: double.infinity,
-              height: 80,
-              fit: BoxFit.contain,
-              loadingBuilder: (_) => const Center(child: CircularProgressIndicator()),
-              errorBuilder: (_, error) => const Center(child: Icon(Icons.broken_image, size: 40)),
-            ),
+            if (business.logo != null)
+              IpfsImage(
+                ipfs: webApi.ipfsApi,
+                cidOrFolder: business.logo!,
+                width: double.infinity,
+                height: 80,
+                fit: BoxFit.contain,
+                loadingBuilder: (_) => const Center(child: CircularProgressIndicator()),
+                errorBuilder: (_, error) => const Center(child: Icon(Icons.broken_image, size: 40)),
+              ),
             Padding(
               padding: const EdgeInsets.fromLTRB(30, 20, 30, 30),
               child: Column(
@@ -74,7 +75,7 @@ class SingleBusinessDetail extends StatelessWidget {
                       //     business.status!,
                       //     style: context.bodySmall.copyWith(color: const Color(0xFF35B731)),
                       //   )
-                      if (AddressUtils.areEqual(business.controller!, currentAddress))
+                      if (business.controller != null && AddressUtils.areEqual(business.controller!, currentAddress))
                         ElevatedButton.icon(
                           onPressed: () {
                             Navigator.of(context).pushNamed(
