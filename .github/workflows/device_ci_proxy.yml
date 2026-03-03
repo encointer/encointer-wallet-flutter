@@ -103,7 +103,21 @@ jobs:
         run: |
           ./cloudflared tunnel --url http://localhost:8080 > ipfs_tunnel.log 2>&1 &
           ./cloudflared tunnel --url http://localhost:5050 > ipfs_auth_tunnel.log 2>&1 &
-          sleep 8
+
+          echo "Waiting for IPFS tunnel URLs (up to 60s)..."
+          for i in $(seq 1 60); do
+            IPFS_GW=$(grep -o 'https://[^ ]*trycloudflare.com' ipfs_tunnel.log 2>/dev/null | head -n1 || true)
+            IPFS_AUTH=$(grep -o 'https://[^ ]*trycloudflare.com' ipfs_auth_tunnel.log 2>/dev/null | head -n1 || true)
+            if [ -n "$IPFS_GW" ] && [ -n "$IPFS_AUTH" ]; then
+              echo "Both IPFS tunnels ready after ${i}s"
+              break
+            fi
+            sleep 1
+          done
+
+          if [ -z "$IPFS_GW" ] || [ -z "$IPFS_AUTH" ]; then
+            echo "::warning::IPFS tunnel(s) not ready after 60s (gateway=$IPFS_GW, auth=$IPFS_AUTH)"
+          fi
 
       - id: export_ipfs_tunnels
         name: Export IPFS endpoints

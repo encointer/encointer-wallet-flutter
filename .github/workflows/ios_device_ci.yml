@@ -56,6 +56,8 @@ jobs:
           echo "API_LEVEL=${{ github.event.inputs.api_level }}" >> $GITHUB_ENV
           echo "RECORD_VIDEO=${{ github.event.inputs.record_video }}" >> $GITHUB_ENV
           echo "WS_ENDPOINT=${{ github.event.inputs.ws_endpoint }}" >> $GITHUB_ENV
+          echo "IPFS_GATEWAY=${{ github.event.inputs.ipfs_gateway }}" >> $GITHUB_ENV
+          echo "IPFS_AUTH_GATEWAY=${{ github.event.inputs.ipfs_auth_gateway }}" >> $GITHUB_ENV
 
       - name: Set Env Vars
         run: cat .github/env >> $GITHUB_ENV
@@ -142,6 +144,21 @@ jobs:
             --no-enable-impeller \
             --target=test_driver/app.dart \
             --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
+            --dart-define=locales=en
+
+      - name: Run bazaar business story
+        if: ${{ env.IPFS_GATEWAY != '' && env.IPFS_AUTH_GATEWAY != '' }}
+        working-directory: ./app
+        timeout-minutes: 15
+        shell: bash
+        run: |
+          ../.flutter/bin/flutter drive \
+            --no-enable-impeller \
+            --driver=test_driver/integration_test.dart \
+            --target=integration_test/stories/bazaar_business_form_test.dart \
+            --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
+            --dart-define=IPFS_GATEWAY="$IPFS_GATEWAY" \
+            --dart-define=IPFS_AUTH_GATEWAY="$IPFS_AUTH_GATEWAY" \
             --dart-define=locales=en
 
       - name: Stop recording and upload
