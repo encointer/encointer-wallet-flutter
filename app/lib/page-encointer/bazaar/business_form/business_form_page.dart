@@ -339,8 +339,15 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
         },
       );
     } else {
-      // Delegate path: wrap in proxy call
+      // Proxy path: look up the user's actual proxy type for this controller
       final controllerPubKey = AddressUtils.addressToPubKey(widget.params.businessController!).toList();
+      final proxies = await webApi.encointer.getProxyAccounts(controllerPubKey);
+      final proxyDef = proxies.where((p) => AddressUtils.isSamePubKey(currentAddress, p.delegate)).firstOrNull;
+
+      if (proxyDef == null) {
+        throw Exception(l10n.proxyNotProxyBody);
+      }
+
       await submitUpdateBusinessViaProxy(
         context,
         store,
@@ -350,6 +357,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
         metadataCid,
         controllerPubKey,
         txPaymentAsset: cid,
+        proxyType: proxyDef.proxyType,
         onFinish: (_, __) {
           if (mounted) Navigator.of(context).pop(true);
         },

@@ -47,6 +47,8 @@ abstract class _BusinessesStoreBase with Store {
   @action
   Future<void> getBusinesses(CommunityIdentifier cid, String currentAddress) async {
     fetchStatus = FetchStatus.loading;
+    businesses = <IpfsBusiness>[];
+    sortedBusinesses = <IpfsBusiness>[];
     Log.d('getBusinesses: before update businesses = $businesses', _targetLogger);
 
     final accountBusinessTuples = await _bazaarGetBusinesses(cid);

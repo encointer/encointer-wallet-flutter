@@ -122,11 +122,18 @@ class _BazaarPageState extends State<BazaarPage> {
     }
   }
 
-  void _onAddBusiness() {
-    Navigator.of(context).pushNamed(
+  Future<void> _onAddBusiness() async {
+    final created = await Navigator.of(context).pushNamed<bool>(
       BusinessFormPage.route,
       arguments: const BusinessFormParams(),
     );
+    if ((created ?? false) && mounted) {
+      final store = context.read<AppStore>();
+      final cid = store.encointer.community?.cid;
+      if (cid != null) {
+        await context.read<BusinessesStore>().getBusinesses(cid, store.account.currentAddress);
+      }
+    }
   }
 
   @override

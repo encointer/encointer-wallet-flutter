@@ -431,6 +431,7 @@ Future<void> submitUpdateBusinessViaProxy(
   String ipfsCid,
   List<int> controllerPubKey, {
   required CommunityIdentifier? txPaymentAsset,
+  required ProxyType proxyType,
   dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
   void Function(DispatchError report)? onError,
 }) async {
@@ -440,7 +441,7 @@ Future<void> submitUpdateBusinessViaProxy(
   );
   final call = api.encointer.encointerKusama.tx.proxy.proxy(
     real: pd.MultiAddress.values.id(controllerPubKey),
-    forceProxyType: ProxyType.bazaarEdit,
+    forceProxyType: proxyType,
     call: innerCall,
   );
   final xt = await TxBuilder(api.provider).createSignedExtrinsic(
