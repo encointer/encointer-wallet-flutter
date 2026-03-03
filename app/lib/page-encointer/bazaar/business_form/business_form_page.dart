@@ -324,6 +324,8 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     business.controller = widget.params.businessController;
     setState(() => _progressMessage = null);
 
+    // The edit button is only shown when isOwner || isDelegate
+    // (SingleBusinessDetail), so !isOwner here implies delegate.
     final isOwner = AddressUtils.areEqual(widget.params.businessController!, currentAddress);
 
     if (isOwner) {
