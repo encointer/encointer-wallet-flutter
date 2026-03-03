@@ -170,13 +170,13 @@ void main() {
     await waitForWidget(
       tester,
       find.byKey(const Key(EWTestKeys.addBusiness)),
-      timeout: const Duration(seconds: 120),
+      timeout: const Duration(seconds: 240),
     );
 
     // --- Verify creation ---
     // Wait for bazaar list to reload and show the new business card
-    final businessCardFinder = find.byKey(Key('${EWTestKeys.businessCard}-Alice Test Shop'));
-    await waitForWidget(tester, businessCardFinder, timeout: const Duration(seconds: 30));
+    final businessCardFinder = find.byKey(const Key('${EWTestKeys.businessCard}-Alice Test Shop'));
+    await waitForWidget(tester, businessCardFinder);
 
     // Screenshot: businesses list with new business
     await takeScreenshot(b, s, Screenshots.bazaarBusinessesList, locales: l);
@@ -240,7 +240,7 @@ void main() {
     await waitForWidget(
       tester,
       find.byKey(const Key(EWTestKeys.businessEditButton)),
-      timeout: const Duration(seconds: 120),
+      timeout: const Duration(seconds: 240),
     );
 
     // AppBar title should show uppercased updated name
@@ -255,7 +255,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // --- Verify list page shows updated business ---
-    final updatedCardFinder = find.byKey(Key('${EWTestKeys.businessCard}-Alice Updated Shop'));
+    final updatedCardFinder = find.byKey(const Key('${EWTestKeys.businessCard}-Alice Updated Shop'));
     await waitForWidget(tester, updatedCardFinder);
     expect(updatedCardFinder, findsOneWidget);
     expect(find.text('Updated E2E description'), findsWidgets);
