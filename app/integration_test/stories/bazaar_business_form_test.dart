@@ -163,11 +163,10 @@ void main() {
       item: find.byKey(const Key(EWTestKeys.businessSave)),
     );
 
-    // Tap save
+    // Tap save — PIN dialog is skipped because cachedPin is set from createPin.
+    // Use pump() not pumpAndSettle() because the progress spinner never settles.
     await tester.tap(find.byKey(const Key(EWTestKeys.businessSave)));
-
-    // Handle PIN dialog triggered by ensureAuthenticated
-    await verifyInputPin(tester);
+    await tester.pump();
 
     // Wait for save to complete (IPFS upload + chain tx — may take a while)
     await waitForWidget(
@@ -238,9 +237,7 @@ void main() {
       item: find.byKey(const Key(EWTestKeys.businessSave)),
     );
     await tester.tap(find.byKey(const Key(EWTestKeys.businessSave)));
-
-    // Handle PIN dialog triggered by ensureAuthenticated
-    await verifyInputPin(tester);
+    await tester.pump();
 
     // --- Verify detail page shows updated data ---
     await waitForWidget(
