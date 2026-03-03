@@ -23,6 +23,7 @@ import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:ew_polkadart/encointer_types.dart' as pd;
 import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_kusama_runtime/proxy_type.dart' show ProxyType;
 import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_proxy/pallet/event.dart' as proxy_event;
+import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
 import 'package:ew_polkadart/runtime_event.dart' as re;
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -375,7 +376,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     // Step 1: createPure
     setState(() => _progressMessage = l10n.businessCreatingAccount);
     final createPureCall = api.encointer.encointerKusama.tx.proxy.createPure(
-      proxyType: ProxyType.bazaarEdit,
+      proxyType: ProxyType.nonTransfer,
       delay: 0,
       index: 0,
     );
@@ -416,7 +417,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     );
     final proxyCall = api.encointer.encointerKusama.tx.proxy.proxy(
       real: pd.MultiAddress.values.id(pureAccountId),
-      forceProxyType: ProxyType.bazaarEdit,
+      forceProxyType: ProxyType.nonTransfer,
       call: createBusinessCall,
     );
     final proxyXt = await TxBuilder(api.provider).createSignedExtrinsic(
@@ -439,6 +440,14 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
       throw Exception('${msg?.title ?? l10n.businessCreateError}: ${msg?.body ?? error}');
     }
 
+    // Check ProxyExecuted event for inner dispatch error
+    final proxyError = _extractProxyDispatchError(createBizReport);
+    if (proxyError != null) {
+      Log.e('createBusiness proxy dispatch error: ${proxyError.toJson()}', _logTarget);
+      final msg = getLocalizedTxErrorMessage(l10n, proxyError);
+      throw Exception('${msg.title}: ${msg.body}');
+    }
+
     setState(() => _progressMessage = null);
 
     if (mounted) Navigator.of(context).pop(true);
@@ -452,6 +461,20 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
         final proxyEvent = event.value0;
         if (proxyEvent is proxy_event.PureCreated) {
           return proxyEvent.pure.toList();
+        }
+      }
+    }
+    return null;
+  }
+
+  /// Extracts the DispatchError from a ProxyExecuted event, if the inner call failed.
+  DispatchError? _extractProxyDispatchError(ExtrinsicReport report) {
+    for (final record in report.events) {
+      final event = record.event;
+      if (event is re.Proxy) {
+        final proxyEvent = event.value0;
+        if (proxyEvent is proxy_event.ProxyExecuted && proxyEvent.result.isErr) {
+          return proxyEvent.result.errValue;
         }
       }
     }
