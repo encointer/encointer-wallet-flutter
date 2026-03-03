@@ -217,32 +217,47 @@ void main() {
     expect(descriptionField.controller.text, 'A test business for E2E');
 
     // --- Update Business ---
-    // Clear name and enter new name
-    await tester.enterText(find.byKey(const Key(EWTestKeys.businessName)), '');
-    await tester.pumpAndSettle();
+    // Update name
     await tester.enterText(find.byKey(const Key(EWTestKeys.businessName)), 'Alice Updated Shop');
     await tester.pumpAndSettle();
 
-    // Scroll to save button
+    // Update description
     final editFormListView = find.byType(ListView);
+    await scrollUntilVisible(tester,
+        scrollable: editFormListView, item: find.byKey(const Key(EWTestKeys.businessDescription)));
+    await tester.enterText(find.byKey(const Key(EWTestKeys.businessDescription)), 'Updated E2E description');
+    await tester.pumpAndSettle();
+
+    // Scroll to save button and tap
     await scrollUntilVisible(
       tester,
       scrollable: editFormListView,
       item: find.byKey(const Key(EWTestKeys.businessSave)),
     );
-
-    // Tap save
     await tester.tap(find.byKey(const Key(EWTestKeys.businessSave)));
 
-    // Wait for navigation back (detail page or bazaar list)
-    await tester.pump(const Duration(seconds: 3));
+    // --- Verify detail page shows updated data ---
     await waitForWidget(
       tester,
-      find.text('Alice Updated Shop'),
+      find.byKey(const Key(EWTestKeys.businessEditButton)),
       timeout: const Duration(seconds: 120),
     );
 
-    // --- Verify update ---
-    expect(find.text('Alice Updated Shop'), findsWidgets);
+    // AppBar title should show uppercased updated name
+    expect(find.text('ALICE UPDATED SHOP'), findsOneWidget);
+    // Description should be updated
+    expect(find.text('Updated E2E description'), findsOneWidget);
+    // Edit button confirms we're on the detail page
+    expect(find.byKey(const Key(EWTestKeys.businessEditButton)), findsOneWidget);
+
+    // --- Navigate back to businesses list ---
+    await tester.tap(find.byTooltip('Back'));
+    await tester.pumpAndSettle();
+
+    // --- Verify list page shows updated business ---
+    final updatedCardFinder = find.byKey(Key('${EWTestKeys.businessCard}-Alice Updated Shop'));
+    await waitForWidget(tester, updatedCardFinder);
+    expect(updatedCardFinder, findsOneWidget);
+    expect(find.text('Updated E2E description'), findsWidgets);
   });
 }
