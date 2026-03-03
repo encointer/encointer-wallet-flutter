@@ -148,7 +148,7 @@ class AppRoute {
           settings: settings,
         );
       case BusinessFormPage.route:
-        return CupertinoPageRoute(
+        return CupertinoPageRoute<bool>(
           builder: (_) => BusinessFormPage(params: arguments as BusinessFormParams? ?? const BusinessFormParams()),
           settings: settings,
           fullscreenDialog: true,
