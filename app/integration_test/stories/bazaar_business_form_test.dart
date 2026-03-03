@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import '../app/app.dart';
+import '../helpers/screenshot_helpers.dart';
 import '../helpers/test_app_launcher.dart';
 import '../helpers/wait_helpers.dart';
 
@@ -80,6 +81,9 @@ void main() {
     await tester.tap(find.text('Art & Music').last);
     await tester.pumpAndSettle();
 
+    // Screenshot: top of form with name + category filled
+    await takeScreenshot(b, s, Screenshots.bazaarFormTop, locales: l);
+
     // Fill description
     await scrollUntilVisible(tester,
         scrollable: formListView, item: find.byKey(const Key(EWTestKeys.businessDescription)));
@@ -149,6 +153,9 @@ void main() {
     await tester.tap(find.byKey(const Key(EWTestKeys.businessAddPhoto)));
     await tester.pumpAndSettle();
 
+    // Screenshot: bottom of form with images picked
+    await takeScreenshot(b, s, Screenshots.bazaarFormBottom, locales: l);
+
     // Scroll to save button
     await scrollUntilVisible(
       tester,
@@ -171,12 +178,20 @@ void main() {
     final businessCardFinder = find.byKey(Key('${EWTestKeys.businessCard}-Alice Test Shop'));
     await waitForWidget(tester, businessCardFinder, timeout: const Duration(seconds: 30));
 
-    // --- Edit Business ---
+    // Screenshot: businesses list with new business
+    await takeScreenshot(b, s, Screenshots.bazaarBusinessesList, locales: l);
+
+    // --- View Business Detail ---
     await tester.tap(businessCardFinder);
     await tester.pumpAndSettle();
 
-    // Wait for detail page, then tap edit button
+    // Wait for detail page
     await waitForWidget(tester, find.byKey(const Key(EWTestKeys.businessEditButton)));
+
+    // Screenshot: business detail page
+    await takeScreenshot(b, s, Screenshots.bazaarBusinessDetail, locales: l);
+
+    // --- Edit Business ---
     await tester.tap(find.byKey(const Key(EWTestKeys.businessEditButton)));
     await tester.pumpAndSettle();
 
