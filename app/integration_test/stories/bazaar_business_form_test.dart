@@ -50,6 +50,8 @@ void main() {
     await goToNetworkView(tester);
     await changeDevNetwork(tester, 'Alice');
 
+    await goToHomeViewFromNavBar(tester);
+
     // Select demo community
     await changeCommunity(tester);
 
