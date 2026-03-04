@@ -46,7 +46,22 @@ jobs:
           curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
           chmod +x cloudflared
           ./cloudflared tunnel --url http://localhost:9944 > tunnel.log 2>&1 &
-          sleep 5
+
+          echo "Waiting for WS tunnel URL (up to 60s)..."
+          for i in $(seq 1 60); do
+            WS_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log 2>/dev/null | head -n1 || true)
+            if [ -n "$WS_URL" ]; then
+              echo "WS tunnel ready after ${i}s: $WS_URL"
+              break
+            fi
+            sleep 1
+          done
+
+          if [ -z "$WS_URL" ]; then
+            echo "::error::WS tunnel not ready after 60s"
+            cat tunnel.log
+            exit 1
+          fi
 
       - name: Verify Cloudflare tunnel health
         run: ./scripts/check_cloudflare_tunnel.sh
@@ -82,7 +97,7 @@ jobs:
           INTERVAL=30
           ELAPSED=0
 
-          while [ $ELAPSED -lt $((MAX_MINUTES * 45)) ]; do
+          while [ $ELAPSED -lt $((MAX_MINUTES * 60)) ]; do
             if ./scripts/check_cloudflare_tunnel.sh; then
               echo "✅ Tunnel is healthy (checked at $ELAPSED seconds)"
             else
