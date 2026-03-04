@@ -79,7 +79,9 @@ class Api {
       AssetsApi(store, EncointerKusama(provider)),
       ChainApi(store, provider),
       EncointerApi(store, SubstrateDartApi(provider), ewHttp, EncointerKusama(provider)),
-      isIntegrationTest ? MockIpfsApi(ewHttp) : IpfsApi(ewHttp, gateway: store.settings.ipfsGateway),
+      isIntegrationTest
+          ? MockIpfsApi(ewHttp, gateway: store.settings.ipfsGateway)
+          : IpfsApi(ewHttp, gateway: store.settings.ipfsGateway),
       ipfsAuthService,
       ipfsUploadService,
     );
