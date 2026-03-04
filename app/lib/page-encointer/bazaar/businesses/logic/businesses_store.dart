@@ -84,29 +84,26 @@ abstract class _BusinessesStoreBase with Store {
   Future<void> _updateBusinesses(List<AccountBusinessTuple> accountBusinessTuples) async {
     Log.d('[updateBusinesses]: accountBusinessTuples = $accountBusinessTuples', _targetLogger);
 
-    if (accountBusinessTuples.isNotEmpty) {
-      await Future.forEach<AccountBusinessTuple>(accountBusinessTuples, (element) async {
-        if (element.businessData.url.isNotNullOrEmpty) {
-          Log.d(
-            '[updateBusinesses]: accountBusinessTuple.businessData!.url! = ${element.businessData.url}',
-            _targetLogger,
-          );
+    if (accountBusinessTuples.isEmpty) return;
 
-          try {
-            final business = await _getBusinesses(element.businessData.url);
-            Log.d('[updateBusinesses]: response = $business', _targetLogger);
-            business.controller = element.controller;
-            Log.d('updateBusinesses: right = ${business.toJson()}', _targetLogger);
-            businesses.add(business);
-          } catch (e) {
-            error = e.toString();
-            Log.d('[updateBusinesses]: error = $e', _targetLogger);
+    await Future.wait(
+      accountBusinessTuples.where((e) => e.businessData.url.isNotNullOrEmpty).map((element) async {
+        try {
+          final business = await _getBusinesses(element.businessData.url);
+          Log.d('[updateBusinesses]: response = $business', _targetLogger);
+          business.controller = element.controller;
+          Log.d('updateBusinesses: right = ${business.toJson()}', _targetLogger);
+          businesses.add(business);
+          sortedBusinesses.add(business);
+          if (fetchStatus == FetchStatus.loading) {
+            fetchStatus = FetchStatus.success;
           }
+        } catch (e) {
+          error = e.toString();
+          Log.d('[updateBusinesses]: error = $e', _targetLogger);
         }
-      });
-    }
-
-    sortedBusinesses.addAll(businesses);
+      }),
+    );
   }
 
   Future<void> _checkDelegateStatus(String currentAddress) async {

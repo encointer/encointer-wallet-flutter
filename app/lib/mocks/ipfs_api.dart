@@ -18,5 +18,4 @@ class MockIpfsApi extends IpfsApi {
   Future<String?> getCommunityIcon(String? ipfsCid) {
     return Future.value(mockIcon);
   }
-
 }
