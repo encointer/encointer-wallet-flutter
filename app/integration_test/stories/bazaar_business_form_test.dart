@@ -174,17 +174,14 @@ void main() {
     await tester.tap(find.byKey(const Key(EWTestKeys.businessSave)));
     await tester.pump();
 
-    // Wait for save to complete (IPFS upload + chain tx — may take a while)
-    await waitForWidget(
-      tester,
-      find.byKey(const Key(EWTestKeys.addBusiness)),
-      timeout: const Duration(seconds: 240),
-    );
-
     // --- Verify creation ---
-    // Wait for bazaar list to reload and show the new business card
+    // Wait for save + list refresh — the card appearing is the definitive signal
+    // that IPFS uploads, chain tx, form pop, and store refresh all completed.
+    // Note: can't use the addBusiness button as a "form done" signal because
+    // find.byKey finds it offstage (BazaarPage stays in the Navigator tree
+    // behind the form page).
     final businessCardFinder = find.byKey(const Key('${EWTestKeys.businessCard}-Alice Test Shop'));
-    await waitForWidget(tester, businessCardFinder);
+    await waitForWidget(tester, businessCardFinder, timeout: const Duration(seconds: 240));
 
     // Screenshot: businesses list with new business
     await takeScreenshot(b, s, Screenshots.bazaarBusinessesList, locales: l);
@@ -265,7 +262,7 @@ void main() {
 
     // --- Verify list page shows updated business ---
     final updatedCardFinder = find.byKey(const Key('${EWTestKeys.businessCard}-Alice Updated Shop'));
-    await waitForWidget(tester, updatedCardFinder);
+    await waitForWidget(tester, updatedCardFinder, timeout: const Duration(seconds: 60));
     expect(updatedCardFinder, findsOneWidget);
     expect(find.text('Updated E2E description'), findsWidgets);
   });
