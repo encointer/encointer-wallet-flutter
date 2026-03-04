@@ -89,7 +89,7 @@ class IpfsUploadService {
 
     try {
       final streamed = await _client.send(request).timeout(_uploadTimeout);
-      final response = await http.Response.fromStream(streamed);
+      final response = await http.Response.fromStream(streamed).timeout(_uploadTimeout);
 
       if (response.statusCode == HttpStatus.ok) {
         final json = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
@@ -147,7 +147,7 @@ class IpfsUploadService {
 
     try {
       final streamed = await _client.send(request).timeout(_uploadTimeout);
-      final response = await http.Response.fromStream(streamed);
+      final response = await http.Response.fromStream(streamed).timeout(_uploadTimeout);
 
       if (response.statusCode == HttpStatus.ok) {
         // Response is newline-delimited JSON; the entry with empty Name is the directory.

@@ -142,6 +142,23 @@ jobs:
             "${{ inputs.workflow_file }}" \
             "$WS_ENDPOINT" \
 
+      - name: Capture infra logs for debugging
+        if: always()
+        run: |
+          mkdir -p infra-logs
+          docker logs kubo > infra-logs/kubo.log 2>&1 || true
+          docker logs ipfs-gateway > infra-logs/ipfs-auth-gateway.log 2>&1 || true
+          cp tunnel.log infra-logs/ || true
+          cp ipfs_tunnel.log infra-logs/ || true
+          cp ipfs_auth_tunnel.log infra-logs/ || true
+
+      - name: Upload infra logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: infra-logs-${{ inputs.device }}
+          path: infra-logs/
+
       # Todo: Ideally, we should cancel this job after the CI is done, but GitHub Actions does not
       # Support cancelling on a job-level (only workflow-level).
       - name: Keep tunnel alive and check every 30s
