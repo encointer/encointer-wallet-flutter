@@ -243,16 +243,22 @@ void main() {
     await tester.pump();
 
     // --- Verify detail page shows updated data ---
+    // Wait for the updated name to appear — this is the definitive signal that
+    // save completed, form popped, store updated, and detail page rebuilt.
+    // (The previous wait on businessEditButton was wrong: that key exists
+    // offstage on the detail page behind the form, so it returned immediately.)
     await waitForWidget(
       tester,
-      find.byKey(const Key(EWTestKeys.businessEditButton)),
+      find.text('ALICE UPDATED SHOP'),
       timeout: const Duration(seconds: 240),
     );
+    await tester.pumpAndSettle();
 
     // AppBar title should show uppercased updated name
     expect(find.text('ALICE UPDATED SHOP'), findsOneWidget);
-    // Description should be updated
-    expect(find.text('Updated E2E description'), findsOneWidget);
+    // Description should be updated (use widgetWithText to exclude form's EditableText
+    // which may linger in the widget tree during the pop-route animation)
+    expect(find.widgetWithText(Text, 'Updated E2E description'), findsOneWidget);
     // Edit button confirms we're on the detail page
     expect(find.byKey(const Key(EWTestKeys.businessEditButton)), findsOneWidget);
 
