@@ -280,6 +280,8 @@ abstract class _EncointerStore with Store {
     // update depending values without awaiting
     if (!_rootStore.settings.loading) {
       webApi.encointer.getCommunityData();
+      unawaited(getEncointerBalance());
+      unawaited(updateAggregatedAccountData());
     }
   }
 
@@ -378,6 +380,7 @@ abstract class _EncointerStore with Store {
 
     if (currentAddress.isEmpty || chosenCid == null) {
       Log.d('[getEncointerBalance] address empty or chosenCid == null', 'EncointerStore');
+      return;
     }
 
     final balanceEntry = await webApi.encointer.getEncointerBalance(currentAddress, chosenCid!);
