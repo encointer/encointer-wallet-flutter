@@ -9,8 +9,8 @@ import '../helpers/test_app_launcher.dart';
 import '../helpers/wait_helpers.dart';
 
 /// Independent single-device story:
-/// Launch app -> create account + PIN -> enable dev mode -> switch to dev network
-/// -> import Alice -> select demo community -> disable dev mode
+/// Launch app -> import Alice + PIN -> enable dev mode -> switch to dev network
+/// -> select demo community -> disable dev mode
 /// -> navigate to Bazaar -> create business with all fields + images
 /// -> verify business appears in list -> open detail -> edit
 /// -> verify prepopulation -> update name -> verify update.
@@ -24,10 +24,20 @@ void main() {
     final b = launcher.binding;
     final l = launcher.locales;
 
-    // --- Setup: Create throwaway account + PIN ---
-    await goToCreateAccountViewFromAcoountEntryView(tester);
-    await createAccount(tester, b, s, l, 'Throwaway');
-    await createPin(tester, b, s, l, EWTestKeys.testPIN);
+    // --- Setup: Import Alice directly as first account ---
+    await waitForWidget(tester, find.byKey(const Key(EWTestKeys.importAccount)));
+    await tester.tap(find.byKey(const Key(EWTestKeys.importAccount)));
+    await tester.pumpAndSettle();
+
+    await enterAccountName(tester, 'Alice');
+    await enterAccountMnemonic(tester, '//Alice');
+    await tester.tap(find.byKey(const Key(EWTestKeys.accountImportNext)));
+    await tester.pumpAndSettle();
+
+    // First account → PIN creation flow
+    await enterPin(tester, EWTestKeys.testPIN);
+    await tester.tap(find.byKey(const Key(EWTestKeys.createAccountConfirm)));
+    await tester.pumpAndSettle();
     await tapNotNowButtonBiometricAuthEnable(tester);
     await choosingCid(tester, b, s, l, 0);
 
@@ -38,13 +48,7 @@ void main() {
 
     // Switch to dev network
     await goToNetworkView(tester);
-    await changeDevNetwork(tester, 'Throwaway');
-
-    // Import Alice (has CC balance for IPFS uploads)
-    await goToHomeViewFromNavBar(tester);
-    await goToAddAcoountViewFromPanel(tester);
-    await importAccount(tester, b, s, l, 'Alice', '//Alice');
-    await closePanel(tester);
+    await changeDevNetwork(tester, 'Alice');
 
     // Select demo community
     await changeCommunity(tester);

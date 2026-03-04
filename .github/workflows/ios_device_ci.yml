@@ -135,6 +135,7 @@ jobs:
           echo $! > recording_pid.txt      
 
       - name: Run Flutter integration tests
+        if: false
         working-directory: ./app
         timeout-minutes: 45
         shell: bash

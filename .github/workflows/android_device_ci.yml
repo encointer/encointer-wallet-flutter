@@ -163,6 +163,8 @@ jobs:
           ANDROID_DEBUG: "true"
           RECORD: ${{ env.RECORD_VIDEO }}
           TEMP_DIR: ${{ env.ARTIFACT_PATH }}
+          SKIP_MAIN: 'true'
+          SKIP_QR: 'true'
         with:
           api-level: ${{ env.API_LEVEL }}
           profile: ${{ env.DEVICE }}

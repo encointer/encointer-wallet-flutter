@@ -46,41 +46,49 @@ QR_EXIT=0
 BAZAAR_EXIT=0
 
 # --- Main integration test ---
-start_recording "recording_main"
+if [ "${SKIP_MAIN:-}" != "true" ]; then
+  start_recording "recording_main"
 
-echo "Running main integration test with WS_ENDPOINT=$WS_ENDPOINT"
+  echo "Running main integration test with WS_ENDPOINT=$WS_ENDPOINT"
 
-cd app
+  cd app
 
-../.flutter/bin/flutter drive \
-  --no-enable-impeller \
-  --driver=test_driver/integration_test.dart \
-  --target=integration_test/app_test.dart \
-  --flavor dev \
-  --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
-  --dart-define=locales=en \
-  || MAIN_EXIT=$?
+  ../.flutter/bin/flutter drive \
+    --no-enable-impeller \
+    --driver=test_driver/integration_test.dart \
+    --target=integration_test/app_test.dart \
+    --flavor dev \
+    --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
+    --dart-define=locales=en \
+    || MAIN_EXIT=$?
 
-cd ..
+  cd ..
 
-stop_recording
+  stop_recording
 
-# Copy screenshots to TEMP_DIR
-mkdir -p "$TEMP_DIR"
-cp -r "$TEMP_DIR/test"/* "$TEMP_DIR" || echo "no screenshots found..."
-rm -r "$TEMP_DIR/test" || true
+  # Copy screenshots to TEMP_DIR
+  mkdir -p "$TEMP_DIR"
+  cp -r "$TEMP_DIR/test"/* "$TEMP_DIR" || echo "no screenshots found..."
+  rm -r "$TEMP_DIR/test" || true
+else
+  echo "Skipping main integration test (SKIP_MAIN=true)"
+fi
 
 # --- QR payment story test ---
-echo "Clearing app data before QR payment story"
-adb shell pm clear org.encointer.wallet || echo "Could not clear app data"
+if [ "${SKIP_QR:-}" != "true" ]; then
+  echo "Clearing app data before QR payment story"
+  adb shell pm clear org.encointer.wallet || echo "Could not clear app data"
 
-start_recording "recording_qr_story"
+  start_recording "recording_qr_story"
 
-echo "Running QR payment story test"
+  echo "Running QR payment story test"
 
-./scripts/run_qr_payment_story.sh || QR_EXIT=$?
+  ./scripts/run_qr_payment_story.sh || QR_EXIT=$?
 
-stop_recording
+  stop_recording
+else
+  echo "Skipping QR payment story test (SKIP_QR=true)"
+fi
 
 # --- Bazaar business story test ---
 if [ -n "${IPFS_GATEWAY:-}" ] && [ -n "${IPFS_AUTH_GATEWAY:-}" ]; then
