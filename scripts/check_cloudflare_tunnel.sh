@@ -1,10 +1,17 @@
 #!/bin/bash
 set -euo pipefail
 
-# Extract the tunnel host
-HTTP_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log | head -n1)
+# Extract the tunnel host (retry for up to 30s in case log is still being written)
+HTTP_URL=""
+for i in $(seq 1 30); do
+  HTTP_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log 2>/dev/null | head -n1 || true)
+  if [ -n "$HTTP_URL" ]; then
+    break
+  fi
+  sleep 1
+done
 if [ -z "$HTTP_URL" ]; then
-  echo "❌ ERROR: Could not find tunnel URL in log"
+  echo "❌ ERROR: Could not find tunnel URL in log after 30s"
   exit 1
 fi
 
@@ -13,8 +20,10 @@ HOST=$(echo "$HTTP_URL" | sed -E 's|https://([^/]+).*|\1|')
 echo "🌍 Tunnel URL: $HTTP_URL"
 echo "🔎 Verifying tunnel is reachable…"
 
-echo "Installing deps"
-sudo apt-get install -y dnsutils
+if ! command -v getent &>/dev/null || ! command -v nc &>/dev/null; then
+  echo "Installing deps"
+  sudo apt-get install -y dnsutils
+fi
 
 # Retry helper
 retry_command() {
