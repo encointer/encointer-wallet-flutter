@@ -30,7 +30,7 @@ jobs:
       ws_endpoint: ${{ steps.export_tunnel.outputs.ws }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Run encointer-node
         run: |
