@@ -22,36 +22,38 @@ class CreateAccountEntryView extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(image: Assets.images.assets.mosaicBackground.provider(), fit: BoxFit.cover),
         ),
-        child: Column(
-          children: <Widget>[
-            const Spacer(),
-            const EncointerLogo(),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: SecondaryButtonWide(
-                key: const Key(EWTestKeys.createAccount),
-                onPressed: () => Navigator.pushNamed(context, CreateAccountView.route),
-                child:
-                    Text(context.l10n.create, style: context.titleLarge.copyWith(color: context.colorScheme.primary)),
+        child: SafeArea(
+          child: Column(
+            children: <Widget>[
+              const Spacer(),
+              const EncointerLogo(),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: SecondaryButtonWide(
+                  key: const Key(EWTestKeys.createAccount),
+                  onPressed: () => Navigator.pushNamed(context, CreateAccountView.route),
+                  child:
+                      Text(context.l10n.create, style: context.titleLarge.copyWith(color: context.colorScheme.primary)),
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            ImportAccountLink(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext _) => Provider(
-                      create: (_) => NewAccountStore(context.read<AppStore>()),
-                      child: const ImportAccountView(),
+              const SizedBox(height: 16),
+              ImportAccountLink(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext _) => Provider(
+                        create: (_) => NewAccountStore(context.read<AppStore>()),
+                        child: const ImportAccountView(),
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: 20),
-          ],
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );
