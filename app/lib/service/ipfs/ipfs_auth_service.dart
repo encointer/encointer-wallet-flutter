@@ -43,7 +43,7 @@ class IpfsAuthService {
   IpfsAuthService(this._ewHttp, {required this.gatewayUrl});
 
   final EwHttp _ewHttp;
-  final String gatewayUrl;
+  String gatewayUrl;
 
   // Cache tokens per communityId
   final Map<String, AuthToken> _tokenCache = {};

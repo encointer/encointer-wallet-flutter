@@ -38,7 +38,7 @@ class IpfsUploadService {
       : _client = client ?? http.Client();
 
   final IpfsAuthService _authService;
-  final String gatewayUrl;
+  String gatewayUrl;
   final http.Client _client;
 
   /// Uploads a file to IPFS via the authenticated gateway.
