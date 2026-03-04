@@ -8,25 +8,17 @@ This guide explains how to run the backend services locally for development and 
 # 1. Bootstrap an Encointer dev chain (one-time)
 make bootstrap
 
-# 2. Start a story node from the snapshot
-make story STORY=dev
+# 2. Start node + IPFS stack from the snapshot
+make story STORY=dev IPFS=1
 
-# 3. Start IPFS + auth gateway
-docker run -d --name kubo -p 5001:5001 -p 8080:8080 -e IPFS_PROFILE=server ipfs/kubo:latest
-docker run -d --name ipfs-gateway -p 5050:5050 \
-  --add-host=host.docker.internal:host-gateway \
-  -e PORT=5050 -e JWT_SECRET=dev-secret \
-  -e IPFS_API_URL=http://host.docker.internal:5001 \
-  -e CHAIN_RPC_URL=ws://host.docker.internal:9944 \
-  -e MIN_BALANCE_CC=0.001 \
-  encointer/ipfs-gateway
-
-# 4. Run the app against local services
+# 3. Run the app against local services
 .flutter/bin/flutter run --flavor dev \
   --dart-define=WS_ENDPOINT=ws://localhost:9944 \
   --dart-define=IPFS_GATEWAY=http://localhost:8080 \
   --dart-define=IPFS_AUTH_GATEWAY=http://localhost:5050
 ```
+
+Omit `IPFS=1` if you only need the Encointer node (no bazaar features).
 
 ## Encointer Node
 
@@ -42,14 +34,17 @@ make bootstrap   # starts node, bootstraps demo community, saves snapshot to vol
 
 ```shell
 make story STORY=dev             # clone snapshot → start node on port 9944
+make story STORY=dev IPFS=1      # node + kubo + auth gateway
 make story STORY=bob RPC_PORT=9945  # run multiple nodes in parallel
 ```
 
 ### Managing nodes
 
 ```shell
-make stop-story STORY=dev        # stop container (keeps state)
-make restart-story STORY=dev     # reset to bootstrap snapshot + restart
+make stop-story STORY=dev        # stop node + IPFS containers (keeps state)
+make restart-story STORY=dev IPFS=1  # reset to bootstrap + restart all
+make stop-ipfs STORY=dev         # stop only IPFS containers
+make ipfs-check STORY=dev        # health-check kubo + auth gateway
 make rm-story STORY=dev          # delete story state completely
 make volumes                     # list encointer volumes
 ```
@@ -86,7 +81,7 @@ docker run -d --name kubo -p 5001:5001 -p 8080:8080 \
 Verify it's running:
 
 ```shell
-curl -s http://localhost:5001/api/v0/id | head -c 100
+curl -s -X POST http://localhost:5001/api/v0/id | head -c 100
 ```
 
 Ports:
@@ -149,8 +144,7 @@ Without the overrides, the app defaults to `10.0.2.2` (Android emulator) or `loc
 ## Teardown
 
 ```shell
-docker rm -f kubo ipfs-gateway
-make stop-story STORY=dev
+make stop-story STORY=dev   # stops node + any IPFS containers for the story
 ```
 
 ## Zombienet
