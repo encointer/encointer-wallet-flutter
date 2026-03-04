@@ -232,8 +232,12 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     if (_clearLogo) {
       logoCid = null;
     } else if (_pickedLogo != null) {
+      // ignore: avoid_print
+      print('[BazaarForm] _buildBusiness: uploading logo');
       final bytes = Uint8List.fromList(await _pickedLogo!.readAsBytes());
       logoCid = await _uploadBytes(bytes, _pickedLogo!.name);
+      // ignore: avoid_print
+      print('[BazaarForm] _buildBusiness: logo uploaded, cid=$logoCid');
     } else {
       logoCid = _existing?.logo;
     }
@@ -251,7 +255,11 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
 
     String? photosCid;
     if (photoFiles.isNotEmpty) {
+      // ignore: avoid_print
+      print('[BazaarForm] _buildBusiness: uploading ${photoFiles.length} photos');
       photosCid = await _uploadFolder(photoFiles);
+      // ignore: avoid_print
+      print('[BazaarForm] _buildBusiness: photos uploaded, cid=$photosCid');
     }
 
     return IpfsBusiness(
@@ -278,15 +286,27 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
   }
 
   Future<void> _onSave() async {
-    if (!_formKey.currentState!.validate()) return;
+    // ignore: avoid_print
+    print('[BazaarForm] _onSave called, _saving=$_saving, _isEdit=$_isEdit');
+    if (!_formKey.currentState!.validate()) {
+      // ignore: avoid_print
+      print('[BazaarForm] _onSave: form validation failed');
+      return;
+    }
 
     final l10n = context.l10n;
     if (_selectedCategory == null) {
+      // ignore: avoid_print
+      print('[BazaarForm] _onSave: category is null');
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.businessCategoryRequired)));
       return;
     }
 
-    if (_saving) return;
+    if (_saving) {
+      // ignore: avoid_print
+      print('[BazaarForm] _onSave: already saving, returning');
+      return;
+    }
 
     setState(() => _saving = true);
 
@@ -296,6 +316,8 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
       } else {
         await _saveCreate();
       }
+      // ignore: avoid_print
+      print('[BazaarForm] _onSave: save completed successfully');
     } catch (e) {
       Log.e('Business form save error: $e', _logTarget);
       if (mounted) {
@@ -369,6 +391,8 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
   }
 
   Future<void> _saveCreate() async {
+    // ignore: avoid_print
+    print('[BazaarForm] _saveCreate: starting');
     final l10n = context.l10n;
     final store = context.read<AppStore>();
     final api = webApi;
@@ -377,12 +401,20 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
 
     // Authenticate once upfront
     final authenticated = await context.read<LoginStore>().ensureAuthenticated(context);
+    // ignore: avoid_print
+    print('[BazaarForm] _saveCreate: authenticated=$authenticated');
     if (!authenticated) return;
 
     // Upload to IPFS
     setState(() => _progressMessage = l10n.businessUploadingData);
+    // ignore: avoid_print
+    print('[BazaarForm] _saveCreate: building business (logo=${_pickedLogo != null}, photos=${_pickedPhotos.length})');
     final business = await _buildBusiness();
+    // ignore: avoid_print
+    print('[BazaarForm] _saveCreate: uploading metadata JSON');
     final metadataCid = await _uploadJson(business.toJson());
+    // ignore: avoid_print
+    print('[BazaarForm] _saveCreate: metadata uploaded, cid=$metadataCid');
 
     // Step 1: createPure
     setState(() => _progressMessage = l10n.businessCreatingAccount);
