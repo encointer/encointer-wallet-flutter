@@ -147,13 +147,13 @@ class IpfsUploadService {
 
     try {
       // ignore: avoid_print
-      print('[IpfsUpload] uploadFolder: sending ${files.length} files to $uri');
+      print('[IpfsUpload] uploadFolder: sending ${files.length} files (${files.keys.toList()}) to $uri');
       final streamed = await _client.send(request).timeout(_uploadTimeout);
       // ignore: avoid_print
       print('[IpfsUpload] uploadFolder: got response status=${streamed.statusCode}, reading body...');
       final response = await http.Response.fromStream(streamed).timeout(_uploadTimeout);
       // ignore: avoid_print
-      print('[IpfsUpload] uploadFolder: body read complete (${response.body.length} chars)');
+      print('[IpfsUpload] uploadFolder: body read complete (${response.body.length} chars), raw: ${response.body}');
 
       if (response.statusCode == HttpStatus.ok) {
         // Response is newline-delimited JSON; the entry with empty Name is the directory.
@@ -162,6 +162,8 @@ class IpfsUploadService {
         for (final line in lines) {
           final json = jsonDecode(line) as Map<String, dynamic>;
           final result = IpfsUploadResult.fromJson(json);
+          // ignore: avoid_print
+          print('[IpfsUpload] uploadFolder: parsed entry Name="${result.name}" Hash=${result.hash}');
           if (result.name.isEmpty) dirResult = result;
         }
         if (dirResult == null) {
