@@ -156,12 +156,13 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: infra-logs-${{ inputs.device }}
+          name: infra-logs-${{ inputs.device }}-api${{ inputs.api_level }}
           path: infra-logs/
 
       # Todo: Ideally, we should cancel this job after the CI is done, but GitHub Actions does not
       # Support cancelling on a job-level (only workflow-level).
       - name: Keep tunnel alive and check every 30s
+        if: ${{ !cancelled() && steps.trigger_device.outcome == 'success' }}
         run: |
           echo "⏳ Monitoring Cloudflare tunnel for up to 45 minutes..."
           MAX_MINUTES=55

@@ -26,6 +26,8 @@ void main() {
 
     // --- Setup: Import Alice directly as first account ---
     await waitForWidget(tester, find.byKey(const Key(EWTestKeys.importAccount)));
+    await tester.ensureVisible(find.byKey(const Key(EWTestKeys.importAccount)));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key(EWTestKeys.importAccount)));
     await tester.pumpAndSettle();
 

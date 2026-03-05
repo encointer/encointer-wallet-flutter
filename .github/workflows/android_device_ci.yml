@@ -178,6 +178,7 @@ jobs:
       - name: "Capture logcat"
         if: always()
         run: |
+          mkdir -p ${{ env.ARTIFACT_PATH }}
           adb logcat -d -s flutter > ${{ env.ARTIFACT_PATH }}/logcat_flutter.txt || true
           adb logcat -d > ${{ env.ARTIFACT_PATH }}/logcat_full.txt || true
 
