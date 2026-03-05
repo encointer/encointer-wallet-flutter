@@ -15,21 +15,28 @@ CURRENT_RECORDING=""
 start_recording() {
   local name="$1"
   if [ "${RECORD:-}" == "true" ]; then
-    adb shell screenrecord "/sdcard/${name}.mp4" &
-    RECORDING_PID=${!}
+    # Android screenrecord has a 180s hard limit per recording.
+    # Chain up to 5 segments (15 min total) to cover long-running tests.
+    (
+      for i in 1 2 3 4 5; do
+        adb shell screenrecord --time-limit 180 "/sdcard/${name}_part${i}.mp4" || break
+      done
+    ) &
+    RECORDING_PID=$!
     CURRENT_RECORDING="$name"
-    echo "Recording started: ${name}.mp4 (pid: $RECORDING_PID)"
+    echo "Recording started: ${name} (pid: $RECORDING_PID, chained 180s segments)"
   fi
 }
 
 stop_recording() {
   if [ "${RECORD:-}" == "true" ] && [ -n "$RECORDING_PID" ]; then
-    echo "Stopping recording: ${CURRENT_RECORDING}.mp4"
-    kill -SIGINT "$RECORDING_PID" || echo "Recording process already stopped"
-    wait "$RECORDING_PID" 2>/dev/null || true
-    sleep 5
+    echo "Stopping recording: ${CURRENT_RECORDING}"
+    kill "$RECORDING_PID" 2>/dev/null || true
+    sleep 3
     mkdir -p "$TEMP_DIR"
-    adb pull "/sdcard/${CURRENT_RECORDING}.mp4" "$TEMP_DIR" || echo "Could not fetch recording from device"
+    for i in 1 2 3 4 5; do
+      adb pull "/sdcard/${CURRENT_RECORDING}_part${i}.mp4" "$TEMP_DIR" 2>/dev/null || true
+    done
     RECORDING_PID=""
     CURRENT_RECORDING=""
   fi

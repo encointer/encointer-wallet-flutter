@@ -17,6 +17,7 @@ fi
 cd app
 
 ../.flutter/bin/flutter drive \
+  --no-enable-impeller \
   --driver=test_driver/integration_test.dart \
   --target=integration_test/stories/bazaar_business_form_test.dart \
   --flavor dev \
