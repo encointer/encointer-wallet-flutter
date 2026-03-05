@@ -352,6 +352,18 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     // (SingleBusinessDetail), so !isOwner here implies delegate.
     final isOwner = AddressUtils.areEqual(widget.params.businessController!, currentAddress);
 
+    Log.d('_saveEdit: submitting via ${isOwner ? "owner" : "proxy"} path', _logTarget);
+
+    void onTxError(DispatchError dispatchError) {
+      Log.e('updateBusiness dispatch error: ${dispatchError.toJson()}', _logTarget);
+      // ignore: avoid_print
+      print('[BazaarForm] _saveEdit: extrinsic FAILED: ${dispatchError.toJson()}');
+      if (mounted) {
+        final msg = getLocalizedTxErrorMessage(l10n, dispatchError);
+        AppAlert.showErrorDialog(context, errorText: '${msg.title}: ${msg.body}', buttontext: l10n.ok);
+      }
+    }
+
     if (isOwner) {
       await submitUpdateBusiness(
         context,
@@ -364,6 +376,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
         onFinish: (_, __) {
           if (mounted) Navigator.of(context).pop(business);
         },
+        onError: onTxError,
       );
     } else {
       // Proxy path: look up the user's actual proxy type for this controller
@@ -388,6 +401,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
         onFinish: (_, __) {
           if (mounted) Navigator.of(context).pop(business);
         },
+        onError: onTxError,
       );
     }
   }

@@ -119,6 +119,47 @@ jobs:
             echo "::warning::IPFS tunnel(s) not ready after 60s (gateway=$IPFS_GW, auth=$IPFS_AUTH)"
           fi
 
+      - name: Verify IPFS tunnel health
+        run: |
+          set -euo pipefail
+
+          IPFS_GW=$(grep -o 'https://[^ ]*trycloudflare.com' ipfs_tunnel.log | head -n1)
+          IPFS_AUTH=$(grep -o 'https://[^ ]*trycloudflare.com' ipfs_auth_tunnel.log | head -n1)
+
+          # Kubo HTTP gateway (:8080) — fetch the empty directory CID (always present)
+          echo "🔎 Checking IPFS gateway tunnel: $IPFS_GW"
+          for i in $(seq 1 20); do
+            STATUS=$(curl -sS --max-time 5 -o /dev/null -w '%{http_code}' \
+              "$IPFS_GW/ipfs/QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn" 2>/dev/null || echo "000")
+            if [ "$STATUS" = "200" ] || [ "$STATUS" = "301" ]; then
+              echo "✅ IPFS gateway healthy (HTTP $STATUS)"
+              break
+            fi
+            echo "⏳ Attempt $i/20 (HTTP $STATUS)..."
+            if [ "$i" -eq 20 ]; then
+              echo "❌ IPFS gateway not responding after 60s"
+              exit 1
+            fi
+            sleep 3
+          done
+
+          # Auth gateway (:5050) — /health endpoint
+          echo "🔎 Checking IPFS auth gateway tunnel: $IPFS_AUTH"
+          for i in $(seq 1 20); do
+            STATUS=$(curl -sS --max-time 5 -o /dev/null -w '%{http_code}' \
+              "$IPFS_AUTH/health" 2>/dev/null || echo "000")
+            if [ "$STATUS" = "200" ]; then
+              echo "✅ IPFS auth gateway healthy"
+              break
+            fi
+            echo "⏳ Attempt $i/20 (HTTP $STATUS)..."
+            if [ "$i" -eq 20 ]; then
+              echo "❌ IPFS auth gateway not responding after 60s"
+              exit 1
+            fi
+            sleep 3
+          done
+
       - id: export_ipfs_tunnels
         name: Export IPFS endpoints
         run: |
