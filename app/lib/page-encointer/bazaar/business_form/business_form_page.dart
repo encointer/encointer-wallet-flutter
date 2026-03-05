@@ -319,6 +319,8 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
       // ignore: avoid_print
       print('[BazaarForm] _onSave: save completed successfully');
     } catch (e) {
+      // ignore: avoid_print
+      print('[BazaarForm] _onSave ERROR: $e');
       Log.e('Business form save error: $e', _logTarget);
       if (mounted) {
         AppAlert.showErrorDialog(context, errorText: e.toString(), buttontext: context.l10n.ok);

@@ -10,7 +10,7 @@ import 'package:ew_log/ew_log.dart';
 import 'package:http/http.dart' as http;
 
 const _logTarget = 'IpfsUpload';
-const _uploadTimeout = Duration(seconds: 30);
+const _uploadTimeout = Duration(seconds: 120);
 
 class IpfsUploadResult {
   IpfsUploadResult({
@@ -146,8 +146,14 @@ class IpfsUploadService {
     }
 
     try {
+      // ignore: avoid_print
+      print('[IpfsUpload] uploadFolder: sending ${files.length} files to $uri');
       final streamed = await _client.send(request).timeout(_uploadTimeout);
+      // ignore: avoid_print
+      print('[IpfsUpload] uploadFolder: got response status=${streamed.statusCode}, reading body...');
       final response = await http.Response.fromStream(streamed).timeout(_uploadTimeout);
+      // ignore: avoid_print
+      print('[IpfsUpload] uploadFolder: body read complete (${response.body.length} chars)');
 
       if (response.statusCode == HttpStatus.ok) {
         // Response is newline-delimited JSON; the entry with empty Name is the directory.
@@ -162,6 +168,8 @@ class IpfsUploadService {
           Log.e('[IpfsUpload] uploadFolder: no directory entry in response. Raw body: ${response.body}', _logTarget);
           throw IpfsUploadException('No directory entry in response');
         }
+        // ignore: avoid_print
+        print('[IpfsUpload] uploadFolder: success, dirCid=${dirResult.hash}');
         Log.d('[IpfsUpload] Folder success: ${dirResult.hash}', _logTarget);
         return dirResult;
       }

@@ -150,7 +150,7 @@ jobs:
       - name: Run bazaar business story
         if: ${{ env.IPFS_GATEWAY != '' && env.IPFS_AUTH_GATEWAY != '' }}
         working-directory: ./app
-        timeout-minutes: 15
+        timeout-minutes: 20
         shell: bash
         run: |
           ../.flutter/bin/flutter drive \
