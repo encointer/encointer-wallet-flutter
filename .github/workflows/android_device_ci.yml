@@ -194,15 +194,6 @@ jobs:
           disable-animations: true
           script: ./scripts/android_integration_test.sh
 
-      - name: "Capture logcat"
-        if: always()
-        timeout-minutes: 2
-        continue-on-error: true
-        run: |
-          mkdir -p ${{ env.ARTIFACT_PATH }}
-          adb logcat -d -s flutter > ${{ env.ARTIFACT_PATH }}/logcat_flutter.txt || true
-          adb logcat -d > ${{ env.ARTIFACT_PATH }}/logcat_full.txt || true
-
       - name: "Upload screenshots"
         if: always()
         uses: actions/upload-artifact@v7

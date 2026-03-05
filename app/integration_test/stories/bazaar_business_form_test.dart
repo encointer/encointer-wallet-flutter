@@ -224,15 +224,23 @@ void main() {
     expect(descriptionField.controller.text, 'A test business for E2E');
 
     // --- Update Business ---
-    // Update name
-    await tester.enterText(find.byKey(const Key(EWTestKeys.businessName)), 'Alice Updated Shop');
+    // Set controller text directly — tester.enterText is unreliable on Android
+    // CI emulators where widget rebuilds disrupt the text input channel.
+    // See also: account_manage_helper.dart, contact_helper.dart.
+    final nameEditable = tester.widget<EditableText>(
+      find.descendant(of: find.byKey(const Key(EWTestKeys.businessName)), matching: find.byType(EditableText)),
+    );
+    nameEditable.controller.text = 'Alice Updated Shop';
     await tester.pumpAndSettle();
 
     // Update description
     final editFormListView = find.byType(ListView);
     await scrollUntilVisible(tester,
         scrollable: editFormListView, item: find.byKey(const Key(EWTestKeys.businessDescription)));
-    await tester.enterText(find.byKey(const Key(EWTestKeys.businessDescription)), 'Updated E2E description');
+    final descEditable = tester.widget<EditableText>(
+      find.descendant(of: find.byKey(const Key(EWTestKeys.businessDescription)), matching: find.byType(EditableText)),
+    );
+    descEditable.controller.text = 'Updated E2E description';
     await tester.pumpAndSettle();
 
     // Scroll to save button and tap
