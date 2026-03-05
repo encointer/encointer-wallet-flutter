@@ -63,12 +63,19 @@ jobs:
 
       # This will fail if the version and build number in the app/pubspec.yaml
       # is not monotonically increasing compared to the last released version.
+      # Note: apple-actions/upload-testflight-build@v4 uses iTMSTransporter which
+      # was removed in Xcode 26. Using xcrun altool directly instead.
       - name: 'Upload app to TestFlight'
-        # Only deploy if we are on beta
         if: github.ref == 'refs/heads/beta'
-        uses: apple-actions/upload-testflight-build@v4
-        with:
-          app-path: app/build/ios/ipa/Encointerwallet.ipa
-          issuer-id: ${{ secrets.APP_STORE_ISSUER_ID }}
-          api-key-id: ${{ secrets.APP_STORE_KEY_ID }}
-          api-private-key: ${{ secrets.APP_STORE_PRIVATE_KEY }}
+        env:
+          APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
+          APP_STORE_PRIVATE_KEY: ${{ secrets.APP_STORE_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/private_keys
+          echo "$APP_STORE_PRIVATE_KEY" > ~/private_keys/AuthKey_${APP_STORE_KEY_ID}.p8
+          xcrun altool --upload-app \
+            -f app/build/ios/ipa/Encointerwallet.ipa \
+            -t ios \
+            --apiKey "$APP_STORE_KEY_ID" \
+            --apiIssuer "${{ secrets.APP_STORE_ISSUER_ID }}"
+          rm -rf ~/private_keys
