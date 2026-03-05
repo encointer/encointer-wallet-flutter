@@ -91,7 +91,7 @@ jobs:
         if: env.IPFS_GATEWAY != ''
         shell: bash
         run: |
-          set -euo pipefail
+          set -uo pipefail
           echo "📦 IPFS Gateway: $IPFS_GATEWAY"
           echo "🔐 IPFS Auth Gateway: $IPFS_AUTH_GATEWAY"
 
@@ -101,7 +101,9 @@ jobs:
             [ -z "$URL" ] && continue
             STATUS=$(curl -sS --max-time 10 -o /dev/null -w '%{http_code}' "$URL" || echo "000")
             echo "$LABEL → HTTP $STATUS"
-            [ "$STATUS" = "000" ] && echo "::warning::$LABEL tunnel unreachable"
+            if [ "$STATUS" = "000" ]; then
+              echo "::warning::$LABEL tunnel unreachable"
+            fi
           done
 
       - uses: actions/setup-java@v5
