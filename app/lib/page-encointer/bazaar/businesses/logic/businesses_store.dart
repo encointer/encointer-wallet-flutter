@@ -54,11 +54,15 @@ abstract class _BusinessesStoreBase with Store {
     final accountBusinessTuples = await _bazaarGetBusinesses(cid);
     Log.d('getBusinesses: RPC returned ${accountBusinessTuples.length} entries for cid=$cid', _targetLogger);
 
+    // Check delegate status before IPFS fetches — controllers are available
+    // from chain data. This ensures delegateOfControllers is populated before
+    // business cards render (fixes edit-button flake).
+    final controllers = accountBusinessTuples.map((t) => t.controller).toSet();
+    await _checkDelegateStatus(controllers, currentAddress);
+
     await _updateBusinesses(accountBusinessTuples);
 
     Log.d('getBusinesses: after update businesses = $businesses', _targetLogger);
-
-    await _checkDelegateStatus(currentAddress);
 
     _update();
   }
@@ -106,13 +110,12 @@ abstract class _BusinessesStoreBase with Store {
     );
   }
 
-  Future<void> _checkDelegateStatus(String currentAddress) async {
-    if (currentAddress.isEmpty || businesses.isEmpty) {
+  Future<void> _checkDelegateStatus(Set<String> controllers, String currentAddress) async {
+    if (currentAddress.isEmpty || controllers.isEmpty) {
       delegateOfControllers = {};
       return;
     }
 
-    final controllers = businesses.map((b) => b.controller!).toSet();
     final result = <String>{};
 
     final nonOwned = controllers.where((c) => !AddressUtils.areEqual(c, currentAddress)).toList();
