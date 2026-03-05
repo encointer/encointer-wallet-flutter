@@ -49,6 +49,9 @@ Future<void> submitTx(
   void Function(DispatchError report)? onError,
 }) async {
   final authenticated = await context.read<LoginStore>().ensureAuthenticated(context);
+  Log.d('submitTx: authenticated=$authenticated', 'submitTx');
+  // ignore: avoid_print
+  print('[submitTx] authenticated=$authenticated');
   if (authenticated) {
     return submitTxInner(
       context,
@@ -60,6 +63,9 @@ Future<void> submitTx(
       onFinish: onFinish,
     );
   } else {
+    Log.e('submitTx: authentication failed, tx skipped', 'submitTx');
+    // ignore: avoid_print
+    print('[submitTx] authentication failed — tx skipped');
     RootSnackBar.showMsg(context.l10n.authenticationNeeded);
   }
 }

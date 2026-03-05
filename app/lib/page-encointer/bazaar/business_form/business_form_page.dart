@@ -352,7 +352,10 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     // (SingleBusinessDetail), so !isOwner here implies delegate.
     final isOwner = AddressUtils.areEqual(widget.params.businessController!, currentAddress);
 
-    Log.d('_saveEdit: submitting via ${isOwner ? "owner" : "proxy"} path', _logTarget);
+    final path = isOwner ? 'owner' : 'proxy';
+    Log.d('_saveEdit: submitting via $path path', _logTarget);
+    // ignore: avoid_print
+    print('[BazaarForm] _saveEdit: submitting via $path path');
 
     void onTxError(DispatchError dispatchError) {
       Log.e('updateBusiness dispatch error: ${dispatchError.toJson()}', _logTarget);
@@ -364,6 +367,13 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
       }
     }
 
+    void onTxFinish(dynamic _, dynamic __) {
+      // ignore: avoid_print
+      print('[BazaarForm] _saveEdit: onFinish called, mounted=$mounted');
+      Log.d('_saveEdit: onFinish called, mounted=$mounted', _logTarget);
+      if (mounted) Navigator.of(context).pop(business);
+    }
+
     if (isOwner) {
       await submitUpdateBusiness(
         context,
@@ -373,9 +383,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
         cid,
         metadataCid,
         txPaymentAsset: cid,
-        onFinish: (_, __) {
-          if (mounted) Navigator.of(context).pop(business);
-        },
+        onFinish: onTxFinish,
         onError: onTxError,
       );
     } else {
@@ -398,12 +406,12 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
         controllerPubKey,
         txPaymentAsset: cid,
         proxyType: proxyDef.proxyType,
-        onFinish: (_, __) {
-          if (mounted) Navigator.of(context).pop(business);
-        },
+        onFinish: onTxFinish,
         onError: onTxError,
       );
     }
+    // ignore: avoid_print
+    print('[BazaarForm] _saveEdit: submitTx returned');
   }
 
   Future<void> _saveCreate() async {
