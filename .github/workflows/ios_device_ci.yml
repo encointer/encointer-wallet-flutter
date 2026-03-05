@@ -91,6 +91,25 @@ jobs:
           
           echo "✅ JSON-RPC health check passed"
 
+      - name: Debug IPFS endpoints
+        if: env.IPFS_GATEWAY != ''
+        shell: bash
+        run: |
+          set -uo pipefail
+          echo "📦 IPFS Gateway: $IPFS_GATEWAY"
+          echo "🔐 IPFS Auth Gateway: $IPFS_AUTH_GATEWAY"
+
+          for label_url in "IPFS_GW:$IPFS_GATEWAY" "IPFS_AUTH:$IPFS_AUTH_GATEWAY"; do
+            LABEL="${label_url%%:*}"
+            URL="${label_url#*:}"
+            [ -z "$URL" ] && continue
+            STATUS=$(curl -sS --max-time 10 -o /dev/null -w '%{http_code}' "$URL" || echo "000")
+            echo "$LABEL → HTTP $STATUS"
+            if [ "$STATUS" = "000" ]; then
+              echo "::warning::$LABEL tunnel unreachable"
+            fi
+          done
+
       - name: prepare xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
