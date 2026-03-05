@@ -156,7 +156,7 @@ jobs:
 
       - name: Upload screenshots and recording
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.DEVICE }}
           path: ${{ env.ARTIFACT_PATH }}
