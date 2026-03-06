@@ -29,7 +29,9 @@ class BazaarPage extends StatefulWidget {
   State<BazaarPage> createState() => _BazaarPageState();
 }
 
-class _BazaarPageState extends State<BazaarPage> {
+class _BazaarPageState extends State<BazaarPage> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   @override
   void initState() {
     super.initState();
@@ -139,6 +141,7 @@ class _BazaarPageState extends State<BazaarPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final l10n = context.l10n;
     final store = context.read<AppStore>();
 
