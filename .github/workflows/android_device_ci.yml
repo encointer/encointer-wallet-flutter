@@ -161,7 +161,8 @@ jobs:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-${{ env.API_LEVEL }}-${{ env.DEVICE }}
+            /usr/local/lib/android/sdk/system-images
+          key: avd-v2-${{ env.API_LEVEL }}-${{ env.DEVICE }}
 
       - name: "Create AVD and generate a clean snapshot for caching"
         if: steps.avd-cache.outputs.cache-hit != 'true'
@@ -175,22 +176,68 @@ jobs:
           disable-animations: false
           script: echo "Generated AVD snapshot for caching."
 
-      - name: "Android Integration Tests"
-        timeout-minutes: 45
-        uses: reactivecircus/android-emulator-runner@v2
-        env:
-          ANDROID_DEBUG: "true"
-          RECORD: ${{ env.RECORD_VIDEO }}
-          TEMP_DIR: ${{ env.ARTIFACT_PATH }}
-        with:
-          api-level: ${{ env.API_LEVEL }}
-          profile: ${{ env.DEVICE }}
-          force-avd-creation: false
-          arch: x86_64
-          # as we use the cleanly cached emulator, we need to define `-no-snapshot-save` here.
-          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: true
-          script: ./scripts/android_integration_test.sh
+      - name: Start Android emulator
+        id: start-emulator
+        timeout-minutes: 10
+        run: ./scripts/android_start_emulator.sh
+
+      - name: Start screen recording
+        if: env.RECORD_VIDEO == 'true' && steps.start-emulator.conclusion == 'success'
+        run: |
+          # Android screenrecord has a 180s hard limit per recording.
+          # Chain segments to cover long-running tests.
+          (
+            for i in $(seq 1 20); do
+              adb shell screenrecord --time-limit 180 "/sdcard/recording_part${i}.mp4" || break
+            done
+          ) &
+          echo $! > /tmp/recording_pid.txt
+
+      - name: Main integration test
+        if: ${{ !cancelled() && steps.start-emulator.conclusion == 'success' }}
+        timeout-minutes: 30
+        working-directory: ./app
+        run: |
+          ../.flutter/bin/flutter drive \
+            --no-enable-impeller \
+            --driver=test_driver/integration_test.dart \
+            --target=integration_test/app_test.dart \
+            --flavor dev \
+            --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
+            --dart-define=locales=en
+
+      - name: QR payment story
+        if: ${{ !cancelled() && steps.start-emulator.conclusion == 'success' }}
+        timeout-minutes: 10
+        run: |
+          adb shell pm clear org.encointer.wallet || echo "Could not clear app data"
+          ./scripts/run_qr_payment_story.sh
+
+      - name: Bazaar business story
+        if: ${{ !cancelled() && steps.start-emulator.conclusion == 'success' && env.IPFS_GATEWAY != '' && env.IPFS_AUTH_GATEWAY != '' }}
+        timeout-minutes: 10
+        run: |
+          adb shell pm clear org.encointer.wallet || echo "Could not clear app data"
+          ./scripts/run_bazaar_business_story.sh
+
+      - name: Stop recording and collect artifacts
+        if: always()
+        run: |
+          if [ -f /tmp/recording_pid.txt ]; then
+            kill "$(cat /tmp/recording_pid.txt)" 2>/dev/null || true
+            sleep 3
+            mkdir -p "$ARTIFACT_PATH"
+            for i in $(seq 1 20); do
+              adb pull "/sdcard/recording_part${i}.mp4" "$ARTIFACT_PATH" 2>/dev/null || true
+            done
+          fi
+          mkdir -p "$ARTIFACT_PATH"
+          cp -r "$ARTIFACT_PATH/test"/* "$ARTIFACT_PATH" 2>/dev/null || echo "no screenshots found"
+          rm -r "$ARTIFACT_PATH/test" 2>/dev/null || true
+
+      - name: Terminate emulator
+        if: always()
+        run: adb emu kill || true
 
       - name: "Upload screenshots"
         if: always()
