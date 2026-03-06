@@ -27,6 +27,9 @@ class IpfsApi {
   static const String lsRequest = '/api/v0/ls';
   static const String catRequest = '/api/v0/cat';
 
+  final _imageCache = <String, Uint8List>{};
+  final _folderListingCache = <String, List<IpfsLink>>{};
+
   Future<String?> getCommunityIcon(String ipfsCid) async {
     if (ipfsCid.isEmpty) {
       Log.d('[IPFS] return default icon (no CID set)', logTarget);
@@ -81,13 +84,20 @@ class IpfsApi {
     }, (r) => r);
   }
 
-  /// 🖼️ Fetches and caches an image, works with folder+file OR direct CID.
+  /// Fetches and caches an image, works with folder+file OR direct CID.
+  /// Uses an in-memory cache to avoid FutureBuilder flash on repeated loads.
   Future<Uint8List?> getImageBytes(String cidOrFolder, [String? imageName]) async {
+    final cacheKey = imageName != null ? '$cidOrFolder/$imageName' : cidOrFolder;
+    final memoryCached = _imageCache[cacheKey];
+    if (memoryCached != null) return memoryCached;
+
     final cacheFile = await _getCachedFile(cidOrFolder, imageName);
 
     if (cacheFile.existsSync()) {
       Log.d('[IPFS] Cache hit for ${imageName ?? cidOrFolder}', 'Ipfs');
-      return cacheFile.readAsBytes();
+      final bytes = await cacheFile.readAsBytes();
+      _imageCache[cacheKey] = bytes;
+      return bytes;
     }
 
     final url = _buildIpfsUrl(cidOrFolder, imageName);
@@ -98,6 +108,7 @@ class IpfsApi {
     }, (r) async {
       await cacheFile.create(recursive: true);
       await cacheFile.writeAsBytes(r);
+      _imageCache[cacheKey] = r;
       Log.d('[IPFS] Cached ${imageName ?? cidOrFolder}', 'Ipfs');
       return r;
     });
@@ -136,7 +147,11 @@ class IpfsApi {
   }
 
   /// Tries to list a folder. Uses API if available, otherwise falls back to gateway HTML.
+  /// Results are cached in memory so repeated calls (e.g. re-opening detail page) resolve instantly.
   Future<List<IpfsLink>> listFolderDetailed(String folderCid) async {
+    final cached = _folderListingCache[folderCid];
+    if (cached != null) return cached;
+
     try {
       final apiUrl = '$gateway$lsRequest';
       final response = await ewHttp.postForm<Map<String, dynamic>>(
@@ -145,18 +160,22 @@ class IpfsApi {
         decodeResponse: (res) => jsonDecode(utf8.decode(res.bodyBytes)) as Map<String, dynamic>,
       );
 
-      return response.fold((l) {
+      final links = await response.fold<Future<List<IpfsLink>>>((l) {
         Log.d('[listFolderDetailed] API not available, fallback', logTarget);
         return _listViaGateway(folderCid).then((r) => r.links);
       }, (r) {
         // Convert API response into typed objects
         final lsResponse = IpfsLsResponse.fromJson(r);
-        if (lsResponse.objects.isEmpty) return <IpfsLink>[];
-        return lsResponse.objects.first.links;
+        if (lsResponse.objects.isEmpty) return Future.value(<IpfsLink>[]);
+        return Future.value(lsResponse.objects.first.links);
       });
+      _folderListingCache[folderCid] = links;
+      return links;
     } catch (e, s) {
       Log.d('[listFolderDetailed] API call failed, fallback: $e', logTarget, s);
-      return _listViaGateway(folderCid).then((r) => r.links);
+      final links = await _listViaGateway(folderCid).then((r) => r.links);
+      _folderListingCache[folderCid] = links;
+      return links;
     }
   }
 
@@ -262,8 +281,10 @@ class IpfsApi {
     return File(p.join(cacheDir.path, fileName));
   }
 
-  /// Clears the cache folder
+  /// Clears both in-memory and disk caches.
   Future<void> clearCache() async {
+    _imageCache.clear();
+    _folderListingCache.clear();
     final dir = _cacheDir ?? await Directory.systemTemp.createTemp();
     final cacheDir = Directory(p.join(dir.path, 'ipfs_cache'));
     if (cacheDir.existsSync()) cacheDir.deleteSync(recursive: true);

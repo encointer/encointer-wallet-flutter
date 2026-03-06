@@ -29,7 +29,9 @@ class BazaarPage extends StatefulWidget {
   State<BazaarPage> createState() => _BazaarPageState();
 }
 
-class _BazaarPageState extends State<BazaarPage> {
+class _BazaarPageState extends State<BazaarPage> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   @override
   void initState() {
     super.initState();
@@ -132,13 +134,14 @@ class _BazaarPageState extends State<BazaarPage> {
       final store = context.read<AppStore>();
       final cid = store.encointer.community?.cid;
       if (cid != null) {
-        await context.read<BusinessesStore>().getBusinesses(cid, store.account.currentAddress);
+        await context.read<BusinessesStore>().getBusinesses(cid, store.account.currentAddress, force: true);
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final l10n = context.l10n;
     final store = context.read<AppStore>();
 

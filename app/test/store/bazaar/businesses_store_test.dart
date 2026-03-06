@@ -33,11 +33,40 @@ void main() {
       expect(businessesStore.businesses.length, greaterThan(0));
     });
 
+    test('all businesses from RPC are present after getBusinesses()', () async {
+      await businessesStore.getBusinesses(cid, '');
+
+      // Mock returns 3 businesses (allMockBusinesses)
+      expect(businessesStore.sortedBusinesses.length, 3);
+      expect(businessesStore.businesses.length, 3);
+    });
+
     test('`getBusinesses()` should filter businesses by category', () async {
       await businessesStore.getBusinesses(cid, '');
 
       expect(businessesStore.sortedBusinesses, isNotNull);
       expect(businessesStore.sortedBusinesses.every((business) => business.category == Category.food), isTrue);
+    });
+
+    test('`getBusinesses()` skips re-fetch within TTL for same CID', () async {
+      await businessesStore.getBusinesses(cid, '');
+      expect(businessesStore.sortedBusinesses.length, 3);
+
+      // Mutate to detect if re-fetch happens
+      businessesStore.businesses.clear();
+      businessesStore.sortedBusinesses.clear();
+
+      // Call again without force — should skip (TTL not expired, same CID)
+      await businessesStore.getBusinesses(cid, '');
+      expect(businessesStore.sortedBusinesses, isEmpty);
+    });
+
+    test('`getBusinesses()` with force bypasses TTL', () async {
+      await businessesStore.getBusinesses(cid, '');
+      expect(businessesStore.sortedBusinesses.length, 3);
+
+      await businessesStore.getBusinesses(cid, '', force: true);
+      expect(businessesStore.sortedBusinesses.length, 3);
     });
   });
 }
