@@ -176,6 +176,7 @@ jobs:
           script: echo "Generated AVD snapshot for caching."
 
       - name: Start Android emulator
+        timeout-minutes: 5
         run: ./scripts/android_start_emulator.sh
 
       - name: Start screen recording
