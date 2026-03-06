@@ -161,7 +161,8 @@ jobs:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-${{ env.API_LEVEL }}-${{ env.DEVICE }}
+            /usr/local/lib/android/sdk/system-images
+          key: avd-v2-${{ env.API_LEVEL }}-${{ env.DEVICE }}
 
       - name: "Create AVD and generate a clean snapshot for caching"
         if: steps.avd-cache.outputs.cache-hit != 'true'
@@ -176,11 +177,12 @@ jobs:
           script: echo "Generated AVD snapshot for caching."
 
       - name: Start Android emulator
-        timeout-minutes: 5
+        id: start-emulator
+        timeout-minutes: 10
         run: ./scripts/android_start_emulator.sh
 
       - name: Start screen recording
-        if: env.RECORD_VIDEO == 'true'
+        if: env.RECORD_VIDEO == 'true' && steps.start-emulator.conclusion == 'success'
         run: |
           # Android screenrecord has a 180s hard limit per recording.
           # Chain segments to cover long-running tests.
@@ -192,7 +194,7 @@ jobs:
           echo $! > /tmp/recording_pid.txt
 
       - name: Main integration test
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.start-emulator.conclusion == 'success' }}
         timeout-minutes: 30
         working-directory: ./app
         run: |
@@ -205,14 +207,14 @@ jobs:
             --dart-define=locales=en
 
       - name: QR payment story
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.start-emulator.conclusion == 'success' }}
         timeout-minutes: 10
         run: |
           adb shell pm clear org.encointer.wallet || echo "Could not clear app data"
           ./scripts/run_qr_payment_story.sh
 
       - name: Bazaar business story
-        if: ${{ !cancelled() && env.IPFS_GATEWAY != '' && env.IPFS_AUTH_GATEWAY != '' }}
+        if: ${{ !cancelled() && steps.start-emulator.conclusion == 'success' && env.IPFS_GATEWAY != '' && env.IPFS_AUTH_GATEWAY != '' }}
         timeout-minutes: 10
         run: |
           adb shell pm clear org.encointer.wallet || echo "Could not clear app data"

@@ -5,15 +5,19 @@ set -euo pipefail
 # Used by android_device_ci.yml to decouple emulator lifecycle from test execution.
 #
 # Required env: API_LEVEL (e.g. 33)
-# Optional env: EMU_TARGET (default: google_apis), EMU_ARCH (default: x86_64)
+# Optional env: EMU_TARGET (default: default), EMU_ARCH (default: x86_64)
 
 API_LEVEL="${API_LEVEL:?API_LEVEL must be set}"
-EMU_TARGET="${EMU_TARGET:-google_apis}"
+EMU_TARGET="${EMU_TARGET:-default}"
 EMU_ARCH="${EMU_ARCH:-x86_64}"
 
-# Install system image and emulator (reactivecircus/android-emulator-runner does this internally)
-echo "Installing system image for API ${API_LEVEL}..."
-sdkmanager --install "system-images;android-${API_LEVEL};${EMU_TARGET};${EMU_ARCH}" emulator "platforms;android-${API_LEVEL}"
+IMAGE_DIR="${ANDROID_HOME}/system-images/android-${API_LEVEL}/${EMU_TARGET}/${EMU_ARCH}"
+if [ ! -d "$IMAGE_DIR" ]; then
+  echo "System image not found at $IMAGE_DIR, installing..."
+  sdkmanager --install "system-images;android-${API_LEVEL};${EMU_TARGET};${EMU_ARCH}" emulator "platforms;android-${API_LEVEL}"
+else
+  echo "System image found at $IMAGE_DIR"
+fi
 
 AVD=$("${ANDROID_HOME}/emulator/emulator" -list-avds | head -1)
 if [ -z "$AVD" ]; then
