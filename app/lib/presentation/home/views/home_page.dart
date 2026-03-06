@@ -22,6 +22,7 @@ class EncointerHomePage extends StatefulWidget {
 
 class _EncointerHomePageState extends State<EncointerHomePage> {
   final PageController _pageController = PageController();
+  final BusinessesStore _businessesStore = BusinessesStore();
 
   late final HomePageService _service;
 
@@ -58,8 +59,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         controller: _pageController,
         children: [
           AssetsView(_service.appStore),
-          Provider(
-            create: (context) => BusinessesStore(),
+          Provider.value(
+            value: _businessesStore,
             child: const BazaarPage(),
           ),
 

@@ -87,8 +87,8 @@ mixin _$BusinessesStore on _BusinessesStoreBase, Store {
   late final _$getBusinessesAsyncAction = AsyncAction('_BusinessesStoreBase.getBusinesses', context: context);
 
   @override
-  Future<void> getBusinesses(CommunityIdentifier cid, String currentAddress) {
-    return _$getBusinessesAsyncAction.run(() => super.getBusinesses(cid, currentAddress));
+  Future<void> getBusinesses(CommunityIdentifier cid, String currentAddress, {bool force = false}) {
+    return _$getBusinessesAsyncAction.run(() => super.getBusinesses(cid, currentAddress, force: force));
   }
 
   late final _$_BusinessesStoreBaseActionController = ActionController(name: '_BusinessesStoreBase', context: context);
