@@ -61,6 +61,110 @@ class AppLocalizationsRu extends AppLocalizations {
   String get businessOwner => 'Владелец';
 
   @override
+  String get businessFormTitleCreate => 'Новый бизнес';
+
+  @override
+  String get businessFormTitleEdit => 'Редактировать бизнес';
+
+  @override
+  String get businessNameLabel => 'Название';
+
+  @override
+  String get businessCategoryLabel => 'Категория';
+
+  @override
+  String get businessDescriptionLabel => 'Описание';
+
+  @override
+  String get businessAddressLabel => 'Улица';
+
+  @override
+  String get businessZipcodeLabel => 'Почтовый индекс';
+
+  @override
+  String get businessAddressDescriptionLabel => 'Описание адреса';
+
+  @override
+  String get businessTelephoneLabel => 'Телефон';
+
+  @override
+  String get businessEmailLabel => 'Эл. почта';
+
+  @override
+  String get businessOpeningHoursLabel => 'Часы работы';
+
+  @override
+  String get businessMoreInfoLabel => 'Дополнительная информация';
+
+  @override
+  String get businessHomepageLabel => 'Веб-сайт';
+
+  @override
+  String get businessLongitudeLabel => 'Долгота';
+
+  @override
+  String get businessLatitudeLabel => 'Широта';
+
+  @override
+  String get businessLogoLabel => 'Логотип';
+
+  @override
+  String get businessPhotosLabel => 'Фотографии';
+
+  @override
+  String get businessSaveButton => 'Сохранить';
+
+  @override
+  String get businessNameRequired => 'Название обязательно';
+
+  @override
+  String get businessCategoryRequired => 'Категория обязательна';
+
+  @override
+  String get createBusinessNotificationTitle => 'Бизнес создан';
+
+  @override
+  String get createBusinessNotificationBody =>
+      'Ваш бизнес зарегистрирован в блокчейне.';
+
+  @override
+  String get updateBusinessNotificationTitle => 'Бизнес обновлён';
+
+  @override
+  String get updateBusinessNotificationBody =>
+      'Ваш бизнес обновлён в блокчейне.';
+
+  @override
+  String get businessCreatingAccount => 'Создание аккаунта бизнеса...';
+
+  @override
+  String get businessRegistering => 'Регистрация бизнеса...';
+
+  @override
+  String get businessUploadingData => 'Загрузка данных бизнеса...';
+
+  @override
+  String get businessCreateError => 'Не удалось создать бизнес';
+
+  @override
+  String get businessPickImage => 'Выбрать изображение';
+
+  @override
+  String get businessChangeImage => 'Изменить изображение';
+
+  @override
+  String get businessAddPhoto => 'Добавить фото';
+
+  @override
+  String get businessRemoveImage => 'Удалить';
+
+  @override
+  String get businessLoadingPhotos => 'Загрузка фото...';
+
+  @override
+  String get businessPhoto => 'Фото';
+
+  @override
   String get addContact => 'Добавить контакт';
 
   @override
@@ -113,6 +217,34 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get balanceTooLowTitle => 'Недостаточно средств на счете';
+
+  @override
+  String get bazaarExistingBusinessBody =>
+      'Бизнес уже зарегистрирован для этого сообщества с этой учётной записью.';
+
+  @override
+  String get bazaarExistingBusinessTitle => 'Бизнес уже существует';
+
+  @override
+  String get bazaarNonexistentBusinessBody =>
+      'Бизнес, который вы пытаетесь обновить, не существует.';
+
+  @override
+  String get bazaarNonexistentBusinessTitle => 'Бизнес не найден';
+
+  @override
+  String get bazaarNonexistentCommunityBody =>
+      'Сообщество, для которого вы пытаетесь зарегистрировать бизнес, не существует.';
+
+  @override
+  String get bazaarNonexistentCommunityTitle => 'Сообщество не найдено';
+
+  @override
+  String get bazaarNonexistentOfferingBody =>
+      'Предложение, к которому вы пытаетесь получить доступ, не существует.';
+
+  @override
+  String get bazaarNonexistentOfferingTitle => 'Предложение не найдено';
 
   @override
   String get balanceTransferNotificationBody =>
@@ -780,6 +912,61 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get print => 'Распечатать';
+
+  @override
+  String get proxyDuplicateBody =>
+      'Эта учётная запись уже зарегистрирована как прокси.';
+
+  @override
+  String get proxyDuplicateTitle => 'Прокси уже существует';
+
+  @override
+  String get proxyNoPermissionBody =>
+      'Этот вызов не может быть выполнен прокси, так как он может повысить привилегии.';
+
+  @override
+  String get proxyNoPermissionTitle => 'Нет разрешения';
+
+  @override
+  String get proxyNoSelfProxyBody =>
+      'Вы не можете добавить себя в качестве прокси.';
+
+  @override
+  String get proxyNoSelfProxyTitle => 'Нельзя быть своим прокси';
+
+  @override
+  String get proxyNotFoundBody => 'Регистрация прокси не найдена.';
+
+  @override
+  String get proxyNotFoundTitle => 'Прокси не найден';
+
+  @override
+  String get proxyNotProxyBody =>
+      'Отправитель не является прокси представляемой учётной записи.';
+
+  @override
+  String get proxyNotProxyTitle => 'Не является прокси';
+
+  @override
+  String get proxyTooManyBody =>
+      'Зарегистрировано слишком много прокси или слишком много ожидающих объявлений.';
+
+  @override
+  String get proxyTooManyTitle => 'Слишком много прокси';
+
+  @override
+  String get proxyUnannouncedBody =>
+      'Объявление, если оно было сделано, было сделано слишком недавно.';
+
+  @override
+  String get proxyUnannouncedTitle => 'Не объявлено';
+
+  @override
+  String get proxyUnproxyableBody =>
+      'Этот вызов несовместим с типом прокси и не может быть выполнен.';
+
+  @override
+  String get proxyUnproxyableTitle => 'Невозможно через прокси';
 
   @override
   String get proposal => 'Предложение';

@@ -67,6 +67,16 @@ class TxNotification {
         body: l10n.swapNotificationBody,
       );
 
+  factory TxNotification.createBusiness(AppLocalizations l10n) => TxNotification(
+        title: l10n.createBusinessNotificationTitle,
+        body: l10n.createBusinessNotificationBody,
+      );
+
+  factory TxNotification.updateBusiness(AppLocalizations l10n) => TxNotification(
+        title: l10n.updateBusinessNotificationTitle,
+        body: l10n.updateBusinessNotificationBody,
+      );
+
   final String title;
   final String body;
 }

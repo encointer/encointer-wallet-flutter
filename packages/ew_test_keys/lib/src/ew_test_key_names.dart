@@ -102,4 +102,24 @@ class EWTestKeys {
   static String cidMarkerIcon(int index) => 'cid-$index-marker-icon';
   static String cidMarkerDescription(int index) => 'cid-$index-marker-description';
   static String educateDialogRegistrationType(String typeName) => 'educate-dialog-$typeName';
+
+  // Bazaar
+  static const bazaarTab = 'bazaar';
+  static const addBusiness = 'add-business';
+  static const businessName = 'business-name';
+  static const businessCategory = 'business-category';
+  static const businessDescription = 'business-description';
+  static const businessAddress = 'business-address';
+  static const businessZipcode = 'business-zipcode';
+  static const businessTelephone = 'business-telephone';
+  static const businessEmail = 'business-email';
+  static const businessOpeningHours = 'business-opening-hours';
+  static const businessHomepage = 'business-homepage';
+  static const businessLongitude = 'business-longitude';
+  static const businessLatitude = 'business-latitude';
+  static const businessPickLogo = 'business-pick-logo';
+  static const businessAddPhoto = 'business-add-photo';
+  static const businessSave = 'business-save';
+  static const businessEditButton = 'business-edit-button';
+  static const businessCard = 'business-card';
 }

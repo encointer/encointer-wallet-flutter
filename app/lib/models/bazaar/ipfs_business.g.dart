@@ -23,6 +23,7 @@ IpfsBusiness _$IpfsBusinessFromJson(Map<String, dynamic> json) => IpfsBusiness(
       email: json['email'] as String?,
       status: $enumDecodeNullable(_$StatusEnumMap, json['status']),
       moreInfo: json['moreInfo'] as String?,
+      sameAs: json['sameAs'] as String?,
       controller: json['controller'] as String?,
     );
 
@@ -39,6 +40,7 @@ Map<String, dynamic> _$IpfsBusinessToJson(IpfsBusiness instance) => <String, dyn
       'latitude': instance.latitude,
       'openingHours': instance.openingHours,
       'moreInfo': instance.moreInfo,
+      'sameAs': instance.sameAs,
       'photos': instance.photos,
       'controller': instance.controller,
       'logo': instance.logo,

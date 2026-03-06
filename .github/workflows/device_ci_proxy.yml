@@ -28,9 +28,11 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       ws_endpoint: ${{ steps.export_tunnel.outputs.ws }}
+      ipfs_gateway: ${{ steps.export_ipfs_tunnels.outputs.ipfs_gateway }}
+      ipfs_auth_gateway: ${{ steps.export_ipfs_tunnels.outputs.ipfs_auth_gateway }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Run encointer-node
         run: |
@@ -41,12 +43,49 @@ jobs:
           ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh \
             --docker-tag=${{ inputs.docker_tag }}
 
+      - name: Run IPFS node (kubo)
+        run: |
+          docker run -d --name kubo --network=host \
+            -e IPFS_PROFILE=server \
+            ipfs/kubo:latest
+          for i in $(seq 1 30); do
+            curl -s http://localhost:5001/api/v0/id && break
+            sleep 1
+          done
+
+      - name: Run IPFS auth gateway
+        run: |
+          docker run -d --name ipfs-gateway --network=host \
+            -e PORT=5050 \
+            -e JWT_SECRET=ci-test-secret \
+            -e IPFS_API_URL=http://localhost:5001 \
+            -e CHAIN_RPC_URL=ws://localhost:9944 \
+            -e MIN_BALANCE_CC=0.001 \
+            encointer/ipfs-gateway
+          sleep 3
+          curl -s http://localhost:5050/health || echo "Gateway health check (may not have /health)"
+
       - name: Start Cloudflare tunnel
         run: |
           curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
           chmod +x cloudflared
           ./cloudflared tunnel --url http://localhost:9944 > tunnel.log 2>&1 &
-          sleep 5
+
+          echo "Waiting for WS tunnel URL (up to 60s)..."
+          for i in $(seq 1 60); do
+            WS_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log 2>/dev/null | head -n1 || true)
+            if [ -n "$WS_URL" ]; then
+              echo "WS tunnel ready after ${i}s: $WS_URL"
+              break
+            fi
+            sleep 1
+          done
+
+          if [ -z "$WS_URL" ]; then
+            echo "::error::WS tunnel not ready after 60s"
+            cat tunnel.log
+            exit 1
+          fi
 
       - name: Verify Cloudflare tunnel health
         run: ./scripts/check_cloudflare_tunnel.sh
@@ -56,14 +95,85 @@ jobs:
         run: |
           HTTP_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log | head -n1)
           WS_URL="${HTTP_URL/https:/wss:}"
-          
+
           echo "🔌 Exporting WS endpoint: $WS_URL"
           echo "ws=$WS_URL" >> "$GITHUB_OUTPUT"
-          
+
+      - name: Start IPFS tunnels
+        run: |
+          ./cloudflared tunnel --url http://localhost:8080 > ipfs_tunnel.log 2>&1 &
+          ./cloudflared tunnel --url http://localhost:5050 > ipfs_auth_tunnel.log 2>&1 &
+
+          echo "Waiting for IPFS tunnel URLs (up to 60s)..."
+          for i in $(seq 1 60); do
+            IPFS_GW=$(grep -o 'https://[^ ]*trycloudflare.com' ipfs_tunnel.log 2>/dev/null | head -n1 || true)
+            IPFS_AUTH=$(grep -o 'https://[^ ]*trycloudflare.com' ipfs_auth_tunnel.log 2>/dev/null | head -n1 || true)
+            if [ -n "$IPFS_GW" ] && [ -n "$IPFS_AUTH" ]; then
+              echo "Both IPFS tunnels ready after ${i}s"
+              break
+            fi
+            sleep 1
+          done
+
+          if [ -z "$IPFS_GW" ] || [ -z "$IPFS_AUTH" ]; then
+            echo "::warning::IPFS tunnel(s) not ready after 60s (gateway=$IPFS_GW, auth=$IPFS_AUTH)"
+          fi
+
+      - name: Verify IPFS tunnel health
+        run: |
+          set -euo pipefail
+
+          IPFS_GW=$(grep -o 'https://[^ ]*trycloudflare.com' ipfs_tunnel.log | head -n1)
+          IPFS_AUTH=$(grep -o 'https://[^ ]*trycloudflare.com' ipfs_auth_tunnel.log | head -n1)
+
+          # Kubo HTTP gateway (:8080) — fetch the empty directory CID (always present)
+          echo "🔎 Checking IPFS gateway tunnel: $IPFS_GW"
+          for i in $(seq 1 20); do
+            STATUS=$(curl -sS --max-time 5 -o /dev/null -w '%{http_code}' \
+              "$IPFS_GW/ipfs/QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn" 2>/dev/null || echo "000")
+            if [ "$STATUS" = "200" ] || [ "$STATUS" = "301" ]; then
+              echo "✅ IPFS gateway healthy (HTTP $STATUS)"
+              break
+            fi
+            echo "⏳ Attempt $i/20 (HTTP $STATUS)..."
+            if [ "$i" -eq 20 ]; then
+              echo "❌ IPFS gateway not responding after 60s"
+              exit 1
+            fi
+            sleep 3
+          done
+
+          # Auth gateway (:5050) — /health endpoint
+          echo "🔎 Checking IPFS auth gateway tunnel: $IPFS_AUTH"
+          for i in $(seq 1 20); do
+            STATUS=$(curl -sS --max-time 5 -o /dev/null -w '%{http_code}' \
+              "$IPFS_AUTH/health" 2>/dev/null || echo "000")
+            if [ "$STATUS" = "200" ]; then
+              echo "✅ IPFS auth gateway healthy"
+              break
+            fi
+            echo "⏳ Attempt $i/20 (HTTP $STATUS)..."
+            if [ "$i" -eq 20 ]; then
+              echo "❌ IPFS auth gateway not responding after 60s"
+              exit 1
+            fi
+            sleep 3
+          done
+
+      - id: export_ipfs_tunnels
+        name: Export IPFS endpoints
+        run: |
+          IPFS_GW=$(grep -o 'https://[^ ]*trycloudflare.com' ipfs_tunnel.log | head -n1)
+          IPFS_AUTH=$(grep -o 'https://[^ ]*trycloudflare.com' ipfs_auth_tunnel.log | head -n1)
+          echo "ipfs_gateway=$IPFS_GW" >> "$GITHUB_OUTPUT"
+          echo "ipfs_auth_gateway=$IPFS_AUTH" >> "$GITHUB_OUTPUT"
+
       - name: Trigger Device CI
         id: trigger_device
         env:
           WS_ENDPOINT: ${{ steps.export_tunnel.outputs.ws }}
+          IPFS_GATEWAY: ${{ steps.export_ipfs_tunnels.outputs.ipfs_gateway }}
+          IPFS_AUTH_GATEWAY: ${{ steps.export_ipfs_tunnels.outputs.ipfs_auth_gateway }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ./scripts/trigger_device_ci.sh \
@@ -73,16 +183,34 @@ jobs:
             "${{ inputs.workflow_file }}" \
             "$WS_ENDPOINT" \
 
-      # Todo: Ideally, we should cancel this job afther the CI is done, but GitHub Actions does not
+      - name: Capture infra logs for debugging
+        if: always()
+        run: |
+          mkdir -p infra-logs
+          docker logs kubo > infra-logs/kubo.log 2>&1 || true
+          docker logs ipfs-gateway > infra-logs/ipfs-auth-gateway.log 2>&1 || true
+          cp tunnel.log infra-logs/ || true
+          cp ipfs_tunnel.log infra-logs/ || true
+          cp ipfs_auth_tunnel.log infra-logs/ || true
+
+      - name: Upload infra logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: infra-logs-${{ inputs.device }}-api${{ inputs.api_level }}
+          path: infra-logs/
+
+      # Todo: Ideally, we should cancel this job after the CI is done, but GitHub Actions does not
       # Support cancelling on a job-level (only workflow-level).
       - name: Keep tunnel alive and check every 30s
+        if: ${{ !cancelled() && steps.trigger_device.outcome == 'success' }}
         run: |
           echo "⏳ Monitoring Cloudflare tunnel for up to 45 minutes..."
-          MAX_MINUTES=45
+          MAX_MINUTES=55
           INTERVAL=30
           ELAPSED=0
 
-          while [ $ELAPSED -lt $((MAX_MINUTES * 45)) ]; do
+          while [ $ELAPSED -lt $((MAX_MINUTES * 60)) ]; do
             if ./scripts/check_cloudflare_tunnel.sh; then
               echo "✅ Tunnel is healthy (checked at $ELAPSED seconds)"
             else

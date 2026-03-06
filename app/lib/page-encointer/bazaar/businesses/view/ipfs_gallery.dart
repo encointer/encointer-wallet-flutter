@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:encointer_wallet/service/ipfs/ipfs_gallery_stream.dart';
+import 'package:flutter/foundation.dart' show listEquals;
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/service/ipfs/ipfs_api.dart';
 
@@ -50,9 +51,7 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery> with SingleTickerPr
   late Animation<double> _backgroundOpacity;
   int? _tappedIndex;
 
-  @override
-  void initState() {
-    super.initState();
+  void _subscribe() {
     _subscription = widget.ipfs
         .streamGalleryImagesQueued(
           cidsOrFolders: widget.cidsOrFolders,
@@ -60,6 +59,12 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery> with SingleTickerPr
           maxConcurrent: widget.maxConcurrent,
         )
         .listen((item) => setState(() => _images.add(item)));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _subscribe();
 
     _tapController = AnimationController(
       vsync: this,
@@ -73,6 +78,16 @@ class _IpfsImageGalleryState extends State<IpfsImageGallery> with SingleTickerPr
     _backgroundOpacity = Tween<double>(begin: 0, end: 0.6).animate(
       CurvedAnimation(parent: _tapController, curve: Curves.easeOutCubic),
     );
+  }
+
+  @override
+  void didUpdateWidget(IpfsImageGallery oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!listEquals(oldWidget.cidsOrFolders, widget.cidsOrFolders)) {
+      _subscription?.cancel();
+      _images.clear();
+      _subscribe();
+    }
   }
 
   @override

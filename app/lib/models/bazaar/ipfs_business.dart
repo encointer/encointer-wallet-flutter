@@ -24,6 +24,7 @@ class IpfsBusiness {
     this.email,
     this.status,
     this.moreInfo,
+    this.sameAs,
     this.controller,
   });
 
@@ -42,6 +43,7 @@ class IpfsBusiness {
   final String? latitude;
   final String? openingHours;
   final String? moreInfo;
+  final String? sameAs;
   final String? photos;
   String? controller;
   final String? logo;

@@ -6,6 +6,7 @@ import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_l10n/l10n.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,21 +27,28 @@ class BusinessCard extends StatelessWidget {
     final businessesStore = context.read<BusinessesStore>();
     // const currentAddress = '5C6xA6UDoGYnYM5o4wAfWMUHLL2dZLEDwAAFep11kcU9oiQK';
 
-    final isOwner = AddressUtils.areEqual(business.controller!, currentAddress);
+    final isOwner = business.controller != null && AddressUtils.areEqual(business.controller!, currentAddress);
     final isDelegate = !isOwner && businessesStore.delegateOfControllers.contains(business.controller);
 
     return InkWell(
+      key: Key('${EWTestKeys.businessCard}-${business.name}'),
       borderRadius: BorderRadius.circular(16),
-      onTap: () {
-        Navigator.push(
+      onTap: () async {
+        final edited = await Navigator.push<bool>(
           context,
-          MaterialPageRoute<Widget>(
+          MaterialPageRoute<bool>(
             builder: (_) => Provider(
-              create: (_) => SingleBusinessStore(business),
+              create: (_) => SingleBusinessStore(business, isOwner: isOwner, isDelegate: isDelegate),
               child: const SingleBusinessView(),
             ),
           ),
         );
+        if (edited ?? false) {
+          final cid = store.encointer.community?.cid;
+          if (cid != null && context.mounted) {
+            await businessesStore.getBusinesses(cid, store.account.currentAddress);
+          }
+        }
       },
       child: Card(
         margin: const EdgeInsets.symmetric(vertical: 6),
@@ -52,16 +60,19 @@ class BusinessCard extends StatelessWidget {
         child: Row(
           children: [
             // --- Left image ---
-            IpfsImage(
-              ipfs: webApi.ipfsApi,
-              cidOrFolder: business.logo!,
-              width: 110,
-              height: 120,
-              fit: BoxFit.contain,
-              loadingBuilder: (_) => const SizedBox(height: 120, child: Center(child: CircularProgressIndicator())),
-              errorBuilder: (_, __) =>
-                  const SizedBox(height: 120, child: Center(child: Icon(Icons.broken_image, size: 40))),
-            ),
+            if (business.logo != null)
+              IpfsImage(
+                ipfs: webApi.ipfsApi,
+                cidOrFolder: business.logo!,
+                width: 110,
+                height: 120,
+                fit: BoxFit.contain,
+                loadingBuilder: (_) => const SizedBox(height: 120, child: Center(child: CircularProgressIndicator())),
+                errorBuilder: (_, __) =>
+                    const SizedBox(height: 120, child: Center(child: Icon(Icons.broken_image, size: 40))),
+              )
+            else
+              const SizedBox(width: 110, height: 120, child: Center(child: Icon(Icons.store, size: 40))),
 
             // --- Right side ---
             Expanded(

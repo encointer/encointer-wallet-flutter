@@ -62,6 +62,110 @@ class AppLocalizationsFr extends AppLocalizations {
   String get businessOwner => 'Propriétaire';
 
   @override
+  String get businessFormTitleCreate => 'Nouvelle entreprise';
+
+  @override
+  String get businessFormTitleEdit => 'Modifier l\'entreprise';
+
+  @override
+  String get businessNameLabel => 'Nom';
+
+  @override
+  String get businessCategoryLabel => 'Catégorie';
+
+  @override
+  String get businessDescriptionLabel => 'Description';
+
+  @override
+  String get businessAddressLabel => 'Adresse';
+
+  @override
+  String get businessZipcodeLabel => 'Code postal';
+
+  @override
+  String get businessAddressDescriptionLabel => 'Description de l\'adresse';
+
+  @override
+  String get businessTelephoneLabel => 'Téléphone';
+
+  @override
+  String get businessEmailLabel => 'E-mail';
+
+  @override
+  String get businessOpeningHoursLabel => 'Horaires d\'ouverture';
+
+  @override
+  String get businessMoreInfoLabel => 'Plus d\'informations';
+
+  @override
+  String get businessHomepageLabel => 'Site web';
+
+  @override
+  String get businessLongitudeLabel => 'Longitude';
+
+  @override
+  String get businessLatitudeLabel => 'Latitude';
+
+  @override
+  String get businessLogoLabel => 'Logo';
+
+  @override
+  String get businessPhotosLabel => 'Photos';
+
+  @override
+  String get businessSaveButton => 'Enregistrer';
+
+  @override
+  String get businessNameRequired => 'Le nom est requis';
+
+  @override
+  String get businessCategoryRequired => 'La catégorie est requise';
+
+  @override
+  String get createBusinessNotificationTitle => 'Entreprise créée';
+
+  @override
+  String get createBusinessNotificationBody =>
+      'Votre entreprise a été enregistrée on-chain.';
+
+  @override
+  String get updateBusinessNotificationTitle => 'Entreprise mise à jour';
+
+  @override
+  String get updateBusinessNotificationBody =>
+      'Votre entreprise a été mise à jour on-chain.';
+
+  @override
+  String get businessCreatingAccount => 'Création du compte entreprise...';
+
+  @override
+  String get businessRegistering => 'Enregistrement de l\'entreprise...';
+
+  @override
+  String get businessUploadingData => 'Téléchargement des données...';
+
+  @override
+  String get businessCreateError => 'Échec de la création de l\'entreprise';
+
+  @override
+  String get businessPickImage => 'Sélectionner une image';
+
+  @override
+  String get businessChangeImage => 'Changer l\'image';
+
+  @override
+  String get businessAddPhoto => 'Ajouter une photo';
+
+  @override
+  String get businessRemoveImage => 'Supprimer';
+
+  @override
+  String get businessLoadingPhotos => 'Chargement des photos...';
+
+  @override
+  String get businessPhoto => 'Photo';
+
+  @override
   String get addContact => 'ajouter un contact';
 
   @override
@@ -115,6 +219,34 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get balanceTooLowTitle => 'Solde trop bas';
+
+  @override
+  String get bazaarExistingBusinessBody =>
+      'Un commerce est déjà enregistré pour cette communauté avec ce compte.';
+
+  @override
+  String get bazaarExistingBusinessTitle => 'Commerce déjà existant';
+
+  @override
+  String get bazaarNonexistentBusinessBody =>
+      'Le commerce que vous essayez de modifier n\'existe pas.';
+
+  @override
+  String get bazaarNonexistentBusinessTitle => 'Commerce introuvable';
+
+  @override
+  String get bazaarNonexistentCommunityBody =>
+      'La communauté pour laquelle vous essayez d\'enregistrer un commerce n\'existe pas.';
+
+  @override
+  String get bazaarNonexistentCommunityTitle => 'Communauté introuvable';
+
+  @override
+  String get bazaarNonexistentOfferingBody =>
+      'L\'offre à laquelle vous essayez d\'accéder n\'existe pas.';
+
+  @override
+  String get bazaarNonexistentOfferingTitle => 'Offre introuvable';
 
   @override
   String get balanceTransferNotificationBody =>
@@ -787,6 +919,61 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get print => 'Imprimer';
+
+  @override
+  String get proxyDuplicateBody => 'Ce compte est déjà enregistré comme proxy.';
+
+  @override
+  String get proxyDuplicateTitle => 'Proxy en double';
+
+  @override
+  String get proxyNoPermissionBody =>
+      'Cet appel ne peut pas être effectué par un proxy car il pourrait élever les privilèges.';
+
+  @override
+  String get proxyNoPermissionTitle => 'Permission refusée';
+
+  @override
+  String get proxyNoSelfProxyBody =>
+      'Vous ne pouvez pas vous ajouter comme proxy de vous-même.';
+
+  @override
+  String get proxyNoSelfProxyTitle => 'Auto-proxy impossible';
+
+  @override
+  String get proxyNotFoundBody =>
+      'L\'enregistrement du proxy n\'a pas été trouvé.';
+
+  @override
+  String get proxyNotFoundTitle => 'Proxy introuvable';
+
+  @override
+  String get proxyNotProxyBody =>
+      'L\'expéditeur n\'est pas un proxy du compte à représenter.';
+
+  @override
+  String get proxyNotProxyTitle => 'Pas un proxy';
+
+  @override
+  String get proxyTooManyBody =>
+      'Il y a trop de proxys enregistrés ou trop d\'annonces en attente.';
+
+  @override
+  String get proxyTooManyTitle => 'Trop de proxys';
+
+  @override
+  String get proxyUnannouncedBody =>
+      'L\'annonce, si elle a été faite, a été faite trop récemment.';
+
+  @override
+  String get proxyUnannouncedTitle => 'Non annoncé';
+
+  @override
+  String get proxyUnproxyableBody =>
+      'Cet appel est incompatible avec le type de proxy et ne peut pas être exécuté.';
+
+  @override
+  String get proxyUnproxyableTitle => 'Appel non proxy-able';
 
   @override
   String get proposal => 'Proposition';

@@ -23,7 +23,7 @@ jobs:
       fail-fast: false
     steps:
       # Setup Environment
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh

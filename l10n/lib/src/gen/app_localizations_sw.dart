@@ -61,6 +61,110 @@ class AppLocalizationsSw extends AppLocalizations {
   String get businessOwner => 'Mmiliki';
 
   @override
+  String get businessFormTitleCreate => 'Biashara Mpya';
+
+  @override
+  String get businessFormTitleEdit => 'Hariri Biashara';
+
+  @override
+  String get businessNameLabel => 'Jina';
+
+  @override
+  String get businessCategoryLabel => 'Aina';
+
+  @override
+  String get businessDescriptionLabel => 'Maelezo';
+
+  @override
+  String get businessAddressLabel => 'Anwani';
+
+  @override
+  String get businessZipcodeLabel => 'Msimbo wa Posta';
+
+  @override
+  String get businessAddressDescriptionLabel => 'Maelezo ya Anwani';
+
+  @override
+  String get businessTelephoneLabel => 'Simu';
+
+  @override
+  String get businessEmailLabel => 'Barua pepe';
+
+  @override
+  String get businessOpeningHoursLabel => 'Saa za Kufungua';
+
+  @override
+  String get businessMoreInfoLabel => 'Maelezo Zaidi';
+
+  @override
+  String get businessHomepageLabel => 'Tovuti';
+
+  @override
+  String get businessLongitudeLabel => 'Longitudo';
+
+  @override
+  String get businessLatitudeLabel => 'Latitudo';
+
+  @override
+  String get businessLogoLabel => 'Nembo';
+
+  @override
+  String get businessPhotosLabel => 'Picha';
+
+  @override
+  String get businessSaveButton => 'Hifadhi';
+
+  @override
+  String get businessNameRequired => 'Jina linahitajika';
+
+  @override
+  String get businessCategoryRequired => 'Aina inahitajika';
+
+  @override
+  String get createBusinessNotificationTitle => 'Biashara imeundwa';
+
+  @override
+  String get createBusinessNotificationBody =>
+      'Biashara yako imesajiliwa kwenye blockchain.';
+
+  @override
+  String get updateBusinessNotificationTitle => 'Biashara imesasishwa';
+
+  @override
+  String get updateBusinessNotificationBody =>
+      'Biashara yako imesasishwa kwenye blockchain.';
+
+  @override
+  String get businessCreatingAccount => 'Kuunda akaunti ya biashara...';
+
+  @override
+  String get businessRegistering => 'Kusajili biashara...';
+
+  @override
+  String get businessUploadingData => 'Kupakia data ya biashara...';
+
+  @override
+  String get businessCreateError => 'Imeshindwa kuunda biashara';
+
+  @override
+  String get businessPickImage => 'Chagua Picha';
+
+  @override
+  String get businessChangeImage => 'Badilisha Picha';
+
+  @override
+  String get businessAddPhoto => 'Ongeza picha';
+
+  @override
+  String get businessRemoveImage => 'Ondoa';
+
+  @override
+  String get businessLoadingPhotos => 'Inapakia picha...';
+
+  @override
+  String get businessPhoto => 'Picha';
+
+  @override
   String get addContact => 'Ongeza mawasiliano';
 
   @override
@@ -113,6 +217,33 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get balanceTooLowTitle => 'Kiasi kipo chini sana';
+
+  @override
+  String get bazaarExistingBusinessBody =>
+      'Biashara tayari imesajiliwa kwa jumuiya hii na akaunti hii.';
+
+  @override
+  String get bazaarExistingBusinessTitle => 'Biashara tayari ipo';
+
+  @override
+  String get bazaarNonexistentBusinessBody =>
+      'Biashara unayojaribu kubadilisha haipo.';
+
+  @override
+  String get bazaarNonexistentBusinessTitle => 'Biashara haipatikani';
+
+  @override
+  String get bazaarNonexistentCommunityBody =>
+      'Jumuiya unayojaribu kusajili biashara haipo.';
+
+  @override
+  String get bazaarNonexistentCommunityTitle => 'Jumuiya haipatikani';
+
+  @override
+  String get bazaarNonexistentOfferingBody => 'Ofa unayojaribu kufikia haipo.';
+
+  @override
+  String get bazaarNonexistentOfferingTitle => 'Ofa haipatikani';
 
   @override
   String get balanceTransferNotificationBody => 'Mpokeaji amepokea tokeni';
@@ -785,6 +916,61 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get print => 'Chapisha';
+
+  @override
+  String get proxyDuplicateBody =>
+      'Akaunti hii tayari imesajiliwa kama wakala.';
+
+  @override
+  String get proxyDuplicateTitle => 'Wakala mara mbili';
+
+  @override
+  String get proxyNoPermissionBody =>
+      'Simu hii haiwezi kufanywa na wakala kwa sababu inaweza kupandisha mamlaka.';
+
+  @override
+  String get proxyNoPermissionTitle => 'Hakuna ruhusa';
+
+  @override
+  String get proxyNoSelfProxyBody =>
+      'Huwezi kujiongeza kama wakala wako mwenyewe.';
+
+  @override
+  String get proxyNoSelfProxyTitle => 'Huwezi kuwa wakala wako';
+
+  @override
+  String get proxyNotFoundBody => 'Usajili wa wakala haukupatikana.';
+
+  @override
+  String get proxyNotFoundTitle => 'Wakala hapatikani';
+
+  @override
+  String get proxyNotProxyBody =>
+      'Mtumaji si wakala wa akaunti inayowakilishwa.';
+
+  @override
+  String get proxyNotProxyTitle => 'Si wakala';
+
+  @override
+  String get proxyTooManyBody =>
+      'Kuna wakala wengi sana waliosajiliwa au matangazo mengi yanasubiri.';
+
+  @override
+  String get proxyTooManyTitle => 'Wakala wengi sana';
+
+  @override
+  String get proxyUnannouncedBody =>
+      'Tangazo, kama lilifanywa, lilifanywa hivi karibuni sana.';
+
+  @override
+  String get proxyUnannouncedTitle => 'Haijatangazwa';
+
+  @override
+  String get proxyUnproxyableBody =>
+      'Simu hii haiendani na aina ya wakala na haiwezi kutekelezwa.';
+
+  @override
+  String get proxyUnproxyableTitle => 'Haiwezi kuwakilishwa';
 
   @override
   String get proposal => 'Pendekezo';

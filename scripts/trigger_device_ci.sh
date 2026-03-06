@@ -37,7 +37,9 @@ INPUTS_JSON=$(cat <<EOF
     "api_level": "$API_LEVEL",
     "record_video": "$RECORD_VIDEO",
     "ws_endpoint": "$WS_ENDPOINT",
-    "git_ref": "$GIT_REF"
+    "git_ref": "$GIT_REF",
+    "ipfs_gateway": "${IPFS_GATEWAY:-}",
+    "ipfs_auth_gateway": "${IPFS_AUTH_GATEWAY:-}"
   }
 }
 EOF

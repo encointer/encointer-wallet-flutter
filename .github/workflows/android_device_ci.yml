@@ -24,6 +24,14 @@ on:
         description: "For concurrency management"
         required: true
         type: string
+      ipfs_gateway:
+        description: "IPFS Gateway URL"
+        required: false
+        type: string
+      ipfs_auth_gateway:
+        description: "IPFS Auth Gateway URL"
+        required: false
+        type: string
 
 env:
   ARTIFACT_PATH: ./screenshots
@@ -39,7 +47,7 @@ jobs:
     timeout-minutes: 70
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set unified input variables
         run: |
@@ -47,6 +55,8 @@ jobs:
           echo "API_LEVEL=${{ github.event.inputs.api_level }}" >> $GITHUB_ENV
           echo "RECORD_VIDEO=${{ github.event.inputs.record_video }}" >> $GITHUB_ENV
           echo "WS_ENDPOINT=${{ github.event.inputs.ws_endpoint }}" >> $GITHUB_ENV
+          echo "IPFS_GATEWAY=${{ github.event.inputs.ipfs_gateway }}" >> $GITHUB_ENV
+          echo "IPFS_AUTH_GATEWAY=${{ github.event.inputs.ipfs_auth_gateway }}" >> $GITHUB_ENV
 
       - name: Debug WS endpoint
         shell: bash
@@ -76,6 +86,25 @@ jobs:
           echo "$RESPONSE" | jq -e '.result' >/dev/null
           
           echo "✅ JSON-RPC health check passed"
+
+      - name: Debug IPFS endpoints
+        if: env.IPFS_GATEWAY != ''
+        shell: bash
+        run: |
+          set -uo pipefail
+          echo "📦 IPFS Gateway: $IPFS_GATEWAY"
+          echo "🔐 IPFS Auth Gateway: $IPFS_AUTH_GATEWAY"
+
+          for label_url in "IPFS_GW:$IPFS_GATEWAY" "IPFS_AUTH:$IPFS_AUTH_GATEWAY"; do
+            LABEL="${label_url%%:*}"
+            URL="${label_url#*:}"
+            [ -z "$URL" ] && continue
+            STATUS=$(curl -sS --max-time 10 -o /dev/null -w '%{http_code}' "$URL" || echo "000")
+            echo "$LABEL → HTTP $STATUS"
+            if [ "$STATUS" = "000" ]; then
+              echo "::warning::$LABEL tunnel unreachable"
+            fi
+          done
 
       - uses: actions/setup-java@v5
         with:
@@ -165,7 +194,7 @@ jobs:
 
       - name: "Upload screenshots"
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.DEVICE }}-api${{ env.API_LEVEL }}-screenshots
           path: ${{ env.ARTIFACT_PATH }}

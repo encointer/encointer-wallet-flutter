@@ -38,7 +38,16 @@ RPC_PORT   ?= 9944
 NODE_NAME_BOOT := bootstrap-node
 NODE_NAME_STORY := node_$(STORY)
 
-.PHONY: help bootstrap bootstrap-check story story-check stop-story stop-bootstrap rm-story rm-bootstrap volumes prune-anon restart-story
+IPFS           ?=
+KUBO_IMG       ?= ipfs/kubo:latest
+GATEWAY_IMG    ?= encointer/ipfs-gateway
+IPFS_API_PORT  ?= 5001
+IPFS_GW_PORT   ?= 8080
+IPFS_AUTH_PORT ?= 5050
+KUBO_NAME      := kubo_$(STORY)
+GATEWAY_NAME   := gateway_$(STORY)
+
+.PHONY: help bootstrap bootstrap-check story story-check stop-story stop-bootstrap rm-story rm-bootstrap volumes prune-anon restart-story start-ipfs stop-ipfs ipfs-check
 
 help:
 	@cat <<'EOF'
@@ -57,6 +66,11 @@ help:
 
 	  make volumes                  List volumes related to encointer
 	  make prune-anon               List anonymous volumes (safety: does NOT delete)
+
+	IPFS targets (set IPFS=1 on story/restart-story to auto-start):
+	  make story STORY=dev IPFS=1   Start node + kubo + auth gateway
+	  make stop-ipfs STORY=dev      Stop IPFS containers for a story
+	  make ipfs-check STORY=dev     Health-check kubo + auth gateway
 	EOF
 
 bootstrap:
@@ -107,6 +121,7 @@ story:
 	  --rpc-methods unsafe --rpc-external
 
 	@echo "✅ Story node running: $(NODE_NAME_STORY) (volume: $(STORYVOL))"
+	@if [ -n "$(IPFS)" ]; then $(MAKE) start-ipfs STORY=$(STORY) IPFS_API_PORT=$(IPFS_API_PORT) IPFS_GW_PORT=$(IPFS_GW_PORT) IPFS_AUTH_PORT=$(IPFS_AUTH_PORT) RPC_PORT=$(RPC_PORT); fi
 
 story-check:
 	@echo "==> Inspect story volume contents: $(STORYVOL)"
@@ -114,6 +129,8 @@ story-check:
 
 stop-story:
 	docker rm -f "$(NODE_NAME_STORY)" >/dev/null 2>&1 || true
+	docker rm -f "$(KUBO_NAME)" >/dev/null 2>&1 || true
+	docker rm -f "$(GATEWAY_NAME)" >/dev/null 2>&1 || true
 	@echo "✅ Stopped: $(NODE_NAME_STORY)"
 
 stop-bootstrap:
@@ -126,8 +143,10 @@ rm-story:
 
 restart-story:
 	@echo "==> Restarting story $(STORY): reset to bootstrap + start node"
-	@echo "==> Stopping/removing container $(NODE_NAME_STORY) (if any)"
+	@echo "==> Stopping/removing containers (if any)"
 	docker rm -f "$(NODE_NAME_STORY)" >/dev/null 2>&1 || true
+	docker rm -f "$(KUBO_NAME)" >/dev/null 2>&1 || true
+	docker rm -f "$(GATEWAY_NAME)" >/dev/null 2>&1 || true
 
 	@echo "==> Recreating story volume $(STORYVOL)"
 	docker volume rm "$(STORYVOL)" >/dev/null 2>&1 || true
@@ -147,6 +166,7 @@ restart-story:
 	  --rpc-methods unsafe --rpc-external
 
 	@echo "✅ Restarted story from bootstrap: $(NODE_NAME_STORY)"
+	@if [ -n "$(IPFS)" ]; then $(MAKE) start-ipfs STORY=$(STORY) IPFS_API_PORT=$(IPFS_API_PORT) IPFS_GW_PORT=$(IPFS_GW_PORT) IPFS_AUTH_PORT=$(IPFS_AUTH_PORT) RPC_PORT=$(RPC_PORT); fi
 
 rm-bootstrap:
 	docker volume rm "$(BOOTVOL)" >/dev/null
@@ -158,3 +178,53 @@ volumes:
 prune-anon:
 	@echo "Anonymous volumes (not deleting anything):"
 	@docker volume ls -qf dangling=true | head -200 || true
+
+# -- IPFS targets -----------------------------------------------------------
+
+start-ipfs:
+	@echo "==> Starting kubo ($(KUBO_NAME)) on API port $(IPFS_API_PORT), gateway port $(IPFS_GW_PORT)"
+	docker rm -f "$(KUBO_NAME)" >/dev/null 2>&1 || true
+	docker run -d --name "$(KUBO_NAME)" \
+	  -p $(IPFS_API_PORT):5001 -p $(IPFS_GW_PORT):8080 \
+	  -e IPFS_PROFILE=server \
+	  "$(KUBO_IMG)"
+
+	@echo "==> Waiting for kubo API..."
+	@for i in $$(seq 1 30); do \
+	  curl -sf -X POST http://localhost:$(IPFS_API_PORT)/api/v0/id >/dev/null 2>&1 && break; \
+	  sleep 1; \
+	done
+	@curl -sf -X POST http://localhost:$(IPFS_API_PORT)/api/v0/id >/dev/null
+	@echo "    kubo ready"
+
+	@echo "==> Starting auth gateway ($(GATEWAY_NAME)) on port $(IPFS_AUTH_PORT)"
+	docker rm -f "$(GATEWAY_NAME)" >/dev/null 2>&1 || true
+	docker run -d --name "$(GATEWAY_NAME)" \
+	  -p $(IPFS_AUTH_PORT):5050 \
+	  --add-host=host.docker.internal:host-gateway \
+	  -e PORT=5050 \
+	  -e JWT_SECRET=dev-secret \
+	  -e IPFS_API_URL=http://host.docker.internal:$(IPFS_API_PORT) \
+	  -e CHAIN_RPC_URL=ws://host.docker.internal:$(RPC_PORT) \
+	  -e MIN_BALANCE_CC=0.001 \
+	  "$(GATEWAY_IMG)"
+
+	@echo "==> Waiting for auth gateway..."
+	@for i in $$(seq 1 15); do \
+	  curl -sf http://localhost:$(IPFS_AUTH_PORT)/health >/dev/null 2>&1 && break; \
+	  sleep 1; \
+	done
+	@curl -sf http://localhost:$(IPFS_AUTH_PORT)/health >/dev/null
+	@echo "    auth gateway ready"
+	@echo "✅ IPFS stack running for story $(STORY)"
+
+stop-ipfs:
+	docker rm -f "$(KUBO_NAME)" >/dev/null 2>&1 || true
+	docker rm -f "$(GATEWAY_NAME)" >/dev/null 2>&1 || true
+	@echo "✅ Stopped IPFS: $(KUBO_NAME), $(GATEWAY_NAME)"
+
+ipfs-check:
+	@echo "==> kubo ($(KUBO_NAME)) on port $(IPFS_API_PORT):"
+	@curl -sf -X POST http://localhost:$(IPFS_API_PORT)/api/v0/id | head -c 120 && echo || echo "    NOT REACHABLE"
+	@echo "==> auth gateway ($(GATEWAY_NAME)) on port $(IPFS_AUTH_PORT):"
+	@curl -sf http://localhost:$(IPFS_AUTH_PORT)/health && echo || echo "    NOT REACHABLE"
