@@ -206,6 +206,204 @@ abstract class AppLocalizations {
   /// **'Owner'**
   String get businessOwner;
 
+  /// No description provided for @businessFormTitleCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'New Business'**
+  String get businessFormTitleCreate;
+
+  /// No description provided for @businessFormTitleEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Business'**
+  String get businessFormTitleEdit;
+
+  /// No description provided for @businessNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get businessNameLabel;
+
+  /// No description provided for @businessCategoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get businessCategoryLabel;
+
+  /// No description provided for @businessDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get businessDescriptionLabel;
+
+  /// No description provided for @businessAddressLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Street Address'**
+  String get businessAddressLabel;
+
+  /// No description provided for @businessZipcodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'ZIP Code'**
+  String get businessZipcodeLabel;
+
+  /// No description provided for @businessAddressDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Address Description'**
+  String get businessAddressDescriptionLabel;
+
+  /// No description provided for @businessTelephoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Telephone'**
+  String get businessTelephoneLabel;
+
+  /// No description provided for @businessEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get businessEmailLabel;
+
+  /// No description provided for @businessOpeningHoursLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening Hours'**
+  String get businessOpeningHoursLabel;
+
+  /// No description provided for @businessMoreInfoLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'More Information'**
+  String get businessMoreInfoLabel;
+
+  /// No description provided for @businessLongitudeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Longitude'**
+  String get businessLongitudeLabel;
+
+  /// No description provided for @businessLatitudeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude'**
+  String get businessLatitudeLabel;
+
+  /// No description provided for @businessLogoLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Logo'**
+  String get businessLogoLabel;
+
+  /// No description provided for @businessPhotosLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get businessPhotosLabel;
+
+  /// No description provided for @businessSaveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get businessSaveButton;
+
+  /// No description provided for @businessNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required'**
+  String get businessNameRequired;
+
+  /// No description provided for @businessCategoryRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Category is required'**
+  String get businessCategoryRequired;
+
+  /// No description provided for @createBusinessNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Business created'**
+  String get createBusinessNotificationTitle;
+
+  /// No description provided for @createBusinessNotificationBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your business has been registered on-chain.'**
+  String get createBusinessNotificationBody;
+
+  /// No description provided for @updateBusinessNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Business updated'**
+  String get updateBusinessNotificationTitle;
+
+  /// No description provided for @updateBusinessNotificationBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your business has been updated on-chain.'**
+  String get updateBusinessNotificationBody;
+
+  /// No description provided for @businessCreatingAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating business account...'**
+  String get businessCreatingAccount;
+
+  /// No description provided for @businessRegistering.
+  ///
+  /// In en, this message translates to:
+  /// **'Registering business...'**
+  String get businessRegistering;
+
+  /// No description provided for @businessUploadingData.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading business data...'**
+  String get businessUploadingData;
+
+  /// No description provided for @businessCreateError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to create business'**
+  String get businessCreateError;
+
+  /// No description provided for @businessPickImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Image'**
+  String get businessPickImage;
+
+  /// No description provided for @businessChangeImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Image'**
+  String get businessChangeImage;
+
+  /// No description provided for @businessAddPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Add photo'**
+  String get businessAddPhoto;
+
+  /// No description provided for @businessRemoveImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get businessRemoveImage;
+
+  /// No description provided for @businessLoadingPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading photos...'**
+  String get businessLoadingPhotos;
+
+  /// No description provided for @businessPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo'**
+  String get businessPhoto;
+
   /// No description provided for @addContact.
   ///
   /// In en, this message translates to:
@@ -307,6 +505,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Balance too low'**
   String get balanceTooLowTitle;
+
+  /// No description provided for @bazaarExistingBusinessBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A business is already registered for this community with this account.'**
+  String get bazaarExistingBusinessBody;
+
+  /// No description provided for @bazaarExistingBusinessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Business already exists'**
+  String get bazaarExistingBusinessTitle;
+
+  /// No description provided for @bazaarNonexistentBusinessBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The business you are trying to update does not exist.'**
+  String get bazaarNonexistentBusinessBody;
+
+  /// No description provided for @bazaarNonexistentBusinessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Business not found'**
+  String get bazaarNonexistentBusinessTitle;
+
+  /// No description provided for @bazaarNonexistentCommunityBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The community you are trying to register a business for does not exist.'**
+  String get bazaarNonexistentCommunityBody;
+
+  /// No description provided for @bazaarNonexistentCommunityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Community not found'**
+  String get bazaarNonexistentCommunityTitle;
+
+  /// No description provided for @bazaarNonexistentOfferingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The offering you are trying to access does not exist.'**
+  String get bazaarNonexistentOfferingBody;
+
+  /// No description provided for @bazaarNonexistentOfferingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Offering not found'**
+  String get bazaarNonexistentOfferingTitle;
 
   /// No description provided for @balanceTransferNotificationBody.
   ///
@@ -1501,6 +1747,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Print'**
   String get print;
+
+  /// No description provided for @proxyDuplicateBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This account is already registered as a proxy.'**
+  String get proxyDuplicateBody;
+
+  /// No description provided for @proxyDuplicateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate proxy'**
+  String get proxyDuplicateTitle;
+
+  /// No description provided for @proxyNoPermissionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This call may not be made by a proxy because it could escalate privileges.'**
+  String get proxyNoPermissionBody;
+
+  /// No description provided for @proxyNoPermissionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No permission'**
+  String get proxyNoPermissionTitle;
+
+  /// No description provided for @proxyNoSelfProxyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You cannot add yourself as a proxy.'**
+  String get proxyNoSelfProxyBody;
+
+  /// No description provided for @proxyNoSelfProxyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot proxy self'**
+  String get proxyNoSelfProxyTitle;
+
+  /// No description provided for @proxyNotFoundBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The proxy registration was not found.'**
+  String get proxyNotFoundBody;
+
+  /// No description provided for @proxyNotFoundTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Proxy not found'**
+  String get proxyNotFoundTitle;
+
+  /// No description provided for @proxyNotProxyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The sender is not a proxy of the account to be proxied.'**
+  String get proxyNotProxyBody;
+
+  /// No description provided for @proxyNotProxyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Not a proxy'**
+  String get proxyNotProxyTitle;
+
+  /// No description provided for @proxyTooManyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'There are too many proxies registered or too many announcements pending.'**
+  String get proxyTooManyBody;
+
+  /// No description provided for @proxyTooManyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many proxies'**
+  String get proxyTooManyTitle;
+
+  /// No description provided for @proxyUnannouncedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The announcement, if made at all, was made too recently.'**
+  String get proxyUnannouncedBody;
+
+  /// No description provided for @proxyUnannouncedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unannounced'**
+  String get proxyUnannouncedTitle;
+
+  /// No description provided for @proxyUnproxyableBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This call is incompatible with the proxy type and cannot be executed.'**
+  String get proxyUnproxyableBody;
+
+  /// No description provided for @proxyUnproxyableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unproxyable call'**
+  String get proxyUnproxyableTitle;
 
   /// No description provided for @proposal.
   ///

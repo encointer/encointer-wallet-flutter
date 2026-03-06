@@ -47,15 +47,22 @@ abstract class _BusinessesStoreBase with Store {
   @action
   Future<void> getBusinesses(CommunityIdentifier cid, String currentAddress) async {
     fetchStatus = FetchStatus.loading;
+    businesses = <IpfsBusiness>[];
+    sortedBusinesses = <IpfsBusiness>[];
     Log.d('getBusinesses: before update businesses = $businesses', _targetLogger);
 
     final accountBusinessTuples = await _bazaarGetBusinesses(cid);
+    Log.d('getBusinesses: RPC returned ${accountBusinessTuples.length} entries for cid=$cid', _targetLogger);
+
+    // Check delegate status before IPFS fetches — controllers are available
+    // from chain data. This ensures delegateOfControllers is populated before
+    // business cards render (fixes edit-button flake).
+    final controllers = accountBusinessTuples.map((t) => t.controller).toSet();
+    await _checkDelegateStatus(controllers, currentAddress);
 
     await _updateBusinesses(accountBusinessTuples);
 
     Log.d('getBusinesses: after update businesses = $businesses', _targetLogger);
-
-    await _checkDelegateStatus(currentAddress);
 
     _update();
   }
@@ -81,38 +88,34 @@ abstract class _BusinessesStoreBase with Store {
   Future<void> _updateBusinesses(List<AccountBusinessTuple> accountBusinessTuples) async {
     Log.d('[updateBusinesses]: accountBusinessTuples = $accountBusinessTuples', _targetLogger);
 
-    if (accountBusinessTuples.isNotEmpty) {
-      await Future.forEach<AccountBusinessTuple>(accountBusinessTuples, (element) async {
-        if (element.businessData.url.isNotNullOrEmpty) {
-          Log.d(
-            '[updateBusinesses]: accountBusinessTuple.businessData!.url! = ${element.businessData.url}',
-            _targetLogger,
-          );
+    if (accountBusinessTuples.isEmpty) return;
 
-          try {
-            final business = await _getBusinesses(element.businessData.url);
-            Log.d('[updateBusinesses]: response = $business', _targetLogger);
-            business.controller = element.controller;
-            Log.d('updateBusinesses: right = ${business.toJson()}', _targetLogger);
-            businesses.add(business);
-          } catch (e) {
-            error = e.toString();
-            Log.d('[updateBusinesses]: error = $e', _targetLogger);
+    await Future.wait(
+      accountBusinessTuples.where((e) => e.businessData.url.isNotNullOrEmpty).map((element) async {
+        try {
+          final business = await _getBusinesses(element.businessData.url);
+          Log.d('[updateBusinesses]: response = $business', _targetLogger);
+          business.controller = element.controller;
+          Log.d('updateBusinesses: right = ${business.toJson()}', _targetLogger);
+          businesses.add(business);
+          sortedBusinesses.add(business);
+          if (fetchStatus == FetchStatus.loading) {
+            fetchStatus = FetchStatus.success;
           }
+        } catch (e) {
+          error = e.toString();
+          Log.d('[updateBusinesses]: error = $e', _targetLogger);
         }
-      });
-    }
-
-    sortedBusinesses.addAll(businesses);
+      }),
+    );
   }
 
-  Future<void> _checkDelegateStatus(String currentAddress) async {
-    if (currentAddress.isEmpty || businesses.isEmpty) {
+  Future<void> _checkDelegateStatus(Set<String> controllers, String currentAddress) async {
+    if (currentAddress.isEmpty || controllers.isEmpty) {
       delegateOfControllers = {};
       return;
     }
 
-    final controllers = businesses.map((b) => b.controller!).toSet();
     final result = <String>{};
 
     final nonOwned = controllers.where((c) => !AddressUtils.areEqual(c, currentAddress)).toList();

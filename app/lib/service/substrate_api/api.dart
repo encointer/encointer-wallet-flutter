@@ -79,7 +79,9 @@ class Api {
       AssetsApi(store, EncointerKusama(provider)),
       ChainApi(store, provider),
       EncointerApi(store, SubstrateDartApi(provider), ewHttp, EncointerKusama(provider)),
-      isIntegrationTest ? MockIpfsApi(ewHttp) : IpfsApi(ewHttp, gateway: store.settings.ipfsGateway),
+      isIntegrationTest
+          ? MockIpfsApi(ewHttp, gateway: store.settings.ipfsGateway)
+          : IpfsApi(ewHttp, gateway: store.settings.ipfsGateway),
       ipfsAuthService,
       ipfsUploadService,
     );
@@ -105,6 +107,14 @@ class Api {
 
   Future<void> init() async {
     await close();
+
+    // Update IPFS gateway URLs for the (possibly changed) network.
+    final ipfsAuthGw = store.settings.currentNetwork.ipfsAuthGateway();
+    ipfsAuthService.gatewayUrl = ipfsAuthGw;
+    ipfsAuthService.clearAllTokens();
+    ipfsUploadService.gatewayUrl = ipfsAuthGw;
+    ipfsApi.gateway = store.settings.ipfsGateway;
+
     _connecting = _connect();
 
     _timer = Timer.periodic(const Duration(seconds: 10), (timer) async {

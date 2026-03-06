@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_gallery.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/business_form/business_form_page.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/propose_page.dart';
 import 'package:ew_log/ew_log.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:flutter/material.dart';
@@ -46,15 +48,16 @@ class SingleBusinessDetail extends StatelessWidget {
       child: Card(
         child: Column(
           children: [
-            IpfsImage(
-              ipfs: webApi.ipfsApi,
-              cidOrFolder: business.logo!,
-              width: double.infinity,
-              height: 80,
-              fit: BoxFit.contain,
-              loadingBuilder: (_) => const Center(child: CircularProgressIndicator()),
-              errorBuilder: (_, error) => const Center(child: Icon(Icons.broken_image, size: 40)),
-            ),
+            if (business.logo != null)
+              IpfsImage(
+                ipfs: webApi.ipfsApi,
+                cidOrFolder: business.logo!,
+                width: double.infinity,
+                height: 80,
+                fit: BoxFit.contain,
+                loadingBuilder: (_) => const Center(child: CircularProgressIndicator()),
+                errorBuilder: (_, error) => const Center(child: Icon(Icons.broken_image, size: 40)),
+              ),
             Padding(
               padding: const EdgeInsets.fromLTRB(30, 20, 30, 30),
               child: Column(
@@ -72,7 +75,7 @@ class SingleBusinessDetail extends StatelessWidget {
                       //     business.status!,
                       //     style: context.bodySmall.copyWith(color: const Color(0xFF35B731)),
                       //   )
-                      if (AddressUtils.areEqual(business.controller!, currentAddress))
+                      if (business.controller != null && AddressUtils.areEqual(business.controller!, currentAddress))
                         ElevatedButton.icon(
                           onPressed: () {
                             Navigator.of(context).pushNamed(
@@ -88,6 +91,27 @@ class SingleBusinessDetail extends StatelessWidget {
                           ),
                           icon: const Icon(Icons.add, size: 16),
                           label: Text(context.l10n.swapOption),
+                        ),
+                      if (businessStore.isOwner || businessStore.isDelegate)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: IconButton(
+                            key: const Key(EWTestKeys.businessEditButton),
+                            onPressed: () async {
+                              final updated = await Navigator.of(context).pushNamed<IpfsBusiness?>(
+                                BusinessFormPage.route,
+                                arguments: BusinessFormParams(
+                                  existingBusiness: business,
+                                  businessController: business.controller,
+                                ),
+                              );
+                              if (updated != null && context.mounted) {
+                                context.read<SingleBusinessStore>().updateBusiness(updated);
+                              }
+                            },
+                            icon: const Icon(Icons.edit, size: 20),
+                            tooltip: l10n.businessFormTitleEdit,
+                          ),
                         ),
                     ],
                   ),

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -9,6 +10,7 @@ import 'package:ew_log/ew_log.dart';
 import 'package:http/http.dart' as http;
 
 const _logTarget = 'IpfsUpload';
+const _uploadTimeout = Duration(seconds: 120);
 
 class IpfsUploadResult {
   IpfsUploadResult({
@@ -36,7 +38,7 @@ class IpfsUploadService {
       : _client = client ?? http.Client();
 
   final IpfsAuthService _authService;
-  final String gatewayUrl;
+  String gatewayUrl;
   final http.Client _client;
 
   /// Uploads a file to IPFS via the authenticated gateway.
@@ -86,8 +88,8 @@ class IpfsUploadService {
       ));
 
     try {
-      final streamed = await _client.send(request);
-      final response = await http.Response.fromStream(streamed);
+      final streamed = await _client.send(request).timeout(_uploadTimeout);
+      final response = await http.Response.fromStream(streamed).timeout(_uploadTimeout);
 
       if (response.statusCode == HttpStatus.ok) {
         final json = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
@@ -112,6 +114,84 @@ class IpfsUploadService {
       }
 
       throw IpfsUploadException('Upload failed: ${response.body}', statusCode: response.statusCode);
+    } on TimeoutException {
+      throw IpfsUploadException('Upload timed out');
+    } catch (e) {
+      if (e is IpfsUploadException) rethrow;
+      Log.e('[IpfsUpload] Error: $e', _logTarget);
+      throw IpfsUploadException('Network error: $e');
+    }
+  }
+
+  /// Uploads multiple files as an IPFS directory.
+  /// Returns the CID of the wrapping folder.
+  Future<IpfsUploadResult> uploadFolder({
+    required Map<String, Uint8List> files,
+    required String address,
+    required String communityId,
+    required Sr25519KeyPair keyPair,
+  }) async {
+    final token = await _authService.getToken(
+      address: address,
+      communityId: communityId,
+      keyPair: keyPair,
+    );
+
+    Log.d('[IpfsUpload] Uploading folder with ${files.length} files', _logTarget);
+
+    final uri = Uri.parse('$gatewayUrl/ipfs/add?wrap-with-directory=true');
+    final request = http.MultipartRequest('POST', uri)..headers['Authorization'] = 'Bearer $token';
+    for (final entry in files.entries) {
+      request.files.add(http.MultipartFile.fromBytes('file', entry.value, filename: entry.key));
+    }
+
+    try {
+      // ignore: avoid_print
+      print('[IpfsUpload] uploadFolder: sending ${files.length} files (${files.keys.toList()}) to $uri');
+      final streamed = await _client.send(request).timeout(_uploadTimeout);
+      // ignore: avoid_print
+      print('[IpfsUpload] uploadFolder: got response status=${streamed.statusCode}, reading body...');
+      final response = await http.Response.fromStream(streamed).timeout(_uploadTimeout);
+      // ignore: avoid_print
+      print('[IpfsUpload] uploadFolder: body read complete (${response.body.length} chars), raw: ${response.body}');
+
+      if (response.statusCode == HttpStatus.ok) {
+        // Response is newline-delimited JSON; the entry with empty Name is the directory.
+        final lines = const LineSplitter().convert(response.body).where((l) => l.trim().isNotEmpty);
+        IpfsUploadResult? dirResult;
+        for (final line in lines) {
+          final json = jsonDecode(line) as Map<String, dynamic>;
+          final result = IpfsUploadResult.fromJson(json);
+          // ignore: avoid_print
+          print('[IpfsUpload] uploadFolder: parsed entry Name="${result.name}" Hash=${result.hash}');
+          if (result.name.isEmpty) dirResult = result;
+        }
+        if (dirResult == null) {
+          Log.e('[IpfsUpload] uploadFolder: no directory entry in response. Raw body: ${response.body}', _logTarget);
+          throw IpfsUploadException('No directory entry in response');
+        }
+        // ignore: avoid_print
+        print('[IpfsUpload] uploadFolder: success, dirCid=${dirResult.hash}');
+        Log.d('[IpfsUpload] Folder success: ${dirResult.hash}', _logTarget);
+        return dirResult;
+      }
+
+      if (response.statusCode == HttpStatus.unauthorized) {
+        _authService.clearToken(communityId);
+        throw IpfsUploadException('Unauthorized - please try again', statusCode: response.statusCode);
+      }
+
+      if (response.statusCode == HttpStatus.forbidden) {
+        throw IpfsUploadException('Account does not exist on chain', statusCode: response.statusCode);
+      }
+
+      if (response.statusCode == 429) {
+        throw IpfsUploadException('Rate limit exceeded - try again later', statusCode: response.statusCode);
+      }
+
+      throw IpfsUploadException('Upload failed: ${response.body}', statusCode: response.statusCode);
+    } on TimeoutException {
+      throw IpfsUploadException('Upload timed out');
     } catch (e) {
       if (e is IpfsUploadException) rethrow;
       Log.e('[IpfsUpload] Error: $e', _logTarget);

@@ -178,6 +178,11 @@ melos:
       run: cd app && flutter drive --no-enable-impeller --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart --flavor dev --dart-define=locales=en
       description: "Run integration test on Android with screenshot capturing enabled."
 
+    integration-app-test-android-bazaar:
+      # screenshots are not possible with the impeller engine
+      run: cd app && flutter drive --no-enable-impeller --driver=test_driver/integration_test.dart --target=integration_test/stories/bazaar_business_form_test.dart --flavor dev --dart-define=locales=en
+      description: "Run integration test on Android with screenshot capturing enabled."
+
     integration-app-test-ios:
       run: cd app && flutter drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart
       description: "Run integration test on iOS"

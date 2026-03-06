@@ -9,6 +9,36 @@ part of 'single_business_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SingleBusinessStore on _SingleBusinessStoreBase, Store {
+  late final _$businessAtom = Atom(name: '_SingleBusinessStoreBase.business', context: context);
+
+  @override
+  IpfsBusiness get business {
+    _$businessAtom.reportRead();
+    return super.business;
+  }
+
+  @override
+  set business(IpfsBusiness value) {
+    _$businessAtom.reportWrite(value, super.business, () {
+      super.business = value;
+    });
+  }
+
+  late final _$wasEditedAtom = Atom(name: '_SingleBusinessStoreBase.wasEdited', context: context);
+
+  @override
+  bool get wasEdited {
+    _$wasEditedAtom.reportRead();
+    return super.wasEdited;
+  }
+
+  @override
+  set wasEdited(bool value) {
+    _$wasEditedAtom.reportWrite(value, super.wasEdited, () {
+      super.wasEdited = value;
+    });
+  }
+
   late final _$isLikedAtom = Atom(name: '_SingleBusinessStoreBase.isLiked', context: context);
 
   @override
@@ -97,6 +127,17 @@ mixin _$SingleBusinessStore on _SingleBusinessStoreBase, Store {
       ActionController(name: '_SingleBusinessStoreBase', context: context);
 
   @override
+  void updateBusiness(IpfsBusiness b) {
+    final _$actionInfo =
+        _$_SingleBusinessStoreBaseActionController.startAction(name: '_SingleBusinessStoreBase.updateBusiness');
+    try {
+      return super.updateBusiness(b);
+    } finally {
+      _$_SingleBusinessStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void toggleLikes() {
     final _$actionInfo =
         _$_SingleBusinessStoreBaseActionController.startAction(name: '_SingleBusinessStoreBase.toggleLikes');
@@ -121,6 +162,8 @@ mixin _$SingleBusinessStore on _SingleBusinessStoreBase, Store {
   @override
   String toString() {
     return '''
+business: ${business},
+wasEdited: ${wasEdited},
 isLiked: ${isLiked},
 isLikedPersonally: ${isLikedPersonally},
 countLikes: ${countLikes},

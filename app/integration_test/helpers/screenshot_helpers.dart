@@ -57,6 +57,12 @@ class Screenshots {
   static const step1ConfirmNumberOfAttendees = '101-step-1-confirm-number-of-attendees';
   static const step2QrCode = '102-step-2-qr-code';
   static const step3FinishGathering = '103-step-3-finish-gathering';
+
+  /// 121-140 bazaar
+  static const bazaarFormTop = '121-bazaar-form-top';
+  static const bazaarFormBottom = '122-bazaar-form-bottom';
+  static const bazaarBusinessesList = '123-bazaar-businesses-list';
+  static const bazaarBusinessDetail = '124-bazaar-business-detail';
 }
 
 /// Takes a screenshot on Android when locale-based captures are enabled.

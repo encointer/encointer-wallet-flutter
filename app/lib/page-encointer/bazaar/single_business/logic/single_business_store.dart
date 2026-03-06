@@ -12,6 +12,10 @@ class SingleBusinessStore = _SingleBusinessStoreBase with _$SingleBusinessStore;
 abstract class _SingleBusinessStoreBase with Store {
   _SingleBusinessStoreBase(
     this.business, {
+    // ignore: unused_element_parameter
+    this.isOwner = false,
+    // ignore: unused_element_parameter
+    this.isDelegate = false,
     bool isLiked1 = false,
     bool isLikedPersonally1 = false,
     int countLikes1 = 0,
@@ -19,7 +23,14 @@ abstract class _SingleBusinessStoreBase with Store {
         isLikedPersonally = isLikedPersonally1,
         countLikes = countLikes1;
 
-  late final IpfsBusiness business;
+  @observable
+  IpfsBusiness business;
+
+  @observable
+  bool wasEdited = false;
+
+  final bool isOwner;
+  final bool isDelegate;
 
   @observable
   late bool isLiked;
@@ -35,6 +46,12 @@ abstract class _SingleBusinessStoreBase with Store {
 
   @observable
   String? error;
+
+  @action
+  void updateBusiness(IpfsBusiness b) {
+    business = b;
+    wasEdited = true;
+  }
 
   @action
   void toggleLikes() {

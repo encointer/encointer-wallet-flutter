@@ -1,5 +1,3 @@
-import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
-import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/service/ipfs/ipfs_api.dart';
 
 const mockIcon = '<svg viewBox="0 0 132.09 131.85" '
@@ -14,15 +12,10 @@ const mockIcon = '<svg viewBox="0 0 132.09 131.85" '
     '<path d="m97.62 95.38-12.03 11.17-8.84-11.17z"/></svg>';
 
 class MockIpfsApi extends IpfsApi {
-  const MockIpfsApi(super.httpClient, {super.gateway});
+  MockIpfsApi(super.httpClient, {super.gateway});
 
   @override
   Future<String?> getCommunityIcon(String? ipfsCid) {
     return Future.value(mockIcon);
-  }
-
-  @override
-  Future<IpfsBusiness> getIpfsBusiness(String businessIpfsCid) async {
-    return Future.value(businessesMockForSingleBusiness);
   }
 }
