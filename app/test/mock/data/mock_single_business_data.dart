@@ -17,6 +17,7 @@ const mockSingleBusiness = {
   'offerName1': 'Single course LEU 25',
   'offerName2': '10-course subscription LEU 200',
   'moreInfo': 'With Leu since 01 January 2023',
+  'sameAs': 'https://hathalisa.com/',
   'status': 'Neu bei Leu',
   'isLiked': false,
   'isLikedPersonally': false,

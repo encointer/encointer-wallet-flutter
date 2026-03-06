@@ -98,6 +98,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get businessMoreInfoLabel => 'Plus d\'informations';
 
   @override
+  String get businessHomepageLabel => 'Site web';
+
+  @override
   String get businessLongitudeLabel => 'Longitude';
 
   @override

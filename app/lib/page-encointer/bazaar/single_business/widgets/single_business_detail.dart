@@ -24,6 +24,8 @@ import 'package:encointer_wallet/page-encointer/bazaar/single_business/widgets/m
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
+import 'package:encointer_wallet/common/components/jump_to_browser_link.dart';
+import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
 
 const logTarget = 'SingleBusinessDetail';
 
@@ -143,6 +145,42 @@ class SingleBusinessDetail extends StatelessWidget {
                     business.description ?? '',
                     style: context.bodyMedium.copyWith(height: 1.5),
                   ),
+                  if (business.openingHours.isNotNullOrEmpty) ...[
+                    const SizedBox(height: 12),
+                    Text(
+                      l10n.businessOpeningHoursLabel,
+                      style: context.titleLarge.copyWith(color: context.colorScheme.primary, fontSize: 18),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      business.openingHours!,
+                      style: context.bodyMedium.copyWith(height: 1.5),
+                    ),
+                  ],
+                  if (business.sameAs.isNotNullOrEmpty) ...[
+                    const SizedBox(height: 12),
+                    Text(
+                      l10n.businessHomepageLabel,
+                      style: context.titleLarge.copyWith(color: context.colorScheme.primary, fontSize: 18),
+                    ),
+                    const SizedBox(height: 4),
+                    JumpToBrowserLink(
+                      business.sameAs,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                    ),
+                  ],
+                  if (business.moreInfo.isNotNullOrEmpty) ...[
+                    const SizedBox(height: 12),
+                    Text(
+                      l10n.businessMoreInfoLabel,
+                      style: context.titleLarge.copyWith(color: context.colorScheme.primary, fontSize: 18),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      business.moreInfo!,
+                      style: context.bodyMedium.copyWith(height: 1.5),
+                    ),
+                  ],
                   const SizedBox(height: 20),
                   if (businessStore.ipfsProducts.isNotEmpty)
                     Column(

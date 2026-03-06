@@ -114,6 +114,7 @@ class EWTestKeys {
   static const businessTelephone = 'business-telephone';
   static const businessEmail = 'business-email';
   static const businessOpeningHours = 'business-opening-hours';
+  static const businessHomepage = 'business-homepage';
   static const businessLongitude = 'business-longitude';
   static const businessLatitude = 'business-latitude';
   static const businessPickLogo = 'business-pick-logo';

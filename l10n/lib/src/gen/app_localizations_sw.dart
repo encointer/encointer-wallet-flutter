@@ -97,6 +97,9 @@ class AppLocalizationsSw extends AppLocalizations {
   String get businessMoreInfoLabel => 'Maelezo Zaidi';
 
   @override
+  String get businessHomepageLabel => 'Tovuti';
+
+  @override
   String get businessLongitudeLabel => 'Longitudo';
 
   @override
