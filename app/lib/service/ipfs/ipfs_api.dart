@@ -27,6 +27,8 @@ class IpfsApi {
   static const String lsRequest = '/api/v0/ls';
   static const String catRequest = '/api/v0/cat';
 
+  final _imageCache = <String, Uint8List>{};
+
   Future<String?> getCommunityIcon(String ipfsCid) async {
     if (ipfsCid.isEmpty) {
       Log.d('[IPFS] return default icon (no CID set)', logTarget);
@@ -81,13 +83,20 @@ class IpfsApi {
     }, (r) => r);
   }
 
-  /// 🖼️ Fetches and caches an image, works with folder+file OR direct CID.
+  /// Fetches and caches an image, works with folder+file OR direct CID.
+  /// Uses an in-memory cache to avoid FutureBuilder flash on repeated loads.
   Future<Uint8List?> getImageBytes(String cidOrFolder, [String? imageName]) async {
+    final cacheKey = imageName != null ? '$cidOrFolder/$imageName' : cidOrFolder;
+    final memoryCached = _imageCache[cacheKey];
+    if (memoryCached != null) return memoryCached;
+
     final cacheFile = await _getCachedFile(cidOrFolder, imageName);
 
     if (cacheFile.existsSync()) {
       Log.d('[IPFS] Cache hit for ${imageName ?? cidOrFolder}', 'Ipfs');
-      return cacheFile.readAsBytes();
+      final bytes = await cacheFile.readAsBytes();
+      _imageCache[cacheKey] = bytes;
+      return bytes;
     }
 
     final url = _buildIpfsUrl(cidOrFolder, imageName);
@@ -98,6 +107,7 @@ class IpfsApi {
     }, (r) async {
       await cacheFile.create(recursive: true);
       await cacheFile.writeAsBytes(r);
+      _imageCache[cacheKey] = r;
       Log.d('[IPFS] Cached ${imageName ?? cidOrFolder}', 'Ipfs');
       return r;
     });
@@ -262,8 +272,9 @@ class IpfsApi {
     return File(p.join(cacheDir.path, fileName));
   }
 
-  /// Clears the cache folder
+  /// Clears both in-memory and disk caches.
   Future<void> clearCache() async {
+    _imageCache.clear();
     final dir = _cacheDir ?? await Directory.systemTemp.createTemp();
     final cacheDir = Directory(p.join(dir.path, 'ipfs_cache'));
     if (cacheDir.existsSync()) cacheDir.deleteSync(recursive: true);
