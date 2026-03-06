@@ -98,8 +98,6 @@ class SingleBusinessDetail extends StatelessWidget {
                           child: IconButton(
                             key: const Key(EWTestKeys.businessEditButton),
                             onPressed: () async {
-                              // ignore: avoid_print
-                              print('[SingleBiz] edit: pushing form');
                               final updated = await Navigator.of(context).pushNamed<IpfsBusiness?>(
                                 BusinessFormPage.route,
                                 arguments: BusinessFormParams(
@@ -107,13 +105,8 @@ class SingleBusinessDetail extends StatelessWidget {
                                   businessController: business.controller,
                                 ),
                               );
-                              // ignore: avoid_print
-                              print(
-                                  '[SingleBiz] edit: form returned, updated=${updated?.name}, mounted=${context.mounted}');
                               if (updated != null && context.mounted) {
                                 context.read<SingleBusinessStore>().updateBusiness(updated);
-                                // ignore: avoid_print
-                                print('[SingleBiz] edit: updateBusiness called with name=${updated.name}');
                               }
                             },
                             icon: const Icon(Icons.edit, size: 20),

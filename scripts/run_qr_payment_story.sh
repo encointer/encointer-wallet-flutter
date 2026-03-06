@@ -18,6 +18,7 @@ cd app
 
 echo "=== Step 1: Running Alice's QR show test ==="
 ../.flutter/bin/flutter drive \
+  --no-enable-impeller \
   --driver=test_driver/alice_qr_driver.dart \
   --target=integration_test/stories/alice_show_qr_test.dart \
   --flavor dev \
@@ -29,6 +30,7 @@ echo "QR payload: ${QR_PAYLOAD:0:40}..."
 
 echo "=== Step 3: Running Bob's scan and pay test ==="
 ../.flutter/bin/flutter drive \
+  --no-enable-impeller \
   --driver=test_driver/integration_test.dart \
   --target=integration_test/stories/bob_scan_and_pay_test.dart \
   --flavor dev \

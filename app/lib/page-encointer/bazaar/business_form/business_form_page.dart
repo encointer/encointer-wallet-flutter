@@ -232,12 +232,10 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     if (_clearLogo) {
       logoCid = null;
     } else if (_pickedLogo != null) {
-      // ignore: avoid_print
-      print('[BazaarForm] _buildBusiness: uploading logo');
+      Log.d('uploading logo', _logTarget);
       final bytes = Uint8List.fromList(await _pickedLogo!.readAsBytes());
       logoCid = await _uploadBytes(bytes, _pickedLogo!.name);
-      // ignore: avoid_print
-      print('[BazaarForm] _buildBusiness: logo uploaded, cid=$logoCid');
+      Log.d('logo uploaded, cid=$logoCid', _logTarget);
     } else {
       logoCid = _existing?.logo;
     }
@@ -255,11 +253,9 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
 
     String? photosCid;
     if (photoFiles.isNotEmpty) {
-      // ignore: avoid_print
-      print('[BazaarForm] _buildBusiness: uploading ${photoFiles.length} photos');
+      Log.d('uploading ${photoFiles.length} photos', _logTarget);
       photosCid = await _uploadFolder(photoFiles);
-      // ignore: avoid_print
-      print('[BazaarForm] _buildBusiness: photos uploaded, cid=$photosCid');
+      Log.d('photos uploaded, cid=$photosCid', _logTarget);
     }
 
     return IpfsBusiness(
@@ -286,27 +282,19 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
   }
 
   Future<void> _onSave() async {
-    // ignore: avoid_print
-    print('[BazaarForm] _onSave called, _saving=$_saving, _isEdit=$_isEdit');
     if (!_formKey.currentState!.validate()) {
-      // ignore: avoid_print
-      print('[BazaarForm] _onSave: form validation failed');
+      Log.d('form validation failed', _logTarget);
       return;
     }
 
     final l10n = context.l10n;
     if (_selectedCategory == null) {
-      // ignore: avoid_print
-      print('[BazaarForm] _onSave: category is null');
+      Log.d('category is null', _logTarget);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.businessCategoryRequired)));
       return;
     }
 
-    if (_saving) {
-      // ignore: avoid_print
-      print('[BazaarForm] _onSave: already saving, returning');
-      return;
-    }
+    if (_saving) return;
 
     setState(() => _saving = true);
 
@@ -316,11 +304,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
       } else {
         await _saveCreate();
       }
-      // ignore: avoid_print
-      print('[BazaarForm] _onSave: save completed successfully');
     } catch (e) {
-      // ignore: avoid_print
-      print('[BazaarForm] _onSave ERROR: $e');
       Log.e('Business form save error: $e', _logTarget);
       if (mounted) {
         AppAlert.showErrorDialog(context, errorText: e.toString(), buttontext: context.l10n.ok);
@@ -354,13 +338,9 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
 
     final path = isOwner ? 'owner' : 'proxy';
     Log.d('_saveEdit: submitting via $path path', _logTarget);
-    // ignore: avoid_print
-    print('[BazaarForm] _saveEdit: submitting via $path path');
 
     void onTxError(DispatchError dispatchError) {
       Log.e('updateBusiness dispatch error: ${dispatchError.toJson()}', _logTarget);
-      // ignore: avoid_print
-      print('[BazaarForm] _saveEdit: extrinsic FAILED: ${dispatchError.toJson()}');
       if (mounted) {
         final msg = getLocalizedTxErrorMessage(l10n, dispatchError);
         AppAlert.showErrorDialog(context, errorText: '${msg.title}: ${msg.body}', buttontext: l10n.ok);
@@ -368,8 +348,6 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     }
 
     void onTxFinish(dynamic _, dynamic __) {
-      // ignore: avoid_print
-      print('[BazaarForm] _saveEdit: onFinish called, mounted=$mounted');
       Log.d('_saveEdit: onFinish called, mounted=$mounted', _logTarget);
       if (mounted) Navigator.of(context).pop(business);
     }
@@ -410,13 +388,10 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
         onError: onTxError,
       );
     }
-    // ignore: avoid_print
-    print('[BazaarForm] _saveEdit: submitTx returned');
   }
 
   Future<void> _saveCreate() async {
-    // ignore: avoid_print
-    print('[BazaarForm] _saveCreate: starting');
+    Log.d('_saveCreate: starting', _logTarget);
     final l10n = context.l10n;
     final store = context.read<AppStore>();
     final api = webApi;
@@ -425,25 +400,21 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
 
     // Authenticate once upfront
     final authenticated = await context.read<LoginStore>().ensureAuthenticated(context);
-    // ignore: avoid_print
-    print('[BazaarForm] _saveCreate: authenticated=$authenticated');
+    Log.d('_saveCreate: authenticated=$authenticated', _logTarget);
     if (!authenticated) return;
 
     // Upload to IPFS
     setState(() => _progressMessage = l10n.businessUploadingData);
-    // ignore: avoid_print
-    print('[BazaarForm] _saveCreate: building business (logo=${_pickedLogo != null}, photos=${_pickedPhotos.length})');
+    Log.d('_saveCreate: building business (logo=${_pickedLogo != null}, photos=${_pickedPhotos.length})', _logTarget);
     final business = await _buildBusiness();
-    // ignore: avoid_print
-    print('[BazaarForm] _saveCreate: uploading metadata JSON');
+    Log.d('_saveCreate: uploading metadata JSON', _logTarget);
     final metadataCid = await _uploadJson(business.toJson());
-    // ignore: avoid_print
-    print('[BazaarForm] _saveCreate: metadata uploaded, cid=$metadataCid');
+    Log.d('_saveCreate: metadata uploaded, cid=$metadataCid', _logTarget);
 
     // Step 1: createPure
     setState(() => _progressMessage = l10n.businessCreatingAccount);
     final createPureCall = api.encointer.encointerKusama.tx.proxy.createPure(
-      proxyType: ProxyType.nonTransfer,
+      proxyType: ProxyType.any,
       delay: 0,
       index: 0,
     );
@@ -484,7 +455,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     );
     final proxyCall = api.encointer.encointerKusama.tx.proxy.proxy(
       real: pd.MultiAddress.values.id(pureAccountId),
-      forceProxyType: ProxyType.nonTransfer,
+      forceProxyType: ProxyType.any,
       call: createBusinessCall,
     );
     final proxyXt = await TxBuilder(api.provider).createSignedExtrinsic(
