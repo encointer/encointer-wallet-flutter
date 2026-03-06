@@ -132,7 +132,7 @@ class _BazaarPageState extends State<BazaarPage> {
       final store = context.read<AppStore>();
       final cid = store.encointer.community?.cid;
       if (cid != null) {
-        await context.read<BusinessesStore>().getBusinesses(cid, store.account.currentAddress);
+        await context.read<BusinessesStore>().getBusinesses(cid, store.account.currentAddress, force: true);
       }
     }
   }

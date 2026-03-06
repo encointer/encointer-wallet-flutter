@@ -46,7 +46,7 @@ class BusinessCard extends StatelessWidget {
         if (edited ?? false) {
           final cid = store.encointer.community?.cid;
           if (cid != null && context.mounted) {
-            await businessesStore.getBusinesses(cid, store.account.currentAddress);
+            await businessesStore.getBusinesses(cid, store.account.currentAddress, force: true);
           }
         }
       },

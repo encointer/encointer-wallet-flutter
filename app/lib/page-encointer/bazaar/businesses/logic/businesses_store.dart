@@ -18,6 +18,11 @@ const _targetLogger = 'BusinessesStore';
 class BusinessesStore = _BusinessesStoreBase with _$BusinessesStore;
 
 abstract class _BusinessesStoreBase with Store {
+  static const _ttl = Duration(minutes: 5);
+
+  DateTime? _lastFetchTime;
+  CommunityIdentifier? _lastFetchCid;
+
   @observable
   List<IpfsBusiness> businesses = <IpfsBusiness>[];
 
@@ -45,7 +50,15 @@ abstract class _BusinessesStoreBase with Store {
   }
 
   @action
-  Future<void> getBusinesses(CommunityIdentifier cid, String currentAddress) async {
+  Future<void> getBusinesses(CommunityIdentifier cid, String currentAddress, {bool force = false}) async {
+    if (!force &&
+        _lastFetchTime != null &&
+        _lastFetchCid == cid &&
+        DateTime.now().difference(_lastFetchTime!) < _ttl &&
+        fetchStatus == FetchStatus.success) {
+      return;
+    }
+
     fetchStatus = FetchStatus.loading;
     businesses = <IpfsBusiness>[];
     sortedBusinesses = <IpfsBusiness>[];
@@ -63,6 +76,9 @@ abstract class _BusinessesStoreBase with Store {
     await _updateBusinesses(accountBusinessTuples);
 
     Log.d('getBusinesses: after update businesses = $businesses', _targetLogger);
+
+    _lastFetchTime = DateTime.now();
+    _lastFetchCid = cid;
 
     _update();
   }
@@ -99,15 +115,14 @@ abstract class _BusinessesStoreBase with Store {
           Log.d('updateBusinesses: right = ${business.toJson()}', _targetLogger);
           businesses.add(business);
           sortedBusinesses.add(business);
-          if (fetchStatus == FetchStatus.loading) {
-            fetchStatus = FetchStatus.success;
-          }
         } catch (e) {
           error = e.toString();
           Log.d('[updateBusinesses]: error = $e', _targetLogger);
         }
       }),
     );
+
+    _sortByStatus();
   }
 
   Future<void> _checkDelegateStatus(Set<String> controllers, String currentAddress) async {
