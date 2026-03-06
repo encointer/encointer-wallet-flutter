@@ -38,6 +38,7 @@ void main() {
       expect(restored.email, business.email);
       expect(restored.openingHours, business.openingHours);
       expect(restored.moreInfo, business.moreInfo);
+      expect(restored.sameAs, business.sameAs);
       expect(restored.longitude, business.longitude);
       expect(restored.latitude, business.latitude);
       expect(restored.logo, business.logo);
@@ -85,6 +86,7 @@ void main() {
       expect(restored.name, 'Minimal');
       expect(restored.description, isNull);
       expect(restored.address, isNull);
+      expect(restored.sameAs, isNull);
       expect(restored.logo, isNull);
       expect(restored.photos, isNull);
     });
@@ -125,6 +127,7 @@ IpfsBusiness _testBusiness() {
     email: 'bakery@test.com',
     openingHours: 'Mon-Fri 7:00-18:00',
     moreInfo: 'Fresh bread daily',
+    sameAs: 'https://example.com',
     longitude: '8.5417',
     latitude: '47.3769',
     logo: 'QmLogoHash123',

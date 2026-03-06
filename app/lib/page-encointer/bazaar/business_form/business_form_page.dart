@@ -62,6 +62,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
   late final TextEditingController _addressDescCtrl;
   late final TextEditingController _telephoneCtrl;
   late final TextEditingController _emailCtrl;
+  late final TextEditingController _sameAsCtrl;
   late final TextEditingController _openingHoursCtrl;
   late final TextEditingController _moreInfoCtrl;
   late final TextEditingController _longitudeCtrl;
@@ -90,6 +91,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     _addressDescCtrl = TextEditingController(text: _existing?.addressDescription ?? '');
     _telephoneCtrl = TextEditingController(text: _existing?.telephone ?? '');
     _emailCtrl = TextEditingController(text: _existing?.email ?? '');
+    _sameAsCtrl = TextEditingController(text: _existing?.sameAs ?? '');
     _openingHoursCtrl = TextEditingController(text: _existing?.openingHours ?? '');
     _moreInfoCtrl = TextEditingController(text: _existing?.moreInfo ?? '');
     _longitudeCtrl = TextEditingController(text: _existing?.longitude ?? '');
@@ -110,6 +112,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
     _addressDescCtrl.dispose();
     _telephoneCtrl.dispose();
     _emailCtrl.dispose();
+    _sameAsCtrl.dispose();
     _openingHoursCtrl.dispose();
     _moreInfoCtrl.dispose();
     _longitudeCtrl.dispose();
@@ -269,6 +272,7 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
       email: _nullIfEmpty(_emailCtrl.text),
       openingHours: _nullIfEmpty(_openingHoursCtrl.text),
       moreInfo: _nullIfEmpty(_moreInfoCtrl.text),
+      sameAs: _nullIfEmpty(_sameAsCtrl.text),
       longitude: _nullIfEmpty(_longitudeCtrl.text),
       latitude: _nullIfEmpty(_latitudeCtrl.text),
       logo: logoCid,
@@ -621,6 +625,15 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
                         labelText: l10n.businessEmailLabel,
                         controller: _emailCtrl,
                         keyboardType: TextInputType.emailAddress,
+                      ),
+                      const SizedBox(height: 12),
+
+                      // Homepage
+                      EncointerTextFormField(
+                        key: const Key(EWTestKeys.businessHomepage),
+                        labelText: l10n.businessHomepageLabel,
+                        controller: _sameAsCtrl,
+                        keyboardType: TextInputType.url,
                       ),
                       const SizedBox(height: 12),
 

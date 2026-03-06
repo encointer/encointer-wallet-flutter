@@ -97,6 +97,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get businessMoreInfoLabel => 'More Information';
 
   @override
+  String get businessHomepageLabel => 'Homepage';
+
+  @override
   String get businessLongitudeLabel => 'Longitude';
 
   @override

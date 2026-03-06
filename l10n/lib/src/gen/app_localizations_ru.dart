@@ -97,6 +97,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get businessMoreInfoLabel => 'Дополнительная информация';
 
   @override
+  String get businessHomepageLabel => 'Веб-сайт';
+
+  @override
   String get businessLongitudeLabel => 'Долгота';
 
   @override

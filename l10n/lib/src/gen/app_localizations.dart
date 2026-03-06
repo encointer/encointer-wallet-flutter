@@ -278,6 +278,12 @@ abstract class AppLocalizations {
   /// **'More Information'**
   String get businessMoreInfoLabel;
 
+  /// No description provided for @businessHomepageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Homepage'**
+  String get businessHomepageLabel;
+
   /// No description provided for @businessLongitudeLabel.
   ///
   /// In en, this message translates to:

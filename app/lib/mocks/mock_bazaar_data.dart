@@ -83,6 +83,7 @@ final mockBusinessData = {
   'longitude': '8.515377938747404',
   'latitude': '47.389401263868514',
   'openingHours': 'Mon-Fri 8h-18h',
+  'sameAs': 'https://example.com',
   'photos': 'QmaQfq6Zr2yCMkSMe8VjSxoYd89hyzcJjeE8jTUG3uXpBG',
   'logo': 'QmcULG6AN5wwMfuwtpsMcjQmFwwUnSHsvSEUFLrCoWMpWh',
   'status': 'highlight',

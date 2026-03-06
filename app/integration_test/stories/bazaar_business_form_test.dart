@@ -119,6 +119,12 @@ void main() {
     await tester.enterText(find.byKey(const Key(EWTestKeys.businessEmail)), 'alice@test.com');
     await tester.pumpAndSettle();
 
+    // Fill homepage
+    await scrollUntilVisible(tester,
+        scrollable: formListView, item: find.byKey(const Key(EWTestKeys.businessHomepage)));
+    await tester.enterText(find.byKey(const Key(EWTestKeys.businessHomepage)), 'https://test.com');
+    await tester.pumpAndSettle();
+
     // Fill opening hours
     await scrollUntilVisible(tester,
         scrollable: formListView, item: find.byKey(const Key(EWTestKeys.businessOpeningHours)));
