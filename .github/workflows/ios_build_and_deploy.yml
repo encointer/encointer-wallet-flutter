@@ -11,6 +11,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: macos-15
+    timeout-minutes: 60
 
     steps:
       - name: Checkout code

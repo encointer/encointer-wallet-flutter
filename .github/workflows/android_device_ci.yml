@@ -230,6 +230,14 @@ jobs:
             for i in $(seq 1 20); do
               adb pull "/sdcard/recording_part${i}.mp4" "$ARTIFACT_PATH" 2>/dev/null || true
             done
+            # Stitch video segments into a single recording
+            ls "$ARTIFACT_PATH"/recording_part*.mp4 2>/dev/null | sort -V | \
+              sed 's/^/file /' > "$ARTIFACT_PATH/concat.txt"
+            if [ -s "$ARTIFACT_PATH/concat.txt" ]; then
+              ffmpeg -f concat -safe 0 -i "$ARTIFACT_PATH/concat.txt" \
+                -c copy "$ARTIFACT_PATH/recording.mp4" 2>/dev/null && \
+                rm -f "$ARTIFACT_PATH"/recording_part*.mp4 "$ARTIFACT_PATH/concat.txt"
+            fi
           fi
           mkdir -p "$ARTIFACT_PATH"
           cp -r "$ARTIFACT_PATH/test"/* "$ARTIFACT_PATH" 2>/dev/null || echo "no screenshots found"
