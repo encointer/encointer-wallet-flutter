@@ -34,20 +34,20 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Run encointer-node
+      - name: Start encointer-node and kubo
         run: |
           ./scripts/docker_run_encointer_node_notee.sh ${{ inputs.docker_tag }} &
+          docker run -d --name kubo --network=host \
+            -e IPFS_PROFILE=server \
+            ipfs/kubo:latest
 
       - name: Bootstrap demo community
         run: |
           ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh \
             --docker-tag=${{ inputs.docker_tag }}
 
-      - name: Run IPFS node (kubo)
+      - name: Wait for kubo readiness
         run: |
-          docker run -d --name kubo --network=host \
-            -e IPFS_PROFILE=server \
-            ipfs/kubo:latest
           for i in $(seq 1 30); do
             curl -s http://localhost:5001/api/v0/id && break
             sleep 1
@@ -116,7 +116,12 @@ jobs:
           done
 
           if [ -z "$IPFS_GW" ] || [ -z "$IPFS_AUTH" ]; then
-            echo "::warning::IPFS tunnel(s) not ready after 60s (gateway=$IPFS_GW, auth=$IPFS_AUTH)"
+            echo "::error::IPFS tunnel(s) not ready after 60s (gateway=$IPFS_GW, auth=$IPFS_AUTH)"
+            echo "--- ipfs_tunnel.log ---"
+            cat ipfs_tunnel.log 2>/dev/null || true
+            echo "--- ipfs_auth_tunnel.log ---"
+            cat ipfs_auth_tunnel.log 2>/dev/null || true
+            exit 1
           fi
 
       - name: Verify IPFS tunnel health
@@ -205,8 +210,8 @@ jobs:
       - name: Keep tunnel alive and check every 30s
         if: ${{ !cancelled() && steps.trigger_device.outcome == 'success' }}
         run: |
-          echo "⏳ Monitoring Cloudflare tunnel for up to 45 minutes..."
-          MAX_MINUTES=55
+          echo "⏳ Monitoring Cloudflare tunnel for up to 35 minutes..."
+          MAX_MINUTES=35
           INTERVAL=30
           ELAPSED=0
 
@@ -220,4 +225,4 @@ jobs:
             ELAPSED=$((ELAPSED + INTERVAL))
           done
 
-          echo "⏰ Finished 60 minutes monitoring."
+          echo "⏰ Finished monitoring."

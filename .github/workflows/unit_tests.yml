@@ -28,6 +28,13 @@ jobs:
       # Setup Environment
       - uses: actions/checkout@v6
 
+      - name: Cache pub dependencies
+        uses: actions/cache@v5
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-pub-
+
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
 
@@ -46,6 +53,13 @@ jobs:
     steps:
       # Setup Environment
       - uses: actions/checkout@v6
+
+      - name: Cache pub dependencies
+        uses: actions/cache@v5
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-pub-
 
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
