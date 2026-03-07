@@ -141,13 +141,14 @@ jobs:
 
       - name: Start simulator
         id: start-simulator
+        timeout-minutes: 5
         working-directory: ./scripts
         env:
           DEVICE_ID: ${{ env.DEVICE }}
         run: source ./ios_emulator.sh
 
       - name: Start screen recording
-        if: ${{ env.RECORD_VIDEO }}
+        if: ${{ env.RECORD_VIDEO == 'true' && steps.start-simulator.conclusion == 'success' }}
         shell: bash
         run: |
           echo "Starting screen recording..."
@@ -169,7 +170,7 @@ jobs:
             --dart-define=locales=en
 
       - name: Run bazaar business story
-        if: ${{ env.IPFS_GATEWAY != '' && env.IPFS_AUTH_GATEWAY != '' }}
+        if: ${{ !cancelled() && steps.start-simulator.conclusion == 'success' && env.IPFS_GATEWAY != '' && env.IPFS_AUTH_GATEWAY != '' }}
         working-directory: ./app
         timeout-minutes: 20
         shell: bash
