@@ -3,7 +3,7 @@ set -euxo pipefail
 IFS=$'\n\t'
 
 # Prefer env var DOCKER_TAG, then CLI arg, then fallback to 1.16.2
-DOCKER_TAG="1.16.2"
+DOCKER_TAG="${ENCOINTER_DOCKER_TAG:-1.16.2}"
 IS_PARACHAIN="0"
 
 while [[ $# -gt 0 ]]; do

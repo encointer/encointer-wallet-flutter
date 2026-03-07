@@ -181,17 +181,9 @@ jobs:
         timeout-minutes: 10
         run: ./scripts/android_start_emulator.sh
 
-      - name: Start screen recording
-        if: env.RECORD_VIDEO == 'true' && steps.start-emulator.conclusion == 'success'
-        run: |
-          # Android screenrecord has a 180s hard limit per recording.
-          # Chain segments to cover long-running tests.
-          (
-            for i in $(seq 1 20); do
-              adb shell screenrecord --time-limit 180 "/sdcard/recording_part${i}.mp4" || break
-            done
-          ) &
-          echo $! > /tmp/recording_pid.txt
+      - name: Start recording (main)
+        if: ${{ !cancelled() && env.RECORD_VIDEO == 'true' && steps.start-emulator.conclusion == 'success' }}
+        run: ./scripts/android_screen_record.sh start main 10
 
       - name: Main integration test
         if: ${{ !cancelled() && steps.start-emulator.conclusion == 'success' }}
@@ -206,12 +198,28 @@ jobs:
             --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
             --dart-define=locales=en
 
+      - name: Stop recording (main)
+        if: ${{ always() && env.RECORD_VIDEO == 'true' && steps.start-emulator.conclusion == 'success' }}
+        run: ./scripts/android_screen_record.sh stop main "$ARTIFACT_PATH"
+
+      - name: Start recording (qr)
+        if: ${{ !cancelled() && env.RECORD_VIDEO == 'true' && steps.start-emulator.conclusion == 'success' }}
+        run: ./scripts/android_screen_record.sh start qr 4
+
       - name: QR payment story
         if: ${{ !cancelled() && steps.start-emulator.conclusion == 'success' }}
         timeout-minutes: 10
         run: |
           adb shell pm clear org.encointer.wallet || echo "Could not clear app data"
           ./scripts/run_qr_payment_story.sh
+
+      - name: Stop recording (qr)
+        if: ${{ always() && env.RECORD_VIDEO == 'true' && steps.start-emulator.conclusion == 'success' }}
+        run: ./scripts/android_screen_record.sh stop qr "$ARTIFACT_PATH"
+
+      - name: Start recording (bazaar)
+        if: ${{ !cancelled() && env.RECORD_VIDEO == 'true' && steps.start-emulator.conclusion == 'success' && env.IPFS_GATEWAY != '' && env.IPFS_AUTH_GATEWAY != '' }}
+        run: ./scripts/android_screen_record.sh start bazaar 4
 
       - name: Bazaar business story
         if: ${{ !cancelled() && steps.start-emulator.conclusion == 'success' && env.IPFS_GATEWAY != '' && env.IPFS_AUTH_GATEWAY != '' }}
@@ -220,17 +228,13 @@ jobs:
           adb shell pm clear org.encointer.wallet || echo "Could not clear app data"
           ./scripts/run_bazaar_business_story.sh
 
-      - name: Stop recording and collect artifacts
+      - name: Stop recording (bazaar)
+        if: ${{ always() && env.RECORD_VIDEO == 'true' && steps.start-emulator.conclusion == 'success' && env.IPFS_GATEWAY != '' && env.IPFS_AUTH_GATEWAY != '' }}
+        run: ./scripts/android_screen_record.sh stop bazaar "$ARTIFACT_PATH"
+
+      - name: Collect screenshots
         if: always()
         run: |
-          if [ -f /tmp/recording_pid.txt ]; then
-            kill "$(cat /tmp/recording_pid.txt)" 2>/dev/null || true
-            sleep 3
-            mkdir -p "$ARTIFACT_PATH"
-            for i in $(seq 1 20); do
-              adb pull "/sdcard/recording_part${i}.mp4" "$ARTIFACT_PATH" 2>/dev/null || true
-            done
-          fi
           mkdir -p "$ARTIFACT_PATH"
           cp -r "$ARTIFACT_PATH/test"/* "$ARTIFACT_PATH" 2>/dev/null || echo "no screenshots found"
           rm -r "$ARTIFACT_PATH/test" 2>/dev/null || true

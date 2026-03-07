@@ -4,7 +4,7 @@ set -euo pipefail
 # Extract the tunnel host (retry for up to 30s in case log is still being written)
 HTTP_URL=""
 for i in $(seq 1 30); do
-  HTTP_URL=$(grep -o 'https://[^ ]*trycloudflare.com' tunnel.log 2>/dev/null | head -n1 || true)
+  HTTP_URL=$(grep -o 'https://[^ ]*trycloudflare.com' "${1:-tunnel.log}" 2>/dev/null | head -n1 || true)
   if [ -n "$HTTP_URL" ]; then
     break
   fi
