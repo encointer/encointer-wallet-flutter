@@ -79,9 +79,14 @@ Future<void> scrollToPanelController(WidgetTester tester) async {
 
 Future<void> scrollToStartMeetup(WidgetTester tester, AppSettings appSettings) async {
   if (appSettings.developerMode) appSettings.toggleDeveloperMode();
-  await scrollUntilVisible(
+  // Scroll the ceremony box into view first — it exists regardless of phase.
+  await scrollToCeremonyBox(tester);
+  // Wait for the phase transition to propagate to the UI. The startMeetup
+  // button appears inside the ceremony box once the chain processes the
+  // phase-advance RPC, which can take several seconds on CI.
+  await waitForWidget(
     tester,
-    scrollable: find.byKey(const Key(EWTestKeys.listViewWallet)),
-    item: find.byKey(const Key(EWTestKeys.startMeetup)),
+    find.byKey(const Key(EWTestKeys.startMeetup)),
+    timeout: const Duration(seconds: 60),
   );
 }

@@ -13,10 +13,15 @@ Future<void> enterAccountName(WidgetTester tester, String accountName) async {
 }
 
 Future<void> enterAccountMnemonic(WidgetTester tester, String seedOrMnemonic) async {
-  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.accountSource)));
-  await tester.tap(find.byKey(const Key(EWTestKeys.accountSource)));
-  await tester.pumpAndSettle();
-  await tester.enterText(find.byKey(const Key(EWTestKeys.accountSource)), seedOrMnemonic);
+  final fieldFinder = find.byKey(const Key(EWTestKeys.accountSource));
+  await waitForWidget(tester, fieldFinder);
+  // Set controller text directly — tester.enterText tries to tap the field,
+  // but the soft keyboard (still open from enterAccountName) intercepts the
+  // tap, generating hit-test warnings that accumulate and fail the test.
+  final editableText = tester.widget<EditableText>(
+    find.descendant(of: fieldFinder, matching: find.byType(EditableText)),
+  );
+  editableText.controller.text = seedOrMnemonic;
   await tester.pumpAndSettle();
 }
 
