@@ -210,6 +210,7 @@ jobs:
         if: ${{ !cancelled() && steps.start-emulator.conclusion == 'success' }}
         timeout-minutes: 10
         run: |
+          adb shell am force-stop org.encointer.wallet || true
           adb shell pm clear org.encointer.wallet || echo "Could not clear app data"
           ./scripts/run_qr_payment_story.sh
 
@@ -225,6 +226,7 @@ jobs:
         if: ${{ !cancelled() && steps.start-emulator.conclusion == 'success' && env.IPFS_GATEWAY != '' && env.IPFS_AUTH_GATEWAY != '' }}
         timeout-minutes: 10
         run: |
+          adb shell am force-stop org.encointer.wallet || true
           adb shell pm clear org.encointer.wallet || echo "Could not clear app data"
           ./scripts/run_bazaar_business_story.sh
 
