@@ -169,6 +169,11 @@ jobs:
             --dart-define=WS_ENDPOINT="$WS_ENDPOINT" \
             --dart-define=locales=en
 
+      - name: Clear app state before bazaar story
+        if: ${{ !cancelled() && steps.start-simulator.conclusion == 'success' && env.IPFS_GATEWAY != '' && env.IPFS_AUTH_GATEWAY != '' }}
+        shell: bash
+        run: xcrun simctl uninstall booted org.encointer.wallet || true
+
       - name: Run bazaar business story
         if: ${{ !cancelled() && steps.start-simulator.conclusion == 'success' && env.IPFS_GATEWAY != '' && env.IPFS_AUTH_GATEWAY != '' }}
         working-directory: ./app

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -5,6 +7,16 @@ import 'package:latlong2/latlong.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
+
+/// 1x1 transparent PNG (67 bytes) used as fallback for failed map tiles.
+final _kTransparentImage = Uint8List.fromList(const <int>[
+  0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0x00, 0x00, 0x00, 0x0D, //
+  0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01,
+  0x08, 0x06, 0x00, 0x00, 0x00, 0x1F, 0x15, 0xC4, 0x89, 0x00, 0x00, 0x00,
+  0x0A, 0x49, 0x44, 0x41, 0x54, 0x78, 0x9C, 0x62, 0x00, 0x00, 0x00, 0x02,
+  0x00, 0x01, 0xE2, 0x21, 0xBC, 0x33, 0x00, 0x00, 0x00, 0x00, 0x49, 0x45,
+  0x4E, 0x44, 0xAE, 0x42, 0x60, 0x82,
+]);
 
 class EncointerMap extends StatelessWidget {
   EncointerMap({
@@ -47,6 +59,8 @@ class EncointerMap extends StatelessWidget {
           tileProvider: NetworkTileProvider(
             headers: {'User-Agent': 'EncointerWallet/1.0 org.encointer.wallet'},
           ),
+          errorImage: MemoryImage(_kTransparentImage),
+          evictErrorTileStrategy: EvictErrorTileStrategy.notVisible,
         ),
         PopupMarkerLayer(
           options: PopupMarkerLayerOptions(
