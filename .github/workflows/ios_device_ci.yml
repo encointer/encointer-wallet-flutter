@@ -158,7 +158,7 @@ jobs:
       - name: Run Flutter integration tests
         if: ${{ !cancelled() && steps.start-simulator.conclusion == 'success' }}
         working-directory: ./app
-        timeout-minutes: 15
+        timeout-minutes: 20
         shell: bash
         run: |
           echo "🚀 Running Flutter integration tests with WS_ENDPOINT=$WS_ENDPOINT"

@@ -40,6 +40,6 @@ echo "Waiting for boot completion..."
 xcrun simctl bootstatus "$UUID" -b
 
 echo "Setting notification permissions..."
-timeout 60 applesimutils --byId "$UUID" --bundle "org.encointer.wallet" --setPermissions "notifications=YES"
+applesimutils --byId "$UUID" --bundle "org.encointer.wallet" --setPermissions "notifications=YES"
 
 echo "Simulator ready"
