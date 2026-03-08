@@ -210,8 +210,9 @@ jobs:
         if: ${{ !cancelled() && steps.start-emulator.conclusion == 'success' }}
         timeout-minutes: 10
         run: |
-          adb shell am force-stop org.encointer.wallet || true
-          adb shell pm clear org.encointer.wallet || echo "Could not clear app data"
+          adb uninstall org.encointer.wallet || true
+          adb forward --remove-all
+          sleep 2
           ./scripts/run_qr_payment_story.sh
 
       - name: Stop recording (qr)
@@ -226,8 +227,9 @@ jobs:
         if: ${{ !cancelled() && steps.start-emulator.conclusion == 'success' && env.IPFS_GATEWAY != '' && env.IPFS_AUTH_GATEWAY != '' }}
         timeout-minutes: 10
         run: |
-          adb shell am force-stop org.encointer.wallet || true
-          adb shell pm clear org.encointer.wallet || echo "Could not clear app data"
+          adb uninstall org.encointer.wallet || true
+          adb forward --remove-all
+          sleep 2
           ./scripts/run_bazaar_business_story.sh
 
       - name: Stop recording (bazaar)
