@@ -44,7 +44,7 @@ jobs:
   ios_device_tests:
     name: iOS Device Tests
     runs-on: macos-26
-    timeout-minutes: 60
+    timeout-minutes: 40
 
     steps:
       # Setup Environment
@@ -158,7 +158,7 @@ jobs:
       - name: Run Flutter integration tests
         if: ${{ !cancelled() && steps.start-simulator.conclusion == 'success' }}
         working-directory: ./app
-        timeout-minutes: 45
+        timeout-minutes: 15
         shell: bash
         run: |
           echo "🚀 Running Flutter integration tests with WS_ENDPOINT=$WS_ENDPOINT"
@@ -177,7 +177,7 @@ jobs:
       - name: Run bazaar business story
         if: ${{ !cancelled() && steps.start-simulator.conclusion == 'success' && env.IPFS_GATEWAY != '' && env.IPFS_AUTH_GATEWAY != '' }}
         working-directory: ./app
-        timeout-minutes: 20
+        timeout-minutes: 10
         shell: bash
         run: |
           ../.flutter/bin/flutter drive \
