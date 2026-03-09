@@ -6,6 +6,7 @@ import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart'
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/ipfs_image.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/models/bazaar/category.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/business_form/business_form_validators.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/modules/login/logic/login_store.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -550,7 +551,11 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
                         key: const Key(EWTestKeys.businessName),
                         labelText: l10n.businessNameLabel,
                         controller: _nameCtrl,
-                        validator: (v) => (v == null || v.trim().isEmpty) ? l10n.businessNameRequired : null,
+                        validator: (v) {
+                          if (v == null || v.trim().isEmpty) return l10n.businessNameRequired;
+                          if (!BusinessFormValidators.isValidName(v)) return l10n.businessNameTooShort;
+                          return null;
+                        },
                       ),
                       const SizedBox(height: 12),
 
@@ -616,6 +621,11 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
                         labelText: l10n.businessTelephoneLabel,
                         controller: _telephoneCtrl,
                         keyboardType: TextInputType.phone,
+                        validator: (v) {
+                          if (v == null || v.trim().isEmpty) return null;
+                          if (!BusinessFormValidators.isValidTelephone(v.trim())) return l10n.businessTelephoneInvalid;
+                          return null;
+                        },
                       ),
                       const SizedBox(height: 12),
 
@@ -625,6 +635,11 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
                         labelText: l10n.businessEmailLabel,
                         controller: _emailCtrl,
                         keyboardType: TextInputType.emailAddress,
+                        validator: (v) {
+                          if (v == null || v.trim().isEmpty) return null;
+                          if (!BusinessFormValidators.isValidEmail(v.trim())) return l10n.businessEmailInvalid;
+                          return null;
+                        },
                       ),
                       const SizedBox(height: 12),
 
@@ -634,6 +649,11 @@ class _BusinessFormPageState extends State<BusinessFormPage> {
                         labelText: l10n.businessHomepageLabel,
                         controller: _sameAsCtrl,
                         keyboardType: TextInputType.url,
+                        validator: (v) {
+                          if (v == null || v.trim().isEmpty) return null;
+                          if (!BusinessFormValidators.isValidUrl(v.trim())) return l10n.businessHomepageInvalid;
+                          return null;
+                        },
                       ),
                       const SizedBox(height: 12),
 

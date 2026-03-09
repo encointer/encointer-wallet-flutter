@@ -326,6 +326,30 @@ abstract class AppLocalizations {
   /// **'Category is required'**
   String get businessCategoryRequired;
 
+  /// No description provided for @businessNameTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must have at least 2 characters'**
+  String get businessNameTooShort;
+
+  /// No description provided for @businessTelephoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid phone number'**
+  String get businessTelephoneInvalid;
+
+  /// No description provided for @businessEmailInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email address'**
+  String get businessEmailInvalid;
+
+  /// No description provided for @businessHomepageInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid URL (e.g. https://example.com)'**
+  String get businessHomepageInvalid;
+
   /// No description provided for @createBusinessNotificationTitle.
   ///
   /// In en, this message translates to:

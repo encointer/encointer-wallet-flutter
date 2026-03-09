@@ -121,6 +121,19 @@ class AppLocalizationsSw extends AppLocalizations {
   String get businessCategoryRequired => 'Aina inahitajika';
 
   @override
+  String get businessNameTooShort => 'Jina lazima liwe na angalau herufi 2';
+
+  @override
+  String get businessTelephoneInvalid => 'Weka nambari sahihi ya simu';
+
+  @override
+  String get businessEmailInvalid => 'Weka anwani sahihi ya barua pepe';
+
+  @override
+  String get businessHomepageInvalid =>
+      'Weka URL sahihi (mfano https://example.com)';
+
+  @override
   String get createBusinessNotificationTitle => 'Biashara imeundwa';
 
   @override
