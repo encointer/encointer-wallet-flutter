@@ -123,6 +123,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get businessCategoryRequired => 'Kategorie ist erforderlich';
 
   @override
+  String get businessNameTooShort => 'Name muss mindestens 2 Zeichen haben';
+
+  @override
+  String get businessTelephoneInvalid =>
+      'Geben Sie eine gültige Telefonnummer ein';
+
+  @override
+  String get businessEmailInvalid =>
+      'Geben Sie eine gültige E-Mail-Adresse ein';
+
+  @override
+  String get businessHomepageInvalid =>
+      'Geben Sie eine gültige URL ein (z.B. https://example.com)';
+
+  @override
   String get createBusinessNotificationTitle => 'Geschäft erstellt';
 
   @override

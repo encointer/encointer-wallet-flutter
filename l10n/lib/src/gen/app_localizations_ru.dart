@@ -121,6 +121,21 @@ class AppLocalizationsRu extends AppLocalizations {
   String get businessCategoryRequired => 'Категория обязательна';
 
   @override
+  String get businessNameTooShort =>
+      'Название должно содержать не менее 2 символов';
+
+  @override
+  String get businessTelephoneInvalid => 'Введите корректный номер телефона';
+
+  @override
+  String get businessEmailInvalid =>
+      'Введите корректный адрес электронной почты';
+
+  @override
+  String get businessHomepageInvalid =>
+      'Введите корректный URL (например https://example.com)';
+
+  @override
   String get createBusinessNotificationTitle => 'Бизнес создан';
 
   @override
