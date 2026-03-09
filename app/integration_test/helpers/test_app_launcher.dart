@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +15,14 @@ class TestAppLauncher {
 
   Future<void> launch(WidgetTester tester) async {
     binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+    // Suppress image loading errors (e.g. unreachable OSM tiles) so they don't
+    // accumulate as test exceptions on CI emulators.
+    final originalOnError = FlutterError.onError;
+    FlutterError.onError = (details) {
+      if (details.library == 'image resource service') return;
+      originalOnError?.call(details);
+    };
 
     const localeEnv = String.fromEnvironment('locales');
     locales = localeEnv.isEmpty ? [] : localeEnv.split(',');

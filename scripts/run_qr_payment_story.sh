@@ -28,6 +28,11 @@ echo "=== Step 2: Reading QR payload ==="
 QR_PAYLOAD=$(cat build/alice_qr_payload.b64)
 echo "QR payload: ${QR_PAYLOAD:0:40}..."
 
+echo "=== Cleaning up before Bob's test ==="
+adb uninstall org.encointer.wallet || true
+adb forward --remove-all
+sleep 2
+
 echo "=== Step 3: Running Bob's scan and pay test ==="
 ../.flutter/bin/flutter drive \
   --no-enable-impeller \

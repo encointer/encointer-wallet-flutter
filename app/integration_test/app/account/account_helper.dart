@@ -13,22 +13,34 @@ Future<void> enterAccountName(WidgetTester tester, String accountName) async {
 }
 
 Future<void> enterAccountMnemonic(WidgetTester tester, String seedOrMnemonic) async {
-  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.accountSource)));
-  await tester.tap(find.byKey(const Key(EWTestKeys.accountSource)));
-  await tester.pumpAndSettle();
-  await tester.enterText(find.byKey(const Key(EWTestKeys.accountSource)), seedOrMnemonic);
+  final fieldFinder = find.byKey(const Key(EWTestKeys.accountSource));
+  await waitForWidget(tester, fieldFinder);
+  // Set controller text directly — tester.enterText tries to tap the field,
+  // but the soft keyboard (still open from enterAccountName) intercepts the
+  // tap, generating hit-test warnings that accumulate and fail the test.
+  final editableText = tester.widget<EditableText>(
+    find.descendant(of: fieldFinder, matching: find.byType(EditableText)),
+  );
+  editableText.controller.text = seedOrMnemonic;
   await tester.pumpAndSettle();
 }
 
 Future<void> enterPin(WidgetTester tester, String password) async {
-  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.createAccountPin)));
-  await tester.tap(find.byKey(const Key(EWTestKeys.createAccountPin)));
+  final pin1Finder = find.byKey(const Key(EWTestKeys.createAccountPin));
+  await waitForWidget(tester, pin1Finder);
+  // Set controller text directly — tap + enterText fails on iOS simulators
+  // because the keyboard pushes pin2 out of the ListView viewport.
+  final pin1Editable = tester.widget<EditableText>(
+    find.descendant(of: pin1Finder, matching: find.byType(EditableText)),
+  );
+  pin1Editable.controller.text = password;
   await tester.pumpAndSettle();
-  await tester.enterText(find.byKey(const Key(EWTestKeys.createAccountPin)), password);
-  await tester.pumpAndSettle();
-  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.createAccountPin2)));
-  await tester.tap(find.byKey(const Key(EWTestKeys.createAccountPin2)));
-  await tester.pumpAndSettle();
-  await tester.enterText(find.byKey(const Key(EWTestKeys.createAccountPin2)), password);
+
+  final pin2Finder = find.byKey(const Key(EWTestKeys.createAccountPin2));
+  await waitForWidget(tester, pin2Finder);
+  final pin2Editable = tester.widget<EditableText>(
+    find.descendant(of: pin2Finder, matching: find.byType(EditableText)),
+  );
+  pin2Editable.controller.text = password;
   await tester.pumpAndSettle();
 }

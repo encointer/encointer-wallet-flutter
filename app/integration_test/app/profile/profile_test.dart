@@ -33,7 +33,9 @@ Future<void> getNextPhase(WidgetTester tester, AppSettings appSettings) async {
 }
 
 Future<void> checkReputationCount(WidgetTester tester, int count) async {
-  await waitForWidget(tester, find.text('$count'));
+  // After claimPendingDev the chain needs time to process the claim and
+  // update the reputation count — 30s default is too tight on CI.
+  await waitForWidget(tester, find.text('$count'), timeout: const Duration(seconds: 60));
 }
 
 Future<void> deleteAllAccount(WidgetTester tester) async {
