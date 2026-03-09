@@ -200,7 +200,7 @@ jobs:
 
       - name: Upload infra logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: infra-logs-${{ inputs.device }}-api${{ inputs.api_level }}
           path: infra-logs/
