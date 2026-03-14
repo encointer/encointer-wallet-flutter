@@ -280,7 +280,9 @@ abstract class _EncointerStore with Store {
     // update depending values without awaiting
     if (!_rootStore.settings.loading) {
       webApi.encointer.getCommunityData();
-      unawaited(getEncointerBalance());
+      unawaited(getEncointerBalance().catchError((Object e, StackTrace s) {
+        Log.e('getEncointerBalance failed after cid change: $e', 'EncointerStore', s);
+      }));
       unawaited(updateAggregatedAccountData());
     }
   }
@@ -319,7 +321,9 @@ abstract class _EncointerStore with Store {
     writeToCache();
 
     // update depending values without awaiting
-    updateState();
+    unawaited(updateState().catchError((Object e, StackTrace s) {
+      Log.e('updateState failed after ceremony index change: $e', 'EncointerStore', s);
+    }));
   }
 
   @action
@@ -364,10 +368,7 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getMeetupTimeOverride(),
       getEncointerBalance(),
       updateAggregatedAccountData(),
-    ]).timeout(const Duration(seconds: 15)).catchError((Object? e, s) {
-      Log.e('Error executing update state: $e', 'EncointerStore');
-      return Future.value([]);
-    }).whenComplete(() {
+    ]).timeout(const Duration(seconds: 15)).whenComplete(() {
       Log.d('[updateState] finished', 'EncointerStore');
       _updateStateFuture = null;
     });
