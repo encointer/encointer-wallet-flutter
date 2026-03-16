@@ -658,10 +658,17 @@ class _AssetsViewState extends State<AssetsView> {
   }
 
   Future<void> _refreshEncointerState() async {
-    // getCurrentPhase is the root of all state updates.
     unawaited(getSwapOptions());
-    await webApi.encointer.getCurrentPhase();
-    await widget.store.encointer.getEncointerBalance();
+    try {
+      await webApi.encointer.getCurrentPhase();
+    } catch (e, s) {
+      Log.e('Failed to refresh current phase: $e', _logTarget, s);
+    }
+    try {
+      await widget.store.encointer.getEncointerBalance();
+    } catch (e, s) {
+      Log.e('Failed to refresh balance: $e', _logTarget, s);
+    }
   }
 }
 

@@ -95,7 +95,13 @@ Future<void> submitClaimRewards(
     onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
       // Claiming the rewards creates a new reputation if successful.
       // Hence, we should update the state afterwards.
-      store.encointer.getEncointerBalance();
+      webApi.encointer
+          .getEncointerBalance(store.account.currentAddress, chosenCid, at: report.blockHashBytes)
+          .then((balanceEntry) => store.encointer.account?.addBalanceEntry(chosenCid, balanceEntry))
+          .catchError((Object e, StackTrace s) {
+        Log.e('Failed to refresh balance after claim: $e', 'submitClaimRewards', s);
+        store.dataUpdate.setInvalidated();
+      });
       webApi.encointer.getReputations();
       return report;
     },
@@ -385,7 +391,13 @@ Future<void> submitEncointerTransfer(
     TxNotification.encointerBalanceTransfer(context.l10n),
     onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
       if (onFinish != null) onFinish(txPageContext, report);
-      store.encointer.getEncointerBalance();
+      webApi.encointer
+          .getEncointerBalance(store.account.currentAddress, cid, at: report.blockHashBytes)
+          .then((balanceEntry) => store.encointer.account?.addBalanceEntry(cid, balanceEntry))
+          .catchError((Object e, StackTrace s) {
+        Log.e('Failed to refresh balance after transfer: $e', 'submitEncointerTransfer', s);
+        store.dataUpdate.setInvalidated();
+      });
       return report;
     },
     onError: onError,
