@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/transfer/transfer_history.dart';
+import 'package:encointer_wallet/service/http_overrides.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,6 +11,8 @@ import '../../utils/test_tags.dart';
 import '../../utils/test_utils.dart';
 
 void main() {
+  setUpAll(() => HttpOverrides.global = MyHttpOverrides());
+
   test(
     'tx-history API responds with a valid transaction list for LEU Kusama',
     () async {
