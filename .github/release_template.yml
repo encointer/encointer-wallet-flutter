@@ -11,13 +11,13 @@ categories:
     labels:
       - 'C1-breaksapi'
   - title: ' [Bug Fixes] '
-    label:
+    labels:
       - 'A1-bugfix'
   - title: '[UX]'
     labels:
       - 'A0-ux'
   - title: ' [Technical] '
-    label:
+    labels:
       - 'A2-technical'
 change-template: '- $TITLE (#$NUMBER) @$AUTHOR '
 change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
