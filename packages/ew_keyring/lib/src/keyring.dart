@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:convert/convert.dart';
 import 'package:ew_keyring/ew_keyring.dart' show AddressUtils, KeyringAccount, KeyringAccountData, KeyringUtils;
 import 'package:polkadart_keyring/polkadart_keyring.dart';
@@ -16,9 +18,13 @@ class EncointerKeyring {
   final Map<Pubkey, KeyringAccount> _accounts;
 
   static Future<EncointerKeyring> fromAccountData(List<KeyringAccountData> accounts) async {
-    final keyringAccounts = await Future.wait([
-      ...accounts.map((acc) => KeyringAccount.fromUri(acc.name, acc.uri)),
-    ]);
+    if (accounts.isEmpty) return EncointerKeyring();
+    // Run key derivation (BIP39 PBKDF2 + Sr25519) off the main thread to avoid ANR.
+    final keyringAccounts = await Isolate.run(() async {
+      return Future.wait([
+        ...accounts.map((acc) => KeyringAccount.fromUri(acc.name, acc.uri)),
+      ]);
+    });
     return EncointerKeyring.fromAccounts(keyringAccounts);
   }
 

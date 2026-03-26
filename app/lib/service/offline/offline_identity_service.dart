@@ -69,11 +69,11 @@ class OfflineIdentityService {
 
     // 1. Derive zkSecret from the account's mnemonic/seed
     final seed = Uint8List.fromList(utf8.encode(keyringAccount.uri));
-    final zkSecret = ZkProver.deriveZkSecret(seed);
+    final zkSecret = await ZkProver.deriveZkSecret(seed);
     Log.d('register: derived zkSecret (${zkSecret.length} bytes)', _logTarget);
 
     // 2. Compute Poseidon commitment
-    final commitment = ZkProver.computeCommitment(zkSecret);
+    final commitment = await ZkProver.computeCommitment(zkSecret);
     Log.d('register: computed commitment (${commitment.length} bytes)', _logTarget);
 
     // 3. Submit registerOfflineIdentity extrinsic
@@ -193,7 +193,7 @@ class OfflineIdentityService {
       return;
     }
 
-    final localCommitment = ZkProver.computeCommitment(localSecret);
+    final localCommitment = await ZkProver.computeCommitment(localSecret);
 
     // Query on-chain commitment
     try {

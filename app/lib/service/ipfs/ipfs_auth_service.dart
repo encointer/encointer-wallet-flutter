@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
@@ -89,9 +90,9 @@ class IpfsAuthService {
     // Step 1: Request challenge
     final challenge = await _requestChallenge(address, communityId);
 
-    // Step 2: Sign the message
+    // Step 2: Sign the message (in isolate to avoid ANR)
     final messageBytes = utf8.encode(challenge.message);
-    final signature = keyPair.sign(Uint8List.fromList(messageBytes));
+    final signature = await Isolate.run(() => keyPair.sign(Uint8List.fromList(messageBytes)));
     final signatureHex = '0x${hex.encode(signature)}';
 
     Log.d('[IpfsAuth] Signed challenge, verifying...', _logTarget);

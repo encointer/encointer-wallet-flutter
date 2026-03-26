@@ -250,19 +250,19 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
       }
 
       // 3. Recipient hash = blake2_256(pubkey) — matches pallet's hash_recipient(&recipient.encode())
-      final recipientHash = ZkProver.blake2_256(AddressUtils.pubKeyHexToPubKey(recipientAccount.pubKey));
+      final recipientHash = await ZkProver.blake2_256(AddressUtils.pubKeyHexToPubKey(recipientAccount.pubKey));
 
       // 4. Amount as 32-byte LE (FixedU128 u128 bits in first 16 bytes)
       final amountBytes = _balanceToBytes32(amount);
 
       // 5. Compute chain_asset_hash = blake2_256(asset_hash ++ genesis_hash)
       //    for cross-chain replay protection (pallets PR #444)
-      final assetHash = ZkProver.blake2_256(Uint8List.fromList(cid.toPolkadart().encode()));
+      final assetHash = await ZkProver.blake2_256(Uint8List.fromList(cid.toPolkadart().encode()));
       final genesisHash = await offlineIdService.loadGenesisHash(pubKey);
       if (genesisHash == null) {
         throw StateError('Genesis hash not stored. Re-register offline identity.');
       }
-      final chainAssetHash = ZkProver.blake2_256(
+      final chainAssetHash = await ZkProver.blake2_256(
         Uint8List.fromList([...assetHash, ...genesisHash]),
       );
 
