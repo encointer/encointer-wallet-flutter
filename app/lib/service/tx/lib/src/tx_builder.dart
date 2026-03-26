@@ -24,81 +24,67 @@ class TxBuilder {
   }
 
   /// Creates an extrinsic from an opaque call.
-  ///
-  /// Network I/O runs on the main isolate; CPU-intensive SCALE encoding and
-  /// Sr25519 signing run in a background isolate to avoid ANR.
   Future<Uint8List> createSignedExtrinsicWithEncodedCall(
     Sr25519KeyPair pair,
     Uint8List encodedCall, {
     CommunityIdentifier? paymentAsset,
   }) async {
     final encointerKusama = EncointerKusama(provider);
+    final encointerState = StateApi(provider);
 
-    // Fetch raw metadata hex so we can reconstruct the Registry inside the
-    // isolate (Registry contains closures and is not sendable).
-    final metadataHex = (await provider.send('state_getMetadata', [])).result as String;
+    final customMetadata = await encointerState.getMetadata();
+    // We have to use this special registry to use custom signed extensions
+    final registry = customMetadata.chainInfo.scaleCodec.registry;
 
-    // Fetch recent chain state (async I/O, non-blocking).
+    // fetch recent relevant data from chain
     final runtimeVersion = await _getRuntimeVersion();
     final finalizedHash = await _getLatestFinalizedHash();
     final blockNumber = await _getBlockNumber(hash: finalizedHash);
     final genesisHash = await _getBlockHash(blockNumber: 0);
     final accountInfo = await encointerKusama.query.system.account(pair.publicKey.bytes);
 
-    // Extract primitives for the isolate closure.
-    final nonce = accountInfo.nonce;
-    final specVersion = runtimeVersion.specVersion;
-    final transactionVersion = runtimeVersion.transactionVersion;
-    final publicKeyBytes = Uint8List.fromList(pair.publicKey.bytes);
-    final paymentAssetJson = paymentAsset?.toJson();
+    final payloadToSign = SigningPayload(
+      method: encodedCall,
+      specVersion: runtimeVersion.specVersion,
+      transactionVersion: runtimeVersion.transactionVersion,
+      genesisHash: genesisHash,
+      blockHash: finalizedHash,
+      blockNumber: blockNumber,
+      eraPeriod: 64,
+      nonce: accountInfo.nonce,
+      tip: 0,
+      customSignedExtensions: <String, dynamic>{
+        'ChargeAssetTxPayment': {
+          'tip': BigInt.zero,
+          'asset_id':
+              paymentAsset != null ? Option.some(paymentAsset.toJson()) : const Option<CommunityIdentifier>.none(),
+        }, // A custom Signed Extensions
+      },
+    );
 
-    // CPU-intensive work in a background isolate: reconstruct Registry from
-    // metadata hex, SCALE-encode the payload, sign, and encode the extrinsic.
-    return Isolate.run(() {
-      final customMetadata = RuntimeMetadata.fromHex(metadataHex);
-      final registry = customMetadata.chainInfo.scaleCodec.registry;
+    final payload = payloadToSign.encode(registry);
+    // Sr25519 signing is CPU-intensive; run in isolate to avoid ANR on ARMv7a.
+    final signature = await Isolate.run(() => pair.sign(payload));
 
-      final payloadToSign = SigningPayload(
-        method: encodedCall,
-        specVersion: specVersion,
-        transactionVersion: transactionVersion,
-        genesisHash: genesisHash,
-        blockHash: finalizedHash,
-        blockNumber: blockNumber,
-        eraPeriod: 64,
-        nonce: nonce,
-        tip: 0,
-        customSignedExtensions: <String, dynamic>{
-          'ChargeAssetTxPayment': {
-            'tip': BigInt.zero,
-            'asset_id':
-                paymentAssetJson != null ? Option.some(paymentAssetJson) : const Option<CommunityIdentifier>.none(),
-          },
-        },
-      );
+    final publicKey = Uint8List.fromList(pair.publicKey.bytes);
+    final extrinsic = ExtrinsicPayload(
+      signer: publicKey,
+      method: encodedCall,
+      signature: signature,
+      eraPeriod: 64,
+      blockNumber: blockNumber,
+      nonce: accountInfo.nonce,
+      tip: 0,
+      customSignedExtensions: <String, dynamic>{
+        'ChargeAssetTxPayment': {
+          'tip': BigInt.zero,
+          'asset_id':
+              paymentAsset != null ? Option.some(paymentAsset.toJson()) : const Option<CommunityIdentifier>.none(),
+        }, // A custom Signed Extensions
+      },
+    );
 
-      final payload = payloadToSign.encode(registry);
-      final signature = pair.sign(payload);
-
-      final extrinsic = ExtrinsicPayload(
-        signer: publicKeyBytes,
-        method: encodedCall,
-        signature: signature,
-        eraPeriod: 64,
-        blockNumber: blockNumber,
-        nonce: nonce,
-        tip: 0,
-        customSignedExtensions: <String, dynamic>{
-          'ChargeAssetTxPayment': {
-            'tip': BigInt.zero,
-            'asset_id':
-                paymentAssetJson != null ? Option.some(paymentAssetJson) : const Option<CommunityIdentifier>.none(),
-          },
-        },
-      );
-
-      return extrinsic.encode(registry, SignatureType.sr25519);
-    });
+    return extrinsic.encode(registry, SignatureType.sr25519);
   }
 
   Future<RuntimeVersion> _getRuntimeVersion() async {
