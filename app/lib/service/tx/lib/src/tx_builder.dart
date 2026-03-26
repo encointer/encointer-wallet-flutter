@@ -1,4 +1,3 @@
-import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:ew_keyring/ew_keyring.dart';
@@ -63,8 +62,9 @@ class TxBuilder {
     );
 
     final payload = payloadToSign.encode(registry);
-    // Sr25519 signing is CPU-intensive; run in isolate to avoid ANR on ARMv7a.
-    final signature = await Isolate.run(() => pair.sign(payload));
+    // TODO(upstream): pair.sign() should run in Isolate.run() but Sr25519KeyPair
+    // can't survive SendPort.send() — see https://github.com/leonardocustodio/polkadart
+    final signature = pair.sign(payload);
 
     final publicKey = Uint8List.fromList(pair.publicKey.bytes);
     final extrinsic = ExtrinsicPayload(
