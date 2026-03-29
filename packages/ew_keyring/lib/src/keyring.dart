@@ -16,10 +16,18 @@ class EncointerKeyring {
   final Map<Pubkey, KeyringAccount> _accounts;
 
   static Future<EncointerKeyring> fromAccountData(List<KeyringAccountData> accounts) async {
-    final keyringAccounts = await Future.wait([
-      ...accounts.map((acc) => KeyringAccount.fromUri(acc.name, acc.uri)),
-    ]);
-    return EncointerKeyring.fromAccounts(keyringAccounts);
+    // Derive keys one at a time, yielding to the event loop between each
+    // derivation to prevent ANR. Each BIP39+Sr25519 derivation takes
+    // ~200-500ms on ARMv7a; without yielding, N accounts block the main
+    // thread for N×500ms continuously (exceeds 5s ANR threshold at ~10 accounts).
+    final keyring = EncointerKeyring();
+    for (final acc in accounts) {
+      final keyringAccount = await KeyringAccount.fromUri(acc.name, acc.uri);
+      keyring.addAccount(keyringAccount);
+      // Allow the event loop to process input events and render frames.
+      await Future<void>.delayed(Duration.zero);
+    }
+    return keyring;
   }
 
   String serializeAccounts() {

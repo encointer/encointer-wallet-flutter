@@ -90,6 +90,7 @@ class IpfsAuthService {
     final challenge = await _requestChallenge(address, communityId);
 
     // Step 2: Sign the message
+    // TODO(upstream): should run in Isolate.run() but Sr25519KeyPair can't survive SendPort.send()
     final messageBytes = utf8.encode(challenge.message);
     final signature = keyPair.sign(Uint8List.fromList(messageBytes));
     final signatureHex = '0x${hex.encode(signature)}';

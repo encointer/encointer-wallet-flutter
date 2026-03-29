@@ -47,13 +47,25 @@ class ZkProver {
   /// Derive zk_secret from account seed.
   ///
   /// Computes: `blake2_256(seed || "encointer-offline-commitment")`
-  static Uint8List deriveZkSecret(Uint8List seed) {
-    return callDeriveZkSecret(ZkProverBindings(), seed);
+  ///
+  /// Runs in a separate isolate to avoid blocking the UI thread.
+  static Future<Uint8List> deriveZkSecret(Uint8List seed) async {
+    final libPath = nativeLibraryOverride;
+    return Isolate.run(() {
+      nativeLibraryOverride = libPath;
+      return callDeriveZkSecret(ZkProverBindings(), seed);
+    });
   }
 
   /// Compute Poseidon commitment from zk_secret.
-  static Uint8List computeCommitment(Uint8List zkSecret) {
-    return callComputeCommitment(ZkProverBindings(), zkSecret);
+  ///
+  /// Runs in a separate isolate to avoid blocking the UI thread.
+  static Future<Uint8List> computeCommitment(Uint8List zkSecret) async {
+    final libPath = nativeLibraryOverride;
+    return Isolate.run(() {
+      nativeLibraryOverride = libPath;
+      return callComputeCommitment(ZkProverBindings(), zkSecret);
+    });
   }
 
   /// Generate a Groth16 proof for an offline payment.
@@ -109,8 +121,14 @@ class ZkProver {
   }
 
   /// Blake2b-256 hash (matches Substrate's `sp_io::hashing::blake2_256`).
-  static Uint8List blake2_256(Uint8List data) {
-    return callBlake2_256(ZkProverBindings(), data);
+  ///
+  /// Runs in a separate isolate to avoid blocking the UI thread.
+  static Future<Uint8List> blake2_256(Uint8List data) async {
+    final libPath = nativeLibraryOverride;
+    return Isolate.run(() {
+      nativeLibraryOverride = libPath;
+      return callBlake2_256(ZkProverBindings(), data);
+    });
   }
 
   /// Generate test trusted setup keys (deterministic, for testing only).

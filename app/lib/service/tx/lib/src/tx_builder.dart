@@ -42,14 +42,6 @@ class TxBuilder {
     final genesisHash = await _getBlockHash(blockNumber: 0);
     final accountInfo = await encointerKusama.query.system.account(pair.publicKey.bytes);
 
-    // print('RuntimeVersion: $runtimeVersion');
-    // print('blockNumber: $blockNumber');
-    // print('blockHash: $blockHash');
-    // print('genesisHash: $genesisHash');
-    // print('accountInfo: $accountInfo');
-
-    // print('encodedCall: call');
-
     final payloadToSign = SigningPayload(
       method: encodedCall,
       specVersion: runtimeVersion.specVersion,
@@ -70,6 +62,8 @@ class TxBuilder {
     );
 
     final payload = payloadToSign.encode(registry);
+    // TODO(upstream): pair.sign() should run in Isolate.run() but Sr25519KeyPair
+    // can't survive SendPort.send() — see https://github.com/leonardocustodio/polkadart
     final signature = pair.sign(payload);
 
     final publicKey = Uint8List.fromList(pair.publicKey.bytes);

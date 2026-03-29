@@ -193,6 +193,7 @@ class _AssetsViewState extends State<AssetsView> {
   }
 
   Future<void> getSwapOptions() async {
+    if (!mounted) return;
     setState(() {
       nativeSwap = null;
       assetSwap = null;

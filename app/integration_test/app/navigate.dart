@@ -26,7 +26,11 @@ Future<void> goToProfileViewFromNavBar(WidgetTester tester) async {
 Future<void> goToHomeViewFromNavBar(WidgetTester tester) async {
   await waitForWidget(tester, find.byKey(const Key(EWTestKeys.wallet)));
   await tester.tap(find.byKey(const Key(EWTestKeys.wallet)));
-  await tester.pumpAndSettle();
+  // Use pump + waitForWidget instead of pumpAndSettle: the home page has
+  // an active WebSocket subscription that continuously triggers rebuilds,
+  // so pumpAndSettle never returns.
+  await tester.pump(const Duration(milliseconds: 500));
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.panelController)));
 }
 
 Future<void> goToAddAcoountViewFromPanel(WidgetTester tester) async {
@@ -54,7 +58,8 @@ Future<void> goToContactViewFromNavBar(WidgetTester tester) async {
 Future<void> navigateToHomePage(WidgetTester tester) async {
   await waitForWidget(tester, find.byKey(const Key(EWTestKeys.bottomNav)));
   await tester.tap(find.byKey(const Key(EWTestKeys.wallet)));
-  await tester.pumpAndSettle();
+  await tester.pump(const Duration(milliseconds: 500));
+  await waitForWidget(tester, find.byKey(const Key(EWTestKeys.panelController)));
 }
 
 Future<void> navigateToScanPage(WidgetTester tester) async {

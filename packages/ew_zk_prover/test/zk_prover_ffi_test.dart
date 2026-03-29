@@ -31,42 +31,42 @@ void main() {
 
   group('ZkProver FFI', skip: hasNativeLib ? null : 'Native library not built', () {
     group('deriveZkSecret', () {
-      test('is deterministic', () {
+      test('is deterministic', () async {
         final seed = Uint8List.fromList('test-seed'.codeUnits);
-        final s1 = ZkProver.deriveZkSecret(seed);
-        final s2 = ZkProver.deriveZkSecret(seed);
+        final s1 = await ZkProver.deriveZkSecret(seed);
+        final s2 = await ZkProver.deriveZkSecret(seed);
         expect(s1, equals(s2));
         expect(s1, isNot(equals(Uint8List(32))));
       });
 
-      test('different seeds produce different secrets', () {
-        final s1 = ZkProver.deriveZkSecret(Uint8List.fromList('seed-a'.codeUnits));
-        final s2 = ZkProver.deriveZkSecret(Uint8List.fromList('seed-b'.codeUnits));
+      test('different seeds produce different secrets', () async {
+        final s1 = await ZkProver.deriveZkSecret(Uint8List.fromList('seed-a'.codeUnits));
+        final s2 = await ZkProver.deriveZkSecret(Uint8List.fromList('seed-b'.codeUnits));
         expect(s1, isNot(equals(s2)));
       });
     });
 
     group('blake2_256', () {
-      test('is deterministic', () {
+      test('is deterministic', () async {
         final data = Uint8List.fromList('hello'.codeUnits);
-        final h1 = ZkProver.blake2_256(data);
-        final h2 = ZkProver.blake2_256(data);
+        final h1 = await ZkProver.blake2_256(data);
+        final h2 = await ZkProver.blake2_256(data);
         expect(h1, equals(h2));
         expect(h1, isNot(equals(Uint8List(32))));
       });
 
-      test('different inputs produce different hashes', () {
-        final h1 = ZkProver.blake2_256(Uint8List.fromList('a'.codeUnits));
-        final h2 = ZkProver.blake2_256(Uint8List.fromList('b'.codeUnits));
+      test('different inputs produce different hashes', () async {
+        final h1 = await ZkProver.blake2_256(Uint8List.fromList('a'.codeUnits));
+        final h2 = await ZkProver.blake2_256(Uint8List.fromList('b'.codeUnits));
         expect(h1, isNot(equals(h2)));
       });
     });
 
     group('computeCommitment', () {
-      test('is deterministic', () {
-        final zkSecret = ZkProver.deriveZkSecret(Uint8List.fromList('test-seed'.codeUnits));
-        final c1 = ZkProver.computeCommitment(zkSecret);
-        final c2 = ZkProver.computeCommitment(zkSecret);
+      test('is deterministic', () async {
+        final zkSecret = await ZkProver.deriveZkSecret(Uint8List.fromList('test-seed'.codeUnits));
+        final c1 = await ZkProver.computeCommitment(zkSecret);
+        final c2 = await ZkProver.computeCommitment(zkSecret);
         expect(c1, equals(c2));
         expect(c1, isNot(equals(Uint8List(32))));
       });
@@ -76,10 +76,10 @@ void main() {
       test('generate and verify proof', () async {
         final setup = ZkProver.generateTestSetup(_testSetupSeed);
 
-        final zkSecret = ZkProver.deriveZkSecret(Uint8List.fromList('alice-seed'.codeUnits));
-        final nonce = ZkProver.blake2_256(Uint8List.fromList('nonce-1'.codeUnits));
-        final recipientHash = ZkProver.blake2_256(Uint8List.fromList('bob-address'.codeUnits));
-        final assetHash = ZkProver.blake2_256(Uint8List.fromList('community-id'.codeUnits));
+        final zkSecret = await ZkProver.deriveZkSecret(Uint8List.fromList('alice-seed'.codeUnits));
+        final nonce = await ZkProver.blake2_256(Uint8List.fromList('nonce-1'.codeUnits));
+        final recipientHash = await ZkProver.blake2_256(Uint8List.fromList('bob-address'.codeUnits));
+        final assetHash = await ZkProver.blake2_256(Uint8List.fromList('community-id'.codeUnits));
 
         final amount = Uint8List(32);
         final amountView = ByteData.sublistView(amount);
@@ -113,10 +113,10 @@ void main() {
       test('wrong commitment fails verification', () async {
         final setup = ZkProver.generateTestSetup(_testSetupSeed);
 
-        final zkSecret = ZkProver.deriveZkSecret(Uint8List.fromList('alice-seed'.codeUnits));
-        final nonce = ZkProver.blake2_256(Uint8List.fromList('nonce-1'.codeUnits));
-        final recipientHash = ZkProver.blake2_256(Uint8List.fromList('bob-address'.codeUnits));
-        final assetHash = ZkProver.blake2_256(Uint8List.fromList('community-id'.codeUnits));
+        final zkSecret = await ZkProver.deriveZkSecret(Uint8List.fromList('alice-seed'.codeUnits));
+        final nonce = await ZkProver.blake2_256(Uint8List.fromList('nonce-1'.codeUnits));
+        final recipientHash = await ZkProver.blake2_256(Uint8List.fromList('bob-address'.codeUnits));
+        final assetHash = await ZkProver.blake2_256(Uint8List.fromList('community-id'.codeUnits));
 
         final amount = Uint8List(32);
         final amountView = ByteData.sublistView(amount);
