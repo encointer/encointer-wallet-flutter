@@ -58,11 +58,11 @@ class Queries {
     hasher: _i1.StorageHasher.blake2b128Concat(_i5.ProposalActionIdentifier.codec),
   );
 
-  final _i1.StorageMap<_i5.ProposalActionIdentifier, BigInt> _enactmentQueue =
-      const _i1.StorageMap<_i5.ProposalActionIdentifier, BigInt>(
+  final _i1.StorageMap<_i5.ProposalActionIdentifier, List<BigInt>> _enactmentQueue =
+      const _i1.StorageMap<_i5.ProposalActionIdentifier, List<BigInt>>(
     prefix: 'EncointerDemocracy',
     storage: 'EnactmentQueue',
-    valueCodec: _i2.U128Codec.codec,
+    valueCodec: _i2.SequenceCodec<BigInt>(_i2.U128Codec.codec),
     hasher: _i1.StorageHasher.blake2b128Concat(_i5.ProposalActionIdentifier.codec),
   );
 
@@ -144,7 +144,7 @@ class Queries {
     return null; /* Nullable */
   }
 
-  _i7.Future<BigInt?> enactmentQueue(
+  _i7.Future<List<BigInt>?> enactmentQueue(
     _i5.ProposalActionIdentifier key1, {
     _i1.BlockHash? at,
   }) async {
@@ -224,7 +224,7 @@ class Queries {
     return []; /* Nullable */
   }
 
-  _i7.Future<List<BigInt?>> multiEnactmentQueue(
+  _i7.Future<List<List<BigInt>?>> multiEnactmentQueue(
     List<_i5.ProposalActionIdentifier> keys, {
     _i1.BlockHash? at,
   }) async {

@@ -1,9 +1,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:typed_data' as _i4;
+import 'dart:typed_data' as _i5;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
 
 import '../polkadot_parachain_primitives/primitives/id.dart' as _i2;
+import 'outbound_channel_flags.dart' as _i4;
 import 'outbound_state.dart' as _i3;
 
 class OutboundChannelDetails {
@@ -13,6 +14,7 @@ class OutboundChannelDetails {
     required this.signalsExist,
     required this.firstIndex,
     required this.lastIndex,
+    required this.flags,
   });
 
   factory OutboundChannelDetails.decode(_i1.Input input) {
@@ -34,9 +36,12 @@ class OutboundChannelDetails {
   /// u16
   final int lastIndex;
 
+  /// OutboundChannelFlags
+  final _i4.OutboundChannelFlags flags;
+
   static const $OutboundChannelDetailsCodec codec = $OutboundChannelDetailsCodec();
 
-  _i4.Uint8List encode() {
+  _i5.Uint8List encode() {
     return codec.encode(this);
   }
 
@@ -46,6 +51,7 @@ class OutboundChannelDetails {
         'signalsExist': signalsExist,
         'firstIndex': firstIndex,
         'lastIndex': lastIndex,
+        'flags': flags.toJson(),
       };
 
   @override
@@ -59,7 +65,8 @@ class OutboundChannelDetails {
           other.state == state &&
           other.signalsExist == signalsExist &&
           other.firstIndex == firstIndex &&
-          other.lastIndex == lastIndex;
+          other.lastIndex == lastIndex &&
+          other.flags == flags;
 
   @override
   int get hashCode => Object.hash(
@@ -68,6 +75,7 @@ class OutboundChannelDetails {
         signalsExist,
         firstIndex,
         lastIndex,
+        flags,
       );
 }
 
@@ -99,6 +107,10 @@ class $OutboundChannelDetailsCodec with _i1.Codec<OutboundChannelDetails> {
       obj.lastIndex,
       output,
     );
+    _i4.OutboundChannelFlags.codec.encodeTo(
+      obj.flags,
+      output,
+    );
   }
 
   @override
@@ -109,6 +121,7 @@ class $OutboundChannelDetailsCodec with _i1.Codec<OutboundChannelDetails> {
       signalsExist: _i1.BoolCodec.codec.decode(input),
       firstIndex: _i1.U16Codec.codec.decode(input),
       lastIndex: _i1.U16Codec.codec.decode(input),
+      flags: _i4.OutboundChannelFlags.codec.decode(input),
     );
   }
 
@@ -120,6 +133,7 @@ class $OutboundChannelDetailsCodec with _i1.Codec<OutboundChannelDetails> {
     size = size + _i1.BoolCodec.codec.sizeHint(obj.signalsExist);
     size = size + _i1.U16Codec.codec.sizeHint(obj.firstIndex);
     size = size + _i1.U16Codec.codec.sizeHint(obj.lastIndex);
+    size = size + _i4.OutboundChannelFlags.codec.sizeHint(obj.flags);
     return size;
   }
 }

@@ -62,10 +62,6 @@ class $Event {
     );
   }
 
-  VerificationKeySet verificationKeySet() {
-    return VerificationKeySet();
-  }
-
   NativeOfflinePaymentSettled nativeOfflinePaymentSettled({
     required _i3.AccountId32 sender,
     required _i3.AccountId32 recipient,
@@ -78,6 +74,10 @@ class $Event {
       amount: amount,
       nullifier: nullifier,
     );
+  }
+
+  VerificationKeySet verificationKeySet() {
+    return VerificationKeySet();
   }
 }
 
@@ -93,9 +93,9 @@ class $EventCodec with _i1.Codec<Event> {
       case 1:
         return OfflinePaymentSettled._decode(input);
       case 2:
-        return const VerificationKeySet();
-      case 3:
         return NativeOfflinePaymentSettled._decode(input);
+      case 3:
+        return const VerificationKeySet();
       default:
         throw Exception('Event: Invalid variant index: "$index"');
     }
@@ -113,11 +113,11 @@ class $EventCodec with _i1.Codec<Event> {
       case OfflinePaymentSettled:
         (value as OfflinePaymentSettled).encodeTo(output);
         break;
-      case VerificationKeySet:
-        (value as VerificationKeySet).encodeTo(output);
-        break;
       case NativeOfflinePaymentSettled:
         (value as NativeOfflinePaymentSettled).encodeTo(output);
+        break;
+      case VerificationKeySet:
+        (value as VerificationKeySet).encodeTo(output);
         break;
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
@@ -131,10 +131,10 @@ class $EventCodec with _i1.Codec<Event> {
         return (value as OfflineIdentityRegistered)._sizeHint();
       case OfflinePaymentSettled:
         return (value as OfflinePaymentSettled)._sizeHint();
-      case VerificationKeySet:
-        return 1;
       case NativeOfflinePaymentSettled:
         return (value as NativeOfflinePaymentSettled)._sizeHint();
+      case VerificationKeySet:
+        return 1;
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -329,27 +329,6 @@ class OfflinePaymentSettled extends Event {
       );
 }
 
-/// Verification key was set
-class VerificationKeySet extends Event {
-  const VerificationKeySet();
-
-  @override
-  Map<String, dynamic> toJson() => {'VerificationKeySet': null};
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      2,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) => other is VerificationKeySet;
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-}
-
 /// Native token offline payment settled successfully
 class NativeOfflinePaymentSettled extends Event {
   const NativeOfflinePaymentSettled({
@@ -374,18 +353,18 @@ class NativeOfflinePaymentSettled extends Event {
   /// T::AccountId
   final _i3.AccountId32 recipient;
 
-  /// BalanceOf<T> (u128)
+  /// BalanceOf<T>
   final BigInt amount;
 
   /// [u8; 32]
   final List<int> nullifier;
 
   @override
-  Map<String, dynamic> toJson() => {
+  Map<String, Map<String, dynamic>> toJson() => {
         'NativeOfflinePaymentSettled': {
           'sender': sender.toList(),
           'recipient': recipient.toList(),
-          'amount': amount.toString(),
+          'amount': amount,
           'nullifier': nullifier.toList(),
         }
       };
@@ -401,7 +380,7 @@ class NativeOfflinePaymentSettled extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      3,
+      2,
       output,
     );
     const _i1.U8ArrayCodec(32).encodeTo(
@@ -450,4 +429,25 @@ class NativeOfflinePaymentSettled extends Event {
         amount,
         nullifier,
       );
+}
+
+/// Verification key was set
+class VerificationKeySet extends Event {
+  const VerificationKeySet();
+
+  @override
+  Map<String, dynamic> toJson() => {'VerificationKeySet': null};
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      3,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) => other is VerificationKeySet;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }

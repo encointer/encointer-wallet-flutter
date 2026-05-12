@@ -227,7 +227,10 @@ class Txs {
     ));
   }
 
-  /// Cancel an anonymously scheduled task.
+  /// Cancel a scheduled task (named or anonymous), by providing the block it is scheduled for
+  /// execution in, as well as the index of the task in that block's agenda.
+  ///
+  /// In the case of a named task, it will remove it from the lookup table as well.
   _i8.Scheduler cancel({
     required int when,
     required int index,
@@ -304,6 +307,8 @@ class Txs {
   /// clones of the original task. Their retry configuration will be derived from the
   /// original task's configuration, but will have a lower value for `remaining` than the
   /// original `total_retries`.
+  ///
+  /// This call **cannot** be used to set a retry configuration for a named task.
   _i8.Scheduler setRetry({
     required _i4.Tuple2<int, int> task,
     required int retries,
@@ -328,6 +333,8 @@ class Txs {
   /// clones of the original task. Their retry configuration will be derived from the
   /// original task's configuration, but will have a lower value for `remaining` than the
   /// original `total_retries`.
+  ///
+  /// This is the only way to set a retry configuration for a named task.
   _i8.Scheduler setRetryNamed({
     required List<int> id,
     required int retries,

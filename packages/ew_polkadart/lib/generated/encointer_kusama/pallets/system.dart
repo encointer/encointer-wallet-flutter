@@ -58,9 +58,9 @@ class Queries {
     valueCodec: _i5.PerDispatchClass.codec,
   );
 
-  final _i1.StorageValue<int> _allExtrinsicsLen = const _i1.StorageValue<int>(
+  final _i1.StorageValue<int> _blockSize = const _i1.StorageValue<int>(
     prefix: 'System',
-    storage: 'AllExtrinsicsLen',
+    storage: 'BlockSize',
     valueCodec: _i4.U32Codec.codec,
   );
 
@@ -124,6 +124,12 @@ class Queries {
     prefix: 'System',
     storage: 'LastRuntimeUpgrade',
     valueCodec: _i10.LastRuntimeUpgradeInfo.codec,
+  );
+
+  final _i1.StorageValue<int> _blocksTillUpgrade = const _i1.StorageValue<int>(
+    prefix: 'System',
+    storage: 'BlocksTillUpgrade',
+    valueCodec: _i4.U8Codec.codec,
   );
 
   final _i1.StorageValue<bool> _upgradedToU32RefCount = const _i1.StorageValue<bool>(
@@ -239,15 +245,17 @@ class Queries {
     ); /* Default */
   }
 
-  /// Total length (in bytes) for all extrinsics put together, for the current block.
-  _i14.Future<int?> allExtrinsicsLen({_i1.BlockHash? at}) async {
-    final hashedKey = _allExtrinsicsLen.hashedKey();
+  /// Total size (in bytes) of the current block.
+  ///
+  /// Tracks the size of the header and all extrinsics.
+  _i14.Future<int?> blockSize({_i1.BlockHash? at}) async {
+    final hashedKey = _blockSize.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
       at: at,
     );
     if (bytes != null) {
-      return _allExtrinsicsLen.decodeValue(bytes);
+      return _blockSize.decodeValue(bytes);
     }
     return null; /* Nullable */
   }
@@ -401,6 +409,19 @@ class Queries {
     );
     if (bytes != null) {
       return _lastRuntimeUpgrade.decodeValue(bytes);
+    }
+    return null; /* Nullable */
+  }
+
+  /// Number of blocks till the pending code upgrade is applied.
+  _i14.Future<int?> blocksTillUpgrade({_i1.BlockHash? at}) async {
+    final hashedKey = _blocksTillUpgrade.hashedKey();
+    final bytes = await __api.getStorage(
+      hashedKey,
+      at: at,
+    );
+    if (bytes != null) {
+      return _blocksTillUpgrade.decodeValue(bytes);
     }
     return null; /* Nullable */
   }
@@ -605,9 +626,9 @@ class Queries {
     return hashedKey;
   }
 
-  /// Returns the storage key for `allExtrinsicsLen`.
-  _i16.Uint8List allExtrinsicsLenKey() {
-    final hashedKey = _allExtrinsicsLen.hashedKey();
+  /// Returns the storage key for `blockSize`.
+  _i16.Uint8List blockSizeKey() {
+    final hashedKey = _blockSize.hashedKey();
     return hashedKey;
   }
 
@@ -662,6 +683,12 @@ class Queries {
   /// Returns the storage key for `lastRuntimeUpgrade`.
   _i16.Uint8List lastRuntimeUpgradeKey() {
     final hashedKey = _lastRuntimeUpgrade.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `blocksTillUpgrade`.
+  _i16.Uint8List blocksTillUpgradeKey() {
+    final hashedKey = _blocksTillUpgrade.hashedKey();
     return hashedKey;
   }
 
@@ -875,11 +902,13 @@ class Constants {
 
   /// The maximum length of a block (in bytes).
   final _i22.BlockLength blockLength = const _i22.BlockLength(
-      max: _i23.PerDispatchClass(
-    normal: 3932160,
-    operational: 5242880,
-    mandatory: 5242880,
-  ));
+    max: _i23.PerDispatchClass(
+      normal: 3932160,
+      operational: 5242880,
+      mandatory: 5242880,
+    ),
+    maxHeaderSize: null,
+  );
 
   /// Maximum number of block number to block hash mappings to keep (oldest pruned first).
   final int blockHashCount = 4096;
@@ -895,7 +924,7 @@ class Constants {
     specName: 'encointer-parachain',
     implName: 'encointer-parachain',
     authoringVersion: 1,
-    specVersion: 2000000,
+    specVersion: 2002000,
     implVersion: 1,
     apis: [
       _i9.Tuple2<List<int>, int>(
@@ -1013,7 +1042,7 @@ class Constants {
           235,
           139,
         ],
-        1,
+        2,
       ),
       _i9.Tuple2<List<int>, int>(
         <int>[
@@ -1065,7 +1094,7 @@ class Constants {
           197,
           189,
         ],
-        1,
+        2,
       ),
       _i9.Tuple2<List<int>, int>(
         <int>[

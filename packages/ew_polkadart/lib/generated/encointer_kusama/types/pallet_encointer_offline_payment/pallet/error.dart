@@ -32,7 +32,7 @@ enum Error {
   /// Sender cannot be the same as recipient
   senderEqualsRecipient('SenderEqualsRecipient', 8),
 
-  /// Insufficient native balance for transfer
+  /// Sender has insufficient balance for this payment
   insufficientBalance('InsufficientBalance', 9);
 
   const Error(

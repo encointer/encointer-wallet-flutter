@@ -5,7 +5,7 @@ import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i8;
 
 import '../../polkadot_parachain_primitives/primitives/id.dart' as _i5;
-import '../../polkadot_primitives/v8/abridged_hrmp_channel.dart' as _i6;
+import '../../polkadot_primitives/v9/abridged_hrmp_channel.dart' as _i6;
 import '../../primitive_types/h256.dart' as _i2;
 import '../../tuples.dart' as _i4;
 import 'relay_dispatch_queue_remaining_capacity.dart' as _i3;

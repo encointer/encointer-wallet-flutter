@@ -5,17 +5,26 @@ import 'package:polkadart/scale_codec.dart' as _i1;
 
 /// The `Error` enum of this pallet.
 enum Error {
-  /// Participant already commited their reputation for this purpose
-  alreadyCommitted('AlreadyCommitted', 0),
+  /// A ring computation is already in progress.
+  computationAlreadyInProgress('ComputationAlreadyInProgress', 0),
 
-  /// Participant does not have reputation for the specified cid, cindex
-  noReputation('NoReputation', 1),
+  /// No ring computation is currently pending.
+  noComputationPending('NoComputationPending', 1),
 
-  /// Purposose registry is full
-  purposeRegistryOverflow('PurposeRegistryOverflow', 2),
+  /// The specified community does not exist.
+  communityNotFound('CommunityNotFound', 2),
 
-  /// Inexsitent purpose
-  inexistentPurpose('InexistentPurpose', 3);
+  /// The ceremony index is invalid (zero or in the future).
+  invalidCeremonyIndex('InvalidCeremonyIndex', 3),
+
+  /// Ring computation is already complete; call finalize or start a new one.
+  computationAlreadyDone('ComputationAlreadyDone', 4),
+
+  /// The ring exceeds MaxRingSize.
+  ringTooLarge('RingTooLarge', 5),
+
+  /// Extrinsic called during the wrong ceremony phase.
+  wrongPhase('WrongPhase', 6);
 
   const Error(
     this.variantName,
@@ -47,13 +56,19 @@ class $ErrorCodec with _i1.Codec<Error> {
     final index = _i1.U8Codec.codec.decode(input);
     switch (index) {
       case 0:
-        return Error.alreadyCommitted;
+        return Error.computationAlreadyInProgress;
       case 1:
-        return Error.noReputation;
+        return Error.noComputationPending;
       case 2:
-        return Error.purposeRegistryOverflow;
+        return Error.communityNotFound;
       case 3:
-        return Error.inexistentPurpose;
+        return Error.invalidCeremonyIndex;
+      case 4:
+        return Error.computationAlreadyDone;
+      case 5:
+        return Error.ringTooLarge;
+      case 6:
+        return Error.wrongPhase;
       default:
         throw Exception('Error: Invalid variant index: "$index"');
     }

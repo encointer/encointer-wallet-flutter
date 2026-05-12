@@ -1,5 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i31;
+import 'dart:async' as _i33;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 
@@ -15,8 +15,9 @@ import 'pallets/encointer_ceremonies.dart' as _i22;
 import 'pallets/encointer_communities.dart' as _i23;
 import 'pallets/encointer_democracy.dart' as _i28;
 import 'pallets/encointer_faucet.dart' as _i27;
-import 'pallets/encointer_offline_payment.dart' as _i32;
+import 'pallets/encointer_offline_payment.dart' as _i30;
 import 'pallets/encointer_reputation_commitments.dart' as _i26;
+import 'pallets/encointer_reputation_rings.dart' as _i31;
 import 'pallets/encointer_scheduler.dart' as _i21;
 import 'pallets/encointer_treasuries.dart' as _i29;
 import 'pallets/membership.dart' as _i20;
@@ -31,7 +32,7 @@ import 'pallets/session.dart' as _i11;
 import 'pallets/system.dart' as _i2;
 import 'pallets/timestamp.dart' as _i5;
 import 'pallets/transaction_payment.dart' as _i8;
-import 'pallets/utility.dart' as _i30;
+import 'pallets/utility.dart' as _i32;
 import 'pallets/xcmp_queue.dart' as _i14;
 
 class Queries {
@@ -64,7 +65,8 @@ class Queries {
         encointerFaucet = _i27.Queries(api),
         encointerDemocracy = _i28.Queries(api),
         encointerTreasuries = _i29.Queries(api),
-        encointerOfflinePayment = _i32.Queries(api);
+        encointerOfflinePayment = _i30.Queries(api),
+        encointerReputationRings = _i31.Queries(api);
 
   final _i2.Queries system;
 
@@ -122,7 +124,9 @@ class Queries {
 
   final _i29.Queries encointerTreasuries;
 
-  final _i32.Queries encointerOfflinePayment;
+  final _i30.Queries encointerOfflinePayment;
+
+  final _i31.Queries encointerReputationRings;
 }
 
 class Extrinsics {
@@ -146,7 +150,7 @@ class Extrinsics {
 
   final _i16.Txs messageQueue = _i16.Txs();
 
-  final _i30.Txs utility = _i30.Txs();
+  final _i32.Txs utility = _i32.Txs();
 
   final _i17.Txs proxy = _i17.Txs();
 
@@ -174,7 +178,9 @@ class Extrinsics {
 
   final _i29.Txs encointerTreasuries = _i29.Txs();
 
-  final _i32.Txs encointerOfflinePayment = const _i32.Txs();
+  final _i30.Txs encointerOfflinePayment = _i30.Txs();
+
+  final _i31.Txs encointerReputationRings = _i31.Txs();
 }
 
 class Constants {
@@ -202,7 +208,7 @@ class Constants {
 
   final _i16.Constants messageQueue = _i16.Constants();
 
-  final _i30.Constants utility = _i30.Constants();
+  final _i32.Constants utility = _i32.Constants();
 
   final _i17.Constants proxy = _i17.Constants();
 
@@ -224,7 +230,9 @@ class Constants {
 
   final _i29.Constants encointerTreasuries = _i29.Constants();
 
-  final _i32.Constants encointerOfflinePayment = _i32.Constants();
+  final _i30.Constants encointerOfflinePayment = _i30.Constants();
+
+  final _i31.Constants encointerReputationRings = _i31.Constants();
 }
 
 class Rpc {
@@ -289,11 +297,11 @@ class EncointerKusama {
 
   final Registry registry;
 
-  _i31.Future connect() async {
+  _i33.Future connect() async {
     return await _provider.connect();
   }
 
-  _i31.Future disconnect() async {
+  _i33.Future disconnect() async {
     return await _provider.disconnect();
   }
 }

@@ -76,6 +76,13 @@ class Queries {
     )),
   );
 
+  final _i1.StorageMap<_i2.AccountId32, dynamic> _externallySetKeys = const _i1.StorageMap<_i2.AccountId32, dynamic>(
+    prefix: 'Session',
+    storage: 'ExternallySetKeys',
+    valueCodec: _i3.NullCodec.codec,
+    hasher: _i1.StorageHasher.twoxx64Concat(_i2.AccountId32Codec()),
+  );
+
   /// The current set of validators.
   _i8.Future<List<_i2.AccountId32>> validators({_i1.BlockHash? at}) async {
     final hashedKey = _validators.hashedKey();
@@ -179,6 +186,25 @@ class Queries {
     return null; /* Nullable */
   }
 
+  /// Accounts whose keys were set via `SessionInterface` (external path) without
+  /// incrementing the consumer reference or placing a key deposit. `do_purge_keys`
+  /// only decrements consumers for accounts that were registered through the local
+  /// session pallet.
+  _i8.Future<dynamic> externallySetKeys(
+    _i2.AccountId32 key1, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKey = _externallySetKeys.hashedKeyFor(key1);
+    final bytes = await __api.getStorage(
+      hashedKey,
+      at: at,
+    );
+    if (bytes != null) {
+      return _externallySetKeys.decodeValue(bytes);
+    }
+    return null; /* Nullable */
+  }
+
   /// The next session keys for a validator.
   _i8.Future<List<_i5.SessionKeys?>> multiNextKeys(
     List<_i2.AccountId32> keys, {
@@ -207,6 +233,25 @@ class Queries {
     );
     if (bytes.isNotEmpty) {
       return bytes.first.changes.map((v) => _keyOwner.decodeValue(v.key)).toList();
+    }
+    return []; /* Nullable */
+  }
+
+  /// Accounts whose keys were set via `SessionInterface` (external path) without
+  /// incrementing the consumer reference or placing a key deposit. `do_purge_keys`
+  /// only decrements consumers for accounts that were registered through the local
+  /// session pallet.
+  _i8.Future<List<dynamic>> multiExternallySetKeys(
+    List<_i2.AccountId32> keys, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKeys = keys.map((key) => _externallySetKeys.hashedKeyFor(key)).toList();
+    final bytes = await __api.queryStorageAt(
+      hashedKeys,
+      at: at,
+    );
+    if (bytes.isNotEmpty) {
+      return bytes.first.changes.map((v) => _externallySetKeys.decodeValue(v.key)).toList();
     }
     return []; /* Nullable */
   }
@@ -253,6 +298,12 @@ class Queries {
     return hashedKey;
   }
 
+  /// Returns the storage key for `externallySetKeys`.
+  _i9.Uint8List externallySetKeysKey(_i2.AccountId32 key1) {
+    final hashedKey = _externallySetKeys.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
   /// Returns the storage map key prefix for `nextKeys`.
   _i9.Uint8List nextKeysMapPrefix() {
     final hashedKey = _nextKeys.mapPrefix();
@@ -264,20 +315,28 @@ class Queries {
     final hashedKey = _keyOwner.mapPrefix();
     return hashedKey;
   }
+
+  /// Returns the storage map key prefix for `externallySetKeys`.
+  _i9.Uint8List externallySetKeysMapPrefix() {
+    final hashedKey = _externallySetKeys.mapPrefix();
+    return hashedKey;
+  }
 }
 
 class Txs {
   const Txs();
 
   /// Sets the session key(s) of the function caller to `keys`.
+  ///
   /// Allows an account to set its session key prior to becoming a validator.
   /// This doesn't take effect until the next session.
   ///
-  /// The dispatch origin of this function must be signed.
-  ///
-  /// ## Complexity
-  /// - `O(1)`. Actual cost depends on the number of length of `T::Keys::key_ids()` which is
-  ///  fixed.
+  /// - `origin`: The dispatch origin of this function must be signed.
+  /// - `keys`: The new session keys to set. These are the public keys of all sessions keys
+  ///  setup in the runtime.
+  /// - `proof`: The proof that `origin` has access to the private keys of `keys`. See
+  ///  [`impl_opaque_keys`](sp_runtime::impl_opaque_keys) for more information about the
+  ///  proof format.
   _i10.Session setKeys({
     required _i5.SessionKeys keys,
     required List<int> proof,
@@ -296,10 +355,6 @@ class Txs {
   /// convertible to a validator ID using the chain's typical addressing system (this usually
   /// means being a controller account) or directly convertible into a validator ID (which
   /// usually means being a stash account).
-  ///
-  /// ## Complexity
-  /// - `O(1)` in number of key types. Actual cost depends on the number of length of
-  ///  `T::Keys::key_ids()` which is fixed.
   _i10.Session purgeKeys() {
     return _i10.Session(_i11.PurgeKeys());
   }

@@ -4,7 +4,7 @@ import 'dart:typed_data' as _i5;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i6;
 
-import '../../polkadot_primitives/v8/persisted_validation_data.dart' as _i2;
+import '../../polkadot_primitives/v9/persisted_validation_data.dart' as _i2;
 import '../../sp_runtime/generic/header/header.dart' as _i4;
 import '../../sp_trie/storage_proof/storage_proof.dart' as _i3;
 
