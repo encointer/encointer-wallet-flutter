@@ -107,7 +107,7 @@ class $EventCodec with _i1.Codec<Event> {
 }
 
 /// Downward message is invalid XCM.
-/// /[ id /]
+/// \[ id \]
 class InvalidFormat extends Event {
   const InvalidFormat(this.value0);
 
@@ -155,7 +155,7 @@ class InvalidFormat extends Event {
 }
 
 /// Downward message is unsupported version of XCM.
-/// /[ id /]
+/// \[ id \]
 class UnsupportedVersion extends Event {
   const UnsupportedVersion(this.value0);
 
@@ -203,7 +203,7 @@ class UnsupportedVersion extends Event {
 }
 
 /// Downward message executed with the given outcome.
-/// /[ id, outcome /]
+/// \[ id, outcome \]
 class ExecutedDownward extends Event {
   const ExecutedDownward(
     this.value0,

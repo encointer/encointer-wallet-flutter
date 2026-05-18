@@ -17,7 +17,9 @@ import '../pallet_encointer_ceremonies/pallet/event.dart' as _i20;
 import '../pallet_encointer_communities/pallet/event.dart' as _i21;
 import '../pallet_encointer_democracy/pallet/event.dart' as _i26;
 import '../pallet_encointer_faucet/pallet/event.dart' as _i25;
+import '../pallet_encointer_offline_payment/pallet/event.dart' as _i28;
 import '../pallet_encointer_reputation_commitments/pallet/event.dart' as _i24;
+import '../pallet_encointer_reputation_rings/pallet/event.dart' as _i29;
 import '../pallet_encointer_scheduler/pallet/event.dart' as _i19;
 import '../pallet_encointer_treasuries/pallet/event.dart' as _i27;
 import '../pallet_membership/pallet/event.dart' as _i18;
@@ -155,6 +157,14 @@ class $RuntimeEvent {
   EncointerTreasuries encointerTreasuries(_i27.Event value0) {
     return EncointerTreasuries(value0);
   }
+
+  EncointerOfflinePayment encointerOfflinePayment(_i28.Event value0) {
+    return EncointerOfflinePayment(value0);
+  }
+
+  EncointerReputationRings encointerReputationRings(_i29.Event value0) {
+    return EncointerReputationRings(value0);
+  }
 }
 
 class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
@@ -214,6 +224,10 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
         return EncointerDemocracy._decode(input);
       case 68:
         return EncointerTreasuries._decode(input);
+      case 69:
+        return EncointerOfflinePayment._decode(input);
+      case 70:
+        return EncointerReputationRings._decode(input);
       default:
         throw Exception('RuntimeEvent: Invalid variant index: "$index"');
     }
@@ -300,6 +314,12 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
       case EncointerTreasuries:
         (value as EncointerTreasuries).encodeTo(output);
         break;
+      case EncointerOfflinePayment:
+        (value as EncointerOfflinePayment).encodeTo(output);
+        break;
+      case EncointerReputationRings:
+        (value as EncointerReputationRings).encodeTo(output);
+        break;
       default:
         throw Exception('RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -358,6 +378,10 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
         return (value as EncointerDemocracy)._sizeHint();
       case EncointerTreasuries:
         return (value as EncointerTreasuries)._sizeHint();
+      case EncointerOfflinePayment:
+        return (value as EncointerOfflinePayment)._sizeHint();
+      case EncointerReputationRings:
+        return (value as EncointerReputationRings)._sizeHint();
       default:
         throw Exception('RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -1409,6 +1433,90 @@ class EncointerTreasuries extends RuntimeEvent {
         other,
       ) ||
       other is EncointerTreasuries && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
+}
+
+class EncointerOfflinePayment extends RuntimeEvent {
+  const EncointerOfflinePayment(this.value0);
+
+  factory EncointerOfflinePayment._decode(_i1.Input input) {
+    return EncointerOfflinePayment(_i28.Event.codec.decode(input));
+  }
+
+  /// pallet_encointer_offline_payment::Event<Runtime>
+  final _i28.Event value0;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {'EncointerOfflinePayment': value0.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i28.Event.codec.sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      69,
+      output,
+    );
+    _i28.Event.codec.encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EncointerOfflinePayment && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
+}
+
+class EncointerReputationRings extends RuntimeEvent {
+  const EncointerReputationRings(this.value0);
+
+  factory EncointerReputationRings._decode(_i1.Input input) {
+    return EncointerReputationRings(_i29.Event.codec.decode(input));
+  }
+
+  /// pallet_encointer_reputation_rings::Event<Runtime>
+  final _i29.Event value0;
+
+  @override
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerReputationRings': value0.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i29.Event.codec.sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      70,
+      output,
+    );
+    _i29.Event.codec.encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EncointerReputationRings && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;

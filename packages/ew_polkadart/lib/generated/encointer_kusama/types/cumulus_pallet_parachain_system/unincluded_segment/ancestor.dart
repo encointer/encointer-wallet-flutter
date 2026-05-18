@@ -3,7 +3,7 @@ import 'dart:typed_data' as _i5;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
 
-import '../../polkadot_primitives/v8/upgrade_go_ahead.dart' as _i4;
+import '../../polkadot_primitives/v9/upgrade_go_ahead.dart' as _i4;
 import '../../primitive_types/h256.dart' as _i3;
 import 'used_bandwidth.dart' as _i2;
 

@@ -350,7 +350,10 @@ class Schedule extends Call {
       );
 }
 
-/// Cancel an anonymously scheduled task.
+/// Cancel a scheduled task (named or anonymous), by providing the block it is scheduled for
+/// execution in, as well as the index of the task in that block's agenda.
+///
+/// In the case of a named task, it will remove it from the lookup table as well.
 class Cancel extends Call {
   const Cancel({
     required this.when,
@@ -826,6 +829,8 @@ class ScheduleNamedAfter extends Call {
 /// clones of the original task. Their retry configuration will be derived from the
 /// original task's configuration, but will have a lower value for `remaining` than the
 /// original `total_retries`.
+///
+/// This call **cannot** be used to set a retry configuration for a named task.
 class SetRetry extends Call {
   const SetRetry({
     required this.task,
@@ -927,6 +932,8 @@ class SetRetry extends Call {
 /// clones of the original task. Their retry configuration will be derived from the
 /// original task's configuration, but will have a lower value for `remaining` than the
 /// original `total_retries`.
+///
+/// This is the only way to set a retry configuration for a named task.
 class SetRetryNamed extends Call {
   const SetRetryNamed({
     required this.id,

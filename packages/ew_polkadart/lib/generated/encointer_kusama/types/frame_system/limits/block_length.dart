@@ -6,7 +6,10 @@ import 'package:polkadart/scale_codec.dart' as _i1;
 import '../../frame_support/dispatch/per_dispatch_class_3.dart' as _i2;
 
 class BlockLength {
-  const BlockLength({required this.max});
+  const BlockLength({
+    required this.max,
+    this.maxHeaderSize,
+  });
 
   factory BlockLength.decode(_i1.Input input) {
     return codec.decode(input);
@@ -15,13 +18,19 @@ class BlockLength {
   /// PerDispatchClass<u32>
   final _i2.PerDispatchClass max;
 
+  /// Option<u32>
+  final int? maxHeaderSize;
+
   static const $BlockLengthCodec codec = $BlockLengthCodec();
 
   _i3.Uint8List encode() {
     return codec.encode(this);
   }
 
-  Map<String, Map<String, int>> toJson() => {'max': max.toJson()};
+  Map<String, dynamic> toJson() => {
+        'max': max.toJson(),
+        'maxHeaderSize': maxHeaderSize,
+      };
 
   @override
   bool operator ==(Object other) =>
@@ -29,10 +38,13 @@ class BlockLength {
         this,
         other,
       ) ||
-      other is BlockLength && other.max == max;
+      other is BlockLength && other.max == max && other.maxHeaderSize == maxHeaderSize;
 
   @override
-  int get hashCode => max.hashCode;
+  int get hashCode => Object.hash(
+        max,
+        maxHeaderSize,
+      );
 }
 
 class $BlockLengthCodec with _i1.Codec<BlockLength> {
@@ -47,17 +59,25 @@ class $BlockLengthCodec with _i1.Codec<BlockLength> {
       obj.max,
       output,
     );
+    const _i1.OptionCodec<int>(_i1.U32Codec.codec).encodeTo(
+      obj.maxHeaderSize,
+      output,
+    );
   }
 
   @override
   BlockLength decode(_i1.Input input) {
-    return BlockLength(max: _i2.PerDispatchClass.codec.decode(input));
+    return BlockLength(
+      max: _i2.PerDispatchClass.codec.decode(input),
+      maxHeaderSize: const _i1.OptionCodec<int>(_i1.U32Codec.codec).decode(input),
+    );
   }
 
   @override
   int sizeHint(BlockLength obj) {
     int size = 0;
     size = size + _i2.PerDispatchClass.codec.sizeHint(obj.max);
+    size = size + const _i1.OptionCodec<int>(_i1.U32Codec.codec).sizeHint(obj.maxHeaderSize);
     return size;
   }
 }

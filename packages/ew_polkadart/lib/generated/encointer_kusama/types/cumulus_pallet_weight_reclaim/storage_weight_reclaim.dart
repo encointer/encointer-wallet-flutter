@@ -10,7 +10,7 @@ import '../frame_system/extensions/check_spec_version/check_spec_version.dart' a
 import '../frame_system/extensions/check_tx_version/check_tx_version.dart' as _i4;
 import '../frame_system/extensions/check_weight/check_weight.dart' as _i8;
 import '../pallet_asset_tx_payment/charge_asset_tx_payment.dart' as _i9;
-import '../tuples_3.dart' as _i1;
+import '../tuples_4.dart' as _i1;
 
 typedef StorageWeightReclaim = _i1.Tuple9<
     _i2.CheckNonZeroSender,

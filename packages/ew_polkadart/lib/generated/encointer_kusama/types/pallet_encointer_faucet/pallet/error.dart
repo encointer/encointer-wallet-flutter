@@ -9,13 +9,13 @@ enum Error {
   faucetEmpty('FaucetEmpty', 0),
 
   /// insufficient balance to create the faucet
-  insuffiecientBalance('InsuffiecientBalance', 1),
+  insufficientBalance('InsufficientBalance', 1),
 
   /// faucet already exists
   faucetAlreadyExists('FaucetAlreadyExists', 2),
 
   /// faucet does not exist
-  inexsistentFaucet('InexsistentFaucet', 3),
+  inexistentFaucet('InexistentFaucet', 3),
 
   /// purposeId creation failed
   purposeIdCreationFailed('PurposeIdCreationFailed', 4),
@@ -67,11 +67,11 @@ class $ErrorCodec with _i1.Codec<Error> {
       case 0:
         return Error.faucetEmpty;
       case 1:
-        return Error.insuffiecientBalance;
+        return Error.insufficientBalance;
       case 2:
         return Error.faucetAlreadyExists;
       case 3:
-        return Error.inexsistentFaucet;
+        return Error.inexistentFaucet;
       case 4:
         return Error.purposeIdCreationFailed;
       case 5:

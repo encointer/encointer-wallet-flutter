@@ -123,7 +123,7 @@ extension LocalizedBalancesError on balances_error.Error {
 extension LocalizedReputationCommitmentsError on reputation_commitments_error.Error {
   ErrorNotificationMsg errorMsg(AppLocalizations l10n) {
     return switch (this) {
-      reputation_commitments_error.Error.alreadyCommited => ErrorNotificationMsg(
+      reputation_commitments_error.Error.alreadyCommitted => ErrorNotificationMsg(
           title: l10n.reputationAlreadyCommittedTitle,
           body: l10n.reputationAlreadyCommittedContent,
         ),

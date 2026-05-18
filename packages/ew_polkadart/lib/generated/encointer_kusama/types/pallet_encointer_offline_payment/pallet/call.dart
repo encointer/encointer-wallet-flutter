@@ -59,10 +59,6 @@ class $Call {
     );
   }
 
-  SetVerificationKey setVerificationKey({required List<int> vk}) {
-    return SetVerificationKey(vk: vk);
-  }
-
   SubmitNativeOfflinePayment submitNativeOfflinePayment({
     required _i3.Groth16ProofBytes proof,
     required _i4.AccountId32 sender,
@@ -78,6 +74,10 @@ class $Call {
       nullifier: nullifier,
     );
   }
+
+  SetVerificationKey setVerificationKey({required List<int> vk}) {
+    return SetVerificationKey(vk: vk);
+  }
 }
 
 class $CallCodec with _i1.Codec<Call> {
@@ -91,10 +91,10 @@ class $CallCodec with _i1.Codec<Call> {
         return RegisterOfflineIdentity._decode(input);
       case 1:
         return SubmitOfflinePayment._decode(input);
-      case 2:
-        return SetVerificationKey._decode(input);
       case 3:
         return SubmitNativeOfflinePayment._decode(input);
+      case 2:
+        return SetVerificationKey._decode(input);
       default:
         throw Exception('Call: Invalid variant index: "$index"');
     }
@@ -112,11 +112,11 @@ class $CallCodec with _i1.Codec<Call> {
       case SubmitOfflinePayment:
         (value as SubmitOfflinePayment).encodeTo(output);
         break;
-      case SetVerificationKey:
-        (value as SetVerificationKey).encodeTo(output);
-        break;
       case SubmitNativeOfflinePayment:
         (value as SubmitNativeOfflinePayment).encodeTo(output);
+        break;
+      case SetVerificationKey:
+        (value as SetVerificationKey).encodeTo(output);
         break;
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
@@ -130,10 +130,10 @@ class $CallCodec with _i1.Codec<Call> {
         return (value as RegisterOfflineIdentity)._sizeHint();
       case SubmitOfflinePayment:
         return (value as SubmitOfflinePayment)._sizeHint();
-      case SetVerificationKey:
-        return (value as SetVerificationKey)._sizeHint();
       case SubmitNativeOfflinePayment:
         return (value as SubmitNativeOfflinePayment)._sizeHint();
+      case SetVerificationKey:
+        return (value as SetVerificationKey)._sizeHint();
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -340,72 +340,11 @@ class SubmitOfflinePayment extends Call {
       );
 }
 
-/// Set the Groth16 verification key (governance/sudo only).
-///
-/// The verification key must be generated from the trusted setup
-/// ceremony for the offline payment circuit.
-///
-/// # Arguments
-/// * `vk` - Serialized verification key bytes
-class SetVerificationKey extends Call {
-  const SetVerificationKey({required this.vk});
-
-  factory SetVerificationKey._decode(_i1.Input input) {
-    return SetVerificationKey(vk: _i1.U8SequenceCodec.codec.decode(input));
-  }
-
-  /// BoundedVec<u8, T::MaxVkSize>
-  final List<int> vk;
-
-  @override
-  Map<String, Map<String, List<int>>> toJson() => {
-        'set_verification_key': {'vk': vk}
-      };
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i1.U8SequenceCodec.codec.sizeHint(vk);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      2,
-      output,
-    );
-    _i1.U8SequenceCodec.codec.encodeTo(
-      vk,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is SetVerificationKey &&
-          _i7.listsEqual(
-            other.vk,
-            vk,
-          );
-
-  @override
-  int get hashCode => vk.hashCode;
-}
-
 /// Submit a native token offline payment ZK proof for settlement.
 ///
-/// Like `submit_offline_payment` but transfers native balance (u128)
-/// instead of community currency.
-///
-/// # Arguments
-/// * `proof` - The Groth16 proof bytes
-/// * `sender` - The account sending funds (must have registered commitment)
-/// * `recipient` - The account receiving funds
-/// * `amount` - The native balance amount (u128)
-/// * `nullifier` - The unique nullifier for this payment
+/// Same ZK circuit as CC payments, but uses a sentinel CID hash
+/// (`blake2_256(b"encointer-native-token")`) and transfers native currency
+/// via `T::Currency::transfer()`.
 class SubmitNativeOfflinePayment extends Call {
   const SubmitNativeOfflinePayment({
     required this.proof,
@@ -434,7 +373,7 @@ class SubmitNativeOfflinePayment extends Call {
   /// T::AccountId
   final _i4.AccountId32 recipient;
 
-  /// BalanceOf<T> (u128)
+  /// BalanceOf<T>
   final BigInt amount;
 
   /// [u8; 32]
@@ -446,7 +385,7 @@ class SubmitNativeOfflinePayment extends Call {
           'proof': proof.toJson(),
           'sender': sender.toList(),
           'recipient': recipient.toList(),
-          'amount': amount.toString(),
+          'amount': amount,
           'nullifier': nullifier.toList(),
         }
       };
@@ -518,4 +457,59 @@ class SubmitNativeOfflinePayment extends Call {
         amount,
         nullifier,
       );
+}
+
+/// Set the Groth16 verification key (governance/sudo only).
+///
+/// The verification key must be generated from the trusted setup
+/// ceremony for the offline payment circuit.
+///
+/// # Arguments
+/// * `vk` - Serialized verification key bytes
+class SetVerificationKey extends Call {
+  const SetVerificationKey({required this.vk});
+
+  factory SetVerificationKey._decode(_i1.Input input) {
+    return SetVerificationKey(vk: _i1.U8SequenceCodec.codec.decode(input));
+  }
+
+  /// BoundedVec<u8, T::MaxVkSize>
+  final List<int> vk;
+
+  @override
+  Map<String, Map<String, List<int>>> toJson() => {
+        'set_verification_key': {'vk': vk}
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.U8SequenceCodec.codec.sizeHint(vk);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      2,
+      output,
+    );
+    _i1.U8SequenceCodec.codec.encodeTo(
+      vk,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetVerificationKey &&
+          _i7.listsEqual(
+            other.vk,
+            vk,
+          );
+
+  @override
+  int get hashCode => vk.hashCode;
 }
