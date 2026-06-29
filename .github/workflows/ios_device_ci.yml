@@ -48,7 +48,7 @@ jobs:
 
     steps:
       # Setup Environment
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Set unified input variables
         run: |
