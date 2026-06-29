@@ -32,7 +32,7 @@ jobs:
       ipfs_auth_gateway: ${{ steps.export_ipfs_tunnels.outputs.ipfs_auth_gateway }}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Start encointer-node and kubo
         run: |
